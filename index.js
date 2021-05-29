@@ -80,10 +80,6 @@ app.get("/crbt", (req, res, next) => {
   }});
 });
 
-app.set('json spaces', 4)
-
-app.listen(port, () => {
-  console.log(`Connected to the Clembs API`)
-});
+app.set('json spaces', 4);
 
 bot.onUserUpdate()
