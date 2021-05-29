@@ -19,7 +19,7 @@ const bot = new Aoijs.Bot({
 bot.onMessage({ guildOnly: false })
 
 const fs = require('fs');
-let dir = fs.readdirSync('./commands');
+let dir = fs.readdirSync('./src');
 
 let i = 0;
 
