@@ -60,13 +60,15 @@ const express = require('express');
 const app = express();
 const port = 15019;
 
-app.get("/", (req, res, next) => {
+app.get('/', (req, res, next) => {
   res.json({
     "server": links.info.discord,
     "endpoints": {
-        "/crbt": {"method": "GET","description": "Retrieves multiple information about CRBT."},
-        "/random": {"method": "GET","description": "Not available for now."}
+      "/crbt": {
+        "method": "GET",
+        "description": "Retrieves multiple information about CRBT."
       }
+    }
   })
 });
 
@@ -81,5 +83,7 @@ app.get("/crbt", (req, res, next) => {
 });
 
 app.set('json spaces', 4);
+
+app.listen(port, () => {console.log(`Connected to the Clembs API`)});
 
 bot.onUserUpdate()
