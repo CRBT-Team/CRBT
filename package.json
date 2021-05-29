@@ -15,7 +15,7 @@
   },
   "author": "clembs",
   "dependencies": {
-    "aoi.js": "^1.0.6",
+    "aoi.js": "^3.0.0",
     "appid": "^1.0.3",
     "dbd.db": "^1.4.5",
     "dbd.express": "^1.0.1",

@@ -135,14 +135,13 @@ handler: while (i < dir.length) {
 const express = require('express')
 const app = express()
 const port = 6969
-const client = require('Discord.js')
 
 app.get('/', (req, res, next) => {
   res.json({"status": process.env.status});
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at https://api.crbt.ga`)
+  console.log(`Running at https://api.crbt.ga`)
 })
 
 bot.onUserUpdate()
