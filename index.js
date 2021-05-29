@@ -64,7 +64,7 @@ app.get('/', (req, res, next) => {
   res.json({
     "server": links.info.discord,
     "endpoints": {
-      "/crbt": {
+      "crbt": {
         "method": "GET",
         "description": "Retrieves multiple information about CRBT."
       }
