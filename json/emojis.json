@@ -1,0 +1,61 @@
+{
+    "music" : {
+        "mute": "<:mute:836285756086812742>", 
+        "volume": "<:volume:836285755906719744>", 
+        "stop": "<:stop:836285755730952274>",
+        "pause": "<:pause:836285755855863828>", 
+        "play": "<:play:836285755495022653>", 
+        "skip": "<:skip:836285755747336272>", 
+        "list": "<:list:836285755721646150>",
+        "list_success": "<:listsuccess:836285755705524256>", 
+        "loop": "<:loop:836285755718238239>", 
+        "loopenabled": "<:loop_enabled:784484021458829377>",
+        "loopdisabled": "<:loop_disabled:784484015662694410>", 
+        "lyrics": "<:list:836285755721646150>"
+    },
+    "general": {
+        "error": "<:cross:836285755571175425>",
+        "success": "<:tick:836285755965571173>",
+        "purplet": "<:purplet:836285755915370556>", 
+        "toggleon": "<:toggleon:836285755822309376>", 
+        "toggleoff": "<:toggleoff:836285755897806848>", 
+        "forcedoff": "<:toggleforcedoff:836285755869102170>", 
+        "forcedon": "<:toggleforcedon:836285755806056528>",
+        "information": "<:information:836285755923365918>",
+        "warning": "<:warning:836285755948662814>"
+    },
+    "channels": {
+        "voice": "<:voice:784030537547251713>", 
+        "news": "<:channelnews:799956227693609020>", 
+        "text": "<:channeltext:799958569360424970>", 
+        "nsfw": "<:channelnsfw:799958568865366047>",
+        "category": "<:category:822947868863102997>"
+    },
+    "users": {
+        "status": {
+            "dnd": "<:DND:782585535008735233>", 
+            "idle": "<:Idle:782585660682928149>", 
+            "online": "<:Online:782585660334669854>",
+            "invisible": "<:Invisible:782585661185589270>"
+        },
+        "badges": {
+            "houses": {
+                "balance": "<:Balance:782585502884036608>",
+                "brilliance": "<:Brillance:782585506969681930>", 
+                "bravery": "<:Bravery:782585509833867264>"    
+            },
+            "nitro": "<:Nitro_badge:804380209889280010>", 
+            "developer": "<:Developer:782585511025836063>", 
+            "partner": "<:Partner:782585510866452480>", 
+            "earlySupporter": "<:EarlySupporter:782585513675980831>", "verifiedBot": "<:Verifiedbot:782585502708662282>", 
+            "boost": "<:Boosting:782585506646982668>"
+        }
+    },
+    "misc": {
+        "eightball": "<:8ball:836285755512586291>"
+    },
+    "reminder": {
+        "set": "<:reminder_set:817733584759947285>",
+        "normal": "<:reminder:817733671015677982>"
+    }
+}

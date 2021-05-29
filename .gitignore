@@ -1,0 +1,7 @@
+new-database
+node_modules
+old
+old dev
+.env
+package-lock.json
+assets
