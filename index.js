@@ -136,8 +136,8 @@ const express = require('express')
 const app = express()
 const port = 6969
 
-app.get('/', (req, res, next) => {
-  res.json({"status": process.env.status});
+app.get('/crbt', (req, res, next) => {
+  res.json({"online": true});
 })
 
 app.listen(port, () => {
