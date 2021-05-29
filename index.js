@@ -56,16 +56,34 @@ handler: while (i < dir.length) {
     }
 }
 
-const express = require('express')
-const app = express()
-const port = 15019
+const express = require('express');
+const app = express();
+const port = 15019;
 
-app.get("/crbt", (req, res, next) => {
-  res.json({"online": true, "news": botinfo.news});
+app.get("/", (req, res, next) => {
+  res.json({
+    "server": links.info.discord,
+    "endpoints": {
+        "/crbt": {"method": "GET","description": "Retrieves multiple information about CRBT."},
+        "/random": {"method": "GET","description": "Not available for now."}
+      }
+  })
 });
 
+app.get("/crbt", (req, res, next) => {
+  res.json({
+  "online": true, 
+  "news": botinfo.news, 
+  "version": {
+    "major": botinfo.version,
+    "build": botinfo.build
+  }});
+});
+
+app.set('json spaces', 4)
+
 app.listen(port, () => {
-  console.log(`Running at https://api.clembs.xyz/crbt (hopefully)`)
+  console.log(`Connected to the Clembs API`)
 });
 
 bot.onUserUpdate()
