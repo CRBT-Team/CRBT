@@ -87,3 +87,4 @@ app.set('json spaces', 4);
 app.listen(port, () => {console.log(`Connected to the Clembs API`)});
 
 bot.onUserUpdate()
+bot.onInteractionCreate()

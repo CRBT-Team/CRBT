@@ -1,7 +1,7 @@
 module.exports.command = {
     name: "$alwaysExecute",
     code: `
-$useChannel[775431942786908160]
+$useChannel[848294622416732240]
 
 $if[$getGlobalUserVar[telemetry]==complete]
 
