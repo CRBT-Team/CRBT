@@ -37,18 +37,6 @@
             "idle": "<:Idle:782585660682928149>", 
             "online": "<:Online:782585660334669854>",
             "invisible": "<:Invisible:782585661185589270>"
-        },
-        "badges": {
-            "houses": {
-                "balance": "<:Balance:782585502884036608>",
-                "brilliance": "<:Brillance:782585506969681930>", 
-                "bravery": "<:Bravery:782585509833867264>"    
-            },
-            "nitro": "<:Nitro_badge:804380209889280010>", 
-            "developer": "<:Developer:782585511025836063>", 
-            "partner": "<:Partner:782585510866452480>", 
-            "earlySupporter": "<:EarlySupporter:782585513675980831>", "verifiedBot": "<:Verifiedbot:782585502708662282>", 
-            "boost": "<:Boosting:782585506646982668>"
         }
     },
     "misc": {
@@ -57,5 +45,20 @@
     "reminder": {
         "set": "<:reminder_set:817733584759947285>",
         "normal": "<:reminder:817733671015677982>"
+    },
+    "badges": {
+        "houses": {
+            "balance": "<:Balance:782585502884036608>",
+            "brilliance": "<:Brillance:782585506969681930>", 
+            "bravery": "<:Bravery:782585509833867264>"    
+        },
+        "nitro": "<:Nitro_badge:804380209889280010>", 
+        "developer": "<:Developer:782585511025836063>", 
+        "partner": "<:Partner:782585510866452480>", 
+        "earlySupporter": "<:EarlySupporter:782585513675980831>", "verifiedBot": "<:Verifiedbot:782585502708662282>", 
+        "boost": "<:Boosting:782585506646982668>",
+        "discordStaff": "",
+        "bugHunter1": "",
+        "bugHunter2": ""
     }
 }
