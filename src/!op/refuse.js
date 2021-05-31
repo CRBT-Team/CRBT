@@ -20,7 +20,7 @@ $sendDM[$splitText[2];
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
 $replaceText[$toLocaleUppercase[$get[title]];Report;report] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/841349909261451295/$message[1])" refused.
+;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" refused.
 :no}
 {field:Message from $userTag:
 $messageSlice[1]
@@ -42,11 +42,13 @@ $messageSlice[1]
 :no}
 {footer:$get[footer]}
 {color:${colors.red}}
-;841349909261451295]
+;$get[channel]]
 
-$let[title;$getEmbed[841349909261451295;$message[1];title]]
-$let[description;$getEmbed[841349909261451295;$message[1];description]]
-$let[footer;$getEmbed[841349909261451295;$message[1];footer]]
+$let[title;$getEmbed[$get[channel];$message[1];title]]
+$let[description;$getEmbed[$get[channel];$message[1];description]]
+$let[footer;$getEmbed[$get[channel];$message[1];footer]]
+
+$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 

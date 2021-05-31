@@ -20,7 +20,7 @@ $sendDM[$splitText[2];
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
 The bug "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/841349909261451295/$message[1])" was successfully fixed.
+;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully fixed.
 :no}
 {footer:You can't reply back to a CRBT message.}
 {color:${colors.cyan}}
@@ -36,15 +36,17 @@ ${emojis.general.success} Fixed in beta ${botinfo.build}
 :yes}
 {footer:$get[footer]}
 {color:${colors.cyan}}
-;841349909261451295]
+;$get[channel]]
 
 $let[reportmessage;$replaceText[$splitText[2];\`;]]
 
 $textSplit[$get[description];\`\`\`]
 
-$let[title;$getEmbed[841349909261451295;$message[1];title]]
-$let[description;$getEmbed[841349909261451295;$message[1];description]]
-$let[footer;$getEmbed[841349909261451295;$message[1];footer]]
+$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
+
+$let[title;$getEmbed[$get[channel];$message[1];title]]
+$let[description;$getEmbed[$get[channel];$message[1];description]]
+$let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
 $argsCheck[>1;{execute:args}]
 

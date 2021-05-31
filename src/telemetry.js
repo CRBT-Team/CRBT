@@ -1,7 +1,9 @@
+const links = require('../json/links.json');
+
 module.exports.command = {
     name: "$alwaysExecute",
     code: `
-$useChannel[848294622416732240]
+$useChannel[${links.channels.telemetry}]
 
 $if[$getGlobalUserVar[telemetry]==complete]
 

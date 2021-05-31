@@ -16,11 +16,7 @@ $reply[$messageID;
 {color:${colors.cyan}}
 ;no]
 
-$if[$username[$clientID]!=CRBT]
-$useChannel[843146465365852170]
-$else
-$useChannel[843146449675747378]
-$endif
+$useChannel[$get[channel]]
 
 $title[Bug report]
 
@@ -54,6 +50,8 @@ $let[title-enUS;${emojis.general.success} Report sent]
 $let[description-enUS;Your bug report was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]
 
 $argsCheck[>1;{execute:args}]
+
+$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $setGlobalUserVar[last_cmd;$commandName]
