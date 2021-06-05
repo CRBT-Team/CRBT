@@ -79,7 +79,8 @@ app.get("/crbt", (req, res, next) => {
   "version": {
     "major": botinfo.version,
     "build": botinfo.build
-  }});
+  }
+  });
 });
 
 app.set('json spaces', 4);

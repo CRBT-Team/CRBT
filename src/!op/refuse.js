@@ -52,6 +52,6 @@ $let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.chan
 
 $argsCheck[>1;{execute:args}]
 
-$setGlobalUserVar[last_cmd;$commandName]
+$setGlobalUserVar[lastCmd;$commandName]
 $onlyForIDs[$botOwnerID;{execute:owneronly}]
   `}

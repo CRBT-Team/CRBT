@@ -50,6 +50,6 @@ $let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
 $argsCheck[>1;{execute:args}]
 
-$setGlobalUserVar[last_cmd;$commandName]
+$setGlobalUserVar[lastCmd;$commandName]
 $onlyForIDs[$botOwnerID;{execute:owneronly}]
   `}

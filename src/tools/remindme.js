@@ -86,7 +86,7 @@ $onlyIf[$replaceText[$message;$message[1] ;]!=;{execute:args}]
 $onlyIf[$checkContains[$toLowercase[$message[1]];s;d;h;m]==true;{execute:args}]
 $onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message[1]];s;];d;];h;];m;]]==true;{execute:args}]
 
-$setGlobalUserVar[last_cmd;$commandName]
+$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

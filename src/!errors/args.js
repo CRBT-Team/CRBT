@@ -9,7 +9,7 @@ $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {field:$get[correct-$getGlobalUserVar[language]]:
 \`\`\`
-$getServerVar[prefix]$getGlobalUserVar[last_cmd] $commandInfo[$getGlobalUserVar[last_cmd];usage_$getGlobalUserVar[language]]\`\`\`
+$getServerVar[prefix]$getGlobalUserVar[lastCmd] $commandInfo[$getGlobalUserVar[lastCmd];usage_$getGlobalUserVar[language]]\`\`\`
 :yes}
 {color:${colors.red}}
 ;no]

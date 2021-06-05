@@ -20,7 +20,7 @@
     "dbd.db": "^1.4.5",
     "dbd.express": "^1.0.1",
     "dbd.js-utils": "^0.1.1",
-    "discord-buttons": "^2.4.1",
+    "discord-buttons": "^3.1.1",
     "discord-reply": "^0.1.2",
     "discord-together": "^1.1.1",
     "discord-utils.js": "^1.0.9",

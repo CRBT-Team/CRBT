@@ -1,5 +1,6 @@
 const colors = require('../../json/colors.json');
 const emojis = require('../../json/emojis.json');
+const links = require('../../json/links.json');
 
 module.exports.command = {
   name: "report",
@@ -54,7 +55,7 @@ $argsCheck[>1;{execute:args}]
 $let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
-$setGlobalUserVar[last_cmd;$commandName]
+$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
