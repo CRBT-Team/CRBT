@@ -42,11 +42,11 @@ $let[reportmessage;$replaceText[$splitText[2];\`;]]
 
 $textSplit[$get[description];\`\`\`]
 
-$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
-
 $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]
 $let[footer;$getEmbed[$get[channel];$message[1];footer]]
+
+$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 

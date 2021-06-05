@@ -25,7 +25,6 @@ $description[<@!$authorID> in [**$serverName[$guildID]**](https://discord.com/ch
 \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
 \`\`\`
-$disableMentions $disableChannelMentions $disableRoleMentions
 ]
 
 $djsEval[const { Util } = require("discord.js");
