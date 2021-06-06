@@ -1,7 +1,9 @@
+const { links } = require("../../index");
+
 module.exports.command = {
   name: "$alwaysExecute",
   code: `
-$useChannel[${process.env.TELEMETRY}]
+$useChannel[${links.channels.telemetry}]
 
 $if[$getGlobalUserVar[telemetry]==complete]
 
