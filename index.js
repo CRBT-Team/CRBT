@@ -5,10 +5,11 @@ const { readFileSync, readdirSync, statSync, writeFileSync } = require("fs");
 require("dotenv").config();
 
 // Configuration files
-const { colors, emojis, jobs, links, tokens, botinfo } = JSON.parse(
+const { colors, emojis, links, tokens, botinfo } = JSON.parse(
   readFileSync("json/config.json", "utf-8")
 );
 const { items } = JSON.parse(readFileSync("json/store.json", "utf-8"));
+const { jobs } = JSON.parse(readFileSync("json/jobs.json", "utf-8"));
 
 // Export configuration files and instance to be accessed better by commands
 module.exports = {
