@@ -1,5 +1,4 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
+const { emojis } = require("../../index");
 
 module.exports.command = {
   name: "8ball",

@@ -1,4 +1,4 @@
-const colors = require("../../json/colors.json");
+const { colors } = require("../../index");
 
 module.exports.variables = {    
     blocklisted: false, //whether the user is blocklisted or not

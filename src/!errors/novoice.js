@@ -1,6 +1,4 @@
-const emojis = require('../../json/emojis.json');
-const links = require('../../json/links.json');
-const colors = require('../../json/colors.json');
+const { colors, emojis } = require("../../index");
 
 module.exports.awaitedCommand = {
     name: "novoice",

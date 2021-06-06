@@ -1,5 +1,4 @@
-const links = require('../../json/links.json');
-const colors = require('../../json/colors.json');
+const { links, colors } = require("../../index");
 
 module.exports.awaitedCommand = {
     name: "sendError",

@@ -1,6 +1,4 @@
-const emojis = require('../../json/emojis.json');
-const links = require('../../json/links.json');
-const colors = require('../../json/colors.json');
+const { emojis, links, colors } = require("../../index");
 
 module.exports.awaitedCommand = {
     name: "blocklist",

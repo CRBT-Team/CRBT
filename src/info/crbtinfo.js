@@ -1,6 +1,4 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
-const botinfo = require('../../package.json');
+const { botinfo } = require("../../index");
 
 module.exports.command = {
   name: "crbtinfo",

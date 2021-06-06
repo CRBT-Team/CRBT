@@ -1,5 +1,4 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
+const { emojis } = require("../../index");
 
 module.exports.command = {
     name: "reboot",
@@ -7,5 +6,5 @@ module.exports.command = {
     code: `
 $reboot[server.js]
 $addCmdReactions[${emojis.general.success}]
-$onlyForIDs[$botOwnerID;{execute:owneronly}]
+$onlyForIDs[327690719085068289;${process.env.ID};{execute:owneronly}]
 `}

@@ -1,10 +1,4 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
-const items = require('../../json/items.json');
-const jobs = require('../../json/jobs.json');
-const links = require('../../json/links.json');
-const tokens = require('../../json/tokens.json');
-const botinfo = require('../../package.json');
+const { links } = require("../../index");
 
 module.exports.command = {
   name: "experiments",

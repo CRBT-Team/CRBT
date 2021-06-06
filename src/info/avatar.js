@@ -1,6 +1,3 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
-
 module.exports.command = {
     name: "avatar",
     aliases: ["pfp", "av"],

@@ -1,9 +1,7 @@
-const links = require('../json/links.json');
-
 module.exports.command = {
-    name: "$alwaysExecute",
-    code: `
-$useChannel[${links.channels.telemetry}]
+  name: "$alwaysExecute",
+  code: `
+$useChannel[${process.env.TELEMETRY}]
 
 $if[$getGlobalUserVar[telemetry]==complete]
 
@@ -53,4 +51,5 @@ $onlyIf[$checkCondition[$toLowercase[$message[1]]==js]==false;]
 $onlyIf[$checkCondition[$toLowercase[$message[1]]==e]==false;]
 
 $textSplit[$message[1];]
-    `}
+    `,
+};

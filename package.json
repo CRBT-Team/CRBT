@@ -1,17 +1,10 @@
 {
   "name": "crbt",
   "description": "cool bot project made by clembs",
-  "version": "10",
-  "build": "009",
-  "main": "index.js",
-  "news": [
-    "+ ()play",
-    "+ ()remindme",
-    "+ ()report"
-  ],
   "license": "Private",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "clembs",
   "dependencies": {
@@ -32,5 +25,8 @@
     "request-image-size": "^2.2.0",
     "text-reverse": "^1.0.0",
     "ytdl-core": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

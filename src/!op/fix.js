@@ -1,7 +1,4 @@
-const colors = require('../../json/colors.json');
-const emojis = require('../../json/emojis.json');
-const links = require('../../json/links.json');
-const botinfo = require('../../package.json');
+const { colors, emojis, links, botinfo } = require("../../index");
 
 module.exports.command = {
   name: "fix",
@@ -51,5 +48,5 @@ $let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.chan
 $argsCheck[>1;{execute:args}]
 
 $setGlobalUserVar[lastCmd;$commandName]
-$onlyForIDs[$botOwnerID;{execute:owneronly}]
+$onlyForIDs[327690719085068289;${process.env.ID};{execute:owneronly}]
   `}

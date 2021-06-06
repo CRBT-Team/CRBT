@@ -1,5 +1,4 @@
-const emojis = require('../../json/emojis.json');
-const links = require('../../json/links.json');
+const { emojis } = require("../../index");
 const badges = emojis.badges
 
 module.exports.command = {

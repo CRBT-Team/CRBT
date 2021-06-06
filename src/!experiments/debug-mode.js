@@ -1,5 +1,4 @@
-const emojis = require('../../json/emojis.json');
-const links = require('../../json/links.json');
+const { links } = require("../../index");
 
 module.exports.awaitedCommand = {
     name: "debug-mode",

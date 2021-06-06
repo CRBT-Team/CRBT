@@ -1,5 +1,4 @@
-const emojis = require('../../json/emojis.json');
-const colors = require('../../json/colors.json');
+const { emojis } = require("../../index");
 
 module.exports.timeoutCommand = {
     code: `s    
