@@ -107,11 +107,14 @@
         }
     },
     "botinfo": {
-        "version": "10",
-        "build": "009",
-        "main": "index.js",
+        "version": 10,
+        "build": 11,
         "news": [
+            "- Removed ()experiments temporarily",
+            "= Fixed most of the stuff",
+            "+ Updated API",
             "+ ()play",
+            "+ ()userinfo",
             "+ ()remindme",
             "+ ()report"
         ]

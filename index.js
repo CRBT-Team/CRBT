@@ -36,13 +36,10 @@ const bot = new Bot({
   cache: true,
 });
 
-// Getting listeners(?) and other stuff from bot
-const { onMessage, onUserUpdate, onInteractionCreate } = bot;
-
-// Listeners(?)
-onMessage({ guildOnly: false });
-onUserUpdate();
-onInteractionCreate();
+// Listeners
+bot.onMessage({ guildOnly: false }); //so it can work in DMs, too
+bot.onUserUpdate(); //to fetch username changes
+bot.onInteractionCreate(); //for slash commands and interactions
 
 // Command handler
 handler: while (i < dir.length) {

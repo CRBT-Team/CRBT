@@ -1,7 +1,7 @@
 const express = require("express");
 const { readFileSync } = require("fs");
 const app = express();
-const port = 15019;
+const port = process.env.PORT;
 const { links, botinfo } = require("./index");
 const instance = require("./instance");
 

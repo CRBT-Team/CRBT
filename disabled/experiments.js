@@ -1,4 +1,4 @@
-const { links } = require("../../index");
+const { links } = require("../index");
 
 module.exports.command = {
   name: "experiments",
