@@ -31,28 +31,44 @@ $endif
 ;$channelID]
 
 $let[title-enUS;$userTag[$clientID] - Ping]
-$let[serverLatency-enUS;Server latency: $pingms]
-$let[apiLatency-enUS;API latency: $getObjectProperty[final]ms]
-$let[dbLatency-enUS;Database latency: $dbPingms]
-$let[uptime-enUS;Uptime: $getObjectProperty[uptime]]
+$let[serverLatency-enUS;Server latency: \`\`\`
+$pingms\`\`\`]
+$let[apiLatency-enUS;API latency: \`\`\`
+$getObjectProperty[final]ms\`\`\`]
+$let[dbLatency-enUS;Database latency: \`\`\`
+$dbPingms\`\`\`]
+$let[uptime-enUS;Uptime: \`\`\`
+$getObjectProperty[uptime]\`\`\`]
 
 $let[title-enUK;$userTag[$clientID] - Ping]
-$let[serverLatency-enUK;Server latency: $pingms]
-$let[apiLatency-enUK;API latency: $getObjectProperty[final]ms]
-$let[dbLatency-enUK;Database latency: $dbPingms]
-$let[uptime-enUK;Uptime: $getObjectProperty[uptime]]
+$let[serverLatency-enUK;Server latency: \`\`\`
+$pingms\`\`\`]
+$let[apiLatency-enUK;API latency: \`\`\`
+$getObjectProperty[final]ms\`\`\`]
+$let[dbLatency-enUK;Database latency: \`\`\`
+$dbPingms\`\`\`]
+$let[uptime-enUK;Uptime: \`\`\`
+$getObjectProperty[uptime]\`\`\`]
 
 $let[title-frFR;$userTag[$clientID] - Ping]
-$let[serverLatency-frFR;Latence du serveur : $pingms]
-$let[apiLatency-frFR;Latence de l'API : $getObjectProperty[final]ms]
-$let[dbLatency-frFR;Latence de la base de données : $dbPingms]
-$let[uptime-frFR;Temps d'activité : $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[uptime];second;seconde];day;jour];, and; et];hour;heure]]
+$let[serverLatency-frFR;Latence du serveur : \`\`\`
+$pingms\`\`\`]
+$let[apiLatency-frFR;Latence de l'API : \`\`\`
+$getObjectProperty[final]ms\`\`\`]
+$let[dbLatency-frFR;Latence de la base de données : \`\`\`
+$dbPingms\`\`\`]
+$let[uptime-frFR;Temps d'activité : \`\`\`
+$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[uptime];second;seconde];day;jour];, and; et];hour;heure]\`\`\`]
 
 $let[title-ru;$userTag[$clientID] - Пинг]
-$let[serverLatency-ru;Задержка сервера: $pingмс]
-$let[apiLatency-ru;Задержка API: $getObjectProperty[final]мс]
-$let[dbLatency-ru;Задержка базы данных: $dbPingмс]
-$let[uptime-ru;Время безотказной работы: $uptime]
+$let[serverLatency-ru;Задержка сервера: \`\`\`
+$pingмс\`\`\`]
+$let[apiLatency-ru;Задержка API: \`\`\`
+$getObjectProperty[final]мс\`\`\`]
+$let[dbLatency-ru;Задержка базы данных: \`\`\`
+$dbPingмс\`\`\`]
+$let[uptime-ru;Время безотказной работы: \`\`\`
+$uptime\`\`\`]
 
 $let[average;$round[$math[$getObjectProperty[final]+$ping+$dbPing]]]
 

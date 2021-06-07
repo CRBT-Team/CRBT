@@ -5,7 +5,7 @@ module.exports.command = {
   module: "fun",
   aliases: ["8b"],
   description_enUS: "Askes your question to 8-Ball and gives you its honest answer.",
-  usage_enUS: "\"question (needs to be answerable by \"yes\" or \"no\")\"",
+  usage_enUS: "<question (answerable by \"yes\" or \"no\")>",
   botperms: "",
   code: `
 $editMessage[$botLastMessageID;

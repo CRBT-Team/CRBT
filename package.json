@@ -22,7 +22,7 @@
     "fs-extra": "^9.1.0",
     "request-image-size": "^2.2.0",
     "text-reverse": "^1.0.0",
-    "ytdl-core": "^4.8.0"
+    "ytdl-core": "^4.8.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

@@ -1,5 +1,5 @@
 module.exports.status = {
-    text: "FORTNITE BATTLE ROYALE",
+    text: "@CRBT | crbt.ga | $abbreviate[$allMembersCount] Members",
     type: "PLAYING",
     time: 12
 }
