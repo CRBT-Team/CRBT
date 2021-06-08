@@ -1,7 +1,7 @@
 const { links, emojis, colors } = require("../../index");
 
 module.exports.awaitedCommand = {
-    name: "addqueue",
+    name: "addQueue",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 

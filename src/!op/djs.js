@@ -16,7 +16,7 @@ const hook = new Webhook('https://discord.com/api/webhooks/${webhook_id}/${webho
 const { colors, emojis, jobs, links, tokens, botinfo, items, instance } = require("../../../../../index")
 $replaceText[$replaceText[$replaceText[$message;\`\`\`js;];\`\`\`;];console.log(;channel.send("Console: " + ]]
 $addCmdReactions[🏳️]
-$onlyForIDs[327690719085068289;${process.env.ID};{execute:owneronly}]
+$onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}
 
     // IGNORE THESE

@@ -119,5 +119,13 @@
             "+ ()remindme",
             "+ ()report"
         ]
+    },
+    "illustrations": {
+        "ping": {
+            "good": "https://cdn.discordapp.com/attachments/760421661735387187/841360028039381063/stonks.png",
+            "meh": "https://cdn.discordapp.com/attachments/782584672772423684/841300273296179220/unknown.png",
+            "bad": "https://cdn.discordapp.com/attachments/782584672772423684/841300367266021396/unknown.png"
+        },
+        "crbtinfo": ""
     }
 }

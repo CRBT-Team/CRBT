@@ -53,5 +53,4 @@ $onlyIf[$checkCondition[$toLowercase[$message[1]]==js]==false;]
 $onlyIf[$checkCondition[$toLowercase[$message[1]]==e]==false;]
 
 $textSplit[$message[1];]
-    `,
-};
+    `}

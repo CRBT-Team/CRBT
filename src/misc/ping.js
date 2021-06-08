@@ -1,3 +1,5 @@
+const { illustrations } = require("../../index")
+
 module.exports.command = {
   name: "ping",
   module: "misc",
@@ -11,21 +13,12 @@ module.exports.command = {
 $editMessage[$botLastMessageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
 
-$if[$getGlobalUserVar[debug]==true]
-{field:Debug:
-average: $get[average]
-status: $replaceText[$replaceText[$checkCondition[$get[average]<=400];true;1 (<400)];false;$replaceText[$replaceText[$checkCondition[$get[average]<=600];true;2 (<600)];false;$replaceText[$checkCondition[$get[average]>600];true;3 (>600)]]]
-:no}
-$endif
-
 {field:$get[serverLatency-$getGlobalUserVar[language]]}
 {field:$get[apiLatency-$getGlobalUserVar[language]]}
 {field:$get[dbLatency-$getGlobalUserVar[language]]}
 {field:$get[uptime-$getGlobalUserVar[language]]}
 
-$if[$getGlobalUserVar[accessibility]==false]
-{thumbnail:$replaceText[$replaceText[$checkCondition[$get[average]<=400];true;https://cdn.discordapp.com/attachments/760421661735387187/841360028039381063/stonks.png];false;$replaceText[$replaceText[$checkCondition[$get[average]<=600];true;https://cdn.discordapp.com/attachments/782584672772423684/841300273296179220/unknown.png];false;$replaceText[$checkCondition[$get[average]>600];true;https://cdn.discordapp.com/attachments/782584672772423684/841300367266021396/unknown.png]]]}
-$endif
+{thumbnail:$replaceText[$replaceText[$checkCondition[$get[average]<=400];true;${illustrations.ping.good}];false;$replaceText[$replaceText[$checkCondition[$get[average]<=600];true;${illustrations.ping.meh}];false;$replaceText[$checkCondition[$get[average]>600];true;${illustrations.ping.bad}]]]}
 
 {color:$getGlobalUserVar[color]}
 ;$channelID]

@@ -1,11 +1,11 @@
 module.exports.command = {
-  name: "template",
-  module: "misc",
-  aliases: ["templatealias"],
-  description_enUS: "description.",
-  usage_enUS: "\"something cool\"",
-  botperms: [""],
-  code: `
+     name: "template",
+    module: "misc",
+    aliases: ["templatealias"],
+    description_enUS: "description.",
+    usage_enUS: "<something cool>",
+    botperms: [""],
+    code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {description:$get[description-$getGlobalUserVar[language]]}
@@ -21,4 +21,4 @@ $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
-  `}
+    `}

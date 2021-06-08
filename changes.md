@@ -23,3 +23,11 @@
     - Fixed some bugs
     - Changed the message modification delay dynamically depending
 - Added the message when the bot leaves the channel for inactivity
+
+### Devlog: Clembs, 2021-06-08
+- Partially fixed ()userinfo
+- Completely removed experiments
+- Added illustrations in ./json/config.json
+- Renamed a lot of the files to be camelCase
+- Made OP commands not require a process.env.id
+- Other minor fixes

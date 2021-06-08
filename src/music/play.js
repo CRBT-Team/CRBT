@@ -1,13 +1,15 @@
 const { colors, emojis, tokens } = require("../../index");
 
 module.exports.command = {
-  name: "play",
-  module: "music",
-  aliases: ["p", "add"],
-  description_enUS: "Adds <botname> to the voice channel, adds the song(s) to the queue or directly plays it if no music is currently playing.",
-  usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
-  botperms: ["connect", "speak"],
-  code: `
+    name: "play",
+    module: "music",
+    aliases: ["p", "add"],
+    description_enUS: "Adds <botname> to the voice channel, adds the song(s) to the queue or directly plays it if no music is currently playing.",
+    usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
+    botperms: ["connect", "speak"],
+    code: `
+$if[$get[condition]==true]
+
 $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
 
 $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]!=true]
@@ -147,11 +149,19 @@ $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on ${emojis.music.mute} to mute/unmute.]
 
-$if[$voiceID[$clientID]!=] $onlyIf[$voiceID[$clientID]==$voiceID;{execute:samevoice}] $endif
+$else
+$loop[1;samevoice]
+$endif
+
+$if[$voiceID[$clientID]!=]
+$let[condition;$checkCondition[$voiceID[$clientID]==$voiceID]]
+$endif
 $onlyIf[$voiceID!=;{execute:novoice}]
 
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
-  `}
+$if[$guildID!=]
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$endif
+    `}
