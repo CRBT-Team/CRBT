@@ -39,5 +39,11 @@ app.get("/crbt/stats", function (req, res) {
 app.set("json spaces", 2);
 
 app.listen(port, () => {
-  console.log(`Connected to the Clembs API (Port: ${port})`);
+  console.log(`Connected to the Clembs API (Port: 15019)`);
+}).on("error", () => {
+  app.listen(process.env.PORT, function () {
+    console.log(`Connected to the Clembs API (Port: ${process.env.PORT})`);
+  }).on("error", () => {
+    console.log("Couldn't connect to Clembs API!");
+  });
 });
