@@ -17,6 +17,8 @@ $get[badges]
 $get[avatar-$getGlobalUserVar[language]]
 }
 
+$if[$getObjectProperty[memberExists]==true]
+
 {field:$get[id-$getGlobalUserVar[language]]:
 $get[id]
 :no}
@@ -40,23 +42,37 @@ $replaceText[$replaceText[$checkCondition[$userRoles[$get[id];mentions; ]==];tru
 
 {field:$get[accountCreated-$getGlobalUserVar[language]]:yes}
 
-{thumbnail:$userAvatar[$get[id]]}
-{color:$getGlobalUserVar[color;$get[id]]}
-;no]
-
 $let[serverJoined-enUS;Joined server:$get[format2-enUS]]
 $let[format2-enUS;$formatDate[$get[memberJoinedDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[memberJoinedDate];MM]]==1];true;0$formatDate[$get[memberJoinedDate];MM]];false;$formatDate[$get[memberJoinedDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[memberJoinedDate];DD]]==1];true;0$formatDate[$get[memberJoinedDate];DD]];false;$formatDate[$get[memberJoinedDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[memberJoinedDate];HH]]==1];true;0$formatDate[$get[memberJoinedDate];HH]];false;$formatDate[$get[memberJoinedDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[memberJoinedDate];mm]]==1];true;0$formatDate[$get[memberJoinedDate];mm]];false;$formatDate[$get[memberJoinedDate];mm]]]
-
 $let[memberJoinedDate;$memberJoinedDate[$get[id];date]]
-    
-$let[accountCreated-enUS;Joined Discord:$get[format-enUS]]
-$let[format-enUS;$formatDate[$get[creationDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];MM]]==1];true;0$formatDate[$get[creationDate];MM]];false;$formatDate[$get[creationDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];DD]]==1];true;0$formatDate[$get[creationDate];DD]];false;$formatDate[$get[creationDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];HH]]==1];true;0$formatDate[$get[creationDate];HH]];false;$formatDate[$get[creationDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];mm]]==1];true;0$formatDate[$get[creationDate];mm]];false;$formatDate[$get[creationDate];mm]]
-($user[$get[id];timestamp] ago)]
 
 $let[perms-enUS;Key permissions:$get[perms]]
 $let[perms;$filterMessageWords[$replaceText[$replaceText[$replaceText[$hasPerms[$get[id];admin];false;$userPerms[$get[id]]];true;Administrator (all permissions)];Tts;TTS];no;Add Reactions, ;View Channel, ;Send Messages, ;Use Vad, ;Read Message History, ;Embed Links, ;Connect, ;Speak, ;Use External Emojis, ;Stream, ]]
-    
+
 $let[roles-enUS;$replaceText[$replaceText[$checkCondition[$userRoleCount[$get[id]]>1];true;Roles];false;Role] ($userRoleCount[$get[id]])]
+
+$else
+
+{field:$get[id-$getGlobalUserVar[language]]:
+$get[id]
+:yes}
+
+{field:$get[activity-$getGlobalUserVar[language]]:
+$replaceText[$replaceText[$activity[$get[id]];Custom Status;Custom Status: $replaceText[$getCustomStatus[$get[id];emoji] ;none ;]$replaceText[$getCustomStatus[$get[id]];none;]
+];none;*None*]
+:yes}
+
+{field:$get[accountCreated-$getGlobalUserVar[language]]:no}
+
+$endif
+
+{thumbnail:$userAvatar[$get[id];256]}
+{color:$getGlobalUserVar[color;$get[id]]}
+;no]
+
+$let[accountCreated-enUS;Joined Discord:$get[format-enUS]]
+$let[format-enUS;$formatDate[$get[creationDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];MM]]==1];true;0$formatDate[$get[creationDate];MM]];false;$formatDate[$get[creationDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];DD]]==1];true;0$formatDate[$get[creationDate];DD]];false;$formatDate[$get[creationDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];HH]]==1];true;0$formatDate[$get[creationDate];HH]];false;$formatDate[$get[creationDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];mm]]==1];true;0$formatDate[$get[creationDate];mm]];false;$formatDate[$get[creationDate];mm]]
+($user[$get[id];timestamp] ago)]
 
 $let[author-enUS;$replaceText[$replaceText[$checkCondition[$charCount[$userTag]<30];true;$userTag[$get[id]]];false;$cropText[$username[$get[id]];25]...#$discriminator[$get[id]]] - Information]
 $let[avatar-enUS;**Profile picture:** **[2048px]($replaceText[$userAvatar[$get[id];2048;yes];webp;png])** | **[512px]($replaceText[$userAvatar[$get[id];512;yes];webp;png])** | **[256px]($replaceText[$userAvatar[$get[id];256;yes];webp;png])** | \`$getServerVar[prefix]avatar\`]
@@ -73,10 +89,10 @@ $let[nick-enUS;Nickname]
 $let[noRoles-enUS;*This user doesn't have any roles...*]
 
 $if[$message==]
+    $createObject[{"memberExists":$checkCondition[$guildID!=]}]
     $let[id;$authorID]
-    $let[memberExists;$checkCondition[$guildID!=]]
 $else
-    $let[memberExists;$memberExists[$get[id]]]
+    $createObject[{"memberExists":$memberExists[$get[id]]}]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif

@@ -1,4 +1,4 @@
-const { illustrations } = require("../../index")
+const { illustrations } = require("../../index");
 
 module.exports.command = {
   name: "ping",

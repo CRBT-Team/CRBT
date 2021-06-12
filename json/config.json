@@ -85,6 +85,10 @@
     "links": {
         "privacypolicy": "https://crbt.ga/privacy",
         "baseURL": "https://crbt.ga/",
+        "invite": "https://crbt.ga/invite",
+        "vote": {
+            "topgg": "https://top.gg/bot/595731552709771264/vote"
+        },
         "info": {
             "discord": "https://crbt.ga/discord",
             "messages": "https://crbt.ga/404"
