@@ -2,7 +2,6 @@ const { colors, emojis, links } = require("../../index");
 
 module.exports.command = {
   name: "reply",
-  module: "basic",
   aliases: ["replyreport"],
   code: `
 $deleteCommand
