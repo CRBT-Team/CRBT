@@ -1,4 +1,4 @@
-const { emojis, links } = require("../../index");
+const { emojis, links, colors } = require("../../index");
 
 module.exports.command = {
   name: "unblocklist",
