@@ -100,7 +100,9 @@ $endif
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] 
+$endif
     `}
 /*$if[$getServerVar[module_allowedChannels]!=true] $onlyIf[$checkContains[$getServerVar[allowedChannels];$channelID]==true;placeholder error xd] $endif
 this ^ is the supposed to be for the allowed channels thing*/

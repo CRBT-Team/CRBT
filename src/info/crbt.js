@@ -29,8 +29,6 @@ $reply[$messageID;
 
   {field:$get[computer-$getGlobalUserVar[language]]:yes}
 
-  {field:$get[news-$getGlobalUserVar[language]]:no}
-
   {thumbnail:https://clembs.xyz/media/placeholder-image.png}
 
   {color:$getGlobalUserVar[color]}
@@ -38,7 +36,7 @@ $reply[$messageID;
 
 $let[title-enUS;$userTag[$clientID] - Information]
 $let[description-enUS;**[Website](${links.baseURL})** | **[Add to Discord](${links.invite})** | **[Support server](${links.info.discord})** | **[Vote on top.gg](${links.vote.topgg})**
-$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}]** | **Created by [Clembs](https://clembs.xyz)]
+$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}] | Created by **[Clembs](https://clembs.xyz)**]
 $let[members-enUS;Members:$numberSeparator[$allMembersCount]]
 $let[servers-enUS;Servers:$numberSeparator[$serverCount]]
 $let[creationDate-enUS;Created at:$get[year]-$get[month]-$get[day] at $get[hour]:$get[minute]]
@@ -50,7 +48,7 @@ $let[news-enUS;Latest $username[$clientID] news: \`\`\`diff\n$replaceText[$repla
 
 $let[title-enUK;$userTag[$clientID] - Bot Info]
 $let[description-enUK;**[Website](${links.baseURL})** | **[Add to Server](${links.invite})** | **[Support server](${links.info.discord})** | **[Vote on top.gg](${links.vote.topgg})**
-$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}]** | **Created by [Clembs](https://clembs.xyz)]
+$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}] | Created by **[Clembs](https://clembs.xyz)**]
 $let[members-enUK;Members:$numberSeparator[$allMembersCount]]
 $let[servers-enUK;Servers:$numberSeparator[$serverCount]]
 $let[creationDate-enUK;Created at: $get[day]/$get[month]/$get[year] at $get[hour]:$get[minute]]
@@ -61,7 +59,7 @@ $let[news-enUK;$username[$clientID] ${botinfo.build} news: \`\`\`diff\n$replaceT
 
 $let[title-frFR;$userTag[$clientID] - Informations]
 $let[description-frFR;**[Site web](${links.baseURL})** | **[Ajouter sur Discord](${links.invite})** | **[Serveur d'aide](${links.info.discord})** | **[Voter sur top.gg](${links.vote.topgg})**
-$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}]** | **Créé par [Clembs](https://clembs.xyz)]
+$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}] | Créé par **[Clembs](https://clembs.xyz)**]
 $let[members-frFR;Members:$replaceText[$numberSeparator[$allMembersCount];,; ]]
 $let[servers-frFR;Servers:$replaceText[$numberSeparator[$serverCount];,; ]]
 $let[creationDate-frFR;Date de création: $get[day]/$get[month]/$get[year] à $get[hour]:$get[minute]]
@@ -72,7 +70,7 @@ $let[news-frFR;Dernières nouveautés de $username[$clientID]: \`\`\`diff\n$repl
 
 $let[title-ru;$userTag[$clientID] - информация]
 $let[description-ru;**[Вебсайт](${links.baseURL})** | **[Добавить в Дискорд Сервер](${links.invite})** | **[Поддержать сервер](${links.info.discord})** | **[Проголосовать на top.gg](${links.vote.topgg})**
-$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}]** | **Created by [Clembs](https://clembs.xyz)]
+$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}] | Created by **[Clembs](https://clembs.xyz)**]
 $let[members-ru;Участников:$replaceText[$numberSeparator[$allMembersCount];,; ]]
 $let[servers-ru;Серверов:$replaceText[$numberSeparator[$serverCount];,; ]]
 $let[creationDate-ru;Создан:$get[day].$get[month].$get[year] в $get[hour]:$get[minute]]
