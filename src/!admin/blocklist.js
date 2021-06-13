@@ -28,7 +28,7 @@ $messageSlice[1]
 {color:${colors.red}}
 ;no]
 
-$setGlobalUserVar[blacklisted;true;$findUser[$message[1];no]]
+$setGlobalUserVar[blocklisted;true;$findUser[$message[1];no]]
 
 $onlyIf[$findUser[$message[1];no]!=undefined;can't find this user]
 

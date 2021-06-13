@@ -22,7 +22,7 @@ $reply[$messageID;
 {color:${colors.red}}
 ;no]
 
-$setGlobalUserVar[blacklisted;false;$findUser[$message[1];no]]
+$setGlobalUserVar[blocklisted;false;$findUser[$message[1];no]]
 
 $onlyIf[$findUser[$message[1];no]!=undefined;can't find this user]
 

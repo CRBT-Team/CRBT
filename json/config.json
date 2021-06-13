@@ -113,7 +113,7 @@
     },
     "botinfo": {
         "version": 10,
-        "build": 13,
+        "build": 14,
         "news": [
             "will be updated whenever a new major version releases"
         ]
@@ -125,6 +125,7 @@
             "bad": "https://cdn.discordapp.com/attachments/782584672772423684/841300367266021396/unknown.png"
         },
         "crbtinfo": "https://clembs.xyz/media/placeholder-image.png",
-        "welcome": "https://clembs.xyz/media/placeholder-image.png"
+        "welcome": "https://clembs.xyz/media/placeholder-image.png",
+        "barrelRoll": "https://clembs.xyz/media/placeholder-image.png"
     }
 }
