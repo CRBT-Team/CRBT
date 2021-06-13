@@ -8,24 +8,24 @@ module.exports.command = {
     usage_enUS: "<name of an Aoi.js function (e.g. $findUser)>",
     code: `
 $reply[$messageID;
-{title:$getObjectProperty[name]}
+{title:$getObjectProperty[function.name]}
 
 {description:
 \`\`\`
-$getObjectProperty[description]
+$getObjectProperty[function.description]
 \`\`\`}
 
-$if[$getObjectProperty[usage]!=]
+$if[$getObjectProperty[function.usage]!=]
 {field:$get[usage-$getGlobalUserVar[language]]:
 \`\`\`
-$getObjectProperty[usage]
+$getObjectProperty[function.usage]
 :no}
 $endif
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;];function]]
+$createObject[$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;]]]
 
 $argsCheck[1;{execute:args}]
 

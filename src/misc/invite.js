@@ -7,7 +7,7 @@ module.exports.command = {
     description_enUS: "Gives useful links to invite CRBT or to join the Discord community.",
     code: `
 $reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$595731552709771264;64]}
+{author:$get[title-$getGlobalUserVar[language]]:$userAvatar[595731552709771264;64]}
 {description:
 $get[recommendedPerms-$getGlobalUserVar[language]]
 

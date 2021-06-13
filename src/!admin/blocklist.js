@@ -12,9 +12,11 @@ Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
 Blocklisted from CRBT.
 :no}
+$if[$messageSlice[1]!=]
 {field:Message from $userTag:
 $messageSlice[1]
 :no}
+$endif
 {footer:You can't reply back to a CRBT message.}
 {color:${colors.red}}
 ]
@@ -22,9 +24,11 @@ $messageSlice[1]
 $reply[$messageID;
 {title:${emojis.general.success} Blocklist successful}
 {description:<@!$findUser[$message[1];no]> has been blocklisted.}
+$if[$messageSlice[1]!=]
 {field:Reason:
 $messageSlice[1]
 :yes}
+$endif
 {color:${colors.red}}
 ;no]
 
