@@ -1,12 +1,11 @@
 const { colors, emojis, links } = require("../../index");
 
 module.exports.command = {
-  name: "report",
+  name: "suggest",
   module: "misc",
-  aliases: ["bugreport", "bug", "sendreport"],
-  description_enUS: "Sends a bug report about CRBT (english only).",
-  usage_enUS: "<bug report message (may include images)>",
-  botperms: "",
+  aliases: ["feedback", "request", "suggestion"],
+  description_enUS: "Sends a suggestion for CRBT (english only).",
+  usage_enUS: "<suggestion (may include images)>",
   cooldown: "10s",
   code: `
 $reply[$messageID;
@@ -17,7 +16,7 @@ $reply[$messageID;
 
 $useChannel[$get[channel]]
 
-$title[Bug report]
+$title[Suggestion]
 
 $description[<@!$authorID> in [**$serverName[$guildID]**](https://discord.com/channels/$guildID/$channelID/$messageID)
 \`\`\`
@@ -40,12 +39,10 @@ $addField[Status;
 Pending
 ;no]
 
-$footer[$randomString[10] | $authorID]
-
 $color[${colors.yellow}]
 
-$let[title-enUS;${emojis.general.success} Report sent]
-$let[description-enUS;Your bug report was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]
+$let[title-enUS;${emojis.general.success} Suggestion sent]
+$let[description-enUS;Your suggestion was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]
 
 $argsCheck[>1;{execute:args}]
 

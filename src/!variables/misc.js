@@ -9,7 +9,7 @@ module.exports.variables = {
     volume: 50, //default volume so we dont break our ears
     color: `${colors.crbt.devblue}`, //default border color
     lastCmd: "", //last command to get exported to awaited cmd
-    avatarlog: "", //the logs for the avatar, will probably change the method if it gets too messy
+    avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
     language: "enUS", //default language
     telemetry: "minimal", //two states: minimal or complete 
     activeReminders: "", //to be merged with todo list

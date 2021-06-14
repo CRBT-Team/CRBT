@@ -5,6 +5,9 @@ const port = process.env.PORT;
 const { links, botinfo } = require("./index");
 const instance = require("./instance");
 
+const files = require("./json/api.json");
+const randomPédiluve = Math.floor(Math.random() * files.pédiluve.length);
+
 app.get("/", function (req, res) {
   res.json({
     server: links.info.discord,
@@ -16,7 +19,6 @@ app.get("/", function (req, res) {
     },
   });
 });
-
 app.get("/crbt", function (req, res) {
   res.json({
     online: true,
@@ -27,7 +29,6 @@ app.get("/crbt", function (req, res) {
     },
   });
 });
-
 app.get("/crbt/stats", function (req, res) {
   res.json({
     memberCount: instance.memberCount,

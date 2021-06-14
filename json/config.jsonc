@@ -35,7 +35,7 @@
         "general": {
             "error": "<:cross:836285755571175425>",
             "success": "<:tick:836285755965571173>",
-            "purplet": "<:purplet:836285755915370556>",
+            "purplet": "<:NewPurplet:853309241720569866>",
             "toggleon": "<:toggleon:836285755822309376>",
             "toggleoff": "<:toggleoff:836285755897806848>",
             "forcedoff": "<:toggleforcedoff:836285755869102170>",
@@ -113,15 +113,9 @@
     },
     "botinfo": {
         "version": 10,
-        "build": 11,
+        "build": 14,
         "news": [
-            "- Removed ()experiments temporarily",
-            "= Fixed most of the stuff",
-            "+ Updated API",
-            "+ ()play",
-            "+ ()userinfo",
-            "+ ()remindme",
-            "+ ()report"
+            "will be updated whenever a new major version releases"
         ]
     },
     "illustrations": {
@@ -130,6 +124,8 @@
             "meh": "https://cdn.discordapp.com/attachments/782584672772423684/841300273296179220/unknown.png",
             "bad": "https://cdn.discordapp.com/attachments/782584672772423684/841300367266021396/unknown.png"
         },
-        "crbtinfo": ""
+        "crbtinfo": "https://clembs.xyz/media/placeholder-image.png",
+        "welcome": "https://clembs.xyz/media/placeholder-image.png",
+        "barrelRoll": "https://clembs.xyz/media/placeholder-image.png"
     }
 }

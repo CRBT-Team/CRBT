@@ -2,7 +2,6 @@ const { colors, emojis, links, botinfo } = require("../../index");
 
 module.exports.command = {
   name: "fix",
-  module: "basic",
   aliases: ["fixed", "fixreport"],
   code: `
 $deleteCommand

@@ -4,5 +4,5 @@ module.exports.variables = {
     profile_banner: "", 
     profile_badges: "", 
     profile_rep: "", //legacy stuff from v8
-    profile_layout: "basic", //for v10 part 2
+    profileLayout: "basic", //for v10 part 2
 }
