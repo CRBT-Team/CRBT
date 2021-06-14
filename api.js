@@ -35,14 +35,11 @@ app.get("/crbt/stats", function (req, res) {
     commandCount: instance.commandCount,
   });
 });
-<<<<<<< Updated upstream
-=======
 app.get("/pediluve", function (req, res) {
   res.json({
     image: files.pédiluve[randomPédiluve]
   })
 })
->>>>>>> Stashed changes
 
 app.set("json spaces", 2);
 

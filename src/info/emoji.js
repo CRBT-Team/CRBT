@@ -1,3 +1,5 @@
+const emojis = require("../../json/emoji-database.json")
+
 module.exports.command = {
     name: "emojiinfo",
     aliases: ["emoji", "ei", "emote", "emoteinfo", "emoji-info", "emoji_info", "emote-info", "emote_info"],
@@ -10,22 +12,26 @@ $if[$charCount[$message[1]]>=24]
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:$get[url]}
 
-    $if[$get[animated]==true]
-        {description:**[$get[openInBrowser-$getGlobalUserVar[language]]]($get[url])**}
-    $else
-        {field:$get[resolutions-$getGlobalUserVar[language]]:
-        **[4096]($get[url]&size=4096)** | **[2048]($get[url]&size=2048)** | **[1024]($get[url]&size=1024)** | **[512]($get[url]&size=512)**
-        :no}
-    $endif
+    {field:$get[resolutions-$getGlobalUserVar[language]]:
+    **[1024]($get[url]?size=1024)** | **[512]($get[url]?size=512)** | **[256]($get[url]?size=256)** | **[128]($get[url]?size=128)**
+    :no}
 
-    {field:$get[id-$getGlobalUserVar[language]]:$get[id]:yes}
-    {field:$get[animated-$getGlobalUserVar[language]]:yes}
+    {field:$get[id-$getGlobalUserVar[language]]
+    :$get[id]
+    :no}
+    
+    {field:$get[animated-$getGlobalUserVar[language]]
+    :yes}
 
     $if[$checkContains[$serverEmojis;$message]==true]
-        {field:$get[creationDate-$getGlobalUserVar[language]]:yes}
-        {field:$get[origin-$getGlobalUserVar[language]]:$serverName:yes}
+        {field:$get[origin-$getGlobalUserVar[language]]:yes}
+        {field:$get[creationDate-$getGlobalUserVar[language]]:no}
+        
+    $let[creationDate-enUS;Added:$get[format-enUS]]
+    $let[format-enUS;$formatDate[$get[creationDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];MM]]==1];true;0$formatDate[$get[creationDate];MM]];false;$formatDate[$get[creationDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];DD]]==1];true;0$formatDate[$get[creationDate];DD]];false;$formatDate[$get[creationDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];HH]]==1];true;0$formatDate[$get[creationDate];HH]];false;$formatDate[$get[creationDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];mm]]==1];true;0$formatDate[$get[creationDate];mm]];false;$formatDate[$get[creationDate];mm]]]
+    $let[creationDate;$emoji[$get[id];created]]
     $else
-        {field:$get[origin-$getGlobalUserVar[language]]:$serverName[$emoji[$get[id];guildid]]:yes}
+        {field:$get[origin-$getGlobalUserVar[language]]:yes}
     $endif
 
     {image:$get[url]}
@@ -34,15 +40,12 @@ $if[$charCount[$message[1]]>=24]
 
     ;no]
 
-    $let[title-enUS;#COLON#$splitText[2]#COLON# - Information]
-    $let[openInBrowser-enUS;Open in browser]
+    $let[title-enUS;$splitText[2] - Information]
     $let[resolutions-enUS;Resolutions (in pixels)]
     $let[id-enUS;ID]
-    $let[animated-enUS;Animated:$replaceText[$replaceText[$get[animated];true;Yes];false;No]
-    $let[creationDate-enUS;Added:$get[format-enUS]]
-    $let[format-enUS;$formatDate[$get[creationDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];MM]]==1];true;0$formatDate[$get[creationDate];MM]];false;$formatDate[$get[creationDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];DD]]==1];true;0$formatDate[$get[creationDate];DD]];false;$formatDate[$get[creationDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];HH]]==1];true;0$formatDate[$get[creationDate];HH]];false;$formatDate[$get[creationDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];mm]]==1];true;0$formatDate[$get[creationDate];mm]];false;$formatDate[$get[creationDate];mm]]]
+    $let[animated-enUS;Animated:$replaceText[$replaceText[$get[animated];true;Yes];false;No]]
+    $let[origin-enUS;From this server:$replaceText[$replaceText[$checkContains[$serverEmojis;$message];true;Yes];false;No]]
 
-    $let[creationDate;$emoji[$get[id];created]]
     $let[url;https://cdn.discordapp.com/emojis/$get[id].$replaceText[$replaceText[$get[animated];false;png];true;gif]]
     $let[animated;$checkCondition[$splitText[1]==<a]]
     $let[id;$replaceText[$splitText[3];>;]]
@@ -53,7 +56,39 @@ $if[$charCount[$message[1]]>=24]
 
 $else
 
-    no ($charCount[$message[1]])
+$reply[$messageID;
+{author:$get[title-$getGlobalUserVar[language]]:$get[twitter]}
+{field:$get[types-$getGlobalUserVar[language]]:
+**[Twitter]($get[twitter])** | **[Google]($get[google])** | **[Apple]($get[apple])**
+:no}
+{field:$get[unicode-$getGlobalUserVar[language]]:
+$get[code2]
+:yes}
+{color:$getGlobalUserVar[color]}
+{image:$get[twitter]}
+
+;no]
+
+$let[google;https://emojiapi.dev/api/v1/$get[code]/512.png]
+$let[twitter;https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/$get[code].png]
+$let[apple;https://raw.githubusercontent.com/loicpirez/EmojiExtractor/master/unicode.org/apple/$get[code].png]
+
+$let[types-enUS;Types]
+$let[title-enUS;$message[1] - Information]
+$let[unicode-enUS;Unicode]
+
+$let[code2;$getObjectProperty[unicode]]
+$let[code;$replaceText[$getObjectProperty[unicode]; ;-]]
+
+$djsEval[
+const message = "$getObjectProperty[message]";
+const unicode = require("emoji-unicode");
+d.object.unicode = unicode(message);
+]
+
+$createObject[{"message":"$message"}]
+
+$onlyIf[$checkContains[${emojis};$message[1]]==true;{execute:args}]
 
 $endif
 
