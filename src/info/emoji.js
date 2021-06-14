@@ -58,8 +58,11 @@ $else
 
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[twitter]}
+{description:
+**[$get[emojipedia-$getGlobalUserVar[language]]](https://emojipedia.org/$message[1])**
+}
 {field:$get[types-$getGlobalUserVar[language]]:
-**[Twitter]($get[twitter])** | **[Google]($get[google])** | **[Apple]($get[apple])**
+**[Twitter]($get[twitter])** | **[Google]($get[google])** | **[Apple]($get[apple])** | **[Facebook]($get[facebook])**
 :no}
 {field:$get[unicode-$getGlobalUserVar[language]]:
 $get[code2]
@@ -69,13 +72,15 @@ $get[code2]
 
 ;no]
 
-$let[google;https://emojiapi.dev/api/v1/$get[code]/512.png]
+$let[google;https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-136/$get[code].png]
 $let[twitter;https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/$get[code].png]
-$let[apple;https://raw.githubusercontent.com/loicpirez/EmojiExtractor/master/unicode.org/apple/$get[code].png]
+$let[apple;https://raw.githubusercontent.com/iamcal/emoji-data/master/img-apple-160/$get[code].png]
+$let[facebook;https://raw.githubusercontent.com/iamcal/emoji-data/master/img-facebook-96/$get[code].png]
 
 $let[types-enUS;Types]
 $let[title-enUS;$message[1] - Information]
 $let[unicode-enUS;Unicode]
+$let[emojipedia-enUS;Emojipedia page]
 
 $let[code2;$getObjectProperty[unicode]]
 $let[code;$replaceText[$getObjectProperty[unicode]; ;-]]

@@ -6,10 +6,10 @@ require("dotenv").config();
 
 // Configuration files
 const { colors, emojis, links, tokens, botinfo, illustrations } = JSON.parse(
-  readFileSync("json/config.json", "utf-8")
+  readFileSync("json/config.jsonc", "utf-8")
 );
-const { items } = JSON.parse(readFileSync("json/store.json", "utf-8"));
-const { jobs } = JSON.parse(readFileSync("json/jobs.json", "utf-8"));
+const { items } = JSON.parse(readFileSync("json/store.jsonc", "utf-8"));
+const { jobs } = JSON.parse(readFileSync("json/jobs.jsonc", "utf-8"));
 
 // Export configuration files and instance to be accessed better by commands
 module.exports = {
