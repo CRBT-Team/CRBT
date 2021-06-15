@@ -1,5 +1,5 @@
 module.exports.command = {
-     name: "template",
+    name: "template",
     module: "misc",
     aliases: ["templatealias"],
     description_enUS: "description.",

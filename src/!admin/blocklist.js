@@ -29,7 +29,7 @@ $if[$messageSlice[1]!=]
 $messageSlice[1]
 :yes}
 $endif
-{color:${colors.red}}
+{color:${colors.cyan}}
 ;no]
 
 $setGlobalUserVar[blocklisted;true;$findUser[$message[1];no]]

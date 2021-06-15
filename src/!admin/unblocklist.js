@@ -19,7 +19,7 @@ Unblocklisted from CRBT.
 $reply[$messageID;
 {title:${emojis.general.success} Unblocklist successful}
 {description:<@!$findUser[$message[1];no]> has been unblocklisted.}
-{color:${colors.red}}
+{color:${colors.cyan}}
 ;no]
 
 $setGlobalUserVar[blocklisted;false;$findUser[$message[1];no]]

@@ -5,8 +5,8 @@ const port = process.env.PORT;
 const { links, botinfo } = require("./index");
 const instance = require("./instance");
 
-const files = require("./json/api.json");
-const randomPédiluve = Math.floor(Math.random() * files.pédiluve.length);
+const { pédiluve } = require("./json/api.json");
+const randomPédiluve = Math.floor(Math.random() * pédiluve.length);
 
 app.get("/", function (req, res) {
   res.json({
@@ -38,7 +38,7 @@ app.get("/crbt/stats", function (req, res) {
 });
 app.get("/pediluve", function (req, res) {
   res.json({
-    image: files.pédiluve[randomPédiluve]
+    image: pédiluve[randomPédiluve]
   })
 })
 
