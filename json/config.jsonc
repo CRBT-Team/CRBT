@@ -1,11 +1,9 @@
 {
     "colors": {
-        "crbt": {
-            "cutepinkred": "F27187",
-            "edgypinkred": "4B0920",
-            "devblue": "77AAE3",
-            "devdarkblue": "002754"
-        },
+        "cutepr": "F27187",
+        "edgypr": "4B0920",
+        "devb": "77AAE3",
+        "devdb": "002754",
         "darkred": "C41F3B",
         "red": "FF2A2A",
         "orange": "FF7E31",

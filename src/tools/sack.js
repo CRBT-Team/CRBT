@@ -3,7 +3,7 @@ module.exports.command = {
     module: "tools",
     aliases: ["decide", "random"],
     description_enUS: "Picks something off the sack at random.",
-    usage_enUS: "<values (seperated by commas and/or newlines)>",
+    usage_enUS: "<values (seperated by commas and/or newlines) (2 min)>",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
@@ -12,6 +12,8 @@ $reply[$messageID;
 
 $let[title-enUS;You pulled __$get[random]__ out of the sack.]
 $let[random;$randomText[$joinSplitText[;]]]
+
+$onlyIf[$getTextSplitLength>=2;{execute:args}]
 
 $textSplit[$get[text];$get[key]]
 

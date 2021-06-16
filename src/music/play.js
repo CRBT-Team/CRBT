@@ -8,8 +8,6 @@ module.exports.command = {
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
     botperms: ["connect", "speak"],
     code: `
-$if[$get[condition]==true]
-
 $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
 
 $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]!=true]
@@ -148,15 +146,6 @@ $let[uploaded-enUS;Uploader]
 $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on ${emojis.music.mute} to mute/unmute.]
-
-$else
-$loop[1;samevoice]
-$endif
-
-$if[$voiceID[$clientID]!=]
-$let[condition;$checkCondition[$voiceID[$clientID]==$voiceID]]
-$endif
-$onlyIf[$voiceID!=;{execute:novoice}]
 
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
