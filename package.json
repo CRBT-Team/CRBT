@@ -1,12 +1,14 @@
 {
   "name": "crbt",
   "description": "cool bot project made by clembs",
-  "license": "Private",
+  "private": true,
+  "version": "10",
+  "license": "",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "clembs",
+  "author": "crbt-developers",
   "dependencies": {
     "aoi.js": "^4.0.0",
     "appid": "^1.0.3",
