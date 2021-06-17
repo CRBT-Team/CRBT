@@ -10,6 +10,6 @@ $channelSendMessage[${links.channels.error};
 Platform: \`$platform\`
 Args: \`$message\`
 :yes}
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
     `}

@@ -1,20 +1,36 @@
 {
     "colors": {
-        "cutepr": "F27187",
-        "edgypr": "4B0920",
-        "devb": "77AAE3",
-        "devdb": "002754",
-        "darkred": "C41F3B",
+        "success": "36A548", //"green"
+        "error": "FF2A2A", //"red"
+
+        "black": "000001",
+        "gray": "C8C5C9",
+        "white": "FFFFFE",
+
+        "brown": "A84D32",
+        "darkred": "4B0920",
         "red": "FF2A2A",
+
         "orange": "FF7E31",
         "yellow": "F3D63A",
+
+        "lightgreen": "64E57E",
         "green": "36A548",
+        "darkgreen": "004A1D",
+
         "cyan": "0DC5A0",
+        "lightblue": "77AAE3",
         "blue": "6C95FF",
+        "darkblue": "002754",
+
+        "blurple": "5662F6",
+        "lightpurple": "AE87FF",
         "purple": "6A21FF",
+        "darkpurple": "29007E",
+        
         "pink": "AB90E5",
-        "brown": "A84D32"
-    },
+        "pinkred": "F27187"
+        },
     "emojis": {
         "music": {
             "mute": "<:mute:836285756086812742>",

@@ -7,7 +7,7 @@ $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
 {description:$get[description-$getGlobalUserVar[language]]
 $replaceText[$replaceText[$hasPermsInChannel[$voiceID[$clientID];$authorID;connect];true;$get[true-$getGlobalUserVar[language];false;$get[false-$getGlobalUserVar[language]]}
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
 
 $let[title-enUS;${emojis.general.error} Code 403: Access denied.]

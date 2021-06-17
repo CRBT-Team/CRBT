@@ -11,7 +11,7 @@ module.exports.command = {
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {description:$get[description-$getGlobalUserVar[language]]}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;no]
 
 $useChannel[$get[channel]]

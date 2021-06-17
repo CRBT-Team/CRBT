@@ -10,7 +10,7 @@ $if[$hasPerms[$authorID;admin]==true]
 $else
 {description:$get[description2-$getGlobalUserVar[language]]}
 $endif
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
 
 $let[title-enUS;${emojis.general.error} This command belongs to a currently disabled module.]

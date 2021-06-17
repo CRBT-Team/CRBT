@@ -18,7 +18,7 @@ $messageSlice[1]
 :no}
 $endif
 {footer:You can't reply back to a CRBT message.}
-{color:${colors.red}}
+{color:${colors.error}}
 ]
 
 $reply[$messageID;
@@ -29,7 +29,7 @@ $if[$messageSlice[1]!=]
 $messageSlice[1]
 :yes}
 $endif
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;no]
 
 $setGlobalUserVar[blocklisted;true;$findUser[$message[1];no]]

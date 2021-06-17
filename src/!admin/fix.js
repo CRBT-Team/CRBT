@@ -19,7 +19,7 @@ The bug "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully fixed.
 :no}
 {footer:You can't reply back to a CRBT message.}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ]
 
 $textSplit[$get[footer]; | ]
@@ -31,7 +31,7 @@ $editMessage[$message;
 ${emojis.general.success} Fixed in beta ${botinfo.build}
 :yes}
 {footer:$get[footer]}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;$get[channel]]
 
 $let[reportmessage;$replaceText[$splitText[2];\`;]]

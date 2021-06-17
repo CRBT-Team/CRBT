@@ -9,7 +9,7 @@ $reply[$messageID;
 \`\`\`
 $getServerVar[prefix]$getGlobalUserVar[lastCmd] $commandInfo[$getGlobalUserVar[lastCmd];usage_$getGlobalUserVar[language]]\`\`\`
 :yes}
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
 
 $let[title-enUS;${emojis.general.error} Wrong usage of the command.]
