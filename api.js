@@ -6,7 +6,6 @@ const { links, botinfo } = require("./index");
 const instance = require("./instance");
 
 const { pédiluve } = require("./json/api.json");
-const randomPédiluve = Math.floor(Math.random() * pédiluve.length);
 
 app.get("/", function (req, res) {
   res.json({

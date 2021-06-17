@@ -45,6 +45,7 @@ bot.onGuildJoin() //for the message when the bot joins
 
 // Command handler
 handler: while (i < dir.length) {
+  console.log(i)
   const stat = statSync("./src/" + dir[i]);
 
   if (stat.isDirectory()) {
