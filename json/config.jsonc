@@ -1,7 +1,7 @@
 {
     "colors": {
-        "success": "36A548", //"green"
-        "error": "FF2A2A", //"red"
+        "success": "36A548", 
+        "error": "FF2A2A", 
 
         "black": "000001",
         "gray": "C8C5C9",
