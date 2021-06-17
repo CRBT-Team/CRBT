@@ -36,9 +36,10 @@ app.get("/crbt/stats", function (req, res) {
     commandCount: instance.commandCount,
   });
 });
+
 app.get("/pediluve", function (req, res) {
   res.json({
-    image: pédiluve[randomPédiluve]
+    image: pédiluve[Math.floor(Math.random() * (pédiluve.length - 0 + 1))]
   })
 })
 
