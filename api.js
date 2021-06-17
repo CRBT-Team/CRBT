@@ -6,16 +6,20 @@ const { links, botinfo } = require("./index");
 const instance = require("./instance");
 
 const { pédiluve } = require("./json/api.json");
-const randomPédiluve = Math.floor(Math.random() * pédiluve.length);
 
 app.get("/", function (req, res) {
   res.json({
-    server: links.info.discord,
-    endpoints: {
-      crbt: {
-        method: "GET",
-        description: "Retrieves information on CRBT.",
+    "welcomeMessage": "Welcome to the Clembs API, currently in beta.",
+    "supportServer": links.info.discord,
+    "endpoints": {
+      "crbt": {
+        "method": "GET",
+        "description": "Retrieves info on CRBT & its latest version.",
       },
+      "crbt/stats": {
+        "method": "GET",
+        "description": "Get member count, guild count & command count on CRBT."
+      }
     },
   });
 });
@@ -46,11 +50,11 @@ app.get("/pediluve", function (req, res) {
 app.set("json spaces", 2);
 
 app.listen(port, () => {
-  console.log(`Connected to the Clembs API (Port: 15019)`);
+  if (port === "15019") {
+    console.log(`Connected to the Clembs API (https://api.clembs.xyz)`);
+  } else {
+    console.log(`Connected to the Clembs API (http://localhost:${port})`)
+  };
 }).on("error", () => {
-  app.listen(process.env.PORT, function () {
-    console.log(`Connected to the Clembs API (Port: ${process.env.PORT})`);
-  }).on("error", () => {
-    console.log("Couldn't connect to Clembs API!");
-  });
+  console.log("Couldn't connect to Clembs API!");
 });

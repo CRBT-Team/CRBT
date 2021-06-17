@@ -1,13 +1,10 @@
-const files = require("../../json/api.json");
-const randomPédiluve = Math.floor(Math.random() * files.pédiluve.length);
-
 module.exports.command = {
     name: "pédiluve",
     module: "fun",
     description_enUS: "A random footbath image (secret command).",
     code: `
 $reply[$messageID;
-{image:${files.pédiluve[randomPédiluve]}}
+{image:$jsonRequest[http://localhost:${process.env.port}/pediluve;image]}
 {color:$getGlobalUserVar[color]}
 ;no]
 

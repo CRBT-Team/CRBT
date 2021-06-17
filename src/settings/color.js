@@ -10,7 +10,7 @@ $if[$message==]
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$authorID;64]}
     {description:
-    ${emojis.corec}
+    ${emojis}
     }
     {thumbnail:https://api.alexflipnote.dev/color/image/$getGlobalUserVar[color]}
     ;no]
