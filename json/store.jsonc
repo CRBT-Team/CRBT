@@ -1,149 +1,221 @@
 {
   "items": {
     "banners": {
-      "season1": {
-        "red": {
-          "price": 300,
-          "contents": "/crbt/banners/1/red.png",
-          "description": "A cool red banner",
-          "credits": "Made by Clembs"
-        },
-        "orange": {
-          "price": 300,
-          "contents": "/crbt/banners/1/orange.png",
-          "description": "A cool orange banner",
-          "credits": "Made by Dee Jeh, edited by Clembs"
-        },
-        "yellow": {
-          "price": 300,
-          "contents": "/crbt/banners/1/yellow.png",
-          "description": "A cool orange banner",
-          "credits": "Made by Dee Jeh, edited by Clembs"
-        },
-        "green": {
-          "price": 300,
-          "contents": "/crbt/banners/1/green.png",
-          "description": "A cool green banner",
-          "credits": "Made by Clembs"
-        },
-        "blue": {
-          "price": 300,
-          "contents": "/crbt/banners/1/blue.png",
-          "description": "A cool blue banner",
-          "credits": "Made by Clembs"
-        },
-        "darkBlue": {
-          "price": 300,
-          "contents": "/crbt/banners/1/dark%20blue.png",
-          "description": "A cool dark blue banner",
-          "credits": "Made by Clembs"
-        },
-        "turquoise": {
-          "price": 300,
-          "contents": "/crbt/banners/1/turquoise.png",
-          "description": "A cool turquoise banner",
-          "credits": "Made by delnyn"
-        },
-        "pink": {
-          "price": 300,
-          "contents": "/crbt/banners/1/pink.png",
-          "description": "A cool pink banner",
-          "credits": "Made by Clembs"
-        },
-        "purple": {
-          "price": 300,
-          "contents": "/crbt/banners/1/purple.png",
-          "description": "A cool purple banner",
-          "credits": "Made by Onyxcode"
-        }
+      "christmas2020": {
+        "season": "special",
+        "value": 2500,
+        "contents": "christmas2020.png",
+        "description": "Made for the Christmas 2020 giveaway and originally won by navy#9255",
+        "credits": "Dee Jeh, edited by Clembs"
       },
-      "season2": {
-        "bars": {
-          "price": 250,
-          "contents": "/crbt/banners/2/bars.png",
-          "description": "idk bars",
-          "credits": "Made by navy"
-        },
-        "curve": {
-          "price": 250,
-          "contents": "/crbt/banners/2/curve.png",
-          "description": "the curve that reflects the beauty of... idk",
-          "credits": "Made by Username *"
-        },
-        "minefield": {
-          "price": 250,
-          "contents": "/crbt/banners/2/minefield.png",
-          "description": "actually why is it called minefield there aren't any mines and this is not a field",
-          "credits": "Made by venn2x"
-        },
-        "waves": {
-          "price": 250,
-          "contents": "/crbt/banners/2/waves.png",
-          "description": "yum wavy waves",
-          "credits": "Made by Leap of Azzam"
-        },
-        "sunrise": {
-          "price": 250,
-          "contents": "/crbt/banners/2/sunrise.png",
-          "description": "special mention to the lovers of the sun ☀️",
-          "credits": "Made by Clembs"
-        },
-        "wallpaper": {
-          "price": 250,
-          "contents": "/crbt/banners/2/wallpaper.png",
-          "description": "because this looks like wallpaper",
-          "credits": "Made by Username *"
-        },
-        "sweet": {
-          "price": 250,
-          "contents": "/crbt/banners/2/sweet.png",
-          "description": "yum its so sweet",
-          "credits": "Made by james."
-        }
+      "halloween2020": {
+        "season": "special",
+        "value": 5500,
+        "contents": "halloween2020.png",
+        "description": "Made for the Halloween 2020 giveaway, features CRBT's original design and was won by Username *#5522",
+        "credits": "Clembs"
+      },
+      "summer2021" : {
+        "season": "special",
+        "value": 12000,
+        "contents": "summer2021.png",
+        "description": "A decomposition of CRBT's new facial features, made as a prize for July 2nd's CRBT fan-art contest.",
+        "credits": "CRBT Design Team"
+      },
+      "red": {
+        "season": 1,
+        "value": 300,
+        "contents": "red.png",
+        "description": "A cool red banner",
+        "credits": "Clembs"
+      },
+      "green": {
+        "season": 1,
+        "value": 300,
+        "contents": "green.png",
+        "description": "A cool green banner",
+        "credits": "Clembs"
+      },
+      "blue": {
+        "season": 1,
+        "value": 300,
+        "contents": "blue.png",
+        "description": "A cool blue banner",
+        "credits": "Clembs"
+      },
+      "darkBlue": {
+        "season": 1,
+        "value": 300,
+        "contents": "dark%20blue.png",
+        "description": "A cool dark blue banner",
+        "credits": "Clembs"
+      },
+      "turquoise": {
+        "season": 1,
+        "value": 300,
+        "contents": "turquoise.png",
+        "description": "A cool turquoise banner",
+        "credits": "delnyn"
+      },
+      "pink": {
+        "season": 1,
+        "value": 300,
+        "contents": "pink.png",
+        "description": "A cool pink banner",
+        "credits": "Clembs"
+      },
+      "purple": {
+        "season": 1,
+        "value": 300,
+        "contents": "purple.png",
+        "description": "A cool purple banner",
+        "credits": "Onyxcode"
+      },
+      "bars": {
+        "season": 2,
+        "value": 250,
+        "contents": "bars.png",
+        "description": "idk bars",
+        "credits": "navy"
+      },
+      "curve": {
+        "season": 2,
+        "value": 250,
+        "contents": "curve.png",
+        "description": "the curve that reflects the beauty of... idk",
+        "credits": "Username *"
+      },
+      "minefield": {
+        "season": 2,
+        "value": 250,
+        "contents": "minefield.png",
+        "description": "actually why is it called minefield there aren't any mines and this is not a field",
+        "credits": "venn2x"
+      },
+      "waves": {
+        "season": 2,
+        "value": 250,
+        "contents": "waves.png",
+        "description": "yum wavy waves",
+        "credits": "Leap of Azzam"
+      },
+      "sunrise": {
+        "season": 2,
+        "value": 250,
+        "contents": "sunrise.png",
+        "description": "special mention to the lovers of the sun ☀️",
+        "credits": "Clembs"
+      },
+      "wallpaper": {
+        "season": 2,
+        "value": 250,
+        "contents": "wallpaper.png",
+        "description": "because this looks like wallpaper",
+        "credits": "Username *"
+      },
+      "sweet": {
+        "season": 2,
+        "value": 250,
+        "contents": "sweet.png",
+        "description": "yum its so sweet",
+        "credits": "james."
+      },
+      "flower": {
+        "season": 3,
+        "value": 300,
+        "contents": "flower.png",
+        "description": "A sort of translucent flower on a very spring-like background.",
+        "credits": "Clembs"
+      },
+      "cake": {
+        "season": 3,
+        "value": 400,
+        "contents": "cake.png",
+        "description": "Who doesn't like a piece of cake?",
+        "credits": "Addy Visuals"
+      },
+      "mountain": {
+        "season": 3,
+        "value": 250,
+        "contents": "mountain.png",
+        "description": "a mountain",
+        "credits": "Clembs"
+      },
+      "stripes": {
+        "season": 3,
+        "value": 500,
+        "contents": "stripes.png",
+        "description": "Aligned stripes made of some cool material",
+        "credits": "CRBT Design Team"
+      },
+      "blood": {
+        "season": 3,
+        "value": 300,
+        "contents": "blood.png",
+        "description": "What would blood look as a banner? It'd look pretty cool, we think",
+        "credits": "CRBT Design Team"
+      },
+      "space": {
+        "season": 3,
+        "value": 400,
+        "contents": "space.png",
+        "description": "The deep navy blue sky with a white stripe on top reflecting the space we live in",
+        "credits": "bkly"
+      },
+      "road": {
+        "season": 3,
+        "value": 400,
+        "contents": "road.png",
+        "description": "The road we take, surrounded by some creepy stuff...",
+        "credits": "Username *"
+
       }
     },
     "badges": {
-      "flags": {
-        "russian": {
-          "price": 150,
-          "contents": ":flag_ru:"
-        },
-        "french": {
-          "price": 150,
-          "contents": ":flag_fr:"
-        },
-        "usa": {
-          "price": 150,
-          "contents": ":flag_us:"
-        },
-        "brazil": {
-          "price": 170,
-          "contents": ":flag_br:"
-        },
-        "poland": {
-          "price": 150,
-          "contents": ":flag_pl:"
-        }
+      "russian": {
+        "type": "flags",
+        "value": 150,
+        "contents": ":flag_ru:"
       },
-      "familiarFaces": {
-        "goodmeal": {
-          "price": 1000,
-          "contents": "<:good_meal:768948885162295326>"
-        },
-        "dollidot": {
-          "price": 420,
-          "contents": "<:dollidot:730074523277197333>"
-        },
-        "udu": {
-          "price": 300,
-          "contents": "<:udu:800716716627853332>"
-        }
+      "french": {
+        "type": "flags",
+        "value": 150,
+        "contents": ":flag_fr:"
       },
-      "jobs": {
-        "developer": {
-          "price": 150,
-          "contents": ":technologist:"
-        }
+      "usa": {
+        "type": "flags",
+        "value": 150,
+        "contents": ":flag_us:"
+      },
+      "brazil": {
+        "type": "flags",
+        "value": 170,
+        "contents": ":flag_br:"
+      },
+      "poland": {
+        "type": "flags",
+        "value": 150,
+        "contents": ":flag_pl:"
+      },
+      "goodmeal": {
+        "type": "familiar faces",
+        "value": 1000,
+        "contents": "<:good_meal:768948885162295326>"
+      },
+      "dollidot": {
+        "type": "familiar faces",
+        "value": 420,
+        "contents": "<:dollidot:730074523277197333>"
+      },
+      "udu": {
+        "type": "familiar faces",
+        "value": 300,
+        "contents": "<:udu:800716716627853332>"
+      },
+      "developer": {
+        "type": "jobs",
+        "value": 150,
+        "contents": ":technologist:"
       }
     }
   }

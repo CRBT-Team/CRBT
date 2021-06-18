@@ -81,7 +81,7 @@ $if[$voiceID[$clientID]!=$voiceID]
     $let[songName;$playSong[$message;5m;yes;yes;{execute:addqueue}]]
   $endif
 
-  $wait[250ms]
+  $wait[600ms]
 
   $editMessage[$get[id];
   {title:$get[step1Title-$getGlobalUserVar[language]]}
