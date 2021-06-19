@@ -7,7 +7,7 @@ module.exports.variables = {
     r34Query: "", //last query for ()rule34
     webhook_token: "", webhook_id: "", //channel var for every channel
     volume: 50, //default volume so we dont break our ears
-    color: `${colors.devb}`, //default border color
+    color: `${colors.lightred}`, //default border color
     lastCmd: "", //last command to get exported to awaited cmd
     avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
     language: "enUS", //default language
