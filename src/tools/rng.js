@@ -26,6 +26,10 @@ $if[$argsCount==2]
     $endif
     $endif
 
+    $if[$message[1]==$message[2]]
+    {title:= $message[2]}
+    $endif
+
 $onlyIf[$isNumber[$message[2]]==true;{execute:args}]
 $onlyIf[$isNumber[$message[1]]==true;{execute:args}]
 

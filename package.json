@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "ffmpeg-static": "^4.3.0",
     "fs-extra": "^9.1.0",
+    "node-fetch": "^2.6.1",
     "request-image-size": "^2.2.0",
     "text-reverse": "^1.0.0",
     "yt-search": "^2.8.0",
