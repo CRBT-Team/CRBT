@@ -6,7 +6,7 @@ module.exports.awaitedCommand = {
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
 {description:$get[description-$getGlobalUserVar[language]]} 
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
 
 $let[title-enUS;${emojis.general.error} Getting a lil' excited, aren't we?]

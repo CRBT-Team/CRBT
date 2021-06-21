@@ -1,15 +1,18 @@
 {
   "name": "crbt",
   "description": "cool bot project made by clembs",
-  "license": "Private",
+  "private": true,
+  "version": "10",
+  "license": "",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "clembs",
+  "author": "crbt-developers",
   "dependencies": {
     "aoi.js": "^4.0.0",
     "appid": "^1.0.3",
+    "color-string": "^1.5.5",
     "dbd.js-utils": "^0.1.1",
     "discord-buttons": "^3.1.1",
     "discord-reply": "^0.1.2",
@@ -20,6 +23,7 @@
     "express": "^4.17.1",
     "ffmpeg-static": "^4.3.0",
     "fs-extra": "^9.1.0",
+    "node-fetch": "^2.6.1",
     "request-image-size": "^2.2.0",
     "text-reverse": "^1.0.0",
     "yt-search": "^2.8.0",

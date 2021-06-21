@@ -16,7 +16,7 @@ $reply[$messageID;
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today];false;$get[date]]] at $get[hour] GMT • In $getObjectProperty[durationdone]
 }
 {footer:$get[protip-$getGlobalUserVar[language]]}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;no]
 
 $setGlobalUserVar[active_reminders;$getGlobalUserVar[active_reminders]
@@ -41,7 +41,7 @@ $reply[$messageID;
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today];false;$get[date]]] at $get[hour] GMT • In $getObjectProperty[durationdone]
 }
 {footer:$get[protip-$getGlobalUserVar[language]]}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;no]
 
 $setGlobalUserVar[active_reminders;$getGlobalUserVar[active_reminders]

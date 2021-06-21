@@ -22,7 +22,7 @@ $replaceText[$toLocaleUppercase[$get[title]];Report;report] "[$cropText[$replace
 $messageSlice[1]
 :no}
 {footer:You can't reply back to a CRBT message.}
-{color:${colors.red}}
+{color:${colors.error}}
 ]
 
 $textSplit[$get[footer]; | ]
@@ -37,7 +37,7 @@ ${emojis.general.error} Won't be added
 $messageSlice[1]
 :no}
 {footer:$get[footer]}
-{color:${colors.red}}
+{color:${colors.error}}
 ;$get[channel]]
 
 $let[title;$getEmbed[$get[channel];$message[1];title]]

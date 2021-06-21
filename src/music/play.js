@@ -8,8 +8,6 @@ module.exports.command = {
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
     botperms: ["connect", "speak"],
     code: `
-$if[$get[condition]==true]
-
 $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
 
 $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]!=true]
@@ -54,17 +52,6 @@ $wait[$get[delay]]
 
 $if[$voiceID[$clientID]!=$voiceID]
 
-  $editMessage[$get[id];
-  {title:$get[message]}
-  {color:$getGlobalUserVar[color]}
-  ;$channelID]
-
-  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
-    $let[message;$get[list-$getGlobalUserVar[language]]]
-  $else
-    $let[message;$get[step2-$getGlobalUserVar[language]]]
-  $endif
-
   $volume[$getServerVar[volume]]
 
   $if[$checkContains[$message;soundcloud.com]==true]
@@ -83,7 +70,18 @@ $if[$voiceID[$clientID]!=$voiceID]
     $let[songName;$playSong[$message;5m;yes;yes;{execute:addqueue}]]
   $endif
 
-  $wait[250ms]
+  $editMessage[$get[id];
+  {title:$get[message]}
+  {color:$getGlobalUserVar[color]}
+  ;$channelID]
+
+  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
+    $let[message;$get[list-$getGlobalUserVar[language]]]
+  $else
+    $let[message;$get[step2-$getGlobalUserVar[language]]]
+  $endif
+
+  $wait[600ms]
 
   $editMessage[$get[id];
   {title:$get[step1Title-$getGlobalUserVar[language]]}
@@ -148,15 +146,6 @@ $let[uploaded-enUS;Uploader]
 $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on ${emojis.music.mute} to mute/unmute.]
-
-$else
-$loop[1;samevoice]
-$endif
-
-$if[$voiceID[$clientID]!=]
-$let[condition;$checkCondition[$voiceID[$clientID]==$voiceID]]
-$endif
-$onlyIf[$voiceID!=;{execute:novoice}]
 
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

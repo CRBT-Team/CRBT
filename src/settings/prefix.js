@@ -15,7 +15,7 @@ $if[$message!=]
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {description:$get[description-$getGlobalUserVar[language]]}
-    {color:${colors.cyan}}
+    {color:${colors.success}}
     ;no]
 
     $let[title-enUS;${emojis.general.success} Changed prefix on $serverName]

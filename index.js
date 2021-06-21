@@ -10,6 +10,7 @@ const { colors, emojis, links, tokens, botinfo, illustrations } = JSON.parse(
 );
 const { items } = JSON.parse(readFileSync("json/store.jsonc", "utf-8"));
 const { jobs } = JSON.parse(readFileSync("json/jobs.jsonc", "utf-8"));
+const { api } = JSON.parse(readFileSync("json/api.json", "utf-8"));
 
 // Export configuration files and instance to be accessed better by commands
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
   items,
   illustrations,
   instance,
+  api,
 };
 
 // Command handler variables

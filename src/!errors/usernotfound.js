@@ -12,7 +12,7 @@ $else
 $get[description2-$getGlobalUserVar[language]]
 $endif
 }
-{color:${colors.red}}
+{color:${colors.error}}
 ;no]
 
 $let[title-enUS;${emojis.general.error} Couldn't find this user.]

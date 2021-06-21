@@ -13,13 +13,13 @@ Learn more about official CRBT messages [here](${links.info.messages}).}
 Unblocklisted from CRBT.
 :no}
 {footer:You can't reply back to a CRBT message.}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ]
 
 $reply[$messageID;
 {title:${emojis.general.success} Unblocklist successful}
 {description:<@!$findUser[$message[1];no]> has been unblocklisted.}
-{color:${colors.cyan}}
+{color:${colors.success}}
 ;no]
 
 $setGlobalUserVar[blocklisted;false;$findUser[$message[1];no]]
