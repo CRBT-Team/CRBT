@@ -14,27 +14,20 @@ $getObjectProperty[e.phonetics[0].text]
 $getObjectProperty[b.definition]
 :no}
 
-$if[$get[example]!=]
+{field:Example:
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[b.example]==];false;$replaceText[$getObjectProperty[b.example]; $getObjectProperty[e.word]; **$getObjectProperty[e.word]**]];true;*None*]
+:no}
 
-  {field:Example:
-  $replaceText[$getObjectProperty[b.example]; $getObjectProperty[e.word]; **$getObjectProperty[e.word]**]
-  :no}
-
-$endif
-
-$if[$get[synonyms]!=]
-
-  {field:Synonyms:
-  $replaceText[$getObjectProperty[b.synonyms];,;, ]
-  :yes}
-
-$endif
+{field:Synonyms:
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[b.synonyms]==];false;$replaceText[$getObjectProperty[b.synonyms];,;, ]];true;*None*]
+:yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[example;$getObjectProperty[b.example]]
-$let[synonyms;$getObjectProperty[b.synonyms]]
+$createFile[$getObject;object.json]
+
+$onlyIf[$getObjectProperty[y]!=yoo;not found]
 
 $djsEval[
 const fetch = require("node-fetch");
@@ -44,6 +37,9 @@ fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + "$getObjectPropert
   .then((res) => {
     d.object.e = res[0];
     d.object.b = res[0].meanings[0].definitions[0];
+  })
+  .on("error", () => {
+    d.object.y = "yoo"
   });]
   
 $createObject[{"message": "$message"}]

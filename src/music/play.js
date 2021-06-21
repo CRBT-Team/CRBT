@@ -52,17 +52,6 @@ $wait[$get[delay]]
 
 $if[$voiceID[$clientID]!=$voiceID]
 
-  $editMessage[$get[id];
-  {title:$get[message]}
-  {color:$getGlobalUserVar[color]}
-  ;$channelID]
-
-  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
-    $let[message;$get[list-$getGlobalUserVar[language]]]
-  $else
-    $let[message;$get[step2-$getGlobalUserVar[language]]]
-  $endif
-
   $volume[$getServerVar[volume]]
 
   $if[$checkContains[$message;soundcloud.com]==true]
@@ -79,6 +68,17 @@ $if[$voiceID[$clientID]!=$voiceID]
   $else
     $let[delay;250ms]
     $let[songName;$playSong[$message;5m;yes;yes;{execute:addqueue}]]
+  $endif
+
+  $editMessage[$get[id];
+  {title:$get[message]}
+  {color:$getGlobalUserVar[color]}
+  ;$channelID]
+
+  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
+    $let[message;$get[list-$getGlobalUserVar[language]]]
+  $else
+    $let[message;$get[step2-$getGlobalUserVar[language]]]
   $endif
 
   $wait[600ms]
