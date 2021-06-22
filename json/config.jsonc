@@ -47,7 +47,7 @@
         "general": {
             "error": "<:cross:836285755571175425>",
             "success": "<:success:855441233057153076>",
-            "purplet": "<:NewPurplet:853309241720569866>",
+            "purplet": "<:Purplet:853309241720569866>",
             "toggleon": "<:toggleon:836285755822309376>",
             "toggleoff": "<:toggleoff:836285755897806848>",
             "forcedoff": "<:toggleforcedoff:836285755869102170>",
@@ -120,7 +120,7 @@
     "links": {
         "privacypolicy": "https://crbt.ga/privacy",
         "baseURL": "https://crbt.ga/",
-        "banners": "https://crbt.ga/",
+        "banners": "https://crbt.ga/banners/",
         "invite": "https://crbt.ga/invite",
         "vote": {
             "topgg": "https://top.gg/bot/595731552709771264/vote"

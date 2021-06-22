@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../index");
+const { emojis, colors, illustrations } = require("../../index");
 
 module.exports.command = {
     name: "prefix",
@@ -27,7 +27,7 @@ $if[$message!=]
 $else
 
     $reply[$messageID;
-    {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
+    {author:$get[title-$getGlobalUserVar[language]]:${illustrations.settings}}
     $if[$hasPerms[$authorID;manageserver]==false]
     {description:$get[description-$getGlobalUserVar[language]]}
     $else
@@ -36,7 +36,7 @@ $else
     {color:$getGlobalUserVar[color]}
     ;no]
 
-    $let[title-enUS;$username[$clientID] - Prefix]
+    $let[title-enUS;CRBT Settings - Prefix]
     $let[description-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf that prefix is too complex, you can always use <@!$clientID> as a prefix instead.]
     $let[descriptionAdmin-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf you don't like this one, you can instead use <@!$clientID> or change it using \`@$username[$clientID] prefix <new prefix>\`.]
 

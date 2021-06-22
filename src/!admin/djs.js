@@ -1,6 +1,3 @@
-const webhook_id = "$getChannelVar[webhook_id]";
-const webhook_token = "$getChannelVar[webhook_token]";
-
 module.exports.command = {
     name: "djseval",
     aliases: ["djs", "js"],
@@ -12,7 +9,7 @@ const emojiUnicode = require("emoji-unicode")
 const webhook_id = "$getChannelVar[webhook_id]"
 const webhook_token = "$getChannelVar[webhook_token]"
 const { Webhook } = require('discord-webhook-node');
-const hook = new Webhook('https://discord.com/api/webhooks/${webhook_id}/${webhook_token}');
+const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + webhook_token);
 const { colors, emojis, jobs, links, tokens, botinfo, items, instance } = require("../../../../../index")
 $replaceText[$replaceText[$replaceText[$message;\`\`\`js;];\`\`\`;];console.log(;channel.send("Console: " + ]]
 $addCmdReactions[🏳️]

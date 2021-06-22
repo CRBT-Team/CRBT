@@ -172,12 +172,12 @@
       }
     },
     "badges": {
-      "russian": {
+      "russia": {
         "type": "flags",
         "value": 150,
         "contents": ":flag_ru:"
       },
-      "french": {
+      "france": {
         "type": "flags",
         "value": 150,
         "contents": ":flag_fr:"
@@ -200,12 +200,13 @@
       "goodmeal": {
         "type": "familiar faces",
         "value": 1000,
-        "contents": "<:good_meal:768948885162295326>"
+        "contents": "<:good_meal:750034917743919256>"
       },
       "dollidot": {
         "type": "familiar faces",
         "value": 420,
-        "contents": "<:dollidot:730074523277197333>"
+        "contents": "<:dollidot:730074523277197333>",
+        "inStore": false
       },
       "udu": {
         "type": "familiar faces",
@@ -216,6 +217,18 @@
         "type": "jobs",
         "value": 150,
         "contents": ":technologist:"
+      },
+      "partner": {
+        "type": "special",
+        "value": 0,
+        "contents": "<:CRBTPartner:856815843127853086>",
+        "inStore": false
+      },
+      "purplet": {
+        "type": "special",
+        "value": 0,
+        "contents": "<:Purplet:853309241720569866>",
+        "inStore": false
       }
     }
   }
