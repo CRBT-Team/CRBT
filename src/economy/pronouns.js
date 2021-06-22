@@ -37,7 +37,7 @@ $endif
 
 $textSplit[$replaceText[$toLowercase[$message]; ;];/]
 
-$onlyIf[$checkContains[$toLowercase[$replaceText[$message; ;]];he/him;she/her;they/them;any;other;ask;username;unspecified]==true;{execute:invalidPronoun}]
+$onlyIf[$checkContains[$toLowercase[$replaceText[$message; ;]];he/him;she/her;they/them;any;other;ask;username;unspecified]==true;{execute:args}]
 
 $argsCheck[>1;{execute:args}]
 
