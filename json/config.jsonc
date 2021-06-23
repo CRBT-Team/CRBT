@@ -164,6 +164,14 @@
         "welcome": "https://clembs.xyz/media/placeholder-image.png",
         "barrelRoll": "https://clembs.xyz/media/placeholder-image.png",
         "settings": "https://cdn.discordapp.com/attachments/843530687780749340/855504701848027166/Settings.png",
-        "invite": "https://clembs.xyz/media/placeholder-image.png"
+        "invite": "https://clembs.xyz/media/placeholder-image.png",
+        "newCRBT": ""
+    },
+    "logos": {
+        "CRBT": "https://crbt.ga/assets/logos/crbt.png",
+        "CRBTold": "https://crbt.ga/assets/logos/crbt-old.png",
+        "CRBTsmall": "https://crbt.ga/assets/logos/crbt-small.png",
+        "CRBTdev": "https://crbt.ga/assets/logos/crbt-dev.png",
+        "CRBTchat": "https://crbt.ga/assets/logos/crbt-chat.png"
     }
 }
