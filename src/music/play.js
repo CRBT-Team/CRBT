@@ -56,18 +56,18 @@ $if[$voiceID[$clientID]!=$voiceID]
 
   $if[$checkContains[$message;soundcloud.com]==true]
     $let[delay;500ms]
-    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
   $elseIf[$checkContains[$message;open.spotify.com]==true]
     $let[delay;1500ms]
-    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addqueue}]]
+    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
     $endelseIf
   $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
   $let[delay;250ms]
-    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
     $endelseIf
   $else
     $let[delay;250ms]
-    $let[songName;$playSong[$message;5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
   $endif
 
   $editMessage[$get[id];
@@ -117,18 +117,18 @@ $let[id;$botLastMessageID]
 
   $if[$checkContains[$message;soundcloud.com]==true]
     $let[delay;1000ms]
-    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
   $elseIf[$checkContains[$message;open.spotify.com]==true]
     $let[delay;2000ms]
-    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addqueue}]]
+    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
     $endelseIf
   $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
   $let[delay;250ms]
-    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
     $endelseIf
   $else
     $let[delay;250ms]
-    $let[songName;$playSong[$message;5m;yes;yes;{execute:addqueue}]]
+    $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
   $endif
 
 $endif
@@ -153,4 +153,5 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$guildID!=]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $endif
+$onlyIf[$guildID!=;{execute:guildOnly}]
     `}

@@ -2,12 +2,13 @@ const { emojis } = require("../../index");
 module.exports.command = {
     name: "leaderboard",
     module: "economy",
+    aliases: ["lb", "lead"],
     code: `
 $reply[$messageID;
 {title:Purplets global leaderboard}
 
 {description:
-$globalUserLeaderboard[user_bank;;**{top}.** {username} - ${emojis.general.purplet} {value} Purplets]
+$globalUserLeaderboard[user_bank;asc;**{top}.** {username} - {value} Purplets;yes;1]
 }
 
 {field:Your position:

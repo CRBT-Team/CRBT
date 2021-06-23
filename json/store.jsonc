@@ -43,7 +43,7 @@
         "description": "A cool blue banner",
         "credits": "Clembs"
       },
-      "darkBlue": {
+      "darkblue": {
         "season": 1,
         "value": 300,
         "contents": "dark%20blue.png",
@@ -173,58 +173,69 @@
     },
     "badges": {
       "russia": {
+        "name": "Russian flag",
         "type": "flags",
         "value": 150,
         "contents": ":flag_ru:"
       },
       "france": {
+        "name": "French flag",
         "type": "flags",
         "value": 150,
         "contents": ":flag_fr:"
       },
       "usa": {
+        "name": "American flag",
         "type": "flags",
         "value": 150,
         "contents": ":flag_us:"
       },
       "brazil": {
+        "name": "Brazilian flag",
         "type": "flags",
         "value": 170,
         "contents": ":flag_br:"
       },
       "poland": {
+        "name": "Polish flag",
         "type": "flags",
         "value": 150,
         "contents": ":flag_pl:"
       },
       "goodmeal": {
+        "name": "Good meal",
         "type": "familiar faces",
         "value": 1000,
         "contents": "<:good_meal:750034917743919256>"
       },
       "dollidot": {
+        "name": "Dollidot",
         "type": "familiar faces",
         "value": 420,
         "contents": "<:dollidot:730074523277197333>",
         "inStore": false
       },
       "udu": {
+        "name": "udu",
         "type": "familiar faces",
         "value": 300,
         "contents": "<:udu:800716716627853332>"
       },
       "developer": {
+        "name": "Developer",
         "type": "jobs",
         "value": 150,
         "contents": ":technologist:"
       },
       "partner": {
+        "name": "CRBT Partner",
         "type": "special",
         "value": 0,
         "contents": "<:CRBTPartner:856815843127853086>",
         "inStore": false
       },
       "purplet": {
+        "name": "Purplet",
         "type": "special",
         "value": 0,
         "contents": "<:Purplet:853309241720569866>",

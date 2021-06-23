@@ -1,4 +1,4 @@
-const { links, emojis, colors } = require("../../index");
+const { links, emojis, colors } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "addQueue",
