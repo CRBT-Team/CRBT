@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../index");
+const { emojis, colors } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "cooldown",

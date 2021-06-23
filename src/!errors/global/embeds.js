@@ -1,4 +1,4 @@
-const { emojis, links } = require("../../index");
+const { emojis, links } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "embeds",

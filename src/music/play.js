@@ -153,4 +153,5 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$guildID!=]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $endif
+$onlyIf[$guildID!=;{execute:guildOnly}]
     `}
