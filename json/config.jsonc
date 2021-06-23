@@ -115,6 +115,10 @@
             "purple": "<:purple:855498310386188288>",
             "darkpurple": "<:darkpurple:855496838173818930>",
             "pink": "<:pink:855497471727763486>"
+        },
+        "store": {
+            "badges": "<:badges:857341071309930568>",
+            "banners": "<:banners:857340872944517120>"
         }
     },
     "links": {
@@ -165,7 +169,9 @@
         "barrelRoll": "https://clembs.xyz/media/placeholder-image.png",
         "settings": "https://cdn.discordapp.com/attachments/843530687780749340/855504701848027166/Settings.png",
         "invite": "https://clembs.xyz/media/placeholder-image.png",
-        "newCRBT": ""
+        "newCRBT": "",
+        "badges": "https://cdn.discordapp.com/attachments/843148633687588945/857341037931790376/unknown.png",
+        "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png"
     },
     "logos": {
         "CRBT": "https://crbt.ga/assets/logos/crbt.png",
