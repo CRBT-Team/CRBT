@@ -10,7 +10,7 @@ module.exports.variables = {
     module_utility: true,
     module_tools: true,
     module_info: true,
-    module_music: true,
+    module_music: false,
     module_radios: true,
     module_settings: true,
     module_moderation: true,

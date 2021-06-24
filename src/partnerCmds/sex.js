@@ -2,8 +2,8 @@ module.exports.command = {
     name: "sex",
     description_enUS: "the sex command <:dorime:672820709436686355>",
     module: "partnerCmd",
-    cooldown: "1s",
-    server: "782584672298729473",
+    cooldown: "5m",
+    server: "567091546684653590",
     code: `
 $setGlobalUserVar[sexlogs;<@!$randomUserID>$getGlobalUserVar[sexlogs]]
 
@@ -24,7 +24,7 @@ $replaceText[$replaceText[$checkCondition[$splitText[1]==];false;$splitText[1]>]
 $replaceText[$replaceText[$checkCondition[$splitText[2]==];false;$splitText[2]>];true;]
 $replaceText[$replaceText[$checkCondition[$splitText[3]==];false;$splitText[3]>];true;]
 $replaceText[$replaceText[$checkCondition[$splitText[4]==];false;$splitText[4]>];true;]
-$replaceText[$replaceText[$checkCondition[$splitText[5]==];false;And $sub[$get[sexcount];5] other(s) people...];true;]
+$replaceText[$replaceText[$checkCondition[$splitText[5]==];false;And $sub[$get[sexcount];5] other(s)...];true;]
 :no}
 
 {color:$getGlobalUserVar[color]}

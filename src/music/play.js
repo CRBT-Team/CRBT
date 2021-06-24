@@ -52,84 +52,84 @@ $wait[$get[delay]]
 
 $if[$voiceID[$clientID]!=$voiceID]
 
-  $volume[$getServerVar[volume]]
+    $volume[$getServerVar[volume]]
 
-  $if[$checkContains[$message;soundcloud.com]==true]
-    $let[delay;500ms]
-    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
-  $elseIf[$checkContains[$message;open.spotify.com]==true]
-    $let[delay;1500ms]
-    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
-    $endelseIf
-  $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
-  $let[delay;250ms]
-    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
-    $endelseIf
-  $else
+    $if[$checkContains[$message;soundcloud.com]==true]
+        $let[delay;500ms]
+        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
+    $elseIf[$checkContains[$message;open.spotify.com]==true]
+        $let[delay;1500ms]
+        $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
+        $endelseIf
+    $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
     $let[delay;250ms]
-    $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
-  $endif
+        $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
+        $endelseIf
+    $else
+        $let[delay;250ms]
+        $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
+    $endif
 
-  $editMessage[$get[id];
-  {title:$get[message]}
-  {color:$getGlobalUserVar[color]}
-  ;$channelID]
+    $editMessage[$get[id];
+    {title:$get[message]}
+    {color:$getGlobalUserVar[color]}
+    ;$channelID]
 
-  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
-    $let[message;$get[list-$getGlobalUserVar[language]]]
-  $else
-    $let[message;$get[step2-$getGlobalUserVar[language]]]
-  $endif
+    $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
+        $let[message;$get[list-$getGlobalUserVar[language]]]
+    $else
+        $let[message;$get[step2-$getGlobalUserVar[language]]]
+    $endif
 
-  $wait[600ms]
+    $wait[600ms]
 
-  $editMessage[$get[id];
-  {title:$get[step1Title-$getGlobalUserVar[language]]}
-  {description:$get[step1-$getGlobalUserVar[language]]}
-  {color:$getGlobalUserVar[color]}
-  ;$channelID]
+    $editMessage[$get[id];
+    {title:$get[step1Title-$getGlobalUserVar[language]]}
+    {description:$get[step1-$getGlobalUserVar[language]]}
+    {color:$getGlobalUserVar[color]}
+    ;$channelID]
 
-  $joinVC[$voiceID]
+    $joinVC[$voiceID]
 
-  $wait[250ms]
+    $wait[250ms]
 
-  $let[id;$botLastMessageID]
+    $let[id;$botLastMessageID]
 
-  $reply[$messageID;
-  {title:$get[title-$getGlobalUserVar[language]]}
-  {color:$getGlobalUserVar[color]}
-  ;no]
+    $reply[$messageID;
+    {title:$get[title-$getGlobalUserVar[language]]}
+    {color:$getGlobalUserVar[color]}
+    ;no]
 
 $else
 
-$let[id;$botLastMessageID]
+    $let[id;$botLastMessageID]
 
-  $reply[$messageID;
-  {title:$get[message]}
-  {color:$getGlobalUserVar[color]}
-  ;no]
+    $reply[$messageID;
+    {title:$get[message]}
+    {color:$getGlobalUserVar[color]}
+    ;no]
 
-  $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
-    $let[message;$get[list-$getGlobalUserVar[language]]]
-  $else
-    $let[message;$get[step2-$getGlobalUserVar[language]]]
-  $endif
+    $if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]==true]
+        $let[message;$get[list-$getGlobalUserVar[language]]]
+    $else
+        $let[message;$get[step2-$getGlobalUserVar[language]]]
+    $endif
 
-  $if[$checkContains[$message;soundcloud.com]==true]
-    $let[delay;1000ms]
-    $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
-  $elseIf[$checkContains[$message;open.spotify.com]==true]
-    $let[delay;2000ms]
-    $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
-    $endelseIf
-  $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
-  $let[delay;250ms]
-    $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
-    $endelseIf
-  $else
+    $if[$checkContains[$message;soundcloud.com]==true]
+        $let[delay;1000ms]
+        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
+    $elseIf[$checkContains[$message;open.spotify.com]==true]
+        $let[delay;2000ms]
+        $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
+        $endelseIf
+    $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
     $let[delay;250ms]
-    $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
-  $endif
+        $let[songName;$playSong[$replaceText[$replaceText[$message;<http;http];>;];5m;yes;yes;{execute:addQueue}]]
+        $endelseIf
+    $else
+        $let[delay;250ms]
+        $let[songName;$playSong[$message;5m;yes;yes;{execute:addQueue}]]
+    $endif
 
 $endif
 
