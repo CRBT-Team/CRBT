@@ -1,7 +1,7 @@
 const {} = require("../../index");
 
 module.exports.command = {
-    name: "dbdjs",
+    name: "aoijs",
     aliases: ["aoi", "dbdjs", "dbd"],
     module: "info",
     description_enUS: "Gives a description and a usage example for a given Aoi.js function.",
