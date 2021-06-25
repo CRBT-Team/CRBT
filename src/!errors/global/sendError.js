@@ -1,4 +1,4 @@
-const { links, colors } = require("../../index");
+const { links, colors } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "sendError",

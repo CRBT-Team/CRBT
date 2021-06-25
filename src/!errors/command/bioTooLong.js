@@ -1,4 +1,4 @@
-const { colors, emojis } = require("../../index");
+const { colors, emojis } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "bioTooLong",

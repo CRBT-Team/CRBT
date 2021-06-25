@@ -2,13 +2,14 @@ const { links, items } = require("../../index");
 const badges = items.badges;
 
 module.exports.command = {
-    name: "profile",
-    aliases: ['userprofile', 'up','uspro', 'user_profile', 'user-profile'],
+    name: "preview",
+    aliases: ["previewbanner", "banner-preview"],
     module: "economy",
-    usage_enUS: "<user ID | username | @mention (optional)>",
-    description_enUS: "Retrieves your CRBT profile (badges, bio, banner, etc...), or a specified user's (if any).",
+    usage_enUS: "<banner name (e.g. banner sweet, banner blue)>",
+    description: "Shows your profile with a chosen banner without having to buy it.",
     code: `
     $reply[$messageID;
+    {author:$get[title-$getGlobalUserVar[language]]}
     {title:$get[profileName]}
     {description:$get[profileBio]}
     
@@ -23,6 +24,7 @@ module.exports.command = {
     {color:$getGlobalUserVar[color;$get[id]]}
     ;no]
 
+    $let[title-enUS;Previewing banner $replaceText[$toLowercase[$message];banner ;]]
     $let[badges-enUS;Badges ($get[e])]
     $let[pronouns-enUS;Pronouns:$get[profilePronouns]]
 
@@ -40,30 +42,22 @@ $let[noBio-enUS;$replaceText[$replaceText[$checkCondition[$get[id]==$authorID];t
 
 $let[banner;${links.banners}$getObjectProperty[banners.$get[a].season]/$getObjectProperty[banners.$get[a].contents]]
 
+$onlyIf[$getObjectProperty[banners.$get[a]]!=;{execute:unknownItem}]
+
+$let[a;$replaceText[$replaceText[$toLowercase[$message];banner;]; ;]]
+
 $djsEval[const { items, links } = require("../../../../../index");
 d.object.banners = items.banners;]
 
-$let[a;$replaceText[$replaceText[$getGlobalUserVar[profile_banner;$get[id]];<banner ;];>;]]
+$let[id;$authorID]
 
-$if[$message==]
-    $let[id;$authorID]
-$else
-    $let[id;$findUser[$message]]
-    $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
-$endif
+$argsCheck[>1;{execute:args}]
 
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
     `}
-
 /*
-$let[pronouns2-enUS;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[pronouns];hh;he/him];hi;he/it];hs;he/she];ht;he/they];ih;it/him];ii;it/its];is;it/she];it;it/they];shh;she/he];sh;she/her];si;she/it];st;she/they];th;they/he];ti;they/it];ts;they/she];tt;they/them];any;Any pronouns];other;Other pronouns];ask;Ask];avoid;Avoid pronouns, use my name];none;Unspecified];unspecified;unspecified]]
-
-
-$let[filteredName;‎$filterMessageWords[$get[profileName];no;$joinSplitText[;]]]
-$let[filteredBio;‎$filterMessageWords[$get[profileBio];no;$joinSplitText[;]]]
-$textSplit[$replaceText[${bad.blockedWords};,;$get[key]];$get[key]]
-$let[key;$randomString[10]]
+$createObject[{"a": "$toLocaleUppercase[$replaceText[$replaceText[$toLowercase[$message];banner;]; ;]]"}]
 */
