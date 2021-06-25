@@ -46,6 +46,9 @@ bot.onUserUpdate(); //to fetch username changes
 bot.onInteractionCreate(); //for slash commands and interactions
 bot.onGuildJoin(); //for the message when the bot joins
 
+// Lavalink
+bot.createLavalink("127.0.0.1:2333", "crbt_rewrite", false)
+
 // Command handler
 handler: while (i < dir.length) {
   const stat = statSync("./src/" + dir[i]);
