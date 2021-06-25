@@ -44,7 +44,7 @@ const bot = new Bot({
 bot.onMessage({ guildOnly: false }); //so it can work in DMs, too
 bot.onUserUpdate(); //to fetch username changes
 bot.onInteractionCreate(); //for slash commands and interactions
-bot.onGuildJoin() //for the message when the bot joins
+bot.onGuildJoin(); //for the message when the bot joins
 
 // Command handler
 handler: while (i < dir.length) {
