@@ -53,4 +53,9 @@ $createObject[$httpRequest[https://discord.com/api/v8/invites/$get[code];GET]]
 
 $let[code;$replaceText[$replaceText[$replaceText[$message;https://discord.gg/;];https://discord.com/invite/;];discord.gg/;]]
 
+$argsCheck[1;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -5,6 +5,7 @@ module.exports.command = {
     name: "store",
     aliases: ["shop"],
     description_enUS: "Brings the CRBT Store up.",
+    usage_enUS: "<banners | badges (optional)>",
     module: "economy",
     code: `
 $reactionCollector[$botLastMessageID;$authorID;1h;${emojis.store.badges},😎,${emojis.store.banners};badges,badges2,banners;yes]
@@ -141,8 +142,9 @@ $let[emotions-enUS;Emotions]
 $let[season3-enUS;Season 3 banners]
 $let[baseURL;${links.banners}3]
 
-$setGlobalUserVar[lastCmd;$commandName]
+$argsCheck[<1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

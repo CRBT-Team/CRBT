@@ -65,8 +65,8 @@ $let[complete2-enUS;- The command name + the arguments (what come after the comm
 $let[minimal1-enUS;${emojis.general.success} Telemetry set to Minimal mode. / Clembs will now have access to the following information:]
 $let[minimal2-enUS;- The command name]
 
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}
