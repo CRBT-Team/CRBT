@@ -8,5 +8,5 @@ module.exports.command = {
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
     botperms: ["connect", "speak"],
     code: `
-    $lavalinkExecute[play;;$message]
+    $lavalinkExecute[play;ytsearch:$message]
     `}
