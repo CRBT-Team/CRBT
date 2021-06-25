@@ -88,4 +88,4 @@ instance.commandCount = bot.client.bot_commands.size;
 // instance.guildCount = bot.client.guilds.cache.size; // Needs $userCount but idk how to access that outside of a command
 
 // Just took the API code from here, put it in another file and required it so it still runs
-require("./api");
+require("./api/api");
