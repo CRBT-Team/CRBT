@@ -1,19 +1,22 @@
+const { colors, emojis } = require("../../../index");
+
 module.exports.command = {
-    name: "template",
-    module: "misc",
-    aliases: ["templatealias"],
-    description_enUS: "description.",
-    usage_enUS: "<something cool>",
-    botperms: [""],
+    name: "join",
+    module: "music",
+    aliases: ["connect", "plscome"],
+    description_enUS: "Connects CRBT to your voice channel.",
     code: `
+$joinVC[$voiceID[$clientID]]
+
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
-{description:$get[description-$getGlobalUserVar[language]]}
-{color:$getGlobalUserVar[color]}
+
+{color:${colors.success}}
 ;no]
 
-$let[title-enUS;hi]
-$let[description-enUS;description]
+$let[title-enUS;${emojis.general.success} Join #$channelID]
+
+$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
