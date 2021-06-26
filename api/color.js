@@ -3,7 +3,7 @@ const { createCanvas } = require("canvas");
 module.exports = (app) => {
   app.get("/color/:hex", function (req, res) {
     if (req.params.hex.length !== 6)
-      return res.send("You must enter a hex code of 6 digits.");
+      return res.send("You must enter a valid HEX code of 6 digits (don't forget to remove the #).");
 
     const canvas = createCanvas(200, 200);
     const ctx = canvas.getContext("2d");

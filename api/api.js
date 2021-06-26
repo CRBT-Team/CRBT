@@ -6,20 +6,26 @@ const { readdirSync, lstatSync } = require("fs");
 
 app.get("/", function (req, res) {
   res.json({
+    status: 200,
     welcomeMessage: "Welcome to the Clembs API, currently in beta.",
     supportServer: links.info.discord,
     endpoints: {
-      crbt: {
+      "crbt": {
         method: "GET",
         description: "Retrieves info on CRBT & its latest version.",
       },
       "crbt/stats": {
         method: "GET",
-        description: "Get member count, guild count & command count on CRBT.",
+        description: "Get CRBT's member count, server count & command count.",
       },
       "crbt/meaning": {
         method: "GET",
         description: "wHaT dOeS cRbT mEan?????????2?",
+      },
+      "color": {
+        method: "GET",
+        usage: "color/:hex (where :hex is a valid HEX color code (with the #))",
+        description: "Returns an image of the chosen HEX color."
       },
     },
   });

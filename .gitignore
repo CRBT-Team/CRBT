@@ -4,5 +4,5 @@ old/
 old dev/
 .env
 assets/
-package-lock.json/
+package-lock.json
 lavalink/
