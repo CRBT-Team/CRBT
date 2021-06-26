@@ -153,9 +153,9 @@
     },
     "botinfo": {
         "version": 10,
-        "build": 20,
+        "build": 21,
         "news": [
-            "will be updated whenever a new major version releases"
+            "👀"
         ]
     },
     "illustrations": {
