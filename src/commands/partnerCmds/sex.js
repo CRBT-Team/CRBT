@@ -5,7 +5,7 @@ module.exports.command = {
     cooldown: "5m",
     server: "567091546684653590",
     code: `
-$setGlobalUserVar[sexlogs;<@!$randomUserID>$getGlobalUserVar[sexlogs]]
+$setGlobalUserVar[sexLogs;<@!$randomUserID>$getGlobalUserVar[sexLogs]]
 
 $reply[$messageID;
 {title:sex status}
@@ -30,9 +30,9 @@ $replaceText[$replaceText[$checkCondition[$splitText[5]==];false;And $sub[$get[s
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[sexcount;$math[1+$replaceText[$replaceText[$checkContains[$getGlobalUserVar[sexlogs];<@!];false;0];true;$charCount[$replaceText[$replaceText[$getGlobalUserVar[sexlogs];<@!;];>;]]]/18]]
+$let[sexcount;$math[1+$replaceText[$replaceText[$checkContains[$getGlobalUserVar[sexLogs];<@!];false;0];true;$charCount[$replaceText[$replaceText[$getGlobalUserVar[sexLogs];<@!;];>;]]]/18]]
 
-$textSplit[$replaceText[$getGlobalUserVar[sexlogs];>;AAA];AAA]
+$textSplit[$replaceText[$getGlobalUserVar[sexLogs];>;AAA];AAA]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $setGlobalUserVar[lastCmd;$commandName]

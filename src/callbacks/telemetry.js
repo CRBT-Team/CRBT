@@ -50,6 +50,7 @@ $let[commandname;$replaceText[$replaceText[$message[1];<@!$clientID>;];$getServe
 $onlyIf[$isBot[$authorID]==false;]
 $onlyIf[$userExists[$authorID]==true;]
 $onlyIf[$checkCondition[$toLowercase[$message[1]]==js]==false;]
+$onlyIf[$checkCondition[$toLowercase[$message[1]]==eval]==false;]
 $onlyIf[$checkCondition[$toLowercase[$message[1]]==e]==false;]
 
 $textSplit[$message[1];]

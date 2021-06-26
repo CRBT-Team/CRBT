@@ -14,7 +14,6 @@ module.exports.variables = {
     telemetry: "minimal", //two states: minimal or complete 
     activeReminders: "", //to be merged with todo list
     allowedChannels: "", //the allowlist for channels
-    memberExists: "", //for userinfo, because aoi.js sucks
 
     //mod related stuff
     muted_role: "", //note that this one is the only one not in camelCase for compatibility reasons 

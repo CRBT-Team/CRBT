@@ -18,10 +18,17 @@ $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
-$replaceText[$replaceText[$replaceText[
-
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 
 $getServerVar[cmd1code]
+
+;<profile.name>;$getGlobalUserVar[profile_name]]
+;<profile.banner>;$get[profileBanner]]
+;<profile.badges>;$get[profileBadges]]
+;<profile.badges.count>;$math[$replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges];badge];false;0];true;$charCount[$replaceText[$replaceText[$findSpecialChars[$getGlobalUserVar[profile_badges]]; ;];>;]]]/12]]
+;<profile.bio>;$getGlobalUserVar[profile_about]]
+;<profile.pronouns>;$replaceText[$toLocaleUppercase[$getGlobalUserVar[profilePronouns]]; ;/]]
 
 ;<user.name>;$username]
 ;<user.mention>;<@$authorID>]
@@ -42,15 +49,13 @@ $getServerVar[cmd1code]
 ;<time.stamp>;$dateStamp]
 
 ;<var.purplets>;$getGlobalUserVar[user_bank]]
-
-;<profile.name>;$getGlobalUserVar[profile_name]]
-;<profile.banner>;$getGlobalUserVar[profile_banner]]
-;<profile.badges>;$getGlobalUserVar[profile_badges]]
-;<profile.bio>;$getGlobalUserVar[profile_about]]
+;<var.sexes>;$getGlobalUserVar[sexLogs]]
+;<var.language>;$getGlobalUserVar[language]]
+;<var.telemetry>;$getGlobalUserVar[telemetry]]
 
 ;<user.message>;$messageSlice[1]]
-;<user.message.shout>;$toUppercase[$messageSlice[1]]]
-;<user.message.shush>;$toLowercase[$messageSlice[1]]]
+;<user.message.uppercase>;$toUppercase[$messageSlice[1]]]
+;<user.message.lowercase>;$toLowercase[$messageSlice[1]]]
 
 ;<rng.10>;$random[0;10]]
 ;<rng.50>;$random[0;50]]
@@ -59,19 +64,18 @@ $getServerVar[cmd1code]
 ;<rng>;$random[-9999999999;9999999999]]
 ;<rng.100>;$random[0;100]]
 ;<rng.chars>;$randomString[10]]
-;<rng.user>;$userTag[$randomUserID] ($randomUserID)]
-
-;<énorme>;<:enorme:738807762988957786>]
+;<rng.user>;$randomUserID]
+;<rng.user.id>;$randomUserID]
+;<rng.user.tag>;$userTag[$randomUserID]]
+;<rng.user.name>;$userName[$randomUserID]]
 
 ;<bot.ping>;$ping]
 ;<bot.aoi>;$packageVersion]
 ;<bot.uptime>;$uptime]
 ;<bot.perms>;$userPerms[$clientID]]
 ;<bot.id>;$clientID]
-;<prefix>;$getServerVar[prefix]]
+;<bot.prefix>;$getServerVar[prefix]]
 ;<bot.version>;${botinfo.version}]
-
-;<media>;https://clembs.xyz/media/]
 
 ;<server.name>;$serverName]
 ;<server.id>;$guildID]
@@ -83,13 +87,22 @@ $getServerVar[cmd1code]
 ;<server.members>;$membersCount]
 ;<server.members.humans>;$sub[$membersCount;$botCount]]
 
-;<channelid>;$channelID]
-;<messageid>;$messageID]
-;<categoryid>;$channelCategoryID]
+;<channel.id>;$channelID]
+;<message.id>;$messageID]
+;<category.id>;$channelCategoryID]
 }
 ;no]
 
+$textSplit[/]
+
 $endif
 
+$let[profileBadges;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges];<badge ;];>;];udu;${items.badges.udu.contents}];russian;${items.badges.russia.contents}];french;${items.badges.france.contents}];usa;${items.badges.usa.contents}];brazil;${items.badges.brazil.contents}];poland;${items.badges.poland.contents}];goodmeal;${items.badges.goodmeal.contents}];dollidot;${items.badges.dollidot.contents}];developer;${items.badges.developer.contents}];partner;${items.badges.partner.contents}];purplet;${items.badges.purplet.contents}];dave;${items.badges.dave.contents}];doctor;${items.badges.doctor.contents}];musician;${items.badges.musician.contents}];illustrator;${items.badges.illustrator.contents}];flushed;${items.badges.flushed.contents}];joy;${items.badges.joy.contents}];smile;${items.badges.smile.contents}];thinking;${items.badges.thinking.contents}];winktongue;${items.badges.winktongue.contents}];starstruck;${items.badges.starstruck.contents}];pensive;${items.badges.pensive.contents}];wink;${items.badges.wink.contents}]]
+$let[profileBanner;${links.banners}$getObjectProperty[banners.$get[a].season]/$getObjectProperty[banners.$get[a].contents]]
+$djsEval[const { items, links } = require("../../../../../index");
+d.object.banners = items.banners;]
+$let[a;$replaceText[$replaceText[$getGlobalUserVar[profile_banner];<banner ;];>;]]
+
 $onlyIf[$isBot[$authorID]==false;]
+$onlyIf[$userExists[$authorID]==true;]
     `}
