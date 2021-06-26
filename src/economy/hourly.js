@@ -35,12 +35,11 @@ $let[description1-enUS;You claimed your hourly ${emojis.general.purplet} **$rand
 Current streak: **$sum[$getGlobalUserVar[hourly_streak];1]/5** ($math[5-($getGlobalUserVar[hourly_streak]+1)] streaks left for a bonus!)]
 $let[description2-enUS;You claimed your hourly ${emojis.general.purplet} **100 Purplets**. (Streak of 5 bonus!)]
 
-$argsCheck[0;{execute:args}]
-
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 
-$setGlobalUserVar[lastCmd;$commandName]
+$argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

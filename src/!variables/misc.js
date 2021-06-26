@@ -20,16 +20,4 @@ module.exports.variables = {
     muted_role: "", //note that this one is the only one not in camelCase for compatibility reasons 
     strikelog: "", 
     strikes: 0,
-
-    //to-do list items
-    list1: "",
-    list2: "",
-    list3: "",
-    list4: "",
-    list5: "",
-    list6: "",
-    list7: "",
-    list8: "",
-    list9: "",
-    list10: "",
 }

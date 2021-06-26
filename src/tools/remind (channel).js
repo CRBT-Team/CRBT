@@ -2,8 +2,8 @@ const { emojis } = require("../../index");
 
 module.exports.timeoutCommand = {
     code: `
-$setGlobalUserVar[active_reminders;$replaceText[$getGlobalUserVar[active_reminders;$timeoutData[userID]];
-$timeoutData[reminder] ⫻∞ $timeoutData[future] ⫻∞ $timeoutData[timestamp] ⫻∞ $timeoutData[method];];$timeoutData[userID]]
+$setGlobalUserVar[reminder$get[count];]
+$setGlobalUserVar[reminders;$sub[$get[count];1]]
 
 $channelSendMessage[$timeoutData[channelID];
 <@!$timeoutData[userID]>
@@ -18,5 +18,7 @@ $channelSendMessage[$timeoutData[channelID];
 
 $let[title-enUS;${emojis.reminder.normal} Reminder]
 
+$onlyIf[$get[count]==$timeoutData[count];]
+$let[count;$math[$getGlobalUserVar[reminders]+($replaceText[$getGlobalUserVar[reminders];-;]+$timeoutData[count])]]
 $onlyIf[$timeoutData[method]==channel;]
     `}

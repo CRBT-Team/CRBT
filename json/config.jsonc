@@ -153,7 +153,7 @@
     },
     "botinfo": {
         "version": 10,
-        "build": 16,
+        "build": 20,
         "news": [
             "will be updated whenever a new major version releases"
         ]

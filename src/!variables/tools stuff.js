@@ -1,0 +1,25 @@
+module.exports.variables = {
+    //to-do list items
+    list1: "",
+    list2: "",
+    list3: "",
+    list4: "",
+    list5: "",
+    list6: "",
+    list7: "",
+    list8: "",
+    list9: "",
+    list10: "",
+    //reminders
+    reminders: 0,
+    reminder1: "",
+    reminder2: "",
+    reminder3: "",
+    reminder4: "",
+    reminder5: "",
+    reminder6: "",
+    reminder7: "",
+    reminder8: "",
+    reminder9: "",
+    reminder10: "",
+}

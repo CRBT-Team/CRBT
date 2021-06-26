@@ -1,7 +1,7 @@
 const { colors, emojis } = require("../../../index");
 
 module.exports.awaitedCommand = {
-    name: "belowZero",
+    name: "aoiMissingFunction",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
@@ -10,7 +10,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} oh...]
-$let[description-enUS;You can't give a negative value of Purplets or... well, nothing.]
-$let[footer-enUS;Pro tip∶ to give nothing, try to not type the command!]
+$let[title-enUS;${emojis.general.error} Couldn't find this Aoi.js function...]
+$let[description-enUS;...although you can still try to search through Aoi.js' documentation, right [here](https://aoi.leref.ga).]
     `}

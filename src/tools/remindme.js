@@ -19,8 +19,7 @@ $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorro
 {color:${colors.success}}
 ;no]
 
-$setGlobalUserVar[active_reminders;$getGlobalUserVar[active_reminders]
-$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ dm]
+$setGlobalUserVar[reminder$getGlobalUserVar[reminders];$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ dm]
 
 $setTimeout[$getObjectProperty[duration]ms;
 userID: $authorID
@@ -29,7 +28,10 @@ channelID: $channelID
 future: $get[future]
 timestamp: $dateStamp
 method: dm
-dms: $isUserDMEnabled]
+dms: $isUserDMEnabled
+count: $getGlobalUserVar[reminders]]
+
+$setGlobalUserVar[reminders;$sum[$getGlobalUserVar[reminders];1]]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;*No subject was set*];false;$messageSlice[1]]]
 
@@ -44,8 +46,7 @@ $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorro
 {color:${colors.success}}
 ;no]
 
-$setGlobalUserVar[active_reminders;$getGlobalUserVar[active_reminders]
-$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ dm]
+$setGlobalUserVar[reminder$getGlobalUserVar[reminders];$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ channel ⫻∞ $mentionedChannels[1]]
 
 $setTimeout[$getObjectProperty[duration]ms;
 userID: $authorID
@@ -53,7 +54,10 @@ reminder: $get[reminder]
 channelID: $mentionedChannels[1]
 future: $get[future]
 timestamp: $dateStamp
-method: channel]
+method: channel
+count: $getGlobalUserVar[reminders]]
+
+$setGlobalUserVar[reminders;$sum[$getGlobalUserVar[reminders];1]]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;*No subject was set*];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
 
@@ -69,24 +73,20 @@ $let[protip-enUS;You can check your reminders using the reminders command.]
 
 
 
-$onlyIf[$getObjectProperty[duration]<63115200000;{title:${emojis.general.error} Reminders cannot be higher than 2 years for now.} {color:${colors.red}]
+$onlyIf[$getObjectProperty[duration]<63115200000;{title:${emojis.general.error} Reminders cannot be higher than 2 years for now.} {color:${colors.red}}]
 
-$djsEval[const util = require('dbd.js-utils')
-
-d.object.durationdone = util.parseMS("$getObjectProperty[duration]")
-] 
-$djsEval[const util = require('dbd.js-utils')
-
-d.object.duration = util.parseToMS("$message[1]")
+$djsEval[const utils = require('dbd.js-utils')
+d.object.durationdone = utils.parseMS("$getObjectProperty[duration]")
+d.object.duration = utils.parseToMS("$message[1]")
 ] 
 $createObject[{}]
 
 $onlyIf[$replaceText[$message;$message[1] ;]!=;{execute:args}]
-$onlyIf[$checkContains[$toLowercase[$message[1]];s;d;h;m]==true;{execute:args}]
-$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message[1]];s;];d;];h;];m;]]==true;{execute:args}]
+$onlyIf[$checkContains[$toLowercase[$message[1]];s;d;h;m;y;w]==true;{execute:args}]
+$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message[1]];s;];d;];h;];m;];y;];w;]]==true;{execute:args}]
 
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
   `}

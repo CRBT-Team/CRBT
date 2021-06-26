@@ -38,9 +38,8 @@ $onlyIf[$charCount[$get[new]]<120;{execute:bioTooLong}]
 $let[new;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;<username>;$username[$authorID]];<userid>;$authorID];<usertag>;$userTag[$authorID]];<purplets>;$getGlobalUserVar[user_bank;$authorID]];<userstatus>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
 
 $argsCheck[>1;{execute:args}]
-
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -11,23 +11,21 @@ $getObjectProperty[e.phonetics[0].text]
 :no}
 
 {field:Definition:
-$getObjectProperty[b.definition]
+$jsonRequest[https://api.dictionaryapi.dev/api/v2/entries/en_US/$message;#RIGHT#0#LEFT#.meanings#RIGHT#0#LEFT#.definitions#RIGHT#0#LEFT#.definition]
 :no}
 
 {field:Example:
-$replaceText[$replaceText[$checkCondition[$getObjectProperty[b.example]==];false;$replaceText[$getObjectProperty[b.example]; $getObjectProperty[e.word]; **$getObjectProperty[e.word]**]];true;*None*]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[e.meanings[0].definitions[0].example]==];false;$replaceText[$getObjectProperty[e.meanings[0].definitions[0].example]; $getObjectProperty[e.word]; **$getObjectProperty[e.word]**]];true;*None*]
 :no}
 
 {field:Synonyms:
-$replaceText[$replaceText[$checkCondition[$getObjectProperty[b.synonyms]==];false;$replaceText[$getObjectProperty[b.synonyms];,;, ]];true;*None*]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[e.meanings[0].definitions[0].synonyms]==];false;$replaceText[$getObjectProperty[e.meanings[0].definitions[0].synonyms];,;, ]];true;*None*]
 :yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createFile[$getObject;object.json]
-
-$onlyIf[$getObjectProperty[y]!=yoo;not found]
+$onlyIf[$getObjectProperty[e.resolution]==;{execute:args}]
 
 $djsEval[
 const fetch = require("node-fetch");
@@ -36,18 +34,13 @@ fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + "$getObjectPropert
   .then((res) => res.json())
   .then((res) => {
     d.object.e = res[0];
-    d.object.b = res[0].meanings[0].definitions[0];
-  })
-  .on("error", () => {
-    d.object.y = "yoo"
-  });]
+  })]
   
 $createObject[{"message": "$message"}]
 
 $argsCheck[1;{execute:args}]
-
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

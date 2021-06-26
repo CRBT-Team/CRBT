@@ -8,7 +8,6 @@ module.exports.command = {
   description_enUK: "Sends detailed information and the latest news of <botname>",
   description_frFR: "Présente des informations détaillées et actualités sur <botname>.",
   description_ru: "Даёт подробную информацию и новости о <botname>",
-  botperms: "",
   code: `
 $reply[$messageID;  
   {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
@@ -99,10 +98,9 @@ d.object.uptime = tools.parseMS(theUptimeInMS)
 ]
 $createObject[{"start": $dateStamp, "botPing": $botPing}]
 
-$argsCheck[<2;{execute:args}]
-
-$setGlobalUserVar[lastCmd;$commandName]
+$argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
   `}

@@ -40,9 +40,8 @@ $textSplit[$replaceText[$toLowercase[$message]; ;];/]
 $onlyIf[$checkContains[$toLowercase[$replaceText[$message; ;]];he/him;she/her;they/them;any;other;ask;username;unspecified]==true;{execute:args}]
 
 $argsCheck[>1;{execute:args}]
-
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

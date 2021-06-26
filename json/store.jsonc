@@ -2,6 +2,7 @@
   "items": {
     "banners": {
       "christmas2020": {
+        "name": "Christmas 2020",
         "season": "special",
         "value": 2500,
         "contents": "christmas2020.png",
@@ -9,6 +10,7 @@
         "credits": "Dee Jeh, edited by Clembs"
       },
       "halloween2020": {
+        "name": "Halloween 2020",
         "season": "special",
         "value": 5500,
         "contents": "halloween2020.png",
@@ -16,6 +18,7 @@
         "credits": "Clembs"
       },
       "summer2021" : {
+        "name": "Summer 2020",
         "season": "special",
         "value": 12000,
         "contents": "summer2021.png",
@@ -23,6 +26,7 @@
         "credits": "CRBT Design Team"
       },
       "red": {
+        "name": "Red",
         "season": 1,
         "value": 300,
         "contents": "red.png",
@@ -30,6 +34,7 @@
         "credits": "Clembs"
       },
       "green": {
+        "name": "Green",
         "season": 1,
         "value": 300,
         "contents": "green.png",
@@ -37,6 +42,7 @@
         "credits": "Clembs"
       },
       "blue": {
+        "name": "Blue",
         "season": 1,
         "value": 300,
         "contents": "blue.png",
@@ -44,6 +50,7 @@
         "credits": "Clembs"
       },
       "darkblue": {
+        "name": "Dark blue",
         "season": 1,
         "value": 300,
         "contents": "dark%20blue.png",
@@ -51,6 +58,7 @@
         "credits": "Clembs"
       },
       "turquoise": {
+        "name": "Turquoise",
         "season": 1,
         "value": 300,
         "contents": "turquoise.png",
@@ -58,6 +66,7 @@
         "credits": "delnyn"
       },
       "pink": {
+        "name": "Pink",
         "season": 1,
         "value": 300,
         "contents": "pink.png",
@@ -65,6 +74,7 @@
         "credits": "Clembs"
       },
       "purple": {
+        "name": "Purple",
         "season": 1,
         "value": 300,
         "contents": "purple.png",
@@ -72,6 +82,7 @@
         "credits": "Onyxcode"
       },
       "bars": {
+        "name": "Bars",
         "season": 2,
         "value": 250,
         "contents": "bars.png",
@@ -79,6 +90,7 @@
         "credits": "navy"
       },
       "curve": {
+        "name": "Curve",
         "season": 2,
         "value": 250,
         "contents": "curve.png",
@@ -86,6 +98,7 @@
         "credits": "Username *"
       },
       "minefield": {
+        "name": "Minefield",
         "season": 2,
         "value": 250,
         "contents": "minefield.png",
@@ -93,6 +106,7 @@
         "credits": "venn2x"
       },
       "waves": {
+        "name": "Waves",
         "season": 2,
         "value": 250,
         "contents": "waves.png",
@@ -100,6 +114,7 @@
         "credits": "Leap of Azzam"
       },
       "sunrise": {
+        "name": "Sunrise",
         "season": 2,
         "value": 250,
         "contents": "sunrise.png",
@@ -107,6 +122,7 @@
         "credits": "Clembs"
       },
       "wallpaper": {
+        "name": "Wallpaper",
         "season": 2,
         "value": 250,
         "contents": "wallpaper.png",
@@ -114,6 +130,7 @@
         "credits": "Username *"
       },
       "sweet": {
+        "name": "Sweet",
         "season": 2,
         "value": 250,
         "contents": "sweet.png",
@@ -121,6 +138,7 @@
         "credits": "james."
       },
       "flower": {
+        "name": "Flower",
         "season": 3,
         "value": 300,
         "contents": "flower.png",
@@ -128,13 +146,15 @@
         "credits": "Clembs"
       },
       "cake": {
+        "name": "Cake",
         "season": 3,
         "value": 400,
         "contents": "cake.png",
-        "description": "Who doesn't like a piece of cake?",
+        "description": "Who wouldn't like a piece of cake?",
         "credits": "Addy Visuals"
       },
       "mountain": {
+        "name": "Mountain",
         "season": 3,
         "value": 250,
         "contents": "mountain.png",
@@ -142,6 +162,7 @@
         "credits": "Clembs"
       },
       "stripes": {
+        "name": "Stripes",
         "season": 3,
         "value": 500,
         "contents": "stripes.png",
@@ -149,6 +170,7 @@
         "credits": "CRBT Design Team"
       },
       "blood": {
+        "name": "Blood",
         "season": 3,
         "value": 300,
         "contents": "blood.png",
@@ -156,19 +178,20 @@
         "credits": "CRBT Design Team"
       },
       "space": {
+        "name": "Space",
         "season": 3,
         "value": 400,
         "contents": "space.png",
         "description": "The deep navy blue sky with a white stripe on top reflecting the space we live in",
         "credits": "bkly"
       },
-      "road": {
+      "bubbles": {
+        "name": "Bubbles",
         "season": 3,
         "value": 400,
-        "contents": "road.png",
-        "description": "The road we take, surrounded by some creepy stuff...",
+        "contents": "bubbles.png",
+        "description": "bubble planets idk",
         "credits": "Username *"
-
       }
     },
     "badges": {
@@ -227,6 +250,24 @@
         "value": 150,
         "contents": ":technologist:"
       },
+      "doctor": {
+        "name": "Doctor",
+        "type": "jobs",
+        "value": 150,
+        "contents": ":health_worker:"
+      },
+      "musician": {
+        "name": "Musician",
+        "type": "jobs",
+        "value": 150,
+        "contents": ":singer:"
+      },
+      "illustrator": {
+        "name": "Illustrator",
+        "type": "jobs",
+        "value": 150,
+        "contents": ":artist:"
+      },
       "partner": {
         "name": "CRBT Partner",
         "type": "special",
@@ -240,6 +281,61 @@
         "value": 0,
         "contents": "<:Purplet:853309241720569866>",
         "inStore": false
+      },
+      "dave": {
+        "name": "dave",
+        "type": "special",
+        "value": 0,
+        "contents": "<:davecool:789190897803591740>",
+        "inStore": false
+      },
+      "flushed": {
+        "name": "Flushed face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cflushed:843530751738642492>"
+      },
+      "joy": {
+        "name": "Laughing face",
+        "type": "emotions",
+        "value": 500,
+        "contents": "<:cjoy:843530751182241842>"
+      },
+      "smile": {
+        "name": "Smiling face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:csmile:843530751152357396>"
+      },
+      "thinking": {
+        "name": "Thinking face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cthinking_face:843530751144493126>"
+      },
+      "winktongue": {
+        "name": "Tongue out winking face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cstuck_out_tongue_winking_eye:843530751014207541>"
+      },
+      "starstruck": {
+        "name": "Star struck face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cstar_struck:843530751177261087>"
+      },
+      "pensive": {
+        "name": "Pensive face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cpensive:843530751118409759>"
+      },
+      "wink": {
+        "name": "Winking face",
+        "type": "emotions",
+        "value": 400,
+        "contents": "<:cwink:843530751454216212>"
       }
     }
   }

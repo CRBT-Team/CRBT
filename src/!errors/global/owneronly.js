@@ -10,7 +10,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.general.error} You don't have access to this command.]
-$let[description-enUS;You seem to have executed a command that only Clembs can execute.]
+$let[description-enUS;You seem to have executed a command that only Clembs $replaceText[$replaceText[$checkCondition[$botOwnerID==327690719085068289];false;and $username[$botOwnerID]];true;] can execute.]
 
 $let[title-enUK;${emojis.general.error} Sorry!]
 $let[description-enUK;You cannot execute this command as it has been locked to Clembs!]

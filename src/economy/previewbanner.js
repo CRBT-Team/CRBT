@@ -32,7 +32,7 @@ module.exports.command = {
     $let[e;$math[$replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;0];true;$charCount[$replaceText[$replaceText[$findSpecialChars[$getGlobalUserVar[profile_badges;$get[id]]]; ;];>;]]]/12]]
 
 $let[profilePronouns;$replaceText[$toLocaleUppercase[$getGlobalUserVar[profilePronouns;$get[id]]]; ;/]]
-$let[profileBadges;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges;$get[id]];<badge ;];>;];udu;${badges.udu.contents}];russian;${badges.russia.contents}];french;${badges.france.contents}];usa;${badges.usa.contents}];brazil;${badges.brazil.contents}];poland;${badges.poland.contents}];goodmeal;${badges.goodmeal.contents}];dollidot;${badges.dollidot.contents}];developer;${badges.developer.contents}];partner;${badges.partner.contents}];purplet;${badges.purplet.contents}]]
+$let[profileBadges;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges;$get[id]];<badge ;];>;];udu;${badges.udu.contents}];russian;${badges.russia.contents}];french;${badges.france.contents}];usa;${badges.usa.contents}];brazil;${badges.brazil.contents}];poland;${badges.poland.contents}];goodmeal;${badges.goodmeal.contents}];dollidot;${badges.dollidot.contents}];developer;${badges.developer.contents}];partner;${badges.partner.contents}];purplet;${badges.purplet.contents}];dave;${badges.dave.contents}];doctor;${badges.doctor.contents}];musician;${badges.musician.contents}];illustrator;${badges.illustrator.contents}];flushed;${badges.flushed.contents}];joy;${badges.joy.contents}];smile;${badges.smile.contents}];thinking;${badges.thinking.contents}];winktongue;${badges.winktongue.contents}];starstruck;${badges.starstruck.contents}];pensive;${badges.pensive.contents}];wink;${badges.wink.contents}]]
 
 $let[profileName;$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_name;$get[id]];<username>;$username[$get[id]]];<userid>;$get[id]];<usertag>;$userTag[$get[id]]];<purplets>;$getGlobalUserVar[user_bank;$get[id]]]]
 $let[profileBio;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[bio];<username>;$username[$get[id]]];<userid>;$get[id]];<usertag>;$userTag[$get[id]]];<purplets>;$getGlobalUserVar[user_bank;$get[id]]];<userstatus>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
@@ -53,10 +53,10 @@ $let[id;$authorID]
 
 $argsCheck[>1;{execute:args}]
 
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}
 /*
 $createObject[{"a": "$toLocaleUppercase[$replaceText[$replaceText[$toLowercase[$message];banner;]; ;]]"}]

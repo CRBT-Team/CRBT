@@ -30,4 +30,9 @@ $else
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif
+
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}
