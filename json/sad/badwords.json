@@ -1,8 +1,39 @@
 {
-    "pleaseForgiveMeForWhatImAboutToWrite": "yikes",
-    "blockedWords": [
-        "nigga","nigger","faggot","fag","hitler","bitch","cunt","fucking","fuck","shit","piss off","dick","dickhead","asshole",
-        "bastard","twat","pussy","retard","retarded","rape","shut the fuck up","shut the hell up","slut","wigga","wanker","bullshit",
-        "motherfucker","horseshit","prick","hell","damn","damnation","tranny","penis"
-    ]
+  "pleaseForgiveMeForWhatImAboutToWrite": "yikes",
+  "blockedWords": [
+    "nigga",
+    "nigger",
+    "faggot",
+    "fag",
+    "hitler",
+    "bitch",
+    "cunt",
+    "fucking",
+    "fuck",
+    "shit",
+    "piss off",
+    "dick",
+    "dickhead",
+    "asshole",
+    "bastard",
+    "twat",
+    "pussy",
+    "retard",
+    "retarded",
+    "rape",
+    "shut the fuck up",
+    "shut the hell up",
+    "slut",
+    "wigga",
+    "wanker",
+    "bullshit",
+    "motherfucker",
+    "horseshit",
+    "prick",
+    "hell",
+    "damn",
+    "damnation",
+    "tranny",
+    "penis"
+  ]
 }

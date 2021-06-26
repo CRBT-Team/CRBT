@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const { links } = require("../index");
+const { readdirSync, lstatSync } = require("fs");
 
 app.get("/", function (req, res) {
   res.json({
@@ -30,9 +31,20 @@ app.get("/", function (req, res) {
   });
 });
 
-require("./crbt")(app);
-require("./color")(app);
-require("./other")(app);
+function loadAPIFiles(dir) {
+  for (const file of readdirSync(dir).filter((file) => {
+    return file !== "api.js";
+  })) {
+    const stat = lstatSync(`${dir}/${file}`);
+    if (stat.isDirectory()) {
+      loadAPIFiles(`${dir}/${file}`)
+    } else if (file.endsWith(".js")) {
+      require(`${dir}/${file}`)(app);
+    }
+  }
+}
+
+loadAPIFiles(__dirname);
 
 app.set("json spaces", 2);
 
