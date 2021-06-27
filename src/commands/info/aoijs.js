@@ -6,7 +6,7 @@ module.exports.command = {
     usage_enUS: "<name of an Aoi.js function (e.g. $findUser)>",
     code: `
 $reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/t6AvTt4.png}
+{author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/kam0X4w.png}
 
 {description:
 **[$get[webDocs-$getGlobalUserVar[language]]](https://aoi.leref.ga/functions/$replaceText[$toLowercase[$getObjectProperty[function.name]];$;usd])**

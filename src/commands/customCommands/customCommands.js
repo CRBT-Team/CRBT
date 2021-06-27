@@ -13,13 +13,15 @@ $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
-$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+$replaceText[$replaceText[$replaceText[$replaceText[
 
 $getServerVar[cmd1code]
 

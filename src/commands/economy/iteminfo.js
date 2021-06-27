@@ -3,7 +3,7 @@ const { links, emojis } = require("../../../index");
 module.exports.command = {
     name: "iteminfo",
     aliases: ["item-info", "item_info", "item", "io"],
-    usage_enUS: "<item name>",
+    usage_enUS: "<item name (e.g. \"banner stripes\", \"badge flushed\")>",
     module: "economy",
     code: `
 $if[$checkContains[$toLowercase[$message[1]];banner]==true]
@@ -21,17 +21,19 @@ $if[$checkContains[$toLowercase[$message[1]];banner]==true]
     :yes}
 
     {field:Value: 
-    $replaceText[$replaceText[$getObjectProperty[banners.$get[a].available];true;${emojis.general.purplet} **$getObjectProperty[banners.$get[a].value] Purplets**];false;Not for sale]
+    $replaceText[$replaceText[$getObjectProperty[banners.$get[a].available];true;${emojis.general.purplet} **$getObjectProperty[banners.$get[a].value] Purplets**]\n\`$getServerVar[prefix]buy badge\`;false;Not for sale]
     :yes}
 
     {image:${links.banners}$getObjectProperty[banners.$get[a].season]/$getObjectProperty[banners.$get[a].contents]}
     {color:$getGlobalUserVar[color]}
-    ;no]
+    ;no] 
+
+    $onlyIf[$getObjectProperty[banners.$get[a]]!=;{execute:unknownItem}]
 
     $djsEval[const { items } = require("../../../../../index");
     d.object.banners = items.banners;]
-    $let[a;$replaceText[$replaceText[$toLowercase[$message];banner;]; ;]]    
-
+    $let[a;$replaceText[$replaceText[$toLowercase[$message];banner;]; ;]]   
+    
 $elseIf[$checkContains[$toLowercase[$message[1]];badge]==true]
     
     $reply[$messageID;
