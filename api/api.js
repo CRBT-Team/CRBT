@@ -4,7 +4,7 @@ const port = process.env.PORT;
 const { links } = require("../index");
 const { readdirSync, lstatSync } = require("fs");
 
-app.get("/", function (req, res) {
+app.get("/", async function (req, res) {
   res.json({
     welcomeMessage: "Welcome to the Clembs API, currently in beta.",
     supportServer: links.info.discord,
@@ -24,6 +24,9 @@ app.get("/", function (req, res) {
     },
   });
 });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Load all other api files
 function loadAPIFiles(dir) {

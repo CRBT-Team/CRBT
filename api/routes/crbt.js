@@ -2,7 +2,7 @@ const { meanings } = require("../../json/api.json");
 const { botinfo, instance } = require("../../index");
 const router = require("express").Router();
 
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
   res.json({
     online: true,
     news: botinfo.news,
@@ -13,7 +13,7 @@ router.get("/", function (req, res) {
   });
 });
 
-router.get("/meaning", function (req, res) {
+router.get("/meaning", async function (req, res) {
   res.json({
     meaning: meanings[Math.floor(Math.random() * (meanings.length - 0 + 1))],
   });
