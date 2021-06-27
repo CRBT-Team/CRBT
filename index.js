@@ -28,6 +28,7 @@ bot.onMessage({ guildOnly: false }); // Allow commands to work in DMs
 bot.onUserUpdate(); // Fetch username changes
 bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
+bot.onMessageDelete(); // For the message deletion thing
 
 /* Lavalink
 bot.createLavalink("127.0.0.1:2333", "crbt_rewrite", false);

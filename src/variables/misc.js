@@ -19,4 +19,9 @@ module.exports.variables = {
     muted_role: "", //note that this one is the only one not in camelCase for compatibility reasons 
     strikelog: "", 
     strikes: 0,
+    //snipe stuff
+    snipeMsg: "",
+	snipeAuthor: "",
+	snipeChannel: "",
+	snipeDate: "",
 }
