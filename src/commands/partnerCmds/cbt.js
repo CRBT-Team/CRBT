@@ -41,6 +41,19 @@ $let[ping;help idk what any of these numbers mean: $pingms\n$replaceText[$getObj
 $let[uptime;since when is crbt not ded chat xd: $getObjectProperty[uptime]]
 $let[computer;the pc: disk#COLON# $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] gb/s\nram#COLON# $ram mb\ncpu#COLON# $cpu%\nhosted by [your mom](https://kiwatech.net/)]
 
+$djsEval[
+let a = Date.now()
+const ms = require('ms')
+d.object.final = Math.floor(a - d.object.start)
+d.object.owo = ms(a - d.object.start)
+d.object.uwu = ms(d.object.botPing)
+
+const tools = require('dbd.js-utils')
+let theUptimeInMS = tools.parseToMS("$replaceText[$uptime; ;]")
+d.object.uptime = tools.parseMS(theUptimeInMS)
+]
+$createObject[{"start": $dateStamp, "botPing": $botPing}]
+
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

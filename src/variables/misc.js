@@ -20,8 +20,8 @@ module.exports.variables = {
     strikelog: "", 
     strikes: 0,
     //snipe stuff
-    snipeMsg: "",
+    snipeContent: "",
 	snipeAuthor: "",
 	snipeChannel: "",
-	snipeDate: "",
+	snipeStamp: "",
 }
