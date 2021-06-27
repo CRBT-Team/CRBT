@@ -1,0 +1,23 @@
+module.exports.command = {
+    name: "template",
+    module: "misc",
+    aliases: ["templatealias"],
+    description_enUS: "description.",
+    usage_enUS: "<something cool>",
+    botperms: [""],
+    code: `
+$reply[$messageID;
+{title:$get[title-$getGlobalUserVar[language]]}
+{description:$get[description-$getGlobalUserVar[language]]}
+{color:$getGlobalUserVar[color]}
+;no]
+
+$let[title-enUS;hi]
+$let[description-enUS;description]
+
+$argsCheck[0;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$setGlobalUserVar[lastCmd;$commandName]
+    `}

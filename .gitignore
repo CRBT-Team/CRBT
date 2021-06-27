@@ -1,8 +1,9 @@
-new-database
-node_modules
-old
-old dev
+new-database/
+node_modules/
+old/
+old dev/
 .env
+assets/
 package-lock.json
-assets
-database
+lavalink/
+disabled/
