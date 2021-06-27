@@ -7,7 +7,8 @@
         "value": 2500,
         "contents": "christmas2020.png",
         "description": "Made for the Christmas 2020 giveaway and originally won by navy#9255",
-        "credits": "Dee Jeh, edited by Clembs"
+        "credits": "Dee Jeh, edited by Clembs",
+        "available": "false"
       },
       "halloween2020": {
         "name": "Halloween 2020",
@@ -15,7 +16,8 @@
         "value": 5500,
         "contents": "halloween2020.png",
         "description": "Made for the Halloween 2020 giveaway, features CRBT's original design and was won by Username *#5522",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "summer2021" : {
         "name": "Summer 2020",
@@ -23,7 +25,8 @@
         "value": 12000,
         "contents": "summer2021.png",
         "description": "A decomposition of CRBT's new facial features, made as a prize for July 2nd's CRBT fan-art contest.",
-        "credits": "CRBT Design Team"
+        "credits": "CRBT Design Team",
+        "available": "false"
       },
       "red": {
         "name": "Red",
@@ -31,7 +34,8 @@
         "value": 300,
         "contents": "red.png",
         "description": "A cool red banner",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "green": {
         "name": "Green",
@@ -39,7 +43,8 @@
         "value": 300,
         "contents": "green.png",
         "description": "A cool green banner",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "blue": {
         "name": "Blue",
@@ -47,7 +52,8 @@
         "value": 300,
         "contents": "blue.png",
         "description": "A cool blue banner",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "darkblue": {
         "name": "Dark blue",
@@ -55,7 +61,8 @@
         "value": 300,
         "contents": "dark%20blue.png",
         "description": "A cool dark blue banner",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "turquoise": {
         "name": "Turquoise",
@@ -63,7 +70,8 @@
         "value": 300,
         "contents": "turquoise.png",
         "description": "A cool turquoise banner",
-        "credits": "delnyn"
+        "credits": "delnyn",
+        "available": "false"
       },
       "pink": {
         "name": "Pink",
@@ -71,7 +79,8 @@
         "value": 300,
         "contents": "pink.png",
         "description": "A cool pink banner",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "purple": {
         "name": "Purple",
@@ -79,7 +88,8 @@
         "value": 300,
         "contents": "purple.png",
         "description": "A cool purple banner",
-        "credits": "Onyxcode"
+        "credits": "Onyxcode",
+        "available": "false"
       },
       "bars": {
         "name": "Bars",
@@ -87,7 +97,8 @@
         "value": 250,
         "contents": "bars.png",
         "description": "idk bars",
-        "credits": "navy"
+        "credits": "navy",
+        "available": "false"
       },
       "curve": {
         "name": "Curve",
@@ -95,7 +106,8 @@
         "value": 250,
         "contents": "curve.png",
         "description": "the curve that reflects the beauty of... idk",
-        "credits": "Username *"
+        "credits": "Username *",
+        "available": "false"
       },
       "minefield": {
         "name": "Minefield",
@@ -103,7 +115,8 @@
         "value": 250,
         "contents": "minefield.png",
         "description": "actually why is it called minefield there aren't any mines and this is not a field",
-        "credits": "venn2x"
+        "credits": "venn2x",
+        "available": "false"
       },
       "waves": {
         "name": "Waves",
@@ -111,7 +124,8 @@
         "value": 250,
         "contents": "waves.png",
         "description": "yum wavy waves",
-        "credits": "Leap of Azzam"
+        "credits": "Leap of Azzam",
+        "available": "false"
       },
       "sunrise": {
         "name": "Sunrise",
@@ -119,7 +133,8 @@
         "value": 250,
         "contents": "sunrise.png",
         "description": "special mention to the lovers of the sun ☀️",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "wallpaper": {
         "name": "Wallpaper",
@@ -127,7 +142,8 @@
         "value": 250,
         "contents": "wallpaper.png",
         "description": "because this looks like wallpaper",
-        "credits": "Username *"
+        "credits": "Username *",
+        "available": "false"
       },
       "sweet": {
         "name": "Sweet",
@@ -135,7 +151,8 @@
         "value": 250,
         "contents": "sweet.png",
         "description": "yum its so sweet",
-        "credits": "james."
+        "credits": "james.",
+        "available": "false"
       },
       "flower": {
         "name": "Flower",
@@ -143,7 +160,8 @@
         "value": 300,
         "contents": "flower.png",
         "description": "A sort of translucent flower on a very spring-like background.",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "false"
       },
       "cake": {
         "name": "Cake",
@@ -151,7 +169,8 @@
         "value": 400,
         "contents": "cake.png",
         "description": "Who wouldn't like a piece of cake?",
-        "credits": "Addy Visuals"
+        "credits": "Addy Visuals",
+        "available": "false"
       },
       "mountain": {
         "name": "Mountain",
@@ -159,7 +178,8 @@
         "value": 250,
         "contents": "mountain.png",
         "description": "a mountain",
-        "credits": "Clembs"
+        "credits": "Clembs",
+        "available": "true"
       },
       "stripes": {
         "name": "Stripes",
@@ -167,7 +187,8 @@
         "value": 500,
         "contents": "stripes.png",
         "description": "Aligned stripes made of some cool material",
-        "credits": "CRBT Design Team"
+        "credits": "CRBT Design Team",
+        "available": "true"
       },
       "blood": {
         "name": "Blood",
@@ -175,7 +196,8 @@
         "value": 300,
         "contents": "blood.png",
         "description": "What would blood look as a banner? It'd look pretty cool, we think",
-        "credits": "CRBT Design Team"
+        "credits": "CRBT Design Team",
+        "available": "true"
       },
       "space": {
         "name": "Space",
@@ -183,7 +205,8 @@
         "value": 400,
         "contents": "space.png",
         "description": "The deep navy blue sky with a white stripe on top reflecting the space we live in",
-        "credits": "bkly"
+        "credits": "bkly",
+        "available": "true"
       },
       "bubbles": {
         "name": "Bubbles",
@@ -191,7 +214,8 @@
         "value": 400,
         "contents": "bubbles.png",
         "description": "bubble planets idk",
-        "credits": "Username *"
+        "credits": "Username *",
+        "available": "true"
       }
     },
     "badges": {
@@ -199,143 +223,162 @@
         "name": "Russian flag",
         "type": "flags",
         "value": 150,
-        "contents": ":flag_ru:"
+        "contents": "🇷🇺",
+        "available": "true"
       },
       "france": {
         "name": "French flag",
         "type": "flags",
         "value": 150,
-        "contents": ":flag_fr:"
+        "contents": "🇫🇷",
+        "available": "true"
       },
       "usa": {
         "name": "American flag",
         "type": "flags",
         "value": 150,
-        "contents": ":flag_us:"
+        "contents": "🇺🇸",
+        "available": "true"
       },
       "brazil": {
         "name": "Brazilian flag",
         "type": "flags",
         "value": 170,
-        "contents": ":flag_br:"
+        "contents": "🇧🇷",
+        "available": "true"
       },
       "poland": {
         "name": "Polish flag",
         "type": "flags",
         "value": 150,
-        "contents": ":flag_pl:"
+        "contents": "🇵🇱",
+        "available": "true"
       },
       "goodmeal": {
         "name": "Good meal",
         "type": "familiar faces",
         "value": 1000,
-        "contents": "<:good_meal:750034917743919256>"
+        "contents": "<:good_meal:750034917743919256>",
+        "available": "true"
       },
       "dollidot": {
         "name": "Dollidot",
         "type": "familiar faces",
         "value": 420,
         "contents": "<:dollidot:730074523277197333>",
-        "inStore": false
+        "available": "false"
       },
       "udu": {
         "name": "udu",
         "type": "familiar faces",
         "value": 300,
-        "contents": "<:udu:800716716627853332>"
+        "contents": "<:udu:800716716627853332>",
+        "available": "true"
       },
       "developer": {
         "name": "Developer",
         "type": "jobs",
         "value": 150,
-        "contents": ":technologist:"
+        "contents": "🧑‍💻",
+        "available": "true"
       },
       "doctor": {
         "name": "Doctor",
         "type": "jobs",
         "value": 150,
-        "contents": ":health_worker:"
+        "contents": "🧑‍⚕️",
+        "available": "true"
       },
       "musician": {
         "name": "Musician",
         "type": "jobs",
         "value": 150,
-        "contents": ":singer:"
+        "contents": "🧑‍🎤",
+        "available": "true"
       },
       "illustrator": {
         "name": "Illustrator",
         "type": "jobs",
         "value": 150,
-        "contents": ":artist:"
+        "contents": "🧑‍🎨",
+        "available": "true"
       },
       "partner": {
         "name": "CRBT Partner",
         "type": "special",
         "value": 0,
         "contents": "<:CRBTPartner:856815843127853086>",
-        "inStore": false
+        "available": "false"
       },
       "purplet": {
         "name": "Purplet",
         "type": "special",
         "value": 0,
         "contents": "<:Purplet:853309241720569866>",
-        "inStore": false
+        "available": "false"
       },
       "dave": {
         "name": "dave",
         "type": "special",
         "value": 0,
         "contents": "<:davecool:789190897803591740>",
-        "inStore": false
+        "available": "false"
       },
       "flushed": {
         "name": "Flushed face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cflushed:843530751738642492>"
+        "contents": "<:cflushed:843530751738642492>",
+        "available": "true"
       },
       "joy": {
         "name": "Laughing face",
         "type": "emotions",
         "value": 500,
-        "contents": "<:cjoy:843530751182241842>"
+        "contents": "<:cjoy:843530751182241842>",
+        "available": "true"
       },
       "smile": {
         "name": "Smiling face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:csmile:843530751152357396>"
+        "contents": "<:csmile:843530751152357396>",
+        "available": "true"
       },
       "thinking": {
         "name": "Thinking face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cthinking_face:843530751144493126>"
+        "contents": "<:cthinking_face:843530751144493126>",
+        "available": "true"
       },
       "winktongue": {
         "name": "Tongue out winking face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cstuck_out_tongue_winking_eye:843530751014207541>"
+        "contents": "<:cstuck_out_tongue_winking_eye:843530751014207541>",
+        "available": "true"
       },
       "starstruck": {
         "name": "Star struck face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cstar_struck:843530751177261087>"
+        "contents": "<:cstar_struck:843530751177261087>",
+        "available": "true"
       },
       "pensive": {
         "name": "Pensive face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cpensive:843530751118409759>"
+        "contents": "<:cpensive:843530751118409759>",
+        "available": "true"
       },
       "wink": {
         "name": "Winking face",
         "type": "emotions",
         "value": 400,
-        "contents": "<:cwink:843530751454216212>"
+        "contents": "<:cwink:843530751454216212>",
+        "available": "true"
       }
     }
   }

@@ -1,10 +1,8 @@
 {
   "name": "crbt",
-  "author": "crbt-developers",
-  "description": "cool bot project made by cool developers 😎",
+  "author": "CRBT Developers",
+  "description": "The Discord companion made for you.",
   "version": "10.0.0",
-  "license": "private",
-  "private": true,
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -22,7 +20,7 @@
     "fs-extra": "^9.1.0",
     "node-fetch": "^2.6.1",
     "yt-search": "^2.8.0",
-    "ytdl-core": "^4.8.2"
+    "ytdl-core": "^4.8.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
