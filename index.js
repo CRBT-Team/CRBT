@@ -82,3 +82,6 @@ instance.commandCount = bot.client.bot_commands.size;
 
 // Just took the API code from here, put it in another file and required it so it still runs
 require("./api");
+
+// snipe.js stuffs
+bot.onMessageDelete();

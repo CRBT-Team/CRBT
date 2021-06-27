@@ -32,4 +32,10 @@ module.exports.variables = {
     list8: "",
     list9: "",
     list10: "",
+
+    //snipe.js vars
+    snipeMsg: "",
+	snipeAuthor: "",
+	snipeChannel: "",
+	snipeDate: "",
 }
