@@ -31,7 +31,7 @@ $reply[$messageID;
   {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title;cbt - Information]
+$let[title;cbt - information]
 $let[description;**[Website](https://en.wikipedia.org/wiki/Cock_and_ball_torture)** | **[Add to Discord](${links.invite})** | **[Support server](${links.info.discord})** | **[Vote on top.gg](${links.vote.topgg})**
 $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;Beta ${botinfo.build}];true;Stable ${botinfo.version}] | Created by **[sexmaster](https://clembs.xyz/)**]
 $let[members;memebers:big number]
