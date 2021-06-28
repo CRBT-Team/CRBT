@@ -28,7 +28,7 @@ $get[playing-$getGlobalUserVar[language]]
 <@!$songInfo[userID;$get[queueLength]]>
 :yes}
 {field:$get[volume-$getGlobalUserVar[language]]:
-$getServerVar[volume]%
+$math[$getServerVar[volume]*2]%
 ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
@@ -55,10 +55,10 @@ $if[$voiceID[$clientID]!=$voiceID]
     $volume[$getServerVar[volume]]
 
     $if[$checkContains[$message;soundcloud.com]==true]
-        $let[delay;500ms]
+        $let[delay;1000ms]
         $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
-        $let[delay;1500ms]
+        $let[delay;2000ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]

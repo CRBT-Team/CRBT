@@ -45,7 +45,7 @@
             "lyrics": "<:list:836285755721646150>"
         },
         "general": {
-            "error": "<:cross:836285755571175425>",
+            "error": "<:error:859160010537435206>",
             "success": "<:success:855441233057153076>",
             "purplet": "<:Purplet:853309241720569866>",
             "toggleon": "<:toggleon:836285755822309376>",
@@ -53,7 +53,8 @@
             "forcedoff": "<:toggleforcedoff:836285755869102170>",
             "forcedon": "<:toggleforcedon:836285755806056528>",
             "information": "<:information:836285755923365918>",
-            "warning": "<:warning:836285755948662814>"
+            "warning": "<:warning:836285755948662814>",
+            "partner": "<:CRBTPartner:856815843127853086>"
         },
         "channels": {
             "voice": "<:voice:784030537547251713>",
@@ -63,6 +64,8 @@
             "category": "<:category:822947868863102997>"
         },
         "users": {
+            "humans": "<:members:859167506324783174>",
+            "bots": "<:members:859167506324783174>",
             "status": {
                 "dnd": "<:DND:782585535008735233>",
                 "idle": "<:Idle:782585660682928149>",
@@ -71,7 +74,11 @@
             }
         },
         "misc": {
-            "eightball": "<:8ball:836285755512586291>"
+            "eightball": "<:8ball:836285755512586291>",
+            "emoji": {
+                "static": "<:emoji:658538492321595393>",
+                "animated": "<:emoji:658538492321595393>"
+            }
         },
         "reminder": {
             "set": "<:reminder_set:817733584759947285>",
