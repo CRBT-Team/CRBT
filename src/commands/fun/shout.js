@@ -1,8 +1,10 @@
+const e = "\\"
+
 module.exports.command = {
-    name: "reverse",
+    name: "shout",
     module: "fun",
-    aliases: ["rv", "esrever"],
-    description_enUS: "Reverses given text and sends it in a webhook, if <botname> has the required permissions.",
+    aliases: ["scream", "aaaaaaaaa"],
+    description_enUS: "Shouts given text and sends it in a webhook, if <botname> has the required permissions.",
     usage_enUS: "<text>",
     botPerms: ["managewebhooks (recommended)"],
     code: `
@@ -18,21 +20,15 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
-
+    
     let random = Math.random().toString(36).substr(2, 5);
     let str = "$get[message] a" + random;
     str2 = str.replaceAll(" a" + random, '')
 
     const { Util } = require("discord.js");
-    
-    let clean1 = Util.cleanContent(str2, message);
+    let clean = Util.cleanContent(str2, message);
 
-    let content = clean1
-    const pog = content.trim().split("").reverse().join("")
-    
-    let clean2 = Util.cleanContent(pog, message);
-
-    hook.send(clean2);
+    hook.send("**" + clean.toUpperCase() + "!!!**");
     ]
 
     $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
@@ -47,7 +43,7 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 $else
 
     $reply[$messageID;
-    {title:$getObjectProperty[reversed]}
+    {title:$getObjectProperty[shout]}
     {color:$getGlobalUserVar[color]}
     ;no]
 
@@ -57,18 +53,12 @@ $else
         str2 = str.replaceAll(" a" + random, '')
     
         const { Util } = require("discord.js");
-        
-        let clean1 = Util.cleanContent(str2, message);
-    
-        let content = clean1
-        const pog = content.trim().split("").reverse().join("")
-        
-        d.object.reversed = Util.cleanContent(pog, message);
+        d.object.shout = Util.cleanContent(str2, message);
     ]
 
 $endif
 
-$let[message;$replaceText[$replaceText[$replaceText[$message;";];enoyreve@;enoyreve‎@];ereh@;ereh‎@]]
+$let[message;$replaceText[$message;";]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
@@ -76,3 +66,5 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+//    $createObject[{"message": "**$toUppercase[$replaceText[$replaceText[$message;";];${e};]]!!!**"}]
+    

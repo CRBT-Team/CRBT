@@ -1,5 +1,5 @@
 module.exports.variables = {
-    cmd1title: "",
+    cmd1names: "",
     cmd1code: "",
     cmd1nonPrefixed: false,
 }

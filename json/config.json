@@ -145,9 +145,9 @@
             "clientID": "6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE"
         },
         "apis": {
-            "ocr.space": "26e9ccb94488957",
-            "api.avux.ga": "CQ4A0JN-WQNMR0H-Q0HYRPK-WA9FYFN",
-            "beta-api.tk": "E5iDrmzFaVdnzcQXnDsUePe7E7KtpxhZT2dmf8aJYxHr6mBOyMj7mWLVoAxh",
+            "ocr": "26e9ccb94488957",
+            "avux": "CQ4A0JN-WQNMR0H-Q0HYRPK-WA9FYFN",
+            "betaApi": "E5iDrmzFaVdnzcQXnDsUePe7E7KtpxhZT2dmf8aJYxHr6mBOyMj7mWLVoAxh",
             "spotify": "BQACarAut_xMq48spywHhaaxXtFd5iixoltrJqMXKr6OKuGWwyiEYV_4Oi3m5VW4OjrTQMurS4bA85522hVwicv5HUi_yMpu0oIZkrTLbCHsIDBCNPwRH3ftxDOVgjMt1vVH8uG5rDaoBpKKb8fRrx3j3adSk0I"
         }
     },
