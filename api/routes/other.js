@@ -15,14 +15,22 @@ router.get(
   [
     param("hex")
       .isLength({ min: 6, max: 6 })
-      .withMessage(`Hex code must be an exact length of 6 characters.`)
+      .withMessage({
+        status: 400,
+        error: `Hex code must be an exact length of 6 characters.`,
+      })
       .isAlphanumeric()
-      .withMessage(`Hex code must be A-Z and 0-9`),
+      .withMessage({
+        status: 400,
+        error: `Hex code must be A-Z and 0-9`,
+      }),
   ],
   async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ status: 400, errors: errors.array() });
+      return res
+        .status(errors.array()[0].msg.status || 500)
+        .json(errors.array()[0].msg || "Unexpected Error");
     }
 
     const canvas = createCanvas(200, 200);
@@ -42,28 +50,50 @@ router.get(
   }
 );
 
-router.post("/shuffle", async function (req, res) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ status: 400, errors: errors.array() });
+router.post(
+  "/shuffle",
+  [
+    body("text")
+      .isString()
+      .withMessage({ status: 400, error: `'text' provided is not a string.` }),
+  ],
+  async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(errors.array()[0].msg.status || 500)
+        .json(errors.array()[0].msg || "Unexpected Error");
+    }
+
+    const newText = req.body.text.trim().split(" ");
+    const shifted = newText.shift();
+    newText.push(shifted);
+
+    res.json({ result: newText.join(" ") });
   }
+);
 
-  const newText = req.body.text.trim().split(" ");
-  const shifted = newText.shift();
-  newText.push(shifted);
+router.post(
+  "/reverse",
+  [
+    body("text")
+      .isString()
+      .withMessage({ status: 400, error: `'text' provided is not a string.` }),
+  ],
+  async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(errors.array()[0].msg.status || 500)
+        .json(errors.array()[0].msg || "Unexpected Error");
+    }
 
-  res.json({ result: newText.join(" ") });
-});
+    const newText = req.body.text.trim().split("").reverse();
 
-router.post("/reverse", async function (req, res) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ status: 400, errors: errors.array() });
+    res.json({ result: newText.join("") });
   }
+);
 
-  const newText = req.body.text.trim().split("").reverse();
-
-  res.json({ result: newText.join("") });
-});
+router.get("/animals/:animal", [], async function (req, res) {});
 
 module.exports = router;
