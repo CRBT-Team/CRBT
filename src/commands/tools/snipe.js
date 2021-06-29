@@ -1,22 +1,33 @@
 module.exports.command = {
     name: "snipe",
-    module: "tools",
-    description_enUS: "Shows the latest deleted ",
-    usage_enUS: "<#channel (optional)>",
+    module: "moderation",
+    description_enUS: "Shows the contents of the latest deleted message in the current channel.",
+    usage_enUS: "<channel ID/channel name/#mention (optional)>",
     code: `
-    $reply[$messageID;
-    {author:$userTag[$get[author]]:$userAvatar[$get[author]]}
-    {description:
-$getChannelVar[snipeContent;$mentionedChannels[1;yes]]
+$reply[$messageID;
+{author:$userTag[$get[author]]:$userAvatar[$get[author]]}
+{description:
+$getChannelVar[snipeContent;$get[id]]
 }
-{footer:In #$channelName[$mentionedChannels[1;yes]]}
+{footer:In #$channelName[$get[id]]}
 {timestamp:$getChannelVar[snipeStamp]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[author;$getChannelVar[snipeAuthor;$mentionedChannels[1;yes]]]
+$let[author;$getChannelVar[snipeAuthor;$get[id]]]
 
-$onlyIf[$getChannelVar[snipeContent;$mentionedChannels[1;yes]]!=;{title:Error}{color:RED}{description:Theres nothing to snipe in <#$mentionedChannels[1;yes]>}]
+$onlyIf[$getChannelVar[snipeContent;$get[id]]!=;{execute:snipeEmpty}]
+
+$if[$message==]
+    $let[id;$channelID]
+$else
+    $onlyIf[$hasPermsInChannel[$get[id];$clientID;readmessages]==true;{execute:cantReadChannel}]
+    $let[id;$findServerChannel[$message]]
+    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:args}]
+$endif
+
+$onlyIf[$hasPerms[$authorID;kick]==true;{execute:onlymods}]
+
     `}
 
     //stuffs if you want to edit this

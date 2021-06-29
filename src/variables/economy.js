@@ -1,6 +1,7 @@
 module.exports.variables = {
     user_bank: 0, 
     hourly_streak: 0,
+    //inventory
     invbanner: "", 
     invmisc: "", 
     invbadge: "",

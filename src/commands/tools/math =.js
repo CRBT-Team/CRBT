@@ -17,6 +17,6 @@ $onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceTe
 $argsCheck[>1;]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -1,4 +1,4 @@
-const { botinfo, links } = require("../../../index");
+const { botinfo, links, illustrations } = require("../../../index");
 
 module.exports.command = {
   name: "crbtinfo",
@@ -28,7 +28,7 @@ $reply[$messageID;
 
   {field:$get[computer-$getGlobalUserVar[language]]:yes}
 
-  {thumbnail:https://clembs.xyz/media/placeholder-image.png}
+  {thumbnail:${illustrations.crbtinfo}}
 
   {color:$getGlobalUserVar[color]}
 ;no]
@@ -101,6 +101,6 @@ $createObject[{"start": $dateStamp, "botPing": $botPing}]
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
   `}

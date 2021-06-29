@@ -9,14 +9,14 @@ module.exports.variables = {
     volume: 50, //default volume so we dont break our ears
     color: `${colors.lightred.toLowerCase()}`, //default border color
     lastCmd: "", //last command to get exported to awaited cmd
-    avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
-    language: "enUS", //default language
+    //avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
+    language: "enUS",
     telemetry: "minimal", //two states: minimal or complete 
-    activeReminders: "", //to be merged with todo list
-    allowedChannels: "", //the allowlist for channels
-
+    /*
+    allowedChannels: "", the allowlist for channels
+    */
     //mod related stuff
-    muted_role: "", //note that this one is the only one not in camelCase for compatibility reasons 
+    muted_role: "", //note that this one is not in camelCase for compatibility reasons 
     strikelog: "", 
     strikes: 0,
     //snipe stuff

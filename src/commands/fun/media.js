@@ -50,7 +50,7 @@ $onlyIf[$checkContains[$stringEndsWith[$message;.png]$stringEndsWith[$message;.g
 $argsCheck[>1;]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;]
 $setGlobalUserVar[lastCmd;$commandName]
     `}
 //    $createObject[{"message": "**$toUppercase[$replaceText[$replaceText[$message;";];${e};]]!!!**"}]
