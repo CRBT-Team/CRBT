@@ -3,6 +3,7 @@ const { links, emojis } = require("../../../index");
 module.exports.command = {
     name: "iteminfo",
     aliases: ["item-info", "item_info", "item", "io"],
+    description_enUS: "Gives info on a specified store item.",
     usage_enUS: "<item name (e.g. \"banner stripes\", \"badge flushed\")>",
     module: "economy",
     code: `

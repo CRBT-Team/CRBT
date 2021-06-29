@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["previewbanner", "banner-preview"],
     module: "economy",
     usage_enUS: "<banner name (e.g. banner sweet, banner blue)>",
-    description: "Shows your profile with a chosen banner without having to buy it.",
+    description_enUS: "Shows your profile with a chosen banner without having to buy it.",
     code: `
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]}

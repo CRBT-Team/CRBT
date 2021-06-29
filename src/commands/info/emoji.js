@@ -4,7 +4,7 @@ module.exports.command = {
     name: "emojiinfo",
     aliases: ["emoji", "ei", "emote", "emoteinfo", "emoji-info", "emoji_info", "emote-info", "emote_info"],
     module: "info",
-    description_enUS: "",
+    description_enUS: "Outputs information about a specified emoji",
     usage_enUS: "<custom emoji | standard Unicode emoji>",
     code: `
 $if[$charCount[$message[1]]>=24]

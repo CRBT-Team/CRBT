@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["scream", "aaaaaaaaa"],
     description_enUS: "Shouts given text and sends it in a webhook, if <botname> has the required permissions.",
     usage_enUS: "<text>",
-    botPerms: ["managewebhooks (recommended)"],
+    botPerms: ["managewebhooks"],
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 

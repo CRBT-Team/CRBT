@@ -1,5 +1,8 @@
 module.exports.command = {
     name: "define",
+    aliases: ['dictionnary', 'dictio', 'word', 'definition'],
+    description_enUS: "Defines a word on Google Dictionnary",
+    usage: "<english word>",
     module: "info",
     code:`
 $attachment[$getObjectProperty[e.phonetics[0].audio];Pronounciation.mp3]

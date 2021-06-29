@@ -7,7 +7,7 @@ module.exports.command = {
     aliases: ["scream", "aaaaaaaaa"],
     description_enUS: "Gives the clembs/media URL.",
     usage_enUS: "<text>",
-    botPerms: ["managewebhooks (recommended)"],
+    botPerms: ["managewebhooks"],
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 

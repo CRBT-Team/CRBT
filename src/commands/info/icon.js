@@ -1,10 +1,9 @@
 module.exports.command = {
     name: "icon",
     aliases: ["servericon"],
-    module: "utility",
+    module: "info",
     description_enUS: "Retrieves a specified user's profile picture in multiple resolutions and formats. Returns yours if no arguments are used.",
     usage_enUS: "<user ID | username | @mention> (optional)",
-    botperms: "",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[avatar]}

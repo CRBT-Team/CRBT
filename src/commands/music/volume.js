@@ -9,13 +9,13 @@ module.exports.command = {
     code: `
 $if[$message!=]
 
-    $volume[$round[$math[$get[volume]$get[volume]/2]]]
+    $volume[$round[$math[$get[volume]/2]]]
 
-    $setServerVar[volume;$round[$math[$get[volume]$get[volume]/2]]]
+    $setServerVar[volume;$round[$math[$get[volume]/2]]]
 
     $reply[$messageID;
     {title:Set volume to $round[$get[volume]]%}
-    {color:${colors.success}]
+    {color:${colors.success}}
     ;no]
 
     $onlyIf[$voiceID[$clientID]!=;{execute:nomusic}]

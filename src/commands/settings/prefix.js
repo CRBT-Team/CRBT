@@ -36,9 +36,9 @@ $else
     {color:$getGlobalUserVar[color]}
     ;no]
 
-    $let[title-enUS;CRBT Settings - Prefix]
-    $let[description-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf that prefix is too complex, you can always use <@!$clientID> as a prefix instead.]
-    $let[descriptionAdmin-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf you don't like this one, you can instead use <@!$clientID> or change it using \`@$username[$clientID] prefix <new prefix>\`.]
+    $let[title-enUS;Prefix - CRBT Settings]
+    $let[description-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.]
+    $let[descriptionAdmin-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf you don't like this one, you can change it using \`$getServerVar[prefix]prefix <new prefix>\`.]
 
 $endif
 

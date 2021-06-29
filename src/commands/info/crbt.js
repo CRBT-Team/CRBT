@@ -2,7 +2,7 @@ const { botinfo, links, illustrations } = require("../../../index");
 
 module.exports.command = {
   name: "crbtinfo",
-  module: "utility",
+  module: "info",
   aliases: ["crbti", "crbt", "bi", "botinfo", "bot-info", "bot_info", "crbt-info", "crbt_info", "stats", "info"],
   description_enUS: "Gives detailed information and news about <botname>.",
   description_enUK: "Sends detailed information and the latest news of <botname>",

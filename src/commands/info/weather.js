@@ -3,9 +3,9 @@ const { tokens, illustrations } = require("../../../index");
 module.exports.command = {
     name: "weather",
     aliases: ["weathersearch", "weather-search", "weather_search"],
-    description: "Searches the weather for the specified city.",
+    description_enUS: "Searches the weather for the specified city.",
     module: "infos",
-    usage: "<city name (none to get the previous results)>",
+    usage_enUS: "<city name (none to get the previous results)>",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[image]}

@@ -6,8 +6,7 @@ module.exports.command = {
     module: "info",
     aliases: ["ui", "user", "user-info", "user_info"],
     description_enUS: "description.",
-    usage_enUS: "<user ID | username | @mention> (optional)",
-    botperms: [""],
+    usage_enUS: "<user ID | username | @mention (optional)>",
     code: `
 $reply[$messageID;
 {author:$get[author-$getGlobalUserVar[language]]:$get[status]}

@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["p", "add"],
     description_enUS: "Adds <botname> to the voice channel, adds the song(s) to the queue or directly plays it if no music is currently playing.",
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
-    botperms: ["connect", "speak"],
+    botPerms: ["connect", "speak"],
     code: `
 $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
 
