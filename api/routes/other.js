@@ -2,6 +2,9 @@ const { pédiluve } = require("../../json/api.json");
 const router = require("express").Router();
 const { createCanvas } = require("canvas");
 const { param, body, validationResult } = require("express-validator");
+const Animal = require("../Schema/Animal");
+const animalChecks = require("../Utils/animalChecks");
+const checkWords = require("../Utils/checkWords");
 
 router.route("/pediluve", async function (req, res) {
   res.json({
@@ -94,6 +97,59 @@ router.post(
   }
 );
 
-router.get("/animals/:animal", [], async function (req, res) {});
+router.get("/animal/", async function (req, res) {
+  const animal = await Animal.find({});
+
+  res.json(animal);
+});
+
+router.post(
+  "/animal/new",
+  [
+    body("name").isAlpha().withMessage({
+      status: 400,
+      error: `Please make sure your animals name is A-Z`,
+    }),
+    body("info").custom((info) => checkWords(info)),
+    body("animal").exists(),
+    body("image").exists(),
+  ],
+  async function (req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res
+        .status(errors.array()[0].msg.status || 500)
+        .json(
+          errors.array()[0].msg || { status: 5000, error: "Unexpected Error" }
+        );
+    }
+
+    const { animal: ani, name, info, image } = req.body;
+
+    const animal = await Animal.create(
+      {
+        animal: ani,
+        name: name,
+        info: info,
+        image: image,
+      },
+    );
+
+    res.json(animal);
+  }
+);
+
+router.get("/animal/random/", async function (req, res) {
+  let fAnimals = await Animal.find({});
+
+  res.json(fAnimals[Math.floor(Math.random() * fAnimals.length)]);
+});
+
+router.get("/animal/random/:type", async function (req, res) {
+  const fAnimals = await Animal.find({ animal: req.params.type });
+
+  res.json(fAnimals[Math.floor(Math.random() * fAnimals.length)]);
+});
 
 module.exports = router;

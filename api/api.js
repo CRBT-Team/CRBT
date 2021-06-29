@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT;
 const { links } = require("../index");
 const { readdirSync, lstatSync } = require("fs");
+const { connect, connection } = require("mongoose");
 
 app.get("/", async function (req, res) {
   res.json({
@@ -29,6 +30,20 @@ app.get("/", async function (req, res) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+connect(
+  `mongodb+srv://CRBT:CRBT_Mongo_DB@crbt.pbnxb.mongodb.net/CRBT`,
+  {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  function (err) {
+    if (err) return console.log(err.stack);
+    console.log("Connected to MongoDB");
+  }
+);
+
 // Load all other api files
 function loadAPIFiles(dir) {
   for (const file of readdirSync(dir).filter((file) => {
@@ -44,7 +59,7 @@ function loadAPIFiles(dir) {
   }
 }
 
-loadAPIFiles(`${__dirname}/routes`)
+loadAPIFiles(`${__dirname}/routes`);
 
 app.set("json spaces", 2);
 
@@ -65,3 +80,13 @@ app
         console.log("Couldn't connect to Clembs API!");
       });
   });
+
+process.on("exit", async function () {
+  console.log("Stopping MongoDB connection");
+  connection.close();
+});
+
+process.on("SIGINT", async function () {
+  console.log("Stopping MongoDB connection");
+  connection.close();
+});

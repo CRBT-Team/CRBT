@@ -1,15 +1,18 @@
 const { Schema, model } = require("mongoose");
 
-const reqStr = {
+const uReqStr = {
   required: true,
-  type: String,
+  type: String
 };
 
 const animalSch = new Schema({
-  animal: reqStr,
-  name: reqStr,
-  info: reqStr,
-  image: reqStr,
+  animal: {
+    required: true,
+    type: String,
+  },
+  name: uReqStr,
+  info: uReqStr,
+  image: uReqStr,
 });
 
 module.exports = model("animal", animalSch);
