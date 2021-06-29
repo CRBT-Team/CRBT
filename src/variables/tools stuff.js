@@ -11,15 +11,5 @@ module.exports.variables = {
     list9: "",
     list10: "",
     //reminders
-    reminders: 0,
-    reminder1: "",
-    reminder2: "",
-    reminder3: "",
-    reminder4: "",
-    reminder5: "",
-    reminder6: "",
-    reminder7: "",
-    reminder8: "",
-    reminder9: "",
-    reminder10: "",
+    reminders: "",
 }

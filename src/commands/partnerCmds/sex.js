@@ -37,6 +37,6 @@ $textSplit[$replaceText[$getGlobalUserVar[sexLogs];>;AAA];AAA]
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $onlyForServers[$commandInfo[$commandName;server];]
 `}

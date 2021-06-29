@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["previewbanner", "banner-preview"],
     module: "economy",
     usage_enUS: "<banner name (e.g. banner sweet, banner blue)>",
-    description: "Shows your profile with a chosen banner without having to buy it.",
+    description_enUS: "Shows your profile with a chosen banner without having to buy it.",
     code: `
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]}
@@ -55,7 +55,7 @@ $argsCheck[>1;{execute:args}]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}
 /*

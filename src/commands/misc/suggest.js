@@ -44,13 +44,12 @@ $color[${colors.yellow}]
 $let[title-enUS;${emojis.general.success} Suggestion sent]
 $let[description-enUS;Your suggestion was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]
 
-$argsCheck[>1;{execute:args}]
-
 $let[channel;$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];true;${links.channels.report}];false;${links.channels.reportDev}]]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
-$setGlobalUserVar[lastCmd;$commandName]
+$argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$setGlobalUserVar[lastCmd;$commandName]
   `}

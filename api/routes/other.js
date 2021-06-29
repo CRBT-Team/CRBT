@@ -5,6 +5,7 @@ const { param, body, validationResult } = require("express-validator");
 
 router.route("/pediluve", async function (req, res) {
   res.json({
+    status: 200,
     image: pédiluve[Math.floor(Math.random() * (pédiluve.length - 0 + 1))],
   });
 });

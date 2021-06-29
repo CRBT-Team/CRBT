@@ -4,6 +4,7 @@ const router = require("express").Router();
 
 router.get("/", async function (req, res) {
   res.json({
+    status: 200,
     online: true,
     news: botinfo.news,
     version: {
@@ -15,12 +16,14 @@ router.get("/", async function (req, res) {
 
 router.get("/meaning", async function (req, res) {
   res.json({
+    status: 200,
     meaning: meanings[Math.floor(Math.random() * (meanings.length - 0 + 1))],
   });
 });
 
 router.get("/stats", function (req, res) {
   res.json({
+    status: 200,
     memberCount: instance.memberCount,
     guildCount: instance.guildCount,
     commandCount: instance.commandCount,

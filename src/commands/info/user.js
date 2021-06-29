@@ -6,8 +6,7 @@ module.exports.command = {
     module: "info",
     aliases: ["ui", "user", "user-info", "user_info"],
     description_enUS: "description.",
-    usage_enUS: "<user ID | username | @mention> (optional)",
-    botperms: [""],
+    usage_enUS: "<user ID | username | @mention (optional)>",
     code: `
 $reply[$messageID;
 {author:$get[author-$getGlobalUserVar[language]]:$get[status]}
@@ -83,7 +82,7 @@ $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}
 /*

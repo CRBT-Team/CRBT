@@ -37,10 +37,11 @@ module.exports = {
 };
 
 // Listeners
-bot.onMessage({ guildOnly: false }); // Allow commands to work in DMs
+bot.onMessage({ guildOnly: true }); // Allow commands to work in DMs
 bot.onUserUpdate(); // Fetch username changes
 bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
+bot.onMessageDelete(); // For the message deletion thing
 
 // Command handler
 require("./loadCmds")();

@@ -1,10 +1,9 @@
 module.exports.command = {
     name: "icon",
-    aliases: ["servericon", "si"],
-    module: "utility",
+    aliases: ["servericon"],
+    module: "info",
     description_enUS: "Retrieves a specified user's profile picture in multiple resolutions and formats. Returns yours if no arguments are used.",
     usage_enUS: "<user ID | username | @mention> (optional)",
-    botperms: "",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[avatar]}
@@ -39,6 +38,6 @@ $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

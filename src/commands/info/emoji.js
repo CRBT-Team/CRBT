@@ -4,7 +4,7 @@ module.exports.command = {
     name: "emojiinfo",
     aliases: ["emoji", "ei", "emote", "emoteinfo", "emoji-info", "emoji_info", "emote-info", "emote_info"],
     module: "info",
-    description_enUS: "",
+    description_enUS: "Outputs information about a specified emoji",
     usage_enUS: "<custom emoji | standard Unicode emoji>",
     code: `
 $if[$charCount[$message[1]]>=24]
@@ -100,6 +100,6 @@ $endif
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

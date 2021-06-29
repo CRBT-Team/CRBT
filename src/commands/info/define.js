@@ -1,5 +1,8 @@
 module.exports.command = {
     name: "define",
+    aliases: ['dictionnary', 'dictio', 'word', 'definition'],
+    description_enUS: "Defines a word on Google Dictionnary",
+    usage: "<english word>",
     module: "info",
     code:`
 $attachment[$getObjectProperty[e.phonetics[0].audio];Pronounciation.mp3]
@@ -41,6 +44,6 @@ $createObject[{"message": "$message"}]
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

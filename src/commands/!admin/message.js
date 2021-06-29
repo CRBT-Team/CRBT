@@ -18,7 +18,7 @@ Learn more about official CRBT messages [here](${links.info.messages}).}
 Reported $toLowercase[$get[title]] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])"
 :no}
-{field:Message from $userTag:
+{field:Message from Clembs#2925:
 $messageSlice[1]
 :no}
 {footer:You can't reply back to a CRBT message.}
@@ -50,10 +50,10 @@ $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]
 $let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
-$let[channel;$replaceText[$replaceText[$clientID;595731552709771264;${links.channels.report}];833327472404594688;${links.channels.reportDev}]]
+$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];true;${links.channels.report}];false;${links.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 
 $setGlobalUserVar[lastCmd;$commandName]
-$onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
+$onlyForIDs[327690719085068289;407261542325813250;$botOwnerID;{execute:owneronly}]
   `}

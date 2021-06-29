@@ -4,7 +4,7 @@ module.exports.command = {
     name: "$alwaysExecute",
     module: "customCommands",
     code: `
-$if[$toLowercase[$message[1]]==$toLowercase[$getServerVar[prefix]$getServerVar[cmd1title]]]
+$if[$toLowercase[$message[1]]==$toLowercase[$getServerVar[prefix]$getServerVar[cmd1names]]]
 
 $reply[$messageID;
 {description:
