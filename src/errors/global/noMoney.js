@@ -6,15 +6,18 @@ module.exports.awaitedCommand = {
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
 {field:$get[your-$getGlobalUserVar[language]]:yes}
-$if[$getGlobalUserVar[lastCmd]==balance]
+$if[$getGlobalUserVar[lastCmd]==buy]
+    {field:$get[required-$getGlobalUserVar[language]]:yes}
 
-{field:$get[required-$getGlobalUserVar[language]]:yes} 
-$let[required-enUS;Required:${emojis.general.purplet} **$getObjectProperty[value] Purplets**]
-$djsEval[const { items } = require("../../../../../index");
-d.object.value = items["$getObjectProperty[msg1]"]["$getObjectProperty[msg2]"].value;]
-$createObject[{"msg1":"$toLowercase[$message[1]]s","msg2":"$toLowercase[$message[2]]"}]
+    $let[required-enUS;Required:${emojis.general.purplet} **$getObjectProperty[$get[item].value] Purplets**]
+
+    $djsEval[const { items } = require("../../../../../index");
+    d.object.banner = items.banners;
+    d.object.badge = items.badges;]
+    $let[item;$replaceText[$replaceText[$replaceText[$toLowercase[$message];banner ;banner.];badge ;badge.]; ;]]
 
 $endif
+
 {color:${colors.error}}
 ;no]
 

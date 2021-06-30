@@ -9,7 +9,7 @@ $if[$checkContains[$toLowercase[$message];énorme]==true]
   $djsEval[message.react('$get[énorme]')]
 $endif
 
-$if[$checkContains[$checkContains[$toLowercase[$message];good meal; yum ;yummy;delicious;great meal;goodmeal;good lunch;good_meal;tasty;tasti;deliciouse;nom]$checkCondition[$checkContains[$toLowercase[$message];good;very good;veri good;great;tasty;tasti;top quality;gr8]$checkContains[$toLowercase[$message];good;very good;veri good;great;tasty;tasti;top quality;meal]==truetrue];true]==true]
+$if[$checkContains[$checkContains[$toLowercase[$message];good meal; yum ;yummy;delicious;great meal;goodmeal;good lunch;good_meal;tasty;deliciouse]$checkCondition[$checkContains[$toLowercase[$message];good;very good;veri good;great;tasty;tasti;top quality;gr8]$checkContains[$toLowercase[$message];meal;lunch]==truetrue];true]==true]
   $djsEval[message.react('$get[goodmeal]')]
 $endif
 

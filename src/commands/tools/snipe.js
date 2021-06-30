@@ -10,14 +10,16 @@ $reply[$messageID;
 {description:
 $getChannelVar[snipeContent;$get[id]]
 }
-{footer:In #$channelName[$get[id]]}
-{timestamp:$getChannelVar[snipeStamp]}
+{footer:In #$splitText[2]}
+{timestamp:$splitText[3]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[author;$getChannelVar[snipeAuthor;$get[id]]]
+$let[author;$splitText[1]]
 
 $onlyIf[$getChannelVar[snipeContent;$get[id]]!=;{execute:snipeEmpty}]
+
+$textSplit[$getChannelVar[snipeDetails;$get[id]];//]
 
 $if[$message==]
     $let[id;$channelID]
@@ -28,9 +30,4 @@ $else
 $endif
 
 $onlyIf[$hasPerms[$authorID;kick]==true;{execute:onlymods}]
-
     `}
-
-    //stuffs if you want to edit this
-    // vars: snipeAuthor, snipeMsg, snipeDate, snipeChannel
-    //the last line of code is the error if there is nothing to snipe in the current channel

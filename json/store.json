@@ -161,7 +161,7 @@
         "contents": "flower.png",
         "description": "A sort of translucent flower on a very spring-like background.",
         "credits": "Clembs",
-        "available": "false"
+        "available": "true"
       },
       "cake": {
         "name": "Cake",
@@ -170,7 +170,7 @@
         "contents": "cake.png",
         "description": "Who wouldn't like a piece of cake?",
         "credits": "Addy Visuals",
-        "available": "false"
+        "available": "true"
       },
       "mountain": {
         "name": "Mountain",

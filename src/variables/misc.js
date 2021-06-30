@@ -21,7 +21,5 @@ module.exports.variables = {
     strikes: 0,
     //snipe stuff
     snipeContent: "",
-	snipeAuthor: "",
-	snipeChannel: "",
-	snipeStamp: "",
+	snipeDetails: "",
 }

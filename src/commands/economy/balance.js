@@ -4,7 +4,7 @@ module.exports.command = {
     name: "balance",
     module: "economy",
     usage_enUS: "<user ID | username | @mention (optional)>",
-    description_enUS: "Retrieves the specified user's balance and additional info (or yours, if none is specified).",
+    description_enUS: "Retrieves the specified user's (or yours, if nobody is specified) balance and additional info.",
     aliases: ["bank", "bal", "money", "credit", "wallet", "purplets"],
     code: `
 $reply[$messageID;
@@ -13,13 +13,13 @@ $reply[$messageID;
 {description:
 $get[purplets-$getGlobalUserVar[language]]
 $get[lead-$getGlobalUserVar[language]]
-$replaceText[$replaceText[$checkCondition[$getGlobalUserVar[job_type]==];true;$get[work-$getGlobalUserVar[language]]];false;]
+$replaceText[$replaceText[$checkCondition[$getGlobalUserVar[job_type]==$getVar[job_type]];true;$get[work-$getGlobalUserVar[language]]];false;]
 }
 
 {color:$getGlobalUserVar[color;$get[id]]}
 ;no]
 
-$let[title-enUS;$userTag[$get[id]] - Wallet]
+$let[title-enUS;$userTag[$get[id]] - Balance]
 $let[purplets-enUS;${emojis.general.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
 $let[lead-enUS;- **$ordinal[$getLeaderboardInfo[user_bank;$get[id];globaluser;top]]** place on the global leaderboard (\`$getServerVar[prefix]leaderboard\`).]
 $let[work-enUS;- You haven't got a job! You can get one by using the \`$getServerVar[prefix]job search\` command!]
