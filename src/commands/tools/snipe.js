@@ -10,7 +10,7 @@ $reply[$messageID;
 {description:
 $getChannelVar[snipeContent;$get[id]]
 }
-{footer:In #$splitText[2]}
+{footer:In #$channelName[$splitText[2]]}
 {timestamp:$splitText[3]}
 {color:$getGlobalUserVar[color]}
 ;no]

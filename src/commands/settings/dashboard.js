@@ -119,8 +119,13 @@ $else
     $loop[1;args]
 $endif
 
-
 $let[title-enUS;Dashboard - CRBT Settings]
 $let[desc1-enUS;Add a corresponding reaction to the message to switch between menus.\n**Index:** ⚙️ Server Settings | 👥 User Settings]
 $let[desc2-enUS;To switch to User Settings, you can use \`$getServerVar[prefix]dashboard user\`]
+
+$argsCheck[>1;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$setGlobalUserVar[lastCmd;$commandName]
     `}
