@@ -5,7 +5,7 @@ module.exports.command = {
     name: "ban",
     module: "moderation",
     description: "Bans the user with a reason if specified.",
-    usage: "{@mention} (reason)",
+    usage_enUS: "{@mention} (reason)",
     aliases: ['yeet','permaban'],
     cooldown: "5s",
     code: `

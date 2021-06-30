@@ -5,7 +5,7 @@ module.exports.command = {
     name: "kick",
     module: "moderation",
     description: "Kicks the user with a reason if specified.",
-    usage: "{@mention} (reason)",
+    usage_enUS: "{@mention} (reason)",
     aliases: ['expulse',"gtfo"],
     cooldown: "5s",
     code: `
