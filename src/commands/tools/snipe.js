@@ -5,10 +5,16 @@ module.exports.command = {
     usage_enUS: "<channel ID/channel name/#mention (optional)>",
     userPerms: "kick",
     code: `
-$reply[$messageID;
-{author:$userTag[$get[author]]:$userAvatar[$get[author]]}
-{description:
-$getChannelVar[snipeContent;$get[id]]
+    $reply[$messageID;
+    {thumbnail:$userAvatar[$getChannelVar[snipeAuthor;$mentionedChannels[1;yes]]]}
+    {color:$getGlobalUserVar[color]}
+    {title:Message Sniped Succesfully!}
+    {description:
+sniped message:
+\`\`\`$getChannelVar[snipeMsg;$mentionedChannels[1;yes]]\`\`\`
+
+deleted on $replaceText[$replaceText[$getChannelVar[snipeDate];.;/];-;at]
+sent by: $userTag[$getChannelVar[snipeAuthor;$mentionedChannels[1;yes]]]
 }
 {footer:In #$channelName[$splitText[2]]}
 {timestamp:$splitText[3]}
