@@ -19,7 +19,6 @@ $jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.apis.ocr}&url=
     
 
     $argsCheck[0;{execute:args}]
-    $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
     $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
     $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
     $if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
