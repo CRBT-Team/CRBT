@@ -5,16 +5,14 @@ module.exports.command = {
     name: "kick",
     module: "moderation",
     description: "Kicks the user with a reason if specified.",
-    usage_enUS: "{@mention} (reason)",
+    usage_enUS: "<@mention> <reason (optional)>",
     aliases: ['expulse',"gtfo"],
     cooldown: "5s",
     code: `
 $reply[$messageID;
-{title:$getVar[success] Successfully kicked $username[$mentioned[1]].} 
-{color:$getVar[green]}
-;$getGlobalUserVar[replies]]
-$setUserVar[strikeCount;$sum[$getUserVar[strikeCount;$mentioned[1]];1];$mentioned[1]]
-$setUserVar[strikelog;$getUserVar[strikelog;$mentioned[1]], **(KICK)** $replaceText[$replaceText[$checkCondition[$noMentionMessage==];true;*No reason specified*];false;$noMentionMessage] - $formatDate[$dateStamp;YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;MM]]==1];true;0$formatDate[$dateStamp;MM]];false;$formatDate[$dateStamp;MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;DD]]==1];true;0$formatDate[$dateStamp;DD]];false;$formatDate[$dateStamp;DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;HH]]==1];true;0$formatDate[$dateStamp;HH]];false;$formatDate[$dateStamp;HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;mm]]==1];true;0$formatDate[$dateStamp;mm]];false;$formatDate[$dateStamp;mm]] (GMT);$mentioned[1]]
+{title:${emojis.general.sucess} Successfully kicked $username[$mentioned[1]].} 
+{color:${colors.green}}
+;no]
 $kick[$mentioned[1]]
 $channelSendMessage[$replaceText[$getServerVar[modlogsChannel];None;$channelID];
 {author:Kick - $userTag[$mentioned[1]]:$userAvatar[$mentioned[1]]}
@@ -23,9 +21,6 @@ $channelSendMessage[$replaceText[$getServerVar[modlogsChannel];None;$channelID];
 :yes}
 {field:Moderator:
 <@$authorID>
-:yes}
-{field:Strike count:
-$replaceText[$sum[$getUserVar[strikeCount;$mentioned[1]];1] strikes;1 strikes;1 strike]
 :yes}
 {field:Reason:
 $replaceText[$replaceText[$checkCondition[$noMentionMessage==];true;*No reason specified*];false;$noMentionMessage]
@@ -46,3 +41,7 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+
+
+    // add a field that tells the user the strike counts because i removed it since there is
+    // no variable that is called "strike_count"
