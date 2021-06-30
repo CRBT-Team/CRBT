@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["p", "add"],
     description_enUS: "Adds <botname> to the voice channel, adds the song(s) to the queue or directly plays it if no music is currently playing.",
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
-    botperms: ["connect", "speak"],
+    botPerms: ["connect", "speak"],
     code: `
 $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
 
@@ -28,7 +28,7 @@ $get[playing-$getGlobalUserVar[language]]
 <@!$songInfo[userID;$get[queueLength]]>
 :yes}
 {field:$get[volume-$getGlobalUserVar[language]]:
-$getServerVar[volume]%
+$math[$getServerVar[volume]*2]%
 ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
@@ -55,10 +55,10 @@ $if[$voiceID[$clientID]!=$voiceID]
     $volume[$getServerVar[volume]]
 
     $if[$checkContains[$message;soundcloud.com]==true]
-        $let[delay;500ms]
+        $let[delay;1000ms]
         $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
-        $let[delay;1500ms]
+        $let[delay;2000ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
@@ -149,7 +149,7 @@ $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$guildID!=;{execute:guildOnly}]
     `}

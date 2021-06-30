@@ -6,6 +6,7 @@ const { readdirSync, lstatSync } = require("fs");
 
 app.get("/", function (req, res) {
   res.json({
+    status: 200,
     welcomeMessage: "Welcome to the Clembs API, currently in beta.",
     supportServer: links.info.discord,
     endpoints: {

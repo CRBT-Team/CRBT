@@ -1,9 +1,11 @@
 module.exports.variables = {
-    messagelogs_channel: "none", //note that this one is the only one not in camelCase for compatibility reasons 
-    serverLogsChannel: "none", 
-    modlogs_channel: "none", //note that this one is the only one not in camelCase for compatibility reasons 
-    memberLogsChannel: "none",
-    loggingLook: "fancy", //unsure if i'll keep this, basically to change the look of the logs between compact and fancy
+    messagelogs_channel: "none", 
+    modlogs_channel: "none",
     autopublishedchannels: "", //to be changed cause it currently blows
+
+    /*for 10.3 or 11.0
     memberStatsChannel: "none",
+    memberLogsChannel: "none",
+    loggingLook: "fancy",
+    serverLogsChannel: "none", */
 }

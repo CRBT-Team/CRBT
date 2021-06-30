@@ -27,9 +27,8 @@ $let[discord-enUS;**[Join the Discord community](${links.info.discord})**
 Get support, try new features and engage with the other members!]
 
 $argsCheck[0;{execute:args}]
-
-$setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$setGlobalUserVar[lastCmd;$commandName]
     `}

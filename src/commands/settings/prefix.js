@@ -36,15 +36,15 @@ $else
     {color:$getGlobalUserVar[color]}
     ;no]
 
-    $let[title-enUS;CRBT Settings - Prefix]
-    $let[description-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf that prefix is too complex, you can always use <@!$clientID> as a prefix instead.]
-    $let[descriptionAdmin-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf you don't like this one, you can instead use <@!$clientID> or change it using \`@$username[$clientID] prefix <new prefix>\`.]
+    $let[title-enUS;Prefix - CRBT Settings]
+    $let[description-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.]
+    $let[descriptionAdmin-enUS;$username[$clientID] uses the \`$getServerVar[prefix]\` prefix on this server.\nIf you don't like this one, you can change it using \`$getServerVar[prefix]prefix <new prefix>\`.]
 
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$guildID!=;{execute:guildOnly}]
     `}

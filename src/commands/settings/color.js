@@ -43,7 +43,7 @@ ${emojis.colors.white} \`White\`
     {color:$getGlobalUserVar[color]}
     ;no]
 
-    $let[title-enUS;CRBT Settings - Accent color]
+    $let[title-enUS;Accent color - CRBT Settings]
     $let[description-enUS;**Current color:** #$getGlobalUserVar[color]
 This color is applied across all commands you execute with CRBT. You can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).]
     $let[default-enUS;default]
@@ -74,6 +74,6 @@ $createObject[{}]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -3,7 +3,7 @@ module.exports.command = {
     aliases: ["edit", "editcmdcode", "editscript", "edit_code", "edit-code"],
     usage_enUS: "<command name/ID> <new script>",
     code: `
-$if[$toLowercase[$message[1]]==$getServerVar[cmd1title]]
+$if[$toLowercase[$message[1]]==$getServerVar[cmd1names]]
 $setServerVar[cmd1code;$messageSlice[1]]
 
 $reply[$messageID;

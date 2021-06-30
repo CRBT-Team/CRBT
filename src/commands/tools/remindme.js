@@ -15,11 +15,8 @@ $reply[$messageID;
 {description:**$get[reminder]**
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today];false;$get[date]]] at $get[hour] GMT • In $getObjectProperty[durationdone]
 }
-{footer:$get[protip-$getGlobalUserVar[language]]}
 {color:${colors.success}}
 ;no]
-
-$setGlobalUserVar[reminder$getGlobalUserVar[reminders];$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ dm]
 
 $setTimeout[$getObjectProperty[duration]ms;
 userID: $authorID
@@ -28,10 +25,7 @@ channelID: $channelID
 future: $get[future]
 timestamp: $dateStamp
 method: dm
-dms: $isUserDMEnabled
-count: $getGlobalUserVar[reminders]]
-
-$setGlobalUserVar[reminders;$sum[$getGlobalUserVar[reminders];1]]
+dms: $isUserDMEnabled]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;*No subject was set*];false;$messageSlice[1]]]
 
@@ -42,11 +36,8 @@ $reply[$messageID;
 {description:**$get[reminder]**
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today];false;$get[date]]] at $get[hour] GMT • In $getObjectProperty[durationdone]
 }
-{footer:$get[protip-$getGlobalUserVar[language]]}
 {color:${colors.success}}
 ;no]
-
-$setGlobalUserVar[reminder$getGlobalUserVar[reminders];$get[reminder] ⫻∞ $get[future] ⫻∞ $dateStamp ⫻∞ channel ⫻∞ $mentionedChannels[1]]
 
 $setTimeout[$getObjectProperty[duration]ms;
 userID: $authorID
@@ -54,10 +45,7 @@ reminder: $get[reminder]
 channelID: $mentionedChannels[1]
 future: $get[future]
 timestamp: $dateStamp
-method: channel
-count: $getGlobalUserVar[reminders]]
-
-$setGlobalUserVar[reminders;$sum[$getGlobalUserVar[reminders];1]]
+method: channel]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;*No subject was set*];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
 
@@ -69,9 +57,6 @@ $let[hour;$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[
 $let[future;$math[$dateStamp+$getObjectProperty[duration]]]
 
 $let[title-enUS;${emojis.reminder.set} Reminder set]
-$let[protip-enUS;You can check your reminders using the reminders command.]
-
-
 
 $onlyIf[$getObjectProperty[duration]<63115200000;{title:${emojis.general.error} Reminders cannot be higher than 2 years for now.} {color:${colors.red}}]
 
@@ -87,6 +72,6 @@ $onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceTe
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
   `}
