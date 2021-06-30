@@ -3,6 +3,7 @@ module.exports.command = {
     module: "moderation",
     description_enUS: "Shows the contents of the latest deleted message in the current channel.",
     usage_enUS: "<channel ID/channel name/#mention (optional)>",
+    userPerms: "kick",
     code: `
 $reply[$messageID;
 {author:$userTag[$get[author]]:$userAvatar[$get[author]]}

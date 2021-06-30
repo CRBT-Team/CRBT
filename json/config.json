@@ -127,6 +127,11 @@
         "store": {
             "badges": "<:badges:857341071309930568>",
             "banners": "<:banners:857340872944517120>"
+        },
+        "other": {
+            "coolwoah": "<:coolwoah:859734784754450442>",
+            "goodmeal": "<:good_meal:750034917743919256>",
+            "heart": "<:heart:858010663226310676>"
         }
     },
     "links": {
