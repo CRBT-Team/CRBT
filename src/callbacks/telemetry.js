@@ -14,7 +14,7 @@ $replaceText[$replaceText[$message;$getServerVar[prefix];()];\`;]\`\`\`]
 
         $addField[Platform;$toLocaleUppercase[$platform];yes]
         $addField[User ID;$authorID;yes]
-        $addField[Type;$replaceText[$replaceText[$checkCondition[$guildID==];false;Server];true;DM];yes]
+        $addField[Type;$replaceText[$replaceText[$checkCondition[$channelType==dm];false;Server];true;DM];yes]
 
     $elseIf[$mentioned[1]==$clientID]
 
@@ -23,7 +23,7 @@ $replaceText[$replaceText[$message;$getServerVar[prefix];()];\`;]\`\`\`]
 
         $addField[Platform;$toLocaleUppercase[$platform];yes]
         $addField[User ID;$authorID;yes]
-        $addField[Type;$replaceText[$replaceText[$checkCondition[$guildID==];false;Server];true;DM];yes]
+        $addField[Type;$replaceText[$replaceText[$checkCondition[$channelType==dm];false;Server];true;DM];yes]
 
     $endelseif
     $endif

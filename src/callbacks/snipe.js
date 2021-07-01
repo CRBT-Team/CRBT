@@ -3,4 +3,5 @@ module.exports.deletedCommand = {
 	code: `
 $setChannelVar[snipeContent;$message]
 $setChannelVar[snipeDetails;$authorID//$channelID//$dateStamp]
+$onlyIf[$channelType!=dm;]
 	`}

@@ -31,6 +31,7 @@ $onlyIf[$serverIcon[$get[id]]!=null;{execute:serverIconMissing}]
 
 $if[$message==]
     $let[id;$guildID]
+    $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $else
     $let[id;$message]
     $onlyIf[$serverExists[$message]==true;{execute:args}]
@@ -38,6 +39,6 @@ $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}

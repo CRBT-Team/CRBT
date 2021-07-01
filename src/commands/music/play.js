@@ -149,7 +149,7 @@ $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$if[$channelType!=dm] $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif $endif
 $setGlobalUserVar[lastCmd;$commandName]
-$onlyIf[$guildID!=;{execute:guildOnly}]
+$onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}

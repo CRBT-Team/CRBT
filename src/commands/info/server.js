@@ -89,8 +89,14 @@ $let[icon;$replaceText[$replaceText[$checkContains[$serverIcon[$get[id]];null];f
 
 $if[$message==]
     $let[id;$guildID]
+    $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $else
     $let[id;$message[1]]
     $onlyIf[$serverExists[$message[1]]==true;{execute:serverNotFound}]
 $endif
+
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

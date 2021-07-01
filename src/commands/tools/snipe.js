@@ -35,5 +35,10 @@ $else
     $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:args}]
 $endif
 
+$argsCheck[>1;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$hasPerms[$authorID;kick]==true;{execute:onlymods}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

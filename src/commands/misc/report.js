@@ -26,10 +26,10 @@ $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedRe
 ]
 
 $djsEval[const { Util } = require("discord.js");
-d.object.cleanedReport = Util.cleanContent("$getObjectProperty[report]", message);
+d.object.cleanedReport = Util.cleanContent("$get[report]", message);
 ]
 
-$createObject[{"report":"$message"}]
+$let[report;$message]
 
 
 $if[$messageAttachment!=]
@@ -53,6 +53,6 @@ $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
   `}
