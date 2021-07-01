@@ -78,6 +78,7 @@ $else
     $let[memberExists;$memberExists[$get[id]]]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
+    $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

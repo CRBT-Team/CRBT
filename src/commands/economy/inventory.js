@@ -4,6 +4,9 @@ const badges = items.badges;
 module.exports.command = {
     name: "inventory",
     aliases: ["inv", "items"],
+    module: "economy",
+    usage: "<user ID | username | @mention>",
+    description_enUS: "Opens a user's banners & badges inventory, as well as some detailed information.",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAVatar[$get[id]]}

@@ -34,7 +34,9 @@ $let[goodmeal;$replaceText[$replaceText[$get[con];true;${e.goodmeal}];false;😋
 $let[con;$checkCondition[$clientID==595731552709771264]]
 
 $onlyIf[$isBot[$authorID]==false;]
-$if[$channelType!=dm] $onlyIf[$hasPerms[$clientID;addreactions]==true;] $endif
+$if[$channelType!=dm] 
+  $onlyIf[$hasPermsInChannel[$channelID;$clientID;addreactions]==true;] 
+$endif
 $onlyIf[$getGlobalUserVar[blocklisted]==false;]
 $onlyIf[$getServerVar[module_autoreact]==true;]
 $onlyIf[$userExists[$authorID]==true;]

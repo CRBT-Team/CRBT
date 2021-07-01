@@ -147,4 +147,5 @@ $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
+$onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}
