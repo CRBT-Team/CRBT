@@ -1,10 +1,11 @@
 module.exports.command = {
     name: "template",
     module: "misc",
-    aliases: ["templatealias"],
+    aliases: ["alias1", "alias2"],
     description_enUS: "description.",
-    usage_enUS: "<something cool>",
-    botperms: [""],
+    usage_enUS: "<something cool>, <option 1 | option 2 | option 3 (optional)>", //how do you use the cmd
+    botPerms: [""], //required bot permissions
+    userPerms: [""], //required user permissions
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}

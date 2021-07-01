@@ -22,7 +22,8 @@ $reply[$messageID;
 
 $let[title-enUS;$userTag[$get[id]] - Job info]
 $let[balance-enUS;Balance:${emojis.general.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
-$let[cooldowns-enUS;Cooldowns:\`$getServerVar[prefix]hourly\`#COLON# $replaceText[$replaceText[$checkCondition[$getCooldownTime[1h;globalUser;hourly;$get[id]]==0];true;**Available!**];false;$getCooldownTime[1h;globalUser;hourly;$get[id]]\n\`$getServerVar[prefix]work\`#COLON# $replaceText[$replaceText[$checkCondition[$getCooldownTime[1h;globalUser;work;$get[id]]==0];true;**Available!**];false;$getCooldownTime[1h;globalUser;work;$get[id]]]]
+$let[cooldowns-enUS;Cooldowns:\`$getServerVar[prefix]hourly\`#COLON# $replaceText[$replaceText[$checkCondition[$getCooldownTime[1h;globalUser;hourly;$get[id]]==0];true;**Available!**];false;$getCooldownTime[1h;globalUser;hourly;$get[id]]
+\`$getServerVar[prefix]work\`#COLON# $replaceText[$replaceText[$checkCondition[$getCooldownTime[1h;globalUser;work;$get[id]]==0];true;**Available!**];false;$getCooldownTime[1h;globalUser;work;$get[id]]]]
 $let[job-enUS;Job:$replaceText[$replaceText[$toLocaleUppercase[$getGlobalUserVar[job_type;$get[id]]];Mcdoemployee;McDonald's employee];Youtuber;YouTuber]]
 $let[level-enUS;Level:$replaceText[$getGlobalUserVar[job_level;$get[id]]/4;4/4;**MAX**]]
 
@@ -40,4 +41,5 @@ $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
+$onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}
