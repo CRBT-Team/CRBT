@@ -13,8 +13,7 @@ $reply[$messageID;
 
 {description:
 $replaceText[$replaceText[$getServerVar[partnered_guild;$get[id]];true;${emojis.general.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];ispartnered];true;${emojis.badges.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];isverified];true;${emojis.badges.partner} ];false;]
-$serverDescription
-$get[icon-$getGlobalUserVar[language]]
+$replaceText[$replaceText[$checkCondition[$serverDescription==];true;];false;$serverDescription\n]$get[icon-$getGlobalUserVar[language]]
 }
 
 {field:$get[id-$getGlobalUserVar[language]]:yes}
@@ -49,13 +48,14 @@ $endif
 
 $let[title-enUS;$serverName[$get[id]] - Information]
 
-$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon\`]]
+$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon $replaceText[$get[id];$guildID;]\`]]
 
 $let[id-enUS;ID:$get[id]]
 
 $let[owner-enUS;Owner:<@!$ownerID[$get[id]]>]
 
-$let[creation-enUS;Creation date:$get[creationDate]]
+$let[creation-enUS;Creation date:<t:$formatDate[$getObjectProperty[time];X]> (<t:$formatDate[$getObjectProperty[time];X]:R>)]
+$djsEval[const snowflake = require('discord-snowflake'); d.object.time = snowflake("$get[id]");]
 
 $let[creationDate;$formatDate[$guild[$get[id];created];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];MM]]==1];true;0$formatDate[$guild[$get[id];created];MM]];false;$formatDate[$guild[$get[id];created];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];DD]]==1];true;0$formatDate[$guild[$get[id];created];DD]];false;$formatDate[$guild[$get[id];created];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];HH]]==1];true;0$formatDate[$guild[$get[id];created];HH]];false;$formatDate[$guild[$get[id];created];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];mm]]==1];true;0$formatDate[$guild[$get[id];created];mm]];false;$formatDate[$guild[$get[id];created];mm]] (GMT)]
 

@@ -12,11 +12,16 @@ $reply[$messageID;
 
 {description:
 \`\`\`
-$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.apis.ocr}&url=$get[message]&scale=true&OCREngine=2;ParsedResults#RIGHT#0#LEFT#.ParsedText]\`\`\`
+$getObjectProperty[ParsedResults[0].ParsedText]
+\`\`\`
 }
+
+{thumbnail:$get[message]}
 
 {color:$getGlobalUserVar[color]}
 ;no]
+
+$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.apis.ocr}&url=$get[message]&scale=true&OCREngine=2]]
 
 $onlyIf[$get[message]!=;{execute:args}]
 
