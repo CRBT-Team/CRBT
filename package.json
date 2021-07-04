@@ -8,19 +8,17 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
-    "aoi.js": "^4.0.0",
+    "aoi.js": "github:clembs/aoi.js",
     "canvas": "^2.8.0",
     "dbd.js-utils": "^0.1.1",
     "discord-buttons": "^3.1.1",
-    "discord-reply": "^0.1.2",
+    "discord-snowflake": "^1.0.1",
     "discord-webhook-node": "^1.1.8",
     "emoji-unicode": "^2.0.1",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.3.0",
     "fs-extra": "^9.1.0",
     "node-fetch": "^2.6.1",
-    "url-exists": "^1.0.3",
-    "url-exists-deep": "^2.0.10",
     "yt-search": "^2.8.0",
     "ytdl-core": "^4.8.3"
   },

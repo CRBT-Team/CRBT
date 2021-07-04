@@ -119,7 +119,7 @@ $else
     $loop[1;args]
 $endif
 
-$let[title-enUS;Dashboard - CRBT Settings]
+$let[title-enUS;CRBT Settings - Dashboard]
 $let[desc1-enUS;Add a corresponding reaction to the message to switch between menus.\n**Index:** ⚙️ Server Settings | 👥 User Settings]
 $let[desc2-enUS;To switch to User Settings, you can use \`$getServerVar[prefix]dashboard user\`]
 

@@ -29,7 +29,39 @@ bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
 bot.onMessageDelete(); // For the message deletion thing
 bot.onMessageUpdate();
+/*
+bot.command({
+    name: "rps",
+    code: `
+$apiMessage[;{title:Testing interactions}
+{color:$getGlobalUserVar[color]}
+{description:click a button to do a thing!}
+{thumbnail:$authorAvatar}
+;{actionRow:Ephemeral message,2,1,ephemeral,:Thing,2,3,editmsg,:Reply message,2,4,replymsg,};$messageID;no;no]
+    `})
 
+bot.interactionCommand({
+    name: "ephemeral",
+    prototype: "button",
+    code: `
+$interactionReply[<@!$authorID>;;;64]
+    `})
+
+bot.interactionCommand({
+    name: "editmsg",
+    prototype: "button",
+    code: `
+$interactionEdit[;{title:yoo}]
+$interactionReply[hello]
+    `})
+
+bot.interactionCommand({
+    name: "replymsg",
+    prototype: "button",
+    code: `
+$interactionReply[<@!$authorID>;;{actionRow:Ephemeral message,2,1,ephemeral,:Edit message,2,2,editmsg,:Reply message,2,3,replymsg,}]
+    `})
+*/
 /* Lavalink
 bot.createLavalink("127.0.0.1:2333", "crbt_rewrite", false);
 */

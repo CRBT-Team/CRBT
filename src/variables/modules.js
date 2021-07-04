@@ -8,7 +8,7 @@ module.exports.variables = {
     module_nsfw: false,
     module_tools: true,
     module_info: true,
-    module_music: false,
+    module_music: true,
     //module_radios: true,
     module_settings: true,
     module_moderation: true,

@@ -4,7 +4,7 @@ const { emojis } = require("../../../index");
 module.exports.command = {
     name: "ban",
     module: "moderation",
-    description: "Bans the user with a reason if specified.",
+    description_enUS: "Bans the user with a reason if specified.",
     usage_enUS: "<@mention> <reason (optional)>",
     aliases: ['yeet','permaban'],
     cooldown: "5s",

@@ -5,20 +5,14 @@ module.exports.command = {
     usage_enUS: "<channel ID/channel name/#mention (optional)>",
     userPerms: "kick",
     code: `
-    $reply[$messageID;
-    {thumbnail:$userAvatar[$getChannelVar[snipeAuthor;$mentionedChannels[1;yes]]]}
-    {color:$getGlobalUserVar[color]}
-    {title:Message Sniped Succesfully!}
+$reply[$messageID;
+    {author:$userTag[$get[author]]:$userAvatar[$get[author]]}
     {description:
-sniped message:
-\`\`\`$getChannelVar[snipeMsg;$mentionedChannels[1;yes]]\`\`\`
-
-deleted on $replaceText[$replaceText[$getChannelVar[snipeDate];.;/];-;at]
-sent by: $userTag[$getChannelVar[snipeAuthor;$mentionedChannels[1;yes]]]
-}
-{footer:In #$channelName[$splitText[2]]}
-{timestamp:$splitText[3]}
-{color:$getGlobalUserVar[color]}
+    $getChannelVar[snipeContent;$get[id]]
+    }
+    {footer:In #$channelName[$splitText[2]]}
+    {timestamp:$splitText[3]}
+    {color:$getGlobalUserVar[color]}
 ;no]
 
 $let[author;$splitText[1]]
@@ -32,10 +26,9 @@ $if[$message==]
 $else
     $onlyIf[$hasPermsInChannel[$get[id];$clientID;readmessages]==true;{execute:cantReadChannel}]
     $let[id;$findServerChannel[$message]]
-    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:args}]
+    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:channelNotFound}]
 $endif
 
-$argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$hasPerms[$authorID;kick]==true;{execute:onlymods}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]

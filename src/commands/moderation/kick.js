@@ -4,7 +4,7 @@ const { emojis } = require("../../../index");
 module.exports.command = {
     name: "kick",
     module: "moderation",
-    description: "Kicks the user with a reason if specified.",
+    description_enUS: "Kicks the user with a reason if specified.",
     usage_enUS: "<@mention> <reason (optional)>",
     aliases: ['expulse',"gtfo"],
     cooldown: "5s",
