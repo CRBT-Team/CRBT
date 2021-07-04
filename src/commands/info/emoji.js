@@ -27,9 +27,7 @@ $if[$charCount[$message[1]]>=24]
         {field:$get[origin-$getGlobalUserVar[language]]:yes}
         {field:$get[creationDate-$getGlobalUserVar[language]]:no}
         
-    $let[creationDate-enUS;Added:$get[format-enUS]]
-    $let[format-enUS;$formatDate[$get[creationDate];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];MM]]==1];true;0$formatDate[$get[creationDate];MM]];false;$formatDate[$get[creationDate];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];DD]]==1];true;0$formatDate[$get[creationDate];DD]];false;$formatDate[$get[creationDate];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];HH]]==1];true;0$formatDate[$get[creationDate];HH]];false;$formatDate[$get[creationDate];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[creationDate];mm]]==1];true;0$formatDate[$get[creationDate];mm]];false;$formatDate[$get[creationDate];mm]]]
-    $let[creationDate;$emoji[$get[id];created]]
+    $let[creationDate-enUS;Added:<t:$formatDate[$emoji[$get[id];created];X]> (<t:$formatDate[$emoji[$get[id];created];X]:R>)]
     $else
         {field:$get[origin-$getGlobalUserVar[language]]:yes}
     $endif

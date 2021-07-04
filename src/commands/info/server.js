@@ -55,9 +55,7 @@ $let[id-enUS;ID:$get[id]]
 
 $let[owner-enUS;Owner:<@!$ownerID[$get[id]]>]
 
-$let[creation-enUS;Creation date:$get[creationDate]]
-
-$let[creationDate;$formatDate[$guild[$get[id];created];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];MM]]==1];true;0$formatDate[$guild[$get[id];created];MM]];false;$formatDate[$guild[$get[id];created];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];DD]]==1];true;0$formatDate[$guild[$get[id];created];DD]];false;$formatDate[$guild[$get[id];created];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];HH]]==1];true;0$formatDate[$guild[$get[id];created];HH]];false;$formatDate[$guild[$get[id];created];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];mm]]==1];true;0$formatDate[$guild[$get[id];created];mm]];false;$formatDate[$guild[$get[id];created];mm]] (GMT)]
+$let[creation-enUS;Creation date:<t:$formatDate[$guild[$get[id];created];X]> (<t:$formatDate[$guild[$get[id];created];X]:R>)]
 
 $if[$channelType!=dm]
 
