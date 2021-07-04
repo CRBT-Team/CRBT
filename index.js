@@ -14,26 +14,13 @@ const { api } = JSON.parse(readFileSync("json/api.json", "utf-8"));
 // Creating the bot
 const bot = new Bot({
   token: process.env.TOKEN,
-  prefix: ["$getServerVar[prefix]", "<@$clientID>", "<@!$clientID>"],
-  mobile: false,
-  sharding: false,
-  cache: true,
+  prefix: ["$getServerVar[prefix]"],
+  mobile: false, sharding: false, cache: true,
 });
 
 // Export the bot, configuration files and instance to be accessed better by commands
 module.exports = {
-  bot,
-  colors,
-  emojis,
-  jobs,
-  links,
-  tokens,
-  botinfo,
-  items,
-  logos,
-  illustrations,
-  instance,
-  api,
+  bot, colors, emojis, jobs, links, tokens, botinfo, items, logos, illustrations, instance, api,
 };
 
 // Listeners
