@@ -37,10 +37,10 @@ $let[image;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get
 $if[$message!=]
     $setGlobalUserVar[city;$getObjectProperty[result.location.name], $getObjectProperty[result.location.country]]
     $onlyIf[$getObjectProperty[success]==true;{title:No data was found for the city \`$message\`.} {color:red}]
-    $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.apis.betaApi}&location=$message]]
+    $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.betaApi}&location=$message]]
 $else
     $onlyIf[$getObjectProperty[success]==true;{title:No data was found for this city.} {color:red}]
-    $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.apis.betaApi}&location=$getGlobalUserVar[city]]]
+    $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.betaApi}&location=$getGlobalUserVar[city]]]
 $endif
 
 $argsCheck[>1;{execute:args}]
