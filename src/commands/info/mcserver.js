@@ -1,6 +1,8 @@
 module.exports.command = {
     name: "mcserver",
-    description_enUS: "",
+    module: "info",
+    description_enUS: "Gives info about a specified Minecraft Java server.",
+    usage_enUS: "<Minecraft Java Edition server IP/hostname>",
     code: `
 $reply[$messageID;
 {author:$getObjectProperty[hostname] - Minecraft server info}

@@ -58,11 +58,13 @@
             "partner": "<:CRBTPartner:856815843127853086>"
         },
         "channels": {
-            "voice": "<:voice:784030537547251713>",
-            "news": "<:channelnews:799956227693609020>",
-            "text": "<:channeltext:799958569360424970>",
-            "nsfw": "<:channelnsfw:799958568865366047>",
-            "category": "<:category:822947868863102997>"
+            "text": "<:text:861643749242306610>",
+            "voice": "<:voice:861643709111468043>",
+            "news": "<:news:861643588668227635>",
+            "rules": "<:rules:861643629563346964>",
+            "store": "<:store:861643679306743809>",
+            "nsfw": "<:text_nsfw:861646458544193567>",
+            "category": "<:category:861645653326692362>"
         },
         "users": {
             "humans": "<:members:859167506324783174>",

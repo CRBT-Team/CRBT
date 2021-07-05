@@ -28,7 +28,7 @@ $reply[$messageID;
 
   {field:$get[computer-$getGlobalUserVar[language]]:yes}
 
-  {thumbnail:${illustrations.crbtinfo}}
+  {thumbnail:$userAvatar[$clientID;512]}
 
   {color:$getGlobalUserVar[color]}
 ;no]

@@ -22,7 +22,7 @@ $get[id]
 
 {field:$get[activity-$getGlobalUserVar[language]]:
 $replaceText[$replaceText[$activity[$get[id]];Custom Status;Custom Status:\n$replaceText[$getCustomStatus[$get[id];emoji] ;none ;]$replaceText[$getCustomStatus[$get[id]];none;]
-];none;*None*]
+];none;None]
 :yes}
 
 {field:$get[nick-$getGlobalUserVar[language]]:
@@ -39,7 +39,7 @@ $replaceText[$replaceText[$checkCondition[$userRoles[$get[id];mentions; ]==];tru
 
 {field:$get[accountCreated-$getGlobalUserVar[language]]:yes}
 
-$let[serverJoined-enUS;Joined server:<t:$formatDate[$memberJoinedDate[$authorID;date];X]> (<t:$formatDate[$memberJoinedDate[$authorID;date];X]:R>)]
+$let[serverJoined-enUS;Joined server:<t:$formatDate[$memberJoinedDate[$get[id];date];X]> (<t:$formatDate[$memberJoinedDate[$get[id];date];X]:R>)]
 
 $let[perms-enUS;Key permissions:$get[perms]]
 $let[perms;$filterMessageWords[$replaceText[$replaceText[$replaceText[$hasPerms[$get[id];admin];false;$userPerms[$get[id]]];true;Administrator (all permissions)];Tts;TTS];no;Add Reactions, ;View Channel, ;Send Messages, ;Use Vad, ;Read Message History, ;Embed Links, ;Connect, ;Speak, ;Use External Emojis, ;Stream, ]]
@@ -50,10 +50,10 @@ $let[roles-enUS;$replaceText[$replaceText[$checkCondition[$userRoleCount[$get[id
 {color:$getGlobalUserVar[color;$get[id]]}
 ;no]
 
-$let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$authorID;date];X]> (<t:$formatDate[$creationDate[$authorID;date];X]:R>)]
+$let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$get[id];date];X]> (<t:$formatDate[$creationDate[$get[id];date];X]:R>)]
 
 $let[author-enUS;$replaceText[$replaceText[$checkCondition[$charCount[$userTag]<30];true;$userTag[$get[id]]];false;$cropText[$username[$get[id]];25]...#$discriminator[$get[id]]] - Information]
-$let[avatar-enUS;**Profile picture:** **[2048px]($replaceText[$userAvatar[$get[id];2048;yes];webp;png])** | **[512px]($replaceText[$userAvatar[$get[id];512;yes];webp;png])** | **[256px]($replaceText[$userAvatar[$get[id];256;yes];webp;png])** | \`$getServerVar[prefix]avatar $replaceText[$get[id];$authorID;]\`]
+$let[avatar-enUS;**Profile picture:** **[2048px]($replaceText[$userAvatar[$get[id];2048;yes];webp;png])** | **[512px]($replaceText[$userAvatar[$get[id];512;yes];webp;png])** | **[256px]($replaceText[$userAvatar[$get[id];256;yes];webp;png])** | \`$getServerVar[prefix]avatar$replaceText[ $get[id]; $authorID;]\`]
 
 $let[status;$replaceText[$replaceText[$replaceText[$replaceText[$status[$get[id]];dnd;https://cdn.discordapp.com/attachments/782584672772423684/851805534527946762/unknown.png];online;https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png];idle;https://cdn.discordapp.com/attachments/782584672772423684/851805544507113542/unknown.png];offline;https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png]]
 
