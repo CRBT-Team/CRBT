@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 connect(
-  `mongodb+srv://CRBT:CRBT_Mongo_DB@crbt.pbnxb.mongodb.net/CRBT`,
+  `mongodb+srv://CRBT:CRBT_Mongo_DB@crbt.pbnxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
   {
     useCreateIndex: true,
     useFindAndModify: false,
