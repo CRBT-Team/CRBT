@@ -56,7 +56,7 @@ $if[$voiceID[$clientID]!=$voiceID]
 
     $if[$checkContains[$message;soundcloud.com]==true]
         $let[delay;1000ms]
-        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
+        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud};5m;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
         $let[delay;2000ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]

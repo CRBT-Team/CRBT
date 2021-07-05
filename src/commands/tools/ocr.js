@@ -21,7 +21,7 @@ $getObjectProperty[ParsedResults[0].ParsedText]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.apis.ocr}&url=$get[message]&scale=true&OCREngine=2]]
+$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.ocr}&url=$get[message]&scale=true&OCREngine=2]]
 
 $onlyIf[$get[message]!=;{execute:args}]
 

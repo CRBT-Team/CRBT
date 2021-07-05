@@ -157,19 +157,16 @@
         }
     },
     "tokens": {
-        "soundcloud": {
-            "clientID": "6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE"
-        },
-        "apis": {
-            "ocr": "26e9ccb94488957",
-            "avux": "CQ4A0JN-WQNMR0H-Q0HYRPK-WA9FYFN",
-            "betaApi": "E5iDrmzFaVdnzcQXnDsUePe7E7KtpxhZT2dmf8aJYxHr6mBOyMj7mWLVoAxh",
-            "spotify": "BQACarAut_xMq48spywHhaaxXtFd5iixoltrJqMXKr6OKuGWwyiEYV_4Oi3m5VW4OjrTQMurS4bA85522hVwicv5HUi_yMpu0oIZkrTLbCHsIDBCNPwRH3ftxDOVgjMt1vVH8uG5rDaoBpKKb8fRrx3j3adSk0I"
-        }
+        "soundcloud": "6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE",
+        "ocr": "26e9ccb94488957",
+        "avux": "CQ4A0JN-WQNMR0H-Q0HYRPK-WA9FYFN",
+        "betaApi": "E5iDrmzFaVdnzcQXnDsUePe7E7KtpxhZT2dmf8aJYxHr6mBOyMj7mWLVoAxh",
+        "spotify": "BQACarAut_xMq48spywHhaaxXtFd5iixoltrJqMXKr6OKuGWwyiEYV_4Oi3m5VW4OjrTQMurS4bA85522hVwicv5HUi_yMpu0oIZkrTLbCHsIDBCNPwRH3ftxDOVgjMt1vVH8uG5rDaoBpKKb8fRrx3j3adSk0I",
+        "github": "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"
     },
     "botinfo": {
         "version": 10,
-        "build": 27,
+        "build": 28,
         "news": [
             "👀"
         ]

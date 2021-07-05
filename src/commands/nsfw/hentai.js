@@ -9,7 +9,7 @@ module.exports.command = {
 $reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]
 
 $reply[$messageID;
-{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/hentai;url];$jsonRequest[https://api.avux.ga/hentai?key=${tokens.apis.avux};text]]}
+{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/hentai;url];$jsonRequest[https://api.avux.ga/hentai?key=${tokens.avux};text]]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
