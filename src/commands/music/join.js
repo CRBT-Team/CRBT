@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["connect", "plscome"],
     description_enUS: "Connects CRBT to your voice channel.",
     code: `
-$joinVC[$voiceID[$clientID]]
+$joinVC[$voiceID]
 
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
@@ -14,14 +14,17 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Join #$channelID]
+$let[title-enUS;${emojis.general.success} Joined ${emojis.channels.voice} $channelName[$voiceID]]
 
-$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
+$if[$voiceID[$clientID]!=]
+    $onlyIf[$voiceID[$clientID]==$voiceID;{execute:samevoice}]
+$endif
+
+$onlyIf[$voiceID!=;{execute:novoice}]
 
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}

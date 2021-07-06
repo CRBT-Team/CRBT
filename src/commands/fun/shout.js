@@ -58,7 +58,7 @@ $else
 
 $endif
 
-$let[message;$replaceText[$message;";]]
+$let[message;$replaceText[$message;";']]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

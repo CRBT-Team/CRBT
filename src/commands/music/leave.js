@@ -14,7 +14,7 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Left #$channelID]
+$let[title-enUS;${emojis.general.success} Left ${emojis.channels.voice} $channelName[$voiceID]]
 
 $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 

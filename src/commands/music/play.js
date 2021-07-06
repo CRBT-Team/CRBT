@@ -8,51 +8,51 @@ module.exports.command = {
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
     botPerms: ["connect", "speak"],
     code: `
-$reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
-
-$if[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true]!=true]
-
-$editMessage[$get[id];
-{author:$get[step3-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755923365918.png}
-{title:$songInfo[title;$get[queueLength]]}
-{url:$songInfo[url;$get[queueLength]]}
-{description:
-$get[duration-$getGlobalUserVar[language]] \`$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[duration;$get[queueLength]]; ]\`
-$get[playing-$getGlobalUserVar[language]]
-}
-
-{field:$get[uploaded-$getGlobalUserVar[language]]:
-[$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])
-:yes}
-{field:$get[added-$getGlobalUserVar[language]]:
-<@!$songInfo[userID;$get[queueLength]]>
-:yes}
-{field:$get[volume-$getGlobalUserVar[language]]:
-$math[$getServerVar[volume]*2]%
-($get[volumeTip-$getGlobalUserVar[language]])
-:no}
-{thumbnail:$songInfo[thumbnail;$get[queueLength]]}
-{color:$getGlobalUserVar[color]}
-;$channelID]
-
-$let[queueLength;$sub[$queueLength;1]]
-
-$else
-
-$editMessage[$get[id];
-{title:Added $sub[$get[newQueueLength];$get[oldQueueLength]] songs to the queue.}
-{color:$getGlobalUserVar[color]}
-;$channelID]
-
-$let[newQueueLength;$queueLength]
-
-$endif
-
-$wait[$get[delay]]
-
 $if[$voiceID[$clientID]!=$voiceID]
 
-    $volume[$getServerVar[volume]]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
+
+    $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
+    
+        $editMessage[$get[id];
+        {author:$get[step3-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755923365918.png}
+        {title:$songInfo[title;$get[queueLength]]}
+        {url:$songInfo[url;$get[queueLength]]}
+        {description:
+        $get[duration-$getGlobalUserVar[language]] \`$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[duration;$get[queueLength]]; ]\`
+        $get[playing-$getGlobalUserVar[language]]
+        }
+    
+        {field:$get[uploaded-$getGlobalUserVar[language]]:
+        [$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])
+        :yes}
+        {field:$get[added-$getGlobalUserVar[language]]:
+        <@!$songInfo[userID;$get[queueLength]]>
+        :yes}
+        {field:$get[volume-$getGlobalUserVar[language]]:
+        $math[$getServerVar[volume]*2]%
+        ($get[volumeTip-$getGlobalUserVar[language]])
+        :no}
+        {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
+        {color:$getGlobalUserVar[color]}
+        ;$channelID]
+    
+        $let[queueLength;$sub[$queueLength;1]]
+    
+    $else
+    
+        $editMessage[$get[id];
+        {title:Added $sub[$get[newQueueLength];$get[oldQueueLength]] songs to the queue.}
+        {color:$getGlobalUserVar[color]}
+        ;$channelID]
+    
+        $let[newQueueLength;$queueLength]
+    
+    $endif
+    
+    $wait[$get[delay]]
+
+    $let[queueLength;$sub[$queueLength;1]]
 
     $if[$checkContains[$message;soundcloud.com]==true]
         $let[delay;1000ms]
@@ -102,6 +102,50 @@ $if[$voiceID[$clientID]!=$voiceID]
 
 $else
 
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
+
+    $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
+    
+        $editMessage[$get[id];
+        {author:$get[step3-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755923365918.png}
+        {title:$songInfo[title;$get[queueLength]]}
+        {url:$songInfo[url;$get[queueLength]]}
+        {description:
+        $get[duration-$getGlobalUserVar[language]] \`$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[duration;$get[queueLength]]; ]\`
+        $get[playing-$getGlobalUserVar[language]]
+        }
+    
+        {field:$get[uploaded-$getGlobalUserVar[language]]:
+        [$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])
+        :yes}
+        {field:$get[added-$getGlobalUserVar[language]]:
+        <@!$songInfo[userID;$get[queueLength]]>
+        :yes}
+        {field:$get[volume-$getGlobalUserVar[language]]:
+        $math[$getServerVar[volume]*2]%
+        ($get[volumeTip-$getGlobalUserVar[language]])
+        :no}
+        {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
+        {color:$getGlobalUserVar[color]}
+        ;$channelID]
+    
+        $let[queueLength;$sub[$queueLength;1]]
+    
+    $else
+    
+        $editMessage[$get[id];
+        {title:Added the playlist to the queue.}
+        {color:$getGlobalUserVar[color]}
+        ;$channelID]
+    
+        $let[newQueueLength;$queueLength]
+
+    $endif
+    
+    $wait[$get[delay]]
+
+    $let[queueLength;$sub[$queueLength;1]]
+
     $let[id;$botLastMessageID]
 
     $reply[$messageID;
@@ -117,7 +161,7 @@ $else
 
     $if[$checkContains[$message;soundcloud.com]==true]
         $let[delay;1000ms]
-        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud.clientID};5m;yes;yes;{execute:addQueue}]]
+        $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<http;http];>;];${tokens.soundcloud};5m;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
         $let[delay;2000ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<http;http];>;];name;yes;{execute:addQueue}]]
@@ -147,6 +191,7 @@ $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;Use \`$getServerVar[prefix]volume\` to change it or click on ${emojis.music.mute} to mute/unmute.]
 
+$argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif $endif

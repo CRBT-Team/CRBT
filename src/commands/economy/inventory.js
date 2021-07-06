@@ -3,7 +3,7 @@ const badges = items.badges;
 
 module.exports.command = {
     name: "inventory",
-    aliases: ["inv", "items"],
+    aliases: ["inv", "items", "badges", "banners"],
     module: "economy",
     usage: "<user ID | username | @mention>",
     description_enUS: "Opens a user's banners & badges inventory, as well as some detailed information.",
