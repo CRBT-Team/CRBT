@@ -4,7 +4,7 @@ module.exports.command = {
     name: "weather",
     aliases: ["weathersearch", "weather-search", "weather_search"],
     description_enUS: "Searches the weather for the specified city.",
-    module: "infos",
+    module: "info",
     usage_enUS: "<city name (none to get the previous results)>",
     code: `
 $reply[$messageID;

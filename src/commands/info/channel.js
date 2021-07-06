@@ -8,14 +8,14 @@ module.exports.command = {
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]}
 {field:$get[id-$getGlobalUserVar[language]]:no}
-{field:$get[topic-$getGlobalUserVar[language]]:$replaceText[$replaceText[$checkCondition[$channelTopic==none];true;yes];false;no]}
+{field:$get[topic-$getGlobalUserVar[language]]:$replaceText[$replaceText[$checkCondition[$channelTopic[$get[id]]==none];true;yes];false;no]}
 {field:$get[slowmode-$getGlobalUserVar[language]]:yes}
 {field:$get[creationDate-$getGlobalUserVar[language]]:no}
 {color:$getGlobalUserVar[color]}
 ;no]
 
 $let[title-enUS;$channelName[$get[id]] - Channel info:$get[icon]]
-$let[topic-enUS;Topic:$replaceText[$replaceText[$checkCondition[$channelTopic==none];true;None];false;$channelTopic]]
+$let[topic-enUS;Topic:$replaceText[$replaceText[$checkCondition[$channelTopic[$get[id]]==none];true;None];false;$channelTopic[$get[id]]]]
 $let[id-enUS;ID:$get[id]]
 $let[creationDate-enUS;Added:<t:$formatDate[$channel[$get[id];created];X]> (<t:$formatDate[$channel[$get[id];created];X]:R>)]
 $let[slowmode-enUS;Slowmode:$replaceText[$replaceText[$checkCondition[$getObjectProperty[slowmode]==];true;None];false;$getObjectProperty[slowmode]]]
