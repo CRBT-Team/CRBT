@@ -7,7 +7,7 @@ module.exports.command = {
   description_enUS: "Sends a bug report about CRBT (english only).",
   usage_enUS: "<bug report message (may include images)>",
   botperms: "",
-  cooldown: "10s",
+  cooldown: "1m",
   code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
