@@ -19,6 +19,8 @@ The $getObjectProperty[badge.$get[item].name] badge has been applied to your pro
 {color:${colors.success}}
 ;no]
 
+$onlyIf[$checkContains[$getGlobalUserVar[profile_badges];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:alreadyOnProfile}]
+
 $onlyIf[$checkContains[$getGlobalUserVar[invbadge];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notInInv}]
 
 $onlyIf[$getObjectProperty[badge.$get[item].contents]!=;{execute:unknownItem}]

@@ -8,7 +8,7 @@ module.exports.variables = {
 //work related stuff
     job_type: "unemployed", 
     job_xp: 0, 
-    job_req: 1500, 
+    job_req: 800, 
     job_level: 1, 
     job_propositions: "",
 }

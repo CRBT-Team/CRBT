@@ -10,17 +10,28 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.general.error} Hold it!]
-$let[description-enUS;You'll be able to use this command again in $getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID].]
+$let[description-enUS;You'll be able to use this command again in $get[time].]
 
 $let[title-enUK;${emojis.general.error} Hold up!]
-$let[description-enUK;You'll be able to use this command again in $getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID].]
+$let[description-enUK;You'll be able to use this command again in $get[time].]
 
 $let[title-esES;${emojis.general.error} ¡Un momento!]
-$let[description-esES;Podrás volver a usar este comando en $getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID].]
+$let[description-esES;Podrás volver a usar este comando en $get[time].]
 
 $let[title-frFR;${emojis.general.error} Un instant !} 
-$let[description-frFR;Vous ne pourrez réutiliser cette commande que dans $replaceText[$replaceText[$getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID];hours;heures];seconds;secondes].]
+$let[description-frFR;Vous ne pourrez réutiliser cette commande que dans $replaceText[$replaceText[$get[time];hours;heures];seconds;secondes].]
 
 $let[title-ru;${emojis.general.error} Погодите!] 
-$let[description-ru;Чтобы использовать эту команду снова, вам нужно подождать ещё $getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID].]
+$let[description-ru;Чтобы использовать эту команду снова, вам нужно подождать ещё $get[time].]
+
+$if[$getGlobalUserVar[lastCmd]==work]
+    $let[time;$getCooldownTime[$getObjectProperty[cooldown]m;globalUser;work;$authorID]]
+$djsEval[const { jobs } = require("../../../../../index");
+const tools = require("dbd.js-utils");
+d.object.cooldown = jobs["$getObjectProperty[job]"]["$getObjectProperty[level]"].cooldown]
+$createObject[{"job":"$getGlobalUserVar[job_type]", "level":"level$getGlobalUserVar[job_level]"}]
+
+$else
+    $let[time;$getCooldownTime[$commandInfo[$getGlobalUserVar[lastCmd];cooldown];globalUser;$getGlobalUserVar[lastCmd];$authorID]]
+$endif
     `}

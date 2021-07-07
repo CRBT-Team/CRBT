@@ -5,7 +5,7 @@ module.exports.command = {
     aliases: ["itt", "imagetotext"],
     module: "tools",
     description_enUS: "Retrieves found text inside of an image.",
-    usage_enUS: "<image URL/attachement>",
+    usage_enUS: "<image URL | attachment>",
     code: `
 $reply[$messageID;
 {author:OCR - Results}

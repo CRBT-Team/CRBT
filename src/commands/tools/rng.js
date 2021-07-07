@@ -2,8 +2,8 @@ module.exports.command = {
     name: "rng",
     aliases: ["random-number", "randint"],
     module: "tools",
-    description_enUS: "",
-    usage_enUS: "",
+    description_enUS: "Gives a random number, between your first and second number, or between 0 and your first number, or a completely random number if no numbers are specified.",
+    usage_enUS: "<minimum number (optional)> <maximum number (optional)>",
     code: `
 $reply[$messageID;
 

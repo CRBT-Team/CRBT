@@ -57,7 +57,7 @@
       },
       "maxloses": 5
     },
-    "mcdonalds": {
+    "mcdoemployee": {
       "level1": {
         "earnings": 20,
         "cooldown": 60
