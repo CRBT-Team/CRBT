@@ -11,7 +11,6 @@ const animalSch = new Schema({
     type: String,
   },
   name: uReqStr,
-  info: uReqStr,
   image: uReqStr,
 });
 

@@ -15,8 +15,3 @@ $replaceText[$replaceText[$replaceText[$message;\`\`\`js;];\`\`\`;];console.log(
 $addCmdReactions[🏳️]
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}
-
-    // IGNORE THESE
-    // message.content.replace("console.log", "channel.send").replace("fconsole.log", "console.log")
-    // $replaceText[message;console.log(;channel.send("Console: " + ]
-    // message.content = message.content.replace(/console.log/g, "channel.send").replace(/fconsole.log/g, "console.log").trim().split(" ")
