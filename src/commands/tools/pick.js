@@ -1,16 +1,16 @@
 module.exports.command = {
-    name: "sack",
+    name: "pick",
     module: "tools",
-    aliases: ["decide", "random"],
-    description_enUS: "Picks something off the sack at random.",
-    usage_enUS: "<values (seperated by commas and/or newlines) (2 min)>",
+    aliases: ["decide", "random", "sack"],
+    description_enUS: "Picks something from the given values at random.",
+    usage_enUS: "<values (seperated by commas and/or newlines) (2 minimum)>",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;You pulled __$get[random]__ out of the sack.]
+$let[title-enUS;__$get[random]__ was picked from the $getTextSplitLength options!]
 $let[random;$randomText[$joinSplitText[;]]]
 
 $onlyIf[$getTextSplitLength>=2;{execute:args}]
@@ -22,6 +22,6 @@ $let[key;$randomString[10]]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -4,15 +4,18 @@ const badges = items.badges;
 module.exports.command = {
     name: "inventory",
     aliases: ["inv", "items"],
+    module: "economy",
+    usage: "<user ID | username | @mention>",
+    description_enUS: "Opens a user's banners & badges inventory, as well as some detailed information.",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAVatar[$get[id]]}
 {field:$get[balance-$getGlobalUserVar[language]]:no}
 {field:$get[color$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:no}
-{field:$get[banner$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:no}
 {field:$get[badges$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:no}
-{field:$get[ownedBadges-$getGlobalUserVar[language]]:yes}
-{field:$get[ownedBanners-$getGlobalUserVar[language]]:yes}
+{field:$get[banner$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:no}
+{field:$get[ownedBadges$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:yes}
+{field:$get[ownedBanners$checkCondition[$get[id]==$authorID]-$getGlobalUserVar[language]]:yes}
 
 {color:$getGlobalUserVar[color;$get[id]]}
 ;no]
@@ -25,9 +28,10 @@ $let[bannertrue-enUS;Active banner: $replaceText[[$getObjectProperty[banners.$ge
 $let[bannerfalse-enUS;Active banner: $replaceText[[$getObjectProperty[banners.$get[a].name]]($get[banner]);[](${links.banners}/);None]]
 $let[badgestrue-enUS;Active badges ($get[e]): $replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;None];true;$get[profileBadges]]‎‎\n(\`$getServerVar[prefix]addbadge\`/\`$getServerVar[prefix]removebadge\`)]
 $let[badgesfalse-enUS;Active badges ($get[e]): $replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;None];true;$get[profileBadges]]‎‎]
-$let[ownedBadges-enUS;Owned badges ($get[e2]/23): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbadge;$get[id]];a , ;];badge ;]\`\`\`;\`\`\`\na \`\`\`;Feels kinda empty in there... Why don't you browse the Store (\`$getServerVar[prefix]store badges\`) to find what you want!]]
-
-$let[ownedBanners-enUS;Owned banners ($get[e3]/24): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbanner;$get[id]];a , ;];banner ;]\`\`\`;\`\`\`\na \`\`\`;This side of your inventory has more dust than actual banners... You know, you can find some cool stuff in the Store (\`$getServerVar[prefix]store badges\`)!]
+$let[ownedBadgestrue-enUS;Owned badges ($get[e2]/23): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbadge;$get[id]];a , ;];badge ;]\`\`\`;\`\`\`\na \`\`\`;Feels kinda empty in there... Why don't you browse the Store (\`$getServerVar[prefix]store badges\`) to find what you want!]]
+$let[ownedBadgesfalse-enUS;Owned badges ($get[e2]/23): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbadge;$get[id]];a , ;];badge ;]\`\`\`;\`\`\`\na \`\`\`;None]]
+$let[ownedBannerstrue-enUS;Owned banners ($get[e3]/24): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbanner;$get[id]];a , ;];banner ;]\`\`\`;\`\`\`\na \`\`\`;This side of your inventory has more dust than actual banners... You know, you can find some cool stuff in the Store (\`$getServerVar[prefix]store banners\`)!]
+$let[ownedBannersfalse-enUS;Owned banners ($get[e3]/24): $replaceText[\`\`\`\n$replaceText[$replaceText[a $getGlobalUserVar[invbanner;$get[id]];a , ;];banner ;]\`\`\`;\`\`\`\na \`\`\`;None]]
 
 $let[e3;$replaceText[$replaceText[$checkContains[$getGlobalUserVar[invbanner;$get[id]];banner];false;0];true;$charCount[$findSpecialChars[$replaceText[$replaceText[$getGlobalUserVar[invbanner;$get[id]]; ;];,;@]]]]]
 $let[e2;$replaceText[$replaceText[$checkContains[$getGlobalUserVar[invbadge;$get[id]];badge];false;0];true;$charCount[$findSpecialChars[$replaceText[$replaceText[$getGlobalUserVar[invbadge;$get[id]]; ;];,;@]]]]]
@@ -45,4 +49,9 @@ $else
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif
+
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

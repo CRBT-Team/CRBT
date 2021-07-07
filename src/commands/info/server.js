@@ -13,8 +13,7 @@ $reply[$messageID;
 
 {description:
 $replaceText[$replaceText[$getServerVar[partnered_guild;$get[id]];true;${emojis.general.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];ispartnered];true;${emojis.badges.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];isverified];true;${emojis.badges.partner} ];false;]
-$serverDescription
-$get[icon-$getGlobalUserVar[language]]
+$replaceText[$replaceText[$checkCondition[$serverDescription==];true;];false;$serverDescription\n]$get[icon-$getGlobalUserVar[language]]
 }
 
 {field:$get[id-$getGlobalUserVar[language]]:yes}
@@ -49,21 +48,26 @@ $endif
 
 $let[title-enUS;$serverName[$get[id]] - Information]
 
-$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon\`]]
+$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon $replaceText[$get[id];$guildID;]\`]]
 
 $let[id-enUS;ID:$get[id]]
 
 $let[owner-enUS;Owner:<@!$ownerID[$get[id]]>]
 
-$let[creation-enUS;Creation date:$get[creationDate]]
+$let[creation-enUS;Creation date:<t:$formatDate[$getObjectProperty[time];X]> (<t:$formatDate[$getObjectProperty[time];X]:R>)]
+$djsEval[const snowflake = require('discord-snowflake'); d.object.time = snowflake("$get[id]");]
 
-$let[creationDate;$formatDate[$guild[$get[id];created];YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];MM]]==1];true;0$formatDate[$guild[$get[id];created];MM]];false;$formatDate[$guild[$get[id];created];MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];DD]]==1];true;0$formatDate[$guild[$get[id];created];DD]];false;$formatDate[$guild[$get[id];created];DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];HH]]==1];true;0$formatDate[$guild[$get[id];created];HH]];false;$formatDate[$guild[$get[id];created];HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$guild[$get[id];created];mm]]==1];true;0$formatDate[$guild[$get[id];created];mm]];false;$formatDate[$guild[$get[id];created];mm]] (GMT)]
+$if[$channelType!=dm]
 
 $let[channels-enUS;Channels ($channelCount):
 ${emojis.channels.text} $channelCount[text] text
 ${emojis.channels.voice} $channelCount[voice] voice
 ${emojis.channels.news} $channelCount[news] announcement
 ${emojis.channels.category} $channelCount[category] categories]
+
+$let[roles-enUS;Role$replaceText[$replaceText[$checkCondition[$sub[$roleCount;1]==1];true;];false;s] ($sub[$roleCount;1]):$replaceText[$replaceText[$checkCondition[$replaceText[$guildRoles[mention];>,;>]==];true;*None*];false;$replaceText[$guildRoles[mention];>,;>]]]
+
+$endif
 
 $let[emojis-enUS;Emojis ($emojiCount[all;$get[id]]):
 ${emojis.misc.emoji.static} $emojiCount[normal;$get[id]] static
@@ -74,8 +78,6 @@ ${emojis.users.status.online} $membersCount[$get[id];online;yes] ${emojis.users.
 ${emojis.users.status.dnd} $membersCount[$get[id];dnd;yes] ${emojis.users.status.invisible} $sum[$membersCount[$get[id];invisible;yes];$membersCount[$get[id];offline;yes]]
 ${emojis.users.humans} $sum[$membersCount[$get[id];dnd;no];$membersCount[$get[id];online;no];$membersCount[$get[id];offline;no];$membersCount[$get[id];idle;no]] humans
 ${emojis.users.bots} $sub[$membersCount[$get[id]];$sum[$membersCount[$get[id];dnd;no];$membersCount[$get[id];online;no];$membersCount[$get[id];offline;no];$membersCount[$get[id];idle;no]]] bots]
-
-$let[roles-enUS;Role$replaceText[$replaceText[$checkCondition[$sub[$roleCount;1]==1];true;];false;s] ($sub[$roleCount;1]):$replaceText[$replaceText[$checkCondition[$replaceText[$guildRoles[mention];>,;>]==];true;*None*];false;$replaceText[$guildRoles[mention];>,;>]]]
 
 $let[boosts-enUS;Boosts:$guild[$get[id];boostcount] (level $guild[$get[id];boostlevel])]
 
@@ -89,8 +91,14 @@ $let[icon;$replaceText[$replaceText[$checkContains[$serverIcon[$get[id]];null];f
 
 $if[$message==]
     $let[id;$guildID]
+    $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $else
     $let[id;$message[1]]
     $onlyIf[$serverExists[$message[1]]==true;{execute:serverNotFound}]
 $endif
+
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

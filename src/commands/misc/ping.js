@@ -7,7 +7,6 @@ module.exports.command = {
   description_enUK: "Pings <botname> and returns <botname>'s connection latency.",
   description_frFR: "Pingue <botname>, puis donne des informations sur son temps de réponse, la latence API, son temps d'activité, etc...",
   description_ru: "Пингует <botname> и показывает информацию о времени ответа, задержке API, времени безотказной работы и т. д.",
-  botperms: "",
   code: `
 
 $editMessage[$botLastMessageID;
@@ -98,6 +97,6 @@ $createObject[{"start": $dateStamp, "botPing": $botPing}]
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
   `}

@@ -1,11 +1,8 @@
-const e = "\\"
-
 module.exports.command = {
     name: "m/",
     nonPrefixed: true,
     module: "fun",
-    aliases: ["scream", "aaaaaaaaa"],
-    description_enUS: "Gives the clembs/media URL.",
+    description_enUS: "Replaces your message with a media from Clembs.xyz.",
     usage_enUS: "<text>",
     botPerms: ["managewebhooks"],
     code: `
@@ -50,8 +47,6 @@ $onlyIf[$checkContains[$stringEndsWith[$message;.png]$stringEndsWith[$message;.g
 $argsCheck[>1;]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;] $endif
 $setGlobalUserVar[lastCmd;$commandName]
-    `}
-//    $createObject[{"message": "**$toUppercase[$replaceText[$replaceText[$message;";];${e};]]!!!**"}]
-    
+    `}    
