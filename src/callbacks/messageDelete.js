@@ -1,5 +1,5 @@
 module.exports.deletedCommand = {
-	channel: '$channelID',
+	channel: "$channelID",
 	code: `
 $setChannelVar[snipeContent;$message]
 $setChannelVar[snipeDetails;$authorID//$channelID//$dateStamp]

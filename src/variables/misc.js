@@ -19,7 +19,7 @@ module.exports.variables = {
     */
 
     //mod related stuff
-    muted_role: "", //note that this one is not in camelCase for compatibility reasons 
+    muted_role: "none", //note that this one is not in camelCase for compatibility reasons 
     strikelog: "", 
    
     //snipe stuff

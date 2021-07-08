@@ -1,41 +1,57 @@
-const { colors } = require("../../../index");
-const { emojis } = require("../../../index");
+const { colors, emojis } = require("../../../index");
 
 module.exports.command = {
     name: "ban",
     module: "moderation",
-    description_enUS: "Bans the user with a reason if specified.",
-    usage_enUS: "<@mention> <reason (optional)>",
+    description_enUS: "Bans the user with a reason (if specified).",
+    usage_enUS: "<@mention | user ID> <reason (optional)>",
     aliases: ['yeet','permaban'],
-    cooldown: "5s",
+    userPerms: "ban",
+    botPerms: "ban",
     code: `
-$reply[$messageID;
-{title:${emojis.general.sucess} Successfully banned $username[$mentioned[1]].} 
-{color:${colors.green}}
-;no]
-$ban[$mentioned[1];$replaceText[$replaceText[$checkCondition[$noMentionMessage==];true;*No reason specified*];false;$noMentionMessage];0]
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];None;$channelID];
-{author:Ban - $userTag[$mentioned[1]]:$userAvatar[$mentioned[1]]}
+$setUserVar[strikelog;$getUserVar[strikelog;$get[id]]|**Ban** - $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] - by <@!$authorID> on <t:$round[$formatDate[$dateStamp;X]]:D> at <t:$round[$formatDate[$dateStamp;X]]:T>;$get[id]]
+
+$ban[$get[id];$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]];0]
+
+$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
+
+{author:$userTag[$get[id]] - Ban:$userAvatar[$get[id]]}
 {field:User:
-<@$mentioned[1]>
+<@!$get[id]>
 :yes}
+
 {field:Moderator:
-<@$authorID>
+<@!$authorID>
 :yes}
+
+{field:Strike count:
+$getTextSplitLength $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;strike];false;strikes]
+$textSplit[$getUserVar[strikelog;$get[id]];|]
+:yes}
+
 {field:Reason:
-$replaceText[$replaceText[$checkCondition[$noMentionMessage==];true;*No reason specified*];false;$noMentionMessage]
+$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
 :no}
+
 {color:${colors.red}}
 ]
-$cooldown[$commandInfo[$commandName;cooldown];{title:${emojis.general.error} $getVar[error_cooldown]} {color:${colors.red}}]
-$onlyIf[$mentioned[1]!=$authorID;{title:${emojis.general.error} You can't ban yourself!} {footer:(I mean technically you could but why would you?)} {color:${colors.red}}]
-$onlyIf[$mentioned[1]!=$ownerID;{title:${emojis.general.error} You can't ban the server's owner!} {color:${colors.red}}]
-$onlyIf[$mentioned[1]!=;{execute:error_nomention}]
-$onlyIf[$rolePosition[$highestRole[$mentioned[1]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone that's as high as you in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$mentioned[1]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.general.error} I can't ban someone higher than me in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$mentioned[1]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone higher than you in the role hierachy!} {color:${colors.red}}]
-$onlyPerms[ban;{title:${emojis.general.error} You need to be able to ban users first!} {color:${colors.red}}]
-$onlyBotPerms[ban;{title:${emojis.general.error} I need the permission to ban users first!} {color:${colors.red}}]
+
+$reply[$messageID;
+{title:${emojis.general.success} Successfully banned $userTag[$get[id]].} 
+{color:${colors.success}}
+;no]
+
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone that's as high as you in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.general.error} I can't ban someone higher than me in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone higher than you in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$get[id]!=$ownerID;{title:${emojis.general.error} You can't ban the server's owner!} {color:${colors.error}}]
+$onlyIf[$get[id]!=$authorID;{title:${emojis.general.error} You can't ban yourself!} {footer:(I mean technically you could but why would you?)} {color:${colors.error}}]
+$onlyPerms[ban;{title:${emojis.general.error} You need to be able to ban users first!} {color:${colors.error}}]
+$onlyBotPerms[ban;{title:${emojis.general.error} I need the permission to ban users first!} {color:${colors.error}}]
+$onlyIf[$userExists[$get[id]]==true;{execute:args}]
+
+$let[id;$replaceText[$replaceText[$message[1];<@!;];>;]]
+
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
@@ -43,7 +59,3 @@ $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}
-
-
-    // add a field that tells the user the strike counts because i removed it since there is
-    // no variable that is called "strike_count"
