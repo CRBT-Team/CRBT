@@ -64,21 +64,11 @@ loadAPIFiles(`${__dirname}/routes`);
 app.set("json spaces", 2);
 
 app
-  .listen(port, () => {
-    if (port === 15019) {
-      console.log(`Connected to the Clembs API (https://api.clembs.xyz)`);
-    } else {
-      console.log(`Connected to the Clembs API (http://localhost:${port})`);
-    }
+  .listen(15019, function () {
+    console.log(`Connected to the Clembs API (https://localhost:15019)`);
   })
   .on("error", () => {
-    app
-      .listen(15019, function () {
-        console.log(`Connected to the Clembs API (https://localhost:15019)`);
-      })
-      .on("error", () => {
-        console.log("Couldn't connect to Clembs API!");
-      });
+    console.log("Couldn't connect to Clembs API!");
   });
 
 process.on("exit", async function () {
