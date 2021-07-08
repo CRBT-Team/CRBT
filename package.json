@@ -8,7 +8,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
-    "aoi.js": "^4.0.0",
+    "aoi.js": "github:clembs/aoi.js",
     "canvas": "^2.8.0",
     "dbd.js-utils": "^0.1.1",
     "discord-buttons": "^3.1.1",
