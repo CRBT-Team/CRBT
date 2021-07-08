@@ -15,7 +15,7 @@ $sendDM[$splitText[2];
 {description:This message was delivered by a verified CRBT developer.
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
-$replaceText[$toLocaleUppercase[$get[title]];Report;report] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
+$replaceText[$toLocaleUppercase[$get[title]];Bug Report;Report] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" refused.
 :no}
 {field:Message from $userTag:

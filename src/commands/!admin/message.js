@@ -15,7 +15,7 @@ $sendDM[$splitText[2];
 {description:This message was delivered by a verified CRBT developer.
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
-Reported $toLowercase[$get[title]] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
+$get[title] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])"
 :no}
 {field:Message from $userTag:

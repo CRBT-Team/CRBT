@@ -15,8 +15,8 @@ $sendDM[$splitText[2];
 {description:This message was delivered by a verified CRBT developer.
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
-The bug "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully fixed.
+Your $replaceText[$replaceText[$get[title];Bug report;reported bug];Suggestion;suggestion] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
+;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully $replaceText[$replaceText[$get[title];Bug report;fixed!];Suggestion;added to CRBT!].
 :no}
 {footer:You can't reply back to a CRBT message.}
 {color:${colors.success}}
@@ -24,11 +24,11 @@ The bug "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 
 $textSplit[$get[footer]; | ]
 
-$editMessage[$message;
+$editMessage[$message[1];
 {title:$get[title]}
-{description:$get[description]}
+{description:$replaceText[$get[description];#LEFT_BRACKET#;#LEFT_BRACKET#]}
 {field:Status:
-${emojis.general.success} Fixed in beta ${botinfo.build}
+${emojis.general.success} $replaceText[$replaceText[$get[title];Bug report;Fixed];Suggestion;Added] in $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;beta ${botinfo.build}];true;stable ${botinfo.version}]
 :yes}
 {footer:$get[footer]}
 {color:${colors.success}}

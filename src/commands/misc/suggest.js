@@ -6,7 +6,7 @@ module.exports.command = {
   aliases: ["feedback", "request", "suggestion"],
   description_enUS: "Sends a suggestion for CRBT (english only).",
   usage_enUS: "<suggestion (may include images)>",
-  cooldown: "10s",
+  cooldown: "1m",
   code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
@@ -24,9 +24,15 @@ $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedRe
 \`\`\`
 ]
 
-$djsEval[const { Util } = require("discord.js");
-d.object.cleanedReport = Util.cleanContent("$get[report]", message);
-]
+$if[$messageAttachment!=]
+$image[$messageAttachment]
+$endif
+
+$addField[Status;
+Pending
+;no]
+
+$footer[$randomString[10] | $authorID]
 
 $djsEval[
   let random = Math.random().toString(36).substr(2, 5);
@@ -37,15 +43,7 @@ $djsEval[
   d.object.cleanedReport = Util.cleanContent(str2, message);
 ]
 
-$let[report;$replaceText[$message;";']]
-
-$if[$messageAttachment!=]
-$image[$messageAttachment]
-$endif
-
-$addField[Status;
-Pending
-;no]
+$let[report;$replaceText[$replaceText[$message;";'];\n;\\n]]
 
 $color[${colors.yellow}]
 
@@ -61,3 +59,16 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
   `}
+/*
+$djsEval[
+  let random = Math.random().toString(36).substr(2, 5);
+  let str = "$get[report] a" + random;
+  str2 = str.replaceAll(" a" + random, '')
+
+  const { Util } = require("discord.js");
+  d.object.cleanedReport = Util.cleanContent(str2, message);
+]
+
+$let[report;$replaceText[$replaceText[$message;";'];
+;#newline]]
+*/

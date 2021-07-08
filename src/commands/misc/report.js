@@ -25,18 +25,6 @@ $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedRe
 \`\`\`
 ]
 
-$djsEval[
-  let random = Math.random().toString(36).substr(2, 5);
-  let str = "$get[report] a" + random;
-  str2 = str.replaceAll(" a" + random, '')
-
-  const { Util } = require("discord.js");
-  d.object.cleanedReport = Util.cleanContent(str2, message);
-]
-
-$let[report;$replaceText[$message;";']]
-
-
 $if[$messageAttachment!=]
 $image[$messageAttachment]
 $endif
@@ -46,6 +34,17 @@ Pending
 ;no]
 
 $footer[$randomString[10] | $authorID]
+
+$djsEval[
+  let random = Math.random().toString(36).substr(2, 5);
+  let str = "$get[report] a" + random;
+  str2 = str.replaceAll(" a" + random, '')
+
+  const { Util } = require("discord.js");
+  d.object.cleanedReport = Util.cleanContent(str2, message);
+]
+
+$let[report;$replaceText[$replaceText[$message;";'];\n;\\n]]
 
 $color[${colors.yellow}]
 

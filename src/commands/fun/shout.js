@@ -43,22 +43,13 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 $else
 
     $reply[$messageID;
-    {title:$getObjectProperty[shout]}
+    {title:**$toUppercase[$message]!!!**}
     {color:$getGlobalUserVar[color]}
     ;no]
 
-    $djsEval[
-        let random = Math.random().toString(36).substr(2, 5);
-        let str = "$get[message] a" + random;
-        str2 = str.replaceAll(" a" + random, '')
-    
-        const { Util } = require("discord.js");
-        d.object.shout = Util.cleanContent(str2, message);
-    ]
-
 $endif
 
-$let[message;$replaceText[$message;";']]
+$let[message;$replaceText[$replaceText[$message;";'];\n;\\n]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

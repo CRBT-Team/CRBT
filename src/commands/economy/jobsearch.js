@@ -2,6 +2,9 @@ const { items } = require("../../../index");
 
 module.exports.command = {
     name: "jobsearch",
+    aliases: ["job-search", "job_search", "j-search", "jsearch"],
+    description_enUS: "Gives you three randomly selected jobs, as well as descriptions for each. Note that this selection will not re-shuffle unless you get a job.",
+    module: "economy",
     code: `
 $reply[$messageID;
 {author:$userTag - Job Search:$authorAvatar}
@@ -27,7 +30,7 @@ $get[$get[random3]-description]
 
 $if[$getGlobalUserVar[job_propositions]==]
 
-    $setGlobalUserVar[job_propositions;$get[random1] $get[random2] $get[random3]]
+    $setGlobalUserVar[job_propositions; $get[random1] $get[random2] $get[random3] ]
 
     $let[job3;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random3]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
     $let[job2;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random2]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
@@ -119,6 +122,11 @@ $let[gardener-description;Cut those bushes and moe those lawns to get to be a wo
 **Salary:**\nMidly Low to Midly High
 **Cooldown:**\nMedium to Low]
 
+$onlyIf[$getGlobalUserVar[job_type]==$getVar[job_type];{execute:alreadyHaveJob}]
 
-$onlyIf[$getGlobalUserVar[job_type]==$getGlobalUserVar[job_type];{execute:alreadyHaveJob}]
+$argsCheck[0;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -2,8 +2,8 @@ const { emojis } = require("../../../index");
 
 module.exports.command = {
     name: "jobinfo",
-    aliases: ["job-info", "job_info", "j-info", "xp", "rank", "level", "job"],
-    description_enUS: "",
+    aliases: ["job-info", "job_info", "j-info", "xp", "rank", "level", "job", "jinfo"],
+    description_enUS: "Gives information on your job, your XP, your cooldowns, as well as some extra info such as your balance and hourly streak.",
     module: "economy",
     usage_enUS: "<user ID | username | @mention (optional)>",
     code: `

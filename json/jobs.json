@@ -118,7 +118,7 @@
         "cooldown": 70
       },
       "maxloses": 1,
-      "rwt": ["You animated a fanfiction and earned {purplets}|You drew an epic fanart for some big content creator! They feature you on their socials and pay you {purplets}|You made a really cool piece of art that some rich people buys for {purplet}"]
+      "rwt": ["You animated a fanfiction and earned {purplets}|You drew an epic fanart for some big content creator! They feature you on their socials and pay you {purplets}|You made a really cool piece of art that some rich people buys for {purplets}"]
     },
     "developer": {
       "level1": {
@@ -218,7 +218,7 @@
         "cooldown": 80
       },
       "maxloses": 150,
-      "rwt": ["You stay all the night on the street, but not in vain. Your friend picks you up in their car and you robbed from them {purplets}|You did your job really well and everyone beings to hear about you. You get {purplet}"]
+      "rwt": ["You stay all the night on the street, but not in vain. Your friend picks you up in their car and you robbed from them {purplets}|You did your job really well and everyone beings to hear about you. You get {purplets}"]
     },
     "gardener": {
       "level1": {

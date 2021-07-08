@@ -13,15 +13,7 @@ $reply[$messageID;
 {author:CRBT - Help}
 
 {description:
-Use \`$getServerVar[prefix]help <module name>\` or click on any of the emojis below to get a command list of the said module. 
-
-⚙️ settings
-💸 economy
-ℹ️ info
-😎 fun
-🔍 tools
-🎶 music
-🔨 mod
+use the other bot lol
 }
 
 ;no]
@@ -33,7 +25,7 @@ $else
 $reply[$messageID;
 {author:$commandInfo[$message;name] - Command info:${logos.CRBTsmall}}
 {field:Description:
-$replaceText[$commandInfo[$message;description_$getGlobalUserVar[language]];<botname>;$username[$clientID]]
+$replaceText[$replaceText[$checkCondition[$commandInfo[$message;description_$getGlobalUserVar[language]]!=];true;$replaceText[$replaceText[$commandInfo[$message;description_$getGlobalUserVar[language]];<botname>;$username[$clientID]];<prefix>;$getServerVar[prefix]]];false;No description available, please \`$getServerVar[prefix]report\` this as an issue.]
 :no}
 {field:Usage:
 \`\`\`
@@ -59,8 +51,10 @@ $get[botPerms]/$get[userPerms]
 $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];true;None];false;$commandInfo[$message;cooldown]]
 :yes}
 {field:Module:
-$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
-:yes}
+$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;-];false;+]$commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.general.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
+:$replaceText[$replaceText[$hasPerms[$authorID;admin];true;no];false;yes]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
@@ -77,6 +71,8 @@ $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];tr
     $else
         $let[botPerms;true]
     $endif
+
+$onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif
 

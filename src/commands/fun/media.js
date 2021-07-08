@@ -40,7 +40,7 @@ $else
 
 $endif
 
-$let[message;https://clembs.xyz/media/$replaceText[$replaceText[$message; ;-];";]]
+$let[message;https://clembs.xyz/media/$replaceText[$replaceText[$replaceText[$message; ;-];";];\n;]]
 
 $onlyIf[$checkContains[$stringEndsWith[$message;.png]$stringEndsWith[$message;.gif]$stringEndsWith[$message;.mp4]$stringEndsWith[$message;.wav];true]==true;]
 

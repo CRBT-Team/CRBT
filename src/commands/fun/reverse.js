@@ -97,7 +97,7 @@ $else
 
 $endif
 
-$let[message;$replaceText[$replaceText[$replaceText[$message;";'];enoyreve@;enoyreve‎@];ereh@;ereh‎@]]
+$let[message;$replaceText[$replaceText[$message;";'];\n;\\n]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
