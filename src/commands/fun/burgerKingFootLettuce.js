@@ -2,7 +2,7 @@ module.exports.command = {
     name: "burgerkingfootlettuce",
     description_enUS: "Burger King foot lettuce",
     module: "fun",
-    aliases: ["bkfl"],
+    aliases: ["bkfl", "bkly"],
     code: `
 $reply[$messageID;
   {title:You asked for it...}
