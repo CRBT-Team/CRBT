@@ -1,7 +1,7 @@
 module.exports.command = {
     name: "anime",
     aliases: ['searchanime','animesearch'],
-    description_enUS: "Searches your query on kitsu.io, and returns a corresponding anime",
+    description_enUS: "Searches your query on kitsu.io, and returns a corresponding anime.",
     usage_enUS: "<anime name (e.g. Konosuba, Attack on Titan)",
     module: "info",
     code: `
@@ -46,8 +46,9 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[endDate]==];true;Si
 $let[title-enUS;$replaceText[$getObjectProperty[titles.canonical];:;#COLON#] - Anime info]
 $let[openIn-enUS;Open in kitsu.io]
 
+$onlyIf[$getObjectProperty[success]!=false;{execute:args}]
 
-$createObject[$jsonRequest[https://api.f1r3.tk/anime?name=$replaceText[$message; ;+]]]
+$createObject[$replaceText[$jsonRequest[https://api.f1r3.tk/anime?name=$replaceText[$message; ;+]];{"success":false,"message":"Anime not found!"};{"success":"false"}]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

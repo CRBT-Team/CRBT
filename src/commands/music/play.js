@@ -10,7 +10,7 @@ module.exports.command = {
     code: `
 $if[$voiceID[$clientID]!=$voiceID]
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     
@@ -42,7 +42,7 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
     $else
     
         $editMessage[$get[id];
-        {title:Added $sub[$get[newQueueLength];$get[oldQueueLength]] songs to the queue.}
+        {title:Added the playlist to the queue.}
         {color:$getGlobalUserVar[color]}
         ;$channelID]
     
@@ -104,7 +104,7 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
 
 $else
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.music.stop},${emojis.general.information},${emojis.music.mute};skip,stop,nowplaying,mute;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     

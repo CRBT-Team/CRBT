@@ -44,6 +44,7 @@ $let[volumeTip-enUS;\`$getServerVar[prefix]volume <new volume>\`]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $argsCheck[0;{execute:args}]
+$onlyIf[$queueLength!=0;{execute:nomusic}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

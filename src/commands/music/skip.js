@@ -3,7 +3,7 @@ const { emojis } = require("../../../index");
 module.exports.command = {
     name: "skip",
     module: "music",
-    aliases: ["s", "vs"],
+    aliases: ["s", "fs", "skipto", "st"],
     description_enUS: "Skips to the next song or to a specified queued song.",
     usage_enUS: "<queued song number (optional)>",
     code: `
@@ -45,6 +45,8 @@ $let[desc-enUS;Skipped]
 $let[title-enUS;Skipped song]
 
 $argsCheck[<1;{execute:args}]
+$onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
+$onlyIf[$queueLength!=0;{execute:nomusic}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

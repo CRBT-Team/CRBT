@@ -1,5 +1,9 @@
 module.exports.command = {
-    name: "tr",
+    name: "translate",
+    aliases: ["tr"],
+    module: "tools",
+    description_enUS: "Translates the desired text in the specified language.",
+    usage_enUS: "<target language> <text to be translated>",
     code: `
 $reply[$messageID;
 {author:Translation - Results}
@@ -16,11 +20,16 @@ $getObjectProperty[translated.text]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$argsCheck[>1;{execute:args}]
-
 $djsEval[const { languages } = require("../../../../../json/api.json");
 d.object.lang = languages;]
 
+$onlyIf[$getObjectProperty[status]==200;{execute:args}]
+
 $createObject[$jsonRequest[https://translate-api.ml/translate?text=$uri[encode;$messageSlice[1]]&lang=$message[1]]]
-$onlyIf[$botOwnerID==$authorID;{execute:owneronly}]
+
+$argsCheck[>2;{execute:args}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
+$onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$setGlobalUserVar[lastCmd;$commandName]
     `}

@@ -39,22 +39,36 @@ $replaceText[$commandInfo[$message;aliases];,;, ]\`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $get[botPerms]/$get[userPerms]
 ;true/true;${emojis.general.success} You're all set to use this command!]
-;false/true;**$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;true/false;You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
-;false/false;You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;false/true;${emojis.general.error} **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;true/false;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;false/false;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
 ;/true;${emojis.general.success} You're all set to use this command!]
 ;true/;${emojis.general.success} You're all set to use this command!]
-;false/;**$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;false/;You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;false/;${emojis.general.error} **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;false/;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
 :no}
 {field:Cooldown:
 $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];true;None];false;$commandInfo[$message;cooldown]]
+:$replaceText[$replaceText[$hasPerms[$authorID;admin];true;no];false;yes]}
+
+$if[$commandInfo[$message;module]==partnerCmd]
+{field:Module:
+${emojis.general.partner} Partner command
 :yes}
+{field:Accessible on:
+$if[$serverExists[$commandInfo[$message;server]]==true]
+$serverName[$commandInfo[$message;server]]
+$else
+Can't access server
+$endif
+:yes}
+$else
 {field:Module:
 $replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;-];false;+]$commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.general.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
-:$replaceText[$replaceText[$hasPerms[$authorID;admin];true;no];false;yes]}
+:yes}
+$endif
 {color:$getGlobalUserVar[color]}
 ;no]
 

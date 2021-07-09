@@ -4,9 +4,9 @@ module.exports.awaitedCommand = {
     name: "stop",
     code: `
 $stopSong
+$setServerVar[music_channel;$getVar[music_channel]]
 $editMessage[$message[1];
-{title:$get[title-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
-{url:$songInfo[url]}
+{title:$get[title-$getGlobalUserVar[language]]}
 {description:
 $get[description-$getGlobalUserVar[language]]
 }
@@ -16,7 +16,7 @@ $get[description-$getGlobalUserVar[language]]
 $let[current;$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[current_duration]; ]]
 $let[total;$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[duration]; ]]
 
-$let[title-enUS;${emojis.general.stop} Stopped playback]
+$let[title-enUS;${emojis.music.stop} Stopped playback]
 $let[description-enUS;Music playback was stopped by <@!$authorID> on this server.]
 
 $onlyIf[$voiceID[$clientID]==$voiceID;]
