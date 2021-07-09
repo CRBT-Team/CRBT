@@ -21,7 +21,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.misc.eightball} 8-Ball]
-$let[answer-enUS;$randomText[Yeah;Definitely not;I'm not sure...;Nope!;It may seem like it's a yes, but in fact no!;Absolutely;As I see it, yes.;Kind of...;Maybe not;Probably.;Of course!]]
+$let[answer-enUS;$randomText[🟢 Yeah!;🔴 Definitely, no.;🟠 I'm not sure...;🔴 Nah...;🔴 It may seem like it's a yes, but in fact nope!;🟢 Absolutely.;🟢 As I see it, yes.;🟠 Sort of...;🔴 Maybe not.;🟢 Probably.;🟢 Of course!]]
 $let[progress-enUS;${emojis.misc.eightball} 8-Ball is thinking...]
 
 $argsCheck[>1;{execute:args}]

@@ -18,7 +18,7 @@
         "cooldown": 200
       },
       "maxloses": 3,
-      "rwt": ["You harvested a couple of melons and earned {purplets}|You sold 20 carrots and got {purplets}|You sold two pounds of turnips worth {purplets}|You sold a bag of patatoes for {purplets}|You harvested, then sold two watermelons for {purplets}|You sold two of your cows to another farmer and got {purplets}|You farmed potatoes and tomatoes to make a very funny joke that no one understand but one person, who was kind enough to land you {purplets}|You farm all day alone to get {purplets}|You ride a TRAAAACTOOOOR on your farm and get {purplets}"]
+      "rwt": ["You plant trees and flowers, and earn {purplets}|You harvested a couple of melons and earned {purplets}|You sold 20 carrots and got {purplets}|You sold two pounds of turnips worth {purplets}|You sold a bag of patatoes for {purplets}|You harvested, then sold two watermelons for {purplets}|You sold two of your cows to another farmer and got {purplets}|You farmed potatoes and tomatoes to make a very funny joke that no one understand but one person, who was kind enough to land you {purplets}|You farm all day alone to get {purplets}|You ride a TRAAAACTOOOOR on your farm and get {purplets}"]
     },
     "cashier": {
       "level1": {
@@ -38,7 +38,7 @@
         "cooldown": 60
       },
       "maxloses": 10,
-      "rwt": ["Someone gave you a tip of {purplets}|You did your job well and the boss gives you {purplets}|You put all your heart and soul scanning these barcodes and you earned {purplets}|You recommend someone they buy extra, and they did! You get {purplets}|You sit on the chair all day at your desk, watching people, waiting for customers to arrive, and boringly enough you earn {purplets}"]
+      "rwt": ["A person bought a lot of toilet paper you sold for {purplets}|Someone gave you a tip of {purplets}|You did your job well and the boss gives you {purplets}|You put all your heart and soul scanning these barcodes and you earned {purplets}|You recommend someone they buy extra, and they did! You get {purplets}|You sit on the chair all day at your desk, watching people, waiting for customers to arrive, and boringly enough you earn {purplets}"]
     },
     "youtuber": {
       "level1": {
@@ -78,7 +78,7 @@
         "cooldown": 15
       },
       "maxloses": 5,
-      "rwt": ["You sold a piece of paper on a rock to a blind man. He enjoys his broken teeth and you enjoy your tip of {purplets}|You sold 50 cheeseburgers! Yum, you got {purplets}|Your new menu idea was a success! Your boss enjoys it and congrats you with {purplets}"]
+      "rwt": ["You worked really hard and almost burnt your hand in the fryer, but at the end of the day you get {purplets}|You sold a piece of paper on a rock to a blind man. He enjoys his broken teeth and you enjoy your tip of {purplets}|You sold 50 cheeseburgers! Yum, you got {purplets}|Your new menu idea was a success! Your boss enjoys it and congrats you with {purplets}"]
     },
     "musician": {
       "level1": {
@@ -98,7 +98,7 @@
         "cooldown": 200
       },
       "maxloses": 1,
-      "rwt": ["You played that very sick theme everyone likes, and you got tipped {purplets}|You wrote a very cool song for a big artist, their corporation gives you {purplets}"]
+      "rwt": ["You make a song while you're bored... Turns out, it gets you {purplets}|You played that very sick theme everyone likes, and you got tipped {purplets}|You wrote a very cool song for a big artist, their corporation gives you {purplets}"]
     },
     "illustrator": {
       "level1": {
@@ -138,7 +138,7 @@
         "cooldown": 120
       },
       "maxloses": 1,
-      "rwt": ["You rewrote the whole Python language in C++, everyone's minds are blown up and you get {purplets}|You find a bug on CRBT and decide to report it. As a congratulation, you earned {purplets}|The boss gets mad looking at your spaghetti code! Luckily, an opponent sitting right next to you had much better code so you steal it and earn {purplets}|You design a much much better bot than CRBT... wait that's impossible, right???? Anyway, you earn {purplets}"]
+      "rwt": ["You hate the testers so much but you still earned {purplets}|You rewrote the whole Python language in C++, everyone's minds are blown away and you get {purplets}|You find a bug on CRBT and decide to report it. As a congratulation, you earned {purplets}|The boss gets mad looking at your spaghetti code! Luckily, an opponent sitting right next to you had much better code so you steal it and earn {purplets}|You design a much much better bot than CRBT... wait that's impossible, right???? Anyway, you earn {purplets}"]
     },
     "doctor": {
       "level1": {
@@ -178,7 +178,7 @@
         "cooldown": 220
       },
       "maxloses": 5,
-      "rwt": ["You and the boys catch a drug dealer on the street! You get {purplets}|You find a dead body and report it. Its discovery makes you gain {purplets}"]
+      "rwt": ["You got hurt in the line of duty and had to stay a few days in hospital. But you make a full recovery. You earn {purplets}|Today was quite quiet... That was until a rookie said that, then all heck broke loose. You were paid {purplets}|You and the boys catch a drug dealer on the street! You get {purplets}|You find a dead body and report it. Its discovery makes you gain {purplets}"]
     },
     "pornstar": {
       "level1": {

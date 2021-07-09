@@ -1,25 +1,25 @@
 const { emojis, colors } = require("../../../index");
 
 module.exports.command = {
-    name: "badge",
-    aliases: ["add_badge", "add-badge", "use-badge", "usebadge", "addbadge", "use_badge"],
+    name: "removebadge",
+    aliases: ["remove_badge", "remove-badge"],
     module: "economy",
-    description_enUS: "Adds the specified badge to your profile (as long as it is in your inventory).",
+    description_enUS: "Removes the specified badge to your profile.",
     usage_enUS: "<badge name (e.g. \"udu\")>",
     code: `
-$setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges];None; ] <badge $replaceText[$toLowercase[$message]; ;]>]
+$setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges];<badge $toLowercase[$message]>;]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Badge applied}
+{title:${emojis.general.success} Badge removed}
 
 {description:
-The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[item].name] badge has been applied to your profile.
+The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[item].name] badge has been removed from your profile.
 }
 
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$checkContains[$getGlobalUserVar[profile_badges];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:alreadyOnProfile}]
+$onlyIf[$checkContains[$getGlobalUserVar[profile_badges];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notOnProfile}]
 
 $onlyIf[$checkContains[$getGlobalUserVar[invbadge];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notInInv}]
 
