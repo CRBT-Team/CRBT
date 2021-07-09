@@ -22,23 +22,23 @@ $if[$message==]
         {description:$get[desc2-$getGlobalUserVar[language]]}
     $endif
 
-    {field:Prefix:
-    Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
-    Changes $username[$clientID]'s prefix across all commands.
-    Changeable with \`$getServerVar[prefix]prefix $commandInfo[prefix;usage_$getGlobalUserVar[language]]\`.
-    :no}
+{field:Prefix:
+Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
+Changes $username[$clientID]'s prefix across all commands.
+Changeable with \`$getServerVar[prefix]prefix $commandInfo[prefix;usage_$getGlobalUserVar[language]]\`.
+:no}
 
-    {field:Volume:
-    Set to \`$getServerVar[volume]%\`
-    Changes the volume of the music playback.
-    Changeable with \`$getServerVar[prefix]volume $commandInfo[vol;usage_$getGlobalUserVar[language]]\`
-    :no}
+{field:Volume:
+Set to \`$getServerVar[volume]%\`
+Changes the volume of the music playback.
+Changeable with \`$getServerVar[prefix]volume $commandInfo[vol;usage_$getGlobalUserVar[language]]\`
+:no}
 
-    {field:Muted role:
-    $replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];false;Set to <@&$getServerVar[muted_role]>];true;None was set yet].
-    Changes the role given to a user muted with the \`$getServerVar[prefix]mute\` command.
-    Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$getGlobalUserVar[language]]\`
-    :no}
+{field:Muted role:
+$replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];false;Set to <@&$getServerVar[muted_role]>];true;None was set yet].
+Changes the role given to a user muted with the \`$getServerVar[prefix]mute\` command.
+Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$getGlobalUserVar[language]]\`
+:no}
 
     {color:$getGlobalUserVar[color]}
     ;no]
@@ -59,21 +59,21 @@ $elseIf[$toLowercase[$message]==server]
     $endif
 
     {field:Prefix:
-    Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
-    Changes $username[$clientID]'s prefix across all commands.
-    Changeable with \`$getServerVar[prefix]prefix $commandInfo[prefix;usage_$getGlobalUserVar[language]]\`.
+Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
+Changes $username[$clientID]'s prefix across all commands.
+Changeable with \`$getServerVar[prefix]prefix $commandInfo[prefix;usage_$getGlobalUserVar[language]]\`.
     :no}
 
     {field:Volume:
-    Set to \`$getServerVar[volume]%\`
-    Changes the volume of the music playback.
-    Changeable with \`$getServerVar[prefix]volume $commandInfo[vol;usage_$getGlobalUserVar[language]]\`
+Set to \`$getServerVar[volume]%\`
+Changes the volume of the music playback.
+Changeable with \`$getServerVar[prefix]volume $commandInfo[vol;usage_$getGlobalUserVar[language]]\`
     :no}
 
     {field:Muted role:
-    $replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];false;Set to <@&$getServerVar[muted_role]>];true;None was set yet].
-    Changes the role given to a user muted with the \`$getServerVar[prefix]mute\` command.
-    Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$getGlobalUserVar[language]]\`
+$replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];false;Set to <@&$getServerVar[muted_role]>];true;None was set yet].
+Changes the role given to a user muted with the \`$getServerVar[prefix]mute\` command.
+Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$getGlobalUserVar[language]]\`
     :no}
 
     {color:$getGlobalUserVar[color]}

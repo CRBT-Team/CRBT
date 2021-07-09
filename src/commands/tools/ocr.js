@@ -12,7 +12,7 @@ $reply[$messageID;
 
 {description:
 \`\`\`
-$getObjectProperty[ParsedResults[0].ParsedText]
+$getObjectProperty[message]
 \`\`\`
 }
 
@@ -21,7 +21,7 @@ $getObjectProperty[ParsedResults[0].ParsedText]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.ocr}&url=$get[message]&scale=true&OCREngine=2]]
+$createObject[$jsonRequest[https://normal-api.ml/ocr?image=$get[message]]]
 
 $onlyIf[$get[message]!=;{execute:args}]
 
@@ -32,3 +32,7 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+/*
+Old API
+$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.ocr}&url=$get[message]&scale=true&OCREngine=2]]
+*/
