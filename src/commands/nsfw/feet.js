@@ -6,8 +6,6 @@ module.exports.command = {
     description_enUS: "Gives a random lewd image of fictional characters' feet.",
     module: "nsfw",
     code: `
-$reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]
-
 $reply[$messageID;
 {image:$jsonRequest[https://nekos.life/api/v2/img/feet;url]}
 {color:$getGlobalUserVar[color]}

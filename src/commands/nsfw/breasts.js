@@ -6,8 +6,6 @@ module.exports.command = {
     description_enUS: "Gives a random image of anime women breasts.",
     module: "nsfw",
     code: `
-$reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]
-
 $reply[$messageID;
 {image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/boobs;url];$jsonRequest[https://nekos.life/api/v2/img/tits;url]]}
 {color:$getGlobalUserVar[color]}
