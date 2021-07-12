@@ -1,6 +1,6 @@
 module.exports.command = {
     name: "channel",
-    aliases: ['channel','ci','channel-info'],
+    aliases: ['channelinfo','ci','channel-info', 'channel_info'],
     module: "info",
     description_enUS: "Gives several info on a specified channel, or the current one if no arguments are given.",
     usage_enUS: "<channel ID | channel name | #channel (optional)>",

@@ -4,7 +4,7 @@ module.exports.command = {
     name: "nowplaying",
     module: "music",
     aliases: ["np", "now-playing", "playing", "controls"],
-    description: "Gives info on the currently playing title + shows the visual controls.",
+    description_enUS: "Gives info on the currently playing title + shows the visual controls.",
     cooldown: "15s",
     code: `
 $reactionCollector[$botLastMessageID;everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]

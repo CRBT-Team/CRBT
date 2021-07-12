@@ -18,7 +18,7 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     const { Webhook } = require('discord-webhook-node');
     const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
 
-    hook.setUsername('$nickname');
+    hook.setUsername('$nickname'.toUpperCase());
     hook.setAvatar('$authorAvatar');
     
     let random = Math.random().toString(36).substr(2, 5);
