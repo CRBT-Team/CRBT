@@ -7,18 +7,37 @@ module.exports.command = {
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$get[id];64]}
+$if[$hasPerms[$authorID;admin]==true]
 {description:$get[protip-$getGlobalUserVar[language]]}
+$endif
 {field:$get[strikes-$getGlobalUserVar[language]]:no}
+
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[protip-enUS;$replaceText[$replaceText[$hasPerms[$authorID;admin];false;];true;You can clear any strike by simply using \`$getServerVar[prefix]clearstrike <strike number> <user ID | @mention>\`, or \`$getServerVar[prefix]clearstrikes <user ID | @mention>\` to remove all of them.]]
-$let[title-enUS;$userTag[$get[id]] - Strikes]
-$let[strikes-enUS;$get[count] strike$replaceText[$replaceText[$checkCondition[$get[count]==1];true;];false;s]:$replaceText[$get[strikes];none;Nothing to see here... (Rightfully!)]]
+$let[protip-enUS;$replaceText[$replaceText[$checkCondition[$get[count]==0];true;];false;You can clear any strike by simply using \`$getServerVar[prefix]clearstrike <strike number> <user ID | @mention>\`, or \`$getServerVar[prefix]clearstrikes <user ID | @mention>\` to remove all of them.]]
 
-$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikelog;$get[id]];|];false;none];true;$replaceText[$getUserVar[strikelog;$get[id]];|;\n]]]
+$let[title-enUS;$userTag[$get[id]] - Strikes]
+
+$let[strikes-enUS;$replaceText[$replaceText[$checkCondition[$get[count]>10];false;Strike$replaceText[$replaceText[$checkCondition[$get[count]==1];true;];false;s] ($get[count])];true;Last 10 strikes (out of $get[count])]:
+$replaceText[$replaceText[$checkCondition[$get[strikes]==none];false;$replaceText[$replaceText[$splitText[1]
+$splitText[2]
+$splitText[3]
+$splitText[4]
+$splitText[5]
+$splitText[6]
+$splitText[7]
+$splitText[8]
+$splitText[9]
+$splitText[10];> - ;> • ]; - <t:; • <t:]];true;Nothing to see here... (Rightfully so!)]]
+
+$textSplit[$get[strikes];\n]
+
+$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikes;$get[id]];|];false;none];true;$replaceText[• $getUserVar[strikes;$get[id]];|;\n• ]]]
+
 $let[count;$math[$getTextSplitLength-1]]
-$textSplit[$getUserVar[strikelog;$get[id]];|]
+
+$textSplit[$getUserVar[strikes;$get[id]];|]
 
 $if[$message==]
     $let[id;$authorID]
@@ -33,3 +52,8 @@ $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}
+
+/*
+
+$replaceText[$get[strikes];none;Nothing to see here... (Rightfully!)]
+*/

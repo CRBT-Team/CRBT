@@ -126,13 +126,13 @@ $replaceText[$commandInfo[$message;aliases];,;, ]\`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $get[botPerms]/$get[userPerms]
 ;true/true;${emojis.general.success} You're all set to use this command!]
-;false/true;${emojis.general.error} **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;true/false;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
-;false/false;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;false/true;${emojis.general.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;true/false;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;false/false;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
 ;/true;${emojis.general.success} You're all set to use this command!]
 ;true/;${emojis.general.success} You're all set to use this command!]
-;false/;${emojis.general.error} **$username[$clientID]** may need the $toUppercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;false/;${emojis.general.error} You may need the $toUppercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;false/;${emojis.general.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;false/;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
 :no}
 {field:Cooldown:
 $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];true;None];false;$commandInfo[$message;cooldown]]

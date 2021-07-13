@@ -1,7 +1,7 @@
 const { colors, emojis } = require("../../../index");
 
 module.exports.awaitedCommand = {
-    name: "alreadyOnProfile",
+    name: "onlyNewsChannels",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Ohhhh...]
-$let[description-enUS;Bad news: Error message!\nGood news: This badge is already on your profile!]
+$let[title-enUS;${emojis.general.error} This ain't it chief!]
+$let[description-enUS;You can only set announcement channels to be auto-published.]
     `}

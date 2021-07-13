@@ -4,24 +4,34 @@ module.exports.command = {
     name: "ocr",
     aliases: ["itt", "imagetotext"],
     module: "tools",
-    description_enUS: "Retrieves found text inside of an image.",
+    description_enUS: "Parses text found within a given image.",
     usage_enUS: "<image URL | attachment>",
     code: `
 $reply[$messageID;
-{author:OCR - Results}
+{author:Optical Character Recognition - Results}
 
 {description:
 \`\`\`
-$getObjectProperty[message]
+$getObjectProperty[ParsedResults[0].ParsedText]
 \`\`\`
 }
+
+{footer:Warning∶ Results may not be 100% accurate | Realized in $getObjectProperty[ProcessingTimeInMilliseconds]ms}
 
 {thumbnail:$get[message]}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://normal-api.ml/ocr?image=$get[message]]]
+$onlyIf[$getObjectProperty[ParsedResults[0].TextOverlay.Message]!=No lines found;Couldn't find text in this image...]
+
+$onlyIf[$getObjectProperty[OCRExitCode]!=99;{execute:args}]
+
+$botTyping
+
+$createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.ocr}&url=$get[message]&scale=true&OCREngine=2]]
+
+$onlyIf[$isValidLink[$get[message]]==true;{execute:args}]
 
 $onlyIf[$get[message]!=;{execute:args}]
 
