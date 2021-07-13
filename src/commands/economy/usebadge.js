@@ -13,7 +13,7 @@ $reply[$messageID;
 {title:${emojis.general.success} Badge applied}
 
 {description:
-The $getObjectProperty[badge.$get[item].name] badge has been applied to your profile.
+The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[item].name] badge has been applied to your profile.
 }
 
 {color:${colors.success}}

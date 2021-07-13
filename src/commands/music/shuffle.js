@@ -1,24 +1,24 @@
-const { colors, emojis } = require("../../../index");
+const { emojis, colors } = require("../../../index");
 
 module.exports.command = {
-    name: "leave",
+    name: "shuffle",
     module: "music",
-    aliases: ["dc", "disconnect", "stfu"],
-    description_enUS: "Makes CRBT quit the current voice channel and clears the queue.",
+    aliases: ["sh"],
+    description_enUS: "Shuffles the queue.",
     code: `
-$leaveVC[$voiceID[$clientID]]
+$shuffleQueue
 
 $reply[$messageID;
-{title:$get[title-$getGlobalUserVar[language]]}
+{title:${emojis.general.success} $get[title-$getGlobalUserVar[language]]}
 
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Left ${emojis.channels.voice} $channelName[$voiceID]]
-
-$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
+$let[title-enUS;Shuffled queue!]
 
 $argsCheck[0;{execute:args}]
+$onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
+$onlyIf[$queueLength!=0;{execute:nomusic}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

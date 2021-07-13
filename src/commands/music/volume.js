@@ -18,14 +18,13 @@ $if[$message!=]
     {color:${colors.success}}
     ;no]
 
+    $onlyIf[$round[$get[volume]]<=100;{execute:volumeLimits}]
+    $onlyIf[$round[$get[volume]]>=0;{execute:volumeLimits}]
+    $onlyIf[$isNumber[$get[volume]]==true;{execute:args}]
+    
     $onlyIf[$voiceID[$clientID]!=;{execute:nomusic}]
     $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 
-    $onlyIf[$round[$get[volume]]<=100;{execute:volumeLimits}]
-    $onlyIf[$round[$get[volume]]>=0.1;{execute:volumeLimits}]
-    $onlyIf[$round[$get[volume]]!=0;{execute:volumeLimits}]
-    $onlyIf[$isNumber[$get[volume]]==true;{execute:args}]
-    
     $let[volume;$replaceText[$message[1];%;]]
 
 $else

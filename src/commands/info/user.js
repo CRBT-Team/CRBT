@@ -52,7 +52,7 @@ $let[roles-enUS;$replaceText[$replaceText[$checkCondition[$userRoleCount[$get[id
 
 $let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$get[id];date];X]> (<t:$formatDate[$creationDate[$get[id];date];X]:R>)]
 
-$let[author-enUS;$replaceText[$replaceText[$checkCondition[$charCount[$userTag]<30];true;$userTag[$get[id]]];false;$cropText[$username[$get[id]];25]...#$discriminator[$get[id]]] - Information]
+$let[author-enUS;$replaceText[$replaceText[$checkCondition[$charCount[$userTag]<30];true;$userTag[$get[id]]];false;$cropText[$username[$get[id]];25]...#$discriminator[$get[id]]] - User info]
 $let[avatar-enUS;**Profile picture:** **[2048px]($replaceText[$userAvatar[$get[id];2048;yes];webp;png])** | **[512px]($replaceText[$userAvatar[$get[id];512;yes];webp;png])** | **[256px]($replaceText[$userAvatar[$get[id];256;yes];webp;png])** | \`$getServerVar[prefix]avatar$replaceText[ $get[id]; $authorID;]\`]
 
 $let[status;$replaceText[$replaceText[$replaceText[$replaceText[$status[$get[id]];dnd;https://cdn.discordapp.com/attachments/782584672772423684/851805534527946762/unknown.png];online;https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png];idle;https://cdn.discordapp.com/attachments/782584672772423684/851805544507113542/unknown.png];offline;https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png]]
@@ -67,13 +67,12 @@ $let[noRoles-enUS;*This user doesn't have any roles...*]
 $onlyIf[$get[memberExists]==true;{execute:userinfo2}]
 
 $if[$message==]
-    $let[memberExists;$checkCondition[$guildID!=]]
+    $let[memberExists;$checkCondition[$channelType!=dm]]
     $let[id;$authorID]
 $else
     $let[memberExists;$memberExists[$get[id]]]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
-    $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

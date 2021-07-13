@@ -30,7 +30,7 @@ $if[$checkContains[${emojis};$message[1]]==true]
     $let[facebook;https://raw.githubusercontent.com/iamcal/emoji-data/master/img-facebook-96/$get[code].png]
     
     $let[types-enUS;Types]
-    $let[title-enUS;$message[1] - Information]
+    $let[title-enUS;$message[1] - Emoji info]
     $let[unicode-enUS;Unicode]
     $let[emojipedia-enUS;Emojipedia page]
     
@@ -69,7 +69,7 @@ $elseIf[$charCount[$message[1]]>=24]
 
     ;no]
 
-    $let[title-enUS;$splitText[2] - Information]
+    $let[title-enUS;$splitText[2] - Emoji info]
     $let[resolutions-enUS;Resolutions (in pixels)]
     $let[id-enUS;ID]
     $let[animated-enUS;Animated:$replaceText[$replaceText[$get[animated];true;Yes];false;No]]
@@ -108,7 +108,7 @@ $else
 
     ;no]
 
-    $let[title-enUS;$splitText[2] - Information]
+    $let[title-enUS;$splitText[2] - Emoji info]
     $let[resolutions-enUS;Resolutions (in pixels)]
     $let[id-enUS;ID]
     $let[animated-enUS;Animated:$replaceText[$replaceText[$get[animated];true;Yes];false;No]]

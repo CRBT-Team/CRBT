@@ -46,7 +46,7 @@ $endif
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;$serverName[$get[id]] - Information]
+$let[title-enUS;$serverName[$get[id]] - Server info]
 
 $let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon $replaceText[$get[id];$guildID;]\`]]
 

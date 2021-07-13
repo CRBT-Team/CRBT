@@ -9,7 +9,7 @@ module.exports.command = {
     userPerms: ["manageroles"],
     botPerms: ["manageroles"],
     code: `
-$setUserVar[strikelog;$getUserVar[strikelog;$get[id]]|**Ban** - $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] - by <@!$authorID> on <t:$round[$formatDate[$dateStamp;X]]:D> at <t:$round[$formatDate[$dateStamp;X]]:T>;$get[id]]
+$setUserVar[strikes;**Mute** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
 
 $giveRole[$get[id];$getServerVar[muted_role]]
 
@@ -27,7 +27,7 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 
 {field:Strike count:
 $getTextSplitLength $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;strike];false;strikes]
-$textSplit[$getUserVar[strikelog;$get[id]];|]
+$textSplit[$getUserVar[strikes;$get[id]];|]
 :yes}
 
 {field:Reason:
@@ -60,4 +60,5 @@ $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
 $setGlobalUserVar[lastCmd;$commandName]
+$onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}

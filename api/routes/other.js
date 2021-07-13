@@ -2,9 +2,9 @@ const { pédiluve } = require("../../json/api.json");
 const router = require("express").Router();
 const { createCanvas } = require("canvas");
 const { param, body, validationResult } = require("express-validator");
-const Animal = require("../Schema/Animal");
-const animalChecks = require("../Utils/animalChecks");
-const checkWords = require("../Utils/checkWords");
+// const Animal = require("../Schema/Animal");
+// const animalChecks = require("../Utils/animalChecks");
+// const checkWords = require("../Utils/checkWords");
 const fetch = require("node-fetch");
 
 router.route("/pediluve", async function (req, res) {
@@ -53,7 +53,7 @@ router.get(
     res.end(png);
   }
 );
-
+/*
 router.post(
   "/shuffle",
   [
@@ -162,5 +162,5 @@ router.get("/animal/random/:type", async function (req, res) {
       })
     );
 });
-
+*/
 module.exports = router;

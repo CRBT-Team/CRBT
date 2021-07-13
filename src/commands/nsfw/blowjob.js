@@ -6,8 +6,6 @@ module.exports.command = {
     description_enUS: "Gives a random hentai image of a blowjob.",
     module: "nsfw",
     code: `
-$reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]
-
 $reply[$messageID;
 {image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/blowjob;url];$jsonRequest[https://api.avux.ga/blowjob?key=${tokens.avux};text]]}
 {color:$getGlobalUserVar[color]}
@@ -20,3 +18,5 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+
+// $reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]

@@ -22,7 +22,6 @@ $if[$message!=]
     $let[description-enUS;$username[$clientID] will now use \`$message\` as its prefix on this server.]
 
     $onlyIf[$charCount[$message]<=15;{execute:prefixTooLong}]
-    $onlyPerms[manageserver;{execute:admins}]
     
 $else
 

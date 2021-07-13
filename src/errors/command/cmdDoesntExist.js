@@ -11,5 +11,5 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.general.error} Huh?]
-$let[description-enUS;Looks like this command or module doesn't exist. Make sure to check your spelling. To check a list of modules & commands, use \`$getServerVar[prefix]help\`.]
+$let[description-enUS;Looks like this command or page number doesn't exist. Make sure to check your spelling. To check a list of all modules, use \`$getServerVar[prefix]help\`.]
     `}

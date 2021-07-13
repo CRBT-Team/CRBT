@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT;
 const { links } = require("../index");
 const { readdirSync, lstatSync } = require("fs");
-const { connect, connection } = require("mongoose");
+// const { connect, connection } = require("mongoose");
 
 app.get("/", async function (req, res) {
   res.json({
@@ -29,7 +29,7 @@ app.get("/", async function (req, res) {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+/*
 connect(
   `mongodb+srv://CRBT:CRBT_Mongo_DB@crbt.pbnxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
   {
@@ -43,7 +43,7 @@ connect(
     console.log("Connected to MongoDB");
   }
 );
-
+*/
 // Load all other api files
 function loadAPIFiles(dir) {
   for (const file of readdirSync(dir).filter((file) => {
@@ -64,13 +64,13 @@ loadAPIFiles(`${__dirname}/routes`);
 app.set("json spaces", 2);
 
 app
-  .listen(15019, function () {
-    console.log(`Connected to the Clembs API (https://localhost:15019)`);
+  .listen(12345, function () {
+    console.log(`Connected to the Clembs API (https://localhost:12345)`);
   })
   .on("error", () => {
     console.log("Couldn't connect to Clembs API!");
   });
-
+/*
 process.on("exit", async function () {
   console.log("Stopping MongoDB connection");
   connection.close();
@@ -80,3 +80,4 @@ process.on("SIGINT", async function () {
   console.log("Stopping MongoDB connection");
   connection.close();
 });
+*/
