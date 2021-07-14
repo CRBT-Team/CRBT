@@ -44,13 +44,13 @@ $reply[$messageID;
 $onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone that's as high as you in the role hierachy!} {color:${colors.error}}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.general.error} I can't ban someone higher than me in the role hierachy!} {color:${colors.error}}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't ban someone higher than you in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$get[id]!=$ownerID;{title:${emojis.general.error} You can't ban the server's owner!} {color:${colors.error}}]
-$onlyIf[$get[id]!=$authorID;{title:${emojis.general.error} You can't ban yourself!} {footer:(I mean technically you could but why would you?)} {color:${colors.error}}]
-$onlyPerms[ban;{title:${emojis.general.error} You need to be able to ban users first!} {color:${colors.error}}]
-$onlyBotPerms[ban;{title:${emojis.general.error} I need the permission to ban users first!} {color:${colors.error}}]
+$onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
+$onlyBotPerms[ban;{execute:botPerms}]
+$onlyPerms[ban;{execute:userPerms}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
-$let[id;$replaceText[$replaceText[$message[1];<@!;];>;]]
+$let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

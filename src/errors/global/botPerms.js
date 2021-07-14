@@ -10,7 +10,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.general.error} I don't have enough permissions.]
-$let[description-enUS;I need the $replaceText[$replaceText[$replaceText[$get[perms];manageemojis;"Manage emojis"];manageserver;"Manage server"];managemessages;"Manage messages"] permission(s) in order to get this command to work.]
+$let[description-enUS;I need the $replaceText[$replaceText[$replaceText[$replaceText[$get[perms];manageemojis;"Manage emojis"];manageserver;"Manage server"];managemessages;"Manage messages"];sendmessages;"Send messages"] permission(s) in order to get this command to work.]
 
 $let[perms;$replaceText[$commandInfo[$getGlobalUserVar[lastCmd];botPerms];,;, ]]
     `}

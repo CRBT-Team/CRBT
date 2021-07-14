@@ -7,7 +7,7 @@ module.exports.command = {
     usage_enUS: "<@mention> <amount of Purplets to give | all>",
     description_enUS: "Allows you to give a fixed amount of Purplets to y",
     code: `
-$setGlobalUserVar[user_bank;$sum[$getGlobalUserVar[user_bank;$get[person]];$get[amount]];$get[person]]
+$setGlobalUserVar[user_bank;$sum[$getGlobalUserVar[user_bank;$get[id]];$get[amount]];$get[id]]
 $setGlobalUserVar[user_bank;$sub[$getGlobalUserVar[user_bank;$authorID];$get[amount]];$authorID]
 
 $reply[$messageID;
@@ -20,24 +20,24 @@ $reply[$messageID;
 
 
 $let[title-enUS;${emojis.general.success} Purplets transfer]
-$let[description-enUS;You successfully gave **${emojis.general.purplet} $get[amount] Purplets** to <@!$get[person]>.]
+$let[description-enUS;You successfully gave **${emojis.general.purplet} $get[amount] Purplets** to <@!$get[id]>.]
 $let[you-enUS;Your balance:Previous: **${emojis.general.purplet} $getGlobalUserVar[user_bank]**\nNew: **${emojis.general.purplet} $sub[$getGlobalUserVar[user_bank];$get[amount]]**]
-$let[them-enUS;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profilePronouns;$get[person]];he him;His];she her;Her];they them;Their];ask;$username[$get[person]]'s];username;$username[$get[person]]'s];any;Their];unspecified;Their];other;$username[$get[person]]'s] balance:Previous: **${emojis.general.purplet} $getGlobalUserVar[user_bank;$get[person]]**\nNew: **${emojis.general.purplet} $sum[$getGlobalUserVar[user_bank;$get[person]];$get[amount]]**]
+$let[them-enUS;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profilePronouns;$get[id]];he him;His];she her;Her];they them;Their];ask;$username[$get[id]]'s];username;$username[$get[id]]'s];any;Their];unspecified;Their];other;$username[$get[id]]'s] balance:Previous: **${emojis.general.purplet} $getGlobalUserVar[user_bank;$get[id]]**\nNew: **${emojis.general.purplet} $sum[$getGlobalUserVar[user_bank;$get[id]];$get[amount]]**]
 
 $onlyIf[$get[amount]>0;{execute:belowZero}]
 $onlyIf[$get[amount]!=0;{execute:belowZero}]
-$onlyIf[$isBot[$get[person]]==false;{execute:giveNotBots}]
+$onlyIf[$isBot[$get[id]]==false;{execute:giveNotBots}]
 $onlyIf[$get[amount]<=$getGlobalUserVar[user_bank];{execute:noMoney}]
 $onlyIf[$getGlobalUserVar[user_bank]>0;{execute:noMoney}]
-$onlyIf[$get[person]!=$authorID;{execute:giveNotYou}]
-$onlyIf[$getGlobalUserVar[blocklisted;$get[person]]==false;{execute:giveNotBlocklist}]
+$onlyIf[$get[id]!=$authorID;{execute:giveNotYou}]
+$onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
 $onlyIf[$isNumber[$get[amount]]==true;{execute:args}]
-$onlyIf[$get[person]!=;{execute:args}]
+$onlyIf[$get[id]!=;{execute:args}]
 $argsCheck[2;{execute:args}]
 $onlyIf[$checkContains[$toLowercase[$message];dollidot]==false;as far as we know, you can't give dollidots (yet)]
 
 $let[amount;$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]]]
-$let[person;$mentioned[1]]
+$let[id;$mentioned[1]]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
@@ -47,6 +47,6 @@ $onlyIf[$guildID!=;{execute:guildOnly}]
     `}
 
 /*
-$let[person;$findUser[$replaceText[$toLowercase[$message];all;$getGlobalUserVar[user_bank]];$findNumbers[$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]];no]]
+$let[id;$findUser[$replaceText[$toLowercase[$message];all;$getGlobalUserVar[user_bank]];$findNumbers[$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]];no]]
 $let[amount;$round[$findNumbers[$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]]]]]
 */

@@ -44,13 +44,13 @@ $reply[$messageID;
 $onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't kick someone that's as high as you in the role hierachy!} {color:${colors.error}}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.general.error} I can't kick someone higher than me in the role hierachy!} {color:${colors.error}}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't kick someone higher than you in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$get[id]!=$ownerID;{title:${emojis.general.error} You can't kick the server's owner!} {color:${colors.error}}]
-$onlyIf[$get[id]!=$authorID;${emojis.general.error} You can't kick yourself!} {footer:(Just leave the server lol)} {color:${colors.error}}]
-$onlyPerms[kick;{title:${emojis.general.error} You need to be able to kick users first!} {color:${colors.error}}]
-$onlyBotPerms[kick;{title:${emojis.general.error} I need the permission to kick users first!} {color:${colors.error}}]
+$onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
+$onlyBotPerms[kick;{execute:botPerms}]
+$onlyPerms[kick;{execute:userPerms}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
-$let[id;$replaceText[$replaceText[$message[1];<@!;];>;]]
+$let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

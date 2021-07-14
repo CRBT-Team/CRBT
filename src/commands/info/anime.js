@@ -48,7 +48,7 @@ $let[openIn-enUS;Open in kitsu.io]
 
 $onlyIf[$getObjectProperty[success]!=false;{execute:args}]
 
-$createObject[$replaceText[$jsonRequest[https://api.f1r3.tk/anime?name=$replaceText[$message; ;+]];{"success":false,"message":"Anime not found!"};{"success":"false"}]]
+$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

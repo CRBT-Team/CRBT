@@ -51,6 +51,7 @@ $createObject[{"job":"$getGlobalUserVar[job_type;$get[id]]", "level":"level$getG
 $if[$message==]
     $let[id;$authorID]
 $else
+    $onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message]!=undefined;{execute:usernotfound}]
 $endif

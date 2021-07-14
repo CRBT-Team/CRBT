@@ -27,6 +27,7 @@ $let[work-enUS;• You haven't got a job! You can get one by using the \`$getSer
 $if[$message==]
     $let[id;$authorID]
 $else
+    $onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif
