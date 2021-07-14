@@ -23,7 +23,6 @@ catch(err) {
 $let[calc;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;x;*];#COLON#;/]; ;];,;];\n;\\n]]
 
 $suppressErrors
-$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;+;];-;];x;];*;];/;];);];(;]]==true;]
 $argsCheck[>1;]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;]
