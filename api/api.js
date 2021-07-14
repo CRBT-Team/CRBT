@@ -8,34 +8,6 @@ const path = require("path");
 
 app.get("/", async function (req, res) {
     res.sendFile(path.join(__dirname, "index.html"));
-    /*
-        res.json({
-        status: 200,
-        welcomeMessage: "Welcome to the Clembs API, currently in beta.",
-        supportServer: links.info.discord,
-        endpoints: {
-        crbt: {
-            method: "GET",
-            description: "Retrieves info on CRBT & its latest version.",
-        },
-        "crbt/stats": {
-            method: "GET",
-            description: "Get member count, guild count & command count on CRBT.",
-        },
-        "crbt/meaning": {
-            method: "GET",
-            description: "wHaT dOeS cRbT mEan?????????2?",
-        },
-        },
-    });
-    */
-});
-
-app.use((req, res, next) => {
-    res.status(404).json({
-        status: 404,
-        message: "Couldn't find this API endpoint.",
-    });
 });
 
 app.use(express.json());
@@ -73,6 +45,13 @@ function loadAPIFiles(dir) {
 loadAPIFiles(`${__dirname}/routes`);
 
 app.set("json spaces", 2);
+
+app.use((req, res, next) => {
+    res.status(404).json({
+        status: 404,
+        message: "Couldn't find this API endpoint.",
+    });
+});
 
 app
     .listen(port, function () {
