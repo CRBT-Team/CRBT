@@ -23,7 +23,7 @@ client.discordTogether.createTogetherCode('$voiceID', 'youtube').then(async invi
 d.object.invite = invite.code;
 });]
 
-$onlyIf[$hasPermsInChannel[$voiceID;$clientID;createinvite]==true;{execute:invitePerms}]
+$onlyIf[$hasPermsInChannel[$voiceID;$clientID;createinvite]==true;{execute:botPerms}]
 $onlyIf[$voiceID!=;{execute:novoice}]
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

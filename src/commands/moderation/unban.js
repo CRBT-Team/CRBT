@@ -4,9 +4,10 @@ const { emojis } = require("../../../index");
 module.exports.command = {
     name: "unban",
     module: "moderation",
-    description: "Unbans a user that was banned before.",
-    usage_enUS: "<user ID>",
-    cooldown: "5s",
+    description_enUS: "Unbans a user that was banned before.",
+    usage_enUS: "<user ID | @mention>",
+    userPerms: "ban",
+    botPerms: "ban",
     code: `
 $reply[$messageID;
 {title:${emojis.general.sucess} Successfully unbanned $username[$message[1]].} 

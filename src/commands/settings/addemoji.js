@@ -4,7 +4,7 @@ module.exports.command = {
     name: "addemoji",
     module: "settings",
     description_enUS: "Adds the specified emoji or image to the current server's emoji list.",
-    usage_enUS: "<name> <image URL> | <custom emoji>",
+    usage_enUS: "<name> <image URL | attachment> | <custom emoji>",
     userPerms: ["manageemojis"],
     botPerms: ["manageemojis"],
     code: `

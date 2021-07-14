@@ -24,7 +24,7 @@ $textSplit[$getChannelVar[snipeDetails;$get[id]];//]
 $if[$message==]
     $let[id;$channelID]
 $else
-    $onlyIf[$hasPermsInChannel[$get[id];$clientID;readmessages]==true;{execute:cantReadChannel}]
+    $onlyIf[$hasPermsInChannel[$get[id];$clientID;readmessages]==true;{execute:botPerms}]
     $let[id;$findServerChannel[$message]]
     $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:channelNotFound}]
 $endif

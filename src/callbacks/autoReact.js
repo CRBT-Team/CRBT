@@ -13,7 +13,7 @@ $if[$checkContains[$checkContains[$toLowercase[$message];good meal; yum ;yummy;d
   $djsEval[message.react('$get[goodmeal]')]
 $endif
 
-$if[$checkContains[$checkCondition[$toLowercase[$message]==cool]$checkContains[$toLowercase[$message];coolwoah;cool ;woah;wow ];true]==true]
+$if[$checkContains[$toLowercase[$message];coolwoah;woah;wow ]==true]
   $djsEval[message.react('$get[coolwoah]')]
 $endif
 

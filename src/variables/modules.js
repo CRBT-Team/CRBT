@@ -15,6 +15,7 @@ module.exports.variables = {
     module_management: true,
     module_autoPublish: false,
     module_messageLogs: false,
+    module_modLogs: false,
     module_partnerCmd: true,
     //module_joinMessages: false,
     //module_leaveMessages: false,

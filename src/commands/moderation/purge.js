@@ -40,10 +40,10 @@ $sendMessage[
 $clear[$sum[$message;1]]
 $deletecommand
     
-$onlyIf[$hasPermsInChannel[$channelID;$authorID;managemessages]==true;{title:${emojis.general.error} You need to be able to delete messages for me to purge some!} {color:${colors.error}}]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;managemessages]==true;{title:${emojis.general.error} I need the permission to manage messages to purge them!} {color:${colors.error}}]
-$onlyIf[$message<=100;{title:${emojis.general.error} You can only purge up to 100 messages per command!} {color:${colors.error}}]
 $onlyIf[$isNumber[$message]==true;{execute:args}]
+$onlyIf[$message<=100;{title:${emojis.general.error} You can only purge up to 100 messages per command!} {color:${colors.error}}]
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;managemessages]==true;{execute:botPerms}]
+$onlyIf[$hasPermsInChannel[$channelID;$authorID;managemessages]==true;{execute:userPerms}]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

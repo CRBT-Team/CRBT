@@ -1,7 +1,7 @@
 const { colors, emojis } = require("../../../index");
 
 module.exports.awaitedCommand = {
-    name: "giveNotBlocklist",
+    name: "userBlocklisted",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]} 
@@ -10,5 +10,5 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.general.error} The user is blocklisted!]
-$let[description-enUS;The user you're trying to give Purplets to is currently blocklisted, so it'll be unecessary to give them Purplets.]
+$let[description-enUS;This user was blocklisted from using $username[$clientID], and you can't interact with blocklisted users.]
     `}

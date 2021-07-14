@@ -7,7 +7,8 @@ module.exports.command = {
     description_enUS: "Adds the specified badge to your profile (as long as it is in your inventory).",
     usage_enUS: "<badge name (e.g. \"udu\")>",
     code: `
-$setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges];None; ] <badge $replaceText[$toLowercase[$message]; ;]>]
+$setGlobalUserVar[profile_badges;$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges];french;france];russian;russia];None; ] <badge $replaceText[$toLowercase[$message]; ;]>;  ; ]]
+$setGlobalUserVar[invbadge;$replaceText[$replaceText[$getGlobalUserVar[invbadge];french;france];russian;russia]]
 
 $reply[$messageID;
 {title:${emojis.general.success} Badge applied}
@@ -19,9 +20,9 @@ The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$checkContains[$getGlobalUserVar[profile_badges];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:alreadyOnProfile}]
+$onlyIf[$checkContains[$replaceText[$replaceText[$getGlobalUserVar[profile_badges];french;france];russian;russia];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:alreadyOnProfile}]
 
-$onlyIf[$checkContains[$getGlobalUserVar[invbadge];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notInInv}]
+$onlyIf[$checkContains[$replaceText[$replaceText[$getGlobalUserVar[invbadge];french;france];russian;russia];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notInInv}]
 
 $onlyIf[$getObjectProperty[badge.$get[item].contents]!=;{execute:unknownItem}]
 
