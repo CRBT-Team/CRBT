@@ -8,7 +8,6 @@ const { param, body, validationResult } = require("express-validator");
 const fetch = require("node-fetch");
 let kitsu = require('kitsu.js')
 const kitsus = new kitsu()
-let req = require('request')
 
 router.get("/pediluve", async function (req, res) {
     res.json({
