@@ -1,9 +1,10 @@
 const { colors, emojis, links } = require("../../../index");
 
 module.exports.command = {
-  name: "reply",
-  aliases: ["replyreport"],
-  code: `
+    name: "reply",
+    aliases: ["replyreport", "message"],
+    module: "admin",
+    code: `
 $deleteCommand
 
 $wait[500ms]
@@ -56,4 +57,4 @@ $argsCheck[>1;{execute:args}]
 
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
-  `}
+    `}

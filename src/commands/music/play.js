@@ -193,6 +193,11 @@ $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;\`$getServerVar[prefix]volume <new volume>\`]
 
+$if[$getServerVar[music_channel]!=]
+$onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
+$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
+$endif
+
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]

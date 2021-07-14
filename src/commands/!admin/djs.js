@@ -1,6 +1,7 @@
 module.exports.command = {
     name: "djseval",
     aliases: ["djs", "js"],
+    module: "admin",
     code: `
 $djsEval[
 const Discord = require("discord.js")

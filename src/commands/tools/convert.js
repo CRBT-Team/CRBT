@@ -10,7 +10,7 @@ $if[$argsCount==3]
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {field:$toUppercase[$message[1]]:
-    $message[3]
+    $roundTenth[$message[3];2]
     :yes}
     {field:$toUppercase[$message[2]]:
     $roundTenth[$getObjectProperty[result];2]
@@ -33,7 +33,7 @@ $if[$argsCount==2]
         $reply[$messageID;
         {title:$get[title-$getGlobalUserVar[language]]}
         {field:$toUppercase[$message[1]]:
-        $message[2]
+        $roundTenth[$message[2];2]
         :yes}
         $if[$toLowercase[$message[1]]!=usd]
         {field:USD:
@@ -73,7 +73,7 @@ $if[$argsCount==2]
         $reply[$messageID;
         {title:$get[title-$getGlobalUserVar[language]]}
         {field:$toUppercase[$message[1]]:
-        1
+        1.00
         :yes}
         {field:$toUppercase[$message[2]]:
         $roundTenth[$getObjectProperty[result];2]
@@ -96,7 +96,7 @@ $if[$argsCount==1]
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {field:$toUppercase[$message[1]]:
-    1
+    1.00
     :yes}
     $if[$toLowercase[$message[1]]!=usd]
     {field:USD:

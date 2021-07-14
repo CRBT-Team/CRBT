@@ -56,7 +56,9 @@
             "forcedoff": "<:forcedoff:864194059823349760>",
             "information": "<:information:862974997236023296>",
             "warning": "<:warning:836285755948662814>",
-            "partner": "<:CRBTPartner:856815843127853086>"
+            "partner": "<:CRBTPartner:856815843127853086>",
+            "thumbsup": "<:thumbsup:836313884590604349>",
+            "thumbsdown": "<:thumbsdown:836313884603842590>"
         },
         "channels": {
             "text": "<:text:861643749242306610>",

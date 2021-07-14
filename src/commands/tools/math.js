@@ -1,3 +1,5 @@
+const {emojis,colors} = require("../../../index");
+
 module.exports.command = {
     name: "calc",
     module: "tools",
@@ -6,16 +8,29 @@ module.exports.command = {
     usage_enUS: "<math calculation (e.g. 4+3)>",
     code: `
 $reply[$messageID;
-{title:= $replaceText[$math[$get[calc]];Infinity;∞]}
-{color:$getGlobalUserVar[color]}
+{title:$getObjectProperty[math]}
+{color:$replaceText[$replaceText[$checkContains[$toLowercase[$getObjectProperty[math]];an error occured];false;$getGlobalUserVar[color]];true;${colors.error}]}
 ;no]
 
-$let[calc;$replaceText[$replaceText[$replaceText[$replaceText[$message;x;*];#COLON#;/]; ;];,;]]
+$djsEval[const { Parser } = require('expr-eval');
+const math = new Parser();
+try{
+    d.object.math = "= " + math.evaluate('$get[calc]')
+}
+catch(err) {
+    d.object.math = "${emojis.general.error} An error occured...}\\n{description:\`" + err.message + "\`"
+}
+]
 
-$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;+;];-;];x;];*;];/;];);];(;]]==true;{execute:args}]
+$let[calc;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;x;*];#COLON#;/]; ;];,;];\n;\\n]]
+
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+
+/*
+$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;+;];-;];x;];*;];/;];);];(;]]==true;{execute:args}]
+     */

@@ -6,11 +6,21 @@ module.exports.command = {
     usage_enUS: "<math calculation (e.g. 4+3)>",
     code: `
 $reply[$messageID;
-{title:= $replaceText[$math[$get[calc]];Infinity;∞]}
-{color:$getGlobalUserVar[color]}
+{title:$getObjectProperty[math]}
+{color:$replaceText[$replaceText[$checkContains[$toLowercase[$getObjectProperty[math]];an error occured];false;$getGlobalUserVar[color]];true;${colors.error}]}
 ;no]
 
-$let[calc;$replaceText[$replaceText[$replaceText[$replaceText[$message;x;*];#COLON#;/]; ;];,;]]
+$djsEval[const { Parser } = require('expr-eval');
+const math = new Parser();
+try{
+    d.object.math = "= " + math.evaluate('$get[calc]')
+}
+catch(err) {
+    d.object.math = "${emojis.general.error} An error occured...}\\n{description:\`" + err.message + "\`"
+}
+]
+
+$let[calc;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;x;*];#COLON#;/]; ;];,;];\n;\\n]]
 
 $suppressErrors
 $onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;+;];-;];x;];*;];/;];);];(;]]==true;]

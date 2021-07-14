@@ -1,35 +1,36 @@
 module.exports.command = {
     name: "aoijs",
     aliases: ["aoi", "dbdjs", "dbd"],
+    module: "admin",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/kam0X4w.png}
 
 {description:
-**[$get[webDocs-$getGlobalUserVar[language]]](https://aoi.leref.ga/functions/$toLowercase[$replaceText[$getObjectProperty[name];\$;usd]])**
+**[$get[webDocs-$getGlobalUserVar[language]]](https://aoi.leref.ga/functions/$toLowercase[$replaceText[$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;];function.name];\$;usd]])**
 }
 
 {field:$get[description-$getGlobalUserVar[language]]:
-$getObjectProperty[description]
+$getObjectProperty[function.description]
 :no}
 
 {field:$get[usage-$getGlobalUserVar[language]]:
 \`\`\`
-$jsonRequest[https://dbdjs.leref.ga/functions/\$$replaceText[$message;\$;];usage]
+$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;];function.usage]
 \`\`\`
 :no}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;$jsonRequest[https://dbdjs.leref.ga/functions/\$$replaceText[$message;\$;];name] - Function info]
+$let[title-enUS;$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;];function.name] - Function info]
 $let[description-enUS;Description]
 $let[usage-enUS;Usage]
 $let[webDocs-enUS;Web documentation]
 
 $onlyIf[$getObjectProperty[error]==;{execute:aoiMissingFunction}]
 
-$createObject[$jsonRequest[https://dbdjs.leref.ga/functions/\$$replaceText[$message;\$;]]]
+$createObject[$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;]]]
 
 $onlyIf[$jsonRequest[https://dbdjs.leref.ga]!=;api down xd]
 

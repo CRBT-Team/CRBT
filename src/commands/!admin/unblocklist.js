@@ -1,10 +1,10 @@
 const { emojis, links, colors } = require("../../../index");
 
 module.exports.command = {
-  name: "unblocklist",
-  aliases: ["unbl", "ubl"],
-  module: "admin",
-  code: `
+    name: "unblocklist",
+    aliases: ["unbl", "ubl"],
+    module: "admin",
+    code: `
 $sendDM[$findUser[$message[1];no];
 {title:${emojis.general.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
@@ -27,4 +27,4 @@ $setGlobalUserVar[blocklisted;false;$findUser[$message[1];no]]
 $onlyIf[$findUser[$message[1];no]!=undefined;can't find this user]
 
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
-`}
+    `}

@@ -50,6 +50,7 @@ router.get("/command/:name", async function(req, res, next) {
             name: cmd.name,
             aliases: cmd.aliases,
             module: cmd.module,
+            cooldown: cmd.cooldown,
             description: {
                 enUS: cmd.description_enUS,
                 enUK: cmd.description_enUK,
@@ -66,7 +67,8 @@ router.get("/command/:name", async function(req, res, next) {
                 ru: cmd.usage_ru,
                 ptBR: cmd.usage_ptBR,
             },
-            cooldown: cmd.cooldown
+            botPerms: cmd.botPerms,
+            userPerms: cmd.userPerms,
         })
     }
 })

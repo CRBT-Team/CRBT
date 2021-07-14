@@ -16,6 +16,7 @@
     "discord-together": "^1.1.14",
     "discord-webhook-node": "^1.1.8",
     "emoji-unicode": "^2.0.1",
+    "expr-eval": "^2.0.2",
     "express": "^4.17.1",
     "express-validator": "^6.12.0",
     "ffmpeg-static": "^4.3.0",

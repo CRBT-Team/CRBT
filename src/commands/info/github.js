@@ -51,9 +51,7 @@ $if[$argsCount==1]
     $let[joinedGitHub-enUS;Joined GitHub]
     $let[lastUpdated-enUS;Last updated]
 
-    $onlyIf[$getObjectProperty[login]!=;{execute:args}]
-
-    $createObject[$httpRequest[https://api.github.com/users/$message[1];GET;;;;Authorization:${tokens.github}]]
+    $createObject[$httpRequest[https://api.github.com/users/$message[1];GET;;;{execute:args};Authorization:${tokens.github}]]
 
 $elseIf[$argsCount==2]
 
@@ -61,7 +59,7 @@ $elseIf[$argsCount==2]
     {author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/1OGU699.png}
 
     {description:
-    $replaceText[$replaceText[$getObjectProperty[archived];true;This repository has been archived by the owner. It is now read-only\n];false;] $replaceText[$replaceText[$getObjectProperty[fork];true;Forked from **[$getObjectProperty[parent.full_name]](https://github.com/$getObjectProperty[parent.full_name])**\n];false;]**[GitHub]($getObjectProperty[html_url])**$replaceText[$replaceText[$checkCondition[$getObjectProperty[homepage]==];true;];false; | **[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[homepage] ;https://;];http://;];/ ;]; ;]]($getObjectProperty[homepage])**]
+    $replaceText[$replaceText[$getObjectProperty[archived];true;This repository has been archived by the owner. It is now read-only.\n];false;] $replaceText[$replaceText[$getObjectProperty[fork];true;Forked from **[$getObjectProperty[parent.full_name]](https://github.com/$getObjectProperty[parent.full_name])**\n];false;]**[GitHub]($getObjectProperty[html_url])**$replaceText[$replaceText[$checkCondition[$getObjectProperty[homepage]==];true;];false; | **[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[homepage] ;https://;];http://;];/ ;]; ;]]($getObjectProperty[homepage])**]
     }
 
     {field:$get[description-$getGlobalUserVar[language]]:
@@ -77,7 +75,7 @@ $elseIf[$argsCount==2]
     :yes}
 
     {field:$get[license-$getGlobalUserVar[language]]:
-    $getObjectProperty[license.name]
+    $replaceText[$replaceText[$checkCondition[$getObjectProperty[license.name]==];true;$get[none-$getGlobalUserVar[language]]];false;$getObjectProperty[license.name]]
     :yes}
 
     {field:$get[branch-$getGlobalUserVar[language]]:
@@ -110,16 +108,13 @@ $elseIf[$argsCount==2]
     $let[license-enUS;License]
     $let[branch-enUS;Main branch]
 
-    $onlyIf[$checkCondition[$getObjectProperty[full_name]!=]==true;{execute:args}]
-
-    $createObject[$httpRequest[https://api.github.com/repos/$message[1]/$message[2];GET;;;;Authorization:${tokens.github}]]
+    $createObject[$httpRequest[https://api.github.com/repos/$message[1]/$message[2];GET;;;{execute:args};Authorization:${tokens.github}]]
 
 $endelseIf
 $else
     $loop[1;args]
 $endif
 
-$argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
