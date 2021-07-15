@@ -46,7 +46,7 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[endDate]==];true;Si
 $let[title-enUS;$replaceText[$getObjectProperty[titles.canonical];:;#COLON#] - Anime info]
 $let[openIn-enUS;Open in kitsu.io]
 
-$onlyIf[$getObjectProperty[success]!=false;{execute:args}]
+$onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
 $createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message]]
 

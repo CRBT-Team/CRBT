@@ -120,7 +120,7 @@ $else
 
     $textSplit[$replaceText[$get[emoji];#COLON#;@];@]
 
-    $onlyIf[$get[emoji]!=undefined;{execute:args}]
+    $onlyIf[$get[emoji]!=undefined;{execute:queryNotFound}]
 
     $let[emoji;$customEmoji[$replaceText[$message[1];#COLON#;]]]
 

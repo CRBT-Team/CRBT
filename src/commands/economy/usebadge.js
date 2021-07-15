@@ -20,7 +20,7 @@ The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$checkContains[$replaceText[$replaceText[$getGlobalUserVar[profile_badges];french;france];russian;russia];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:alreadyOnProfile}]
+$onlyIf[$checkContains[$replaceText[$replaceText[$getGlobalUserVar[profile_badges];french;france];russian;russia];badge $replaceText[$toLowercase[$message]; ;]]==false;{execute:onProfile}]
 
 $onlyIf[$checkContains[$replaceText[$replaceText[$getGlobalUserVar[invbadge];french;france];russian;russia];badge $replaceText[$toLowercase[$message]; ;]]==true;{execute:notInInv}]
 

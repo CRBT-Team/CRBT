@@ -37,7 +37,7 @@ $endif
 
 ;no]
 
-$onlyIf[$httpRequest[https://mcapi.xdefcon.com/server/$message/ping/json;GET;;ping]!=undefined;{execute:unknownServer}]
+$onlyIf[$httpRequest[https://mcapi.xdefcon.com/server/$message/ping/json;GET;;ping]!=undefined;{execute:queryNotFound}]
 
 $createObject[$jsonRequest[https://api.mcsrvstat.us/1/$message]]
 

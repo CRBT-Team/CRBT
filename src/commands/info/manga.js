@@ -54,7 +54,7 @@ $let[openIn-enUS;Open in kitsu.io]
 
 $createFile[$getObject;source.json]
 
-$onlyIf[$getObjectProperty[success]!=false;{execute:args}]
+$onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
 $createObject[$replaceText[$jsonRequest[https://api.avux.ga/mangasearch?search=$message;;;X-API-Key:${tokens.avux}];{};{"success":"false"}]]
 

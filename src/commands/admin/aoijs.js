@@ -28,7 +28,7 @@ $let[description-enUS;Description]
 $let[usage-enUS;Usage]
 $let[webDocs-enUS;Web documentation]
 
-$onlyIf[$getObjectProperty[error]==;{execute:aoiMissingFunction}]
+$onlyIf[$getObjectProperty[error]==;{execute:queryNotFound}]
 
 $createObject[$jsonRequest[https://dbdjs.leref.ga/search/\$$replaceText[$message;\$;]]]
 

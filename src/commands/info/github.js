@@ -51,7 +51,7 @@ $if[$argsCount==1]
     $let[joinedGitHub-enUS;Joined GitHub]
     $let[lastUpdated-enUS;Last updated]
 
-    $createObject[$httpRequest[https://api.github.com/users/$message[1];GET;;;{execute:args};Authorization:${tokens.github}]]
+    $createObject[$httpRequest[https://api.github.com/users/$message[1];GET;;;{execute:queryNotFound};Authorization:${tokens.github}]]
 
 $elseIf[$argsCount==2]
 
@@ -108,7 +108,7 @@ $elseIf[$argsCount==2]
     $let[license-enUS;License]
     $let[branch-enUS;Main branch]
 
-    $createObject[$httpRequest[https://api.github.com/repos/$message[1]/$message[2];GET;;;{execute:args};Authorization:${tokens.github}]]
+    $createObject[$httpRequest[https://api.github.com/repos/$message[1]/$message[2];GET;;;{execute:queryNotFound};Authorization:${tokens.github}]]
 
 $endelseIf
 $else

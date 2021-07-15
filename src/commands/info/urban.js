@@ -1,8 +1,8 @@
 const {emojis} = require("../../../index");
 
 module.exports.command = {
-    name: "urbansearch",
-    aliases: ["urban", "urbandictionnary", "urban-search", "urban_search","urban-dictionnary", "urban_dictionnary", "urbandefine"],
+    name: "urbandictionary",
+    aliases: ["urban", "urbansearch", "urban-search", "urban_search","urban-dictionnary", "urban_dictionnary", "urbandefine"],
     description_enUS: "Searches your query on Urban Dictionnary and gives the first result.",
     module: "info",
     usage_enUS: "<search terms>",
@@ -15,15 +15,15 @@ $reply[$messageID;
 }
 
 {field:Definition:
-$replaceText[$replaceText[$getObjectProperty[list[0].definition];#LEFT#;];#RIGHT#;]
+$replaceText[$replaceText[$checkCondition[$charCount[$getObjectProperty[list[0].definition]]>500];true;$cropText[$replaceText[$replaceText[$getObjectProperty[list[0].definition];#RIGHT#;];#LEFT#;];500]...];false;$replaceText[$replaceText[$getObjectProperty[list[0].definition];#RIGHT#;];#LEFT#;]]
 :no}
 
 {field:Example:
-$replaceText[$replaceText[$getObjectProperty[list[0].example];#LEFT#;];#RIGHT#;]
+$replaceText[$replaceText[$checkCondition[$charCount[$getObjectProperty[list[0].example]]>500];true;$cropText[$replaceText[$replaceText[$getObjectProperty[list[0].example];#RIGHT#;];#LEFT#;];500]...];false;$replaceText[$replaceText[$getObjectProperty[list[0].example];#RIGHT#;];#LEFT#;]]
 :no}
 
 {field:Author:
-$getObjectProperty[list[0].author]
+**[$getObjectProperty[list[0].author]](https://www.urbandictionary.com/author.php?author=$getObjectProperty[list[0].author])**
 :yes}
 
 {field:Written:
@@ -39,7 +39,7 @@ ${emojis.general.thumbsdown} $replaceText[$replaceText[$checkCondition[$getObjec
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$onlyIf[$getObjectProperty[list[0].word]!=;{execute:args}]
+$onlyIf[$getObjectProperty[list[0].word]!=;{execute:queryNotFound}]
 
 $createObject[$jsonRequest[https://api.urbandictionary.com/v0/define?term=$message]]
 

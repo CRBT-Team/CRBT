@@ -45,7 +45,7 @@ $replaceText[$getObjectProperty[abilities];,;, ]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://some-random-api.ml/pokedex?pokemon=$message;;{execute:pokéNotFound}]]
+$createObject[$jsonRequest[https://some-random-api.ml/pokedex?pokemon=$message;;{execute:queryNotFound}]]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

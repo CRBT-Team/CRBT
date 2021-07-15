@@ -9,7 +9,7 @@ module.exports.command = {
     code: `
 $eval[
 $reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:${illustrations.invite}}
+{author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/Uogdguc.jpeg}
 {title:$getObjectProperty[guild.name]}
 
 {description:$getObjectProperty[guild.welcome_screen.description]}
@@ -21,7 +21,7 @@ $if[$getObjectProperty[guild.welcome_screen.description]!=]
 $endif
 
 {field:$get[landingChannel-$getGlobalUserVar[language]]:
-<#$getObjectProperty[channel.id]>
+#$getObjectProperty[channel.name] ($getObjectProperty[channel.id])
 :yes}
 
 {field:$get[serverID-$getGlobalUserVar[language]]:
@@ -29,14 +29,13 @@ $getObjectProperty[guild.id]
 :yes}
 
 {field:$get[inviter-$getGlobalUserVar[language]]:
-$replaceText[$replaceText[$checkCondition[$getObjectProperty[inviter.id]!=];true;$userTag[$getObjectProperty[inviter.id]]
-($getObjectProperty[inviter.id])];false;$get[vanity-$getGlobalUserVar[language]]]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[inviter.id]!=];true;$userTag[$getObjectProperty[inviter.id]] ($getObjectProperty[inviter.id])];false;$get[vanity-$getGlobalUserVar[language]]]
 :no}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;$get[code] - Invite info]
+$let[title-enUS;$get[code] - Discord invite info]
 $let[serverID-enUS;Server ID]
 $let[landingChannel-enUS;Landing channel]
 $let[inviter-enUS;Inviter]
@@ -47,7 +46,7 @@ $let[icon2;$replaceText[$replaceText[$get[isNSFW];false;https://cdn.discordapp.c
 
 $let[isNSFW;$checkCondition[$getObjectProperty[guild.nsfw]==true]]
 
-$createObject[$httpRequest[https://discord.com/api/v8/invites/$get[code];GET]]
+$createObject[$httpRequest[https://discord.com/api/v8/invites/$get[code];GET;;;{execute:queryNotFound}]]
 
 $let[code;$replaceText[$replaceText[$replaceText[$message;https://discord.gg/;];https://discord.com/invite/;];discord.gg/;]]
 

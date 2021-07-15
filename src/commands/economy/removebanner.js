@@ -18,7 +18,7 @@ Your current profile banner has been removed from your profile.
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$getGlobalUserVar[profile_banner]!=$getVar[profile_banner];{execute:noBanner}]
+$onlyIf[$getGlobalUserVar[profile_banner]!=$getVar[profile_banner];{execute:onProfile}]
 
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

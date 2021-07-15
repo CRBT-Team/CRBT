@@ -1,16 +1,16 @@
 module.exports.command = {
     name: "define",
-    aliases: ['dictionnary', 'dictio', 'word', 'definition'],
-    description_enUS: "Defines a word on Google Dictionnary",
-    usage: "<english word>",
+    aliases: ['dictionary', 'dictio', 'word', 'definition'],
+    description_enUS: "Defines a word on Google Dictionary",
+    usage_enUS: "<english word>",
     module: "info",
     code:`
-$attachment[$getObjectProperty[e.phonetics[0].audio];Pronounciation.mp3]
+$attachment[$getObjectProperty[res.phonetics[0].audio];Pronounciation.mp3]
 $reply[$messageID;
-{title:$getObjectProperty[e.word] ($getObjectProperty[e.meanings[0].partOfSpeech])}
+{author:$getObjectProperty[res.word] ($getObjectProperty[res.meanings[0].partOfSpeech]) - Definition}
 
 {field:Phonetics:
-$getObjectProperty[e.phonetics[0].text]
+$getObjectProperty[res.phonetics[0].text]
 :no}
 
 {field:Definition:
@@ -18,28 +18,22 @@ $jsonRequest[https://api.dictionaryapi.dev/api/v2/entries/en_US/$message;#RIGHT#
 :no}
 
 {field:Example:
-$replaceText[$replaceText[$checkCondition[$getObjectProperty[e.meanings[0].definitions[0].example]==];false;$replaceText[$getObjectProperty[e.meanings[0].definitions[0].example]; $getObjectProperty[e.word]; **$getObjectProperty[e.word]**]];true;*None*]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[res.meanings[0].definitions[0].example]==];false;$replaceText[$getObjectProperty[res.meanings[0].definitions[0].example]; $getObjectProperty[res.word]; **$getObjectProperty[res.word]**]];true;*None*]
 :no}
 
 {field:Synonyms:
-$replaceText[$replaceText[$checkCondition[$getObjectProperty[e.meanings[0].definitions[0].synonyms]==];false;$replaceText[$getObjectProperty[e.meanings[0].definitions[0].synonyms];,;, ]];true;*None*]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[res.meanings[0].definitions[0].synonyms]==];false;$replaceText[$getObjectProperty[res.meanings[0].definitions[0].synonyms];,;, ]];true;*None*]
 :yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$onlyIf[$getObjectProperty[e.resolution]==;{execute:args}]
-
 $djsEval[
-const fetch = require("node-fetch");
+let obj = $getObject
+d.object.res = obj[0]
+]
 
-fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + "$getObjectProperty[message]")
-  .then((res) => res.json())
-  .then((res) => {
-    d.object.e = res[0];
-  })]
-  
-$createObject[{"message": "$message"}]
+$createObject[$jsonRequest[https://api.dictionaryapi.dev/api/v2/entries/en_US/$message;;{execute:queryNotFound}]]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
