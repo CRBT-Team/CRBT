@@ -1,4 +1,5 @@
 module.exports.joinCommand = {
+    channel: "$channelID",
     code: `
 $if[$roleExists[718944495105867898]==true]
 $giveRole[$authorID;718944495105867898]
