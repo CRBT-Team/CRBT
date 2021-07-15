@@ -7,6 +7,7 @@ module.exports.variables = {
     color: `${colors.lightred.toLowerCase()}`,
     language: "enUS",
     telemetry: "complete", //two states: minimal or complete 
+    paintedColor: "", //for name color
     
 
 //user related misc data
