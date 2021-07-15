@@ -1,3 +1,5 @@
+const {emojis,colors} = require("../../../index");
+
 module.exports.command = {
     name: "=",
     nonPrefixed: true,
@@ -10,13 +12,15 @@ $reply[$messageID;
 {color:$replaceText[$replaceText[$checkContains[$toLowercase[$getObjectProperty[math]];an error occured];false;$getGlobalUserVar[color]];true;${colors.error}]}
 ;no]
 
+$onlyIf[$getObjectProperty[math]!=;]
+
 $djsEval[const { Parser } = require('expr-eval');
 const math = new Parser();
 try{
     d.object.math = "= " + math.evaluate('$get[calc]')
 }
 catch(err) {
-    d.object.math = "${emojis.general.error} An error occured...}\\n{description:\`" + err.message + "\`"
+    d.object.math = ""
 }
 ]
 
