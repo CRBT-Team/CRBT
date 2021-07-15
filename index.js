@@ -29,6 +29,7 @@ bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
 bot.onMessageDelete(); // For the message deletion thing
 bot.onMessageUpdate();
+bot.onJoined();
 
 // Command handler
 require("./loadCmds")();
