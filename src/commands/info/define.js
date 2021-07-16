@@ -28,6 +28,8 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[res.meanings[0].def
 {color:$getGlobalUserVar[color]}
 ;no]
 
+$onlyIf[$getObjectProperty[res.meanings[0].definitions[0].example]!=;{execute:queryNotFound}]
+
 $djsEval[
 let obj = $getObject
 d.object.res = obj[0]

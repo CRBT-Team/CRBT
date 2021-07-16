@@ -26,7 +26,7 @@ $if[$message==]
 $else
     $onlyIf[$hasPermsInChannel[$get[id];$clientID;readmessages]==true;{execute:botPerms}]
     $let[id;$findServerChannel[$message]]
-    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:channelNotFound}]
+    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:queryNotFound}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

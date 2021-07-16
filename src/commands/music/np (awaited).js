@@ -11,7 +11,7 @@ $get[playing-$getGlobalUserVar[language]]
 }
 
 {field:$get[uploaded-$getGlobalUserVar[language]]:
-[$songInfo[publisher]]($songInfo[url])
+**[$songInfo[publisher]]($songInfo[url])**
 :yes}
 {field:$get[added-$getGlobalUserVar[language]]:
 <@!$songInfo[userID]>

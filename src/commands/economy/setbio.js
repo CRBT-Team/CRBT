@@ -33,7 +33,7 @@ $let[new-enUS;New]
 $let[old;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_about];<user.name>;$username[$authorID]];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
 
 $onlyIf[$checkContains[${bad.blockedWords};$message]!=true;{execute:noBadWords}]
-$onlyIf[$charCount[$get[new]]<120;{execute:bioTooLong}]
+$onlyIf[$charCount[$get[new]]<120;{execute:tooLong}]
 
 $let[new;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;<user.name>;$username[$authorID]];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
 

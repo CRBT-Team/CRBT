@@ -17,9 +17,7 @@ $getObjectProperty[id]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[https://api.mojang.com/users/profiles/minecraft/$toLowercase[$message]]]
-
-$onlyIf[$httpRequest[https://api.mojang.com/users/profiles/minecraft/$toLowercase[$message];GET]!=;{execute:mcUserNotFound}]
+$createObject[$jsonRequest[https://api.mojang.com/users/profiles/minecraft/$toLowercase[$message];;{execute:queryNotFound}]]
 
 
 $argsCheck[1;{execute:args}]

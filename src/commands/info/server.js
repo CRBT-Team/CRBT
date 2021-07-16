@@ -48,7 +48,7 @@ $endif
 
 $let[title-enUS;$serverName[$get[id]] - Server info]
 
-$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon $replaceText[$get[id];$guildID;]\`]]
+$let[icon-enUS;**Icon:** $replaceText[$replaceText[$checkCondition[$serverIcon[$get[id]]==null];true;*None*];false;**[2048px]($serverIcon[$get[id];2048])** | **[512px]($serverIcon[$get[id];512])** | **[256px]($serverIcon[$get[id];256])** | \`$getServerVar[prefix]icon$replaceText[ $get[id]; $guildID;]\`]]
 
 $let[id-enUS;ID:$get[id]]
 
@@ -94,7 +94,7 @@ $if[$message==]
     $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $else
     $let[id;$message[1]]
-    $onlyIf[$serverExists[$message[1]]==true;{execute:serverNotFound}]
+    $onlyIf[$serverExists[$message[1]]==true;{execute:queryNotFound}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

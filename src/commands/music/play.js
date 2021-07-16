@@ -6,7 +6,7 @@ module.exports.command = {
     aliases: ["p", "add"],
     description_enUS: "Adds <botname> to the voice channel, adds the song(s) to the queue or directly plays it if no music is currently playing.",
     usage_enUS: "<search terms | YouTube, Spotify or SoundCloud URL>",
-    botPerms: ["connect", "speak"],
+    botPerms: ["connect", "speak", "addreactions"],
     code: `
 $if[$voiceID[$clientID]!=$voiceID]
 
@@ -24,7 +24,7 @@ $get[playing-$getGlobalUserVar[language]]
 }
     
 {field:$get[uploaded-$getGlobalUserVar[language]]:
-[$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])
+**[$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])**
 :yes}
 {field:$get[added-$getGlobalUserVar[language]]:
 <@!$songInfo[userID;$get[queueLength]]>
@@ -58,7 +58,7 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
         $let[delay;1000ms]
         $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<;];>;];${tokens.soundcloud};0s;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
-        $let[delay;2000ms]
+        $let[delay;2500ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<;];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
@@ -118,7 +118,7 @@ $get[playing-$getGlobalUserVar[language]]
 }
     
 {field:$get[uploaded-$getGlobalUserVar[language]]:
-[$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])
+**[$songInfo[publisher;$get[queueLength]]]($songInfo[url;$get[queueLength]])**
 :yes}
 {field:$get[added-$getGlobalUserVar[language]]:
 <@!$songInfo[userID;$get[queueLength]]>
@@ -194,10 +194,13 @@ $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;\`$getServerVar[prefix]volume <new volume>\`]
 
 $if[$getServerVar[music_channel]!=]
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;addreactions]==true;{execute:botPerms}]
+$onlyIf[$hasPermsInChannel[$voiceID;$clientID;connect;speak]==true;{execute:botPerms}]
 $onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
 $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 $endif
 
+$onlyIf[$voiceID!=;{execute:novoice}]
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]

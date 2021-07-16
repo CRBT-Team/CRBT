@@ -27,9 +27,10 @@ module.exports = {
 bot.onMessage({ guildOnly: false }); // Allow commands to work in DMs
 bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
-bot.onMessageDelete(); // For the message deletion thing
-bot.onMessageUpdate();
-bot.onJoined();
+bot.onGuildLeave(); // Deletes some of the guild's variables when CRBT is kicked, to save space in the DB
+bot.onMessageDelete(); // Message deleted logs
+bot.onMessageUpdate(); // Message edited logs
+bot.onJoined(); //For pi's autorole
 
 // Command handler
 require("./loadCmds")();

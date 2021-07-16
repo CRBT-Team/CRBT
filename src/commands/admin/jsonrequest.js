@@ -5,7 +5,7 @@ module.exports.command = {
     code: `
 $addCmdReactions[🏳️]
 $if[$argsCount==1]
-$createFile[$jsonRequest[$message[1]];request.json]
+$createFile[$jsonRequest[$message[1];;error message xd];request.json]
 $elseIf[$argsCount==2]
 \`\`\`
 $jsonRequest[$message[1];$message[2];error message xd]

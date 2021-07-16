@@ -52,17 +52,18 @@ module.exports.variables = {
     module_music: true, //Music
     module_nsfw: false, //NSFW
     module_tools: true, //Tools
-    //module_serverStores: true,
-    //module_serverProfiles: true,
-    //module_radios: true,
-    //module_joinMessages: false,
-    //module_leaveMessages: false,
-    //module_statsChannel: false,
-    //module_channelAllowlist: false,
-    //module_customCommands: false,
+//  module_serverStores: true,
+//  module_serverProfiles: true,
+//  module_radios: true,
+//  module_joinMessages: false,
+//  module_leaveMessages: false,
+//  module_statsChannel: false,
+//  module_channelAllowlist: false,
+//  module_customCommands: false,
 
-    //can't be disabled
+//  can't be disabled
     module_misc: true, //Misc (previously "Basic")
     module_settings: true, //Settings
     module_partnerCmd: true, //Partner command
+    module_admin: true, //Admin
 }

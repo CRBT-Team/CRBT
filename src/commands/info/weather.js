@@ -41,6 +41,8 @@ $else
     $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.betaApi}&location=$getGlobalUserVar[city];;{execute:queryNotFound}]]
 $endif
 
+$onlyIf[$charCount>1;{execute:queryNotFound}]
+
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]

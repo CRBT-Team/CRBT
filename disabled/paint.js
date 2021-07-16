@@ -2,27 +2,23 @@ module.exports.command = {
     name: "paint",
     aliases: ["color", "namepaint"],
     code: `
+$if[$get[role]==undefined]
 
-$djsEval[
+$giveRoles[$authorID;$findRole[$get[color]]]
 
-if ("$get[role]" === undefined) {
+$wait[1s]
 
 $createRole[$get[color];$get[color];no;no]
 
-$giveRoles[$authorID;$get[role]]
+debug:\ncolor:$get[color]\nrole: $get[role]\nstat: b"
 
-channel.send("debug:\\ncolor:$get[color]\\nrole: $get[role]\\nstat: b")
-
-}
-
-else {
+$else
 
 $giveRoles[$authorID;$get[role]]
 
-channel.send("debug:\\ncolor:$get[color]\\nrole: $get[role]\\nstat: a")
+debug:\ncolor:$get[color]\nrole: $get[role]\nstat: a
 
-}
-]
+$endif
 
 $onlyIf[$isValidHex[$replaceText[$get[color];#;]]==true;not a real color!!! (use hex only for now, # or not idrc)]
 

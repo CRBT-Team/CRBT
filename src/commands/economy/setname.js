@@ -33,7 +33,7 @@ $let[new-enUS;New]
 $let[old;$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_name];<user.name>;$username];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]]]
 
 $onlyIf[$checkContains[${bad.blockedWords};$message]!=true;{execute:noBadWords}]
-$onlyIf[$charCount[$get[new]]<40;{execute:nameTooLong}]
+$onlyIf[$charCount[$get[new]]<40;{execute:tooLong}]
 
 $let[new;$replaceText[$replaceText[$replaceText[$replaceText[$message;<user.name>;$username[$authorID]];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]]]
 

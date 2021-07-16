@@ -1,4 +1,4 @@
-const { links, illustrations } = require("../../index");
+const { links, illustrations, colors } = require("../../index");
 
 module.exports.botJoinCommand = {
     channel: "$systemChannelID",
@@ -34,4 +34,10 @@ $username[$clientID] is now on $serverCount servers!
 {color:$getVar[color]}
 ]
 $endif
+
+$channelSendMessage[${links.channels.telemetry};
+<@!327690719085068289>
+{title:Joined $serverName ($guildID).}
+{color:${colors.success}}
+;no]
 `}

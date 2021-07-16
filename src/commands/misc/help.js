@@ -4,6 +4,11 @@ module.exports.command = {
     name: "help",
     description_enUS: "eeeeeeeeeeee",
     usage_enUS: "<command name | page number (optional)>",
+    examples_enUS: [
+        "help",
+        "cmds 1",
+        "command help"
+    ],
     module: "misc",
     aliases: ["aled", "ouho", "commands", "cmds", "command", "cmd"],
     code: `
@@ -151,8 +156,8 @@ $endif
 :yes}
 $else
 {field:Module:
-$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
-$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;-];false;+]$commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.general.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.general.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
 :yes}
 $endif

@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../../index");
+const { emojis, colors, links } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "queryNotFound",
@@ -14,6 +14,9 @@ $let[aoijs-2-enUS;...although you can still try to search through Aoi.js' docume
 
 $let[anime-1-enUS;${emojis.general.error} We couldn't get this one.]
 $let[anime-2-enUS;Try to use the japanese name of the anime or check your spelling. If the problem still persists, try to look this anime up directly on [kitsu.io](https://kitsu.io/).]
+
+$let[channelinfo-1-enUS;${emojis.general.error} Couldn't find this channel.]
+$let[channelinfo-2-enUS;I couldn't find \`$message\` in this server. Try again by mentioning the channel (#<channel name>) or by using its ID.]
 
 $let[define-1-enUS;${emojis.general.error} This word doesn't appear to exist...]
 $let[define-2-enUS;FYI: The Dictionary only accepts english words for now. If your word doesn't exist here, you can try to look it up with \`$getServerVar[prefix]urbandictionary\`.]
@@ -36,11 +39,20 @@ $let[mcinfo-2-enUS;Make sure to include a valid Minecraft Java Edition player na
 $let[mcserver-1-enUS;${emojis.general.error} Internal Exception: \`io.crbt.handler.timeout.unknownServer\`]
 $let[mcserver-2-enUS;Couldn't find this Minecraft Java Edition server! Make sure to use a valid host address or that the server is online.]
 
+$let[npm-1-enUS;${emojis.general.error} Couldn't find this npm module.]
+$let[npm-2-enUS;If it was recently added, it may not be there yet. Be sure to check [npmjs.com](https://npmjs.com).]
+
 $let[pokedex-1-enUS;${emojis.general.error} Who's that Pokémon?]
 $let[pokedex-2-enUS;Couldn't find his Pokémon. Make sure to check your spelling or this beautiful [web Pokédex](https://www.pokemon.com/us/pokedex/) for all Pokémon.]
 
 $let[urbandictionary-1-enUS;${emojis.general.error} Couldn't find this word...]
 $let[urbandictionary-2-enUS;Nobody has defined this word on Urban Dictionary yet.]
+
+$let[roleinfo-1-enUS;${emojis.general.error} This role doesn't exist!]
+$let[roleinfo-2-enUS;Through all of the roles on the server, this one doesn't seem to exist.]
+
+$let[serverinfo-1-enUS;${emojis.general.error} Couldn't find this server.]
+$let[serverinfo-2-enUS;I couldn't fetch information for this Discord server as I am not part of it, or the ID used is invalid.\nTo invite me to $replaceText[$replaceText[$checkCondition[$channelType==dm];true;any];false;another] server, click [here](${links.info.discord}).]
 
 $let[weather-1-enUS;${emojis.general.error} No data was found for this query]
 $let[weather-2-enUS;This city/country doesn't exist or no weather data for it is listed.]

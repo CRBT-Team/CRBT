@@ -33,7 +33,7 @@ $replaceText[$replaceText[$checkCondition[$getServerVar[modlogs_channel]==$getVa
 
 $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$clientID;sendmessages]==true;{execute:botPerms}]
 $onlyPerms[manageserver;{execute:admins}]
-$onlyIf[$mentionedChannels[1]!=;{execute:channelNotFound}]
+$onlyIf[$mentionedChannels[1]!=;{execute:queryNotFound}]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

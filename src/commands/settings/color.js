@@ -1,23 +1,17 @@
 const { colors, emojis, illustrations } = require("../../../index");
 
 module.exports.command = {
-  name: "color",
-  module: "settings",
-  aliases: [
-    "colors",
-    "colours",
-    "set_color",
-    "colour",
-    "setcolor",
-    "setcolour",
-    "set_colour",
-    "set-color",
-    "set-colour",
-  ],
-  description_enUS:
-    "Gives information about your color, or changes it if any color name/hex code is given.",
-  usage_enUS: "<hexadecimal color code | color name (optional)>",
-  code: `
+    name: "color",
+    module: "settings",
+    aliases: ["colors","colours","set_color","colour","setcolor","setcolour","set_colour","set-color","set-colour",],
+    description_enUS: "Gives information about your color, or changes it if any color name/hex code is given.",
+    usage_enUS: "<hexadecimal color code | color name (optional)>",
+    examples_enUS: [
+        "setcolor default",
+        "color #9099FF",
+        "set_colour light green"
+    ],
+    code: `
 $if[$message==]
 
     $reply[$messageID;
@@ -87,5 +81,4 @@ $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
-    `,
-};
+    `}

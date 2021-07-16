@@ -5,6 +5,7 @@ module.exports.command = {
     module: "music",
     aliases: ["np", "now-playing", "playing", "controls"],
     description_enUS: "Gives info on the currently playing title + shows the visual controls.",
+    botPerms: "addreactions",
     cooldown: "15s",
     code: `
 $reactionCollector[$botLastMessageID;everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
@@ -19,7 +20,7 @@ $get[playing-$getGlobalUserVar[language]]
 }
 
 {field:$get[uploaded-$getGlobalUserVar[language]]:
-[$songInfo[publisher]]($songInfo[url])
+**[$songInfo[publisher]]($songInfo[url])**
 :yes}
 {field:$get[added-$getGlobalUserVar[language]]:
 <@!$songInfo[userID]>

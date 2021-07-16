@@ -31,9 +31,7 @@ $let[license-enUS;License:$getObjectProperty[collected.metadata.license]]
 $let[version-enUS;Latest version:$getObjectProperty[collected.metadata.version]]
 $let[downloads-enUS;Downloads:$jsonRequest[https://img.shields.io/npm/dt/$message.json;message]]
 
-$onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
-
-$createObject[$jsonRequest[https://api.npms.io/v2/package/$message]]
+$createObject[$jsonRequest[https://api.npms.io/v2/package/$message;;{execute:queryNotFound}]]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

@@ -45,9 +45,10 @@ $let[perms-enUS;Permissions:$replaceText[$replaceText[$checkContains[$rolePerms[
 
 $let[color;$replaceText[$role[$get[id];hex];000000;${colors.blurple}]]
 
-$onlyIf[$get[id]!=;{execute:roleNotFound}]
+$onlyIf[$get[id]!=;{execute:queryNotFound}]
 $let[id;$findRole[$message]]
 
+$argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

@@ -6,7 +6,7 @@ module.exports.command = {
   aliases: ["bugreport", "bug", "sendreport"],
   description_enUS: "Sends a bug report about CRBT (english only).",
   usage_enUS: "<bug report message (may include images)>",
-  cooldown: "1m",
+  cooldown: "1s",
   code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}

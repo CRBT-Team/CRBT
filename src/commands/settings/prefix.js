@@ -10,7 +10,7 @@ module.exports.command = {
     code: `
 $if[$message!=]
 
-    $setServerVar[prefix;$message]
+    $setServerVar[prefix;$get[newPrefix]]
 
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
@@ -19,9 +19,13 @@ $if[$message!=]
     ;no]
 
     $let[title-enUS;${emojis.general.success} Changed prefix on $serverName]
-    $let[description-enUS;$username[$clientID] will now use \`$message\` as its prefix on this server.]
+    $let[description-enUS;$username[$clientID] will now use \`$get[newPrefix]\` as its prefix on this server.]
 
-    $onlyIf[$charCount[$message]<=15;{execute:prefixTooLong}]
+    $onlyIf[$charCount[$get[newPrefix]]<=15;{execute:prefixTooLong}]
+
+    $let[newPrefix;$replaceText[$replaceText[$replaceText[$message;_;];*;];\`;]]
+
+    $onlyPerms[manageserver;{execute:userPerms}]
     
 $else
 

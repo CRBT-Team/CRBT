@@ -52,11 +52,11 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[res.endDate]==];tru
 $let[title-enUS;$replaceText[$replaceText[$checkCondition[$getObjectProperty[res.titles.enJp]==];false;$replaceText[$getObjectProperty[res.titles.enJp];:;#COLON#]];true;$replaceText[$getObjectProperty[res.titles.en];:;#COLON#]] - Manga info]
 $let[openIn-enUS;Open in kitsu.io]
 
-$createFile[$getObject;source.json]
-
 $onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
 $createObject[$replaceText[$jsonRequest[https://api.avux.ga/mangasearch?search=$message;;;X-API-Key:${tokens.avux}];{};{"success":"false"}]]
+
+$onlyIf[$charCount>1;{execute:queryNotFound}]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
