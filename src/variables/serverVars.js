@@ -29,6 +29,7 @@ module.exports.variables = {
 //server related misc data
 
     webhook_token: "", webhook_id: "",
+    locked: false,
     music_channel: "",
     strikes: "", 
     strikelog: "",

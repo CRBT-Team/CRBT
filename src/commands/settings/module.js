@@ -2,15 +2,17 @@ const {illustrations,colors,emojis} = require("../../../index");
 
 module.exports.command = {
     name: "module",
-    aliases: ["modules", "config", "cfg", "md"],
+    description_enUS: "Lists all available modules, or disables/enables any if specified",
     usage_enUS: "<enable | + | - | disable (optional)> <module name (optional)>",
-    module: "settings",
     examples_enUS: [
         "modules",
         "module enable message logs",
         "cfg remove Music",
         "md +autopublish"
     ],
+    module: "settings",
+    aliases: ["modules", "config", "cfg", "md"],
+    userPerms: "manageserver",
     code: `
 $if[$message==]
 

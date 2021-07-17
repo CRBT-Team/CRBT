@@ -3,7 +3,6 @@ module.exports.command = {
     module: "moderation",
     description_enUS: "Shows the contents of the latest deleted message in the current channel.",
     usage_enUS: "<channel ID/channel name/#mention (optional)>",
-    userPerms: "kick",
     code: `
 $reply[$messageID;
     {author:$userTag[$get[author]]:$userAvatar[$get[author]]}
@@ -29,8 +28,8 @@ $else
     $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:queryNotFound}]
 $endif
 
-$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$checkContains[$hasPerms[$authorID;managemessages]$hasPerms[$authorID;manageserver]$checkContains[$toLowercase[$userRoles];crbt mod];true]==true;{execute:mods}]
+$onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
