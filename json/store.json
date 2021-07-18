@@ -307,14 +307,14 @@
         "name": "CRBT Partner",
         "type": "special",
         "value": 0,
-        "contents": "<:CRBTPartner:856815843127853086>",
+        "contents": "<:partner:866113174314287125>",
         "available": "false"
       },
       "purplet": {
         "name": "Purplet",
         "type": "special",
         "value": 0,
-        "contents": "<:Purplet:853309241720569866>",
+        "contents": "<:purplet:866116902215745576>",
         "available": "false"
       },
       "dave": {

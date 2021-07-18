@@ -36,7 +36,7 @@
             "error": "<:error:866037872519938069> ",
             "success": "<:success:866037503567069185> ",
 
-            "purplet": "<:Purplet:853309241720569866>",
+            "purplet": "<:purplet:866116902215745576>",
             
             "toggleon": "<:toggleon:866036010663542816>",
             "toggleoff": "<:toggleoff:866036062471192627>",
@@ -45,7 +45,7 @@
 
             "information": "<:information:862974997236023296>",
             "warning": "<:warning:836285755948662814>",
-            "partner": "<:CRBTPartner:856815843127853086>",
+            "partner": "<:partner:866113174314287125>",
             "thumbsup": "<:thumbsup:836313884590604349>",
             "thumbsdown": "<:thumbsdown:836313884603842590>"
         },
@@ -190,7 +190,7 @@
         "crbtinfo": "https://crbt.ga/assets/logos/crbt.png",
         "welcome": "https://cdn.discordapp.com/attachments/843146398484660254/865602008019107850/unknown.png",
         "barrelRoll": "https://cdn.discordapp.com/attachments/764855467272306728/864855443662045226/attachment.gif",
-        "settings": "https://cdn.discordapp.com/attachments/782584672772423684/866044268546883584/unknown.png",
+        "settings": "https://cdn.discordapp.com/attachments/843148633687588945/866115631665381415/unknown.png",
         "invite": "https://crbt.ga/assets/logos/crbt.png",
         "newCRBT": "https://cdn.clembs.xyz/AhIOoNA.gif",
         "badges": "https://cdn.discordapp.com/attachments/843148633687588945/857341037931790376/unknown.png",
