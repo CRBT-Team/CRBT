@@ -193,11 +193,11 @@ $let[duration-enUS;Duration:]
 $let[playing-enUS;Playing in <#$voiceID> and bound to <#$channelID>.]
 $let[volumeTip-enUS;\`$getServerVar[prefix]volume <new volume>\`]
 
-$if[$getServerVar[music_channel]!=]
-$onlyIf[$hasPermsInChannel[$channelID;$clientID;addreactions]==true;{execute:botPerms}]
-$onlyIf[$hasPermsInChannel[$voiceID;$clientID;connect;speak]==true;{execute:botPerms}]
-$onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
-$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
+$if[$getServerVar[music_channel]$voiceID[$clientID]!=]
+    $onlyIf[$hasPermsInChannel[$channelID;$clientID;addreactions]==true;{execute:botPerms}]
+    $onlyIf[$hasPermsInChannel[$voiceID;$clientID;connect;speak]==true;{execute:botPerms}]
+    $onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
+    $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 $endif
 
 $onlyIf[$voiceID!=;{execute:novoice}]

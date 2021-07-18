@@ -1,6 +1,6 @@
 module.exports.command = {
     name: "convert",
-    aliases: ["currency", "conv", "$"],
+    aliases: ["currency", "conv", "$", "cc"],
     module: "tools",
     description_enUS: "Converts a specified amount (if any) of a given currency into other currencies or into another given currency.",
     usage_enUS: "<from (optional)> <to (optional)> <amount (optional)>",

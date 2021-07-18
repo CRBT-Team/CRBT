@@ -11,7 +11,7 @@ $joinVC[$voiceID]
 $setServerVar[music_channel;$channelID]
 
 $reply[$messageID;
-{title:$get[title-$getGlobalUserVar[language]]}
+{author:$get[title-$getGlobalUserVar[language]]}
 {description:$get[desc-$getGlobalUserVar[language]]}
 
 {color:${colors.success}}

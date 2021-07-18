@@ -18,7 +18,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;See you next time! 👋]
-$let[desc-enUS;$username[$clientID] disconnected from <#$voiceID> and unbounded from <#$getServerVar[music_channel]>.]
+$let[desc-enUS;Disconnected from <#$voiceID> and unbounded from <#$getServerVar[music_channel]>.]
 
 $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 
