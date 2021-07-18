@@ -13,7 +13,7 @@ $setGlobalUserVar[job_req;$getVar[job_req]]
 $setGlobalUserVar[job_type;$getVar[job_type]]
 
 $reply[$messageID;
-{title:${emojis.general.success} You've successfully left your job!}
+{title:${emojis.success} You've successfully left your job!}
 {description:
 You lost all of your previously earned job XP, levels and progression.
 To get a new job, search for jobs using the \`$getServerVar[prefix]jobsearch\` command.

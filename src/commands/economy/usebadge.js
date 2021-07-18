@@ -11,7 +11,7 @@ $setGlobalUserVar[profile_badges;$replaceText[$replaceText[$replaceText[$replace
 $setGlobalUserVar[invbadge;$replaceText[$replaceText[$getGlobalUserVar[invbadge];french;france];russian;russia]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Badge applied}
+{title:${emojis.success} Badge applied}
 
 {description:
 The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[item].name] badge has been applied to your profile.

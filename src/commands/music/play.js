@@ -1,4 +1,4 @@
-const { emojis, tokens } = require("../../../index");
+const { emojis, tokens, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "play",
@@ -10,12 +10,12 @@ module.exports.command = {
     code: `
 $if[$voiceID[$clientID]!=$voiceID]
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     
         $editMessage[$get[id];
-        {author:$get[step3-$getGlobalUserVar[language]]:https://cdn.discordapp.com/attachments/843148633687588945/862975214794965012/list_success.png}
+        {author:$get[step3-$getGlobalUserVar[language]]:${illustrations.music.queueadded}}
         {title:$songInfo[title;$get[queueLength]]}
         {url:$songInfo[url;$get[queueLength]]}
 {description:
@@ -62,11 +62,11 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<;];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
-    $let[delay;250ms]
+    $let[delay;350ms]
         $let[songName;$playSong[$replaceText[$replaceText[$message;<;];>;];0s;yes;yes;{execute:addQueue}]]
         $endelseIf
     $else
-        $let[delay;250ms]
+        $let[delay;350ms]
         $let[songName;$playSong[$message;0s;yes;yes;{execute:addQueue}]]
     $endif
 
@@ -93,7 +93,7 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
 
     $joinVC[$voiceID]
 
-    $wait[250ms]
+    $wait[350ms]
 
     $let[id;$botLastMessageID]
 
@@ -104,12 +104,12 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
 
 $else
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     
         $editMessage[$get[id];
-{author:$get[step3-$getGlobalUserVar[language]]:https://cdn.discordapp.com/attachments/843148633687588945/862975214794965012/list_success.png}
+{author:$get[step3-$getGlobalUserVar[language]]:${illustrations.music.queueadded}}
 {title:$songInfo[title;$get[queueLength]]}
 {url:$songInfo[url;$get[queueLength]]}
 {description:
@@ -169,11 +169,11 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<;];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
-    $let[delay;250ms]
+    $let[delay;350ms]
         $let[songName;$playSong[$replaceText[$replaceText[$message;<;];>;];0s;yes;yes;{execute:addQueue}]]
         $endelseIf
     $else
-        $let[delay;250ms]
+        $let[delay;350ms]
         $let[songName;$playSong[$message;0s;yes;yes;{execute:addQueue}]]
     $endif
 

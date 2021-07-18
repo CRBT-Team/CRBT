@@ -9,7 +9,7 @@ module.exports.command = {
 $setGlobalUserVar[profile_banner;$getVar[profile_banner]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Banner removed}
+{title:${emojis.success} Banner removed}
 
 {description:
 Your current profile banner has been removed from your profile.

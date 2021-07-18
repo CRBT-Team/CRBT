@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Missing server icon]
+$let[title-enUS;${emojis.error} Missing server icon]
 $let[description-enUS;This server apparently doesn't have a server icon... so I can't quite display it.]
     `}

@@ -33,7 +33,7 @@ $deleteMessage[$botLastMessageID]
 $wait[1s]
     
 $sendMessage[
-{title:${emojis.general.success} $message messages purged.}
+{title:${emojis.success} $message messages purged.}
 {color:${colors.success}}
 ;no]
 
@@ -41,7 +41,7 @@ $clear[$sum[$message;1]]
 $deletecommand
     
 $onlyIf[$isNumber[$message]==true;{execute:args}]
-$onlyIf[$message<=100;{title:${emojis.general.error} You can only purge up to 100 messages per command!} {color:${colors.error}}]
+$onlyIf[$message<=100;{title:${emojis.error} You can only purge up to 100 messages per command!} {color:${colors.error}}]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;managemessages]==true;{execute:botPerms}]
 $onlyIf[$hasPermsInChannel[$channelID;$authorID;managemessages]==true;{execute:userPerms}]
 

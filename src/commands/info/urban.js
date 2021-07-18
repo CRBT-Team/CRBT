@@ -32,8 +32,8 @@ $replaceText[$replaceText[$checkCondition[$charCount[$getObjectProperty[list[0].
 :yes}
 
 {field:Votes:
-${emojis.general.thumbsup} $replaceText[$replaceText[$checkCondition[$getObjectProperty[list[0].thumbs_up]==];true;0];false;$getObjectProperty[list[0].thumbs_up]] 
-${emojis.general.thumbsdown} $replaceText[$replaceText[$checkCondition[$getObjectProperty[list[0].thumbs_down]==];true;0];false;$getObjectProperty[list[0].thumbs_down]]
+${emojis.misc.thumbsup} $replaceText[$replaceText[$checkCondition[$getObjectProperty[list[0].thumbs_up]==];true;0];false;$getObjectProperty[list[0].thumbs_up]] 
+${emojis.misc.thumbsdown} $replaceText[$replaceText[$checkCondition[$getObjectProperty[list[0].thumbs_down]==];true;0];false;$getObjectProperty[list[0].thumbs_down]]
 :yes}
 
 {color:$getGlobalUserVar[color]}

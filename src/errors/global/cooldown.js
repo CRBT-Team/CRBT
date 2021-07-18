@@ -9,19 +9,19 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Hold it!]
+$let[title-enUS;${emojis.error} Hold it!]
 $let[description-enUS;You'll be able to use this command again in $get[time].]
 
-$let[title-enUK;${emojis.general.error} Hold up!]
+$let[title-enUK;${emojis.error} Hold up!]
 $let[description-enUK;You'll be able to use this command again in $get[time].]
 
-$let[title-esES;${emojis.general.error} ¡Un momento!]
+$let[title-esES;${emojis.error} ¡Un momento!]
 $let[description-esES;Podrás volver a usar este comando en $get[time].]
 
-$let[title-frFR;${emojis.general.error} Un instant !} 
+$let[title-frFR;${emojis.error} Un instant !} 
 $let[description-frFR;Vous ne pourrez réutiliser cette commande que dans $replaceText[$replaceText[$get[time];hours;heures];seconds;secondes].]
 
-$let[title-ru;${emojis.general.error} Погодите!] 
+$let[title-ru;${emojis.error} Погодите!] 
 $let[description-ru;Чтобы использовать эту команду снова, вам нужно подождать ещё $get[time].]
 
 $if[$getGlobalUserVar[lastCmd]==work]

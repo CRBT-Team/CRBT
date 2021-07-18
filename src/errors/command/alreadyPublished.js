@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Nice... I guess?]
+$let[title-enUS;${emojis.error} Nice... I guess?]
 $let[description-enUS;This channel is already part of the auto-publish module.]
     `}

@@ -21,8 +21,8 @@ $reply[$messageID;
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[result-enUS;${emojis.general.purplet} Landed $replaceText[$replaceText[$replaceText[$get[random];tails;on tails];heads;on heads];side;sideways]!]
-$let[title-enUS;${emojis.general.purplet} Flipping Purplet...]
+$let[result-enUS;${emojis.purplet} Landed $replaceText[$replaceText[$replaceText[$get[random];tails;on tails];heads;on heads];side;sideways]!]
+$let[title-enUS;${emojis.purplet} Flipping Purplet...]
 
 $let[random;$randomText[tails;tails;tails;tails;tails;heads;heads;heads;heads;heads;side]]
 

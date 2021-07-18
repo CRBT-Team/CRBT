@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../../index");
+const { emojis, colors, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "volume",
@@ -32,7 +32,7 @@ $else
     $reactionCollector[$botLastMessageID;everyone;10m;${emojis.music.volume},${emojis.music.mute};full,mute;yes]
 
     $reply[$messageID;
-    {title:${emojis.music.volume} Volume is set at $math[$getServerVar[volume]*2]%}
+    {author:Volume is set at $math[$getServerVar[volume]*2]%:${illustrations.music.volume}}
     {description:You can use the reactions below this message to control the volume.}
     {color:$getGlobalUserVar[color]}
     ;no]

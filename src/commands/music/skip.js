@@ -1,4 +1,4 @@
-const { emojis } = require("../../../index");
+const { emojis, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "skip",
@@ -12,7 +12,7 @@ $if[$message==]
 $skipSong
 
     $reply[$messageID;
-    {author:$get[title-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
+    {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 
     {description:
     $get[desc-$getGlobalUserVar[language]] [$songInfo[title]]($songInfo[url])
@@ -25,7 +25,7 @@ $else
 $skipTo[$message[1]]
 
     $reply[$messageID;
-    {author:$get[title-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
+    {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 
     {description:
     $get[desc2-$getGlobalUserVar[language]] [$queue[$math[$message+1];1;{title}]]($queue[$math[$message+1];1;{url}])
@@ -62,7 +62,7 @@ $onlyIf[$channelType!=dm;{execute:guildOnly}]
         $setServerVar[skip_users;$getVar[skip_users]]
 
         $reply[$messageID;
-        {author:$get[title-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
+        {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 
         {description:
         $get[desc-$getGlobalUserVar[language]] [$songInfo[title]]($songInfo[url])
@@ -72,7 +72,7 @@ $onlyIf[$channelType!=dm;{execute:guildOnly}]
         ;no]
 
         $reply[$messageID;
-        {author:$get[title2-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
+        {author:$get[title2-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 
         {description:
         $get[desc3-$getGlobalUserVar[language]]

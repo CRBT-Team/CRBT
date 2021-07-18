@@ -1,4 +1,4 @@
-const { colors, emojis, tokens } = require("../../../index");
+const { colors, emojis, tokens, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "pause",
@@ -8,7 +8,7 @@ module.exports.command = {
 $pauseSong
 
 $reply[$messageID;
-{title:${emojis.music.pause} Paused playback}
+{author:Paused playback:${illustrations.music.pause}}
 {color:${colors.success}}
 ;no]
 

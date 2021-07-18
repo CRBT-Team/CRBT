@@ -10,7 +10,7 @@ module.exports.command = {
 $setGlobalUserVar[profile_banner;<banner $replaceText[$toLowercase[$message]; ;]>]
 
 $reply[$messageID;
-{title:${emojis.general.success} Banner applied}
+{title:${emojis.success} Banner applied}
 
 {description:
 The $getObjectProperty[banner.$get[item].name] banner has been applied to your profile.

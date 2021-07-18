@@ -1,8 +1,10 @@
+const {illustrations} = require("../../../index");
+
 module.exports.awaitedCommand = {
     name: "nowplaying",
     code: `
 $editMessage[$message[1];
-{author:$get[nowplaying-$getGlobalUserVar[language]]:https://cdn.discordapp.com/attachments/843148633687588945/862974955812290610/info.png}
+{author:$get[nowplaying-$getGlobalUserVar[language]]:${illustrations.music.information}}
 {title:$songInfo[title]}
 {url:$songInfo[url]}
 {description:

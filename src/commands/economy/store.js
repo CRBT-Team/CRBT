@@ -17,36 +17,36 @@ $if[$message==]
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
-${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.general.purplet} ${badges.goodmeal.value} Purplets**
+${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
 \`$getServerVar[prefix]buy badge goodmeal\`
 —
-${badges.udu.contents} ${badges.udu.name}\n**${emojis.general.purplet} ${badges.udu.value} Purplets**
+${badges.udu.contents} ${badges.udu.name}\n**${emojis.purplet} ${badges.udu.value} Purplets**
 \`$getServerVar[prefix]buy badge udu\`
 :yes}
 {field:$get[flags-$getGlobalUserVar[language]]:
-${badges.france.contents} ${badges.france.name}\n**${emojis.general.purplet} ${badges.france.value} Purplets**
+${badges.france.contents} ${badges.france.name}\n**${emojis.purplet} ${badges.france.value} Purplets**
 \`$getServerVar[prefix]buy badge france\`
 —
-${badges.usa.contents} ${badges.usa.name}\n**${emojis.general.purplet} ${badges.usa.value} Purplets**
+${badges.usa.contents} ${badges.usa.name}\n**${emojis.purplet} ${badges.usa.value} Purplets**
 \`$getServerVar[prefix]buy badge usa\`
 —
-${badges.russia.contents} ${badges.russia.name}\n**${emojis.general.purplet} ${badges.russia.value} Purplets**
+${badges.russia.contents} ${badges.russia.name}\n**${emojis.purplet} ${badges.russia.value} Purplets**
 \`$getServerVar[prefix]buy badge russia\`
 —
-${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.general.purplet} ${badges.brazil.value} Purplets**
+${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.purplet} ${badges.brazil.value} Purplets**
 \`$getServerVar[prefix]buy badge brazil\`
 :yes}
 {field:$get[jobs-$getGlobalUserVar[language]]:
-${badges.developer.contents} ${badges.developer.name}\n**${emojis.general.purplet} ${badges.developer.value} Purplets**
+${badges.developer.contents} ${badges.developer.name}\n**${emojis.purplet} ${badges.developer.value} Purplets**
 \`$getServerVar[prefix]buy badge developer\`
 —
-${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.general.purplet} ${badges.doctor.value} Purplets**
+${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.purplet} ${badges.doctor.value} Purplets**
 \`$getServerVar[prefix]buy badge doctor\`
 —
-${badges.musician.contents} ${badges.musician.name}\n**${emojis.general.purplet} ${badges.musician.value} Purplets**
+${badges.musician.contents} ${badges.musician.name}\n**${emojis.purplet} ${badges.musician.value} Purplets**
 \`$getServerVar[prefix]buy badge musician\`
 —
-${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.general.purplet} ${badges.illustrator.value} Purplets**
+${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.purplet} ${badges.illustrator.value} Purplets**
 \`$getServerVar[prefix]buy badge illustrator\`
 :yes}
 {thumbnail:${illustrations.badges}}
@@ -58,36 +58,36 @@ $elseIf[$toLowercase[$message]==badges]
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
-${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.general.purplet} ${badges.goodmeal.value} Purplets**
+${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
 \`$getServerVar[prefix]buy badge goodmeal\`
 —
-${badges.udu.contents} ${badges.udu.name}\n**${emojis.general.purplet} ${badges.udu.value} Purplets**
+${badges.udu.contents} ${badges.udu.name}\n**${emojis.purplet} ${badges.udu.value} Purplets**
 \`$getServerVar[prefix]buy badge udu\`
 :yes}
 {field:$get[flags-$getGlobalUserVar[language]]:
-${badges.france.contents} ${badges.france.name}\n**${emojis.general.purplet} ${badges.france.value} Purplets**
+${badges.france.contents} ${badges.france.name}\n**${emojis.purplet} ${badges.france.value} Purplets**
 \`$getServerVar[prefix]buy badge france\`
 —
-${badges.usa.contents} ${badges.usa.name}\n**${emojis.general.purplet} ${badges.usa.value} Purplets**
+${badges.usa.contents} ${badges.usa.name}\n**${emojis.purplet} ${badges.usa.value} Purplets**
 \`$getServerVar[prefix]buy badge usa\`
 —
-${badges.russia.contents} ${badges.russia.name}\n**${emojis.general.purplet} ${badges.russia.value} Purplets**
+${badges.russia.contents} ${badges.russia.name}\n**${emojis.purplet} ${badges.russia.value} Purplets**
 \`$getServerVar[prefix]buy badge russia\`
 —
-${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.general.purplet} ${badges.brazil.value} Purplets**
+${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.purplet} ${badges.brazil.value} Purplets**
 \`$getServerVar[prefix]buy badge brazil\`
 :yes}
 {field:$get[jobs-$getGlobalUserVar[language]]:
-${badges.developer.contents} ${badges.developer.name}\n**${emojis.general.purplet} ${badges.developer.value} Purplets**
+${badges.developer.contents} ${badges.developer.name}\n**${emojis.purplet} ${badges.developer.value} Purplets**
 \`$getServerVar[prefix]buy badge developer\`
 —
-${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.general.purplet} ${badges.doctor.value} Purplets**
+${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.purplet} ${badges.doctor.value} Purplets**
 \`$getServerVar[prefix]buy badge doctor\`
 —
-${badges.musician.contents} ${badges.musician.name}\n**${emojis.general.purplet} ${badges.musician.value} Purplets**
+${badges.musician.contents} ${badges.musician.name}\n**${emojis.purplet} ${badges.musician.value} Purplets**
 \`$getServerVar[prefix]buy badge musician\`
 —
-${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.general.purplet} ${badges.illustrator.value} Purplets**
+${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.purplet} ${badges.illustrator.value} Purplets**
 \`$getServerVar[prefix]buy badge illustrator\`
 :yes}
 {thumbnail:${illustrations.badges}}
@@ -101,26 +101,26 @@ $elseIf[$toLowercase[$message]==banners]
 {description:$get[description-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[season3-$getGlobalUserVar[language]]:
-**• [${banners.flower.name}]($get[baseURL]/${banners.flower.contents})**\n**${emojis.general.purplet} ${banners.flower.value} Purplets**
+**• [${banners.flower.name}]($get[baseURL]/${banners.flower.contents})**\n**${emojis.purplet} ${banners.flower.value} Purplets**
 \`$getServerVar[prefix]buy banner flower\`
 —
-**• [${banners.cake.name}]($get[baseURL]/${banners.cake.contents})**\n**${emojis.general.purplet} ${banners.cake.value} Purplets**
+**• [${banners.cake.name}]($get[baseURL]/${banners.cake.contents})**\n**${emojis.purplet} ${banners.cake.value} Purplets**
 \`$getServerVar[prefix]buy banner cake\`
 —
-**• [${banners.mountain.name}]($get[baseURL]/${banners.mountain.contents})**\n**${emojis.general.purplet} ${banners.mountain.value} Purplets**
+**• [${banners.mountain.name}]($get[baseURL]/${banners.mountain.contents})**\n**${emojis.purplet} ${banners.mountain.value} Purplets**
 \`$getServerVar[prefix]buy banner mountain\`
 —
-**• [${banners.stripes.name}]($get[baseURL]/${banners.stripes.contents})**\n**${emojis.general.purplet} ${banners.stripes.value} Purplets**
+**• [${banners.stripes.name}]($get[baseURL]/${banners.stripes.contents})**\n**${emojis.purplet} ${banners.stripes.value} Purplets**
 \`$getServerVar[prefix]buy banner stripes\`
 :yes}
 {field:—:
-**• [${banners.blood.name}]($get[baseURL]/${banners.blood.contents})**\n**${emojis.general.purplet} ${banners.blood.value} Purplets**
+**• [${banners.blood.name}]($get[baseURL]/${banners.blood.contents})**\n**${emojis.purplet} ${banners.blood.value} Purplets**
 \`$getServerVar[prefix]buy banner blood\`
 —
-**• [${banners.space.name}]($get[baseURL]/${banners.space.contents})**\n**${emojis.general.purplet} ${banners.space.value} Purplets**
+**• [${banners.space.name}]($get[baseURL]/${banners.space.contents})**\n**${emojis.purplet} ${banners.space.value} Purplets**
 \`$getServerVar[prefix]buy banner space\`
 —
-**• [${banners.bubbles.name}]($get[baseURL]/${banners.bubbles.contents})**\n**${emojis.general.purplet} ${banners.bubbles.value} Purplets**
+**• [${banners.bubbles.name}]($get[baseURL]/${banners.bubbles.contents})**\n**${emojis.purplet} ${banners.bubbles.value} Purplets**
 \`$getServerVar[prefix]buy banner bubbles\`
 :yes}
 {thumbnail:${illustrations.banners}}
@@ -133,7 +133,7 @@ $endif
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[purplets-enUS;Balance:${emojis.general.purplet} $getGlobalUserVar[user_bank] Purplets]
+$let[purplets-enUS;Balance:${emojis.purplet} $getGlobalUserVar[user_bank] Purplets]
 $let[preview-enUS;Preview any banner on your profile using the \`$getServerVar[prefix]preview <banner name>\` command!]
 $let[familiarFaces-enUS;Familiar faces]
 $let[flags-enUS;Flags]

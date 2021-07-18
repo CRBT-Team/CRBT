@@ -6,7 +6,7 @@ module.exports.command = {
     module: "admin",
     code: `
 $sendDM[$findUser[$message[1];no];
-{title:${emojis.general.information} You've got mail!}
+{title:${emojis.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
 Learn more about official CRBT messages [here](${links.info.messages}).}
 {field:Subject:
@@ -22,7 +22,7 @@ $endif
 ]
 
 $reply[$messageID;
-{title:${emojis.general.success} Blocklist successful}
+{title:${emojis.success} Blocklist successful}
 {description:<@!$findUser[$message[1];no]> has been blocklisted.}
 $if[$messageSlice[1]!=]
 {field:Reason:

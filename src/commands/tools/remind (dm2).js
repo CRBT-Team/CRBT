@@ -13,7 +13,7 @@ $timeoutData[reminder]}
 {color:$getGlobalUserVar[color;$timeoutData[userID]]}
 ]
 
-$let[title-enUS;${emojis.reminder.normal} Reminder]
+$let[title-enUS;${emojis.misc.reminder} Reminder]
 
 $onlyIf[$timeoutData[dms]$timeoutData[method]==falsedm;]
     `}

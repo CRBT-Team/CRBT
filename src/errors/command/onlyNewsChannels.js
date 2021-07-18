@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} This ain't it chief!]
+$let[title-enUS;${emojis.error} This ain't it chief!]
 $let[description-enUS;You can only set announcement channels to be auto-published.]
     `}

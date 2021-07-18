@@ -10,7 +10,7 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} oh...]
+$let[title-enUS;${emojis.error} oh...]
 $let[description-enUS;You can't give a negative value of Purplets or... well, nothing.]
 $let[footer-enUS;Pro tip∶ to give nothing, try to not type the command!]
     `}

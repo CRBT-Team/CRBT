@@ -1,4 +1,4 @@
-const { emojis } = require("../../../index");
+const { emojis, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "nowplaying",
@@ -8,10 +8,10 @@ module.exports.command = {
     botPerms: "addreactions",
     cooldown: "15s",
     code: `
-$reactionCollector[$botLastMessageID;everyone;1h;${emojis.music.skip},${emojis.general.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
+$reactionCollector[$botLastMessageID;everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
 
 $reply[$messageID;
-{author:$get[nowplaying-$getGlobalUserVar[language]]:https://cdn.discordapp.com/attachments/843148633687588945/862974955812290610/info.png}
+{author:$get[nowplaying-$getGlobalUserVar[language]]:${illustrations.music.information}}
 {title:$songInfo[title]}
 {url:$songInfo[url]}
 {description:

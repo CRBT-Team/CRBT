@@ -1,3 +1,5 @@
+const {illustrations} = require("../../../index");
+
 module.exports.command = {
     name: "queue",
     aliases: ["q", "songs", "playlist"],
@@ -8,7 +10,7 @@ module.exports.command = {
 $if[$message==]
 
 $reply[$messageID;
-{author:Queue - Page 1 ($queueLength songs):https://cdn.discordapp.com/attachments/843148633687588945/862975174839500800/list.png}
+{author:Queue - Page 1 ($queueLength songs):${illustrations.music.queue}}
 {description:
 **Now playing:**
 [$songInfo[title]]($songInfo[url])
@@ -25,7 +27,7 @@ $replaceText[$replaceText[$checkCondition[$queueLength>12];true;and $math[$queue
 $else
 
 $reply[$messageID;
-{author:Queue - Page $message ($queueLength songs):https://cdn.discordapp.com/attachments/843148633687588945/862975174839500800/list.png}
+{author:Queue - Page $message ($queueLength songs):${illustrations.music.queue}}
 {description:
 **Now playing:**
 [$songInfo[title]]($songInfo[url])

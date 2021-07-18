@@ -30,10 +30,10 @@ $endif
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Hourly Purplets]
-$let[description1-enUS;You claimed your hourly ${emojis.general.purplet} **$random[20;50] Purplets**.
+$let[title-enUS;${emojis.success} Hourly Purplets]
+$let[description1-enUS;You claimed your hourly ${emojis.purplet} **$random[20;50] Purplets**.
 Current streak: **$sum[$getGlobalUserVar[hourly_streak];1]/5** ($math[5-($getGlobalUserVar[hourly_streak]+1)] streak$replaceText[$replaceText[$checkCondition[$math[5-($getGlobalUserVar[hourly_streak]+1)]==1];true;s];false;] left for a bonus!)]
-$let[description2-enUS;You claimed your hourly ${emojis.general.purplet} **100 Purplets**. (Streak of 5 bonus!)]
+$let[description2-enUS;You claimed your hourly ${emojis.purplet} **100 Purplets**. (Streak of 5 bonus!)]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 

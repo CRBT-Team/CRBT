@@ -13,7 +13,7 @@ $setServerVar[modlogs_channel;$mentionedChannels[1]]
 $setServerVar[module_modLogs;true]
 
 $reply[$messageID;
-{title:${emojis.general.success} Moderation logs channel changed}
+{title:${emojis.success} Moderation logs channel changed}
 
 {description:
 New moderation actions using $username[$clientID] will now show in this channel.

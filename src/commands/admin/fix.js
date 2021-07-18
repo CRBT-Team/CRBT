@@ -9,12 +9,13 @@ $deleteCommand
 
 $wait[500ms]
 
-$addCmdReactions[${emojis.general.success}]
+$addCmdReactions[${emojis.success}]
 
 $sendDM[$splitText[2];
-{title:${emojis.general.information} You've got mail!}
+{title:${emojis.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
-Learn more about official CRBT messages [here](${links.info.messages}).}
+Learn more about CRBT messages **[here](${links.info.messages})**.
+}
 {field:Subject:
 Your $replaceText[$replaceText[$get[title];Bug report;reported bug];Suggestion;suggestion] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully $replaceText[$replaceText[$get[title];Bug report;fixed!];Suggestion;added to CRBT!].
@@ -29,7 +30,7 @@ $editMessage[$message[1];
 {title:$get[title]}
 {description:$replaceText[$get[description];#LEFT_BRACKET#;#LEFT_BRACKET#]}
 {field:Status:
-${emojis.general.success} $replaceText[$replaceText[$get[title];Bug report;Fixed];Suggestion;Added] in $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;beta ${botinfo.build}];true;stable ${botinfo.version}]
+${emojis.success} $replaceText[$replaceText[$get[title];Bug report;Fixed];Suggestion;Added] in $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;beta ${botinfo.build}];true;stable ${botinfo.version}]
 :yes}
 {footer:$get[footer]}
 {color:${colors.success}}

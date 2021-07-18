@@ -26,7 +26,7 @@ $message\`\`\`
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Profile bio changed]
+$let[title-enUS;${emojis.success} Profile bio changed]
 $let[previous-enUS;Previous]
 $let[new-enUS;New]
 

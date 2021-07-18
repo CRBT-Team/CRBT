@@ -34,7 +34,7 @@ $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];
 $modifyChannelPerms[$channelID;-sendmessages;$guildID]
 
 $reply[$messageID;
-{title:${emojis.general.success} Disabled the "Send messages" permission for @everyone on #$channelName.} 
+{title:${emojis.success} Disabled the "Send messages" permission for @everyone on #$channelName.} 
 {color:${colors.success}}
 ;no]
 
@@ -60,7 +60,7 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 $modifyChannelPerms[$channelID;+sendmessages;$guildID]
 
 $reply[$messageID;
-{title:${emojis.general.success} Enabled the "Send messages" permission for @everyone on #$channelName.} 
+{title:${emojis.success} Enabled the "Send messages" permission for @everyone on #$channelName.} 
 {color:${colors.success}}
 ;no]
 

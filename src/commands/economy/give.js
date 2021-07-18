@@ -19,10 +19,10 @@ $reply[$messageID;
 ;no]
 
 
-$let[title-enUS;${emojis.general.success} Purplets transfer]
-$let[description-enUS;You successfully gave **${emojis.general.purplet} $get[amount] Purplets** to <@!$get[id]>.]
-$let[you-enUS;Your balance:Previous: **${emojis.general.purplet} $getGlobalUserVar[user_bank]**\nNew: **${emojis.general.purplet} $sub[$getGlobalUserVar[user_bank];$get[amount]]**]
-$let[them-enUS;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profilePronouns;$get[id]];he him;His];she her;Her];they them;Their];ask;$username[$get[id]]'s];username;$username[$get[id]]'s];any;Their];unspecified;Their];other;$username[$get[id]]'s] balance:Previous: **${emojis.general.purplet} $getGlobalUserVar[user_bank;$get[id]]**\nNew: **${emojis.general.purplet} $sum[$getGlobalUserVar[user_bank;$get[id]];$get[amount]]**]
+$let[title-enUS;${emojis.success} Purplets transfer]
+$let[description-enUS;You successfully gave **${emojis.purplet} $get[amount] Purplets** to <@!$get[id]>.]
+$let[you-enUS;Your balance:Previous: **${emojis.purplet} $getGlobalUserVar[user_bank]**\nNew: **${emojis.purplet} $sub[$getGlobalUserVar[user_bank];$get[amount]]**]
+$let[them-enUS;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profilePronouns;$get[id]];he him;His];she her;Her];they them;Their];ask;$username[$get[id]]'s];username;$username[$get[id]]'s];any;Their];unspecified;Their];other;$username[$get[id]]'s] balance:Previous: **${emojis.purplet} $getGlobalUserVar[user_bank;$get[id]]**\nNew: **${emojis.purplet} $sum[$getGlobalUserVar[user_bank;$get[id]];$get[amount]]**]
 
 $onlyIf[$get[amount]>0;{execute:belowZero}]
 $onlyIf[$get[amount]!=0;{execute:belowZero}]

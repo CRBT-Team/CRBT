@@ -20,7 +20,7 @@ $replaceText[$replaceText[$checkCondition[$getGlobalUserVar[job_type]==$getVar[j
 ;no]
 
 $let[title-enUS;$userTag[$get[id]] - Balance]
-$let[purplets-enUS;${emojis.general.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
+$let[purplets-enUS;${emojis.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
 $let[lead-enUS;• **$ordinal[$getLeaderboardInfo[user_bank;$get[id];globaluser;top]]** place on the global leaderboard (\`$getServerVar[prefix]leaderboard\`).]
 $let[work-enUS;• You haven't got a job! You can get one by using the \`$getServerVar[prefix]job search\` command!]
 

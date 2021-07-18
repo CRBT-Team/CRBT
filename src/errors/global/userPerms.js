@@ -9,7 +9,7 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} You don't have the required permissions.]
+$let[title-enUS;${emojis.error} You don't have the required permissions.]
 $let[description-enUS;You will need the $replaceText[$get[perms-enUS];\n;] permission(s) to execute this command.]
 
 $let[perms-enUS;

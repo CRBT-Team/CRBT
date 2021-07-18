@@ -10,6 +10,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} You already have a job!]
+$let[title-enUS;${emojis.error} You already have a job!]
 $let[description-enUS;You can't search for other jobs while you already have one. To leave your job, use \`$getServerVar[prefix]jobquit\`.]
     `}

@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} You don't have a job!]
+$let[title-enUS;${emojis.error} You don't have a job!]
 $let[description-enUS;You can get one by simply searching with \`$getServerVar[prefix]jobsearch\`.]
     `}

@@ -1,4 +1,4 @@
-const { colors, emojis } = require("../../../index");
+const { colors, emojis, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "leave",
@@ -11,13 +11,13 @@ $leaveVC[$voiceID[$clientID]]
 $setServerVar[music_channel;]
 
 $reply[$messageID;
-{title:$get[title-$getGlobalUserVar[language]]}
+{author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.stop}}
 {description:$get[desc-$getGlobalUserVar[language]]}
 
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} See you next time! 👋]
+$let[title-enUS;See you next time! 👋]
 $let[desc-enUS;$username[$clientID] disconnected from <#$voiceID> and unbounded from <#$getServerVar[music_channel]>.]
 
 $onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]

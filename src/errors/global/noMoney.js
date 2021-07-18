@@ -9,7 +9,7 @@ $reply[$messageID;
 $if[$getGlobalUserVar[lastCmd]==buy]
     {field:$get[required-$getGlobalUserVar[language]]:yes}
 
-    $let[required-enUS;Required:${emojis.general.purplet} **$getObjectProperty[$get[item].value] Purplets**]
+    $let[required-enUS;Required:${emojis.purplet} **$getObjectProperty[$get[item].value] Purplets**]
 
     $djsEval[const { items } = require("../../../../../index");
     d.object.banner = items.banners;
@@ -21,6 +21,6 @@ $endif
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} You don't have enough Purplets!]
-$let[your-enUS;Your current balance:${emojis.general.purplet} **$getGlobalUserVar[user_bank] Purplets**]
+$let[title-enUS;${emojis.error} You don't have enough Purplets!]
+$let[your-enUS;Your current balance:${emojis.purplet} **$getGlobalUserVar[user_bank] Purplets**]
     `}

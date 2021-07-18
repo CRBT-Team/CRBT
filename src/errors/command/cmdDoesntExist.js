@@ -10,6 +10,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Huh?]
+$let[title-enUS;${emojis.error} Huh?]
 $let[description-enUS;Looks like this command or page number doesn't exist. Make sure to check your spelling. To check a list of all modules, use \`$getServerVar[prefix]help\`.]
     `}

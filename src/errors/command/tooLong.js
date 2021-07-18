@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Too long!]
+$let[title-enUS;${emojis.error} Too long!]
 $let[description-enUS;Your profile $replaceText[$getGlobalUserVar[lastCmd];set;] should not surpass $replaceText[$replaceText[$getGlobalUserVar[lastCmd];setbio;120];setname;40] characters in length, including interpreted CRBTscript tags.]
     `}

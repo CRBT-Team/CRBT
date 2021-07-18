@@ -10,7 +10,7 @@ module.exports.command = {
 $setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges];<badge $toLowercase[$message]>;]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Badge removed}
+{title:${emojis.success} Badge removed}
 
 {description:
 The $getObjectProperty[badge.$get[item].contents] $getObjectProperty[badge.$get[item].name] badge has been removed from your profile.

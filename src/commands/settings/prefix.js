@@ -18,7 +18,7 @@ $if[$message!=]
     {color:${colors.success}}
     ;no]
 
-    $let[title-enUS;${emojis.general.success} Changed prefix on $serverName]
+    $let[title-enUS;${emojis.success} Changed prefix on $serverName]
     $let[description-enUS;$username[$clientID] will now use \`$get[newPrefix]\` as its prefix on this server.]
 
     $onlyIf[$charCount[$get[newPrefix]]<=15;{execute:prefixTooLong}]

@@ -1,3 +1,6 @@
+const {illustrations} = require("../../../index");
+const c = illustrations.channels
+
 module.exports.command = {
     name: "channel",
     aliases: ['channelinfo','ci','channel-info', 'channel_info'],
@@ -27,21 +30,21 @@ $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 
 $channelType[$get[id]]$channelNSFW[$get[id]]$checkCondition[$get[id]==$guild[$guildID;ruleschannel]]
 
-;textfalsefalse;https://cdn.discordapp.com/emojis/861643749242306610.png]
-;texttruefalse;https://cdn.discordapp.com/emojis/861646458544193567.png]
+;textfalsefalse;${c.text}]
+;texttruefalse;${c.nsfw}]
 
-;voiceundefinedfalse;https://cdn.discordapp.com/emojis/861643709111468043.png]
+;voiceundefinedfalse;${c.voice}]
 
-;newsfalsefalse;https://cdn.discordapp.com/emojis/861643588668227635.png]
-;newstruefalse;https://cdn.discordapp.com/emojis/861643588668227635.png]
+;newsfalsefalse;${c.news}]
+;newstruefalse;${c.news}]
 
-;categoryundefinedfalse;https://cdn.discordapp.com/emojis/861645653326692362.png]
+;categoryundefinedfalse;${c.category}]
 
-;textfalsetrue;https://cdn.discordapp.com/emojis/861643629563346964.png]
-;texttruetrue;https://cdn.discordapp.com/emojis/861643629563346964.png]
+;textfalsetrue;${c.rules}]
+;texttruetrue;${c.rules}]
 
-;storefalsefalse;https://cdn.discordapp.com/emojis/861643679306743809.png]
-;storetruefalse;https://cdn.discordapp.com/emojis/861643679306743809.png]
+;storefalsefalse;${c.store}]
+;storetruefalse;${c.store}]
 
 ]
 

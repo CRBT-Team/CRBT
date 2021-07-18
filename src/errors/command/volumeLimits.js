@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Woa woa too $replaceText[$replaceText[$checkCondition[$message<0];true;low!];false;high!]]
+$let[title-enUS;${emojis.error} Woa woa too $replaceText[$replaceText[$checkCondition[$message<0];true;low!];false;high!]]
 $let[description-enUS;You cannot set the volume higher than 100% or lower than 0%.]
     `}

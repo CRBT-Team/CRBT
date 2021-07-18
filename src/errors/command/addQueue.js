@@ -9,7 +9,7 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} An error occured while adding \`$message\` to the queue!]
+$let[title-enUS;${emojis.error} An error occured while adding \`$message\` to the queue!]
 $let[description-enUS;This may happen because:
 - You are being rate limited.
 - The video you're trying to play is age restricted.

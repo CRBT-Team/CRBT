@@ -9,12 +9,13 @@ $deleteCommand
 
 $wait[500ms]
 
-$addCmdReactions[${emojis.general.success}]
+$addCmdReactions[${emojis.success}]
   
 $sendDM[$splitText[2];
-{title:${emojis.general.information} You've got mail!}
+{title:${emojis.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
-Learn more about official CRBT messages [here](${links.info.messages}).}
+Learn more about CRBT messages **[here](${links.info.messages})**.
+}
 {field:Subject:
 $get[title] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
 ;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])"

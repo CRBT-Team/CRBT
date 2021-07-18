@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} We searched far and wide.]
+$let[title-enUS;${emojis.error} We searched far and wide.]
 $let[description-enUS;I couldn't find this item... Use \`$getServerVar[prefix]store\` to get a list of all currently available items.]
     `}

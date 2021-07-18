@@ -18,7 +18,7 @@ try{
     d.object.math = "= " + math.evaluate('$get[calc]')
 }
 catch(err) {
-    d.object.math = "${emojis.general.error} An error occured...}\\n{description:\`" + err.message + "\`"
+    d.object.math = "${emojis.error} An error occured...}\\n{description:\`" + err.message + "\`"
 }
 ]
 

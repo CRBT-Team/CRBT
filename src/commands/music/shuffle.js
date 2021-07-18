@@ -9,7 +9,7 @@ module.exports.command = {
 $shuffleQueue
 
 $reply[$messageID;
-{title:${emojis.general.success} $get[title-$getGlobalUserVar[language]]}
+{title:${emojis.success} $get[title-$getGlobalUserVar[language]]}
 
 {color:${colors.success}}
 ;no]

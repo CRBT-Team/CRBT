@@ -21,7 +21,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;$userTag[$get[id]] - Inventory]
-$let[balance-enUS;Balance:${emojis.general.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
+$let[balance-enUS;Balance:${emojis.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
 $let[colortrue-enUS;Current color: **#$getGlobalUserVar[color;$get[id]]** (Change it with \`$getServerVar[prefix]setcolor\`)]
 $let[colorfalse-enUS;Current color: **#$getGlobalUserVar[color;$get[id]]**]
 $let[bannertrue-enUS;Active banner: $replaceText[[$getObjectProperty[banners.$get[a].name]]($get[banner]) (Change your banner with \`$getServerVar[prefix]setbanner\`);[](${links.banners}/) (Change your banner with \`$getServerVar[prefix]setbanner\`);None (If you have a banner, you can use it with \`$getServerVar[prefix]setbanner\`)]]

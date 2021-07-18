@@ -13,7 +13,7 @@ $setServerVar[messagelogs_channel;$mentionedChannels[1]]
 $setServerVar[module_messageLogs;true]
 
 $reply[$messageID;
-{title:${emojis.general.success} Message logs channel changed}
+{title:${emojis.success} Message logs channel changed}
 
 {description:
 Deleted and edited messages from all members will now show in this channel.

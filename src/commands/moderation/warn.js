@@ -1,17 +1,13 @@
 const { colors, emojis, links } = require("../../../index");
 
 module.exports.command = {
-    name: "mute",
+    name: "warn",
     module: "moderation",
     description_enUS: "Adds the muted role to the user with a reason (if specified).",
     usage_enUS: "<@mention | user ID> <reason (optional)>",
-    aliases: ['ftg'],
-    userPerms: ["manageroles"],
-    botPerms: ["manageroles"],
+    aliases: ['strike'],
     code: `
-$setUserVar[strikes;**Mute** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
-
-$giveRole[$get[id];$getServerVar[muted_role]]
+$setUserVar[strikes;**Warn** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
 
 $sendDM[$get[id];
 {title:${emojis.information} You've got mail!}
@@ -22,7 +18,7 @@ Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 
 {field:Subject:
-Muted from **$serverName** ($guildID)
+Warned from **$serverName** ($guildID)
 :no}
 
 {field:Reason from $userTag:
@@ -31,12 +27,12 @@ $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];
 
 {footer:You can't reply back to a CRBT message}
 
-{color:${colors.orange}}
+{color:${colors.yellow}}
 ]
 
 $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
 
-{author:$userTag[$get[id]] - Mute:$userAvatar[$get[id]]}
+{author:$userTag[$get[id]] - Warn:$userAvatar[$get[id]]}
 
 {field:User:
 <@!$get[id]>
@@ -55,11 +51,11 @@ $textSplit[$getUserVar[strikes;$get[id]];|]
 $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
 :no}
 
-{color:${colors.orange}}
+{color:${colors.yellow}}
 ]
 
 $reply[$messageID;
-{title:${emojis.success} Successfully muted $userTag[$get[id]].} 
+{title:${emojis.success} Successfully warned $userTag[$get[id]].} 
 {color:${colors.success}}
 ;no]
 
@@ -68,10 +64,7 @@ $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clien
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't mute someone higher than you in the role hierachy!} {color:${colors.red}}]
 $onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
-$onlyIf[$hasRole[$get[id];$getServerVar[muted_role]]==false;{title:${emojis.error} This user is already muted!} {color:${colors.red}}]
-$onlyIf[$getServerVar[muted_role]!=none;{title:${emojis.error} No muted role to give was set!} {description:Use \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage]\` to change it.} {color:${colors.red}}]
-$onlyBotPerms[manageroles;{execute:botPerms}]
-$onlyPerms[manageroles;{execute:userPerms}]
+$onlyIf[$checkContains[$hasPerms[$authorID;managemessages]$hasPerms[$authorID;manageserver]$checkContains[$toLowercase[$userRoles];crbt mod];true]==true;{execute:mods}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

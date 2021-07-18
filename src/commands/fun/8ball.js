@@ -1,4 +1,4 @@
-const { emojis } = require("../../../index");
+const { emojis, illustrations } = require("../../../index");
 
 module.exports.command = {
     name: "8ball",
@@ -8,7 +8,7 @@ module.exports.command = {
     usage_enUS: "<question>",
     code: `
 $editMessage[$botLastMessageID;
-{title:$get[title-$getGlobalUserVar[language]]}
+{author:$get[title-$getGlobalUserVar[language]]:${illustrations.eightball}}
 $if[$checkContains[$toLowercase[$message];who]==true]
 
     {description:$get[who-$getGlobalUserVar[language]]}
@@ -38,7 +38,7 @@ $reply[$messageID;
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;${emojis.misc.eightball} 8-Ball]
+$let[title-enUS;8-Ball]
 
 $let[who-enUS;$randomText[I think it's <@!$randomUserID>.;For sure, it's <@!$randomUserID>.;I'm pretty confident to say it is <@!$randomUserID>.]]
 
@@ -48,7 +48,7 @@ $let[whenPast-enUS;$randomText[I think it was yesterday.;Wasn't it last week?;My
 
 $let[answer-enUS;$randomText[🟢 Yeah!;🔴 Definitely, no.;🟠 I'm not sure...;🔴 Nah...;🔴 It may seem like it's a yes, but in fact nope!;🟢 Absolutely.;🟢 As I see it, yes.;🟠 Sort of...;🔴 Maybe not.;🟢 Probably.;🟢 Of course!]]
 
-$let[progress-enUS;${emojis.misc.eightball} 8-Ball is thinking...]
+$let[progress-enUS;$randomText[Hmmmm...;Let me think...;Thinking in progress...;Loading answers...]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

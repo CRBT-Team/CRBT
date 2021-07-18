@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} This command can't be used here!]
+$let[title-enUS;${emojis.error} This command can't be used here!]
 $let[description-enUS;$username[$clientID] is bounded to <#$getServerVar[music_channel]>, which means you can only use this command here.]
     `}

@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../../index");
+const { emojis, colors, illustrations } = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "stop",
@@ -6,7 +6,7 @@ module.exports.awaitedCommand = {
 $stopSong
 $setServerVar[music_channel;$getVar[music_channel]]
 $editMessage[$message[1];
-{title:$get[title-$getGlobalUserVar[language]]}
+{author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.stop}}
 {description:
 $get[description-$getGlobalUserVar[language]]
 }
@@ -16,7 +16,7 @@ $get[description-$getGlobalUserVar[language]]
 $let[current;$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[current_duration]; ]]
 $let[total;$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInfo[duration]; ]]
 
-$let[title-enUS;${emojis.music.stop} Stopped playback]
+$let[title-enUS;Stopped playback]
 $let[description-enUS;Music playback was stopped by <@!$authorID> on this server.]
 
 $onlyIf[$voiceID[$clientID]==$voiceID;]

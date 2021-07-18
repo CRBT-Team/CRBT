@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Hmm... that's weird...]
+$let[title-enUS;${emojis.error} Hmm... that's weird...]
 $let[description-enUS;We couldn't find this song in your queue. As a reminder, the queue currently has $queueLength songs. (Check the queue with \`$getServerVar[prefix]queue\`!)]
     `}

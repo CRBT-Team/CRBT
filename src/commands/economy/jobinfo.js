@@ -22,7 +22,7 @@ $reply[$messageID;
 
 
 $let[title-enUS;$userTag[$get[id]] - Job info]
-$let[balance-enUS;Balance:${emojis.general.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
+$let[balance-enUS;Balance:${emojis.purplet} **$getGlobalUserVar[user_bank;$get[id]] Purplets**]
 $let[streak-enUS;Hourly streak:**$getGlobalUserVar[hourly_streak;$get[id]]/5** ($math[5-$getGlobalUserVar[hourly_streak;$get[id]]] streak$replaceText[$replaceText[$checkCondition[$math[5-$getGlobalUserVar[hourly_streak;$get[id]]]==1];true;];false;s] left for a bonus!)]
 $let[cooldowns-enUS;Cooldowns:\`$getServerVar[prefix]hourly\`#COLON# $replaceText[$replaceText[$checkCondition[$get[hourcd]==0];true;**Available!**];false;$get[hourcd]]
 \`$getServerVar[prefix]work\`#COLON# $replaceText[$replaceText[$checkCondition[$get[workcd]==0];true;**Available!**];false;$get[workcd]]]

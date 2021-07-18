@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Only for CRBT Partners!]
+$let[title-enUS;${emojis.error} Only for CRBT Partners!]
 $let[description-enUS;This badge isn't accessible through the store... To get it, you can ask Clembs on the [Discord server](${links.info.discord})!]
     `}

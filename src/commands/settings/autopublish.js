@@ -13,7 +13,7 @@ $setServerVar[autoPublishedChannels;$getServerVar[autoPublishedChannels]<#$menti
 $setServerVar[module_autoPublish;true]
 
 $reply[$messageID;
-{title:${emojis.general.success} Channel added to the auto-publish module.}
+{title:${emojis.success} Channel added to the auto-publish module.}
 
 {description:
 All messages sent within this channel will now be automatically published.

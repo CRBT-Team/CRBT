@@ -11,10 +11,10 @@ $setGlobalUserVar[inv$toLowercase[$message[1]];$getGlobalUserVar[inv$toLowercase
 $setGlobalUserVar[user_bank;$math[$getGlobalUserVar[user_bank]-$getObjectProperty[$get[item].value]]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Purchase successful}
+{title:${emojis.success} Purchase successful}
 
 {description:
-You have bought the $getObjectProperty[$get[item].name] $toLowercase[$message[1]] for ${emojis.general.purplet} **$getObjectProperty[$get[item].value] Purplets**.
+You have bought the $getObjectProperty[$get[item].name] $toLowercase[$message[1]] for ${emojis.purplet} **$getObjectProperty[$get[item].value] Purplets**.
 You can use it with \`$getServerVar[prefix]$toLowercase[$message[1]] $replaceText[$toLowercase[$messageSlice[1]]; ;]\` and access your inventory with \`$getServerVar[prefix]inventory\`.
 }
 {color:${colors.success}}

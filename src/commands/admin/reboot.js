@@ -6,6 +6,6 @@ module.exports.command = {
     module: "admin",
     code: `
 $reboot[server.js]
-$addCmdReactions[${emojis.general.success}]
+$addCmdReactions[${emojis.success}]
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}

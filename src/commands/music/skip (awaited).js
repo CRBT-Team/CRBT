@@ -1,10 +1,12 @@
+const {illustrations} = require("../../../index");
+
 module.exports.awaitedCommand = {
     name: "skip",
     code: `
 $volume[$getServerVar[volume]]
 $skipSong
 $editMessage[$message[1];
-{author:$get[title-$getGlobalUserVar[language]]:https://cdn.discordapp.com/emojis/836285755747336272.png}
+{author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 {title:$songInfo[title]}
 {url:$songInfo[url]}
 {description:

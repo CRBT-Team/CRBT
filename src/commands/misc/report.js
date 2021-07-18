@@ -47,7 +47,7 @@ $let[report;$replaceText[$replaceText[$message;";'];\n;\\n]]
 
 $color[${colors.yellow}]
 
-$let[title-enUS;${emojis.general.success} Report sent]
+$let[title-enUS;${emojis.success} Report sent]
 $let[description-enUS;Your bug report was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]
 
 $let[channel;$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];true;${links.channels.report}];false;${links.channels.reportDev}]]

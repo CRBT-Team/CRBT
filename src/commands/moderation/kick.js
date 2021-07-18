@@ -1,4 +1,4 @@
-const { colors, emojis } = require("../../../index");
+const { colors, emojis, links } = require("../../../index");
 
 module.exports.command = {
     name: "kick",
@@ -12,6 +12,27 @@ module.exports.command = {
 $setUserVar[strikes;**Kick** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
 
 $kick[$get[id];$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]]]
+
+$sendDM[$get[id];
+{title:${emojis.information} You've got mail!}
+{description:
+This message was delivered by a moderator of $serverName.
+$username[$clientID] is not affiliated with this message, by this moderator and this server.
+Learn more about CRBT messages **[here](${links.info.messages})**.
+}
+
+{field:Subject:
+Kicked from **$serverName** ($guildID)
+:no}
+
+{field:Reason from $userTag:
+$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
+:no}
+
+{footer:You can't reply back to a CRBT message}
+
+{color:${colors.red}}
+]
 
 $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
 
@@ -37,13 +58,13 @@ $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];
 ]
 
 $reply[$messageID;
-{title:${emojis.general.success} Successfully kicked $userTag[$get[id]].} 
+{title:${emojis.success} Successfully kicked $userTag[$get[id]].} 
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't kick someone that's as high as you in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.general.error} I can't kick someone higher than me in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.general.error} You can't kick someone higher than you in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't kick someone that's as high as you in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.error} I can't kick someone higher than me in the role hierachy!} {color:${colors.error}}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't kick someone higher than you in the role hierachy!} {color:${colors.error}}]
 $onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
 $onlyBotPerms[kick;{execute:botPerms}]

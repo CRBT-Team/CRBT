@@ -10,7 +10,7 @@ module.exports.command = {
 $setGlobalUserVar[job_type;$get[message]]
 
 $reply[$messageID;
-{title:${emojis.general.success} You will now work as a $replaceText[$replaceText[$replaceText[$get[message];mcdoemployee;fast food employee];youtuber;videast];policeman;police officer]!}
+{title:${emojis.success} You will now work as a $replaceText[$replaceText[$replaceText[$get[message];mcdoemployee;fast food employee];youtuber;videast];policeman;police officer]!}
 {description:You can now use \`$getServerVar[prefix]work\` to earn some Purplets and Job XP, and \`$getServerVar[prefix]jobinfo\` to get your current stats and info.
 To leave your job at any moment, use \`$getServerVar[prefix]jobquit\`.}
 {color:${colors.success}}

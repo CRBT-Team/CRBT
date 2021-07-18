@@ -61,9 +61,9 @@ $let[day;$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[f
 $let[date;$round[$math[$get[future]/1000]]]
 $let[future;$math[$dateStamp+$getObjectProperty[duration]]]
 
-$let[title-enUS;${emojis.general.success} Reminder set!]
+$let[title-enUS;${emojis.success} Reminder set!]
 
-$onlyIf[$getObjectProperty[duration]<63115200000;{title:${emojis.general.error} Reminders cannot be higher than 2 years for now.} {color:${colors.red}}]
+$onlyIf[$getObjectProperty[duration]<63115200000;{title:${emojis.error} Reminders cannot be higher than 2 years for now.} {color:${colors.red}}]
 
 $djsEval[const utils = require('dbd.js-utils')
 d.object.durationdone = utils.parseMS("$getObjectProperty[duration]")]

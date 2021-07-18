@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} We don't belong here, $username.]
+$let[title-enUS;${emojis.error} We don't belong here, $username.]
 $let[description-enUS;This command unfortunately can't be executed from your DMs. Try again in a server this time or [invite me](${links.invite}) to one of yours!]
     `}

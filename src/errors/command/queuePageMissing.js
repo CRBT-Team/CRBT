@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Too far!!]
+$let[title-enUS;${emojis.error} Too far!!]
 $let[description-enUS;We couldn't reach this page of the queue, likely due to its non-existance!]
     `}

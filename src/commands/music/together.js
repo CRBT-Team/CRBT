@@ -13,7 +13,7 @@ $apiMessage[;
 {color:${colors.success}}
 ;{actionRow:Join Activity,2,5,$replaceText[$getObjectProperty[invite];:;#COLON#]}:$messageID:no:yes]
 
-$let[title-enUS;${emojis.general.success} Here you go!]
+$let[title-enUS;${emojis.success} Here you go!]
 $let[description-enUS;Click on the button below to join the YouTube Together activity right on Discord.]
 
 $djsEval[

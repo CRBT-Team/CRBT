@@ -32,36 +32,27 @@
         "default": "F27187"
         },
     "emojis": {
-        "general": {
-            "error": "<:error:866037872519938069> ",
-            "success": "<:success:866037503567069185> ",
-
-            "purplet": "<:purplet:866116902215745576>",
+        "error": "<:error:866037872519938069> ",
+        "success": "<:success:866037503567069185> ",
+        
+        "purplet": "<:purplet:866116902215745576>",
             
-            "toggleon": "<:toggleon:866036010663542816>",
-            "toggleoff": "<:toggleoff:866036062471192627>",
-            "forcedon": "<:forcedon:866042868766736394>",
-            "forcedoff": "<:forcedoff:866042899501940757>",
+        "toggleon": "<:toggleon:866036010663542816>",
+        "toggleoff": "<:toggleoff:866036062471192627>",
+        "forcedon": "<:forcedon:866042868766736394>",
+        "forcedoff": "<:forcedoff:866042899501940757>",
 
-            "information": "<:information:862974997236023296>",
-            "warning": "<:warning:836285755948662814>",
-            "partner": "<:partner:866113174314287125>",
-            "thumbsup": "<:thumbsup:836313884590604349>",
-            "thumbsdown": "<:thumbsdown:836313884603842590>"
-        },
+        "information": "<:information:866336136951758848>",
+        "warning": "<:warning:836285755948662814>",
+        "partner": "<:partner:866113174314287125>",
+        
         "music": {
-            "mute": "<:mute:836285756086812742>",
-            "volume": "<:volume:836285755906719744>",
-            "stop": "<:stop:836285755730952274>",
-            "pause": "<:pause:836285755855863828>",
-            "play": "<:play:836285755495022653>",
-            "skip": "<:skip:836285755747336272>",
-            "list": "<:list:862975264355385375>",
-            "list_success": "<:list_success:862975357581000744>",
-            "loop": "<:loop:836285755718238239>",
-            "loopenabled": "<:loop_enabled:784484021458829377>",
-            "loopdisabled": "<:loop_disabled:784484015662694410>",
-            "lyrics": "<:list:836285755721646150>"
+            "mute": "<:mute:866336306971934761>",
+            "volume": "<:volume_high:866336351677710376>",
+            "stop": "<:stop:866336251178647591>",
+            "pause": "<:pause:866337168444227604>",
+            "play": "<:resume:866337139162349568>",
+            "skip": "<:skip:866336024643895318>"
         },
         "channels": {
             "text": "<:text:861643749242306610>",
@@ -87,11 +78,10 @@
             "emoji": {
                 "static": "<:emoji:658538492321595393>",
                 "animated": "<:emoji:658538492321595393>"
-            }
-        },
-        "reminder": {
-            "set": "<:reminder_set:817733584759947285>",
-            "normal": "<:reminder:817733671015677982>"
+            },
+            "thumbsup": "<:thumbsup:836313884590604349>",
+            "thumbsdown": "<:thumbsdown:836313884603842590>",
+            "reminder": "<:reminder:817733671015677982>"
         },
         "badges": {
             "houses": {
@@ -143,6 +133,47 @@
             "heart": "<:heart:858010663226310676>"
         }
     },
+    "illustrations": {
+        "ping": {
+            "good": "",
+            "meh": "",
+            "bad": ""
+        },
+        "crbtinfo": "https://crbt.ga/assets/logos/crbt.png",
+        "welcome": "https://cdn.discordapp.com/attachments/843146398484660254/865602008019107850/unknown.png",
+        "barrelRoll": "https://cdn.discordapp.com/attachments/764855467272306728/864855443662045226/attachment.gif",
+
+        "settings": "https://cdn.discordapp.com/attachments/782584672772423684/866329988662951956/unknown.png",
+        "eightball": "https://cdn.discordapp.com/attachments/843148633687588945/866338223340257301/unknown.png",
+        
+        "channels": {
+            "category": "https://cdn.discordapp.com/attachments/782584672772423684/866328659064520724/unknown.png",
+            "text": "https://cdn.discordapp.com/attachments/782584672772423684/866329002645127198/unknown.png",
+            "voice": "https://cdn.discordapp.com/attachments/782584672772423684/866329241045565480/unknown.png",
+            "nsfw": "https://cdn.discordapp.com/attachments/782584672772423684/866329296410509342/unknown.png",
+            "news": "https://cdn.discordapp.com/attachments/782584672772423684/866329358612561930/unknown.png",
+            "store": "https://cdn.discordapp.com/attachments/782584672772423684/866329368821366784/unknown.png",
+            "rules": "https://cdn.discordapp.com/attachments/782584672772423684/866329407076827136/unknown.png"
+        },
+
+        "music": {
+            "queueadded": "https://cdn.discordapp.com/attachments/782584672772423684/866330146961096704/unknown.png",
+            "queue": "https://cdn.discordapp.com/attachments/782584672772423684/866330448309387305/unknown.png",
+            "information": "https://cdn.discordapp.com/attachments/782584672772423684/866330436626939935/unknown.png",
+            "skip": "https://cdn.discordapp.com/attachments/782584672772423684/866330412887048202/unknown.png",
+            "resume": "https://cdn.discordapp.com/attachments/782584672772423684/866330372936695814/unknown.png",
+            "pause": "https://cdn.discordapp.com/attachments/782584672772423684/866330366611947560/unknown.png",
+            "stop": "https://cdn.discordapp.com/attachments/782584672772423684/866330296345559070/unknown.png",
+            "volumelow": "https://cdn.discordapp.com/attachments/782584672772423684/866334343370506251/unknown.png",
+            "volumehigh": "https://cdn.discordapp.com/attachments/782584672772423684/866334350844100638/unknown.png",
+            "volumemuted": "https://cdn.discordapp.com/attachments/782584672772423684/866334312528609290/unknown.png"
+        },
+
+        "invite": "https://crbt.ga/assets/logos/crbt.png",
+        "newCRBT": "https://cdn.clembs.xyz/AhIOoNA.gif",
+        "badges": "https://cdn.discordapp.com/attachments/843148633687588945/857341037931790376/unknown.png",
+        "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png"
+    },
     "links": {
         "privacypolicy": "https://crbt.ga/privacy",
         "baseURL": "https://crbt.ga/",
@@ -180,21 +211,6 @@
         "news": [
             "👀"
         ]
-    },
-    "illustrations": {
-        "ping": {
-            "good": "",
-            "meh": "",
-            "bad": ""
-        },
-        "crbtinfo": "https://crbt.ga/assets/logos/crbt.png",
-        "welcome": "https://cdn.discordapp.com/attachments/843146398484660254/865602008019107850/unknown.png",
-        "barrelRoll": "https://cdn.discordapp.com/attachments/764855467272306728/864855443662045226/attachment.gif",
-        "settings": "https://cdn.discordapp.com/attachments/843148633687588945/866115631665381415/unknown.png",
-        "invite": "https://crbt.ga/assets/logos/crbt.png",
-        "newCRBT": "https://cdn.clembs.xyz/AhIOoNA.gif",
-        "badges": "https://cdn.discordapp.com/attachments/843148633687588945/857341037931790376/unknown.png",
-        "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png"
     },
     "logos": {
         "CRBT": "https://crbt.ga/assets/logos/crbt.png",

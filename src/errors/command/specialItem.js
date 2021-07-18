@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Yikes!]
+$let[title-enUS;${emojis.error} Yikes!]
 $let[description-enUS;Unfortunately, this item is sold out or isn't available for purchase...]
     `}

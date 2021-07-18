@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} The user is blocklisted!]
+$let[title-enUS;${emojis.error} The user is blocklisted!]
 $let[description-enUS;This user was blocklisted from using $username[$clientID], and you can't interact with blocklisted users.]
     `}

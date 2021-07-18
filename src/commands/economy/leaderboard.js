@@ -12,7 +12,7 @@ $globalUserLeaderboard[user_bank;asc;**{top}.** {username} - {value} Purplets;ye
 }
 
 {field:Your position:
-**$getLeaderboardInfo[user_bank;$authorID;globaluser;top].** $username - ${emojis.general.purplet} $getLeaderboardInfo[user_bank;$authorID;globaluser;value] Purplets
+**$getLeaderboardInfo[user_bank;$authorID;globaluser;top].** $username - ${emojis.purplet} $getLeaderboardInfo[user_bank;$authorID;globaluser;value] Purplets
 }
 
 {color:$getGlobalUserVar[color]}

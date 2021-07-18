@@ -23,7 +23,7 @@ $get[new]
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;${emojis.general.success} Pronouns changed]
+$let[title-enUS;${emojis.success} Pronouns changed]
 $let[previous-enUS;Previous]
 $let[new-enUS;New]
 

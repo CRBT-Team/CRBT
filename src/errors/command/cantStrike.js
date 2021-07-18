@@ -9,7 +9,7 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} You can't $getGlobalUserVar[lastCmd] $replaceText[$replaceText[$get[id];$authorID;yourself];$ownerID;the server's owner]!]
+$let[title-enUS;${emojis.error} You can't $getGlobalUserVar[lastCmd] $replaceText[$replaceText[$get[id];$authorID;yourself];$ownerID;the server's owner]!]
 $let[footer-enUS;$replaceText[$replaceText[$checkCondition[$get[id]==$authorID];true;I mean, technically you could.... but why?];false;]]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

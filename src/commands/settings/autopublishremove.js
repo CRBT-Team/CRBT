@@ -11,7 +11,7 @@ module.exports.command = {
 $setServerVar[autoPublishedChannels;$replaceText[$getServerVar[autoPublishedChannels];<#$mentionedChannels[1]>;]]
 
 $reply[$messageID;
-{title:${emojis.general.success} Channel removed from the auto-publish module.}
+{title:${emojis.success} Channel removed from the auto-publish module.}
 
 {description:
 All messages sent within this channel will no longer be automatically published.

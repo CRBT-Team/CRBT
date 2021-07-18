@@ -63,7 +63,7 @@ $else
     {color:$get[color]}
     ;no]
         
-    $let[title-enUS;${emojis.general.success} Accent color updated]
+    $let[title-enUS;${emojis.success} Accent color updated]
     $let[description-enUS;$username[$clientID] will now use this color across all commands you execute!]
 
     $onlyIf[$isValidHex[$get[color]]==true;{execute:notAColor}]

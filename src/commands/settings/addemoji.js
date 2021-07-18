@@ -46,7 +46,7 @@ $endif
 
 $let[message;$replaceText[$replaceText[$checkCondition[$message[2]==];false;$message[2]];true;$messageAttachment]]
     
-$let[title-enUS;${emojis.general.success} Emoji added to $serverName!]
+$let[title-enUS;${emojis.success} Emoji added to $serverName!]
 
 $onlyBotPerms[manageemojis;{execute:botPerms}]
 $onlyPerms[manageemojis;{execute:userPerms}]

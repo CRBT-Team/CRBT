@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.general.error} Wait- that's incorrect]
+$let[title-enUS;${emojis.error} Wait- that's incorrect]
 $let[description-enUS;You can't give Purplets to yourself, surpringly enough.]
     `}

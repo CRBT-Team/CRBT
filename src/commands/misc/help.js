@@ -130,14 +130,14 @@ $replaceText[$commandInfo[$message;aliases];,;, ]\`\`\`
 {field:Permission errors:
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $get[botPerms]/$get[userPerms]
-;true/true;${emojis.general.success} You're all set to use this command!]
-;false/true;${emojis.general.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;true/false;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
-;false/false;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;/true;${emojis.general.success} You're all set to use this command!]
-;true/;${emojis.general.success} You're all set to use this command!]
-;false/;${emojis.general.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
-;false/;${emojis.general.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;true/true;${emojis.success} You're all set to use this command!]
+;false/true;${emojis.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;true/false;${emojis.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
+;false/false;${emojis.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions, and **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;/true;${emojis.success} You're all set to use this command!]
+;true/;${emojis.success} You're all set to use this command!]
+;false/;${emojis.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
+;false/;${emojis.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
 :no}
 {field:Cooldown:
 $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];true;None];false;$commandInfo[$message;cooldown]]
@@ -145,7 +145,7 @@ $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];tru
 
 $if[$commandInfo[$message;module]==partnerCmd]
 {field:Module:
-${emojis.general.partner} Partner command
+${emojis.partner} Partner command
 :yes}
 {field:Accessible on:
 $if[$serverExists[$commandInfo[$message;server]]==true]
@@ -156,8 +156,8 @@ $endif
 :yes}
 $else
 {field:Module:
-$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.general.toggleon}];false;${emojis.general.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
-$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.general.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggleon}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
 :yes}
 $endif
@@ -186,7 +186,7 @@ $endif
 
 
 $let[economy-enUS;Economy & profiles:
-$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]jobsearch\`
 Gives you 3 random job propositions to get you started!
@@ -201,7 +201,7 @@ Displays your CRBT profile.]
 
 
 $let[basic-enUS;Basic commands:
-${emojis.general.forcedon} You can't disable this module.
+${emojis.forcedon} You can't disable this module.
 
 • \`$getServerVar[prefix]help\`
 Get CRBT's help on its general usage, or on any command. 
@@ -218,7 +218,7 @@ To invite CRBT on your server, or join the support server!]
 
 
 $let[moderation-enUS;Moderation:
-$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]kick\`, \`$getServerVar[prefix]ban\`, \`$getServerVar[prefix]warn\`
 Kicks, bans or gives a warning to a specified user (via its user ID or a @mention)
@@ -229,7 +229,7 @@ Finds the latest deleted message on the current channel, or on a specified chann
 
 
 $let[fun-enUS;Fun commands:
-$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]8ball\`
 Asks your question to 8-Ball, and retrieves its honest answer. 
@@ -244,10 +244,10 @@ Shuffles your message's words into a completely random mess of a sentence!]
 
 
 $let[tools-enUS;Tools:
-$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]coinflip\`
-Flips a ${emojis.general.purplet} Purplet and gives you the result.
+Flips a ${emojis.purplet} Purplet and gives you the result.
 • \`$getServerVar[prefix]convert\`
 Converts a specified currency into another one.
 • \`$getServerVar[prefix]calculate\`
@@ -265,7 +265,7 @@ Translates given text into the target language.]
 
 
 $let[info-enUS;Info commands:
-$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]anime <anime name>\`
 • \`$getServerVar[prefix]avatar <user (optional)>\`
@@ -286,7 +286,7 @@ $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.general.toggl
 
 
 $let[settings-true-enUS;Settings:
-${emojis.general.forcedon} You can't disable this module.
+${emojis.forcedon} You can't disable this module.
 
 • \`$getServerVar[prefix]color\`
 Change $username[$clientID]'s accent color across all commands.
@@ -299,7 +299,7 @@ Get a list of $username[$clientID]'s entire settings for the server or yourself.
 
 
 $let[settings-false-enUS;Settings:
-${emojis.general.forcedon} You can't disable this module.
+${emojis.forcedon} You can't disable this module.
 
 • \`$getServerVar[prefix]color\`
 Change $username[$clientID]'s accent color across all commands.
@@ -308,7 +308,7 @@ Get to know how your data is used on CRBT, and change your privacy settings.]
 
 
 $let[music-enUS;Music commands:
-$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 • \`$getServerVar[prefix]play\`
 Queues or directly plays the song of your choice.
@@ -321,7 +321,7 @@ Disconnects $username[$clientID] from its voice channels and clears the queue.]
 
 
 $let[nsfw-enUS;Not Safe For Work commands:
-$replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.general.toggleon} This module is enabled on this server.];false;${emojis.general.toggleoff} This module is disabled on this server.]
+$replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 Warning: Contains unsuitable language for minor audiences.
 ||• \`$getServerVar[prefix]play\`
