@@ -37,7 +37,7 @@ $endif
 
 $channelSendMessage[${links.channels.telemetry};
 <@!327690719085068289>
-{title:Joined $serverName ($guildID).}
+{author:Joined $serverName ($guildID).}
 {color:${colors.success}}
 ;no]
 `}

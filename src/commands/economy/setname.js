@@ -1,5 +1,5 @@
 const { emojis, colors } = require("../../../index");
-const bad = require("../../../json/sad/badwords.json");
+const bad = require("../../../data/misc/badwords.json");
 
 module.exports.command = {
     name: "setname",

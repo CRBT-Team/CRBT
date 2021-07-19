@@ -1,4 +1,4 @@
-const { meanings } = require("../../json/api.json");
+const { meanings } = require("../../data/api.json");
 const { bot, botinfo, instance } = require("../../index");
 const router = require("express").Router();
 

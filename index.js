@@ -6,10 +6,10 @@ require("dotenv").config();
 
 // Configuration files
 const { colors, emojis, links, tokens, botinfo, illustrations, logos } =
-  JSON.parse(readFileSync("json/config.json", "utf-8"));
-const { items } = JSON.parse(readFileSync("json/store.json", "utf-8"));
-const { jobs } = JSON.parse(readFileSync("json/jobs.json", "utf-8"));
-const { api } = JSON.parse(readFileSync("json/api.json", "utf-8"));
+  JSON.parse(readFileSync("data/config.json", "utf-8"));
+const { items } = JSON.parse(readFileSync("data/store.json", "utf-8"));
+const { jobs } = JSON.parse(readFileSync("data/jobs.json", "utf-8"));
+const { api } = JSON.parse(readFileSync("data/api.json", "utf-8"));
 
 // Creating the bot
 const bot = new Bot({

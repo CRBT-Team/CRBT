@@ -1,5 +1,5 @@
 # CRBT - Privacy Policy
- _Last update: 2021-07-02 (10.0)_
+ _Last update: 2021-07-22 (as of version 10.0)_
 
 When you make use of the CRBT service, by adding it to a server or by using it as a Discord user, you automatically apply to this privacy policy.
 

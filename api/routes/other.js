@@ -1,4 +1,4 @@
-const { pédiluve } = require("../../json/api.json");
+const { pédiluve } = require("../../data/api.json");
 const router = require("express").Router();
 const { createCanvas } = require("canvas");
 const { param, body, validationResult } = require("express-validator");

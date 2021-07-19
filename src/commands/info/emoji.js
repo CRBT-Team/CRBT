@@ -1,4 +1,4 @@
-const emojis = require("../../../json/emoji-database.json")
+const emojis = require("../../../data/misc/emoji-database.json")
 
 module.exports.command = {
     name: "emojiinfo",
