@@ -67,6 +67,14 @@ router.get("/command/:name", async function(req, res, next) {
                 ru: cmd.usage_ru,
                 ptBR: cmd.usage_ptBR,
             },
+            examples: {
+                enUS: cmd.examples_enUS,
+                enUK: cmd.examples_enUK,
+                frFR: cmd.examples_frFR,
+                esES: cmd.examples_esES,
+                ru: cmd.example_ru,
+                ptBR: cmd.examples_ptBR,
+            },
             botPerms: cmd.botPerms,
             userPerms: cmd.userPerms,
         })

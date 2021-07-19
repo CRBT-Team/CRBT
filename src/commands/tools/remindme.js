@@ -54,6 +54,12 @@ method: channel]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;*No subject was set*];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
 
+$onlyIf[$hasPermsInChannel[$mentionedChannels[1];$authorID;sendmessages]==true;{execute:reminderChannel}]
+$onlyIf[$mentionedChannels[1]!=$guild[$guildID;ruleschannel];{execute:reminderChannel}]
+$onlyIf[$mentionedChannels[1]!=$getServerVar[messagelogs_channel];{execute:reminderChannel}]
+$onlyIf[$mentionedChannels[1]!=$getServerVar[modlogs_channel];{execute:reminderChannel}]
+$onlyIf[$channelType[$mentionedChannels[1]]!=news;{execute:reminderChannel}]
+
 $endif
 
 $let[day;$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$get[future];DD]]==1];true;0$formatDate[$get[future];DD]];false;$formatDate[$get[future];DD]]]

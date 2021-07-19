@@ -38,6 +38,7 @@ module.exports.variables = {
 //  skip_votes: 0,
 //  skip_users: "",
 //  stopped_playback: false,
+    newPopup: false,
 
 
 //modules

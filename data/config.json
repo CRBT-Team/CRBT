@@ -188,6 +188,7 @@
         "baseURL": "https://crbt.ga/",
         "banners": "https://crbt.ga/banners/",
         "invite": "https://crbt.ga/invite",
+        "newVersion": "https://crbt.ga/blog/v10-changelog",
         "vote": {
             "topgg": "https://top.gg/bot/595731552709771264/vote",
             "discordbots": "https://discord.bots.gg/bots/595731552709771264"
