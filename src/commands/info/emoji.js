@@ -38,12 +38,12 @@ $if[$checkContains[${emojis};$message[1]]==true]
     $let[code;$replaceText[$getObjectProperty[unicode]; ;-]]
     
     $djsEval[
-    const message = "$getObjectProperty[message]";
+    const message = "$get[message]";
     const unicode = require("emoji-unicode");
     d.object.unicode = unicode(message);
     ]
     
-    $createObject[{"message":"$message"}]
+    $let[message;$replaceText[$replaceText[$message;\n;\\n];";']]
     
 $elseIf[$charCount[$message[1]]>=24]
 

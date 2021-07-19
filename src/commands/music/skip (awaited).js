@@ -1,4 +1,4 @@
-const {illustrations} = require("../../../index");
+const {illustrations, emojis} = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "skip",
@@ -13,7 +13,7 @@ $editMessage[$message[1];
 $get[playing-$getGlobalUserVar[language]]
 }
 {field:$get[volume-$getGlobalUserVar[language]]:
-$math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
+$replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$math[$replaceText[$getServerVar[volume];-muted;]*2]%];true;${emojis.music.mute} Muted] ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {color:$getGlobalUserVar[color]}
 ;$channelID]

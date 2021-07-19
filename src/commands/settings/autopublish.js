@@ -31,9 +31,8 @@ $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$clientID;managemessages]==true
 $onlyBotPerms[manageserver;{execute:botPerms}]
 $onlyPerms[manageserver;{execute:admins}]
 $onlyIf[$channelType[$mentionedChannels[1;no]]==news;{execute:onlyNewsChannels}]
-$onlyIf[$mentionedChannels[1;no]!=;{execute:queryNotFound}]
-
-$onlyIf[$checkContains[$getServerVar[autoPublishedChannels];$mentionedChannels[1]]==false;{execute:alreadyPublished}]
+$onlyIf[$checkContains[$getServerVar[autoPublishedChannels];$mentiodnedChannels[1]]==false;{execute:alreadyPublished}]
+$onlyIf[$mentionedChannels[1;no]!=;{execute:channelNotFound}]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

@@ -26,8 +26,8 @@ $replaceText[$replaceText[$getServerVar[autoPublishedChannels];<#$mentionedChann
 ;no]
 
 $onlyPerms[manageserver;{execute:admins}]
-$onlyIf[$mentionedChannels[1;no]!=;{execute:queryNotFound}]
 $onlyIf[$checkContains[$getServerVar[autoPublishedChannels];$mentionedChannels[1]]==true;{execute:notAlreadyPublished}]
+$onlyIf[$mentionedChannels[1;no]!=;{execute:channelNotFound}]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

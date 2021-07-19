@@ -1,4 +1,4 @@
-const {illustrations} = require("../../../index");
+const {illustrations, emojis} = require("../../../index");
 
 module.exports.awaitedCommand = {
     name: "nowplaying",
@@ -19,7 +19,7 @@ $get[playing-$getGlobalUserVar[language]]
 <@!$songInfo[userID]>
 :yes}
 {field:$get[volume-$getGlobalUserVar[language]]:
-$math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
+$replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$math[$replaceText[$getServerVar[volume];-muted;]*2]%];true;${emojis.music.mute} Muted] ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {thumbnail:$songInfo[thumbnail]}
 {color:$getGlobalUserVar[color]}

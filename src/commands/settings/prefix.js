@@ -10,16 +10,18 @@ module.exports.command = {
     code: `
 $if[$message!=]
 
-    $setServerVar[prefix;$get[newPrefix]]
+    $setGlobalUserVar[lastCmd;prefix ** $get[newPrefix] ** $botLastMessageID]
 
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {description:$get[description-$getGlobalUserVar[language]]}
-    {color:${colors.success}}
+    {color:${colors.orange}}
     ;no]
 
-    $let[title-enUS;${emojis.success} Changed prefix on $serverName]
-    $let[description-enUS;$username[$clientID] will now use \`$get[newPrefix]\` as its prefix on this server.]
+    $let[title-enUS;Awaiting input...]
+    $let[description-enUS;Please ping me <@!$clientID> to confirm you want to change **my** prefix.\nThis will automatically expire in 10 seconds or if you not ping me.]
+
+    $awaitMessages[$authorID;10s;everything;prefixConfirm;{execute:prefixCancel}]
 
     $onlyIf[$charCount[$get[newPrefix]]<=15;{execute:prefixTooLong}]
 

@@ -3,7 +3,7 @@ module.exports.command = {
     aliases: ["tr"],
     module: "tools",
     description_enUS: "Translates the desired text in the specified language.",
-    usage_enUS: "<target language> <text to be translated>",
+    usage_enUS: "<target language> <text to translate>",
     code: `
 $reply[$messageID;
 {author:Translation - Results}

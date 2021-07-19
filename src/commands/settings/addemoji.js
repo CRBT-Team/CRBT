@@ -16,7 +16,7 @@ $if[$checkContains[$message[1];<]$checkContains[$message[1];>]$checkContains[$me
     {color:${colors.success}}
     ;no]
 
-    $onlyIf[$emojiCount[$replaceText[$replaceText[$checkContains[$splitText[2]==.gif];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:emojiMaxCap}]
+    $onlyIf[$emojiCount[$replaceText[$replaceText[$checkContains[$splitText[2]==.gif];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:limitReached}]
 
     $let[url;http$splitText[2]]
     $let[name;$replaceText[$replaceText[$toLowercase[$splitText[1]]; ;_];-;_]]
@@ -33,7 +33,7 @@ $else
     {description:$addEmoji[$get[url];$splitText[2];yes]}
     ;no]
 
-    $onlyIf[$emojiCount[$replaceText[$replaceText[$get[animated];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:emojiMaxCap}]
+    $onlyIf[$emojiCount[$replaceText[$replaceText[$get[animated];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:limitReached}]
 
     $let[url;https://cdn.discordapp.com/emojis/$get[id].$replaceText[$replaceText[$get[animated];false;png];true;gif]]
     $let[animated;$checkCondition[$splitText[1]==<a]]

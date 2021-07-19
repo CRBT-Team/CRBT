@@ -45,7 +45,7 @@ $let[perms-enUS;Permissions:$replaceText[$replaceText[$checkContains[$rolePerms[
 
 $let[color;$replaceText[$role[$get[id];hex];000000;${colors.blurple}]]
 
-$onlyIf[$get[id]!=;{execute:queryNotFound}]
+$onlyIf[$get[id]!=;{execute:roleNotFound}]
 $let[id;$findRole[$message]]
 
 $argsCheck[>1;{execute:args}]

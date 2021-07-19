@@ -16,12 +16,15 @@ $let[perms-enUS;
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+$replaceText[
 $get[perms]
 ;manageemojis;"Manage Emojis and Stickers"]
 ;manageserver;"Manage Server"]
 ;managemessages;"Manage Messages"]
 ;sendmessages;"Send Messages"]
-;manageroles;"Manage roles"]
+;manageroles;"Manage Roles"]
+
+;managechannels;"Manage Channels"]
 
 ;createinvite;"Create Invite"]
 ;kick;"Kick Members"]

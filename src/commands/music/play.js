@@ -10,7 +10,7 @@ module.exports.command = {
     code: `
 $if[$voiceID[$clientID]!=$voiceID]
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute1,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     
@@ -30,7 +30,7 @@ $get[playing-$getGlobalUserVar[language]]
 <@!$songInfo[userID;$get[queueLength]]>
 :yes}
 {field:$get[volume-$getGlobalUserVar[language]]:
-$math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
+$replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$math[$replaceText[$getServerVar[volume];-muted;]*2]%];true;${emojis.music.mute} Muted] ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
 {color:$getGlobalUserVar[color]}
@@ -104,7 +104,7 @@ $math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
 
 $else
 
-    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute,stop;yes]
+    $reactionCollector[$get[id];everyone;1h;${emojis.music.skip},${emojis.information},${emojis.music.mute},${emojis.music.stop};skip,nowplaying,mute1,stop;yes]
 
     $if[$replaceText[$replaceText[$checkContains[$checkContains[$message;youtube.com/playlist?list=]$checkContains[$message;open.spotify.com/playlist];true];true;yes];false;no]==no]
     
@@ -124,7 +124,7 @@ $get[playing-$getGlobalUserVar[language]]
 <@!$songInfo[userID;$get[queueLength]]>
 :yes}
 {field:$get[volume-$getGlobalUserVar[language]]:
-$math[$getServerVar[volume]*2]% ($get[volumeTip-$getGlobalUserVar[language]])
+$replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$math[$replaceText[$getServerVar[volume];-muted;]*2]%];true;${emojis.music.mute} Muted] ($get[volumeTip-$getGlobalUserVar[language]])
 :no}
 {thumbnail:$songInfo[thumbnail;$get[queueLength]]}
 {color:$getGlobalUserVar[color]}

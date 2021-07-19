@@ -57,7 +57,7 @@ $if[$message==]
     $let[id;$channelID]
 $else
     $let[id;$findServerChannel[$message]]
-    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:queryNotFound}]
+    $onlyIf[$findServerChannel[$message;no]!=undefined;{execute:channelNotFound}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

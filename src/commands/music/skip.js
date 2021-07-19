@@ -46,7 +46,9 @@ $let[title-enUS;Skipped song]
 
 $argsCheck[<1;{execute:args}]
 $onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
-$onlyIf[$queueLength!=0;{execute:nomusic}]
+$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
+$onlyIf[$voiceID[$clientID]!=;{execute:nomusic}]
+$onlyIf[$voiceID!=;{execute:novoice}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

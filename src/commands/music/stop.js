@@ -20,11 +20,11 @@ $reply[$messageID;
 $let[title-enUS;See you next time! 👋]
 $let[desc-enUS;Disconnected from <#$voiceID> and unbounded from <#$getServerVar[music_channel]>.]
 
-$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
-
 $argsCheck[0;{execute:args}]
 $onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]
+$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 $onlyIf[$voiceID[$clientID]!=;{execute:nomusic}]
+$onlyIf[$voiceID!=;{execute:novoice}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
