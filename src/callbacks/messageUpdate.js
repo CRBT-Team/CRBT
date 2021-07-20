@@ -33,6 +33,8 @@ $message
 {color:${colors.orange}}
 ]
 
+$onlyIf[$channelExists[$getServerVar[messagelogs_channel]]==true;]
+
 $onlyIf[$message!=$oldMessage;]
 $onlyIf[$getServerVar[messagelogs_channel]!=$getVar[messagelogs_channel];]
 $onlyIf[$getServerVar[module_messageLogs]==true;]

@@ -6,6 +6,7 @@ module.exports.awaitedCommand = {
     code: `
 $editMessage[$message[1];
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
+{description:$get[protip-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[emotions-$getGlobalUserVar[language]]:
 ${badges.flushed.contents} ${badges.flushed.name}\n**${emojis.purplet} ${badges.flushed.value} Purplets**
@@ -40,6 +41,8 @@ ${badges.wink.contents} ${badges.wink.name}\n**${emojis.purplet} ${badges.wink.v
 
 $let[title-enUS;CRBT Store - Badges (Page 2)]
 $let[purplets-enUS;Balance:${emojis.purplet} $getGlobalUserVar[user_bank] Purplets]
+$let[preview-enUS;Preview any banner on your profile using the \`$getServerVar[prefix]preview <banner name>\` command!]
+$let[protip-enUS;You can get info on any item using the \`$getServerVar[prefix]iteminfo <item name>\` command!]
 $let[familiarFaces-enUS;Familiar faces]
 $let[flags-enUS;Flags]
 $let[jobs-enUS;Jobs]

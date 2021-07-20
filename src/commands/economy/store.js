@@ -15,6 +15,7 @@ $reply[$messageID;
 $if[$message==]
 
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
+{description:$get[protip-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
 ${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
@@ -56,6 +57,7 @@ $let[title-enUS;CRBT Store - Badges (Page 1)]
 $elseIf[$toLowercase[$message]==badges]
 
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
+{description:$get[protip-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
 ${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
@@ -98,7 +100,7 @@ $endelseIf
 $elseIf[$toLowercase[$message]==banners]
 
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
-{description:$get[description-$getGlobalUserVar[language]]}
+{description:$get[preview-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[season3-$getGlobalUserVar[language]]:
 **• [${banners.flower.name}]($get[baseURL]/${banners.flower.contents})**\n**${emojis.purplet} ${banners.flower.value} Purplets**
@@ -135,6 +137,7 @@ $endif
 
 $let[purplets-enUS;Balance:${emojis.purplet} $getGlobalUserVar[user_bank] Purplets]
 $let[preview-enUS;Preview any banner on your profile using the \`$getServerVar[prefix]preview <banner name>\` command!]
+$let[protip-enUS;You can get info on any item using the \`$getServerVar[prefix]iteminfo <item name>\` command!]
 $let[familiarFaces-enUS;Familiar faces]
 $let[flags-enUS;Flags]
 $let[jobs-enUS;Jobs]

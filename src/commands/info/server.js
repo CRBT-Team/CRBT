@@ -44,6 +44,9 @@ $endif
 
 {thumbnail:$get[icon]}
 {color:$getGlobalUserVar[color]}
+
+{image:$getServerVar[guild_banner;$get[id]]}
+
 ;no]
 
 $let[title-enUS;$serverName[$get[id]] - Server info]

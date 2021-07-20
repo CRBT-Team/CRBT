@@ -11,10 +11,11 @@ $apiMessage[;
 {title:$get[title-$getGlobalUserVar[language]]}
 {description:$get[description-$getGlobalUserVar[language]]}
 {color:${colors.success}}
-;{actionRow:Join Activity,2,5,$replaceText[$getObjectProperty[invite];:;#COLON#]}:$messageID:no:yes]
+;{actionRow:Join Activity,2,5,$replaceText[$getObjectProperty[invite];:;#COLON#]}
+;$messageID:false;no]
 
-$let[title-enUS;${emojis.success} Here you go!]
-$let[description-enUS;Click on the button below to join the YouTube Together activity right on Discord.]
+$let[title-enUS;${emojis.success} You're all set!]
+$let[description-enUS;Click on the button below to join the YouTube Together Discord activity.]
 
 $djsEval[
 const { DiscordTogether } = require('discord-together');

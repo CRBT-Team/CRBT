@@ -18,6 +18,10 @@ module.exports.variables = {
     city: "", //last city entered in ()weather
     r34Query: "", //last query for ()rule34
     hourly_streak: 0,
+    temp: "", //these vars can be used for anything
+    temp1: "", 
+    temp2: "",
+    temp3: "",
 //  reminders: "",
     list1: "",list2: "",list3: "",
     list4: "",list5: "",list6: "",
