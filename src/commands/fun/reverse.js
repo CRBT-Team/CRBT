@@ -10,72 +10,74 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
     $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
 
-        $deletecommand
-        
-        $djsEval[
-        const webhook_id = "$getChannelVar[webhook_id]";
-        const webhook_token = "$getChannelVar[webhook_token]";
-        const { Webhook } = require('discord-webhook-node')
-        const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token)
+    $deletecommand
 
-        let nick = "$get[nick]"
-        const revNick = nick.trim().split("").reverse().join("")
+    $djsEval[
+    const webhook_id = "$getChannelVar[webhook_id]"
+    const webhook_token = "$getChannelVar[webhook_token]"
+    const { Webhook } = require('discord-webhook-node');
+    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
 
-        hook.setUsername(revNick);
-        hook.setAvatar('$authorAvatar');
+    let nick = "$get[nick]"
+    const revNick = nick.trim().split("").reverse().join("")
 
-        let random = Math.random().toString(36).substr(2, 5);
-        let str = "$get[message] a" + random;
-        str2 = str.replaceAll(" a" + random, '')
+    hook.setUsername(revNick);
+    hook.setAvatar('$authorAvatar');
 
-        const { Util } = require("discord.js");
-        
-        let clean1 = Util.cleanContent(str2, message);
+    let random = Math.random().toString(36).substr(2, 5);
+    let str = "$get[message] a" + random;
+    str2 = str.replaceAll(" a" + random, '')
 
-        let content = clean1
-        const pog = content.trim().split("").reverse().join("")
-        
-        let clean2 = Util.cleanContent(pog, message);
+    const { Util } = require("discord.js");
+    
+    let clean1 = Util.cleanContent(str2, message);
 
-        hook.send(clean2);
-        ]
+    let content = clean1
+    const pog = content.trim().split("").reverse().join("")
+    
+    let clean2 = Util.cleanContent(pog, message);
 
-        $setChannelVar[webhook_id;$splitText[1]]
-        $setChannelVar[webhook_token;$splitText[2]]
+    hook.send(clean2);
+    ]
 
-        $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
+    $wait[200ms]
+
+    $setChannelVar[webhook_id;$splitText[1]]
+    $setChannelVar[webhook_token;$splitText[2]]
+
+    $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
 
     $else
-        
-        $deletecommand
-            
-        $djsEval[
-        const webhook_id = "$getChannelVar[webhook_id]"
-        const webhook_token = "$getChannelVar[webhook_token]"
-        const { Webhook } = require('discord-webhook-node');
-        const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
 
-        let nick = "$get[nick]"
-        const revNick = nick.trim().split("").reverse().join("")
+    $deletecommand
 
-        hook.setUsername(revNick);
-        hook.setAvatar('$authorAvatar');
+    $djsEval[
+    const webhook_id = "$getChannelVar[webhook_id]"
+    const webhook_token = "$getChannelVar[webhook_token]"
+    const { Webhook } = require('discord-webhook-node');
+    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
 
-        let random = Math.random().toString(36).substr(2, 5);
-        let str = "$get[message] a" + random;
-        str2 = str.replaceAll(" a" + random, '')
+    let nick = "$get[nick]"
+    const revNick = nick.trim().split("").reverse().join("")
 
-        const { Util } = require("discord.js");
-        
-        let clean1 = Util.cleanContent(str2, message);
+    hook.setUsername(revNick);
+    hook.setAvatar('$authorAvatar');
 
-        let content = clean1
-        const pog = content.trim().split("").reverse().join("")
-        
-        let clean2 = Util.cleanContent(pog, message);
+    let random = Math.random().toString(36).substr(2, 5);
+    let str = "$get[message] a" + random;
+    str2 = str.replaceAll(" a" + random, '')
 
-        hook.send(clean2);
-        ]
+    const { Util } = require("discord.js");
+    
+    let clean1 = Util.cleanContent(str2, message);
+
+    let content = clean1
+    const pog = content.trim().split("").reverse().join("")
+    
+    let clean2 = Util.cleanContent(pog, message);
+
+    hook.send(clean2);
+    ]
 
     $endif
 

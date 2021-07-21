@@ -1,19 +1,18 @@
-const { emojis, colors, illustrations } = require("../../../index");
+const { colors, emojis, tokens, illustrations } = require("../../../index");
 
 module.exports.command = {
-    name: "shuffle",
+    name: "restart",
+    description_enUS: "Replays the currently playing song from the start.",
     module: "music",
-    aliases: ["sh"],
-    description_enUS: "Shuffles the queue.",
     code: `
-$shuffleQueue
+$seekTo[0]
 
 $reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.shuffle}}
+{author:Restarted song:${illustrations.music.rewind}}
 {color:${colors.success}}
 ;no]
 
-$let[title-enUS;Shuffled queue!]
+$onlyIf[$voiceID==$voiceID[$clientID];{execute:samevoice}]
 
 $argsCheck[0;{execute:args}]
 $onlyIf[$getServerVar[music_channel]==$channelID;{execute:wrongChannel}]

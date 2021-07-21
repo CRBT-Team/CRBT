@@ -1,12 +1,12 @@
 const { emojis, colors, illustrations } = require("../../../index");
 
 module.exports.command = {
-    name: "shuffle",
+    name: "loop",
     module: "music",
     aliases: ["sh"],
-    description_enUS: "Shuffles the queue.",
+    description_enUS: "wip.",
     code: `
-$shuffleQueue
+$loopQueue
 
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.shuffle}}

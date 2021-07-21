@@ -1,5 +1,3 @@
-const e = "\\"
-
 module.exports.command = {
     name: "shout",
     module: "fun",
@@ -9,6 +7,8 @@ module.exports.command = {
     botPerms: ["managewebhooks"],
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
+
+    $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
 
     $deletecommand
     
@@ -31,12 +31,35 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     hook.send("**" + clean.toUpperCase() + "!!!**");
     ]
 
-    $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
+    $wait[200ms]
 
-        $setChannelVar[webhook_id;$splitText[1]]
-        $setChannelVar[webhook_token;$splitText[2]]
+    $setChannelVar[webhook_id;$splitText[1]]
+    $setChannelVar[webhook_token;$splitText[2]]
 
-        $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
+    $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
+
+    $else
+    
+    $deletecommand
+    
+    $djsEval[
+    const webhook_id = "$getChannelVar[webhook_id]"
+    const webhook_token = "$getChannelVar[webhook_token]"
+    const { Webhook } = require('discord-webhook-node');
+    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+
+    hook.setUsername('$nickname'.toUpperCase());
+    hook.setAvatar('$authorAvatar');
+    
+    let random = Math.random().toString(36).substr(2, 5);
+    let str = "$get[message] a" + random;
+    str2 = str.replaceAll(" a" + random, '')
+
+    const { Util } = require("discord.js");
+    let clean = Util.cleanContent(str2, message);
+
+    hook.send("**" + clean.toUpperCase() + "!!!**");
+    ]
 
     $endif
 

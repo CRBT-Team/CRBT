@@ -8,6 +8,31 @@ module.exports.command = {
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
+    $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
+
+    $deletecommand
+    
+    $djsEval[
+    const webhook_id = "$getChannelVar[webhook_id]"
+    const webhook_token = "$getChannelVar[webhook_token]"
+    const { Webhook } = require('discord-webhook-node');
+    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+
+    hook.setUsername('$nickname');
+    hook.setAvatar('$authorAvatar');
+        
+    hook.send("$get[message]");
+    ]
+
+    $wait[200ms]
+
+    $setChannelVar[webhook_id;$splitText[1]]
+    $setChannelVar[webhook_token;$splitText[2]]
+    
+    $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
+    
+    $else
+    
     $deletecommand
     
     $djsEval[
@@ -21,13 +46,6 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     
     hook.send("$get[message]");
     ]
-
-    $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
-
-        $setChannelVar[webhook_id;$splitText[1]]
-        $setChannelVar[webhook_token;$splitText[2]]
-
-        $textSplit[$createWebhook[$channelID;CRBT Webhook;;yes;###];###]
 
     $endif
 

@@ -9,13 +9,13 @@ $reply[$messageID;
 {author:QR-code scan - Results}
 
 {field:Parsed text:
-$getObjectProperty[[0].symbol[0].data]
+$getObjectProperty[req[0].symbol[0].data]
 :yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$createObject[$jsonRequest[http://api.qrserver.com/v1/read-qr-code/?fileurl=$get[message]]]
+$createObject[{"req":$jsonRequest[http://api.qrserver.com/v1/read-qr-code/?fileurl=$get[message]]}]
 
 $onlyIf[$get[message]!=;{execute:args}]
 
