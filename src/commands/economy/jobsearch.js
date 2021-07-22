@@ -56,7 +56,7 @@ $else
     $let[random2;$splitText[2]]
     $let[random1;$splitText[1]]
 
-    $textSplit[$getGlobalUserVar[job_propositions]; ]
+    $textSplit[$replaceText[$replaceText[1 $getGlobalUserVar[job_propositions] 2;1  ;];  2;]; ]
 
 $endif
 
@@ -90,9 +90,7 @@ $let[illustrator-description;Sell your art to the world and explore the wonders 
 **Salary:**\nVery Low to Midly High
 **Cooldown:**\nMedium (stable)]
 
-$let[developer-description;\`\`\`html
-<h1>Use your coding skills to create amazing projects and become a worldwide-known developer</h1>
-\`\`\`
+$let[developer-description;Use your skills to create cool projects and become a renown developer!
 
 **Salary:**\nVery Low to Midly High
 **Cooldown:**\nVery Low to High]

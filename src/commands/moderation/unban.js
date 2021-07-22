@@ -1,54 +1,74 @@
-const { colors } = require("../../../index");
-const { emojis } = require("../../../index");
+const {colors,emojis,links} = require("../../../index");
 
 module.exports.command = {
     name: "unban",
     module: "moderation",
-    description_enUS: "Unbans a user that was banned before.",
-    usage_enUS: "<user ID | @mention>",
+    description_enUS: "Unbans a banned user from the server.",
+    usage_enUS: "<user ID>",
     userPerms: "ban",
     botPerms: "ban",
     code: `
-$reply[$messageID;
-{title:${emojis.sucess} Successfully unbanned $username[$message[1]].} 
+$unban[$get[id]]
+
+$sendDM[$get[id];
+{title:${emojis.information} You've got mail!}
+{description:
+This message was delivered by a moderator of $serverName.
+$username[$clientID] is not affiliated with this message, by this moderator and this server.
+Learn more about CRBT messages **[here](${links.info.messages})**.
+}
+
+{field:Subject:
+Unbanned from **$serverName** ($guildID)
+:no}
+
+{footer:You can't reply back to a CRBT message}
+
 {color:${colors.green}}
-;no]
-$setUserVar[strikelog;$getUserVar[strikelog;$message[1]], **(UNBAN)** $formatDate[$dateStamp;YYYY]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;MM]]==1];true;0$formatDate[$dateStamp;MM]];false;$formatDate[$dateStamp;MM]]-$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;DD]]==1];true;0$formatDate[$dateStamp;DD]];false;$formatDate[$dateStamp;DD]] at $replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;HH]]==1];true;0$formatDate[$dateStamp;HH]];false;$formatDate[$dateStamp;HH]]:$replaceText[$replaceText[$checkCondition[$charCount[$formatDate[$dateStamp;mm]]==1];true;0$formatDate[$dateStamp;mm]];false;$formatDate[$dateStamp;mm]] (GMT);$message[1]]
-$unban[$message[1]]
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];None;$channelID];
-{author:Ban - $userTag[$message[1]]:$userAvatar[$message[1]]}
-{field:User:
-<@$message[1]>
-:yes}
-{field:Moderator:
-<@$authorID>
-:yes}
-{field:Strike count:
-$replaceText[$getUserVar[strike_count;$message[1]] strikes;1 strikes;1 strike]
-:yes}
-{color:${colors.red}}
 ]
-$cooldown[$commandInfo[$commandName;cooldown];{title:${emojis.error} $getVar[error_cooldown]} {color:${colors.red}}]
 
-$onlyIf[$message[1]!=$authorID;{title:${emojis.error} You can't unban yourself!} {footer:(wait what?)} {color:${colors.red}}]
+$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
 
-$onlyIf[$message[1]!=;{execute:error_incorrectargs}]
+{author:$userTag[$get[id]] - Unban:$userAvatar[$get[id]]}
+{field:User:
+<@!$get[id]>
+:yes}
 
-$onlyIf[$rolePosition[$highestRole[$message[1]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't unban someone that's as high as you in the role hierachy!} {color:${colors.red}}]
+{field:Moderator:
+<@!$authorID>
+:yes}
 
-$onlyIf[$rolePosition[$highestRole[$message[1]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.error} I can't unban someone higher than me in the role hierachy!} {color:${colors.red}}]
+{field:Strike count:
+$math[$getTextSplitLength-1] $replaceText[$replaceText[$checkCondition[$math[$getTextSplitLength-1]==1];true;strike];false;strikes]
+$textSplit[$getUserVar[strikes;$get[id]];|]
+:yes}
 
-$onlyIf[$rolePosition[$highestRole[$message[1]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't unban someone higher than you in the role hierachy!} {color:${colors.red}}]
+{color:${colors.green}}
+]
 
-$onlyIf[$isBanned[$message[1]]==true;{title:${emojis.error} This user isn't banned from this server.} {color:${colors.red}}]
+$reply[$messageID;
+{title:${emojis.success} Successfully unbanned \`$get[id]\`.} 
+{color:${colors.success}}
+;no]
 
-$onlyPerms[ban;{title:${emojis.error} You need to be able to ban users first!} {color:${colors.red}}]
+$if[$authorID!=$ownerID]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$endif
+$onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
+$onlyIf[$isBanned[$get[id]]==true;{execute:modAlready}]
+$onlyBotPerms[ban;{execute:botPerms}]
+$onlyPerms[ban;{execute:userPerms}]
+$onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
-$onlyBotPerms[ban;{title:${emojis.error} I need the permission to ban users first!} {color:${colors.red}}]
+$let[id;$message[1]]
 
-$argsCheck[>1;{execute:args}]
+$argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$guildID!=]$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]$endif
+$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
+$onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}

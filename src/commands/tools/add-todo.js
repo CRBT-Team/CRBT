@@ -26,15 +26,7 @@ $onlyIf[$get[item]!=;]
 
 $let[newlist;$replaceText[$getGlobalUserVar[todolist];\n-;\n•]]
 
-$let[item;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
-$message
-;*;]
-;\`;]
-;•;]
-;_;]
-;#RIGHT#;]
-;#LEFT#;]
-;\n;]]
+$let[item;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;*;];\`;];_;];#RIGHT#;];#LEFT#;]]
 
 $onlyIf[$message!=;]
 

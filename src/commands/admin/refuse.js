@@ -17,8 +17,8 @@ $sendDM[$splitText[2];
 Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 {field:Subject:
-$replaceText[$toLocaleUppercase[$get[title]];Bug Report;Report] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" refused.
+Your $replaceText[$replaceText[$get[title];Bug report;reported bug];Suggestion;suggestion] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
+;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was refused.
 :no}
 {field:Message from $userTag:
 $messageSlice[1]
