@@ -1,13 +1,13 @@
 const { emojis, tokens } = require("../../../index");
 
 module.exports.command = {
-    name: "hentai",
-    aliases: ["hnt"],
-    description_enUS: "Gives a random hentai image.",
+    name: "porn",
+    aliases: ["irl"],
+    description_enUS: "Gives a random pornographic image.",
     module: "nsfw",
     code: `
 $reply[$messageID;
-{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/hentai;url];$jsonRequest[https://api.avux.ga/hentai;;;X-API-Key:${tokens.avux}]]}
+{image:$jsonRequest[https://api.avux.ga/pgif;;;X-API-Key:${tokens.avux}]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
@@ -18,3 +18,5 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+
+// $reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]

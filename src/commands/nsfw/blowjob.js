@@ -7,7 +7,7 @@ module.exports.command = {
     module: "nsfw",
     code: `
 $reply[$messageID;
-{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/blowjob;url];$jsonRequest[https://api.avux.ga/blowjob?key=${tokens.avux};text]]}
+{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/blowjob;url];$jsonRequest[https://api.avux.ga/blowjob;;;X-API-Key:${tokens.avux}]]}
 {color:$getGlobalUserVar[color]}
 ;no]
 

@@ -23,10 +23,14 @@ module.exports.variables = {
     temp2: "",
     temp3: "",
 //  reminders: "",
-    list1: "",list2: "",list3: "",
-    list4: "",list5: "",list6: "",
-    list7: "",list8: "",list9: "",
-    list10: "",
+
+//for now we're using the old to-do lists since we ain't got time
+    todolist: "",
+
+//  list1: "",list2: "",list3: "",
+//  list4: "",list5: "",list6: "",
+//  list7: "",list8: "",list9: "",
+//  list10: "",
 
 
 //economy

@@ -1,4 +1,4 @@
-const { emojis, illustrations } = require("../../../index");
+const { emojis, illustrations, colors } = require("../../../index");
 
 module.exports.command = {
     name: "skip",
@@ -14,10 +14,7 @@ $skipSong
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.skip}}
 
-    {description:
-    $get[desc-$getGlobalUserVar[language]] [$songInfo[title]]($songInfo[url])
-    }
-    {color:$getGlobalUserVar[color]}
+    {color:${colors.success}}
     ;no]
 
 $else
@@ -31,7 +28,7 @@ $skipTo[$message[1]]
     $get[desc2-$getGlobalUserVar[language]] [$queue[$math[$message+1];1;{title}]]($queue[$math[$message+1];1;{url}])
     }
 
-    {color:$getGlobalUserVar[color]}
+    {color:${colors.success}}
     ;no]
 
 $onlyIf[$message<=$queueLength;{execute:unknownSong}]
@@ -41,7 +38,6 @@ $onlyIf[$isNumber[$message]==true;{execute:args}]
 $endif
 
 $let[desc2-enUS;Skipped to song #$message:]
-$let[desc-enUS;Skipped]
 $let[title-enUS;Skipped song]
 
 $argsCheck[<1;{execute:args}]
@@ -70,7 +66,7 @@ $onlyIf[$channelType!=dm;{execute:guildOnly}]
         $get[desc-$getGlobalUserVar[language]] [$songInfo[title]]($songInfo[url])
         }
 
-        {color:$getGlobalUserVar[color]}
+        {color:${colors.success}}
         ;no]
 
         $reply[$messageID;
@@ -80,7 +76,7 @@ $onlyIf[$channelType!=dm;{execute:guildOnly}]
         $get[desc3-$getGlobalUserVar[language]]
         }
 
-        {color:$getGlobalUserVar[color]}
+        {color:${colors.success}}
         ;no]
 
         $let[desc3-enUS;$replaceText[$replaceText[ $getServerVar[skip_users];  ;]; ;, ] want$replaceText[$replaceText[$checkCondition[$math[$round[$math[($getTextSplitLength-1)/2]]-$getServerVar[skip_votes]]==1];true;];false;s] to skip this song. Only $math[$round[$math[($getTextSplitLength-1)/2]]-($getServerVar[skip_votes]-1)] vote$replaceText[$replaceText[$checkCondition[$math[$round[$math[($getTextSplitLength-1)/2]]-($getServerVar[skip_votes]-1)]==1];true;];false;s] left to skip! Type \`$getServerVar[prefix]skip\` to skip-vote.]
