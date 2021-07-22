@@ -63,13 +63,15 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't mute someone that's as high as you in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.error} I can't mute someone higher than me in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't mute someone higher than you in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
-$onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
-$onlyIf[$hasRole[$get[id];$getServerVar[muted_role]]==false;{title:${emojis.error} This user is already muted!} {color:${colors.red}}]
-$onlyIf[$getServerVar[muted_role]!=none;{title:${emojis.error} No muted role to give was set!} {description:Use \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage]\` to change it.} {color:${colors.red}}]
+$if[$authorID!=$ownerID]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$endif
+$onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
+$onlyIf[$hasRole[$get[id];$getServerVar[muted_role]]==false;{execute:modAlready}]
+$onlyIf[$getServerVar[muted_role]!=none;{execute:noMutedRole}]
 $onlyBotPerms[manageroles;{execute:botPerms}]
 $onlyPerms[manageroles;{execute:userPerms}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]

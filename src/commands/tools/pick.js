@@ -6,18 +6,18 @@ module.exports.command = {
     usage_enUS: "<values (seperated by commas and/or newlines) (2 minimum)>",
     code: `
 $reply[$messageID;
-{title:$get[title-$getGlobalUserVar[language]]}
+{title:"$get[random]" was picked from $getTextSplitLength options.}
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;__$get[random]__ was picked from the $getTextSplitLength options!]
 $let[random;$randomText[$joinSplitText[;]]]
 
 $onlyIf[$getTextSplitLength>=2;{execute:args}]
 
-$textSplit[$get[text];$get[key]]
+$textSplit[$get[options];$get[key]]
 
-$let[text;$replaceText[$replaceText[$replaceText[$message;\n;,];, ;,];,;$get[key]]]
+$let[options;$replaceText[$replaceText[$replaceText[$message;\n;, ];, ;,];,;$get[key]]]
+
 $let[key;$randomString[10]]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

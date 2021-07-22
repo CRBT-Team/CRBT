@@ -1,7 +1,7 @@
 const { colors, emojis } = require("../../../index");
 
 module.exports.awaitedCommand = {
-    name: "cantStrike",
+    name: "modCantStrike",
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}

@@ -7,12 +7,12 @@ module.exports.command = {
     description_enUS: "Retrieves 10 songs per page of the current music queue.",
     usage_enUS: "<queue page>",
     code: `
-$if[$message==]
+$if[$checkContains[$checkCondition[$message==]$checkCondition[$message==1];true]==true]
 
 $reply[$messageID;
-{author:Queue - Page 1 ($queueLength songs):${illustrations.music.queue}}
+{author:Queue - Page 1 ($queueLength song$replaceText[$replaceText[$checkCondition[$queueLength==1];true;s];false;]):${illustrations.music.queue}}
 {description:
-**Now playing:**
+$replaceText[**Now playing:**
 [$songInfo[title]]($songInfo[url])
 Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[$songInfo[duration]; Seconds;s] | Added by <@!$songInfo[userID]>
 —
@@ -20,6 +20,7 @@ $replaceText[$replaceText[$queue[1;11;{number}. [{title}](<{url}>)
 Uploaded by [{publisher}]({publisher_url}) | {duration} | Added by <@!{userID}>
 —]; Seconds;s] a;— a;]
 $replaceText[$replaceText[$checkCondition[$queueLength>12];true;and $math[$queueLength-10] more... (\`$getServerVar[prefix]queue 2\`)];false;]
+;—\n a;]
 }
 {color:$getGlobalUserVar[color]}
 ;no]
@@ -53,3 +54,16 @@ $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
     `}
+
+/*
+
+$apiMessage[;
+
+{actionRow:$get[prev]:$get[next]}
+]
+
+$let[next;,2,1,queue3,next|867080274194071582|false,false]
+
+$let[prev;,2,1,queue2,previous|867080071637106699|false,true]
+
+*/

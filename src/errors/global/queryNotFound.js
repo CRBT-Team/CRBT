@@ -42,6 +42,9 @@ $let[npm-2-enUS;If it was recently added, it may not be there yet. Be sure to ch
 $let[pokedex-1-enUS;${emojis.error} Who's that Pokémon?]
 $let[pokedex-2-enUS;Couldn't find his Pokémon. Make sure to check your spelling or this beautiful [web Pokédex](https://www.pokemon.com/us/pokedex/) for all Pokémon.]
 
+$let[rule34-1-enUS;${emojis.error} Nope that doesn't exist.]
+$let[rule34-2-enUS;We couldn't find this tags combination on Rule34.xxx... Make sure to seperate tags with a comma (e.g. \`breasts, panties\`) and to check your spelling.]
+
 $let[urbandictionary-1-enUS;${emojis.error} Couldn't find this word...]
 $let[urbandictionary-2-enUS;Nobody has defined this word on Urban Dictionary yet.]
 

@@ -59,11 +59,13 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't mute someone that's as high as you in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.error} I can't mute someone higher than me in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't mute someone higher than you in the role hierachy!} {color:${colors.red}}]
-$onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
-$onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
+$if[$authorID!=$ownerID]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$endif
+$onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
 $onlyIf[$checkContains[$hasPerms[$authorID;managemessages]$hasPerms[$authorID;manageserver]$checkContains[$toLowercase[$userRoles];crbt mod];true]==true;{execute:mods}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 

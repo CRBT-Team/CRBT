@@ -22,7 +22,7 @@ $replaceText[$get[newlist];
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$checkContains[$replaceText[$get[newlist];\n; ];• $get[item] ]==true;{execute:todoInvalidItem}]
+$onlyIf[$checkContains[$get[newlist]\n;• $get[item]\n]==true;{execute:todoInvalidItem}]
 
 $let[newlist;$replaceText[$getGlobalUserVar[todolist];\n-;\n•]]
 

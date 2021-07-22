@@ -62,11 +62,12 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't kick someone that's as high as you in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{title:${emojis.error} I can't kick someone higher than me in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{title:${emojis.error} You can't kick someone higher than you in the role hierachy!} {color:${colors.error}}]
-$onlyIf[$get[id]!=$ownerID;{execute:cantStrike}]
-$onlyIf[$get[id]!=$authorID;{execute:cantStrike}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
+$onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modAlready}]
 $onlyBotPerms[kick;{execute:botPerms}]
 $onlyPerms[kick;{execute:userPerms}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]

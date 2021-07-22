@@ -16,7 +16,7 @@ $let[current2;$replaceText[$replaceText[$splitText[3];(;];);]$textSplit[$songInf
 
 $wait[1s]
 
-$seekTo[$get[s]]
+$seekTo[$replaceText[$replaceText[$checkCondition[$get[s]==s];true;0s];false;$get[s]]]
 
 $let[icon;$replaceText[$replaceText[$checkCondition[$getObjectProperty[ms2]<$getObjectProperty[ms]];true;${illustrations.music.seek_right}];false;${illustrations.music.seek_left}]
 

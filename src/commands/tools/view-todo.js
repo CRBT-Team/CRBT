@@ -10,15 +10,15 @@ $reply[$messageID;
 {author:$userTag - To-Do list:$authorAvatar}
 
 {description:
-Remove any item from your To-Do list with \`$getServerVar[prefix]checktodo <item>\`.
-Add an item to your list by using \`$getServerVar[prefix]todo <new item>\`.
-Clear your entire To-Do list with the \`$getServerVar[prefix]cleartodo\` command.
-}
-
-{description:
 \`\`\`
 $get[newlist]
 \`\`\`
+}
+
+{field:Tips:
+Remove any item from your To-Do list with \`$getServerVar[prefix]checktodo <item>\`.
+Add an item to your list by using \`$getServerVar[prefix]todo <new item>\`.
+Clear your entire To-Do list with the \`$getServerVar[prefix]cleartodo\` command.
 }
 
 {color:$getGlobalUserVar[color]}

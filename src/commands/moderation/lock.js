@@ -25,7 +25,7 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 :yes}
 
 {field:Reason:
-$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
+$replaceText[$replaceText[$checkCondition[$message==];true;Unspecified];false;$replaceText[$message;|;]]
 :no}
 
 {color:${colors.orange}}
