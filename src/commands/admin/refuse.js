@@ -18,7 +18,7 @@ Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 {field:Subject:
 Your $replaceText[$replaceText[$get[title];Bug report;reported bug];Suggestion;suggestion] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was refused.
+;];50]$replaceText[$replaceText[$checkCondition[$charCount[$get[reportmessage]]>50];true;...];false;]](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was refused.
 :no}
 {field:Message from $userTag:
 $messageSlice[1]
@@ -41,6 +41,10 @@ $messageSlice[1]
 {footer:$get[footer]}
 {color:${colors.error}}
 ;$get[channel]]
+
+$let[reportmessage;$replaceText[$splitText[2];\`;]]
+
+$textSplit[$get[description];\`\`\`]
 
 $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]

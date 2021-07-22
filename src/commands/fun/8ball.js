@@ -7,7 +7,7 @@ module.exports.command = {
     description_enUS: "Askes your question to 8-Ball and gives you its honest answer.",
     usage_enUS: "<question>",
     code: `
-$editMessage[$botLastMessageID;
+$editMessage[$get[id];
 {author:$get[title-$getGlobalUserVar[language]]:${illustrations.eightball}}
 $if[$checkContains[$toLowercase[$message];who]==true]
 
@@ -32,6 +32,8 @@ $endif
 ;$channelID]
 
 $wait[500ms]
+
+$let[id;$botLastMessageID]
 
 $reply[$messageID;
 {title:$get[progress-$getGlobalUserVar[language]]}

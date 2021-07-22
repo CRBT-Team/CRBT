@@ -2,11 +2,11 @@ const { emojis, logos } = require("../../../index");
 
 module.exports.command = {
     name: "help",
-    description_enUS: "eeeeeeeeeeee",
-    usage_enUS: "<command name | page number (optional)>",
+    description_enUS: "Returns a list of all avaiable modules or information on a specified module or command",
+    usage_enUS: "<command name | module name (optional)>",
     examples_enUS: [
         "help",
-        "cmds 1",
+        "cmds music",
         "command help"
     ],
     module: "misc",
@@ -14,102 +14,24 @@ module.exports.command = {
     code: `
 $if[$checkContains[$checkCondition[$message==]$checkCondition[$message==1];true]==true]
 
-    $if[$channelType!=dm] 
-    $reactionCollector[$botLastMessageID;$authorID;15m;1️⃣,2️⃣,3️⃣,4️⃣,5️⃣;hp1,hp2,hp3,hp4,hp5;yes] 
-    $endif
-
 $reply[$messageID;
-{author:$username[$clientID] - Help (Page 1):$userAvatar[$clientID;64]}
-{description:$get[desc-$getGlobalUserVar[language]]}
-
-{field:$get[basic-$getGlobalUserVar[language]]:yes}
-
-{field:$get[tools-$getGlobalUserVar[language]]:yes}
-
+{author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
+{description:$get[desc-$getGlobalUserVar[language]]
+$get[modules-$getGlobalUserVar[language]]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
 
-$elseIf[$message==2]
-
-    $if[$channelType!=dm] 
-    $reactionCollector[$botLastMessageID;$authorID;15m;1️⃣,2️⃣,3️⃣,4️⃣,5️⃣;hp1,hp2,hp3,hp4,hp5;yes] 
-    $endif
+$elseIf[$checkCondition[$toLowercase[$message];autoreact;basic;economy;fun;info;moderation;music;tools;settings]==true]
 
 $reply[$messageID;
-{author:$username[$clientID] - Help (Page 2):$userAvatar[$clientID;64]}
+{author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
 {description:$get[desc-$getGlobalUserVar[language]]}
 
-{field:$get[info-$getGlobalUserVar[language]]:yes}
-
-{field:$get[economy-$getGlobalUserVar[language]]:yes}
+{field:$get[$toLowercase[$message]-$getGlobalUserVar[language]]:yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
-
-
-$endelseIf
-$elseIf[$message==3]
-
-    $if[$channelType!=dm] 
-    $reactionCollector[$botLastMessageID;$authorID;15m;1️⃣,2️⃣,3️⃣,4️⃣,5️⃣;hp1,hp2,hp3,hp4,hp5;yes] 
-    $endif
-
-$reply[$messageID;
-{author:$username[$clientID] - Help (Page 3):$userAvatar[$clientID;64]}
-{description:$get[desc-$getGlobalUserVar[language]]}
-
-{field:$get[music-$getGlobalUserVar[language]]:yes}
-
-{field:$get[fun-$getGlobalUserVar[language]]:yes}
-
-{color:$getGlobalUserVar[color]}
-;no]
-
-
-$endelseIf
-$elseIf[$message==4]
-
-    $if[$channelType!=dm] 
-    $reactionCollector[$botLastMessageID;$authorID;15m;1️⃣,2️⃣,3️⃣,4️⃣,5️⃣;hp1,hp2,hp3,hp4,hp5;yes] 
-    $endif
-
-$reply[$messageID;
-{author:$username[$clientID] - Help (Page 4):$userAvatar[$clientID;64]}
-{description:$get[desc-$getGlobalUserVar[language]]}
-
-{field:$get[moderation-$getGlobalUserVar[language]]:yes}
-
-{field:$get[settings-$hasPerms[$authorID;manageserver]-$getGlobalUserVar[language]]:yes}
-
-{color:$getGlobalUserVar[color]}
-;no]
-
-
-$endelseIf
-$elseIf[$message==5]
-
-    $if[$channelType!=dm] 
-    $reactionCollector[$botLastMessageID;$authorID;15m;1️⃣,2️⃣,3️⃣,4️⃣,5️⃣;hp1,hp2,hp3,hp4,hp5;yes] 
-    $endif
-
-$reply[$messageID;
-{author:$username[$clientID] - Help (Page 5):$userAvatar[$clientID;64]}
-{description:$get[desc-$getGlobalUserVar[language]]}
-
-{field:$get[nsfw-$getGlobalUserVar[language]]:yes}
-
-{color:$getGlobalUserVar[color]}
-;no]
-
-
-$endelseIf
-$elseIf[$checkContains[$message;basic;misc;moderation;music;mod;nsfw;settings;tools;info;fun;economy;profiles]==true]
-
-$reply[$messageID;
-
-;no]
-
 
 $endelseIf
 $else
@@ -333,11 +255,17 @@ $commandInfo[nowplaying;description_enUS]
 • \`$getServerVar[prefix]stop\`
 Disconnects $username[$clientID] from its voice channels and clears the queue.||]
 
-$let[desc-enUS;If you need extra information on any command, you can simply use \`$getServerVar[prefix]help\` followed by the command name.
-Not all commands are displayed in this menu, but rather the most important ones!]
+$let[desc-enUS;If you need extra information on any command, you can simply use \`$getServerVar[prefix]help\` followed by the command name.]
 
-
-
-
-
+$let[modules-enUS;
+$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react: \`$getServerVar[prefix]help autoreact\`
+${emojis.forcedon} Basic: \`$getServerVar[prefix]help basic\`
+$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles: \`$getServerVar[prefix]help economy\`
+$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun: \`$getServerVar[prefix]help fun\`
+$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info: \`$getServerVar[prefix]help info\`
+$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation: \`$getServerVar[prefix]help moderation\`
+$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music: \`$getServerVar[prefix]help music\`
+${emojis.forcedon} Settings: \`$getServerVar[prefix]help settings\`
+$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools: \`$getServerVar[prefix]help tools\`
+]
     `}

@@ -18,7 +18,7 @@ Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 {field:Subject:
 $get[title] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])"
+;];50]$replaceText[$replaceText[$checkCondition[$charCount[$get[reportmessage]]>50];true;...];false;]](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])"
 :no}
 {field:Message from $userTag:
 $messageSlice[1]

@@ -18,7 +18,7 @@ Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 {field:Subject:
 Your $replaceText[$replaceText[$get[title];Bug report;reported bug];Suggestion;suggestion] "[$cropText[$replaceText[$replaceText[$get[reportmessage];\`;];
-;];50]...](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully $replaceText[$replaceText[$get[title];Bug report;fixed!];Suggestion;added to CRBT!].
+;];50]$replaceText[$replaceText[$checkCondition[$charCount[$get[reportmessage]]>50];true;...];false;]](https://discord.com/channels/738747595438030888/$get[channel]/$message[1])" was successfully $replaceText[$replaceText[$get[title];Bug report;fixed!];Suggestion;added to CRBT!].
 :no}
 {footer:You can't reply back to a CRBT message.}
 {color:${colors.success}}

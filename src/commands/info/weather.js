@@ -32,18 +32,26 @@ $let[cloud-enUS;Cloud coverage:$getObjectProperty[result.weather.cloudCoverage]]
 
 $let[pressure-enUS;Pressure:$getObjectProperty[result.weather.pressure.millibars] millibars]
 
-$let[image;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[result.weather.condition];Light rain;https://cdn.discordapp.com/attachments/843148633687588945/859115102467653642/unknown.png];Moderate rain;https://cdn.discordapp.com/attachments/843148633687588945/859115102467653642/unknown.png];Sunny;https://cdn.discordapp.com/attachments/843148633687588945/859115082479173703/unknown.png];Partly cloudy;https://cdn.discordapp.com/attachments/843148633687588945/859115092855881768/unknown.png];Moderate or heavy rain with thunder;https://cdn.discordapp.com/attachments/843148633687588945/859115112337768478/unknown.png]]
+$let[image;$replaceText[
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+$getObjectProperty[result.weather.condition]
+;Light rain;https://cdn.discordapp.com/attachments/843148633687588945/859115102467653642/unknown.png]
+;Moderate rain;https://cdn.discordapp.com/attachments/843148633687588945/859115102467653642/unknown.png]
+;Sunny;https://cdn.discordapp.com/attachments/843148633687588945/859115082479173703/unknown.png]
+;Partly cloudy;https://cdn.discordapp.com/attachments/843148633687588945/859115092855881768/unknown.png]
+;Moderate or heavy rain with thunder;https://cdn.discordapp.com/attachments/843148633687588945/859115112337768478/unknown.png]
+;Clear;https://cdn.discordapp.com/attachments/843148633687588945/859115082479173703/unknown.png]
+;\n;]]
 
 $if[$message!=]
     $setGlobalUserVar[city;$getObjectProperty[result.location.name], $getObjectProperty[result.location.country]]
     $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.betaApi}&location=$message;;{execute:queryNotFound}]]
+    $onlyIf[$charCount>1;{execute:queryNotFound}]
 $else
     $createObject[$jsonRequest[https://beta-api.tk/api/info/weather?authKey=${tokens.betaApi}&location=$getGlobalUserVar[city];;{execute:queryNotFound}]]
+    $onlyIf[$getGlobalUserVar[city]!=;{execute:queryNotFound}]
 $endif
 
-$onlyIf[$charCount>1;{execute:queryNotFound}]
-
-$argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

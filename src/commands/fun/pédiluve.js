@@ -4,7 +4,7 @@ module.exports.command = {
     description_enUS: "A random footbath image (secret command).",
     code: `
 $reply[$messageID;
-{image:$jsonRequest[http://localhost:${process.env.port}/pediluve;image]}
+{image:$jsonRequest[http://localhost:${process.env.port}/other/pediluve;image]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
