@@ -1,17 +1,14 @@
-const { colors, emojis, links } = require("../../../index");
+const {colors,emojis,links} = require("../../../index");
 
 module.exports.command = {
-    name: "ban",
+    name: "unmute",
     module: "moderation",
-    description_enUS: "Bans the user with a reason (if specified).",
-    usage_enUS: "<@mention | user ID> <reason (optional)>",
-    aliases: ['yeet','permaban'],
-    userPerms: "ban",
-    botPerms: "ban",
+    description_enUS: "Removes the muted role of a user.",
+    usage_enUS: "<@mention | user ID>",
+    userPerms: ["manageroles"],
+    botPerms: ["manageroles"],
     code: `
-$setUserVar[strikes;**Ban** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
-
-$ban[$get[id];$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]];0]
+$takeRoles[$get[id];$getServerVar[muted_role]]
 
 $sendDM[$get[id];
 {title:${emojis.information} You've got mail!}
@@ -22,21 +19,17 @@ Learn more about CRBT messages **[here](${links.info.messages})**.
 }
 
 {field:Subject:
-Banned from **$serverName** ($guildID)
-:no}
-
-{field:Reason from $userTag:
-$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
+Unmuted from **$serverName** ($guildID)
 :no}
 
 {footer:You can't reply back to a CRBT message}
 
-{color:${colors.red}}
+{color:${colors.green}}
 ]
 
 $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
 
-{author:$userTag[$get[id]] - Ban:$userAvatar[$get[id]]}
+{author:$userTag[$get[id]] - Unmute:$userAvatar[$get[id]]}
 {field:User:
 <@!$get[id]>
 :yes}
@@ -46,19 +39,15 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 :yes}
 
 {field:Strike count:
-$getTextSplitLength $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;strike];false;strikes]
+$math[$getTextSplitLength-1] $replaceText[$replaceText[$checkCondition[$math[$getTextSplitLength-1]==1];true;strike];false;strikes]
 $textSplit[$getUserVar[strikes;$get[id]];|]
 :yes}
 
-{field:Reason:
-$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]
-:no}
-
-{color:${colors.red}}
+{color:${colors.green}}
 ]
 
 $reply[$messageID;
-{title:${emojis.success} Successfully banned $userTag[$get[id]].} 
+{title:${emojis.success} Successfully unmuted $userTag[$get[id]].} 
 {color:${colors.success}}
 ;no]
 
@@ -69,14 +58,17 @@ $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$autho
 $endif
 $onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
-$onlyIf[$isBanned[$get[id]]==false;{execute:modAlready}]
-$onlyBotPerms[ban;{execute:botPerms}]
-$onlyPerms[ban;{execute:userPerms}]
+$onlyIf[$hasRole[$get[id];$getServerVar[muted_role]]==true;{execute:modAlready}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modAlready}]
+$onlyIf[$roleExists[$getServerVar[muted_role]]==true;{execute:noMutedRole}]
+$onlyIf[$getServerVar[muted_role]!=none;{execute:noMutedRole}]
+$onlyBotPerms[manageroles;{execute:botPerms}]
+$onlyPerms[manageroles;{execute:userPerms}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]
 
-$argsCheck[>1;{execute:args}]
+$argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

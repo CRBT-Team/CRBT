@@ -54,6 +54,7 @@ method: channel]
 
 $let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;*No subject was set*];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
 
+$onlyIf[$hasPermsInChannel[$mentionedChannels[1];$clientID;sendmessages]==true;{execute:reminderChannel}]
 $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$authorID;sendmessages]==true;{execute:reminderChannel}]
 $onlyIf[$mentionedChannels[1]!=$guild[$guildID;ruleschannel];{execute:reminderChannel}]
 $onlyIf[$mentionedChannels[1]!=$getServerVar[messagelogs_channel];{execute:reminderChannel}]

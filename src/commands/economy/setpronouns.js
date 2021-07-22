@@ -13,11 +13,11 @@ $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 
 {field:$get[previous-$getGlobalUserVar[language]]:
-$get[old]
+$replaceText[$get[old];Username;Use my username]
 :yes}
 
 {field:$get[new-$getGlobalUserVar[language]]:
-$get[new]
+$replaceText[$get[new];Username;Use my username]
 :yes}
 
 {color:${colors.success}}

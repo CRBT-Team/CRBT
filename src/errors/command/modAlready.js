@@ -10,5 +10,12 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.error} Woops!]
-$let[description-enUS;This user is already $getGlobalUserVar[lastCmd]ed.]
+$let[description-enUS;This user is already $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
+$getGlobalUserVar[lastCmd]F
+;banF;banned]
+;unbanF;not banned]
+;kickF;not on the server]
+;unmuteF;unmuted or not on the server]
+;muteF;muted or not on the server]
+;\n;].]
     `}

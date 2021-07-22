@@ -71,6 +71,8 @@ $endif
 $onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
 $onlyIf[$hasRole[$get[id];$getServerVar[muted_role]]==false;{execute:modAlready}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modAlready}]
+$onlyIf[$roleExists[$getServerVar[muted_role]]==true;{execute:noMutedRole}]
 $onlyIf[$getServerVar[muted_role]!=none;{execute:noMutedRole}]
 $onlyBotPerms[manageroles;{execute:botPerms}]
 $onlyPerms[manageroles;{execute:userPerms}]

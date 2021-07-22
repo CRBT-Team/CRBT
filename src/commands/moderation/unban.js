@@ -47,11 +47,11 @@ $textSplit[$getUserVar[strikes;$get[id]];|]
 ]
 
 $reply[$messageID;
-{title:${emojis.success} Successfully unbanned \`$get[id]\`.} 
+{title:${emojis.success} Successfully unbanned $userTag[$get[id]].} 
 {color:${colors.success}}
 ;no]
 
-$if[$authorID!=$ownerID]
+$if[$checkContains[$checkCondition[$authorID!=$ownerID]$checkCondition[$memberExists[$message[1]]==false];false]!=true]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]

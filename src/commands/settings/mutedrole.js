@@ -16,7 +16,9 @@ module.exports.command = {
     code: `
 $if[$message==]
 
-$setServerVar[muted_role;$findRole[Muted]]
+    $forEachGuildChannel[addMutedPerms]
+    $wait[250ms]
+    $setServerVar[muted_role;$findRole[Muted]]
 
 $reply[$messageID;
 {title:${emojis.success} Muted role created}
@@ -33,8 +35,9 @@ $replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];true;None
 {color:${colors.success}}
 ;no]
 
-    $forEachGuildChannel[addMutedPerms]
-    $createRole[Muted;${colors.red};no;yes]
+$wait[250ms]
+
+$createRole[Muted;${colors.red};no;yes]
 
 $onlyIf[$roleCount!=250;{execute:limitReached}]
 

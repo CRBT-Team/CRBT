@@ -24,7 +24,7 @@ module.exports.command = {
     ;no]
 
     $let[badges-enUS;Badges ($get[e])]
-    $let[pronouns-enUS;Pronouns:$get[profilePronouns]]
+    $let[pronouns-enUS;Pronouns:$replaceText[$get[profilePronouns];Username;Use my username]]
 
     $let[j;$replaceText[$replaceText[$checkCondition[$get[e]>5];false;yes];true;no]]
     $let[e;$math[$replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;0];true;$charCount[$replaceText[$replaceText[$findSpecialChars[$getGlobalUserVar[profile_badges;$get[id]]]; ;];>;]]]/12]]
@@ -33,7 +33,7 @@ $let[profilePronouns;$replaceText[$toLocaleUppercase[$getGlobalUserVar[profilePr
 $let[profileBadges;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges;$get[id]];<;];>;];badge france;${badges.france.contents}];badge udu;${badges.udu.contents}];badge russian;${badges.russia.contents}];badge russia;${badges.russia.contents}];badge french;${badges.france.contents}];badge usa;${badges.usa.contents}];badge brazil;${badges.brazil.contents}];badge poland;${badges.poland.contents}];badge goodmeal;${badges.goodmeal.contents}];badge dollidot;${badges.dollidot.contents}];badge developer;${badges.developer.contents}];badge partner;${badges.partner.contents}];badge purplet;${badges.purplet.contents}];badge dave;${badges.dave.contents}];badge doctor;${badges.doctor.contents}];badge musician;${badges.musician.contents}];badge illustrator;${badges.illustrator.contents}];badge flushed;${badges.flushed.contents}];badge joy;${badges.joy.contents}];badge smile;${badges.smile.contents}];badge thinking;${badges.thinking.contents}];badge winktongue;${badges.winktongue.contents}];badge starstruck;${badges.starstruck.contents}];badge pensive;${badges.pensive.contents}];badge wink;${badges.wink.contents}]]
 
 $let[profileName;$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_name;$get[id]];<user.name>;$username[$get[id]]];<user.id>;$get[id]];<user.tag>;$userTag[$get[id]]];<var.purplets>;$getGlobalUserVar[user_bank;$get[id]]]]
-$let[profileBio;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[bio];<user.name>;$username[$get[id]]];<user.id>;$get[id]];<user.tag>;$userTag[$get[id]]];<var.purplets>;$getGlobalUserVar[user_bank;$get[id]]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
+$let[profileBio;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[bio];<user.name>;$username[$get[id]]];<user.id>;$get[id]];<user.tag>;$userTag[$get[id]]];<var.purplets>;$getGlobalUserVar[user_bank;$get[id]]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$get[id];emoji];none;] $getCustomStatus[$get[id];state]; none;None]]]
 $let[bio;$replaceText[$getGlobalUserVar[profile_about;$get[id]];none;$get[noBio-$getGlobalUserVar[language]]]
 
 $let[noBio-enUS;$replaceText[$replaceText[$checkCondition[$get[id]==$authorID];true;You don't have a bio! You can change that with \`$getServerVar[prefix]setbio\`.];false;This user doesn't have a bio]

@@ -20,7 +20,7 @@ $getObjectProperty[translated.text]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$djsEval[const { languages } = require("../../../../../json/api.json");
+$djsEval[const { languages } = require("../../../../../data/api.json");
 d.object.lang = languages;]
 
 $onlyIf[$getObjectProperty[status]==200;{execute:args}]

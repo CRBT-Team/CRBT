@@ -39,6 +39,9 @@ $let[mcserver-2-enUS;Couldn't find this Minecraft Java Edition server! Make sure
 $let[npm-1-enUS;${emojis.error} Couldn't find this npm module.]
 $let[npm-2-enUS;If it was recently added, it may not be there yet. Be sure to check [npmjs.com](https://npmjs.com).]
 
+$let[ocr-1-enUS;${emojis.error} Couldn't find text in this image.]
+$let[ocr-2-enUS;Note that as of now $username[$clientID] only supports the latin alphabet and some other characters.\nIf possible, please provide a clearer image or a close up of the text you want to be parsed.]
+
 $let[pokedex-1-enUS;${emojis.error} Who's that Pokémon?]
 $let[pokedex-2-enUS;Couldn't find his Pokémon. Make sure to check your spelling or this beautiful [web Pokédex](https://www.pokemon.com/us/pokedex/) for all Pokémon.]
 
