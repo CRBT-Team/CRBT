@@ -29,7 +29,7 @@ $deleteGlobalUserVar[blocklisted;$get[id]]
 
 $onlyIf[$userExists[$get[id]]==true;{execute:usernotfound}]
 
-$let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!];<@];>]]
+$let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]
 
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}
