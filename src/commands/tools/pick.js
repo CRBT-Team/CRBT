@@ -3,7 +3,7 @@ module.exports.command = {
     module: "tools",
     aliases: ["decide", "random", "sack"],
     description_enUS: "Picks something from the given values at random.",
-    usage_enUS: "<values (seperated by commas and/or newlines) (2 minimum)>",
+    usage_enUS: "<values (separated by commas and/or newlines) (2 minimum)>",
     code: `
 $reply[$messageID;
 {title:"$get[random]" was picked from $getTextSplitLength options.}

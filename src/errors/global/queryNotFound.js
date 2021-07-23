@@ -15,6 +15,9 @@ $let[aoijs-2-enUS;...although you can still try to search through Aoi.js' docume
 $let[anime-1-enUS;${emojis.error} We couldn't get this one.]
 $let[anime-2-enUS;Try to use the japanese name of the anime or check your spelling. If the problem still persists, try to look this anime up directly on [kitsu.io](https://kitsu.io/).]
 
+$let[clearstrikes-1-enUS;${emojis.error} This user doesn't have any strikes...]
+$let[clearstrikes-2-enUS;And rightfully so! If you need help with CRBT's moderation commands, use \`$getServerVar[prefix]help moderation\`!]
+
 $let[define-1-enUS;${emojis.error} This word doesn't appear to exist...]
 $let[define-2-enUS;FYI: The Dictionary only accepts english words for now. If your word doesn't exist here, you can try to look it up with \`$getServerVar[prefix]urbandictionary\`.]
 

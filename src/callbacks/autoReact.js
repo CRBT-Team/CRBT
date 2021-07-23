@@ -17,7 +17,7 @@ $if[$checkContains[$toLowercase[$message];coolwoah;woah;wow ]==true]
   $djsEval[message.react('$get[coolwoah]')]
 $endif
 
-$if[$checkContains[$toLowercase[$message];kill yourself;end my life;kill me;i want die;i want aliven't;kys;fml]==true]
+$if[$checkContains[$toLowercase[$message];kill yourself;end my life;kill me;i want die;i want aliven't;kys;fml;kms]==true]
   $djsEval[message.react('$get[nodont]')]
 $endif
 

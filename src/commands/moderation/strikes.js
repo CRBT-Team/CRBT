@@ -15,7 +15,7 @@ $endif
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[protip-enUS;$replaceText[$replaceText[$checkCondition[$get[count]==0];true;];false;You can clear any strike by simply using \`$getServerVar[prefix]clearstrike <strike number> <user ID | @mention>\`, or \`$getServerVar[prefix]clearstrikes <user ID | @mention>\` to remove all of them.]]
+$let[protip-enUS;$replaceText[$replaceText[$checkCondition[$get[count]==0];true;];false;You can clear a user's strikes using \`$getServerVar[prefix]clearstrikes <user ID | @mention>\`.]]
 
 $let[title-enUS;$userTag[$get[id]] - Strikes]
 
@@ -33,7 +33,7 @@ $splitText[10];> - ;> • ]; - <t:; • <t:]];true;Nothing to see here... (Right
 
 $textSplit[$get[strikes];\n]
 
-$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikes;$get[id]];|];false;none];true;$replaceText[• $getUserVar[strikes;$get[id]];|;\n• ]]]
+$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikes;$get[id]];|];false;none];true;$replaceText[• $replaceText[$getUserVar[strikes;$get[id]]a;|a;];|;\n• ]]]
 
 $let[count;$math[$getTextSplitLength-1]]
 

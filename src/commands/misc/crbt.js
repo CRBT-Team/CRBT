@@ -39,9 +39,9 @@ $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;B
 $let[members-enUS;Members:$numberSeparator[$allMembersCount]]
 $let[servers-enUS;Servers:$numberSeparator[$serverCount]]
 $let[creationDate-enUS;Created at:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
-$let[ping-enUS;Ping: Server#COLON# $pingms\nAPI#COLON# $replaceText[$getObjectProperty[final];-;]ms\nDatabase#COLON# $dbPingms]
+$let[ping-enUS;Ping: Message: $pingms\nWS: $botPingms\nDatabase: $dbPingms]
 $let[uptime-enUS;Uptime: $getObjectProperty[uptime]]
-$let[computer-enUS;Server: Disk speed#COLON# $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] GB/s\nRAM#COLON# $ram MB\nCPU#COLON# $cpu%\nHosted on $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
+$let[computer-enUS;Server: Disk speed: $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] GB/s\nRAM: $ram MB\nCPU: $cpu%\nHosted on $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
 $let[credits-enUS]
 $let[news-enUS;Latest $username[$clientID] news: \`\`\`diff\n$replaceText[$replaceText[${botinfo.news};,;\n];();$getServerVar[prefix]]\n\`\`\`]
 
@@ -51,9 +51,9 @@ $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;B
 $let[members-enUK;Members:$numberSeparator[$allMembersCount]]
 $let[servers-enUK;Servers:$numberSeparator[$serverCount]]
 $let[creationDate-enUK;Created at:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
-$let[ping-enUK;Ping: Server#COLON# $pingms\nAPI#COLON# $replaceText[$getObjectProperty[final];-;]ms\nDatabase#COLON# $dbPingms]
+$let[ping-enUK;Ping: Server: $pingms\nAPI: $replaceText[$getObjectProperty[final];-;]ms\nDatabase: $dbPingms]
 $let[uptime-enUK;Uptime: $getObjectProperty[uptime]]
-$let[computer-enUK;Server: Disk speed#COLON# $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] GB/s\nRAM#COLON# $ram MB\nCPU#COLON# $cpu%\nHosted by $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
+$let[computer-enUK;Server: Disk speed: $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] GB/s\nRAM: $ram MB\nCPU: $cpu%\nHosted by $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
 $let[news-enUK;$username[$clientID] ${botinfo.build} news: \`\`\`diff\n$replaceText[$replaceText[${botinfo.news};,;\n];();$getServerVar[prefix]]\n\`\`\`]
 
 $let[title-frFR;$userTag[$clientID] - Informations]
@@ -62,9 +62,9 @@ $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;B
 $let[members-frFR;Members:$replaceText[$numberSeparator[$allMembersCount];,; ]]
 $let[servers-frFR;Servers:$replaceText[$numberSeparator[$serverCount];,; ]]
 $let[creationDate-frFR;Date de création:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
-$let[ping-frFR;Ping: Serveur #COLON# $pingms\nAPI #COLON# $replaceText[$getObjectProperty[final];-;]ms\nDatabase #COLON# $dbPingms]
+$let[ping-frFR;Ping: Serveur : $pingms\nAPI : $replaceText[$getObjectProperty[final];-;]ms\nDatabase : $dbPingms]
 $let[uptime-frFR;Uptime: $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[uptime];second;seconde];day;jour];, and; et];hour;heure]]
-$let[computer-frFR;Serveur: Vitesse du disque #COLON# $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] Go/s\nMémoire vive #COLON# $ram Mo\nProcesseur #COLON# $cpu%\nHébergé par $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
+$let[computer-frFR;Serveur: Vitesse du disque : $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] Go/s\nMémoire vive : $ram Mo\nProcesseur : $cpu%\nHébergé par $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
 $let[news-frFR;Dernières nouveautés de $username[$clientID]: \`\`\`diff\n$replaceText[$replaceText[${botinfo.news};,;\n];();$getServerVar[prefix]]\n\`\`\`]
 
 $let[title-ru;$userTag[$clientID] - информация]
@@ -73,9 +73,9 @@ $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;B
 $let[members-ru;Участников:$replaceText[$numberSeparator[$allMembersCount];,; ]]
 $let[servers-ru;Серверов:$replaceText[$numberSeparator[$serverCount];,; ]]
 $let[creationDate-ru;Создан:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
-$let[ping-ru;Пинг: CRBT Сервер#COLON# $pingмс\nAPI#COLON# $replaceText[$getObjectProperty[final];-;]мс\nБаза Данных#COLON# $dbPingмс]
+$let[ping-ru;Пинг: CRBT Сервер: $pingмс\nAPI: $replaceText[$getObjectProperty[final];-;]мс\nБаза Данных: $dbPingмс]
 $let[uptime-ru;Время безотказной работы: $uptime]
-$let[computer-ru;Сервер: Скорость ЖД#COLON# $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] ГБ/с\nОЗУ#COLON# $ram MB\nМБ ЦП#COLON# $cpu%\nHosted by $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
+$let[computer-ru;Сервер: Скорость ЖД: $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] ГБ/с\nОЗУ: $ram MB\nМБ ЦП: $cpu%\nHosted by $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
 $let[news-ru;Последние новости $username[$clientID]: \`\`\`diff\n$replaceText[$replaceText[${botinfo.news};,;\n];();$getServerVar[prefix]]\n\`\`\`]
 
 $djsEval[

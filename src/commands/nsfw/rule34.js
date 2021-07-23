@@ -3,7 +3,7 @@ module.exports.command = {
     aliases: ["r34"],
     description_enUS: "Gives an random post from rule34.xxx containing the specified tags.",
     module: "nsfw",
-    usage_enUS: "<tags (seperated with a comma)>",
+    usage_enUS: "<tags (separated with a comma)>",
     code: `
 $reply[$messageID;
 {author:Rule 34 - Results:https://cdn.clembs.xyz/6E55isu.png}

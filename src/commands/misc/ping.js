@@ -12,8 +12,9 @@ module.exports.command = {
 $editMessage[$botLastMessageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
 
-{field:$get[serverLatency-$getGlobalUserVar[language]]}
+{field:$get[messageLatency-$getGlobalUserVar[language]]}
 {field:$get[apiLatency-$getGlobalUserVar[language]]}
+{field:$get[wsLatency-$getGlobalUserVar[language]]}
 {field:$get[dbLatency-$getGlobalUserVar[language]]}
 {field:$get[uptime-$getGlobalUserVar[language]]}
 
@@ -23,17 +24,19 @@ $editMessage[$botLastMessageID;
 ;$channelID]
 
 $let[title-enUS;$userTag[$clientID] - Ping]
-$let[serverLatency-enUS;Server latency: \`\`\`
-$pingms\`\`\`]
+$let[messageLatency-enUS;Message latency: \`\`\`
+$math[$ping/3]ms\`\`\`]
 $let[apiLatency-enUS;API latency: \`\`\`
 $getObjectProperty[final]ms\`\`\`]
+$let[wsLatency-enUS;WebSocket latency: \`\`\`
+$botPingms\`\`\`]
 $let[dbLatency-enUS;Database latency: \`\`\`
 $dbPingms\`\`\`]
 $let[uptime-enUS;Uptime: \`\`\`
 $getObjectProperty[uptime]\`\`\`]
 
 $let[title-enUK;$userTag[$clientID] - Ping]
-$let[serverLatency-enUK;Server latency: \`\`\`
+$let[messageLatency-enUK;Message latency: \`\`\`
 $pingms\`\`\`]
 $let[apiLatency-enUK;API latency: \`\`\`
 $getObjectProperty[final]ms\`\`\`]
@@ -43,7 +46,7 @@ $let[uptime-enUK;Uptime: \`\`\`
 $getObjectProperty[uptime]\`\`\`]
 
 $let[title-frFR;$userTag[$clientID] - Ping]
-$let[serverLatency-frFR;Latence du serveur : \`\`\`
+$let[messageLatency-frFR;Latence du serveur : \`\`\`
 $pingms\`\`\`]
 $let[apiLatency-frFR;Latence de l'API : \`\`\`
 $getObjectProperty[final]ms\`\`\`]
@@ -53,7 +56,7 @@ $let[uptime-frFR;Temps d'activité : \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[uptime];second;seconde];day;jour];, and; et];hour;heure]\`\`\`]
 
 $let[title-ru;$userTag[$clientID] - Пинг]
-$let[serverLatency-ru;Задержка сервера: \`\`\`
+$let[messageLatency-ru;Задержка сервера: \`\`\`
 $pingмс\`\`\`]
 $let[apiLatency-ru;Задержка API: \`\`\`
 $getObjectProperty[final]мс\`\`\`]
@@ -66,11 +69,11 @@ $let[average;$round[$math[$getObjectProperty[final]+$ping+$dbPing]]]
 
 $djsEval[let a = Date.now()
 const ms = require('ms')
-d.object.final = Math.floor(a - d.object.start - 500)
+d.object.final = Math.floor(a - d.object.start - 10)
 d.object.owo = ms(a - d.object.start)
 d.object.uwu = ms(d.object.botPing)]
 
-$wait[500ms]
+$wait[10ms]
 
 $reply[$messageID;
 

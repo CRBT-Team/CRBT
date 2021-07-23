@@ -4,25 +4,23 @@ module.exports.command = {
     name: "clearstrikes",
     module: "moderation",
     aliases: ['strikes_clear','removestrikes','remove_strikes','clear-strikes','clear_strikes'],
-    description_enUS: "Gets the history of your strikes or of someone else's.",
+    description_enUS: "Clears the strike history of a specified user.",
     usage_enUS: "<user ID | username | @mention (optional)>",
     code: `
-$reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$get[id];64]}
-$if[$hasPerms[$authorID;admin]==true]
-{description:$get[protip-$getGlobalUserVar[language]]}
-$endif
-{field:$get[strikes-$getGlobalUserVar[language]]:no}
+$deleteUserVar[strikes;$get[id]]
 
-{color:$getGlobalUserVar[color]}
+$reply[$messageID;
+{title:$get[title-$getGlobalUserVar[language]]}
+{field:
+$get[strikes-$getGlobalUserVar[language]]
+}
+
+{color:${colors.success}}
 ;no]
 
-$let[protip-enUS;$replaceText[$replaceText[$checkCondition[$get[count]==0];true;];false;You can clear any strike by simply using \`$getServerVar[prefix]clearstrike <strike number> <user ID | @mention>\`, or \`$getServerVar[prefix]clearstrikes <user ID | @mention>\` to remove all of them.]]
+$let[title-enUS;${emojis.success} Cleared $userTag[$get[id]]'s $get[count] strikes]
 
-$let[title-enUS;$userTag[$get[id]] - Strikes]
-
-$let[strikes-enUS;$replaceText[$replaceText[$checkCondition[$get[count]>10];false;Strike$replaceText[$replaceText[$checkCondition[$get[count]==1];true;];false;s] ($get[count])];true;Last 10 strikes (out of $get[count])]:
-$replaceText[$replaceText[$checkCondition[$get[strikes]==none];false;$replaceText[$replaceText[$splitText[1]
+$let[strikes-enUS;Last 10 strikes:$replaceText[$replaceText[$checkCondition[$get[strikes]==none];false;$replaceText[$replaceText[$splitText[1]
 $splitText[2]
 $splitText[3]
 $splitText[4]
@@ -35,9 +33,9 @@ $splitText[10];> - ;> • ]; - <t:; • <t:]];true;Nothing to see here... (Right
 
 $textSplit[$get[strikes];\n]
 
-$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikes;$get[id]];|];false;none];true;$replaceText[• $getUserVar[strikes;$get[id]];|;\n• ]]]
+$let[strikes;$replaceText[$replaceText[$checkContains[$getUserVar[strikes;$get[id]];|];false;none];true;$replaceText[• $replaceText[$getUserVar[strikes;$get[id]]a;|a;];|;\n• ]]]
 
-$onlyIf[$getTextSplitLength!=0;{execute:queryNotFound}]
+$onlyIf[$get[count]!=0;{execute:queryNotFound}]
 
 $let[count;$math[$getTextSplitLength-1]]
 

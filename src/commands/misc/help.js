@@ -1,4 +1,5 @@
 const { emojis, logos } = require("../../../index");
+const e = emojis.other
 
 module.exports.command = {
     name: "help",
@@ -12,7 +13,7 @@ module.exports.command = {
     module: "misc",
     aliases: ["aled", "ouho", "commands", "cmds", "command", "cmd"],
     code: `
-$if[$checkContains[$checkCondition[$message==]$checkCondition[$message==1];true]==true]
+$if[$message==]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
@@ -22,16 +23,18 @@ $get[modules-$getGlobalUserVar[language]]}
 ;no]
 
 
-$elseIf[$checkCondition[$toLowercase[$message];autoreact;basic;economy;fun;info;moderation;music;tools;settings]==true]
+$elseIf[$checkContains[ $toLowercase[$message] ; auto-react ; misc ; economy & profiles ; profiles ; mod ; autoreact ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ]==true]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
 {description:$get[desc-$getGlobalUserVar[language]]}
 
-{field:$get[$toLowercase[$message]-$getGlobalUserVar[language]]:yes}
+{field:$get[$get[module]-$getGlobalUserVar[language]]:yes}
 
 {color:$getGlobalUserVar[color]}
 ;no]
+
+$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];settings;settings-$hasPerms[$authorID;admin]]]
 
 $endelseIf
 $else
@@ -45,10 +48,12 @@ $replaceText[$replaceText[$checkCondition[$commandInfo[$message;description_$get
 \`\`\`
 $replaceText[$replaceText[$getServerVar[prefix]$commandInfo[$message;name];$getServerVar[prefix]m/;m/];$getServerVar[prefix]=;=] $replaceText[$commandInfo[$message;usage_$getGlobalUserVar[language]];<botname>;$username[$clientID]]\`\`\`
 :no}
+$if[$commandInfo[$message;aliases]!=]
 {field:Aliases:
 \`\`\`
 $replaceText[$commandInfo[$message;aliases];,;, ]\`\`\`
 :no}
+$endif
 {field:Permission errors:
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $get[botPerms]/$get[userPerms]
@@ -106,6 +111,48 @@ $endif
 
 
 
+$let[autoreact-enUS;Autoreact triggers:
+$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
+
+• \`yummy, delicious, good meal, great meal...\`
+Triggers the $get[goodmeal] reaction.
+• \`woah, coolwoah, wow\`
+Triggers the $get[coolwoah] reaction.
+• \`énorme\`
+Triggers the $get[énorme] reaction.
+• \`crbt\` + \`good bot, best bot\`
+Triggers the $get[heart] reaction.
+• *\`suicide-related trigger words\`*
+Triggers the $get[nodont] reaction.
+]
+
+$let[énorme;$replaceText[$replaceText[$get[con];true;<:enorme:738807762988957786>];false;👍]]
+$let[heart;$replaceText[$replaceText[$get[con];true;$randomText[${e.heart};💚;${e.coolwoah};👍;🥰]];false;💚]]
+$let[coolwoah;$replaceText[$replaceText[$get[con];true;$randomText[${e.coolwoah};😎]];false;😎]]
+$let[nodont;❌]
+$let[goodmeal;$replaceText[$replaceText[$get[con];true;${e.goodmeal}];false;😋]]
+
+$let[con;$checkCondition[$clientID==595731552709771264]]
+
+
+$let[basic-enUS;Basic commands:
+${emojis.forcedon} This module can't be disabled.
+
+• \`@$username[$clientID]\`
+Get a mini-help menu (useful if you've forgotten $username[$clientID]'s prefix).
+• \`$getServerVar[prefix]help\`
+Get CRBT's help on its general usage, or on any command. 
+• \`$getServerVar[prefix]report $commandinfo[report;usage_enUS]\`
+Report any bug you find on CRBT to its developers!
+• \`$getServerVar[prefix]suggest $commandinfo[suggest;usage_enUS]\`
+Suggest anything to add to CRBT!
+• \`$getServerVar[prefix]info\`
+Get CRBT's ping, stats and some other nerdy info.
+• \`$getServerVar[prefix]ping\`
+$replaceText[$commandInfo[ping;description_enUS];<botname>;$username[$clientID]]
+• \`$getServerVar[prefix]invite\`
+To invite CRBT on your server, or join the support server!]
+
 
 $let[economy-enUS;Economy & profiles:
 $replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
@@ -122,32 +169,17 @@ Opens your item inventory on CRBT, and gives you useful tips!
 Displays your CRBT profile.]
 
 
-$let[basic-enUS;Basic commands:
-${emojis.forcedon} You can't disable this module.
-
-• \`$getServerVar[prefix]help\`
-Get CRBT's help on its general usage, or on any command. 
-• \`$getServerVar[prefix]report\`
-Report any bug you find on CRBT to its developers!
-• \`$getServerVar[prefix]suggest\`
-Suggest anything to add to CRBT!
-• \`$getServerVar[prefix]info\`
-Get CRBT's connection status and some other useful info.
-• \`$getServerVar[prefix]ping\`
-$replaceText[$commandInfo[ping;description_enUS];<botname>;$username[$clientID]]
-• \`$getServerVar[prefix]invite\`
-To invite CRBT on your server, or join the support server!]
-
-
 $let[moderation-enUS;Moderation:
 $replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
-• \`$getServerVar[prefix]kick\`, \`$getServerVar[prefix]ban\`, \`$getServerVar[prefix]warn\`
-Kicks, bans or gives a warning to a specified user (via its user ID or a @mention)
+• \`$getServerVar[prefix]kick\`, \`$getServerVar[prefix]ban\`, \`$getServerVar[prefix]warn\`, \`$getServerVar[prefix]mute\`
+Kicks, bans, gives a muted role or a warning to a specified user (via its user ID or a @mention)
 • \`$getServerVar[prefix]purge\`
 Bulk deletes a specified number of messages in the current channel.
 • \`$getServerVar[prefix]snipe\`
-Finds the latest deleted message on the current channel, or on a specified channel (if any).]
+Finds the latest deleted message on the current channel, or on a specified channel (if any).
+• \`$getServerVar[prefix]strikes $commandinfo[strikes;usage_enUS]\`
+$commandinfo[strikes;description_enUS]]
 
 
 $let[fun-enUS;Fun commands:
@@ -193,7 +225,7 @@ $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon} Thi
 • \`$getServerVar[prefix]avatar <user (optional)>\`
 • \`$getServerVar[prefix]channelinfo <channel>\`
 • \`$getServerVar[prefix]define <english word>\`
-• \`$getServerVar[prefix]emoji <emoji>\`
+• \`$getServerVar[prefix]emojiinfo <emoji>\`
 • \`$getServerVar[prefix]github <GitHub username> <repository>\`
 • \`$getServerVar[prefix]icon <server ID (optional)>\`
 • \`$getServerVar[prefix]inviteinfo <invite link>\`
@@ -204,11 +236,12 @@ $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon} Thi
 • \`$getServerVar[prefix]roleinfo <role>\`
 • \`$getServerVar[prefix]serverinfo <server ID (optional)>\`
 • \`$getServerVar[prefix]userinfo <user (optional)>\`
+• \`$getServerVar[prefix]urbandictionary <word or expression>\`
 • \`$getServerVar[prefix]weather <city>\`]
 
 
 $let[settings-true-enUS;Settings:
-${emojis.forcedon} You can't disable this module.
+${emojis.forcedon} This module can't be disabled.
 
 • \`$getServerVar[prefix]color\`
 Change $username[$clientID]'s accent color across all commands.
@@ -221,7 +254,7 @@ Get a list of $username[$clientID]'s entire settings for the server or yourself.
 
 
 $let[settings-false-enUS;Settings:
-${emojis.forcedon} You can't disable this module.
+${emojis.forcedon} This module can't be disabled.
 
 • \`$getServerVar[prefix]color\`
 Change $username[$clientID]'s accent color across all commands.
@@ -246,16 +279,19 @@ $let[nsfw-enUS;Not Safe For Work commands:
 $replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
 
 Warning: Contains unsuitable language for minor audiences.
-||• \`$getServerVar[prefix]play\`
-Queues or directly plays the song of your choice.
-• \`$getServerVar[prefix]nowplaying\`
-$commandInfo[nowplaying;description_enUS]
-• \`$getServerVar[prefix]queue\`
-$commandInfo[nowplaying;description_enUS]
-• \`$getServerVar[prefix]stop\`
-Disconnects $username[$clientID] from its voice channels and clears the queue.||]
+||• \`$getServerVar[prefix]blowjob\`
+• \`$getServerVar[prefix]breasts\`
+• \`$getServerVar[prefix]feet\`
+• \`$getServerVar[prefix]hentai\`
+• \`$getServerVar[prefix]lesbian\`
+• \`$getServerVar[prefix]irl\`
+• \`$getServerVar[prefix]rule34 $commandinfo[r34;usage_enUS]\`
+$commandinfo[r34;description_enUS]
+• \`$getServerVar[prefix]sperm\`
+• \`$getServerVar[prefix]vagina\`||]
 
-$let[desc-enUS;If you need extra information on any command, you can simply use \`$getServerVar[prefix]help\` followed by the command name.]
+$let[desc-enUS;If you need extra information on any command, you can simply use \`$getServerVar[prefix]help\` followed by the command name.
+Note: Not all commands and modules are displayed for simplicity purposes. A website containing all of the commands is in construction and will be updated here as well.]
 
 $let[modules-enUS;
 $replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react: \`$getServerVar[prefix]help autoreact\`
