@@ -13,7 +13,11 @@ $if[$message!=]
     $volume[$round[$math[$get[volume]/2]]]
     $endif
 
+    $if[$replaceText[$message;%;]==100]
+    $deleteServerVar[volume]
+    $else
     $setServerVar[volume;$round[$math[$get[volume]/2]]]
+    $endif
 
     $reply[$messageID;
     {author:Set volume to $round[$get[volume]]%:$replaceText[$get[icon];\n;]}
@@ -38,7 +42,7 @@ $endif
     ;true;${illustrations.music.volumelow}];false;${illustrations.music.volumemuted}
     ]]]
 
-    $let[volume;$replaceText[$message[1];%;]]
+    $let[volume;$replaceText[$message;%;]]
 
 $else
 

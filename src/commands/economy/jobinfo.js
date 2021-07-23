@@ -53,7 +53,7 @@ $if[$message==]
 $else
     $onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
     $let[id;$findUser[$message]]
-    $onlyIf[$findUser[$message]!=undefined;{execute:usernotfound}]
+    $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

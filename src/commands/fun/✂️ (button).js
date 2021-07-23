@@ -39,6 +39,6 @@ $let[win;$randomText[Too easy... I won 😎;Heck yeah, I won;The RNG is going pr
 $let[choice;scissors]
 $let[rng;$randomText[paper;rock;scissors]]
 
-$setUserVar[temp3;;$clientID]
+$deleteUserVar[temp3;$clientID]
 $onlyIf[$getUserVar[temp3;$clientID]==$authorID;]
     `}

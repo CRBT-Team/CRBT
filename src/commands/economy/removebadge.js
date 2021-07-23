@@ -7,7 +7,11 @@ module.exports.command = {
     description_enUS: "Removes the specified badge to your profile.",
     usage_enUS: "<badge name (e.g. \"udu\")>",
     code: `
-$setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges];<badge $toLowercase[$message]>;]]
+$if[$replaceText[$getGlobalUserVar[profile_badges]; <badge $toLowercase[$message]>;]==]
+$deleteGlobalUserVar[profile_badges]
+$else
+$setGlobalUserVar[profile_badges;$replaceText[$getGlobalUserVar[profile_badges]; <badge $toLowercase[$message]>;]]
+$endif
 
 $reply[$messageID;
 {title:${emojis.success} Badge removed}

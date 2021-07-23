@@ -8,7 +8,11 @@ module.exports.command = {
     usage_enUS: "<new bio (may include CRBTscript tags)>",
     description_enUS: "Changes your bio shown on your CRBT profile.",
     code: `
+$if[$message==$getVar[profile_about]]
+$deleteGlobalUserVar[profile_about]
+$else
 $setGlobalUserVar[profile_about;$message]
+$endif
 
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}

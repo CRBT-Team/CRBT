@@ -12,9 +12,13 @@ $if[$checkContains[$message[1];<]$checkContains[$message[1];>]$checkContains[$me
 
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
-    {description:$addEmoji[$get[url];$get[name];yes]}
+    {description:
+    $get[emoji] (\\$get[emoji]) was successfully added to the server.
+    }
     {color:${colors.success}}
     ;no]
+
+    $let[emoji;$addEmoji[$get[url];$get[name];yes]]
 
     $onlyIf[$emojiCount[$replaceText[$replaceText[$checkContains[$splitText[2]==.gif];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:limitReached}]
 
@@ -30,8 +34,12 @@ $else
 
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
-    {description:$addEmoji[$get[url];$splitText[2];yes]}
+    {description:
+    $get[emoji] (\\$get[emoji]) was successfully added to the server.
+    }
     ;no]
+
+    $let[emoji;$addEmoji[$get[url];$splitText[2];yes]]
 
     $onlyIf[$emojiCount[$replaceText[$replaceText[$get[animated];true;animated];false;normal]]<$replaceText[$replaceText[$replaceText[$replaceText[$serverBoostLevel;0;50];1;100];2;150];3;250];{execute:limitReached}]
 

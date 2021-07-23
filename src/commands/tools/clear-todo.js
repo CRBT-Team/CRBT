@@ -6,7 +6,7 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Clears your entire To-Do list.",
     code: `
-$setGlobalUserVar[todolist;$getVar[todolist]]
+$deleteGlobalUserVar[todolist]
 
 $reply[$messageID;
 {title:${emojis.success} To-Do list cleared}

@@ -16,7 +16,7 @@ $let[icon;${illustrations.music.volumehigh}]
 $if[$queueLength!=0]
     $volume[50]
 $endif
-$setServerVar[volume;50]
+$deleteServerVar[volume]
 
 $if[$voiceID[$clientID]!=]
     $onlyIf[$voiceID[$clientID]==$voiceID;]

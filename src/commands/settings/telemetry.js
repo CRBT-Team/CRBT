@@ -17,7 +17,7 @@ $if[$message==]
 
 $elseIf[$checkContains[$toLowercase[$message[1]];true;on;enable;1;complete]==true]
 
-    $setGlobalUserVar[telemetry;complete]
+    $deleteGlobalUserVar[telemetry]
     $reply[$messageID;
     {title:$splitText[1]}
     {description:$splitText[2]

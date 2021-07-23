@@ -86,23 +86,23 @@ $endif
 $let[title-enUS;CRBT Settings - Modules]
 $let[modules-enUS;Modules:
 $replaceText[$replaceText[$hasPerms[$authorID;manageserver];true;To enable or disable any module, use \`$getServerVar[prefix]module <enable | disable> <module name>\`.];false;Note that you will need the "Manage server" permissions on this server to disable or enable any of these.]
-$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react (\`autoreact\`)
-$replaceText[$replaceText[$getServerVar[module_autoPublish];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-publish (\`autoPublish\`)
-$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles (\`economy\`)
-$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun (\`fun\`)
-$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info (\`info\`)
-$replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Message logs (\`messageLogs\`)
-$replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation logs (\`modLogs\`)
-$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation (\`moderation\`)
-$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music (\`music\`)
-$replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.toggleon}];false;${emojis.toggleoff}] NSFW (\`nsfw\`)
-$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools (\`tools\`)
+$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react
+$replaceText[$replaceText[$getServerVar[module_autoPublish];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-publish
+$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles
+$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun
+$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info
+$replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Message logs
+$replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation logs
+$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation
+$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music
+$replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.toggleon}];false;${emojis.toggleoff}] NSFW
+$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools
 ]
 $let[essentials-enUS;Essential modules:
 You can't disable any of these modules.
-${emojis.forcedon} Basic (\`misc\`)
-${emojis.forcedon} Settings (\`settings\`)
-${emojis.forcedon} Admin (\`admin\`)
+${emojis.forcedon} Basic
+${emojis.forcedon} Settings
+${emojis.forcedon} Admin
 ]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

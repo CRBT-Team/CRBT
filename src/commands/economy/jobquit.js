@@ -6,11 +6,11 @@ module.exports.command = {
     description_enUS: "Removes your job and all previously earned job XP and levels.",
     module: "economy",
     code: `
-$setGlobalUserVar[job_xp;$getVar[job_xp]]
-$setGlobalUserVar[job_propositions;$getVar[job_propositions]]
-$setGlobalUserVar[job_level;$getVar[job_level]]
-$setGlobalUserVar[job_req;$getVar[job_req]]
-$setGlobalUserVar[job_type;$getVar[job_type]]
+$deleteGlobalUserVar[job_xp]
+$deleteGlobalUserVar[job_propositions]
+$deleteGlobalUserVar[job_level]
+$deleteGlobalUserVar[job_req]
+$deleteGlobalUserVar[job_type]
 
 $reply[$messageID;
 {title:${emojis.success} You've successfully left your job!}

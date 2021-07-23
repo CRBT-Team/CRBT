@@ -6,7 +6,7 @@ module.exports.command = {
     module: "economy",
     description_enUS: "Removes your current profile banner.",
     code: `
-$setGlobalUserVar[profile_banner;$getVar[profile_banner]]
+$deleteGlobalUserVar[profile_banner]
 
 $reply[$messageID;
 {title:${emojis.success} Banner removed}

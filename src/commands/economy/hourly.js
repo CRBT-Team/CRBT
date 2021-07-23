@@ -19,7 +19,7 @@ $if[$getGlobalUserVar[hourly_streak]<4]
 
 $elseIf[$getGlobalUserVar[hourly_streak]==4]
 
-  $setGlobalUserVar[hourly_streak;0]
+  $deleteGlobalUserVar[hourly_streak]
   $setGlobalUserVar[user_bank;$sum[$getGlobalUserVar[user_bank];100]]
 
     {description:$get[description2-$getGlobalUserVar[language]]}

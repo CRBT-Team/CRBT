@@ -8,6 +8,7 @@ module.exports.command = {
     usage_enUS: "<job name>",
     code: `
 $setGlobalUserVar[job_type;$get[message]]
+$deleteGlobalUserVar[job_propositions]
 
 $reply[$messageID;
 {title:${emojis.success} You will now work as a $replaceText[$replaceText[$replaceText[$get[message];mcdoemployee;fast food employee];youtuber;videast];policeman;police officer]!}

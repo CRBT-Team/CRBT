@@ -10,7 +10,11 @@ module.exports.command = {
     code: `
 $if[$message!=]
 
-    $setGlobalUserVar[lastCmd;prefix ** $get[newPrefix] ** $botLastMessageID]
+    $if[$message==$getVar[prefix]]
+        $setGlobalUserVar[lastCmd;prefix ** $getVar[prefix] ** $botLastMessageID]
+    $else
+        $setGlobalUserVar[lastCmd;prefix ** $get[newPrefix] ** $botLastMessageID]
+    $endif
 
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}

@@ -8,7 +8,7 @@ module.exports.command = {
     code: `
 $leaveVC[$voiceID[$clientID]]
 
-$setServerVar[music_channel;]
+$deleteServerVar[music_channel]
 
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:${illustrations.music.stop}}

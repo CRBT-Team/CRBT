@@ -7,7 +7,11 @@ $if[$checkContains[$checkCondition[$message==<@!$clientID>]$checkCondition[$mess
 
 $setGlobalUserVar[lastCmd;prefix]
 
+$if[$stringStartsWith[$getGlobalUserVar[lastCmd];prefix ** $getVar[prefix] **]==true]
+$deleteServerVar[prefix]
+$else
 $setServerVar[prefix;$splitText[2]]
+$endif
 
 $editMessage[$splitText[3];
 {title:$get[title-$getGlobalUserVar[language]]}

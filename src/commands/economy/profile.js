@@ -48,6 +48,7 @@ $let[a;$replaceText[$replaceText[$getGlobalUserVar[profile_banner;$get[id]];<ban
 $if[$message==]
     $let[id;$authorID]
 $else
+    $onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
     $let[id;$findUser[$message]]
     $onlyIf[$findUser[$message;no]!=undefined;{execute:usernotfound}]
 $endif

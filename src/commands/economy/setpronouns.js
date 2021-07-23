@@ -7,7 +7,11 @@ module.exports.command = {
     usage_enUS: "<he/him | she/her | they/them | any | other | ask | username | unspecified>",
     description_enUS: "Changes the pronouns shown on your CRBT profile.",
     code: `
+$if[$toLowercase[$message]==$getVar[profile_about]]
+$deleteGlobalUserVar[profilePronouns]
+$else
 $setGlobalUserVar[profilePronouns;$replaceText[$toLowercase[$get[new]];/; ]]
+$endif
 
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
