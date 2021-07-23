@@ -6,7 +6,7 @@ module.exports.command = {
   aliases: ["bugreport", "bug", "sendreport"],
   description_enUS: "Sends a bug report about CRBT (english only).",
   usage_enUS: "<bug report message (may include images)>",
-  cooldown: "1s",
+  cooldown: "1m",
   code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
@@ -14,25 +14,32 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$useChannel[$get[channel]]
+$channelSendMessage[$get[channel];
 
-$title[Bug report]
+{title:Bug report}
 
-$description[<@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
-\`\`\`
+{description:
+$if[$channelType==dm]
+<@!$authorID> in **DMs**
+$else
+<@!$authorID> in **[$serverName[$guildID]**](https://discord.com/channels/$guildID/$channelID/$messageID)**
+$endif \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
 \`\`\`
-]
+}
 
 $if[$messageAttachment!=]
-$image[$messageAttachment]
+{image:$messageAttachment}
 $endif
 
-$addField[Status;
+{field:Status:
 Pending
-;no]
+:no}
 
-$footer[$randomString[10] | $authorID]
+{footer:Bug ID - $randomString[10]}
+
+{color:${colors.yellow}}
+]
 
 $djsEval[
   let random = Math.random().toString(36).substr(2, 5);
@@ -44,8 +51,6 @@ $djsEval[
 ]
 
 $let[report;$replaceText[$replaceText[$message;";'];\n;\\n]]
-
-$color[${colors.yellow}]
 
 $let[title-enUS;${emojis.success} Report sent]
 $let[description-enUS;Your bug report was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]

@@ -14,25 +14,36 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
-$useChannel[$get[channel]]
+$addMessageReactions[$get[channel];$get[id];${emojis.misc.thumbsup};${emojis.misc.thumbsdown}]
 
-$title[Suggestion]
+$let[id;$botLastMessageID]
 
-$description[<@!$authorID> in [**$serverName[$guildID]**](https://discord.com/channels/$guildID/$channelID/$messageID)
-\`\`\`
+$channelSendMessage[$get[channel];
+
+{title:Suggestion}
+
+{description:
+$if[$channelType==dm]
+<@!$authorID> in **DMs**
+$else
+<@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
+$endif \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
 \`\`\`
-]
+}
 
 $if[$messageAttachment!=]
-$image[$messageAttachment]
+{image:$messageAttachment}
 $endif
 
-$addField[Status;
+{field:Status:
 Pending
-;no]
+:no}
 
-$footer[$randomString[10] | $authorID]
+{color:${colors.yellow}}
+
+{footer:Suggestion ID - $randomString[10]}
+;no]
 
 $djsEval[
   let random = Math.random().toString(36).substr(2, 5);
@@ -44,8 +55,6 @@ $djsEval[
 ]
 
 $let[report;$replaceText[$replaceText[$message;";'];\n;\\n]]
-
-$color[${colors.yellow}]
 
 $let[title-enUS;${emojis.success} Suggestion sent]
 $let[description-enUS;Your suggestion was sent to Clembs, CRBT's developer. Please do not spam the command or send invalid/joke issues, as you could get blocklisted forever.]

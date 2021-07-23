@@ -23,7 +23,7 @@ $replaceText[$replaceText[$checkCondition[$charCount[$getObjectProperty[list[0].
 :no}
 
 {field:Author:
-**[$getObjectProperty[list[0].author]](https://www.urbandictionary.com/author.php?author=$getObjectProperty[list[0].author])**
+**[$getObjectProperty[list[0].author]](https://www.urbandictionary.com/author.php?author=$uri[encode;$getObjectProperty[list[0].author]])**
 :yes}
 
 {field:Written:

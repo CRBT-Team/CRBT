@@ -80,9 +80,9 @@
                 "static": "<:emoji:658538492321595393>",
                 "animated": "<:emoji:658538492321595393>"
             },
-            "thumbsup": "<:thumbsup:836313884590604349>",
-            "thumbsdown": "<:thumbsdown:836313884603842590>",
-            "reminder": "<:reminder:817733671015677982>"
+            "thumbsup": "<:thumbsup:868200292024467486>",
+            "thumbsdown": "<:thumbsdown:868200320868708393>",
+            "reminder": "<:bell:868193178149347338> "
         },
         "badges": {
             "houses": {
@@ -94,7 +94,7 @@
             "developer": "<:verifiedbotdev:853277205264859156>",
             "partner": "<:DiscordPartner:843189287552942142>",
             "earlySupporter": "<:supporter:585763690868113455>",
-            "verifiedBot": "<:Verifiedbot:782585502708662282>",
+            "verifiedBot": "",
             "boost": "<:Boosting:782585506646982668>",
             "discordStaff": "<:DiscordStaff:843179936771604503>",
             "bugHunter1": "<:bughunter:585765206769139723>",

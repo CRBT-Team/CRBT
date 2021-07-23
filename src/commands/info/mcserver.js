@@ -29,7 +29,7 @@ $replaceText[$replaceText[$jsonRequest[https://mcapi.xdefcon.com/server/$message
 
 {color:$getGlobalUserVar[color]}
 
-$if[$getObjectProperty[icon]!=]
+$if[$jsonRequest[https://api.mcsrvstat.us/1/$message;icon]!=]
 {thumbnail:https://eu.mc-api.net/v3/server/favicon/$message}
 $else
 {thumbnail:https://cdn.clembs.xyz/4aq9CoU.png}

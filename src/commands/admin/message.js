@@ -11,7 +11,7 @@ $wait[500ms]
 
 $addCmdReactions[${emojis.success}]
   
-$sendDM[$splitText[2];
+$sendDM[$replaceText[$replaceText[$splitText[1];<@!;];>;];
 {title:${emojis.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
 Learn more about CRBT messages **[here](${links.info.messages})**.
@@ -27,7 +27,7 @@ $messageSlice[1]
 {color:${colors.blue}}
 ]
 
-$textSplit[$get[footer]; | ]
+$textSplit[$get[description]; in ]
 
 $editMessage[$message[1];
 {title:$get[title]}

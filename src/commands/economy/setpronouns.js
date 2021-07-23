@@ -6,6 +6,11 @@ module.exports.command = {
     module: "economy",
     usage_enUS: "<he/him | she/her | they/them | any | other | ask | username | unspecified>",
     description_enUS: "Changes the pronouns shown on your CRBT profile.",
+    examples_enUS: [
+        "pronouns they/them",
+        "setpronouns username",
+        "set-pronouns other"
+    ],
     code: `
 $if[$toLowercase[$message]==$getVar[profile_about]]
 $deleteGlobalUserVar[profilePronouns]
@@ -41,7 +46,9 @@ $endif
 
 $textSplit[$replaceText[$toLowercase[$message]; ;];/]
 
-$onlyIf[$checkContains[$toLowercase[$replaceText[$message; ;]];he/him;she/her;they/them;any;other;ask;username;unspecified]==true;{execute:args}]
+$onlyIf[$checkContains[$checkCondition[$get[msg]==he/him]$checkCondition[$get[msg]==she/her]$checkCondition[$get[msg]==they/them]$checkCondition[$get[msg]==any]$checkCondition[$get[msg]==other]$checkCondition[$get[msg]==ask]$checkCondition[$get[msg]==username]$checkCondition[$get[msg]==unspecified];true]==true;{execute:args}]
+
+$get[msg;$toLowercase[$replaceText[$message; ;]]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

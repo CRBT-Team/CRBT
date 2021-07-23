@@ -46,7 +46,7 @@ $let[perms-enUS;Permissions:$replaceText[$replaceText[$checkContains[$rolePerms[
 $let[color;$replaceText[$role[$get[id];hex];000000;${colors.blurple}]]
 
 $onlyIf[$get[id]!=;{execute:roleNotFound}]
-$let[id;$findRole[$message]]
+$let[id;$findRole[$replaceText[$replaceText[$message;<@&;];>;]]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
