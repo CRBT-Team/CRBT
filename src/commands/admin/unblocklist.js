@@ -2,10 +2,12 @@ const { emojis, links, colors } = require("../../../index");
 
 module.exports.command = {
     name: "unblocklist",
+    description_enUS: "Unblocklists a user from using <botname>.",
+    usage_enUS: "<user ID | @mention>",
     aliases: ["unbl", "ubl"],
     module: "admin",
     code: `
-$sendDM[$findUser[$message[1];no];
+$sendDM[$get[id];
 {title:${emojis.information} You've got mail!}
 {description:This message was delivered by a verified CRBT developer.
 Learn more about CRBT messages **[here](${links.info.messages})**.
@@ -19,13 +21,15 @@ Unblocklisted from CRBT.
 
 $reply[$messageID;
 {title:${emojis.success} Unblocklist successful}
-{description:<@!$findUser[$message[1];no]> has been unblocklisted.}
+{description:<@!$get[id]> has been unblocklisted.}
 {color:${colors.success}}
 ;no]
 
-$setGlobalUserVar[blocklisted;false;$findUser[$message[1];no]]
+$deleteGlobalUserVar[blocklisted;$get[id]]
 
-$onlyIf[$findUser[$message[1];no]!=undefined;can't find this user]
+$onlyIf[$userExists[$get[id]]==true;{execute:usernotfound}]
+
+$let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!];<@];>]]
 
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}

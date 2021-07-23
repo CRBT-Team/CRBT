@@ -13,7 +13,7 @@ $if[$checkContains[$message[1];<]$checkContains[$message[1];>]$checkContains[$me
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {description:
-    $get[emoji] (\\$get[emoji]) was successfully added to the server.
+    $get[emoji] ($get[name]) was successfully added to the server.
     }
     {color:${colors.success}}
     ;no]
@@ -37,6 +37,7 @@ $else
     {description:
     $get[emoji] (\\$get[emoji]) was successfully added to the server.
     }
+    {color:${colors.success}}
     ;no]
 
     $let[emoji;$addEmoji[$get[url];$splitText[2];yes]]

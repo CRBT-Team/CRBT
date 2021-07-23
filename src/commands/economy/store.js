@@ -130,6 +130,8 @@ $elseIf[$toLowercase[$message]==banners]
 $let[title-enUS;CRBT Store - Banners]
 
 $endelseIf
+$else
+    $loop[1;args]
 $endif
 
 {color:$getGlobalUserVar[color]}

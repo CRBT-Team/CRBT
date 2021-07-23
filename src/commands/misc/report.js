@@ -18,7 +18,7 @@ $useChannel[$get[channel]]
 
 $title[Bug report]
 
-$description[<@!$authorID> in [**$serverName[$guildID]**](https://discord.com/channels/$guildID/$channelID/$messageID)
+$description[<@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
 \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
 \`\`\`

@@ -8,12 +8,20 @@ $reply[$messageID;
 {field:$get[correct-$getGlobalUserVar[language]]:
 \`\`\`
 $getServerVar[prefix]$getGlobalUserVar[lastCmd] $commandInfo[$getGlobalUserVar[lastCmd];usage_$getGlobalUserVar[language]]\`\`\`
-:yes}
+:no}
+$if[$commandInfo[$getGlobalUserVar[lastCmd];examples_$getGlobalUserVar[language]]!=]
+{field:$get[examples-$getGlobalUserVar[language]]:
+\`\`\`
+$getServerVar[prefix]$replaceText[$commandInfo[$getGlobalUserVar[lastCmd];examples_$getGlobalUserVar[language]];,;\n$getServerVar[prefix]]
+\`\`\`
+:no}
+$endif
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.error} Wrong usage of the command.]
-$let[correct-enUS;Correct usage#COLON#]
+$let[title-enUS;${emojis.error} Invalid command syntax.]
+$let[correct-enUS;Command usage#COLON#]
+$let[examples-enUS;Examples#COLON#]
 
 $let[title-enUK;${emojis.error} Incorrect usage!]
 $let[correct-enUK;Please use#COLON#]

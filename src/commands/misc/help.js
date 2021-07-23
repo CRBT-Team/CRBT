@@ -23,7 +23,7 @@ $get[modules-$getGlobalUserVar[language]]}
 ;no]
 
 
-$elseIf[$checkContains[ $toLowercase[$message] ; auto-react ; misc ; economy & profiles ; profiles ; mod ; autoreact ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ]==true]
+$elseIf[$checkContains[ $toLowercase[$message] ; auto-react ; misc ; economy & profiles ; profiles ; mod ; autoreact ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
@@ -34,7 +34,7 @@ $reply[$messageID;
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];settings;settings-$hasPerms[$authorID;admin]]]
+$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];settings&administration;settings-$hasPerms[$authorID;admin]];settings;settings-$hasPerms[$authorID;admin]];administration;settings-$hasPerms[$authorID;admin]];settings-$hasPerms[$authorID;admin]-$hasPerms[$authorID;admin];settings-$hasPerms[$authorID;admin]]]
 
 $endelseIf
 $else
@@ -48,6 +48,13 @@ $replaceText[$replaceText[$checkCondition[$commandInfo[$message;description_$get
 \`\`\`
 $replaceText[$replaceText[$getServerVar[prefix]$commandInfo[$message;name];$getServerVar[prefix]m/;m/];$getServerVar[prefix]=;=] $replaceText[$commandInfo[$message;usage_$getGlobalUserVar[language]];<botname>;$username[$clientID]]\`\`\`
 :no}
+$if[$commandInfo[$message;examples_enUS]!=]
+{field:Examples:
+\`\`\`
+$getServerVar[prefix]$replaceText[$commandInfo[$message;examples_$getGlobalUserVar[language]];,;\n$getServerVar[prefix]]
+\`\`\`
+:no}
+$endif
 $if[$commandInfo[$message;aliases]!=]
 {field:Aliases:
 \`\`\`
@@ -240,17 +247,21 @@ $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon} Thi
 • \`$getServerVar[prefix]weather <city>\`]
 
 
-$let[settings-true-enUS;Settings:
+$let[settings-true-enUS;Settings & Administration:
 ${emojis.forcedon} This module can't be disabled.
 
 • \`$getServerVar[prefix]color\`
 Change $username[$clientID]'s accent color across all commands.
-• \`$getServerVar[prefix]modules\`
-Gets a list of all modules to enable or disable on the current server.
 • \`$getServerVar[prefix]prefix\`
 Change $username[$clientID]'s prefix (currently \`$getServerVar[prefix]\`) on the server!
+-
+• \`$getServerVar[prefix]addemoji $commandinfo[addemoji;usage_enUS]\`
+Adds a specified emoji to the current server.
+-
 • \`$getServerVar[prefix]dashboard\`
-Get a list of $username[$clientID]'s entire settings for the server or yourself.]
+Get a list of $username[$clientID]'s entire settings for the server or yourself.
+• \`$getServerVar[prefix]modules\`
+Gives you a list of all modules to enable or disable on the current server.]
 
 
 $let[settings-false-enUS;Settings:
@@ -272,7 +283,9 @@ $commandInfo[nowplaying;description_enUS]
 • \`$getServerVar[prefix]queue\`
 $commandInfo[nowplaying;description_enUS]
 • \`$getServerVar[prefix]stop\`
-Disconnects $username[$clientID] from its voice channels and clears the queue.]
+Disconnects $username[$clientID] from its voice channels and clears the queue.
+• \`$getServerVar[prefix]volume\`
+Gives you volume controls or manually sets the volume.]
 
 
 $let[nsfw-enUS;Not Safe For Work commands:
@@ -301,7 +314,7 @@ $replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];fal
 $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info: \`$getServerVar[prefix]help info\`
 $replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation: \`$getServerVar[prefix]help moderation\`
 $replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music: \`$getServerVar[prefix]help music\`
-${emojis.forcedon} Settings: \`$getServerVar[prefix]help settings\`
+${emojis.forcedon} Settings & Administration: \`$getServerVar[prefix]help settings\`
 $replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools: \`$getServerVar[prefix]help tools\`
 ]
     `}

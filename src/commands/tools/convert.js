@@ -4,6 +4,12 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Converts a specified amount (if any) of a given currency into other currencies or into another given currency.",
     usage_enUS: "<from (optional)> <to (optional)> <amount (optional)>",
+    examples_enUS: [
+        "currency eur",
+        "convert brl jpy 30",
+        "cc usd 30",
+        "conv aud cad"
+    ],
     code: `
 $if[$argsCount==3]
 
@@ -64,6 +70,9 @@ $if[$argsCount==2]
         ;no]
         
         $onlyIf[$getObjectProperty[rates.EUR]!=;{execute:args}]
+
+        $onlyIf[$charCount[$message[1]]==3;]
+
         $onlyIf[$getObjectProperty[base]==$toUppercase[$message[1]];{execute:args}]
 
         $createObject[$jsonRequest[https://api.exchangerate.host/latest?base=$toUppercase[$message[1]]&symbols=USD,JPY,BRL,EUR,RUB,GBP&amount=$message[2]]]
@@ -84,6 +93,8 @@ $if[$argsCount==2]
         $onlyIf[$getObjectProperty[query.amount]!=;{execute:args}]
         $onlyIf[$getObjectProperty[info.rate]!=;{execute:args}]
         $onlyIf[$getObjectProperty[result]!=;{execute:args}]
+
+        $onlyIf[$charCount[$message[2]]$charCount[$message[1]]==33;{execute:args}]
 
         $createObject[$jsonRequest[https://api.exchangerate.host/convert?from=$toUppercase[$message[1]]&to=$toUppercase[$message[2]]&amount=1]]
 

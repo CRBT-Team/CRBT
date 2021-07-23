@@ -1,7 +1,13 @@
 module.exports.command = {
     name: "aoijs",
-    aliases: ["aoi", "dbdjs", "dbd"],
+    aliases: ["aoi"],
     module: "admin",
+    description_enUS: "Gives aoi.js' documentation on a given query or function",
+    usage_enUS: "<aoi.js function | search>",
+    examples_enUS: [
+        "aoi $findUser",
+        "aoijs $reply"
+    ],
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/kam0X4w.png}

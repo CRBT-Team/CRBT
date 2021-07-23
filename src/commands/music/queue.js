@@ -10,15 +10,15 @@ module.exports.command = {
 $if[$checkContains[$checkCondition[$message==]$checkCondition[$message==1];true]==true]
 
 $reply[$messageID;
-{author:Queue - Page 1 ($queueLength song$replaceText[$replaceText[$checkCondition[$queueLength==1];true;s];false;]):${illustrations.music.queue}}
+{author:Queue - Page 1 ($queueLength song$replaceText[$replaceText[$checkCondition[$queueLength==1];true;];false;s]):${illustrations.music.queue}}
 {description:
 $replaceText[**Now playing:**
 [$songInfo[title]]($songInfo[url])
-Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[$songInfo[duration]; Seconds;s] | Added by <@!$songInfo[userID]>
+Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[\`$replaceText[$songInfo[duration]; Seconds;s]\`;0s (00:00:00);🔴 LIVE] | Added by <@!$songInfo[userID]>
 —
-$replaceText[$replaceText[$queue[1;11;{number}. [{title}](<{url}>)
-Uploaded by [{publisher}]({publisher_url}) | {duration} | Added by <@!{userID}>
-—]; Seconds;s] a;— a;]
+$replaceText[$replaceText[$replaceText[$queue[1;11;{number}. [{title}](<{url}>)
+Uploaded by [{publisher}]({publisher_url}) | \`{duration}\` | Added by <@!{userID}>
+—]; Seconds;s];0s (00:00:00);🔴 LIVE] a;— a;]
 $replaceText[$replaceText[$checkCondition[$queueLength>12];true;and $math[$queueLength-10] more... (\`$getServerVar[prefix]queue 2\`)];false;]
 ;—\n a;]
 }
@@ -32,16 +32,16 @@ $reply[$messageID;
 {description:
 **Now playing:**
 [$songInfo[title]]($songInfo[url])
-Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[$songInfo[duration]; Seconds;s] | Added by <@!$songInfo[userID]>
+Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[\`$replaceText[$songInfo[duration]; Seconds;s]\`;0s (00:00:00);🔴 LIVE] | Added by <@!$songInfo[userID]>
 —
-$replaceText[$replaceText[$queue[$message[1];11;{number}. [{title}](<{url}>)
-Uploaded by [{publisher}]({publisher_url}) | {duration} | Added by <@!{userID}>
-—]; Seconds;s] a;— a;]
+$replaceText[$replaceText[$replaceText[$queue[$message[1];11;{number}. [{title}](<{url}>)
+Uploaded by [{publisher}]({publisher_url}) | \`{duration}\`  | Added by <@!{userID}>
+—]; Seconds;s];0s (00:00:00);🔴 LIVE] a;— a;]
 }
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$onlyIf[$math[$message*11]<$queueLength;{execute:queuePageMissing}]
+$onlyIf[$math[(($message-1)*11)+1]<$queueLength;{execute:queuePageMissing}]
 $onlyIf[$isNumber[$message]==true;{execute:args}]
 
 $endif

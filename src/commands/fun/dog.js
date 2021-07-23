@@ -1,9 +1,9 @@
 module.exports.command = {
-  name: "dog",
-  description_enUS: "Gives a random dog image & fact!",
-  module: "fun",
-  aliases: ["doggo", "doggy"],
-  code: `
+    name: "dog",
+    description_enUS: "Gives a random dog image & fact!",
+    module: "fun",
+    aliases: ["doggo", "doggy"],
+    code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {field:$get[dyk-$getGlobalUserVar[language]]}
