@@ -22,7 +22,7 @@ $channelSendMessage[$get[channel];
 $if[$channelType==dm]
 <@!$authorID> in **DMs**
 $else
-<@!$authorID> in **[$serverName[$guildID]**](https://discord.com/channels/$guildID/$channelID/$messageID)**
+<@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
 $endif \`\`\`
 $replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
 \`\`\`

@@ -62,9 +62,11 @@ $reply[$messageID;
 {color:${colors.success}}
 ;no]
 
+$onlyIf[$rolePosition[$highestRole[$get[id]]]>$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
+$if[$checkContains[$checkCondition[$authorID!=$ownerID]$checkCondition[$memberExists[$message[1]]==false];false]!=true]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
-$onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]];{execute:modHierarchy}]
 $onlyIf[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]];{execute:modHierarchy}]
+$endif
 $onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
 $onlyIf[$memberExists[$get[id]]==true;{execute:modAlready}]

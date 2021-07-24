@@ -34,7 +34,7 @@ $reply[$messageID;
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];settings&administration;settings-$hasPerms[$authorID;admin]];settings;settings-$hasPerms[$authorID;admin]];administration;settings-$hasPerms[$authorID;admin]];settings-$hasPerms[$authorID;admin]-$hasPerms[$authorID;admin];settings-$hasPerms[$authorID;admin]]]
+$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];moderationeration;moderation];settings&administration;settings-$hasPerms[$authorID;admin]];settings;settings-$hasPerms[$authorID;admin]];administration;settings-$hasPerms[$authorID;admin]];settings-$hasPerms[$authorID;admin]-$hasPerms[$authorID;admin];settings-$hasPerms[$authorID;admin]]]
 
 $endelseIf
 $else

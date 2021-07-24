@@ -129,7 +129,7 @@
             "banners": "<:banners:857340872944517120>"
         },
         "other": {
-            "coolwoah": "<:coolwoah:859734784754450442>",
+            "coolwoah": "<:coolwoah:717684437508161546>",
             "goodmeal": "<:good_meal:750034917743919256>",
             "heart": "<:heart:858010663226310676>"
         }
@@ -184,18 +184,20 @@
         "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png"
     },
     "links": {
-        "privacypolicy": "https://crbt.ga/privacy",
+        "privacypolicy": "https://crbt.ga/policy",
         "baseURL": "https://crbt.ga/",
         "banners": "https://crbt.ga/banners/",
         "invite": "https://crbt.ga/invite",
-        "newVersion": "https://crbt.ga/blog/v10-changelog",
+        "invite2": "https://discord.com/api/oauth2/authorize?client_id=595731552709771264&permissions=8&redirect_uri=https%3A%2F%2Fcrbt.ga%2Fthankyou&scope=bot%20applications.commands",
+        "inviteMin": "https://discord.com/api/oauth2/authorize?client_id=595731552709771264&permissions=0&redirect_uri=https%3A%2F%2Fcrbt.ga%2Fthankyou&scope=bot%20applications.commands",
+        "newVersion": "https://crbt.ga/changelog",
         "vote": {
-            "topgg": "https://top.gg/bot/595731552709771264/vote",
+            "topgg": "https://crbt.ga/vote",
             "discordbots": "https://discord.bots.gg/bots/595731552709771264"
         },
         "info": {
             "discord": "https://crbt.ga/discord",
-            "messages": "https://crbt.ga/404"
+            "messages": "https://crbt.ga/blog/about-crbt-messages"
         },
         "channels": {
             "report": "843146449675747378",
@@ -217,10 +219,10 @@
         "geniusSecret": "eGI3sE0VdNDGCeKcIhWn_rbTeSvrRGz1yPczb5MGHd71BfW0XAQ-ZgWgCxWCOyK5mJWsxhOEWeCb0_OBChL02Q"
     },
     "botinfo": {
-        "version": "10.0",
+        "version": "10.0.1",
         "build": 40,
         "news": [
-            "https://crbt.ga/blog/v10-changelog"
+            "https://crbt.ga/changelog"
         ]
     },
     "logos": {

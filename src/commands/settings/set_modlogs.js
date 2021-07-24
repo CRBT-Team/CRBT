@@ -28,7 +28,7 @@ $replaceText[$replaceText[$checkCondition[$getServerVar[modlogs_channel]==$getVa
 <#$mentionedChannels[1]>
 :yes}
 
-{color:${colors.green}}
+{color:${colors.success}}
 ;no]
 
 $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$clientID;sendmessages]==true;{execute:botPerms}]

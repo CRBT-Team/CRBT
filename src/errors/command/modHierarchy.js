@@ -13,16 +13,16 @@ $let[title-enUS;${emojis.error} $get[cond]]
 
 $let[cond;$replaceText[
 $replaceText[$replaceText[
-$checkCondition[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]]]
-;false;You can't $getGlobalUserVar[lastCmd] users above you in the role hierarchy.]
+$checkCondition[$rolePosition[$highestRole[$get[id]]]>$rolePosition[$highestRole[$clientID]]]
+;false;I can't $getGlobalUserVar[lastCmd] users above me or on the same height in the role hierarchy.]
 ;true;
 $replaceText[$replaceText[
 $checkCondition[$rolePosition[$highestRole[$get[id]]]!=$rolePosition[$highestRole[$authorID]]]
 ;false;You can't $getGlobalUserVar[lastCmd] users with the same highest role.]
 ;true;
 $replaceText[$replaceText[
-$checkCondition[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$clientID]]]
-;false;I can't $getGlobalUserVar[lastCmd] users above me in the role hierarchy.]
+$checkCondition[$rolePosition[$highestRole[$get[id]]]>=$rolePosition[$highestRole[$authorID]]]
+;false;You can't $getGlobalUserVar[lastCmd] users above you in the role hierarchy.]
 ;true;what]]];\n;]]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

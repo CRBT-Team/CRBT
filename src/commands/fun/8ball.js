@@ -1,4 +1,4 @@
-const { emojis, illustrations } = require("../../../index");
+const { emojis, illustrations, colors } = require("../../../index");
 
 module.exports.command = {
     name: "8ball",
@@ -12,23 +12,28 @@ $editMessage[$get[id];
 $if[$checkContains[$toLowercase[$message];who]==true]
 
     {description:$get[who-$getGlobalUserVar[language]]}
+    {color:$getGlobalUserVar[color]}
 
 $elseIf[$checkContains[$toLowercase[$message];when will;when is;when am;when are]==true]
 
     {description:$get[whenFuture-$getGlobalUserVar[language]]}
+    {color:$getGlobalUserVar[color]}
 
 $endelseIf
 $elseIf[$checkContains[$toLowercase[$message];when did;when has;when was;when]==true]
 
     {description:$get[whenPast-$getGlobalUserVar[language]]}
+    {color:$getGlobalUserVar[color]}
 
 $endelseIf
 $else
 
-    {description:$get[answer-$getGlobalUserVar[language]]}
+    {description:
+    $replaceText[$replaceText[$checkCondition[$get[$get[answer-$getGlobalUserVar[language]]-$getGlobalUserVar[language]]==];false;$get[$get[answer-$getGlobalUserVar[language]]-$getGlobalUserVar[language]]];true;$get[answer-$getGlobalUserVar[language]]]
+    }
+    {color:$get[color]}
 
 $endif
-{color:$getGlobalUserVar[color]}
 ;$channelID]
 
 $wait[500ms]
@@ -48,7 +53,25 @@ $let[whenFuture-enUS;$randomText[Likely tomorrow.;Maybe later today.;Hopefully s
 
 $let[whenPast-enUS;$randomText[I think it was yesterday.;Wasn't it last week?;My sources say it was several years ago.;If I recall correctly... never.;I'm pretty sure it was a long long time ago.]]
 
-$let[answer-enUS;$randomText[🟢 Yeah!;🔴 Definitely, no.;🟠 I'm not sure...;🔴 Nah...;🔴 It may seem like it's a yes, but in fact nope!;🟢 Absolutely.;🟢 As I see it, yes.;🟠 Sort of...;🔴 Maybe not.;🟢 Probably.;🟢 Of course!]]
+$if[$checkContains[$toLowercase[$message];I;myself;me]$checkContains[$toLowercase[$message];suicide;die;kill;murder;hang]$checkContains[$toLowercase[$message];not]==truetruefalse]
+
+$let[answer-enUS;You have so much to live for. <:sad:717683548487811111>]
+
+$let[color;${colors.red}]
+
+$else
+
+$let[color;$replaceText[$replaceText[$replaceText[$get[answer-enUS];negative;${colors.red}];positive;${colors.green}];neutral;${colors.orange}]]
+
+$let[answer-enUS;$randomText[neutral;negative;positive]]
+
+$let[neutral-enUS;${emojis.colors.orange}  $randomText[I'm not sure...;Sort of...]]
+
+$let[negative-enUS;${emojis.colors.red}  $randomText[Definitely, no.;Nah...;It may seem like it's a yes, but in fact nope!;Maybe not.]]
+
+$let[positive-enUS;${emojis.colors.green}  $randomText[Yeah!;Absolutely.;As I see it, yes.;Probably.;Of course!]]
+
+$endif
 
 $let[progress-enUS;$randomText[Hmmmm...;Let me think...;Thinking in progress...;Loading answers...]]
 

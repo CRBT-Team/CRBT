@@ -48,7 +48,11 @@ $let[openIn-enUS;Open in kitsu.io]
 
 $onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
-$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message]]
+$if[$djsEval[require ('os').cpus()[0].model;yes]==Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz]
+$createObject[$jsonRequest[http://api.clembs.xyz/other/anime/$message];;Unfortunately, the API is down...]
+$else
+$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message];;Unfortunately, the API is down...]
+$endif
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

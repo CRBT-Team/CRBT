@@ -19,9 +19,9 @@ $get[discord-$getGlobalUserVar[language]]
 ;no]
 
 $let[title-enUS;$userTag[595731552709771264] - Invite]
-$let[recommendedPerms-enUS;**[Invite CRBT with recommanded permissions](${links.invite})**
+$let[recommendedPerms-enUS;**[Invite CRBT with recommanded permissions](${links.invite2})**
 Get all of CRBT's features working perfectly, with no permissions issues]
-$let[noPerms-enUS;**[Invite CRBT with no permissions](https://discord.com/oauth2/authorize?client_id=595731552709771264&permissions=0&redirect_uri=https%3A%2F%2Fcrbt.ga%2Fthankyou&response_type=code&scope=bot%20identify)**
+$let[noPerms-enUS;**[Invite CRBT with no permissions](${links.inviteMin})**
 Restrict CRBT's features (useful if you have a "Bots" role with set permissions)]
 $let[discord-enUS;**[Join the Discord community](${links.info.discord})**
 Get support, try new features and engage with the other members!]
