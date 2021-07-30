@@ -42,7 +42,7 @@ $onlyIf[$jsonRequest[https://dbdjs.leref.ga]!=;api down xd]
 
 $argsCheck[1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
-$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyForIDs[327690719085068289;$botOwnerID;{execute:owneronly}]
     `}

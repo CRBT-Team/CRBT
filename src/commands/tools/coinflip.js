@@ -6,18 +6,9 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Flips a Purplet that either lands on heads or tails.",
     code: `
-$editMessage[$get[id];
+$reply[$messageID;
 {title:$get[result-$getGlobalUserVar[language]]}
 {image:$replaceText[$replaceText[$replaceText[$get[random];heads;https://cdn.clembs.xyz/zBYEdTb.png];tails;https://cdn.clembs.xyz/WsyQVPX.png];side;https://cdn.clembs.xyz/Kkeq1eD.png]}
-{color:$getGlobalUserVar[color]}
-;$channelID]
-
-$wait[2s]
-
-$let[id;$botLastMessageID]
-$reply[$messageID;
-{title:$get[title-$getGlobalUserVar[language]]}
-{image:https://clembs.xyz/media/placeholder-image.png}
 {color:$getGlobalUserVar[color]}
 ;no]
 
@@ -29,6 +20,16 @@ $let[random;$randomText[tails;tails;tails;tails;tails;heads;heads;heads;heads;he
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+/*
+$wait[2s]
+
+$let[id;$botLastMessageID]
+$reply[$messageID;
+{title:$get[title-$getGlobalUserVar[language]]}
+{image:https://clembs.xyz/media/placeholder-image.png}
+{color:$getGlobalUserVar[color]}
+;no]
+ */

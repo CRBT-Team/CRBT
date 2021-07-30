@@ -48,7 +48,7 @@ $textSplit[$replaceText[$toLowercase[$message]; ;];/]
 
 $onlyIf[$checkContains[$checkCondition[$get[msg]==he/him]$checkCondition[$get[msg]==she/her]$checkCondition[$get[msg]==they/them]$checkCondition[$get[msg]==any]$checkCondition[$get[msg]==other]$checkCondition[$get[msg]==ask]$checkCondition[$get[msg]==username]$checkCondition[$get[msg]==unspecified];true]==true;{execute:args}]
 
-$get[msg;$toLowercase[$replaceText[$message; ;]]]
+$let[msg;$toLowercase[$replaceText[$message; ;]]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

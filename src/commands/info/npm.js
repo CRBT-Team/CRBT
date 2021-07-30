@@ -3,7 +3,11 @@ module.exports.command = {
     aliases: ["npminfo", "npm-info", "npm_info","packageinfo"],
     description_enUS: "Gives information on a specified npm package.",
     module: "info",
-    usage_enUS: "<npm package name (e.g. discord.js, ytdl-core)>",
+    usage_enUS: "<npm package>",
+    examples_enUS: [
+        "npm discord.js",
+        "npminfo ytdl-core"
+    ],
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/ZgJCsA8.png}

@@ -29,7 +29,7 @@ module.exports.variables = {
 //server related misc data
 
     webhook_token: "", webhook_id: "",
-    locked: false,
+//  locked: false,
     music_channel: "",
     strikes: "", 
     strikelog: "",
@@ -38,12 +38,12 @@ module.exports.variables = {
 //  skip_votes: 0,
 //  skip_users: "",
 //  stopped_playback: false,
-    newPopup: false,
+//  newPopup: false,
 
 
 //modules
 
-    module_autoreact: true, //Auto-react
+//  module_autoreact: true, //Auto-react
     module_autoPublish: false, //Auto-publish
     module_economy: true, //Economy & Profiles
     module_fun: true, //Fun

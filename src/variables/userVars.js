@@ -8,7 +8,21 @@ module.exports.variables = {
     language: "enUS",
     telemetry: "complete", //two states: minimal or complete 
 //  paintedColor: "", //for name color
+
+//experiments
+    experimentalFeatures: false, //to enable experimental features
     
+    
+//experimentalFeatures flag
+    r34Query: "", //last query for ()rule34
+    todolist: "", //for now we're using the old to-do lists since we ain't got time
+    //work related stuff
+    job_type: "unemployed", 
+    job_xp: 0, 
+    job_req: 800, 
+    job_level: 1, 
+    job_propositions: "",
+
 
 //user related misc data
 
@@ -16,16 +30,12 @@ module.exports.variables = {
     lastCmd: "", //export last used cmd
 //  avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
     city: "", //last city entered in ()weather
-    r34Query: "", //last query for ()rule34
     hourly_streak: 0,
-    temp: "", //these vars can be used for anything
-    temp1: "", 
-    temp2: "",
-    temp3: "",
+//  temp: "", //these vars can be used for anything
+//  temp1: "", 
+//  temp2: "",
+//  temp3: "",
 //  reminders: "",
-
-//for now we're using the old to-do lists since we ain't got time
-    todolist: "",
 
 //  list1: "",list2: "",list3: "",
 //  list4: "",list5: "",list6: "",
@@ -44,14 +54,6 @@ module.exports.variables = {
     invbanner: "", 
     invmisc: "", 
     invbadge: "",
-
-
-//work related stuff
-    job_type: "unemployed", 
-    job_xp: 0, 
-    job_req: 800, 
-    job_level: 1, 
-    job_propositions: "",
 
 
 //profiles

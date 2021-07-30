@@ -69,9 +69,8 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
     const { Util } = require("discord.js");
     
-    let clean1 = Util.cleanContent(str2, message);
+    let content = Util.cleanContent(str2, message);
 
-    let content = clean1
     const pog = content.trim().split("").reverse().join("")
     
     let clean2 = Util.cleanContent(pog, message);
@@ -95,9 +94,8 @@ $else
     
         const { Util } = require("discord.js");
         
-        let clean1 = Util.cleanContent(str2, message);
-    
-        let content = clean1
+        let content = Util.cleanContent(str2, message);
+
         const pog = content.trim().split("").reverse().join("")
         
         d.object.reversed = Util.cleanContent(pog, message);
@@ -106,7 +104,7 @@ $else
 $endif
 
 $let[nick;$nickname]
-$let[message;$replaceText[$replaceText[$message;";'];\n;\\n]]
+$let[message;$replaceText[$replaceText[$replaceText[$replaceText[$message;enoyreve@;enoyreve‎@]ereh‎@;];";'];\n;\\n]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

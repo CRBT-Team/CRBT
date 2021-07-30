@@ -9,18 +9,8 @@ module.exports.command = {
     code: `
 $if[$message==]
 
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-        $reactionCollector[$botLastMessageID;$authorID;12m;⚙️,👥;servset;userset;yes]
-    $endif
-
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:${illustrations.settings}}
-
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-        {description:$get[desc1-$getGlobalUserVar[language]]}
-    $else
-        {description:$get[desc2-$getGlobalUserVar[language]]}
-    $endif
 
 {field:Prefix:
 Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
@@ -45,18 +35,8 @@ Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$g
 
 $elseIf[$toLowercase[$message]==server]
 
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-        $reactionCollector[$botLastMessageID;$authorID;12m;⚙️,👥;servset;userset;yes]
-    $endif
-
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:${illustrations.settings}}
-
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-    {description:$get[desc1-$getGlobalUserVar[language]]}
-    $else
-    {description:$get[desc2-$getGlobalUserVar[language]]}
-    $endif
 
     {field:Prefix:
 Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
@@ -81,18 +61,8 @@ Changeable with \`$getServerVar[prefix]mutedrole $commandInfo[mutedrole;usage_$g
 $endelseIf
 $elseIf[$toLowercase[$message]==user]
 
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-        $reactionCollector[$botLastMessageID;$authorID;12m;⚙️,👥;servset;userset;yes]
-    $endif
-
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]]:${illustrations.settings}}
-
-    $if[$hasPermsInChannel[$channelID;$clientID;addreactions]==true]
-    {description:$get[desc1-$getGlobalUserVar[language]]}
-    $else
-    {description:$get[desc2-$getGlobalUserVar[language]]}
-    $endif
 
     {field:Prefix:
     Set to \`$getServerVar[prefix]\`. (default: \`$getVar[prefix]\`)
@@ -120,10 +90,8 @@ $else
 $endif
 
 $let[title-enUS;CRBT Settings - Dashboard]
-$let[desc1-enUS;Add a corresponding reaction to the message to switch between menus.\n**Index:** ⚙️ Server Settings | 👥 User Settings]
-$let[desc2-enUS;To switch to User Settings, you can use \`$getServerVar[prefix]dashboard user\`]
 
-$argsCheck[>1;{execute:args}]
+$argsCheck[<2;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif

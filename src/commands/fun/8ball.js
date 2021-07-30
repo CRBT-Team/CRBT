@@ -7,7 +7,8 @@ module.exports.command = {
     description_enUS: "Askes your question to 8-Ball and gives you its honest answer.",
     usage_enUS: "<question>",
     code: `
-$editMessage[$get[id];
+$reply[$messageID;
+
 {author:$get[title-$getGlobalUserVar[language]]:${illustrations.eightball}}
 $if[$checkContains[$toLowercase[$message];who]==true]
 
@@ -34,15 +35,7 @@ $else
     {color:$get[color]}
 
 $endif
-;$channelID]
 
-$wait[500ms]
-
-$let[id;$botLastMessageID]
-
-$reply[$messageID;
-{title:$get[progress-$getGlobalUserVar[language]]}
-{color:$getGlobalUserVar[color]}
 ;no]
 
 $let[title-enUS;8-Ball]
@@ -52,14 +45,6 @@ $let[who-enUS;$randomText[I think it's <@!$randomUserID>.;For sure, it's <@!$ran
 $let[whenFuture-enUS;$randomText[Likely tomorrow.;Maybe later today.;Hopefully soon.;Probably next week.;Never.;In a couple of months.;In several years from now.]]
 
 $let[whenPast-enUS;$randomText[I think it was yesterday.;Wasn't it last week?;My sources say it was several years ago.;If I recall correctly... never.;I'm pretty sure it was a long long time ago.]]
-
-$if[$checkContains[$toLowercase[$message];I;myself;me]$checkContains[$toLowercase[$message];suicide;die;kill;murder;hang]$checkContains[$toLowercase[$message];not]==truetruefalse]
-
-$let[answer-enUS;You have so much to live for. <:sad:717683548487811111>]
-
-$let[color;${colors.red}]
-
-$else
 
 $let[color;$replaceText[$replaceText[$replaceText[$get[answer-enUS];negative;${colors.red}];positive;${colors.green}];neutral;${colors.orange}]]
 
@@ -71,8 +56,6 @@ $let[negative-enUS;${emojis.colors.red}  $randomText[Definitely, no.;Nah...;It m
 
 $let[positive-enUS;${emojis.colors.green}  $randomText[Yeah!;Absolutely.;As I see it, yes.;Probably.;Of course!]]
 
-$endif
-
 $let[progress-enUS;$randomText[Hmmmm...;Let me think...;Thinking in progress...;Loading answers...]]
 
 $argsCheck[>1;{execute:args}]
@@ -81,3 +64,15 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+/* 
+
+$wait[500ms]
+
+$let[id;$botLastMessageID]
+
+$reply[$messageID;
+{title:$get[progress-$getGlobalUserVar[language]]}
+{color:$getGlobalUserVar[color]}
+;no]
+
+*/

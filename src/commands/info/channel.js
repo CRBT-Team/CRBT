@@ -7,6 +7,11 @@ module.exports.command = {
     module: "info",
     description_enUS: "Gives several info on a specified channel, or the current one if no arguments are given.",
     usage_enUS: "<channel ID | channel name | #channel (optional)>",
+    examples_enUS: [
+        "channelinfo",
+        "channel #general",
+        "ci"
+    ],
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]}

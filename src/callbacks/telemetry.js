@@ -47,27 +47,6 @@ $endif
 
 $let[commandname;$replaceText[$message[1];$getServerVar[prefix];]]
 
-$if[$getServerVar[newPopup]$checkCondition[$commandInfo[$replaceText[$message[1];$getServerVar[prefix];];name]==]==falsefalse]
-
-$sendMessage[
-{author:Information - Release of CRBT 10.0:${illustrations.music.information}}
-
-{description:
-Small disclaimer to say that we recently completely revamped CRBT, 
-meaning **everything** will look different than before, so don't worry.
-If you want to know more about this update, click **[here](${links.newVersion})**. 
-If you don't, sorry for the annoying pop-up (it won't appear again).
-}
-
-{thumbnail:${illustrations.newCRBT}}
-
-{color:${colors.default}}
-;no]
-
-$setServerVar[newPopup;true]
-
-$endif
-
 $onlyIf[$isBot[$authorID]==false;]
 $onlyIf[$userExists[$authorID]==true;]
 $onlyIf[$checkCondition[$toLowercase[$message[1]]==js]==false;]

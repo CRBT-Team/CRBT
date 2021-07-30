@@ -4,6 +4,7 @@ module.exports.botLeaveCommand = {
     channel: `${links.channels.telemetry}`,
     code: `
 $deleteServerVar[prefix]
+$deleteServerVar[volume]
 
 $channelSendMessage[${links.channels.telemetry};
 <@!327690719085068289>

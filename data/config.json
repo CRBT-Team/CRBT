@@ -65,8 +65,8 @@
             "category": "<:category:861645653326692362>"
         },
         "users": {
-            "humans": "<:members:859167506324783174>",
-            "bots": "<:members:859167506324783174>",
+            "humans": "<:members:658538493470965787>",
+            "bots": "<:members:658538493470965787>",
             "status": {
                 "dnd": "<:DND:782585535008735233>",
                 "idle": "<:Idle:782585660682928149>",
@@ -190,7 +190,6 @@
         "invite": "https://crbt.ga/invite",
         "invite2": "https://discord.com/api/oauth2/authorize?client_id=595731552709771264&permissions=8&redirect_uri=https%3A%2F%2Fcrbt.ga%2Fthankyou&scope=bot%20applications.commands",
         "inviteMin": "https://discord.com/api/oauth2/authorize?client_id=595731552709771264&permissions=0&redirect_uri=https%3A%2F%2Fcrbt.ga%2Fthankyou&scope=bot%20applications.commands",
-        "newVersion": "https://crbt.ga/changelog",
         "vote": {
             "topgg": "https://crbt.ga/vote",
             "discordbots": "https://discord.bots.gg/bots/595731552709771264"
@@ -201,10 +200,11 @@
         },
         "channels": {
             "report": "843146449675747378",
-            "reportDev": "843146465365852170",
+            "reportDev": "870761936365707314",
             "telemetry": "848294622416732240",
             "error": "829605038656978985"
-        }
+        },
+        "links.CRBTclientID": "595731552709771264"
     },
     "tokens": {
         "soundcloud": "YlwZoLxM9l93V0gI0GdIGeZjHJeLM9bP",
@@ -217,13 +217,6 @@
         "genius": "kNt1T10m-YjrUrerF8tmdvewuudTF_XZEOud3YQhlSbokD2BdSAB1a79PAR2vNLY",
         "geniusID": "ZWcCtEEF3uHxG5bG2wQhOZZ8cX8PI5ZuxeUAXJ-klnZuSiU8JoV6Wr88KICn-Yfw",
         "geniusSecret": "eGI3sE0VdNDGCeKcIhWn_rbTeSvrRGz1yPczb5MGHd71BfW0XAQ-ZgWgCxWCOyK5mJWsxhOEWeCb0_OBChL02Q"
-    },
-    "botinfo": {
-        "version": "10.0.1",
-        "build": 40,
-        "news": [
-            "https://crbt.ga/changelog"
-        ]
     },
     "logos": {
         "CRBT": "https://crbt.ga/assets/logos/crbt.png",

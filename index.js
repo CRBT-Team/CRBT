@@ -1,11 +1,11 @@
 // Imports
 const { Bot } = require("aoi.js");
-const instance = require("./instance");
+// const instance = require("./instance");
 const { readFileSync } = require("fs");
 require("dotenv").config();
 
 // Configuration files
-const { colors, emojis, links, tokens, botinfo, illustrations, logos } =
+const { colors, emojis, links, tokens, illustrations, logos } =
     JSON.parse(readFileSync("data/config.json", "utf-8"));
 const { items } = JSON.parse(readFileSync("data/store.json", "utf-8"));
 const { jobs } = JSON.parse(readFileSync("data/jobs.json", "utf-8"));
@@ -20,17 +20,17 @@ const bot = new Bot({
 
 // Export the bot, configuration files and instance to be accessed better by commands
 module.exports = {
-    bot, colors, emojis, jobs, links, tokens, botinfo, items, logos, illustrations, instance, api,
+    bot, colors, emojis, jobs, links, tokens, items, logos, illustrations, api,
 };
 
 // Listeners
-bot.onMessage({ guildOnly: false }); // Allow commands to work in DMs
+bot.onMessage({ guildOnly: true }); // Allow commands to work in DMs
 bot.onInteractionCreate(); // For slash commands / interactions
 bot.onGuildJoin(); // Send a message when the bot joins a guild
 bot.onGuildLeave(); // Deletes some of the guild's variables when CRBT is kicked, to save space in the DB
 bot.onMessageDelete(); // Message deleted logs
 bot.onMessageUpdate(); // Message edited logs
-bot.onJoined(); //For pi's autorole
+// bot.onJoined(); //For pi's autorole
 
 // Command handler
 require("./loadCmds")();

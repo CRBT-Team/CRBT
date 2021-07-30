@@ -2,14 +2,18 @@ module.exports.command = {
     name: "anime",
     aliases: ['searchanime','animesearch'],
     description_enUS: "Searches your query on kitsu.io, and returns a corresponding anime.",
-    usage_enUS: "<anime name (e.g. Konosuba, Attack on Titan)",
+    usage_enUS: "<anime title>",
+    examples_enUS: [
+        "animesearch Konosuba",
+        "anime Attack on Titan"
+    ],
     module: "info",
     code: `
 $reply[$messageID;
-{author:$get[title-$getGlobalUserVar[language]]:https://cdn.clembs.xyz/C6PFAcn.png}
+{author:$replaceText[$getObjectProperty[titles.canonical];:;#COLON#] - Anime info:https://cdn.clembs.xyz/C6PFAcn.png}
 
 {description:
-**[$get[openIn-$getGlobalUserVar[language]]](https://kitsu.io/anime/$getObjectProperty[id])** $replaceText[$replaceText[$checkCondition[$getObjectProperty[youtubeVideoId]==];true;];false;| **[Open YouTube trailer](https://youtu.be/$getObjectProperty[youtubeVideoId])**]
+**[Open in kitsu.io](https://kitsu.io/anime/$getObjectProperty[id])** $replaceText[$replaceText[$checkCondition[$getObjectProperty[youtubeVideoId]==];true;];false;| **[Open YouTube trailer](https://youtu.be/$getObjectProperty[youtubeVideoId])**]
 }
 
 {field:Synopsis:
@@ -43,20 +47,13 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[endDate]==];true;Si
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;$replaceText[$getObjectProperty[titles.canonical];:;#COLON#] - Anime info]
-$let[openIn-enUS;Open in kitsu.io]
-
 $onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
-$if[$djsEval[require ('os').cpus()[0].model;yes]==Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz]
-$createObject[$jsonRequest[http://api.clembs.xyz/other/anime/$message];;Unfortunately, the API is down...]
-$else
-$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message];;Unfortunately, the API is down...]
-$endif
+$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message;;Unfortunately, the API is down...]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
+$onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

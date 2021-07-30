@@ -23,7 +23,7 @@ $get[modules-$getGlobalUserVar[language]]}
 ;no]
 
 
-$elseIf[$checkContains[ $toLowercase[$message] ; auto-react ; misc ; economy & profiles ; profiles ; mod ; autoreact ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
+$elseIf[$checkContains[ $toLowercase[$message] ; misc ; economy & profiles ; profiles ; mod ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
@@ -115,32 +115,6 @@ $endif
 $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif
-
-
-
-$let[autoreact-enUS;Autoreact triggers:
-$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon} This module is enabled on this server.];false;${emojis.toggleoff} This module is disabled on this server.]
-
-• \`yummy, delicious, good meal, great meal...\`
-Triggers the $get[goodmeal] reaction.
-• \`woah, coolwoah, wow\`
-Triggers the $get[coolwoah] reaction.
-• \`énorme\`
-Triggers the $get[énorme] reaction.
-• \`crbt\` + \`good bot, best bot\`
-Triggers the $get[heart] reaction.
-• *\`suicide-related trigger words\`*
-Triggers the $get[nodont] reaction.
-]
-
-$let[énorme;$replaceText[$replaceText[$get[con];true;<:enorme:738807762988957786>];false;👍]]
-$let[heart;$replaceText[$replaceText[$get[con];true;$randomText[${e.heart};💚;${e.coolwoah};👍;🥰]];false;💚]]
-$let[coolwoah;$replaceText[$replaceText[$get[con];true;$randomText[${e.coolwoah};😎]];false;😎]]
-$let[nodont;❌]
-$let[goodmeal;$replaceText[$replaceText[$get[con];true;${e.goodmeal}];false;😋]]
-
-$let[con;$checkCondition[$clientID==595731552709771264]]
-
 
 $let[basic-enUS;Basic commands:
 ${emojis.forcedon} This module can't be disabled.
@@ -307,7 +281,6 @@ $let[desc-enUS;If you need extra information on any command, you can simply use 
 Note: Not all commands and modules are displayed for simplicity purposes. A website containing all of the commands is in construction and will be updated here as well.]
 
 $let[modules-enUS;
-$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react: \`$getServerVar[prefix]help autoreact\`
 ${emojis.forcedon} Basic: \`$getServerVar[prefix]help basic\`
 $replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles: \`$getServerVar[prefix]help economy\`
 $replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun: \`$getServerVar[prefix]help fun\`

@@ -21,7 +21,7 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
         
-    hook.send("$get[message]");
+    hook.send("$getObjectProperty[message]");
     ]
 
     $wait[200ms]
@@ -44,21 +44,24 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
     
-    hook.send("$get[message]");
+    hook.send("$getObjectProperty[message]");
     ]
 
     $endif
 
 $else
 
-    $reply[$messageID;
-    {title:$get[message]}
-    {color:$getGlobalUserVar[color]}
-    ;no]
-
+    $getObjectProperty[message]
+    
 $endif
 
-$let[message;https://clembs.xyz/media/$replaceText[$replaceText[$replaceText[$message; ;-];";];\n;]]
+$djsEval[
+const { Util } = require("discord.js");
+        
+d.object.message = Util.cleanContent("$get[message]", message);
+]
+
+$let[message;https://clembs.xyz/media/$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;@everyone;@‎everyone];@here;@‎here]; ;-];";];\n;]]
 
 $onlyIf[$checkContains[$stringEndsWith[$message;.png]$stringEndsWith[$message;.gif]$stringEndsWith[$message;.mp4]$stringEndsWith[$message;.wav];true]==true;]
 

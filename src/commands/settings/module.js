@@ -43,7 +43,7 @@ All commands belonging to this module will now be executable in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==false;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; music ; autoreact ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; music ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
 
 $let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
@@ -68,7 +68,7 @@ All commands belonging to this module will no longer execute in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==true;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; music ; autoreact ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; music ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
 
 $let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
@@ -86,7 +86,6 @@ $endif
 $let[title-enUS;CRBT Settings - Modules]
 $let[modules-enUS;Modules:
 $replaceText[$replaceText[$hasPerms[$authorID;manageserver];true;To enable or disable any module, use \`$getServerVar[prefix]module <enable | disable> <module name>\`.];false;Note that you will need the "Manage server" permissions on this server to disable or enable any of these.]
-$replaceText[$replaceText[$getServerVar[module_autoreact];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-react
 $replaceText[$replaceText[$getServerVar[module_autoPublish];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-publish
 $replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles
 $replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun

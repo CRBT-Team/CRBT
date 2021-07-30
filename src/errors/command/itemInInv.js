@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.error} I have an air of déjà vu...]
+$let[title-enUS;${emojis.error} Ever get that feeling of déjà vu?]
 $let[description-enUS;You already own this item! To use it, you can use \`$getServerVar[prefix]$toLowercase[$message]\`.]
     `}

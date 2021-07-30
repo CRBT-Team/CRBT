@@ -6,6 +6,11 @@ module.exports.command = {
     description_enUS: "Gives info on a specified GitHub user, or a repository (if any specified).",
     usage_enUS: "<GitHub username> <repository (optional)>",
     module: "info",
+    examples_enUS: [
+        "github Clembs",
+        "gh CRBT-Team",
+        "git Clembs Clembs"
+    ],
     code: `
 $if[$argsCount==1]
     $reply[$messageID;

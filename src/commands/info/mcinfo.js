@@ -3,6 +3,11 @@ module.exports.command = {
     aliases: ['minecraft', 'minecraft-info', 'mc-info', 'skin', 'mc','mcskin'],
     description_enUS: "Gives the UUID, the name and the skin of a specified Minecraft Java player.",
     usage_enUS: "<Minecraft Java Edition player name>",
+    examples_enUS: [
+        "mcinfo Clembs",
+        "skin Jeb_",
+        "mcskin Dinnerbone"
+    ],
     module: "info",
     code: `
 $reply[$messageID;

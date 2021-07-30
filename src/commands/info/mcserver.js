@@ -3,12 +3,16 @@ module.exports.command = {
     module: "info",
     description_enUS: "Gives info about a specified Minecraft Java server.",
     usage_enUS: "<Minecraft Java Edition server IP/hostname>",
+    examples_enUS: [
+        "mcserver cubecraft.net",
+        "mcserver 2b2t.org"
+    ],
     code: `
 $reply[$messageID;
 {author:$getObjectProperty[hostname] - Minecraft server info}
 
 {description:
-$getObjectProperty[motd.clean]
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[motd.clean];#LEFT#;#LEFT#];#LEFT_BRACKET#;#LEFT_BRACKET#];&gt;];&lt;];|;];,;\n]
 }
 
 {field:IPv4:

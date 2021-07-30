@@ -1,16 +1,13 @@
 const { meanings } = require("../../data/api.json");
-const { bot, botinfo, instance } = require("../../index");
+const { bot } = require("../../index");
 const router = require("express").Router();
+const { version } = require("../../package.json");
 
 router.get("/", async function (req, res) {
     res.json({
         status: 200,
         online: true,
-        news: botinfo.news,
-        version: {
-            major: botinfo.version,
-            build: botinfo.build,
-        },
+        build: version,
     });
 });
 
@@ -18,15 +15,6 @@ router.get("/meaning", async function (req, res) {
     res.json({
         status: 200,
         meaning: meanings[Math.floor(Math.random() * (meanings.length - 0 + 1))],
-    });
-});
-
-router.get("/stats", async function (req, res) {
-    res.json({
-        status: 200,
-        memberCount: instance.memberCount,
-        guildCount: instance.guildCount,
-        commandCount: instance.commandCount,
     });
 });
 

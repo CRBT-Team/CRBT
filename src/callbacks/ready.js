@@ -1,7 +1,7 @@
-const { botinfo } = require("../../index");
+const { version } = require("../../package.json");
 
 module.exports.readyCommand = { 
     channel: "738747595438030891",
     code: `
-$log[Running $username[$clientID] build ${botinfo.build} / version ${botinfo.version}]
+$log[Running $username[$clientID] build ${version}]
     `}

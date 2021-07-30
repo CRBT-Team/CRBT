@@ -1,4 +1,4 @@
-const { colors, emojis, links, botinfo } = require("../../../index");
+const { colors, emojis, links } = require("../../../index");
 
 module.exports.command = {
     name: "fix",
@@ -33,7 +33,7 @@ $editMessage[$message[1];
 {title:$get[title]}
 {description:$replaceText[$get[description];#LEFT_BRACKET#;#LEFT_BRACKET#]}
 {field:Status:
-${emojis.success} $replaceText[$replaceText[$get[title];Bug report;Fixed];Suggestion;Added] in $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;beta ${botinfo.build}];true;stable ${botinfo.version}]
+${emojis.success} $replaceText[$replaceText[$get[title];Bug report;Fixed];Suggestion;Added]
 :yes}
 {footer:$get[footer]}
 {color:${colors.success}}
@@ -47,7 +47,7 @@ $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]
 $let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
-$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];true;${links.channels.report}];false;${links.channels.reportDev}]]
+$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==${links.CRBTclientID}];true;${links.channels.report}];false;${links.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 

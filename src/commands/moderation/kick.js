@@ -9,7 +9,9 @@ module.exports.command = {
     userPerms: "kick",
     botPerms: "kick",
     code: `
+$if[$getGlobalUserVar[experimentalFeatures]==true]
 $setUserVar[strikes;**Kick** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
+$endif
 
 $kick[$get[id];$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]]]
 
@@ -45,10 +47,14 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 <@!$authorID>
 :yes}
 
+$if[$getGlobalUserVar[experimentalFeatures]==true]
+
 {field:Strike count:
 $getTextSplitLength $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;strike];false;strikes]
 $textSplit[$getUserVar[strikes;$get[id]];|]
 :yes}
+
+$endif
 
 {field:Reason:
 $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]

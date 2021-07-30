@@ -10,7 +10,11 @@ module.exports.command = {
     usage_enUK: "<User ID  |  Username  |  @mention> (optional)",
     usage_frFR: "<ID utilisateur | nom d'utilisateur | @mention> (optionnel)",
     usage_ru: "<ID пользователя | имя пользователя | @упоминание> (Необязательно)",
-    botperms: "",
+    examples_enUS: [
+        "avatar CRBT",
+        "pfp 327690719085068289",
+        "av CRBT Dev#6796"
+    ],
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$findUser[$message];64]}

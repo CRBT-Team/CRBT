@@ -38,10 +38,14 @@ $channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID]
 <@!$authorID>
 :yes}
 
+$if[$getGlobalUserVar[experimentalFeatures]==true]
+
 {field:Strike count:
 $math[$getTextSplitLength-1] $replaceText[$replaceText[$checkCondition[$math[$getTextSplitLength-1]==1];true;strike];false;strikes]
 $textSplit[$getUserVar[strikes;$get[id]];|]
 :yes}
+
+$endif
 
 {color:${colors.green}}
 ]

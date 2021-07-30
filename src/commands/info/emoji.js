@@ -6,6 +6,11 @@ module.exports.command = {
     module: "info",
     description_enUS: "Outputs information about a specified emoji",
     usage_enUS: "<custom emoji | standard Unicode emoji>",
+    examples_enUS: [
+        "emojiinfo good_meal",
+        "ei 😎",
+        "emote <:partner:866113174314287125>"
+    ],
     code: `
 $if[$checkContains[${emojis};$message[1]]==true]
 

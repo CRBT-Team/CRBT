@@ -4,8 +4,13 @@ module.exports.command = {
     name: "buy",
     aliases: ["purchase", "acquire"],
     module: "economy",
-    description_enUS: "Spends your Purplets on a specified item.",
-    usage_enUS: "<item name (e.g. \"badge flushed\" or \"banner stripes\")>",
+    description_enUS: "Spends your Purplets on a specified item. Use <prefix>store to get a list of all available items.",
+    usage_enUS: "<item name>",
+    examples_enUS: [
+        "buy badge flushed",
+        "acquire banner stripes",
+        "purchase badge france"
+    ],
     code: `
 $setGlobalUserVar[inv$toLowercase[$message[1]];$getGlobalUserVar[inv$toLowercase[$message[1]]], $toLowercase[$message[1]] $replaceText[$toLowercase[$messageSlice[1]]; ;]]
 $setGlobalUserVar[user_bank;$math[$getGlobalUserVar[user_bank]-$getObjectProperty[$get[item].value]]]
@@ -28,7 +33,7 @@ $onlyIf[$getObjectProperty[$get[item].name]!=CRBT Partner;{execute:partnerNotSal
 
 $onlyIf[$getObjectProperty[$get[item].contents]!=;{execute:unknownItem}]
 
-$onlyIf[$checkContains[$getGlobalUserVar[inv$toLowercase[$message[1]]];$toLowercase[$message[1]] $replaceText[$toLowercase[$messageSlice[1]]; ;]]==false;{execute:itemInInv}]
+$onlyIf[$checkContains[ $getGlobalUserVar[inv$toLowercase[$message[1]]] ; $toLowercase[$message[1]] $replaceText[$toLowercase[$messageSlice[1]]; ;] ]==false;{execute:itemInInv}]
 
 $let[item;$replaceText[$replaceText[$replaceText[$toLowercase[$message];banner ;banner.];badge ;badge.]; ;]]
 

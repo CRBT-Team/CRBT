@@ -44,7 +44,7 @@ ${emojis.colors.black} \`Black\`
 ${emojis.colors.gray} \`Gray\`
 ${emojis.colors.white} \`White\`
     :yes}
-    {thumbnail:http://localhost:15019/other/color/$getGlobalUserVar[color]}
+    {thumbnail:https://api.clembs.xyz/other/color/$getGlobalUserVar[color]}
     {color:$getGlobalUserVar[color]}
     ;no]
 
@@ -75,7 +75,6 @@ $endif
 
 $djsEval[const { colors } = require("../../../../../index");
 d.object.colors = colors]
-$createObject[{}]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
