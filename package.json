@@ -2,7 +2,7 @@
     "name": "crbt",
     "author": "CRBT Developers",
     "description": "The Discord companion made for you.",
-    "version": "2021.10.42",
+    "version": "2021.10.43",
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon index.js"

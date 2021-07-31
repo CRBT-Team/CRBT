@@ -2,7 +2,7 @@ const { colors, emojis, links } = require("../../../index");
 
 module.exports.command = {
     name: "suggest",
-    module: "misc",
+    module: "basic",
     aliases: ["feedback", "request", "suggestion"],
     description_enUS: "Sends a suggestion for CRBT (english only).",
     usage_enUS: "<suggestion (may include images)>",

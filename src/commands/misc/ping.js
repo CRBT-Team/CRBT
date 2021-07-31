@@ -1,6 +1,6 @@
 module.exports.command = {
     name: "ping",
-    module: "misc",
+    module: "basic",
     description_enUS: "Pings <botname> and then displays information relative to its connection.",
     description_enUK: "Pings <botname> and returns <botname>'s connection latency.",
     description_frFR: "Pingue <botname>, puis donne des informations sur son temps de réponse, la latence API, son temps d'activité, etc...",
@@ -21,7 +21,7 @@ $editMessage[$botLastMessageID;
 
 $let[average;$round[$math[($botPing+$getObjectProperty[final]+$ping+$dbPing)/4]]]
 
-$let[title-enUS;$userTag[$clientID] - Ping]
+$let[title-enUS;$username[$clientID] - Ping]
 $let[messageLatency-enUS;Message latency: $round[$math[$ping/3]]ms]
 $let[apiLatency-enUS;API latency: $getObjectProperty[final]ms]
 $let[wsLatency-enUS;WebSocket latency: $botPingms]

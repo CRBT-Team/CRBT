@@ -61,12 +61,11 @@ $get[$getGlobalUserVar[telemetry]2-$getGlobalUserVar[language]]
 To learn more about CRBT Telemetry, please read the **[Privacy policy](${links.privacypolicy})**.
 You can disable or enable telemetry by using \`$getServerVar[prefix]telemetry $commandInfo[telemetry;usage_enUS]\`.]
 
-$let[complete1-enUS;${emojis.success} Telemetry set to Complete mode. / Clembs will now have access to the following information:]
-$let[complete2-enUS;• The command name + the arguments (what come after the command name)
-• Where the command was executed (DMs/Server)
+$let[complete1-enUS;${emojis.success} Telemetry set to Complete mode. / Clembs, CRBT's developer will now have access to the following information:]
+$let[complete2-enUS;• The command name + the options used
 • Your user ID
 • The platform (Desktop/Mobile/Web)]
-$let[minimal1-enUS;${emojis.success} Telemetry set to Minimal mode. / Clembs will now have access to the following information:]
+$let[minimal1-enUS;${emojis.success} Telemetry set to Minimal mode. / Clembs, CRBT's developer will now have access to the following information:]
 $let[minimal2-enUS;• The command name]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

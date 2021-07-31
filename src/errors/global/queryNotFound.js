@@ -39,6 +39,9 @@ $let[mcinfo-2-enUS;Make sure to include a valid Minecraft Java Edition player na
 $let[mcserver-1-enUS;${emojis.error} Internal Exception: \`io.crbt.handler.timeout.unknownServer\`]
 $let[mcserver-2-enUS;Couldn't find this Minecraft Java Edition server! Make sure to use a valid host address or that the server is online.]
 
+$let[module-1-enUS;${emojis.error} Wait what?!]
+$let[module-2-enUS;This CRBT module doesn't exist... Make sure to check your spelling and the list of modules at \`$getServerVar[prefix]modules\`.\nIf you wish to request a module, use \`$getServerVar[prefix]request <your suggestion here>\`! :D]
+
 $let[npm-1-enUS;${emojis.error} Couldn't find this npm module.]
 $let[npm-2-enUS;If it was recently added, it may not be there yet. Be sure to check [npmjs.com](https://npmjs.com).]
 

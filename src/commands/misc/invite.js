@@ -3,7 +3,7 @@ const { links } = require("../../../index");
 module.exports.command = {
     name: "invite",
     aliases: ["crbtinvite", "discord"],
-    module: "misc",
+    module: "basic",
     description_enUS: "Gives useful links to invite CRBT or to join the Discord community.",
     code: `
 $reply[$messageID;
@@ -18,7 +18,7 @@ $get[discord-$getGlobalUserVar[language]]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[title-enUS;$userTag[595731552709771264] - Invite]
+$let[title-enUS;$username[595731552709771264] - Invite]
 $let[recommendedPerms-enUS;**[Invite CRBT with recommanded permissions](${links.invite2})**
 Get all of CRBT's features working perfectly, with no permissions issues]
 $let[noPerms-enUS;**[Invite CRBT with no permissions](${links.inviteMin})**

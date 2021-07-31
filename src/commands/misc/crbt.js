@@ -1,50 +1,60 @@
-const { links } = require("../../../index");
+const { links, colors } = require("../../../index");
 
 module.exports.command = {
     name: "info",
-    module: "misc",
+    module: "basic",
     aliases: ["crbti", "crbt", "bi", "botinfo", "bot-info", "bot_info", "crbt-info", "crbt_info", "stats", "crbtinfo"],
     description_enUS: "Gives detailed information and news about <botname>.",
     description_enUK: "Sends detailed information and the latest news of <botname>",
     description_frFR: "Présente des informations détaillées et actualités sur <botname>.",
     description_ru: "Даёт подробную информацию и новости о <botname>",
     code: `
-$reply[$messageID;  
+$editMessage[$get[id];  
     {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
-
-    {description:
-    $get[description-$getGlobalUserVar[language]]
-    }
 
     {field:$get[members-$getGlobalUserVar[language]]:yes}
 
     {field:$get[servers-$getGlobalUserVar[language]]:yes}
 
-    {field:$get[creationDate-$getGlobalUserVar[language]]:yes}
+    {field:$get[channels-$getGlobalUserVar[language]]:yes}
 
-    {field:$get[ping-$getGlobalUserVar[language]]:yes}
+    {field:$get[creationDate-$getGlobalUserVar[language]]:no}
 
-    {field:$get[uptime-$getGlobalUserVar[language]]:yes}
+    {field:$get[ping-$getGlobalUserVar[language]]:no}
 
-    {field:$get[computer-$getGlobalUserVar[language]]:yes}
+    {field:$get[uptime-$getGlobalUserVar[language]]:no}
 
     {thumbnail:$userAvatar[$clientID;512]}
 
     {color:$getGlobalUserVar[color]}
-;no]
+;$channelID]
 
-$let[title-enUS;$userTag[$clientID] - Information]
-$let[description-enUS;**[Website](${links.baseURL})** | **[Add to Discord](${links.invite})** | **[Support server](${links.info.discord})** | **[Vote on top.gg](${links.vote.topgg})**]
+$let[title-enUS;$username[$clientID] - Information]
 $let[members-enUS;Members:$numberSeparator[$allMembersCount]]
 $let[servers-enUS;Servers:$numberSeparator[$serverCount]]
-$let[creationDate-enUS;Created on:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
-$let[ping-enUS;Ping: Message: $pingms\nWebSocket: $botPingms\nDatabase: $dbPingms]
-$let[uptime-enUS;Uptime: $getObjectProperty[uptime]]
-$let[computer-enUS;Server: Disk speed: $roundTenth[$divide[$divide[$multi[$ram;8];$divide[$ping;1000]];1000];2] GB/s\nRAM: $ram MB\nCPU: $cpu%\nHosted on $replaceText[$replaceText[$checkCondition[$clientID==595731552709771264];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;Club Hosting]]
+$let[channels-enUS;Channels:$numberSeparator[$allChannelsCount]]
+$let[creationDate-enUS;Created:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)]
+$let[ping-enUS;Ping:≈$round[$math[($ping+$replaceText[$botPing;-;]+$dbPing)/3]] milliseconds (\`$getServerVar[prefix]ping\`)]
+$let[uptime-enUS;Online since:<t:$get[up]> (<t:$get[up]:R>)]
+
+$let[up;$round[$formatDate[$math[$dateStamp-$getObjectProperty[ms]];X]]]
 
 $djsEval[const tools = require('dbd.js-utils')
 let theUptimeInMS = tools.parseToMS("$replaceText[$uptime; ;]")
-d.object.uptime = tools.parseMS(theUptimeInMS)]
+d.object.uptime = tools.parseMS(theUptimeInMS)
+d.object.ms = theUptimeInMS]
+
+$let[id;$splitText[1]]
+
+$textSplit[$apiMessage[;
+{title:Loading...}
+{color:${colors.orange}}
+;{actionRow:$get[web]:$get[invite]:$get[server]}
+;$messageID:false;yes]; ]
+
+$let[server;Discord,2,5,$replaceText[${links.info.discord};:;#COLON#]]
+$let[invite;Invite,2,5,$replaceText[${links.invite};:;#COLON#]]
+$let[web;Website,2,5,$replaceText[${links.baseURL};:;#COLON#]]
 
 $argsCheck[0;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

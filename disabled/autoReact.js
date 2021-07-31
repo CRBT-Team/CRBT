@@ -1,4 +1,4 @@
-const { emojis, items } = require("../../index");
+const { emojis, items } = require("../index");
 const b = items.badges
 const e = emojis.other
 

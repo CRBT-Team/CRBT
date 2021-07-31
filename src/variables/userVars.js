@@ -31,17 +31,8 @@ module.exports.variables = {
 //  avatarLog: "", //the logs for the avatar, will probably change the method if it gets too messy
     city: "", //last city entered in ()weather
     hourly_streak: 0,
-//  temp: "", //these vars can be used for anything
-//  temp1: "", 
-//  temp2: "",
-//  temp3: "",
-//  reminders: "",
+    helpSuggestions: "",
 
-//  list1: "",list2: "",list3: "",
-//  list4: "",list5: "",list6: "",
-//  list7: "",list8: "",list9: "",
-//  list10: "",
-    test: `{"hello":"yes"}`,
 
 //economy
 

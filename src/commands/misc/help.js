@@ -10,20 +10,25 @@ module.exports.command = {
         "cmds music",
         "command help"
     ],
-    module: "misc",
+    module: "basic",
     aliases: ["aled", "ouho", "commands", "cmds", "command", "cmd"],
     code: `
 $if[$message==]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
-{description:$get[desc-$getGlobalUserVar[language]]
-$get[modules-$getGlobalUserVar[language]]}
+
+{description:$get[desc-$getGlobalUserVar[language]]}
+
+$get[modules]
+
+{field:$get[suggested-$getGlobalUserVar[language]]}
+
 {color:$getGlobalUserVar[color]}
 ;no]
 
 
-$elseIf[$checkContains[ $toLowercase[$message] ; misc ; economy & profiles ; profiles ; mod ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
+$elseIf[$checkContains[ $toLowercase[$message] ; economy & profiles ; profiles ; mod ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
@@ -114,6 +119,30 @@ $endif
 
 $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
+$endif
+
+$if[$checkContains[$checkCondition[$getUserVar[helpSuggestions]==]$checkContains[$getUserVar[helpSuggestions];basic-general-];true]==true]
+$let[suggested-enUS;Suggested commands:
+Note: Suggestions will only get better as you use CRBT more often!
+\`\`\`
+• $getServerVar[prefix]report $commandinfo[report;usage_enUS]
+• $getServerVar[prefix]info
+• $getServerVar[prefix]invite
+• $getServerVar[prefix]play $commandinfo[play;usage_enUS]
+• $getServerVar[prefix]balance
+\`\`\`
+]
+$setUserVar[helpSuggestions;basic-general-$hasPerms[$authorID;manageserver]]
+$else
+$let[suggested-enUS;Suggested commands:
+Note: Suggestions will only get better as you use CRBT more often!
+\`\`\`
+$splitText[1]
+$splitText[2]
+$splitText[3]
+\`\`\`
+]
+$textSplit[$getUserVar[helpSuggestions];-]
 $endif
 
 $let[basic-enUS;Basic commands:
@@ -277,17 +306,58 @@ $commandinfo[r34;description_enUS]
 • \`$getServerVar[prefix]sperm\`
 • \`$getServerVar[prefix]vagina\`||]
 
-$let[desc-enUS;If you need extra information on any command, you can simply use \`$getServerVar[prefix]help\` followed by the command name.
-Note: Not all commands and modules are displayed for simplicity purposes. A website containing all of the commands is in construction and will be updated here as well.]
+$let[desc-enUS;If you need information on a command, use \`$getServerVar[prefix]help <command name>\`.
+Keep your eyes peeled for the full command list website, coming soon.]
 
-$let[modules-enUS;
-${emojis.forcedon} Basic: \`$getServerVar[prefix]help basic\`
-$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles: \`$getServerVar[prefix]help economy\`
-$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun: \`$getServerVar[prefix]help fun\`
-$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info: \`$getServerVar[prefix]help info\`
-$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation: \`$getServerVar[prefix]help moderation\`
-$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music: \`$getServerVar[prefix]help music\`
-${emojis.forcedon} Settings & Administration: \`$getServerVar[prefix]help settings\`
-$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools: \`$getServerVar[prefix]help tools\`
+$let[modules;
+{field:$get[economy] Economy:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[fun] Fun:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[info] Info:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[moderation] Moderation:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[music] Music:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[tools] Tools:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[forced] Basic:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
+
+{field:$get[forced] Settings:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+:yes}
 ]
+
+$let[economy;$replaceText[$replaceText[$getServerVar[module_economy];true;$get[on]];false;$get[off]]]
+$let[fun;$replaceText[$replaceText[$getServerVar[module_fun];true;$get[on]];false;$get[off]]]
+$let[info;$replaceText[$replaceText[$getServerVar[module_info];true;$get[on]];false;$get[off]]]
+$let[moderation;$replaceText[$replaceText[$getServerVar[module_moderation];true;$get[on]];false;$get[off]]]
+$let[music;$replaceText[$replaceText[$getServerVar[module_music];true;$get[on]];false;$get[off]]]
+$let[tools;$replaceText[$replaceText[$getServerVar[module_tools];true;$get[on]];false;$get[off]]]
+
+$let[forced;$replaceText[${emojis.forcedon};:;#COLON#]]
+$let[on;$replaceText[${emojis.toggleon};:;#COLON#]]
+$let[off;$replaceText[${emojis.toggleoff};:;#COLON#]]
+
     `}
+
+/*
+
+{field:$get[modules-$getGlobalUserVar[language]]}
+
+*/

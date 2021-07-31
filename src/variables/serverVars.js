@@ -64,7 +64,7 @@ module.exports.variables = {
 //  module_customCommands: false,
 
 //  can't be disabled
-    module_misc: true, //Misc (previously "Basic")
+    module_basic: true, //Misc (previously "Basic")
     module_settings: true, //Settings
     module_partnerCmd: true, //Partner command
     module_admin: true, //Admin

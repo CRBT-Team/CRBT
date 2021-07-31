@@ -7,51 +7,32 @@ $useChannel[${links.channels.telemetry}]
 
 $if[$getGlobalUserVar[telemetry]==complete]
 
-    $if[$checkContains[$message[1];$getServerVar[prefix]]==true]
-        
-        $description[\`\`\`
-$replaceText[$replaceText[$message;$getServerVar[prefix];()];\`;]\`\`\`]
+    $description[\`\`\`
+$replaceText[$replaceText[$replaceText[$message;$getServerVar[prefix] ;()];$getServerVar[prefix];()];\`;]\`\`\`]
 
-        $addField[Platform;$toLocaleUppercase[$platform];yes]
-        $addField[User ID;$authorID;yes]
-        $addField[Type;$replaceText[$replaceText[$checkCondition[$channelType==dm];false;Server];true;DM];yes]
-
-    $elseIf[$mentioned[1]==$clientID]
-
-        $description[\`\`\`
-$replaceText[$replaceText[$message;$getServerVar[prefix];()];\`;]\`\`\`]
-
-        $addField[Platform;$toLocaleUppercase[$platform];yes]
-        $addField[User ID;$authorID;yes]
-        $addField[Type;$replaceText[$replaceText[$checkCondition[$channelType==dm];false;Server];true;DM];yes]
-
-    $endelseif
-    $endif
+    $addField[Platform;$toLocaleUppercase[$platform];yes]
+    $addField[User ID;$authorID;yes]
 
 $else
 
-    $if[$checkContains[$message[1];$getServerVar[prefix]]==true]
-            
 \`\`\`
-()$get[commandname]\`\`\`
-
-    $elseIf[$mentioned[1]==$clientID]
-
+()$get[commandname]
 \`\`\`
-()$get[commandname]\`\`\`
-
-    $endelseif
-    $endif
 
 $endif
 
-$let[commandname;$replaceText[$message[1];$getServerVar[prefix];]]
+$setUserVar[helpSuggestions;$replaceText[$replaceText[$checkCondition[$get[a]==];true;basic];false;$get[a]]-$splitText[2]-$hasPerms[$authorID;manageserver]]
+$textSplit[$getUserVar[helpSuggestions];-]
+
+$let[a;$commandInfo[$toLowercase[$get[commandname]];module]]
+
+$onlyIf[$commandInfo[$toLowercase[$get[commandname]];name]!=djseval;]
+$onlyIf[$commandInfo[$toLowercase[$get[commandname]];name]!=eval;]
+
+$let[commandname;$replaceText[$replaceText[ $message; $getServerVar[prefix] ;]; $getServerVar[prefix];]]
 
 $onlyIf[$isBot[$authorID]==false;]
 $onlyIf[$userExists[$authorID]==true;]
-$onlyIf[$checkCondition[$toLowercase[$message[1]]==js]==false;]
-$onlyIf[$checkCondition[$toLowercase[$message[1]]==eval]==false;]
-$onlyIf[$checkCondition[$toLowercase[$message[1]]==e]==false;]
 
-$onlyIf[$stringStartsWith[$message[1];$getServerVar[prefix]]==true;]
+$onlyIf[$stringStartsWith[$message;$getServerVar[prefix]]==true;]
     `}
