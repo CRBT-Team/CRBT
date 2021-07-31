@@ -41,7 +41,7 @@ module.exports.variables = {
 //  list4: "",list5: "",list6: "",
 //  list7: "",list8: "",list9: "",
 //  list10: "",
-
+    test: `{"hello":"yes"}`,
 
 //economy
 
