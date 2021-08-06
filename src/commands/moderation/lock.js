@@ -12,7 +12,7 @@ $if[$getChannelVar[locked]==false]
 
 $setChannelVar[locked;true]
 
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
+$channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];false;$channelID];true;$getServerVar[modlogs_channel]];
 
 {author:#$channelName - Lock}
 
@@ -42,7 +42,7 @@ $else
 
 $setChannelVar[locked;$getVar[locked]]
 
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
+$channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];false;$channelID];true;$getServerVar[modlogs_channel]];
 
 {author:#$channelName - Unlock}
 

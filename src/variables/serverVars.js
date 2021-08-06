@@ -1,7 +1,6 @@
 module.exports.variables = {
     
 //server settings
-
     prefix: "//",
     muted_role: "none",
     volume: 50, //which is interprated as 100 on CRBT
@@ -14,20 +13,16 @@ module.exports.variables = {
 //  loggingLook: "fancy",
 //  serverLogsChannel: "none", 
 
-
 //server profiles    
-   
 //  guild_contributors: "", 
 //  guild_contributed: 0, 
 //  guild_trophies: "none", 
-    partnered_guild: false, 
+//  partnered_guild: false, 
 //  guild_description: "none", 
 //  guild_bank: 0,
-    guild_banner: "",
-
+//  guild_banner: "",
 
 //server related misc data
-
     webhook_token: "", webhook_id: "",
 //  locked: false,
     music_channel: "",
@@ -40,9 +35,7 @@ module.exports.variables = {
 //  stopped_playback: false,
 //  newPopup: false,
 
-
 //modules
-
 //  module_autoreact: true, //Auto-react
     module_autoPublish: false, //Auto-publish
     module_economy: true, //Economy & Profiles

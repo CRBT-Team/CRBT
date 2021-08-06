@@ -13,20 +13,15 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
     
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     hook.setUsername('$nickname'.toUpperCase());
     hook.setAvatar('$authorAvatar');
     
-    let random = Math.random().toString(36).substr(2, 5);
-    let str = "$get[message] a" + random;
-    str2 = str.replaceAll(" a" + random, '')
-
     const { Util } = require("discord.js");
-    let clean = Util.cleanContent(str2, message);
+    let clean = Util.cleanContent("$get[message]", message);
 
     hook.send("**" + clean.toUpperCase() + "!!!**");
     ]
@@ -43,20 +38,15 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
     
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     hook.setUsername('$nickname'.toUpperCase());
     hook.setAvatar('$authorAvatar');
     
-    let random = Math.random().toString(36).substr(2, 5);
-    let str = "$get[message] a" + random;
-    str2 = str.replaceAll(" a" + random, '')
-
     const { Util } = require("discord.js");
-    let clean = Util.cleanContent(str2, message);
+    let clean = Util.cleanContent("$get[message]", message);
 
     hook.send("**" + clean.toUpperCase() + "!!!**");
     ]
@@ -66,13 +56,13 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 $else
 
     $reply[$messageID;
-    {title:**$toUppercase[$message]!!!**}
+    {title:**$get[message]!!!**}
     {color:$getGlobalUserVar[color]}
     ;no]
 
 $endif
 
-$let[message;$replaceText[$replaceText[$message;";'];\n;\\n]]
+$let[message;$replaceText[$replaceText[$toUppercase[$message];";'];\n;\\n]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

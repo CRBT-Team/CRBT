@@ -2,7 +2,7 @@
     "name": "crbt",
     "author": "CRBT Developers",
     "description": "The Discord companion made for you.",
-    "version": "2021.10.43",
+    "version": "2021.10.44",
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon index.js"
@@ -14,6 +14,7 @@
         "discord-snowflake": "^1.0.1",
         "discord-together": "^1.1.14",
         "discord-webhook-node": "^1.1.8",
+        "emoji-api": "^1.0.2",
         "emoji-unicode": "^2.0.1",
         "expr-eval": "^2.0.2",
         "express": "^4.17.1",

@@ -1,0 +1,26 @@
+{
+    "enUS": {
+        "CRBT": {
+            "title": "$username[$clientID] - Mini-help",
+            "description": "$username[$clientID]'s prefix for this server is `$getServerVar[prefix]`.\nIf you don't know how to use CRBT, you can use the `$getServerVar[prefix]help` command!"
+        },
+        "ping": {
+            "": ""
+        },
+        "info": {
+            "title": "$username[$clientID] - Information",
+            "members": "Members:$numberSeparator[$allMembersCount]",
+            "servers": "Servers:$numberSeparator[$serverCount]",
+            "channels": "Channels:$numberSeparator[$allChannelsCount]",
+            "creationDate": "Created:<t:$formatDate[$creationDate[$clientID;date];X]> (<t:$formatDate[$creationDate[$clientID;date];X]:R>)",
+            "ping": "Ping:≈$round[$math[($ping+$replaceText[$botPing;-;]+$dbPing)/3]] milliseconds (`$getServerVar[prefix]ping`)",
+            "uptime": "Online since:<t:$get[up]> (<t:$get[up]:R>)",
+            "loading": "Loading...",
+            "buttons": {
+                "server": "Discord",
+                "invite": "Invite",
+                "web": "Website"
+            }
+        }
+    }
+}

@@ -9,8 +9,8 @@ module.exports.command = {
     code: `
 $if[$getServerVar[modlogs_channel]!=none]
     
-$channelSendMessage[$getServerVar[modlogs_channel];
-    
+$channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];true;$getServerVar[modlogs_channel]];false;];
+
 {author:$userTag - Message Clear:$authorAvatar}
 
 {field:Moderator:

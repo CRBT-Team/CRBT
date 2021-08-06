@@ -2,14 +2,12 @@ const { logos, emojis, items, illustrations, links, colors } = require("../../in
 const badges = items.badges; const banners = items.banners
 
 module.exports.command = {
-    name: "store",
-    aliases: ["shop"],
+    name: "store2",
+    aliases: ["shop2"],
     description_enUS: "Displays the CRBT Store menu.",
     usage_enUS: "<banners | badges (optional)>",
     module: "economy",
     code: `
-$setMessageVar[temp1;hello;$get[id]]
-
 $editMessage[$get[id];
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
 
@@ -18,28 +16,21 @@ $editMessage[$get[id];
 Emojis you can add up to your profile.
 **${emojis.store.banners} Banners**
 A unique image you can have on your profile. 
-
-$if[$channelType==dm]
-You will need to type \`$getServerVar[prefix]store\` and the category of your choice, as interactions are disabled in DMs.
-$endif
 }
 
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 
 {color:$getGlobalUserVar[color]}
 ;$channelID]
+$awaitButtons[msgid;userfilter;customID;awaitcommand;error,embed,flags;uses]
+$awaitButtons[$get[id];$authorID;banners,badges;blocklist,module;error,,64;]
 
-$let[id;$botLastMessageID]
-
-$apiMessage[;
+$let[id;$apiMessage[;
 {title:Loading CRBT Store...}
 {color:${colors.orange}}
 ;
-
-$if[$channelType!=dm]
 {actionRow:$get[badges]:$get[banners]}
-$endif
-;$messageID:false;no]
+;$messageID:false;yes]]
 
 $let[title-enUS;CRBT Store - Home]
 

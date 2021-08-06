@@ -35,7 +35,7 @@ $reply[$messageID;
 Uploaded by [$songInfo[publisher]]($songInfo[publisher_url]) | $replaceText[\`$replaceText[$songInfo[duration]; Seconds;s]\`;0s (00:00:00);🔴 LIVE] | Added by <@!$songInfo[userID]>
 —
 $replaceText[$replaceText[$replaceText[$queue[$message[1];11;{number}. [{title}](<{url}>)
-Uploaded by [{publisher}]({publisher_url}) | \`{duration}\`  | Added by <@!{userID}>
+Uploaded by [{publisher}]({publisher_url}) | \`{duration}\` | Added by <@!{userID}>
 —]; Seconds;s];0s (00:00:00);🔴 LIVE] a;— a;]
 }
 {color:$getGlobalUserVar[color]}

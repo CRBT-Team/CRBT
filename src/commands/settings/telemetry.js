@@ -1,72 +1,27 @@
-const { emojis, colors, illustrations, links } = require("../../../index"); 
+const { emojis, colors, illustrations, links, logos } = require("../../../index"); 
 
 module.exports.command = {
     name: "telemetry",
     aliases: ["datacollect", "privacypolicy", "privacy", "data-collect", "data"],
-    description_enUS: "Gets CRBT's privacy policy or changes your telemetry mode.",
-    usage_enUS: "<minimalist | complete (optional)>",
-    module: "settings",
+    description_enUS: "Shows CRBT's privacy policy.",
+    module: "basic",
     code: `
-$if[$message==]
+$reply[$messageID;
+{author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
+{description:$get[desc-$getGlobalUserVar[language]]}
+{field:Upon using CRBT's commands:
+Upon triggering CRBT with a command (e.g. \`$getServerVar[prefix]ping\`), info such as the command name, options, your user ID, the platform you're using (Desktop/Mobile/Web) as well as some analytics on some specific commands are logged.}
+{field:When inviting or kicking CRBT:
+Whenever you invite CRBT into your server, or kick it out (D:), a log is sent with the server name & ID (in case of abuse).
+}
+{field:More info:
+To learn more about CRBT's telemetry, please read the **[Privacy policy](${links.privacypolicy})**.
+Note: We recently took away the Minimal mode toggle and telemetry configuration. Learn more **[here](${links.policychanges})**.}
+{color:$getGlobalUserVar[color]}
+;no]
 
-    $reply[$messageID;
-    {author:$get[info1-$getGlobalUserVar[language]]:${illustrations.settings}}
-    {description:$get[info2-$getGlobalUserVar[language]]}
-    {color:$getGlobalUserVar[color]}
-    ;no]
-
-$elseIf[$checkContains[$toLowercase[$message[1]];true;on;enable;1;complete]==true]
-
-    $deleteGlobalUserVar[telemetry]
-    $reply[$messageID;
-    {title:$splitText[1]}
-    {description:$splitText[2]
-
-    $get[complete2-$getGlobalUserVar[language]]}
-    {color:${colors.green}}
-    ;no]
-
-    $textSplit[$get[complete1-$getGlobalUserVar[language]];/]
-
-    $onlyIf[$getGlobalUserVar[telemetry]!=complete;{execute:dataAlr}]
-
-$endelseIf
-$elseIf[$checkContains[$toLowercase[$message[1]];false;off;disable;0;minimal]==true]
-
-    $setGlobalUserVar[telemetry;minimal]
-    $reply[$messageID;
-    {title:$splitText[1]}
-    {description:$splitText[2]
-
-    $get[minimal2-$getGlobalUserVar[language]]
-    }
-    {color:${colors.green}}
-    ;no]
-
-    $textSplit[$get[minimal1-$getGlobalUserVar[language]];/]
-
-    $onlyIf[$getGlobalUserVar[telemetry]!=minimal;{execute:dataAlr}]
-
-$endelseIf
-$else
-    $loop[1;args]
-$endif
-
-
-$let[info1-enUS;CRBT Settings - Telemetry]
-$let[info2-enUS;You're currently on the **$toLocaleUppercase[$getGlobalUserVar[telemetry]] mode**, which upon using CRBT grants Clembs access to:
-
-$get[$getGlobalUserVar[telemetry]2-$getGlobalUserVar[language]]
-
-To learn more about CRBT Telemetry, please read the **[Privacy policy](${links.privacypolicy})**.
-You can disable or enable telemetry by using \`$getServerVar[prefix]telemetry $commandInfo[telemetry;usage_enUS]\`.]
-
-$let[complete1-enUS;${emojis.success} Telemetry set to Complete mode. / Clembs, CRBT's developer will now have access to the following information:]
-$let[complete2-enUS;• The command name + the options used
-• Your user ID
-• The platform (Desktop/Mobile/Web)]
-$let[minimal1-enUS;${emojis.success} Telemetry set to Minimal mode. / Clembs, CRBT's developer will now have access to the following information:]
-$let[minimal2-enUS;• The command name]
+$let[title-enUS;CRBT - Telemetry]
+$let[desc-enUS;CRBT collects some of your data in multiple forms:]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]

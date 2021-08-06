@@ -13,31 +13,21 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
 
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     let nick = "$get[nick]"
     const revNick = nick.trim().split("").reverse().join("")
-
     hook.setUsername(revNick);
     hook.setAvatar('$authorAvatar');
 
-    let random = Math.random().toString(36).substr(2, 5);
-    let str = "$get[message] a" + random;
-    str2 = str.replaceAll(" a" + random, '')
-
     const { Util } = require("discord.js");
+    let content = Util.cleanContent("$get[message]", message);
+    const reversed = content.trim().split("").reverse().join("")
     
-    let clean1 = Util.cleanContent(str2, message);
-
-    let content = clean1
-    const pog = content.trim().split("").reverse().join("")
-    
-    let clean2 = Util.cleanContent(pog, message);
-
-    hook.send(clean2);
+    let reclean = Util.cleanContent(reversed, message);
+    hook.send(reclean);
     ]
 
     $wait[200ms]
@@ -52,30 +42,21 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
 
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     let nick = "$get[nick]"
     const revNick = nick.trim().split("").reverse().join("")
-
     hook.setUsername(revNick);
     hook.setAvatar('$authorAvatar');
 
-    let random = Math.random().toString(36).substr(2, 5);
-    let str = "$get[message] a" + random;
-    str2 = str.replaceAll(" a" + random, '')
-
     const { Util } = require("discord.js");
+    let content = Util.cleanContent("$get[message]", message);
+    const reversed = content.trim().split("").reverse().join("")
     
-    let content = Util.cleanContent(str2, message);
-
-    const pog = content.trim().split("").reverse().join("")
-    
-    let clean2 = Util.cleanContent(pog, message);
-
-    hook.send(clean2);
+    let reclean = Util.cleanContent(reversed, message);
+    hook.send(reclean);
     ]
 
     $endif
@@ -88,17 +69,11 @@ $else
     ;no]
 
     $djsEval[
-        let random = Math.random().toString(36).substr(2, 5);
-        let str = "$get[message] a" + random;
-        str2 = str.replaceAll(" a" + random, '')
-    
         const { Util } = require("discord.js");
-        
-        let content = Util.cleanContent(str2, message);
+        let content = Util.cleanContent("$get[message]", message);
 
-        const pog = content.trim().split("").reverse().join("")
-        
-        d.object.reversed = Util.cleanContent(pog, message);
+        const reversed = content.trim().split("").reverse().join("")
+        d.object.reversed = Util.cleanContent(reversed, message);
     ]
 
 $endif

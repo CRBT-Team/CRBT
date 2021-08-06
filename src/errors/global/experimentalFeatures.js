@@ -10,8 +10,8 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.error} Bleep bloop.]
-$let[description-enUS;This command is currently under the "Experimental Features" flag. 
-You can enable this flag by using the \`$getServerVar[prefix]flags +experimentalFeatures\` command.
-Learn more about flags and experimental features **[here](${links.experiments})**.
+$let[description-enUS;This command is currently under the Experimental Features toggle. 
+You can enable Experimental Features using the \`$getServerVar[prefix]experiments on\` command.
+Learn more about this change **[here](${links.experiments})**.
 ]
     `}

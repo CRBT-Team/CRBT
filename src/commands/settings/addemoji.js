@@ -35,7 +35,7 @@ $else
     $reply[$messageID;
     {title:$get[title-$getGlobalUserVar[language]]}
     {description:
-    $get[emoji] (\\$get[emoji]) was successfully added to the server.
+    $get[emoji] ($get[name]) was successfully added to the server.
     }
     {color:${colors.success}}
     ;no]

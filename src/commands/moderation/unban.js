@@ -24,10 +24,10 @@ Unbanned from **$serverName** ($guildID)
 
 {footer:You can't reply back to a CRBT message}
 
-{color:${colors.green}}
+{color:${colors.success}}
 ]
 
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
+$channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];false;$channelID];true;$getServerVar[modlogs_channel]];
 
 {author:$userTag[$get[id]] - Unban:$userAvatar[$get[id]]}
 {field:User:

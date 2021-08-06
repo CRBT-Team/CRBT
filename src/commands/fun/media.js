@@ -2,8 +2,8 @@ module.exports.command = {
     name: "m/",
     nonPrefixed: true,
     module: "fun",
-    description_enUS: "Replaces your message with a media from Clembs.xyz.",
-    usage_enUS: "<text>",
+    description_enUS: "Replaces your message with a corresponding file from clembs.xyz/media.",
+    usage_enUS: "<valid file name>",
     botPerms: ["managewebhooks"],
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
@@ -13,10 +13,9 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
     
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
@@ -36,10 +35,9 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     $deletecommand
     
     $djsEval[
-    const webhook_id = "$getChannelVar[webhook_id]"
-    const webhook_token = "$getChannelVar[webhook_token]"
+    const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook('https://discord.com/api/webhooks/' + webhook_id + '/' + webhook_token);
+    const hook = new Webhook(url);
 
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
@@ -51,15 +49,15 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
 $else
 
+$reply[$messageID;
     $getObjectProperty[message]
-    
+;no]
+
 $endif
 
 $djsEval[
 const { Util } = require("discord.js");
-        
-d.object.message = Util.cleanContent("$get[message]", message);
-]
+d.object.message = Util.cleanContent("$get[message]", message);]
 
 $let[message;https://clembs.xyz/media/$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;@everyone;@‎everyone];@here;@‎here]; ;-];";];\n;]]
 

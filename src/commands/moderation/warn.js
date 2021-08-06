@@ -32,7 +32,7 @@ $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];
 {color:${colors.yellow}}
 ]
 
-$channelSendMessage[$replaceText[$getServerVar[modlogs_channel];none;$channelID];
+$channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];false;$channelID];true;$getServerVar[modlogs_channel]];
 
 {author:$userTag[$get[id]] - Warn:$userAvatar[$get[id]]}
 

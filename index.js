@@ -30,6 +30,7 @@ bot.onGuildJoin(); // Send a message when the bot joins a guild
 bot.onGuildLeave(); // Deletes some of the guild's variables when CRBT is kicked, to save space in the DB
 bot.onMessageDelete(); // Message deleted logs
 bot.onMessageUpdate(); // Message edited logs
+bot.onRateLimit();
 // bot.onJoined(); //For pi's autorole
 
 // Command handler

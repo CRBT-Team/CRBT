@@ -13,7 +13,7 @@ module.exports.command = {
         "p https://open.spotify.com/track/2V4Fx72svQRxrFvNT1eq5f?si=3a498c6c1259480c",
         "play https://soundcloud.com/djmaxeofficial/teamwork-promotional-single"
     ],
-    cooldown: "3s",
+    cooldown: "5s",
     code: `
 $if[$voiceID[$clientID]!=$voiceID]
 
@@ -49,23 +49,21 @@ $replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$ma
     $else
     
         $editMessage[$get[id];
-        {title:Added playlist to queue.}
+        {author:Added playlist to queue:${illustrations.music.queueadded}}
         {color:${colors.success}}
         ;$channelID]
     
-        $let[newQueueLength;$queueLength]
-    
     $endif
     
-    $wait[$get[delay]]
-
     $let[queueLength;$sub[$queueLength;1]]
+
+    $wait[$get[delay]]
 
     $if[$checkContains[$message;soundcloud.com]==true]
         $let[delay;1000ms]
         $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<;];>;];${tokens.soundcloud};0s;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
-        $let[delay;2500ms]
+        $let[delay;$math[3000+$replaceText[$botPing;-;]]ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<;];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
@@ -147,18 +145,15 @@ $replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$ma
         {color:${colors.success}}
         ;$channelID]
     
-        $let[newQueueLength;$queueLength]
-
     $endif
+    
+    $let[queueLength;$sub[$queueLength;1]]
     
     $wait[$get[delay]]
 
-    $let[queueLength;$sub[$queueLength;1]]
-
     $let[id;$botLastMessageID]
-
     $reply[$messageID;
-    {author:$get[message]}
+    {title:$get[message]}
     {color:${colors.orange}}
     ;no]
 
@@ -172,11 +167,11 @@ $replaceText[$replaceText[$checkContains[$getServerVar[volume];-muted];false;$ma
         $let[delay;1000ms]
         $let[songName;$playSoundCloud[$replaceText[$replaceText[$message;<;];>;];${tokens.soundcloud};0s;yes;yes;{execute:addQueue}]]
     $elseIf[$checkContains[$message;open.spotify.com]==true]
-        $let[delay;2000ms]
+        $let[delay;$math[2500+$replaceText[$botPing;-;]]ms]
         $let[songName;$playSpotify[$replaceText[$replaceText[$message;<;];>;];name;yes;{execute:addQueue}]]
         $endelseIf
     $elseIf[$checkContains[$message;http:]$checkContains[$message;youtu]==truetrue]
-    $let[delay;350ms]
+        $let[delay;350ms]
         $let[songName;$playSong[$replaceText[$replaceText[$message;<;];>;];0s;yes;yes;{execute:addQueue}]]
         $endelseIf
     $else

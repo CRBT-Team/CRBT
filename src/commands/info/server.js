@@ -12,7 +12,7 @@ $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[icon]}
 
 {description:
-$replaceText[$replaceText[$getServerVar[partnered_guild;$get[id]];true;${emojis.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];ispartnered];true;${emojis.badges.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];isverified];true;${emojis.badges.partner} ];false;]
+$replaceText[$replaceText[$guild[$get[id];ispartnered];true;${emojis.badges.partner} ];false;]$replaceText[$replaceText[$guild[$get[id];isverified];true;${emojis.badges.partner} ];false;]
 $replaceText[$replaceText[$checkCondition[$serverDescription==];true;];false;$serverDescription\n]$get[icon-$getGlobalUserVar[language]]
 }
 
@@ -105,3 +105,7 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
     `}
+
+/*
+$replaceText[$replaceText[$getServerVar[partnered_guild;$get[id]];true;${emojis.partner} ];false;]
+*/

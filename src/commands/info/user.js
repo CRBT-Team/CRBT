@@ -35,6 +35,10 @@ $replaceText[$replaceText[$activity[$get[id]];Custom Status;Custom Status:\n$rep
 $nickname[$get[id]]
 :yes}
 
+{field:Profile color:
+$replaceText[$replaceText[$checkCondition[$get[color]==];true;None];false;$get[color]]
+:yes}
+
 {field:$get[roles-$getGlobalUserVar[language]]:
 $replaceText[$replaceText[$checkCondition[$userRoles[$get[id];mentions; ]==];true;$get[noRoles-$getGlobalUserVar[language]]];false;$userRoles[$get[id];mentions; ]]
 :no}
@@ -55,8 +59,10 @@ $let[roles-enUS;$replaceText[$replaceText[$checkCondition[$userRoleCount[$get[id
 {image:$get[banner]4096}
 
 {thumbnail:$userAvatar[$get[id];256]}
-{color:$getGlobalUserVar[color;$get[id]]}
+{color:$replaceText[$replaceText[$checkCondition[$get[color]==];true;$getGlobalUserVar[color;$get[id]]];false;$get[color]]}
 ;no]
+
+$let[color;$jsonRequest[https://discordapp.com/api/users/$get[id];banner_color;;Authorization:Bot $clientToken]]
 
 $let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$get[id];date];X]> (<t:$formatDate[$creationDate[$get[id];date];X]:R>)]
 

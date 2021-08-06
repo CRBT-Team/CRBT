@@ -3,25 +3,34 @@ const { links, illustrations, colors } = require("../../index");
 module.exports.command = {
   name: "$alwaysExecute",
   code: `
-$useChannel[${links.channels.telemetry}]
+$channelSendMessage[${links.channels.telemetry};
 
-$if[$getGlobalUserVar[telemetry]==complete]
+{description:\`\`\`
+$replaceText[$replaceText[$replaceText[$message;$getServerVar[prefix] ;()];$getServerVar[prefix];()];\`;]\`\`\`}
 
-    $description[\`\`\`
-$replaceText[$replaceText[$replaceText[$message;$getServerVar[prefix] ;()];$getServerVar[prefix];()];\`;]\`\`\`]
+{field:Platform:
+$toLocaleUppercase[$platform]
+:yes}
 
-    $addField[Platform;$toLocaleUppercase[$platform];yes]
-    $addField[User ID;$authorID;yes]
+{field:User ID:
+$authorID
+:yes}
 
-$else
+$if[$checkContains[$checkCondition[$getGlobalUserVar[lastCmd]==setname]$checkCondition[$getGlobalUserVar[lastCmd]==setbio];true]==true]
 
+{field:Var \`$get[var]\` updated:
 \`\`\`
-()$get[commandname]
-\`\`\`
+$getGlobalUserVar[$get[var]]\`\`\`
+:no}
+{color:${colors.green}}
+
+$let[var;$replaceText[$replaceText[$getGlobalUserVar[lastCmd];set;profile_];bio;about]]
 
 $endif
 
-$setUserVar[helpSuggestions;$replaceText[$replaceText[$checkCondition[$get[a]==];true;basic];false;$get[a]]-$splitText[2]-$hasPerms[$authorID;manageserver]]
+]
+
+$setGlobalUserVar[helpSuggestions;$replaceText[$replaceText[$checkCondition[$get[a]==];true;basic];false;$get[a]]-$splitText[2]]
 $textSplit[$getUserVar[helpSuggestions];-]
 
 $let[a;$commandInfo[$toLowercase[$get[commandname]];module]]
