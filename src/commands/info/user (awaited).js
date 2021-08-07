@@ -8,24 +8,41 @@ $reply[$messageID;
 {author:$get[author-$getGlobalUserVar[language]]:$get[status]}
 
 {description:
-$get[badges]
+$replaceText[$get[badges]; ${badges.nitro} ${badges.nitro} ; ${badges.nitro} ]
 $get[avatar-$getGlobalUserVar[language]]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[banner]==];true;];false;$get[banner-$getGlobalUserVar[language]]]
 }
 
 {field:$get[id-$getGlobalUserVar[language]]:
 $get[id]
-:yes}
+:no}
 
 {field:$get[activity-$getGlobalUserVar[language]]:
 $replaceText[$replaceText[$activity[$get[id]];Custom Status;Custom Status:\n$replaceText[$getCustomStatus[$get[id];emoji] ;none ;]$replaceText[$getCustomStatus[$get[id]];none;]
 ];none;None]
 :yes}
 
+{field:Profile color:
+$replaceText[$replaceText[$checkCondition[$get[color]==];true;None];false;$get[color]]
+:yes}
+
 {field:$get[accountCreated-$getGlobalUserVar[language]]:no}
 
+{image:$get[banner]4096}
+
 {thumbnail:$userAvatar[$get[id];256]}
-{color:$getGlobalUserVar[color;$get[id]]}
+{color:$replaceText[$replaceText[$checkCondition[$get[color]==];true;$getGlobalUserVar[color;$get[id]]];false;$get[color]]}
 ;no]
+
+$let[banner-enUS;Banner: **[2048px]($get[banner]2048)** | **[512px]($get[banner]512)** | **[256px]($get[banner]256)** | \`$getServerVar[prefix]userbanner$replaceText[ $get[id]; $authorID;]\`]
+
+$let[color;$getObjectProperty[banner_color]]
+
+$let[banner;https://cdn.discordapp.com/banners/$get[id]/$getObjectProperty[banner].$replaceText[$replaceText[$get[animated];false;png];true;gif]?size=]
+
+$let[animated;$stringStartsWith[$getObjectProperty[banner];a_]]
+
+$createObject[$jsonRequest[https://discordapp.com/api/users/$get[id];;;Authorization:Bot $clientToken]]
 
 $let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$get[id];date];X]> (<t:$formatDate[$creationDate[$get[id];date];X]:R>)]
 

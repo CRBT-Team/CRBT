@@ -1,4 +1,4 @@
-const { botinfo, links } = require("../index");
+const { botinfo, links } = require("../../../index");
 
 module.exports.command = {
     name: "cbt",

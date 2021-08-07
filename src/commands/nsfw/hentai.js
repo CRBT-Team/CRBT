@@ -1,13 +1,13 @@
-const { tokens } = require("../../../../index");
+const { tokens } = require("../../../index");
 
 module.exports.command = {
-    name: "blowjob",
-    aliases: ["bj", "suck", "dicksuck", "fellation"],
-    description_enUS: "Gives a random hentai image of a blowjob.",
+    name: "hentai",
+    aliases: ["hnt"],
+    description_enUS: "Gives a random hentai image.",
     module: "nsfw",
     code: `
 $reply[$messageID;
-{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/blowjob;url];$jsonRequest[https://api.avux.ga/blowjob;;;X-API-Key:${tokens.avux}]]}
+{image:$randomText[$jsonRequest[https://nekos.life/api/v2/img/hentai;url];$jsonRequest[https://api.avux.ga/hentai;;;X-API-Key:${tokens.avux}]]}
 {color:$getGlobalUserVar[color]}
 ;no]
 
@@ -19,5 +19,3 @@ $onlyIf[$getGlobalUserVar[experimentalFeatures]==true;{execute:experimentalFeatu
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}
-
-// $reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]

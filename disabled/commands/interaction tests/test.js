@@ -1,4 +1,4 @@
-const {colors} = require("../../index");
+const {colors} = require("../../../index");
 
 module.exports.command = {
     name: "test",

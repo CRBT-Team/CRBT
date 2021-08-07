@@ -19,7 +19,7 @@ $reply[$messageID;
 {description:
 $replaceText[$get[badges]; ${badges.nitro} ${badges.nitro} ; ${badges.nitro} ]
 $get[avatar-$getGlobalUserVar[language]]
-$replaceText[$replaceText[$checkCondition[$get[banner]==https://cdn.discordapp.com/banners/$get[id]/.png?size=];true;];false;$get[banner-$getGlobalUserVar[language]]]
+$replaceText[$replaceText[$checkCondition[$getObjectProperty[banner]==];true;];false;$get[banner-$getGlobalUserVar[language]]]
 }
 
 {field:$get[id-$getGlobalUserVar[language]]:
@@ -62,7 +62,7 @@ $let[roles-enUS;$replaceText[$replaceText[$checkCondition[$userRoleCount[$get[id
 {color:$replaceText[$replaceText[$checkCondition[$get[color]==];true;$getGlobalUserVar[color;$get[id]]];false;$get[color]]}
 ;no]
 
-$let[color;$jsonRequest[https://discordapp.com/api/users/$get[id];banner_color;;Authorization:Bot $clientToken]]
+$let[color;$getObjectProperty[banner_color]]
 
 $let[accountCreated-enUS;Joined Discord:<t:$formatDate[$creationDate[$get[id];date];X]> (<t:$formatDate[$creationDate[$get[id];date];X]:R>)]
 
@@ -70,9 +70,11 @@ $let[author-enUS;$replaceText[$replaceText[$checkCondition[$charCount[$userTag]<
 $let[avatar-enUS;Profile picture: **[2048px]($replaceText[$userAvatar[$get[id];2048;yes];webp;png])** | **[512px]($replaceText[$userAvatar[$get[id];512;yes];webp;png])** | **[256px]($replaceText[$userAvatar[$get[id];256;yes];webp;png])** | \`$getServerVar[prefix]avatar$replaceText[ $get[id]; $authorID;]\`]
 $let[banner-enUS;Banner: **[2048px]($get[banner]2048)** | **[512px]($get[banner]512)** | **[256px]($get[banner]256)** | \`$getServerVar[prefix]userbanner$replaceText[ $get[id]; $authorID;]\`]
 
-$let[banner;https://cdn.discordapp.com/banners/$get[id]/$jsonRequest[https://discordapp.com/api/users/$get[id];banner;;Authorization:Bot $clientToken].$replaceText[$replaceText[$get[animated];false;png];true;gif]?size=]
+$let[banner;https://cdn.discordapp.com/banners/$get[id]/$getObjectProperty[banner].$replaceText[$replaceText[$get[animated];false;png];true;gif]?size=]
 
-$let[animated;$stringStartsWith[$jsonRequest[https://discordapp.com/api/users/$get[id];banner;;Authorization:Bot $clientToken];a_]]
+$let[animated;$stringStartsWith[$getObjectProperty[banner];a_]]
+
+$createObject[$jsonRequest[https://discordapp.com/api/users/$get[id];;;Authorization:Bot $clientToken]]
 
 $let[status;$replaceText[$replaceText[$replaceText[$replaceText[$status[$get[id]];dnd;https://cdn.discordapp.com/attachments/782584672772423684/851805534527946762/unknown.png];online;https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png];idle;https://cdn.discordapp.com/attachments/782584672772423684/851805544507113542/unknown.png];offline;https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png]]
 

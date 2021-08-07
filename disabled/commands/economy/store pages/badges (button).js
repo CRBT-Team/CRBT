@@ -1,4 +1,4 @@
-const { logos, emojis, items, illustrations, links } = require("../../../index");
+const { logos, emojis, items, illustrations, links } = require("../../../../index");
 const badges = items.badges; const banners = items.banners
 
 module.exports.interactionCommand = {

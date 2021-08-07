@@ -1,15 +1,15 @@
-const { logos, emojis, items, illustrations, links } = require("../../../index");
+const { logos, emojis, items, illustrations, links } = require("../../../../index");
 const badges = items.badges; const banners = items.banners
 
 module.exports.interactionCommand = {
-    name: "jobs",
+    name: "emotions",
     prototype: "button",
     code: `
 $interactionReply[;
 
 {author:$get[title-$getGlobalUserVar[language]]:${logos.CRBTsmall}}
 
-{title:Jobs}
+{title:Emotions}
 
 {field:$replaceText[${badges.flushed.contents};:;#COLON#] ${badges.flushed.name}:
 **${emojis.purplet} ${badges.flushed.value} Purplets**
@@ -53,13 +53,14 @@ $interactionReply[;
 {color:$getGlobalUserVar[color]};
 
 {actionRow:$get[back]:$get[prev]:$get[next]}
-;;7]
+;$replaceText[$replaceText[$get[cond];false;64];true;];$replaceText[$replaceText[$get[cond];false;4];true;7]]
+$let[cond;$checkCondition[$getUserVar[temp1;$clientID]==$authorID]]
 
-$let[title-enUS;CRBT Store - Badges (Page 4/4)]
+$let[title-enUS;CRBT Store - Badges (Page 3/4)]
 
 $let[next;,2,1,jobs,next|867080274194071582|false,true]
 
-$let[prev;,2,1,emotions,previous|867080071637106699|false,false]
+$let[prev;,2,1,flags,previous|867080071637106699|false,false]
 
 $let[back;Back,2,2,index,$get[emoji1],false]
 $let[emoji1;previous|867080071637106699|false]

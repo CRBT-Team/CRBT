@@ -1,4 +1,4 @@
-const { tokens } = require("../../../../index");
+const { tokens } = require("../../../index");
 
 module.exports.command = {
     name: "porn",
