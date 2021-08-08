@@ -22,7 +22,7 @@ $reply[$messageID;
 
 $get[modules]
 
-{field:$get[suggested-$getGlobalUserVar[language]]}
+{field:$get[suggested]}
 
 {color:$getGlobalUserVar[color]}
 ;no]
@@ -39,20 +39,29 @@ $reply[$messageID;
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];misc;basic];economy&profiles;economy];profiles;economy];mod;moderation];moderationeration;moderation];settings&administration;settings-$hasPerms[$authorID;admin]];settings;settings-$hasPerms[$authorID;admin]];administration;settings-$hasPerms[$authorID;admin]];settings-$hasPerms[$authorID;admin]-$hasPerms[$authorID;admin];settings-$hasPerms[$authorID;admin]]]
+$let[module;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];-;];economy&profiles;economy];profiles;economy];mod;moderation];moderationeration;moderation];settings&administration;settings-$hasPerms[$authorID;admin]];settings;settings-$hasPerms[$authorID;admin]];administration;settings-$hasPerms[$authorID;admin]];settings-$hasPerms[$authorID;admin]-$hasPerms[$authorID;admin];settings-$hasPerms[$authorID;admin]]]
 
 $endelseIf
 $else
 
 $reply[$messageID;
 {author:$commandInfo[$message;name] - Command info:${logos.CRBTsmall}}
+
+$if[$commandInfo[$message;description_$getGlobalUserVar[language]]!=]
 {field:Description:
-$replaceText[$replaceText[$checkCondition[$commandInfo[$message;description_$getGlobalUserVar[language]]!=];true;$replaceText[$replaceText[$commandInfo[$message;description_$getGlobalUserVar[language]];<botname>;$username[$clientID]];<prefix>;$getServerVar[prefix]]];false;No description available, please \`$getServerVar[prefix]report\` this as an issue.]
+$replaceText[$replaceText[$commandInfo[$message;description_$getGlobalUserVar[language]];<botname>;$username[$clientID]];<prefix>;$getServerVar[prefix]]
 :no}
+$else
+{field:Description:
+No description available, please \`$getServerVar[prefix]report\` this as an issue.
+:no}
+$endif
+
 {field:Usage:
 \`\`\`
 $replaceText[$replaceText[$getServerVar[prefix]$commandInfo[$message;name];$getServerVar[prefix]m/;m/];$getServerVar[prefix]=;=] $replaceText[$commandInfo[$message;usage_$getGlobalUserVar[language]];<botname>;$username[$clientID]]\`\`\`
 :no}
+
 $if[$commandInfo[$message;examples_enUS]!=]
 {field:Examples:
 \`\`\`
@@ -60,12 +69,17 @@ $getServerVar[prefix]$replaceText[$commandInfo[$message;examples_$getGlobalUserV
 \`\`\`
 :no}
 $endif
+
 $if[$commandInfo[$message;aliases]!=]
 {field:Aliases:
 \`\`\`
 $replaceText[$commandInfo[$message;aliases];,;, ]\`\`\`
 :no}
 $endif
+
+$get[$replaceText[$replaceText[$checkContains[$get[botPerms]/$get[userPerms];true];true;];false;perms]]
+
+$let[perms;
 {field:Permission errors:
 $replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[
 $get[botPerms]/$get[userPerms]
@@ -77,29 +91,21 @@ $get[botPerms]/$get[userPerms]
 ;true/;${emojis.success} You're all set to use this command!]
 ;false/;${emojis.error} **$username[$clientID]** may need the $toLowercase[$replaceText[$commandInfo[$message;botPerms];,;, ]] permissions]
 ;false/;${emojis.error} You may need the $toLowercase[$replaceText[$commandInfo[$message;userPerms];,;, ]] permissions]
-:no}
+:no}]
+
+$if[$commandInfo[$message;cooldown]!=]
 {field:Cooldown:
 $replaceText[$replaceText[$checkCondition[$commandInfo[$message;cooldown]==];true;None];false;$commandInfo[$message;cooldown]]
-:$replaceText[$replaceText[$hasPerms[$authorID;admin];true;no];false;yes]}
-
-$if[$commandInfo[$message;module]==partnerCmd]
-{field:Module:
-${emojis.partner} Partner command
-:yes}
-{field:Accessible on:
-$if[$serverExists[$commandInfo[$message;server]]==true]
-$serverName[$commandInfo[$message;server]]
-$else
-Can't access server
+:$replaceText[$replaceText[$hasPerms[$authorID;admin];true;no];false;yes]
+}
 $endif
-:yes}
-$else
+
 {field:Module:
-$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];misc;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggleon}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];basic;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggleon}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
 $replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
 :yes}
-$endif
+
 {color:$getGlobalUserVar[color]}
 ;no]
 
@@ -122,7 +128,7 @@ $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 $endif
 
 $if[$checkContains[$checkCondition[$getUserVar[helpSuggestions]==]$checkContains[$getUserVar[helpSuggestions];basic-general-];true]==true]
-$let[suggested-enUS;Suggested commands:
+$let[suggested;Suggested commands:
 Note: Suggestions will only get better as you use CRBT more often!
 \`\`\`
 • $getServerVar[prefix]report $commandinfo[report;usage_enUS]
@@ -134,7 +140,7 @@ Note: Suggestions will only get better as you use CRBT more often!
 ]
 $setUserVar[helpSuggestions;basic-general-$hasPerms[$authorID;manageserver]]
 $else
-$let[suggested-enUS;Suggested commands:
+$let[suggested;Suggested commands:
 Note: Suggestions will only get better as you use CRBT more often!
 \`\`\`
 $splitText[1]
@@ -250,7 +256,7 @@ $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon} Thi
 • \`$getServerVar[prefix]weather <city>\`]
 
 
-$let[settings-true-enUS;Settings & Administration:
+$let[settings-true-enUS;Settings:
 ${emojis.forcedon} This module can't be disabled.
 
 • \`$getServerVar[prefix]color\`
@@ -360,4 +366,25 @@ $let[off;$replaceText[${emojis.toggleoff};:;#COLON#]]
 
 {field:$get[modules-$getGlobalUserVar[language]]}
 
+
+partner crap
+
+$if[$commandInfo[$message;module]==partnerCmd]
+{field:Module:
+${emojis.partner} Partner command
+:yes}
+{field:Accessible on:
+$if[$serverExists[$commandInfo[$message;server]]==true]
+$serverName[$commandInfo[$message;server]]
+$else
+Can't access server
+$endif
+:yes}
+$else
+{field:Module:
+$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];basic;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggleon}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
+$replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
+:yes}
+$endif
 */

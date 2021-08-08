@@ -3,13 +3,14 @@ const { colors, emojis, illustrations } = require("../../../index");
 module.exports.command = {
     name: "color",
     module: "settings",
-    aliases: ["colors","colours","set_color","colour","setcolor","setcolour","set_colour","set-color","set-colour",],
+    aliases: ["colour","setcolor","setcolour"],
     description_enUS: "Gives information about your color, or changes it if any color name/hex code is given.",
-    usage_enUS: "<hexadecimal color code | color name (optional)>",
+    usage_enUS: "<hexadecimal color code | color name | \"profile\" (optional)>",
     examples_enUS: [
         "setcolor default",
         "color #9099FF",
-        "set_colour light green"
+        "colour light green",
+        "color profile (uses your Discord Profile Color)"
     ],
     code: `
 $if[$message==]
@@ -50,7 +51,7 @@ ${emojis.colors.white} \`White\`
 
     $let[title-enUS;CRBT Settings - Accent color]
     $let[description-enUS;**Current color:** #$getGlobalUserVar[color]
-This color is applied across all commands you execute with CRBT. You can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).]
+This color is applied across most commands you use on CRBT.\nYou can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).\n**New:** You can now use your Discord Profile Color (if you have any) as your CRBT accent color! Simply use \`$getServerVar[prefix]$commandName profile color\`.]
     $let[default-enUS;default]
 
 $else
@@ -68,8 +69,20 @@ $else
 
     $onlyIf[$isValidHex[$get[color]]==true;{execute:notAColor}]
 
+    $if[$replaceText[$toLowercase[$message]; ;]!=profile]
+
     $let[color;$toLowercase[$replaceText[$replaceText[$checkCondition[$getObjectProperty[colors.$get[message]]!=];true;$getObjectProperty[colors.$get[message]]];false;$get[message]]]]
     $let[message;$replaceText[$replaceText[$toLowercase[$message];#;]; ;]]
+
+    $else
+
+    $let[color;$replaceText[$getObjectProperty[banner_color];#;]]
+
+    $onlyIf[$getObjectProperty[banner_color]!=;{execute:noProfileColor}]
+
+    $createObject[$jsonRequest[https://discordapp.com/api/users/$authorID;;;Authorization:Bot $clientToken]]
+
+    $endif
 
 $endif
 

@@ -47,7 +47,7 @@ $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]
 $let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
-$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==${links.CRBTclientID}];true;${links.channels.report}];false;${links.channels.reportDev}]]
+$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==${links.CRBTid}];true;${links.channels.report}];false;${links.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 

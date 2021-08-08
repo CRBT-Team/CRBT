@@ -24,7 +24,7 @@ $let[average;$round[$math[($botPing+$getObjectProperty[final]+$ping+$dbPing)/4]]
 $let[title-enUS;$username[$clientID] - Ping]
 $let[messageLatency-enUS;Message latency: $round[$math[$ping/3]]ms]
 $let[apiLatency-enUS;API latency: $getObjectProperty[final]ms]
-$let[wsLatency-enUS;WebSocket latency: $botPingms]
+$let[wsLatency-enUS;WebSocket latency: $replaceText[$botPing;-;]ms]
 $let[dbLatency-enUS;Database latency: $dbPingms]
 $let[uptime-enUS;Uptime: $getObjectProperty[uptime]]
 

@@ -2,10 +2,9 @@
     "name": "crbt",
     "author": "CRBT Developers",
     "description": "The Discord companion made for you.",
-    "version": "2021.10.45",
+    "version": "2021.10.46",
     "scripts": {
-        "start": "node index.js",
-        "dev": "nodemon index.js"
+        "start": "node index.js"
     },
     "dependencies": {
         "aoi.js": "github:clembs/aoi.js",
@@ -14,7 +13,6 @@
         "discord-snowflake": "^1.0.1",
         "discord-together": "^1.1.14",
         "discord-webhook-node": "^1.1.8",
-        "emoji-api": "^1.0.2",
         "emoji-unicode": "^2.0.1",
         "expr-eval": "^2.0.2",
         "express": "^4.17.1",
@@ -22,12 +20,13 @@
         "ffmpeg-static": "^4.3.0",
         "fs-extra": "^9.1.0",
         "kitsu.js": "^2.0.0",
-        "mongoose": "^5.13.0",
         "node-fetch": "^2.6.1",
         "yt-search": "^2.8.0",
         "ytdl-core": "^4.9.0"
     },
-    "devDependencies": {
+    "disabledDependencies": {
+        "emoji-api": "^1.0.2",
+        "mongoose": "^5.13.0",
         "nodemon": "^2.0.7"
     }
 }

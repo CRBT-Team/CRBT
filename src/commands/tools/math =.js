@@ -5,10 +5,16 @@ module.exports.command = {
     nonPrefixed: true,
     module: "tools",
     description_enUS: "Calculates your input.",
-    usage_enUS: "<math calculation (e.g. 4+3)>",
+    usage_enUS: "<math calculation>",
+    examples_enUS: [
+        "=4+4",
+        "=(10+50)*30/28",
+        "=sqrt(5)^2",
+        "=50^30+20"
+    ],
     code: `
 $reply[$messageID;
-{title:$getObjectProperty[math]}
+{title:= $getObjectProperty[math]}
 {color:$replaceText[$replaceText[$checkContains[$toLowercase[$getObjectProperty[math]];an error occured];false;$getGlobalUserVar[color]];true;${colors.error}]}
 ;no]
 
