@@ -8,7 +8,7 @@ module.exports.command = {
     code: `
 $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
 
-    $if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
+    $if[$webhookExists[$getChannelVar[webhook_id];$getChannelVar[webhook_token]]==false]
 
     $deletecommand
 

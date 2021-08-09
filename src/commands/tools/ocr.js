@@ -5,7 +5,7 @@ module.exports.command = {
     aliases: ["itt", "imagetotext"],
     module: "tools",
     description_enUS: "Parses text found within a given image.",
-    usage_enUS: "<image URL | attachment>",
+    usage_enUS: "<image URL | attachment (.png, .jpeg or .jpg only)>",
     cooldown: "15s",
     code: `
 $reply[$messageID;
@@ -35,14 +35,19 @@ $createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.
 
 $onlyIf[$isValidLink[$get[message]]==true;{execute:args}]
 
+$onlyIf[$checkContains[$stringEndsWith[$get[message];.png]$stringEndsWith[$get[message];.jpg]$stringEndsWith[$get[message];.jpeg];true]==true;{execute:args}]
+
 $onlyIf[$get[message]!=;{execute:args}]
 
-$let[message;$replaceText[$replaceText[$checkCondition[$message==];false;$message];true;$messageAttachment]]
+$if[$message$messageAttachment!=]
+    $let[message;$replaceText[$replaceText[$checkCondition[$message==];false;$message];true;$messageAttachment]]
+$else
+    $let[message;$getChannelVar[lastAttach]]
+$endif
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
-$onlyIf[$getGlobalUserVar[experimentalFeatures]==true;{execute:experimentalFeatures}]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
     `}

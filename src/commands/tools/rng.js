@@ -1,9 +1,15 @@
 module.exports.command = {
     name: "rng",
-    aliases: ["random-number", "randint"],
+    aliases: ["random-number"],
     module: "tools",
-    description_enUS: "Gives a random number, between your first and second number, or between 0 and your first number, or a completely random number if no numbers are specified.",
+    description_enUS: "Gives a random number, between your first and second number, or between 1 and your first number, or a completely random number if no numbers are specified.",
     usage_enUS: "<minimum number (optional)> <maximum number (optional)>",
+    examples_enUS: [
+        "rng (picks from -10,000 to 10,000)",
+        "rng 40 (picks from 1 to 40)",
+        "rng 3 50 (picks from 3 to 50)",
+        "rng 40.3 50.5 (picks a number with decimals)"
+    ],
     code: `
 $reply[$messageID;
 
@@ -37,10 +43,10 @@ $onlyIf[$isNumber[$message[1]]==true;{execute:args}]
     $if[$argsCount==1]
 
     $if[$checkContains[$message;.]==true]
-        {title:= $random[0;$message[1];yes]}
+        {title:= $random[1;$message[1];yes]}
     $else
         $reply[$messageID;
-        {title:= $random[0;$message[1]]}
+        {title:= $random[1;$message[1]]}
     $endif
 
     $onlyIf[$isNumber[$message[1]]==true;{execute:args}]
@@ -48,7 +54,7 @@ $onlyIf[$isNumber[$message[1]]==true;{execute:args}]
         $else
         $if[$argsCount==0]
 
-        {title:= $random[-1000000000;1000000000]}
+        {title:= $random[-10000;10000]}
 
         $endif
     $endif

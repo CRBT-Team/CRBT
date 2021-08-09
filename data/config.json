@@ -1,7 +1,8 @@
 {
     "colors": {
         "success": "4ADC67", 
-        "error": "FF2A2A", 
+        "error": "FF2A2A",
+        "default": "F27187", 
 
         "black": "000001",
         "gray": "C8C5C9",
@@ -25,11 +26,10 @@
         "darkpurple": "29007E",
         "pink": "DC79E4",
 
-        "clembs": "6A21FF",
+        "clembs": "826FE5",
         "akaï": "123324",
         "navy": "004BAA",
-        "tomato": "FF475D",
-        "default": "F27187"
+        "tomato": "FF475D"
         },
     "emojis": {
         "error": "<:error:866037872519938069> ",

@@ -14,7 +14,7 @@ module.exports.command = {
     ],
     code: `
 $reply[$messageID;
-{title:= $getObjectProperty[math]}
+{title:$getObjectProperty[math]}
 {color:$replaceText[$replaceText[$checkContains[$toLowercase[$getObjectProperty[math]];an error occured];false;$getGlobalUserVar[color]];true;${colors.error}]}
 ;no]
 

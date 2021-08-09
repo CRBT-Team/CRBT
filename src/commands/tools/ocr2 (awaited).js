@@ -21,5 +21,9 @@ $getObjectProperty[ParsedResults[0].ParsedText]
 
 $createObject[$jsonRequest[https://api.ocr.space/parse/imageurl?apikey=${tokens.ocr}&url=$get[message]&scale=true&OCREngine=1]]
 
-$let[message;$replaceText[$replaceText[$checkCondition[$message==];false;$message];true;$messageAttachment]]
+$if[$message$messageAttachment!=]
+    $let[message;$replaceText[$replaceText[$checkCondition[$message==];false;$message];true;$messageAttachment]]
+$else
+    $let[message;$getChannelVar[lastAttach]]
+$endif
     `}

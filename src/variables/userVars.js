@@ -46,6 +46,6 @@ module.exports.variables = {
     profile_badges: "",
     profilePronouns: "unspecified",
 //  profile_rep: "", //legacy stuff from v8
-//  profileLayout: "basic", //11.0
+//  profileLayout: "basic",
 
 }
