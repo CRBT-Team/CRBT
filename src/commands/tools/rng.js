@@ -5,7 +5,7 @@ module.exports.command = {
     description_enUS: "Gives a random number, between your first and second number, or between 1 and your first number, or a completely random number if no numbers are specified.",
     usage_enUS: "<minimum number (optional)> <maximum number (optional)>",
     examples_enUS: [
-        "rng (picks from -10,000 to 10,000)",
+        "rng (picks from -10000 to 10000)",
         "rng 40 (picks from 1 to 40)",
         "rng 3 50 (picks from 3 to 50)",
         "rng 40.3 50.5 (picks a number with decimals)"

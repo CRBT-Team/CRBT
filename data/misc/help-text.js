@@ -30,12 +30,12 @@ let data = {
             `<prefix>shout - Shouts your message out loud and sends it as a webhook (if perms given)`
         ],
         info1: [
-            `<prefix>avatar - Get your or a specified user's profile picture.`
+            `<prefix>avatar - Get your profile picture (or a specified user's, if any).`,
             `<prefix>anime, manga - Get info about a manga or anime on kitsu.io.`,
             `<prefix>emojiinfo - Get a bigger image of a selected emoji, along with some info.`
         ],
         info2: [
-            `<prefix>userinfo - Get information about your Discord profile, or someone else's (if specified).`
+            `<prefix>userinfo - Get information about your Discord profile, or someone else's (if specified).`,
             `<prefix>skin - Get a Minecraft Java player's skin.`
         ],
         moderation1: [
@@ -44,7 +44,7 @@ let data = {
             `<prefix>purge - Bulk deletes a specified amount of messages in a channel.`
         ],
         moderation2: [
-            `<prefix>snipe - Gets the contents of the lastly deleted message in this channel or in a specified channel (if any).`
+            `<prefix>snipe - Finds the latest deleted message on the current channel, or on a specified channel (if any).`
         ],
         music1: [
             `<prefix>play - Plays or queues a specified song (through search terms or a URL)`,

@@ -5,7 +5,7 @@ module.exports.command = {
     usage_enUS: "<text (optional)>",
     botPerms: ["managewebhooks", "managemessages"],
     code: `
-$if[$getChannelVar[webhook_id]$getChannelVar[webhook_token]==]
+$if[$webhookExists[$getChannelVar[webhook_id];$getChannelVar[webhook_token]]==false]
 
 $djsEval[
     const url = "https://discord.com/api/webhooks/$getChannelVar[webhook_id]/$getChannelVar[webhook_token]"

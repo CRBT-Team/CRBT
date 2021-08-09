@@ -155,7 +155,7 @@ $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif
 
-$if[$checkContains[$checkCondition[$getGlobalUserVar[helpSuggestions]==]$checkContains[$getGlobalUserVar[helpSuggestions];basic-general];true]==true]
+$if[$checkContains[$checkCondition[$getGlobalUserVar[helpSuggestions]==]$checkContains[$getGlobalUserVar[helpSuggestions];basic-basic];true]==true]
 $let[suggested;Suggested commands:
 Note: Suggestions will only get better as you use $username[$clientID] more often!
 \`\`\`
@@ -166,7 +166,7 @@ Note: Suggestions will only get better as you use $username[$clientID] more ofte
 • $get[p]balance
 \`\`\`
 ]
-$setGlobalUserVar[helpSuggestions;basic-general]
+$setGlobalUserVar[helpSuggestions;basic-basic]
 $else
 $let[suggested;Suggested commands:
 **Note:** Suggestions will only get better as you use $username[$clientID] more often!

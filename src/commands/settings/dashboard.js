@@ -1,4 +1,4 @@
-const {illustrations,emojis} = require("../../../index");
+const {illustrations,emojis, links} = require("../../../index");
 
 module.exports.command = {
     name: "dashboard",
@@ -90,6 +90,38 @@ Disable it with \`$getServerVar[prefix]module disable modlogs\`]
 ;false;$replaceText[${emojis.toggleoff};:;#COLON#] Disabled
 Enable it with \`$getServerVar[prefix]modlogs <channel>\`]
 :yes}
+]
+
+$let[user;
+{field:Language:
+Set to English (American) - \`$getGlobalUserVar[language]\`.
+Changes $username[$clientID]'s language for when you use it.
+Not changeable at the moment.
+:no}
+
+{field:Accent color:
+Set to #$getGlobalUserVar[color].
+Changes the color of most embeds for commands you use with CRBT.
+More info available with \`$getServerVar[prefix]color $commandInfo[color;usage_$getGlobalUserVar[language]]\`
+:no}
+
+{field:Experimental features:
+$replaceText[$replaceText[$getGlobalUserVar[experimentalFeatures];false;${emojis.toggleoff} Disabled];${emojis.toggleon} Enabled]
+Enables or disables a set of unstable beta commands.
+Toggle them with \`$getServerVar[prefix]experiments <"on" | "off">\`
+:no}
+
+{field:Telemetry:
+${emojis.forcedon} Enabled
+**Update:** As of August 2021, telemetry can no longer be disabled.
+Learn more about CRBT's privacy policy **[here](${links.privacypolicy})** or use \`$getServerVar[prefix]data\`
+:no}
+
+{field:More Settings coming soon!:
+CRBT is constantly evolving and we want to provide you the right options.
+Soon you'll be able to change CRBT's language, disable command suggestions, and more to make CRBT more personal.
+:no}
+
 ]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
