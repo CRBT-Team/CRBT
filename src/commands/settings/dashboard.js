@@ -106,7 +106,7 @@ More info available with \`$getServerVar[prefix]color $commandInfo[color;usage_$
 :no}
 
 {field:Experimental features:
-$replaceText[$replaceText[$getGlobalUserVar[experimentalFeatures];false;${emojis.toggleoff} Disabled];${emojis.toggleon} Enabled]
+$replaceText[$replaceText[$getGlobalUserVar[experimentalFeatures];false;${emojis.toggleoff} Disabled];true;${emojis.toggleon} Enabled]
 Enables or disables a set of unstable beta commands.
 Toggle them with \`$getServerVar[prefix]experiments <"on" | "off">\`
 :no}
