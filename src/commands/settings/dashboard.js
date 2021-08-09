@@ -10,7 +10,7 @@ module.exports.command = {
     code: `
 $if[$message==]
 
-    $reactionCollector[$botLastMessageID;$authorID;1s;👥,📕;user,server;yes]
+    $reactionCollector[$botLastMessageID;$authorID;1m;👥,📕;duser,dserver;yes]
 
     $reply[$messageID;
     {author:$get[title-$getGlobalUserVar[language]] (Index):${illustrations.settings}}
@@ -94,7 +94,7 @@ Enable it with \`$getServerVar[prefix]modlogs <channel>\`]
 
 $let[user;
 {field:Language:
-Set to English (American) - \`$getGlobalUserVar[language]\`.
+:flag_us: Set to English (American) - \`$getGlobalUserVar[language]\`.
 Changes $username[$clientID]'s language for when you use it.
 Not changeable at the moment.
 :no}
@@ -102,7 +102,7 @@ Not changeable at the moment.
 {field:Accent color:
 Set to #$getGlobalUserVar[color].
 Changes the color of most embeds for commands you use with CRBT.
-More info available with \`$getServerVar[prefix]color $commandInfo[color;usage_$getGlobalUserVar[language]]\`
+Chnage it with \`$getServerVar[prefix]color\`
 :no}
 
 {field:Experimental features:
