@@ -7,7 +7,7 @@ module.exports.command = {
     description_enUS: "Toggles the Experimental Features on or off. Use at your own risk.",
     usage_enUS: "<\"on\" | \"off\">",
     code: `
-$if[$checkContains[$message;on;enable;true;1]==true]
+$if[$checkContains[$toLowercase[$message];on;enable;true;1]==true]
 
 $setGlobalUserVar[experimentalFeatures;true]
 
@@ -35,7 +35,7 @@ Interested in some more beta features? Join our **[Discord server](${links.info.
 
 $onlyIf[$getGlobalUserVar[experimentalFeatures]!=true;{execute:valueAlr}]
 
-$elseIf[$checkContains[$message;off;disable;false;0]==true]
+$elseIf[$checkContains[$toLowercase[$message];off;disable;false;0]==true]
 
 $setGlobalUserVar[experimentalFeatures;false]
 

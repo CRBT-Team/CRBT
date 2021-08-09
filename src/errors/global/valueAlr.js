@@ -9,6 +9,6 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[experiments-1-enUS;${emojis.error} EXperimental features are already $replaceText[$replaceText[$getGlobalUserVar[experimentalFeatures];true;enabled];false;disabled] for you.]
+$let[experiments-1-enUS;${emojis.error} Experimental features are already $replaceText[$replaceText[$getGlobalUserVar[experimentalFeatures];true;enabled];false;disabled] for you.]
 $let[experiments-2-enUS;]
     `}
