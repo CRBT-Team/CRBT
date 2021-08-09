@@ -26,7 +26,7 @@ Keep your eyes peeled for the full command list website, coming soon.
 
 $get[modules]
 
-{field:$get[suggested]}
+$get[suggested]
 
 {color:$getGlobalUserVar[color]}
 ;no]
@@ -155,28 +155,34 @@ $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif
 
-$if[$checkContains[$checkCondition[$getGlobalUserVar[helpSuggestions]==]$checkContains[$getGlobalUserVar[helpSuggestions];basic-basic];true]==true]
-$let[suggested;Suggested commands:
-Note: Suggestions will only get better as you use $username[$clientID] more often!
+$if[$getGlobalUserVar[helpSuggestions]==]
+$let[suggested;
+{field:Suggested commands:
+These suggestions will only improve the more you use $username[$clientID]! 
 \`\`\`
-• $get[p]bugreport $commandinfo[report;usage_enUS]
-• $get[p]info
-• $get[p]invite
-• $get[p]play $commandinfo[play;usage_enUS]
-• $get[p]balance
+$if[$getGlobalUserVar[lastCmd]!=] 
+• $replaceText[$getServerVar[prefix]$getGlobalUserVar[lastCmd] $replaceText[$replaceText[$commandInfo[$getGlobalUserVar[lastCmd];usage_$getGlobalUserVar[language]] - $commandInfo[$getGlobalUserVar[lastCmd];description_$getGlobalUserVar[language]];<botname>;$username[$clientID]];<prefix>;$get[p]];  -; -] $endif
+• $get[p]bugreport - Report any bug you find on CRBT to its developers!
+• $get[p]info - Get CRBT's ping, stats and some other nerdy info.
+• $get[p]play (Music) - Plays or queues a specified song (through search terms or a URL)
+• $get[p]jobsearch (Economy) - Gives you 3 random job propositions to get you started! 
 \`\`\`
+}
 ]
-$setGlobalUserVar[helpSuggestions;basic-basic]
 $else
-$let[suggested;Suggested commands:
-**Note:** Suggestions will only get better as you use $username[$clientID] more often!
+$let[suggested;
+{field:Suggested commands:
+These suggestions are based on what commands you previously used and what you're looking for in \`$get[p]help\`.
 \`\`\`
+$if[$getGlobalUserVar[lastCmd]!=] 
+• $replaceText[$getServerVar[prefix]$getGlobalUserVar[lastCmd] $replaceText[$replaceText[$commandInfo[$getGlobalUserVar[lastCmd];usage_$getGlobalUserVar[language]] - $commandInfo[$getGlobalUserVar[lastCmd];description_$getGlobalUserVar[language]];<botname>;$username[$clientID]];<prefix>;$get[p]];  -; -] $endif
 • $replaceText[$replaceText[$replaceText[$getObjectProperty[$get[sugg1]];<prefix>;$get[p]];,$get[p];\n• $get[p]];<botname>;$username[$clientID]]
 • $replaceText[$replaceText[$replaceText[$getObjectProperty[$get[sugg2]];<prefix>;$get[p]];,$get[p];\n• $get[p]];<botname>;$username[$clientID]]
 \`\`\`
+}
 ]
-$let[sugg1;data.suggested.$replaceText[$replaceText[$splitText[1];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]1]
-$let[sugg2;data.suggested.$replaceText[$replaceText[$splitText[2];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]2]
+$let[sugg1;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$splitText[1]==];true;basic];false;$splitText[1]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]1]
+$let[sugg2;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$splitText[2]==];true;basic];false;$splitText[2]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]2]
 $textSplit[$getGlobalUserVar[helpSuggestions];-]
 $endif
 
@@ -235,7 +241,6 @@ $let[p;$getServerVar[prefix]]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
-$setGlobalUserVar[lastCmd;$commandName]
     `}
 
 /*
