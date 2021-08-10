@@ -12,6 +12,5 @@ $reply[$messageID;
 $let[title-enUS;${emojis.error} Bleep bloop.]
 $let[description-enUS;This command is currently under the Experimental Features toggle. 
 You can enable Experimental Features using the \`$getServerVar[prefix]experiments on\` command.
-Learn more about this change **[here](${links.experiments})**.
 ]
     `}
