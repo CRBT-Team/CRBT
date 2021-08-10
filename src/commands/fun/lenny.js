@@ -15,7 +15,7 @@ $djsEval[
     hook.setUsername("$nickname");
     hook.setAvatar('$authorAvatar');
 
-    hook.send("$get[message]");
+    hook.send(d.object.message);
 ]
 
 $deletecommand
@@ -37,12 +37,16 @@ $djsEval[
     hook.setUsername("$nickname");
     hook.setAvatar('$authorAvatar');
 
-    hook.send("$get[message]");
+    hook.send(d.object.message);
 ]
 
 $deletecommand
 
 $endif
+
+$djsEval[
+const { Util } = require("discord.js");
+d.object.message = Util.cleanContent("$get[message]", message);]
 
 $if[$message!=]
 $let[message;$replaceText[$replaceText[$replaceText[$replaceText[$message;@everyone;@‎everyone];@here;@‎here];";'];\n;\\n] ( ͡° ͜ʖ ͡°)]

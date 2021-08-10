@@ -20,7 +20,7 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
         
-    hook.send("$getObjectProperty[message]");
+    hook.send(d.object.message);
     ]
 
     $wait[200ms]
@@ -42,7 +42,7 @@ $if[$hasPermsInChannel[$channelID;$clientID;managewebhooks]==true]
     hook.setUsername('$nickname');
     hook.setAvatar('$authorAvatar');
     
-    hook.send("$getObjectProperty[message]");
+    hook.send(d.object.message);
     ]
 
     $endif
