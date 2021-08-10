@@ -30,11 +30,6 @@ $endif
 
 ]
 
-$if[$getGlobalUserVar[lastCmd]!=help]
-$setGlobalUserVar[helpSuggestions;$replaceText[$replaceText[$checkCondition[$get[a]==];true;basic];false;$get[a]]-$splitText[2]]
-$textSplit[$getGlobalUserVar[helpSuggestions];-]
-$endif
-
 $let[a;$commandInfo[$toLowercase[$get[commandname]];module]]
 
 $onlyIf[$commandInfo[$toLowercase[$get[commandname]];name]!=djseval;]

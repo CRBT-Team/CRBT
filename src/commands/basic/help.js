@@ -33,9 +33,7 @@ $get[suggested]
 
 $elseIf[$checkContains[ $toLowercase[$message] ; economy & profiles ; profiles ; mod ; basic ; economy ; fun ; info ; moderation ; music ; tools ; settings ; nsfw ; administration ]==true]
 
-$setGlobalUserVar[helpSuggestions;$splitText[1]-$get[module]]
-
-$textSplit[$getGlobalUserVar[helpSuggestions];-]
+$setGlobalUserVar[helpSuggestions;$get[module]]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
@@ -151,11 +149,13 @@ $endif
         $let[botPerms;true]
     $endif
 
+$setGlobalUserVar[helpSuggestions;$commandInfo[$message;module]]
+
 $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif
 
-$if[$getGlobalUserVar[helpSuggestions]==]
+$if[$getGlobalUserVar[helpSuggestions]$getGlobalUserVar[lastCmd]==]
 $let[suggested;
 {field:Suggested commands:
 These suggestions will only improve the more you use $username[$clientID]! 
@@ -181,9 +181,8 @@ $if[$getGlobalUserVar[lastCmd]!=]
 \`\`\`
 }
 ]
-$let[sugg1;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$splitText[1]==];true;basic];false;$splitText[1]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]1]
-$let[sugg2;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$splitText[2]==];true;basic];false;$splitText[2]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]2]
-$textSplit[$getGlobalUserVar[helpSuggestions];-]
+$let[sugg1;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$commandInfo[$getGlobalUserVar[lastCmd];module]==];true;basic];false;$commandInfo[$getGlobalUserVar[lastCmd];module]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]1]
+$let[sugg2;data.suggested.$replaceText[$replaceText[$replaceText[$replaceText[$checkCondition[$getGlobalUserVar[helpSuggestions]==];true;basic];false;$getGlobalUserVar[helpSuggestions]];nsfw;basic];settings;settings_$hasPerms[$authorID;manageserver]]2]
 $endif
 
 $djsEval[const data = require("../../../../../data/misc/help-text.js")
