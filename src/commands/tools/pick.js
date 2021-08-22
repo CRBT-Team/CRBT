@@ -15,9 +15,6 @@ $if[$checkContains[$message; // ]==true]
 {author:Comment∶ "$replaceText[$replaceText[$checkCondition[$charCount[$getObjectProperty[comment]]>35];true;$cropText[$getObjectProperty[comment];35]...];false;$getObjectProperty[comment]]"}
 $endif
 {title:"$get[random]" was picked from $getTextSplitLength values.}
-$if[$checkContains[$message; // ]==false]
-{description:**New:** You can now add comments to spice up your selections. Simply add a comment with \` // comment\` next to your list of values!}
-$endif
 {color:$getGlobalUserVar[color]}
 ;no]
 

@@ -33,8 +33,6 @@ $let[content;$msg[$get[channel];$get[msg];content]]
 $let[id;$msg[$get[channel];$get[msg];author]]
 
 $onlyIf[$hasPermsInChannel[$get[channel];$clientID;viewchannel]==true;{execute:botPerms}]
-$onlyIf[$msg[$get[channel];$get[msg];isdeleted]!=false;the msg was deleted idot]
-
 
 $let[channel;$splitText[2]]
 $let[msg;$splitText[3]]

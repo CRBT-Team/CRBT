@@ -6,7 +6,11 @@ module.exports.deletedCommand = {
 $channelSendMessage[$getServerVar[messagelogs_channel];
 {author:$userTag\nMessage deleted in #$channelName[$channelUsed]:$authorAvatar}
 
+$if[$message!=]
 {description:$message}
+$else
+{description:Attachment/embed}
+$endif
 
 {field:Channel:
 <#$channelUsed>
@@ -16,7 +20,7 @@ $channelSendMessage[$getServerVar[messagelogs_channel];
 <@!$authorID>
 :yes}
 
-{field:Timestamp:
+{field:Date:
 <t:$round[$formatDate[$dateStamp;X]]>
 :yes}
 

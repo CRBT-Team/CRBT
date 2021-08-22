@@ -27,6 +27,9 @@ ${badges.russia.contents} ${badges.russia.name}\n**${emojis.purplet} ${badges.ru
 —
 ${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.purplet} ${badges.brazil.value} Purplets**
 \`$getServerVar[prefix]buy badge brazil\`
+—
+${badges.poland.contents} ${badges.poland.name}\n**${emojis.purplet} ${badges.poland.value} Purplets**
+\`$getServerVar[prefix]buy badge poland\`
 :yes}
 {field:$get[jobs-$getGlobalUserVar[language]]:
 ${badges.developer.contents} ${badges.developer.name}\n**${emojis.purplet} ${badges.developer.value} Purplets**

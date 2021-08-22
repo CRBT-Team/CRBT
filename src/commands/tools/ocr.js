@@ -24,8 +24,8 @@ $getObjectProperty[ParsedResults[0].ParsedText]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$onlyIf[$getObjectProperty[ParsedResults[0].ParsedText]!=;{execute:queryNotFound}]
-$onlyIf[$getObjectProperty[ParsedResults[0].TextOverlay.Message]!=No lines found;{execute:queryNotFound}]
+$onlyIf[$replaceText[$getObjectProperty[ParsedResults[0].ParsedText];#SEMI#;]!=;{execute:queryNotFound}]
+$onlyIf[$replaceText[$getObjectProperty[ParsedResults[0].TextOverlay.Message];#SEMI#;]!=No lines found;{execute:queryNotFound}]
 
 $onlyIf[$getObjectProperty[OCRExitCode]!=99;{execute:args}]
 

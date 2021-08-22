@@ -10,11 +10,10 @@ module.exports.command = {
 $editMessage[$botLastMessageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}
 
-{field:$get[messageLatency-$getGlobalUserVar[language]]}
-{field:$get[apiLatency-$getGlobalUserVar[language]]}
-{field:$get[wsLatency-$getGlobalUserVar[language]]}
-{field:$get[dbLatency-$getGlobalUserVar[language]]}
-{field:$get[uptime-$getGlobalUserVar[language]]}
+{field:$get[messageLatency-$getGlobalUserVar[language]]:yes}
+{field:$get[wsLatency-$getGlobalUserVar[language]]:yes}
+{field:$get[dbLatency-$getGlobalUserVar[language]]:yes}
+{field:$get[uptime-$getGlobalUserVar[language]]:no}
 
 {color:$getGlobalUserVar[color]}
 ;$channelID]
@@ -22,17 +21,17 @@ $editMessage[$botLastMessageID;
 $let[average;$round[$math[($botPing+$getObjectProperty[final]+$ping+$dbPing)/4]]]
 
 $let[title-enUS;$username[$clientID] - Ping]
-$let[messageLatency-enUS;Message latency: $round[$math[$ping/3]]ms]
-$let[apiLatency-enUS;API latency: $getObjectProperty[final]ms]
-$let[wsLatency-enUS;WebSocket latency: $replaceText[$botPing;-;]ms]
-$let[dbLatency-enUS;Database latency: $dbPingms]
-$let[uptime-enUS;Uptime: $getObjectProperty[uptime]]
+$let[messageLatency-enUS;Message: $round[$math[$ping/3]]ms]
+$let[wsLatency-enUS;WebSocket: $replaceText[$botPing;-;]ms]
+$let[dbLatency-enUS;Database: $dbPingms]
+$let[uptime-enUS;Online since:<t:$get[up]> (<t:$get[up]:R>)]
 
-$djsEval[
-const tools = require('dbd.js-utils')
+$let[up;$round[$formatDate[$math[$dateStamp-$getObjectProperty[ms]];X]]]
+
+$djsEval[const tools = require('dbd.js-utils')
 let theUptimeInMS = tools.parseToMS("$replaceText[$uptime; ;]")
 d.object.uptime = tools.parseMS(theUptimeInMS)
-]
+d.object.ms = theUptimeInMS]
 
 $djsEval[let a = Date.now()
 d.object.final = Math.floor(a - d.object.start - 50)

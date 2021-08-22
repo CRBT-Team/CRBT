@@ -7,9 +7,7 @@ module.exports.command = {
     usage_enUS: "<@mention | user ID> <reason (optional)>",
     aliases: ['strike'],
     code: `
-$if[$getGlobalUserVar[experimentalFeatures]==true]
 $setUserVar[strikes;**Warn** by <@!$authorID> • $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;No reason specified];false;$replaceText[$messageSlice[1];|;]] • <t:$round[$formatDate[$dateStamp;X]]:R>|$getUserVar[strikes;$get[id]];$get[id]]
-$endif
 
 $sendDM[$get[id];
 {title:${emojis.information} You've got mail!}
@@ -44,14 +42,10 @@ $channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlo
 <@!$authorID>
 :yes}
 
-$if[$getGlobalUserVar[experimentalFeatures]==true]
-
 {field:Strike count:
 $getTextSplitLength $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;strike];false;strikes]
 $textSplit[$getUserVar[strikes;$get[id]];|]
 :yes}
-
-$endif
 
 {field:Reason:
 $replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;Unspecified];false;$replaceText[$messageSlice[1];|;]]

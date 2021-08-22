@@ -13,7 +13,7 @@ const { api } = JSON.parse(readFileSync("data/api.json", "utf-8"));
 
 // Creating the bot
 const bot = new Bot({
-    token: process.env.TOKEN,
+    token: process.env.DISCORD_TOKEN,
     prefix: ["$getServerVar[prefix]"],
     mobile: false, sharding: false, cache: true,
 });

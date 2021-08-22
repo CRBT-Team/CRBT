@@ -1,5 +1,5 @@
 const { logos, emojis, items, illustrations, links } = require("../../../index");
-const badges = items.badges; const banners = items.banners
+const bd = items.badges; const bn = items.banners
 
 module.exports.command = {
     name: "store",
@@ -18,36 +18,39 @@ $if[$message==]
 {description:$get[protip-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
-${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
+${bd.goodmeal.contents} ${bd.goodmeal.name}\n**${emojis.purplet} ${bd.goodmeal.value} Purplets**
 \`$getServerVar[prefix]buy badge goodmeal\`
 —
-${badges.udu.contents} ${badges.udu.name}\n**${emojis.purplet} ${badges.udu.value} Purplets**
+${bd.udu.contents} ${bd.udu.name}\n**${emojis.purplet} ${bd.udu.value} Purplets**
 \`$getServerVar[prefix]buy badge udu\`
 :yes}
 {field:$get[flags-$getGlobalUserVar[language]]:
-${badges.france.contents} ${badges.france.name}\n**${emojis.purplet} ${badges.france.value} Purplets**
+${bd.france.contents} ${bd.france.name}\n**${emojis.purplet} ${bd.france.value} Purplets**
 \`$getServerVar[prefix]buy badge france\`
 —
-${badges.usa.contents} ${badges.usa.name}\n**${emojis.purplet} ${badges.usa.value} Purplets**
+${bd.usa.contents} ${bd.usa.name}\n**${emojis.purplet} ${bd.usa.value} Purplets**
 \`$getServerVar[prefix]buy badge usa\`
 —
-${badges.russia.contents} ${badges.russia.name}\n**${emojis.purplet} ${badges.russia.value} Purplets**
+${bd.russia.contents} ${bd.russia.name}\n**${emojis.purplet} ${bd.russia.value} Purplets**
 \`$getServerVar[prefix]buy badge russia\`
 —
-${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.purplet} ${badges.brazil.value} Purplets**
+${bd.brazil.contents} ${bd.brazil.name}\n**${emojis.purplet} ${bd.brazil.value} Purplets**
 \`$getServerVar[prefix]buy badge brazil\`
+—
+${bd.poland.contents} ${bd.poland.name}\n**${emojis.purplet} ${bd.poland.value} Purplets**
+\`$getServerVar[prefix]buy badge poland\`
 :yes}
 {field:$get[jobs-$getGlobalUserVar[language]]:
-${badges.developer.contents} ${badges.developer.name}\n**${emojis.purplet} ${badges.developer.value} Purplets**
+${bd.developer.contents} ${bd.developer.name}\n**${emojis.purplet} ${bd.developer.value} Purplets**
 \`$getServerVar[prefix]buy badge developer\`
 —
-${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.purplet} ${badges.doctor.value} Purplets**
+${bd.doctor.contents} ${bd.doctor.name}\n**${emojis.purplet} ${bd.doctor.value} Purplets**
 \`$getServerVar[prefix]buy badge doctor\`
 —
-${badges.musician.contents} ${badges.musician.name}\n**${emojis.purplet} ${badges.musician.value} Purplets**
+${bd.musician.contents} ${bd.musician.name}\n**${emojis.purplet} ${bd.musician.value} Purplets**
 \`$getServerVar[prefix]buy badge musician\`
 —
-${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.purplet} ${badges.illustrator.value} Purplets**
+${bd.illustrator.contents} ${bd.illustrator.name}\n**${emojis.purplet} ${bd.illustrator.value} Purplets**
 \`$getServerVar[prefix]buy badge illustrator\`
 :yes}
 {thumbnail:${illustrations.badges}}
@@ -60,36 +63,39 @@ $elseIf[$toLowercase[$message]==badges]
 {description:$get[protip-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[familiarFaces-$getGlobalUserVar[language]]:
-${badges.goodmeal.contents} ${badges.goodmeal.name}\n**${emojis.purplet} ${badges.goodmeal.value} Purplets**
+${bd.goodmeal.contents} ${bd.goodmeal.name}\n**${emojis.purplet} ${bd.goodmeal.value} Purplets**
 \`$getServerVar[prefix]buy badge goodmeal\`
 —
-${badges.udu.contents} ${badges.udu.name}\n**${emojis.purplet} ${badges.udu.value} Purplets**
+${bd.udu.contents} ${bd.udu.name}\n**${emojis.purplet} ${bd.udu.value} Purplets**
 \`$getServerVar[prefix]buy badge udu\`
 :yes}
 {field:$get[flags-$getGlobalUserVar[language]]:
-${badges.france.contents} ${badges.france.name}\n**${emojis.purplet} ${badges.france.value} Purplets**
+${bd.france.contents} ${bd.france.name}\n**${emojis.purplet} ${bd.france.value} Purplets**
 \`$getServerVar[prefix]buy badge france\`
 —
-${badges.usa.contents} ${badges.usa.name}\n**${emojis.purplet} ${badges.usa.value} Purplets**
+${bd.usa.contents} ${bd.usa.name}\n**${emojis.purplet} ${bd.usa.value} Purplets**
 \`$getServerVar[prefix]buy badge usa\`
 —
-${badges.russia.contents} ${badges.russia.name}\n**${emojis.purplet} ${badges.russia.value} Purplets**
+${bd.russia.contents} ${bd.russia.name}\n**${emojis.purplet} ${bd.russia.value} Purplets**
 \`$getServerVar[prefix]buy badge russia\`
 —
-${badges.brazil.contents} ${badges.brazil.name}\n**${emojis.purplet} ${badges.brazil.value} Purplets**
+${bd.brazil.contents} ${bd.brazil.name}\n**${emojis.purplet} ${bd.brazil.value} Purplets**
 \`$getServerVar[prefix]buy badge brazil\`
+—
+${bd.poland.contents} ${bd.poland.name}\n**${emojis.purplet} ${bd.poland.value} Purplets**
+\`$getServerVar[prefix]buy badge poland\`
 :yes}
 {field:$get[jobs-$getGlobalUserVar[language]]:
-${badges.developer.contents} ${badges.developer.name}\n**${emojis.purplet} ${badges.developer.value} Purplets**
+${bd.developer.contents} ${bd.developer.name}\n**${emojis.purplet} ${bd.developer.value} Purplets**
 \`$getServerVar[prefix]buy badge developer\`
 —
-${badges.doctor.contents} ${badges.doctor.name}\n**${emojis.purplet} ${badges.doctor.value} Purplets**
+${bd.doctor.contents} ${bd.doctor.name}\n**${emojis.purplet} ${bd.doctor.value} Purplets**
 \`$getServerVar[prefix]buy badge doctor\`
 —
-${badges.musician.contents} ${badges.musician.name}\n**${emojis.purplet} ${badges.musician.value} Purplets**
+${bd.musician.contents} ${bd.musician.name}\n**${emojis.purplet} ${bd.musician.value} Purplets**
 \`$getServerVar[prefix]buy badge musician\`
 —
-${badges.illustrator.contents} ${badges.illustrator.name}\n**${emojis.purplet} ${badges.illustrator.value} Purplets**
+${bd.illustrator.contents} ${bd.illustrator.name}\n**${emojis.purplet} ${bd.illustrator.value} Purplets**
 \`$getServerVar[prefix]buy badge illustrator\`
 :yes}
 {thumbnail:${illustrations.badges}}
@@ -103,26 +109,26 @@ $elseIf[$toLowercase[$message]==banners]
 {description:$get[preview-$getGlobalUserVar[language]]}
 {field:$get[purplets-$getGlobalUserVar[language]]:no}
 {field:$get[season3-$getGlobalUserVar[language]]:
-**• [${banners.flower.name}]($get[baseURL]/${banners.flower.contents})**\n**${emojis.purplet} ${banners.flower.value} Purplets**
+**• [${bn.flower.name}]($get[baseURL]/${bn.flower.contents})**\n**${emojis.purplet} ${bn.flower.value} Purplets**
 \`$getServerVar[prefix]buy banner flower\`
 —
-**• [${banners.cake.name}]($get[baseURL]/${banners.cake.contents})**\n**${emojis.purplet} ${banners.cake.value} Purplets**
+**• [${bn.cake.name}]($get[baseURL]/${bn.cake.contents})**\n**${emojis.purplet} ${bn.cake.value} Purplets**
 \`$getServerVar[prefix]buy banner cake\`
 —
-**• [${banners.mountain.name}]($get[baseURL]/${banners.mountain.contents})**\n**${emojis.purplet} ${banners.mountain.value} Purplets**
+**• [${bn.mountain.name}]($get[baseURL]/${bn.mountain.contents})**\n**${emojis.purplet} ${bn.mountain.value} Purplets**
 \`$getServerVar[prefix]buy banner mountain\`
 —
-**• [${banners.stripes.name}]($get[baseURL]/${banners.stripes.contents})**\n**${emojis.purplet} ${banners.stripes.value} Purplets**
+**• [${bn.stripes.name}]($get[baseURL]/${bn.stripes.contents})**\n**${emojis.purplet} ${bn.stripes.value} Purplets**
 \`$getServerVar[prefix]buy banner stripes\`
 :yes}
 {field:—:
-**• [${banners.blood.name}]($get[baseURL]/${banners.blood.contents})**\n**${emojis.purplet} ${banners.blood.value} Purplets**
+**• [${bn.blood.name}]($get[baseURL]/${bn.blood.contents})**\n**${emojis.purplet} ${bn.blood.value} Purplets**
 \`$getServerVar[prefix]buy banner blood\`
 —
-**• [${banners.space.name}]($get[baseURL]/${banners.space.contents})**\n**${emojis.purplet} ${banners.space.value} Purplets**
+**• [${bn.space.name}]($get[baseURL]/${bn.space.contents})**\n**${emojis.purplet} ${bn.space.value} Purplets**
 \`$getServerVar[prefix]buy banner space\`
 —
-**• [${banners.bubbles.name}]($get[baseURL]/${banners.bubbles.contents})**\n**${emojis.purplet} ${banners.bubbles.value} Purplets**
+**• [${bn.bubbles.name}]($get[baseURL]/${bn.bubbles.contents})**\n**${emojis.purplet} ${bn.bubbles.value} Purplets**
 \`$getServerVar[prefix]buy banner bubbles\`
 :yes}
 {thumbnail:${illustrations.banners}}

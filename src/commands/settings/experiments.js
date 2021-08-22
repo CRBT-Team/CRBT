@@ -19,7 +19,6 @@ You can now use these features:
 + Button commands ($get[pre]rps, $get[pre]count)
 + To-Do list commands ($get[pre]todolist)
 + Easter-egg commands (🤫)
-+ Strike count for moderation commands + $get[pre]strikes
 + QR-code creation/scanning ($get[pre]scanqr, $get[pre]createqr)
 + $get[pre]leaderboard
 + $get[pre]pause & $get[pre]resume
@@ -42,17 +41,6 @@ $setGlobalUserVar[experimentalFeatures;false]
 $reply[$messageID;
 {title:${emojis.toggleoff}  Experimental features disabled.}
 {description:
-You lost access to these features:
-\`\`\`diff
-- Button commands ($get[pre]rps, $get[pre]count)
-- To-Do list commands ($get[pre]todolist)
-- Easter-egg commands (🤫)
-- Strike count for moderation commands + $get[pre]strikes
-- QR-code creation/scanning ($get[pre]scanqr, $get[pre]createqr)
-- $get[pre]leaderboard
-- $get[pre]pause & $get[pre]resume
-- $get[pre]quote
-\`\`\`
 To enable them back, use \`$get[pre]experiments on\`.
 }
 {color:${colors.error}}

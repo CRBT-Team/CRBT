@@ -16,7 +16,7 @@ Whenever you invite CRBT into your server, or kick it out (D:), a log is sent wi
 }
 {field:More info:
 To learn more about CRBT's telemetry, please read the **[Privacy policy](${links.privacypolicy})**.
-Note: We recently took away the Minimal mode toggle and telemetry configuration. Learn more **[here](${links.policychanges})**.}
+**Note:** We recently took away the Minimal mode toggle and telemetry configuration.}
 {color:$getGlobalUserVar[color]}
 ;no]
 

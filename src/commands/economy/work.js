@@ -23,7 +23,7 @@ $reply[$messageID;
 {description:
 $replaceText[$get[rwt];{purplets};**${emojis.purplet} $getObjectProperty[earnings] Purplets.**]
 You earned $get[randomXP] Job XP (You just advanced to level $math[$getGlobalUserVar[job_level]+1]!).
-You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** in the way...
+You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** on the way...
 }
 
 {color:${colors.success}}
@@ -38,7 +38,7 @@ $reply[$messageID;
 
 {description:
 $replaceText[$get[rwt];{purplets};**${emojis.purplet} $getObjectProperty[earnings] Purplets.**] 
-You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** in the way...
+You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** on the way...
 }
 
 {color:${colors.success}}
@@ -57,7 +57,7 @@ $reply[$messageID;
 {description:
 $replaceText[$get[rwt];{purplets};**${emojis.purplet} $getObjectProperty[earnings] Purplets.**]
 You earned $get[randomXP] Job XP ($math[$getGlobalUserVar[job_req]-$getGlobalUserVar[job_xp]-$get[randomXP]] remaining to level $math[$getGlobalUserVar[job_level]+1]).
-You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** in the way...
+You lost **${emojis.purplet} $random[0;$getObjectProperty[maxloses]] Purplets** on the way...
 }
 
 {color:${colors.success}}

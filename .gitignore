@@ -7,3 +7,5 @@ assets/
 package-lock.json
 lavalink/
 database/
+yarn.lock
+yarn-error.log

@@ -2,7 +2,7 @@ const { colors, emojis } = require("../../../index");
 
 module.exports.command = {
   name: "remindme",
-  module: "misc",
+  module: "tools",
   aliases: ['remind','remind-me','set_reminder','set-reminder','reminder'],
   description_enUS: "Sends you a reminder for a specified event in your DMs (or in a channel, if specified or if your DMs are closed).",
   usage_enUS: "<time (e.g. \"3d\" for 3 days)> <#channel (optional)> <subject>",
@@ -12,7 +12,7 @@ $if[$mentionedChannels[1]==]
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {field:Subject:
-$replaceText[$get[reminder];*No subject was set*;None]
+$replaceText[$get[reminder];none;None]
 :no}
 {description:
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow at <t:$get[date]:T>];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today at <t:$get[date]:T>];false;<t:$get[date]>]] • <t:$get[date]:R>
@@ -27,16 +27,17 @@ channelID: $channelID
 future: $get[date]
 timestamp: $round[$math[$dateStamp/1000]]
 method: dm
-dms: $isUserDMEnabled]
+dms: $isUserDMEnabled
+url: $messageURL]
 
-$let[reminder;$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;*No subject was set*];false;$messageSlice[1]]]
+$let[reminder;$replaceText[$replaceText[$checkCondition[$messageSlice[1]==];true;none];false;$messageSlice[1]]]
 
 $else
 
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
 {field:Subject:
-$replaceText[$get[reminder];*No subject was set*;None]
+$replaceText[$get[reminder];none;None]
 :no}
 {description:
 $replaceText[$replaceText[$checkCondition[$get[day]==$math[$day+1]];true;Tomorrow at <t:$get[date]:T>];false;$replaceText[$replaceText[$checkCondition[$get[day]==$day];true;Today at <t:$get[date]:T>];false;<t:$get[date]>]] • <t:$get[date]:R>
@@ -50,9 +51,10 @@ reminder: $get[reminder]
 channelID: $mentionedChannels[1]
 future: $get[date]
 timestamp: $round[$math[$dateStamp/1000]]
-method: channel]
+method: channel
+url: $messageURL]
 
-$let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;*No subject was set*];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
+$let[reminder;$replaceText[$replaceText[$checkCondition[$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]==];true;none];false;$replaceText[$messageSlice[1];<#$mentionedChannels[1]>;]]]
 
 $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$clientID;sendmessages]==true;{execute:reminderChannel}]
 $onlyIf[$hasPermsInChannel[$mentionedChannels[1];$authorID;sendmessages]==true;{execute:reminderChannel}]

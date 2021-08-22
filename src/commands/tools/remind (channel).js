@@ -9,7 +9,11 @@ $channelSendMessage[$timeoutData[channelID];
 Set by <@!$timeoutData[userID]> on <t:$timeoutData[timestamp]:D> at <t:$timeoutData[timestamp]:T>.
 }
 {field:Subject:
-$timeoutData[reminder]}
+$timeoutData[reminder]
+:no}
+{field:Link:
+[Jump to message]($timeoutData[url])
+:no}
 {color:$getGlobalUserVar[color;$timeoutData[userID]]}
 ]
 

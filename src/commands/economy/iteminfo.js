@@ -29,6 +29,8 @@ $if[$checkContains[$toLowercase[$message[1]];banner]==true]
     {color:$getGlobalUserVar[color]}
     ;no] 
 
+    $onlyIf[$getObjectProperty[banners.$get[a].name]!=CRBT Partner;{execute:unknownItem}]
+
     $onlyIf[$getObjectProperty[banners.$get[a]]!=;{execute:unknownItem}]
 
     $djsEval[const { items } = require("../../../../../index");
@@ -66,6 +68,8 @@ $elseIf[$checkContains[$toLowercase[$message[1]];badge]==true]
         $addObjectProperty[a;$get[a]]
         
         $textSplit[$replaceText[$getObjectProperty[badges.$get[a].contents];#COLON#;@];@]
+
+    $onlyIf[$getObjectProperty[badges.$get[a].name]!=CRBT Partner;{execute:unknownItem}]
 
     $onlyIf[$getObjectProperty[badges.$get[a]]!=;{execute:unknownItem}]
     

@@ -29,7 +29,7 @@ $onlyIf[$getGlobalUserVar[user_bank]>=$getObjectProperty[$get[item].value];{exec
 
 $onlyIf[$getObjectProperty[$get[item].available]==true;{execute:specialItem}]
 
-$onlyIf[$getObjectProperty[$get[item].name]!=CRBT Partner;{execute:partnerNotSale}]
+$onlyIf[$getObjectProperty[$get[item].name]!=CRBT Partner;{execute:unknownItem}]
 
 $onlyIf[$getObjectProperty[$get[item].contents]!=;{execute:unknownItem}]
 

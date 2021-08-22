@@ -1,5 +1,5 @@
 module.exports.status = {
-    text: "@CRBT | crbt.ga | $abbreviate[$allMembersCount] Members",
+    text: `@CRBT | crbt.ga`,
     type: "PLAYING",
     time: 12
 }
