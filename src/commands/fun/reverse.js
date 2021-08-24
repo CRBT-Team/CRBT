@@ -79,7 +79,7 @@ $else
 $endif
 
 $let[nick;$nickname]
-$let[message;$replaceText[$replaceText[$replaceText[$replaceText[$message;enoyreve@;enoyreve‎@]ereh‎@;];";'];\n;\\n]]
+$let[message;$replaceText[$replaceText[$replaceText[$replaceText[$message;enoyreve@;enoyreve‎@];ereh‎@;];";'];\n;\\n]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

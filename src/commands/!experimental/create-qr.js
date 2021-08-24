@@ -4,6 +4,7 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Creates a QR-code off the indicated link/image.",
     usage_enUS: "<link | attachment>",
+    slashCmd: 'qrcode create link:<args>',
     code: `
 $reply[$messageID;
 {author:QR-code creation - Result}

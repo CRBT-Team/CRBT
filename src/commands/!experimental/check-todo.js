@@ -6,6 +6,7 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Removes an item from your To-Do list.",
     usage_enUS: "<item to remove>",
+    slashCmd: 'todo check item:<args>',
     code: `
 $setGlobalUserVar[todolist;$replaceText[$get[newlist];
 • $get[item];]]

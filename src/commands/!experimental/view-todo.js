@@ -5,6 +5,7 @@ module.exports.command = {
     aliases: ['todolist', 'view-todo','viewlist', 'view-list','view_list', 'view_todo', 'list', 'todo'],
     module: "tools",
     description_enUS: "Displays your To-Do list.",
+    slashCmd: 'todo view',
     code: `
 $reply[$messageID;
 {author:$userTag - To-Do list:$authorAvatar}

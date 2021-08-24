@@ -13,7 +13,7 @@ module.exports.command = {
     {description:$get[profileBio]}
     
     {field:$get[badges-$getGlobalUserVar[language]]:
-    $replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;None];true;$get[profileBadges]]‎‎
+    $replaceText[$replaceText[$checkCondition[$get[e]==0];true;None];false;$get[profileBadges]]‎‎
     :yes}
 
     {field:$get[pronouns-$getGlobalUserVar[language]]:$get[j]}
@@ -27,7 +27,9 @@ module.exports.command = {
     $let[pronouns-enUS;Pronouns:$replaceText[$get[profilePronouns];Username;Use my username]]
 
     $let[j;$replaceText[$replaceText[$checkCondition[$get[e]>5];false;yes];true;no]]
-    $let[e;$math[$replaceText[$replaceText[$checkContains[$getGlobalUserVar[profile_badges;$get[id]];badge];false;0];true;$charCount[$replaceText[$replaceText[$findSpecialChars[$getGlobalUserVar[profile_badges;$get[id]]]; ;];>;]]]/12]]
+    $let[e;$math[$getTextSplitLength-1]]
+
+$textSplit[$get[profileBadges]; ;]
 
 $let[profilePronouns;$replaceText[$toLocaleUppercase[$getGlobalUserVar[profilePronouns;$get[id]]]; ;/]]
 $let[profileBadges;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_badges;$get[id]];<;];>;];badge france;${badges.france.contents}];badge udu;${badges.udu.contents}];badge russian;${badges.russia.contents}];badge russia;${badges.russia.contents}];badge french;${badges.france.contents}];badge usa;${badges.usa.contents}];badge brazil;${badges.brazil.contents}];badge poland;${badges.poland.contents}];badge goodmeal;${badges.goodmeal.contents}];badge dollidot;${badges.dollidot.contents}];badge developer;${badges.developer.contents}];badge partner ;];badge purplet;${badges.purplet.contents}];badge dave;${badges.dave.contents}];badge doctor;${badges.doctor.contents}];badge musician;${badges.musician.contents}];badge illustrator;${badges.illustrator.contents}];badge flushed;${badges.flushed.contents}];badge joy;${badges.joy.contents}];badge smile;${badges.smile.contents}];badge thinking;${badges.thinking.contents}];badge winktongue;${badges.winktongue.contents}];badge starstruck;${badges.starstruck.contents}];badge pensive;${badges.pensive.contents}];badge wink;${badges.wink.contents}]]

@@ -6,6 +6,7 @@ module.exports.command = {
     aliases: ["feedback", "request", "suggestion"],
     description_enUS: "Sends a suggestion for CRBT (english only).",
     usage_enUS: "<suggestion (may include images)>",
+    slashCmd: 'send suggestion',
     cooldown: "1m",
     code: `
 $reply[$messageID;
@@ -25,7 +26,7 @@ $channelSendMessage[$get[channel];
 {description:
 <@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
 \`\`\`
-$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];#LEFT#;#LEFT#];#RIGHT#;#RIGHT#];#LEFT_BRACKET#;#LEFT_BRACKET#];#RIGHT_BRACKET#;#RIGHT_BRACKET#]
 \`\`\`
 }
 

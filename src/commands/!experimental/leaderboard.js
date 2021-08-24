@@ -3,6 +3,7 @@ module.exports.command = {
     name: "leaderboard",
     module: "economy",
     aliases: ["lb", "lead"],
+    slashCmd: 'leaderboard type:purplets',
     code: `
 $reply[$messageID;
 {title:Purplets global leaderboard}

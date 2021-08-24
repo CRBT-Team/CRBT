@@ -9,7 +9,9 @@ $channelSendMessage[$getServerVar[messagelogs_channel];
 $if[$message!=]
 {description:$message}
 $else
-{description:Attachment/embed}
+{description:
+#LEFT#Attachment#RIGHT#
+}
 $endif
 
 {field:Channel:

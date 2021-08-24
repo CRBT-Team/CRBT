@@ -11,6 +11,7 @@ module.exports.command = {
         "acquire banner stripes",
         "purchase badge france"
     ],
+    slashCmd: 'item buy item:<args>',
     code: `
 $setGlobalUserVar[inv$toLowercase[$message[1]];$getGlobalUserVar[inv$toLowercase[$message[1]]], $toLowercase[$message[1]] $replaceText[$toLowercase[$messageSlice[1]]; ;]]
 $setGlobalUserVar[user_bank;$math[$getGlobalUserVar[user_bank]-$getObjectProperty[$get[item].value]]]

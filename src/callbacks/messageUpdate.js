@@ -26,7 +26,7 @@ $message
 <@!$authorID>
 :yes}
 
-{field:Timestamp:
+{field:Date:
 <t:$round[$formatDate[$dateStamp;X]]>
 :yes}
 

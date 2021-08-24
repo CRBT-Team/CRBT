@@ -6,6 +6,7 @@ module.exports.command = {
     module: "economy",
     description_enUS: "Claim a few Purplets, and make your streak go higher each time to win a bonus!",
     cooldown: "1h",
+    slashCmd: 'claim hourlies',
     code: `
 $reply[$messageID;
 {title:$get[title-$getGlobalUserVar[language]]}
@@ -32,8 +33,8 @@ $endif
 
 $let[title-enUS;${emojis.success} Hourly Purplets]
 $let[description1-enUS;You claimed your hourly ${emojis.purplet} **$random[20;50] Purplets**.
-Current streak: **$sum[$getGlobalUserVar[hourly_streak];1]/5** ($math[5-($getGlobalUserVar[hourly_streak]+1)] streak$replaceText[$replaceText[$checkCondition[$math[5-($getGlobalUserVar[hourly_streak]+1)]==1];true;s];false;] left for a bonus!)]
-$let[description2-enUS;You claimed your hourly ${emojis.purplet} **100 Purplets**. (Streak of 5 bonus!)]
+Current streak: **$sum[$getGlobalUserVar[hourly_streak];1]/5** ($math[5-($getGlobalUserVar[hourly_streak]+1)] streak$replaceText[$replaceText[$checkCondition[$math[5-($getGlobalUserVar[hourly_streak]+1)]==1];true;];false;s] left for a bonus!)]
+$let[description2-enUS;You claimed your hourly ${emojis.purplet} **100 Purplets**. (5-Streak bonus!)]
 
 $globalCooldown[$commandInfo[$commandName;cooldown];{execute:cooldown}]
 

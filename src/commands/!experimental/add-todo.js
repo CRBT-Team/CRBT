@@ -6,6 +6,7 @@ module.exports.command = {
     module: "tools",
     description_enUS: "Adds an item to your To-Do list.",
     usage_enUS: "<new item>",
+    slashCmd: 'todo add item:<args>',
     code: `
 $setGlobalUserVar[todolist;$get[newlist]
 • $get[item]]

@@ -1,9 +1,10 @@
 module.exports.command = {
     name: "readqr",
-    aliases: ['createqr','create-qr','generate-qr','qr-code','qr'],
+    aliases: ['scanqr','scan-qr','read-qr','qr-scan'],
     module: "tools",
     description_enUS: "Scans the given QR-code and gives the parsed text.",
     usage_enUS: "<image URL | attachment>",
+    slashCmd: 'qrcode scan image:<args>',
     code: `
 $reply[$messageID;
 {author:QR-code scan - Results}

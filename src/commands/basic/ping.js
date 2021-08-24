@@ -5,6 +5,7 @@ module.exports.command = {
     description_enUK: "Pings <botname> and returns <botname>'s connection latency.",
     description_frFR: "Pingue <botname>, puis donne des informations sur son temps de réponse, la latence API, son temps d'activité, etc...",
     description_ru: "Пингует <botname> и показывает информацию о времени ответа, задержке API, времени безотказной работы и т. д.",
+    slashCmd: 'ping',
     code: `
 
 $editMessage[$botLastMessageID;

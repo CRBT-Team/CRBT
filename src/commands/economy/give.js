@@ -4,8 +4,9 @@ module.exports.command = {
     name: "give",
     module: "economy",
     aliases: ["givemoney", "share", "give-money", "pay"],
-    usage_enUS: "<@mention> <amount of Purplets to give | all>",
-    description_enUS: "Allows you to give a fixed amount of Purplets to y",
+    usage_enUS: "<user ID | username | @mention> <amount of Purplets to give | all>",
+    description_enUS: "Allows you to give a fixed amount of Purplets to the specified user",
+    slashCmd: 'give user:<arg1> amount:<arg2>',
     code: `
 $setGlobalUserVar[user_bank;$sum[$getGlobalUserVar[user_bank;$get[id]];$get[amount]];$get[id]]
 $setGlobalUserVar[user_bank;$sub[$getGlobalUserVar[user_bank;$authorID];$get[amount]];$authorID]
@@ -32,12 +33,11 @@ $onlyIf[$getGlobalUserVar[user_bank]>0;{execute:noMoney}]
 $onlyIf[$get[id]!=$authorID;{execute:giveNotYou}]
 $onlyIf[$getGlobalUserVar[blocklisted;$get[id]]==false;{execute:userBlocklisted}]
 $onlyIf[$isNumber[$get[amount]]==true;{execute:args}]
-$onlyIf[$get[id]!=;{execute:args}]
-$argsCheck[2;{execute:args}]
-$onlyIf[$checkContains[$toLowercase[$message];dollidot]==false;as far as we know, you can't give dollidots (yet)]
+$onlyIf[$get[id]!=undefined;{execute:args}]
+$onlyIf[$checkContains[$toLowercase[$message[2]];dollidot]==false;as far as we know, you can't give dollidots (yet)]
 
-$let[amount;$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]]]
-$let[id;$mentioned[1]]
+$let[amount;$round[$replaceText[$toLowercase[$message[2]];all;$getGlobalUserVar[user_bank]]]]
+$let[id;$findUser[$message[1];no]]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
@@ -45,8 +45,3 @@ $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$guildID!=;{execute:guildOnly}]
     `}
-
-/*
-$let[id;$findUser[$replaceText[$toLowercase[$message];all;$getGlobalUserVar[user_bank]];$findNumbers[$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]];no]]
-$let[amount;$round[$findNumbers[$replaceText[$toLowercase[$noMentionMessage];all;$getGlobalUserVar[user_bank]]]]]
-*/

@@ -8,6 +8,7 @@ module.exports.command = {
     description_enUK: "Sends detailed information and the latest news of <botname>",
     description_frFR: "Présente des informations détaillées et actualités sur <botname>.",
     description_ru: "Даёт подробную информацию и новости о <botname>",
+    slashCmd: 'crbt',
     code: `
 $editMessage[$get[id];  
     {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$clientID;64]}

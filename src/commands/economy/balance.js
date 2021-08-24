@@ -6,6 +6,7 @@ module.exports.command = {
     usage_enUS: "<user ID | username | @mention (optional)>",
     description_enUS: "Retrieves the specified user's (or yours, if nobody is specified) balance and additional info.",
     aliases: ["bank", "bal", "money", "credit", "wallet", "purplets"],
+    slashCmd: 'balance user:<args>',
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[$get[id];64]}

@@ -5,6 +5,7 @@ module.exports.command = {
     aliases: ["crbtinvite", "discord"],
     module: "basic",
     description_enUS: "Gives useful links to invite CRBT or to join the Discord community.",
+    slashCmd: 'crbt type:invite',
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$userAvatar[595731552709771264;64]}

@@ -5,6 +5,7 @@ module.exports.command = {
     aliases: ['clear-todo','clear_todo', 'todo-clear', 'clearlist', 'clear-list','clear_list','listdelete', 'deletetodo'],
     module: "tools",
     description_enUS: "Clears your entire To-Do list.",
+    slashCmd: 'todo clear',
     code: `
 $deleteGlobalUserVar[todolist]
 

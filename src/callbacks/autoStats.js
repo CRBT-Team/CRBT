@@ -30,9 +30,9 @@ $numberSeparator[$allChannelsCount]
 Hosted on $replaceText[$replaceText[$checkCondition[$clientID==${links.CRBTid}];false;$username[$botOwnerID]'s $replaceText[$replaceText[$djsEval[require("os").platform();yes];win32;Windows PC];linux;Linux PC]];true;the Club]
 :yes}
 {field:Bot:
-▪︎ Running NodeJS $nodeVersion
+▪︎ Running Node.js $nodeVersion
 ▪︎ Running API at **[api.clembs.xyz](https://api.clembs.xyz)**
-▪︎ Running CRBT build ${version}
+▪︎ Running CRBT v${version}
 :yes}
 {field:Online since:
 <t:$get[up]> (<t:$get[up]:R>)

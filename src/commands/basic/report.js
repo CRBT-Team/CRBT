@@ -6,6 +6,7 @@ module.exports.command = {
     aliases: ["bugreport", "bug", "sendreport"],
     description_enUS: "Sends a bug report about CRBT (english only).",
     usage_enUS: "<bug report message (may include images)>",
+    slashCmd: 'send report',
     cooldown: "1m",
     code: `
 $reply[$messageID;
@@ -21,7 +22,7 @@ $channelSendMessage[$get[channel];
 {description:
 <@!$authorID> in **[$serverName[$guildID]](https://discord.com/channels/$guildID/$channelID/$messageID)**
 \`\`\`
-$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];|;];*;];_;] 
+$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getObjectProperty[cleanedReport];\`;];#LEFT#;#LEFT#];#RIGHT#;#RIGHT#];#LEFT_BRACKET#;#LEFT_BRACKET#];#RIGHT_BRACKET#;#RIGHT_BRACKET#]
 \`\`\`
 }
 

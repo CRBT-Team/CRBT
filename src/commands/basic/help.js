@@ -12,6 +12,7 @@ module.exports.command = {
     ],
     module: "basic",
     aliases: ["aled", "ouho", "commands", "cmds", "command", "cmd"],
+    slashCmd: 'help commands',
     code: `
 $if[$message==]
 
