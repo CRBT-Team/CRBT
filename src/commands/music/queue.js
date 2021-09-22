@@ -53,17 +53,6 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $if[$channelType!=dm] $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}] $endif
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
+
+$onlyIf[1==2;{execute:musicDisabled}]
     `}
-
-/*
-
-$apiMessage[;
-
-{actionRow:$get[prev]:$get[next]}
-]
-
-$let[next;,2,1,queue3,next|867080274194071582|false,false]
-
-$let[prev;,2,1,queue2,previous|867080071637106699|false,true]
-
-*/

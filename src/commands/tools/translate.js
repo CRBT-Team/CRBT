@@ -6,7 +6,7 @@ module.exports.command = {
     usage_enUS: "<target language> <text to translate>",
     code: `
 $reply[$messageID;
-{author:Translation - Results}
+{author:Translated from $getObjectProperty[lang.enUS.$toLowercase[$getObjectProperty[given.lang]]] to $getObjectProperty[lang.enUS.$toLowercase[$getObjectProperty[translated.lang]]]}
 {field:$getObjectProperty[lang.enUS.$toLowercase[$getObjectProperty[given.lang]]]:
 \`\`\`text
 $messageSlice[1]
@@ -20,8 +20,7 @@ $getObjectProperty[translated.text]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$djsEval[const { languages } = require("../../../../../data/api.json");
-d.object.lang = languages;]
+$djsEval[d.object.lang = require("../../../../../data/misc/languageShortCodes.json");]
 
 $onlyIf[$getObjectProperty[status]==200;{execute:args}]
 

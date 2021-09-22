@@ -7,7 +7,7 @@ module.exports.command = {
     examples_enUS: [
         "modules",
         "module enable message logs",
-        "cfg remove Music",
+        "cfg remove Moderation",
         "md +autopublish"
     ],
     module: "settings",
@@ -32,7 +32,7 @@ $elseIf[$checkContains[$stringStartsWith[$toLowercase[$message];+]$stringStartsW
 $setServerVar[module_$get[module2];true]
 
 $reply[$messageID;
-{title:${emojis.toggleon} The \`$get[module2]\` module was enabled.}
+{title:${emojis.toggle.on} The \`$get[module2]\` module was enabled.}
 
 {description:
 All commands belonging to this module will now be executable in $serverName.
@@ -43,7 +43,7 @@ All commands belonging to this module will now be executable in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==false;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; music ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
 
 $let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
@@ -57,7 +57,7 @@ $elseIf[$checkContains[$stringStartsWith[$toLowercase[$message];-]$stringStartsW
 $setServerVar[module_$get[module2];false]
 
 $reply[$messageID;
-{title:${emojis.toggleoff} The \`$get[module2]\` module was disabled.}
+{title:${emojis.toggle.off} The \`$get[module2]\` module was disabled.}
 
 {description:
 All commands belonging to this module will no longer execute in $serverName.
@@ -68,7 +68,7 @@ All commands belonging to this module will no longer execute in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==true;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; music ; autoPublish ; modLogs ; messageLogs ; nsfw ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
 
 $let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
@@ -86,22 +86,19 @@ $endif
 $let[title-enUS;CRBT Settings - Modules]
 $let[modules-enUS;
 $replaceText[$replaceText[$hasPerms[$authorID;manageserver];true;To enable or disable any module, use \`$getServerVar[prefix]module <enable | disable> <module name>\`.];false;Note that you will need the "Manage server" permissions on this server to disable or enable any of these.]
-$replaceText[$replaceText[$getServerVar[module_autoPublish];true;${emojis.toggleon}];false;${emojis.toggleoff}] Auto-publish
-$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggleon}];false;${emojis.toggleoff}] Economy & profiles
-$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggleon}];false;${emojis.toggleoff}] Fun
-$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggleon}];false;${emojis.toggleoff}] Info
-$replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Message logs
-$replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation logs
-$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggleon}];false;${emojis.toggleoff}] Moderation
-$replaceText[$replaceText[$getServerVar[module_music];true;${emojis.toggleon}];false;${emojis.toggleoff}] Music
-$replaceText[$replaceText[$getServerVar[module_nsfw];true;${emojis.toggleon}];false;${emojis.toggleoff}] NSFW
-$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggleon}];false;${emojis.toggleoff}] Tools
+$replaceText[$replaceText[$getServerVar[module_autoPublish];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Auto-publish
+$replaceText[$replaceText[$getServerVar[module_economy];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Economy & profiles
+$replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Fun
+$replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Info
+$replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Message logs
+$replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Moderation logs
+$replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Moderation
+$replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Tools
 ]
 $let[essentials-enUS;Essential modules:
 You can't disable any of these modules.
-${emojis.forcedon} Basic
-${emojis.forcedon} Settings
-${emojis.forcedon} Admin
+${emojis.toggle.fon} Basic
+${emojis.toggle.fon} Settings
 ]
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

@@ -13,7 +13,6 @@ $reply[$messageID;
 
 {description:
 $get[purplets-$getGlobalUserVar[language]]
-$get[lead-$getGlobalUserVar[language]]
 $replaceText[$replaceText[$checkCondition[$getGlobalUserVar[job_type]==$getVar[job_type]];true;$get[work-$getGlobalUserVar[language]]];false;]
 }
 

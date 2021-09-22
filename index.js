@@ -1,15 +1,7 @@
 // Imports
 const { Bot } = require("aoi.js");
-// const instance = require("./instance");
-const { readFileSync } = require("fs");
+const { readdirSync } = require('fs-extra')
 require("dotenv").config();
-
-// Configuration files
-const { colors, emojis, links, tokens, illustrations, logos } =
-    JSON.parse(readFileSync("data/config.json", "utf-8"));
-const { items } = JSON.parse(readFileSync("data/store.json", "utf-8"));
-const { jobs } = JSON.parse(readFileSync("data/jobs.json", "utf-8"));
-const { api } = JSON.parse(readFileSync("data/api.json", "utf-8"));
 
 // Creating the bot
 const bot = new Bot({
@@ -19,19 +11,33 @@ const bot = new Bot({
 });
 
 // Export the bot, configuration files and instance to be accessed better by commands
+function config(path) {
+    const configFolder = readdirSync(path).filter((file) => file.endsWith(".json"));
+
+    let configs = {};
+    for (const file of configFolder) {
+    try {
+        const config = require(`${path}/${file}`);
+        configs[file.split('.')[0]] = config
+
+    } catch (e) {
+        return console.log(e);
+    }
+    }
+    return configs;
+}
+const { colors, emojis, illustrations, jobs, links, logos, misc, items, tokens } = config("./data/config");
+
 module.exports = {
-    bot, colors, emojis, jobs, links, tokens, items, logos, illustrations, api,
+    bot, colors, emojis, illustrations, jobs, links, logos, misc, items, tokens
 };
 
 // Listeners
-bot.onMessage({ guildOnly: true }); // Allow commands to work in DMs
-bot.onInteractionCreate(); // For slash commands / interactions
-bot.onGuildJoin(); // Send a message when the bot joins a guild
-bot.onGuildLeave(); // Deletes some of the guild's variables when CRBT is kicked, to save space in the DB
-bot.onMessageDelete(); // Message deleted logs
-bot.onMessageUpdate(); // Message edited logs
-bot.onRateLimit();
-// bot.onJoined(); //For pi's autorole
+bot.onMessage({ guildOnly: true });
+bot.onGuildJoin();
+bot.onGuildLeave();
+bot.onMessageDelete();
+bot.onMessageUpdate();
 
 // Command handler
 require("./loadCmds")();

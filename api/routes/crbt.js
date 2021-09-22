@@ -1,4 +1,4 @@
-const { meanings } = require("../../data/api.json");
+const meanings = require("../../data/api/CRBTmeanings.json");
 const { bot } = require("../../index");
 const router = require("express").Router();
 const { version } = require("../../package.json");
@@ -39,30 +39,9 @@ router.get("/command/:name", async function(req, res, next) {
             aliases: cmd.aliases,
             module: cmd.module,
             cooldown: cmd.cooldown,
-            description: {
-                enUS: cmd.description_enUS,
-                enUK: cmd.description_enUK,
-                frFR: cmd.description_frFR,
-                esES: cmd.description_esES,
-                ru: cmd.description_ru,
-                ptBR: cmd.description_ptBR,
-            },
-            usage: {
-                enUS: cmd.usage_enUS,
-                enUK: cmd.usage_enUK,
-                frFR: cmd.usage_frFR,
-                esES: cmd.usage_esES,
-                ru: cmd.usage_ru,
-                ptBR: cmd.usage_ptBR,
-            },
-            examples: {
-                enUS: cmd.examples_enUS,
-                enUK: cmd.examples_enUK,
-                frFR: cmd.examples_frFR,
-                esES: cmd.examples_esES,
-                ru: cmd.example_ru,
-                ptBR: cmd.examples_ptBR,
-            },
+            description: cmd.description_enUS,
+            usage: cmd.usage_enUS,
+            examples: cmd.examples_enUS,
             botPerms: cmd.botPerms,
             userPerms: cmd.userPerms,
         })

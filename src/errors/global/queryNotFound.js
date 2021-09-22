@@ -58,7 +58,7 @@ $let[urbandictionary-1-enUS;${emojis.error} Couldn't find this word...]
 $let[urbandictionary-2-enUS;Nobody has defined this word on Urban Dictionary yet.]
 
 $let[serverinfo-1-enUS;${emojis.error} Couldn't find this server.]
-$let[serverinfo-2-enUS;I couldn't fetch information for this Discord server as I am not part of it, or the ID used is invalid.\nTo invite me to $replaceText[$replaceText[$checkCondition[$channelType==dm];true;any];false;another] server, click [here](${links.info.discord}).]
+$let[serverinfo-2-enUS;I couldn't fetch information for this Discord server as I am not part of it, or the ID used is invalid.\nTo invite me to $replaceText[$replaceText[$checkCondition[$channelType==dm];true;any];false;another] server, click **[here](${links.discord})**.]
 
 $let[weather-1-enUS;${emojis.error} No data was found for this query]
 $let[weather-2-enUS;This city/country doesn't exist or no weather data for it is listed.]

@@ -22,7 +22,7 @@ $let[tutorial-enUS;> **Image tutorial:**
 > https://cdn.clembs.xyz/ho49it1.png 
 > https://cdn.clembs.xyz/grmzEy3.png 
 > https://cdn.clembs.xyz/CuWoykW.png]
-$let[description3-enUS;> If you need further help, please go to the Discord support server: ${links.info.discord}.]
+$let[description3-enUS;> If you need further help, please go to the Discord support server: ${links.discord}.]
 
 $let[title-enUK;> ❌ **$username[$clientID] needs the "Embed Links" permission.**]
 $let[description1-enUK;> Try contacting an administrator to resolve the issue.]
@@ -31,7 +31,7 @@ $let[tutorial-enUK;> **Image tutorial:**
 > https://cdn.clembs.xyz/ho49it1.png 
 > https://cdn.clembs.xyz/grmzEy3.png 
 > https://cdn.clembs.xyz/CuWoykW.png]
-$let[description3-enUK;> If you need further help, please go to the Discord Support server: ${links.info.discord}.]
+$let[description3-enUK;> If you need further help, please go to the Discord Support server: ${links.discord}.]
 
 $let[title-esES;> ❌ **$username[$clientID] necesita el permiso "Insertar enlaces".**]
 $let[description1-esES;> Prueba a contactar a un administrador para solucionar este problema.]
@@ -40,7 +40,7 @@ $let[tutorial-esES;> **Tutorial de imágenes:**
 > https://cdn.clembs.xyz/QL8rTZw.png 
 > https://cdn.clembs.xyz/Q7CKnMk.png 
 > https://cdn.clembs.xyz/r6uQks3.png]
-$let[description3-esES;> Si necesitas más ayuda, ve al servidor de soporte de Discord: ${links.info.discord}.]
+$let[description3-esES;> Si necesitas más ayuda, ve al servidor de soporte de Discord: ${links.discord}.]
 
 $let[title-frFR;> ❌ **$username[$clientID] a besoin de la permission "Intégrer les liens".**]
 $let[description1-frFR;> Contactez un administrateur pour régler ce souci.]
@@ -49,7 +49,7 @@ $let[tutorial-frFR;> **Tutoriel en images :**
 > https://cdn.clembs.xyz/28b9nd8.png 
 > https://cdn.clembs.xyz/cmcBtE1.png 
 > https://cdn.clembs.xyz/leuTbTM.png]
-$let[description3-frFR;> Si vous avez besoin d'aide, rejoignez le serveur Discord : ${links.info.discord}.]
+$let[description3-frFR;> Si vous avez besoin d'aide, rejoignez le serveur Discord : ${links.discord}.]
 
 $let[title-ptBR;> ❌ **$username[$clientID] needs the "Embed Links" permission.**]
 $let[description1-ptBR;> Try contacting an administrator to resolve the issue.]
@@ -58,7 +58,7 @@ $let[tutorial-ptBR;> **Image tutorial:**
 > https://cdn.clembs.xyz/ho49it1.png 
 > https://cdn.clembs.xyz/grmzEy3.png 
 > https://cdn.clembs.xyz/CuWoykW.png]
-$let[description3-ptBR;> If you need further help, please go to the Discord Support server: ${links.info.discord}.]
+$let[description3-ptBR;> If you need further help, please go to the Discord Support server: ${links.discord}.]
 
 $let[title-ru;> ❌ **$username[$clientID] нужны права на встраивание ссылок.**]
 $let[description1-ru;> Свяжитесь с администратором сервера и сообщите ему о проблеме.]
@@ -67,5 +67,5 @@ $let[tutorial-ru;> **Туториал в картинках:**
 > https://cdn.clembs.xyz/8kmO2s0.png 
 > https://cdn.clembs.xyz/22cpDDP.png 
 > https://cdn.clembs.xyz/XmOVzxA.png]
-$let[description3-ru;> Если вам нужна дополнительная помощь, пожалуйста, перейдите на сервер поддержки Discord ${links.info.discord}.]
+$let[description3-ru;> Если вам нужна дополнительная помощь, пожалуйста, перейдите на сервер поддержки Discord ${links.discord}.]
   `}

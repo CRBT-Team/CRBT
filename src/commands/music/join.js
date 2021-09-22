@@ -32,4 +32,6 @@ $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
 $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:module}]
 $setGlobalUserVar[lastCmd;$commandName]
 $onlyIf[$channelType!=dm;{execute:guildOnly}]
+
+$onlyIf[1==2;{execute:musicDisabled}]
     `}

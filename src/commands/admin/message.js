@@ -1,4 +1,4 @@
-const { colors, emojis, links } = require("../../../index");
+const { colors, emojis, links, misc } = require("../../../index");
 
 module.exports.command = {
     name: "reply",
@@ -52,7 +52,7 @@ $let[title;$getEmbed[$get[channel];$message[1];title]]
 $let[description;$getEmbed[$get[channel];$message[1];description]]
 $let[footer;$getEmbed[$get[channel];$message[1];footer]]
 
-$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==${links.CRBTid}];true;${links.channels.report}];false;${links.channels.reportDev}]]
+$let[channel;$replaceText[$replaceText[$checkCondition[$clientID==${misc.CRBTid}];true;${misc.channels.report}];false;${misc.channels.reportDev}]]
 
 $argsCheck[>1;{execute:args}]
 

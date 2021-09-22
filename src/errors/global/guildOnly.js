@@ -10,5 +10,5 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.error} We don't belong here, $username.]
-$let[description-enUS;This command unfortunately can't be executed from your DMs. Try again in a server this time or [invite me](${links.invite}) to one of yours!]
+$let[description-enUS;This command unfortunately can't be executed from your DMs. Try again in a server this time or **[invite me](${links.invite.fullInvite})** to one of yours!]
     `}
