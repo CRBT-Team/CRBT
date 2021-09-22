@@ -9,8 +9,12 @@ module.exports.command = {
     description_enUS: "Retrieves your CRBT profile (badges, bio, banner, etc...), or a specified user's (if any).",
     code: `
     $reply[$messageID;
-    {title:$get[profileName]}
-    {description:$get[profileBio]}
+    {title:
+    $replaceText[$replaceText[$checkCondition[$charCount[$get[profileName]]>40];true;$cropText[$get[profileName];40]...];false;$get[profileName]]
+    }
+    {description:
+    $replaceText[$replaceText[$checkCondition[$charCount[$get[profileBio]]>120];true;$cropText[$get[profileBio];120]...];false;$get[profileBio]]
+    }
     
     {field:$get[badges-$getGlobalUserVar[language]]:
     $replaceText[$replaceText[$checkCondition[$get[e]==0];true;None];false;$get[profileBadges]]‎‎

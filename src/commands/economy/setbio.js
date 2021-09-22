@@ -36,13 +36,15 @@ $let[new-enUS;New]
 
 $let[old;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$getGlobalUserVar[profile_about];<user.name>;$username[$authorID]];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
 
-$onlyIf[$checkContains[${blockedWords};$message]==false;{execute:noBadWords}]
+$onlyIf[$checkContains[ $message ;$joinSplitText[ ; ]]==false;{execute:noBadWords}]
 $onlyIf[$charCount[$toLowercase[$get[new]]]<=120;{execute:tooLong}]
-$onlyIf[$charCount[$toLowercase[$get[cleanedUp]]]>=10;{execute:tooShort}]
+$onlyIf[$charCount[$get[h]]>=10;{execute:tooShort}]
 
-$let[cleanedUp;$djsEval['$replaceText[$get[plainNew];';]'.trim().replace(/[u200B-u200DuFEFF]/g, '');yes]]
+$textSplit[${blockedWords};,]
 
-$let[plainNew;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[new];||;];* ;]; *;]; _;];_ ;];*;];_;]]
+$let[h;$djsEval['$replaceText[$get[plainNew];';]'.trim();yes]]
+
+$let[plainNew;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[new];||;];* ;]; *;]; _;];_ ;];_;]]
 
 $let[new;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$message;<user.name>;$username[$authorID]];<user.id>;$authorID];<user.tag>;$userTag[$authorID]];<var.purplets>;$getGlobalUserVar[user_bank;$authorID]];<user.status>;$replaceText[$replaceText[$getCustomStatus[$authorID;emoji];none;] $getCustomStatus[$authorID;state]; none;None]]]
 

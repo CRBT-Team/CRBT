@@ -5,7 +5,7 @@ const { param, body, validationResult } = require("express-validator");
 let kitsu = require('kitsu.js')
 const kitsus = new kitsu()
 
-router.get("/pédiluve", async function (req, res) {
+router.get("/pediluve", async function (req, res) {
     res.json({
         status: 200,
         image: pédiluve[Math.floor(Math.random() * (pédiluve.length - 0 + 1))],

@@ -1,4 +1,4 @@
-const { colors, emojis, logos, illustrations, links, api } = require("../../../index")
+const { colors, emojis, logos, illustrations, links } = require("../../../index")
 
 module.exports.command = {
     name: "template",
