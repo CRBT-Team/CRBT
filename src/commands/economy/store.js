@@ -1,4 +1,4 @@
-const { logos, emojis, illustrations } = require("../../..");
+const { logos, emojis, illustrations, colors } = require("../../..");
 const { badges, badges2, banners } = require("../../../data/misc/store-pages")
 
 const p = {
@@ -16,8 +16,7 @@ module.exports.command = {
     code: `
 $reactionCollector[$get[id];$authorID;1h;${emojis.store.badges},😎,${emojis.store.banners};badges,badges2,banners;yes]
 
-$let[id;$apiMessage[;
-
+$editMessage[$get[id];
 $if[$message==]
 
     {author:${p.title} Badges (Page 1):${logos.CRBTsmall}}
@@ -61,6 +60,11 @@ $else
 $endif
 
 {color:$getGlobalUserVar[color]}
+;$channelID]
+
+$let[id;$apiMessage[;
+{title:Loading...}
+{color:${colors.orange}}
 ;
 ;$messageID:false;yes]]
 
