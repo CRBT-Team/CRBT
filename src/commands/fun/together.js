@@ -3,7 +3,7 @@ const {emojis, colors} = require("../../../index");
 module.exports.command = {
     name: "yt",
     module: "fun",
-    aliases: ["youtube", "yttogether", "w2g"],
+    aliases: ["youtube", "yttogether", "w2g", "youtube-together"],
     description_enUS: "Allows you to create a YouTube Together activity within a voice channel.",
     botPerms: "createinvite",
     code: `

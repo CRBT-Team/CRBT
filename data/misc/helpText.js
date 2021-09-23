@@ -1,4 +1,4 @@
-const { emojis } = require("../../index")
+const { emojis, links } = require("../../index")
 
 module.exports = {
     modules: {
@@ -31,6 +31,12 @@ module.exports = {
         Displays your CRBT profile.
         `,
         fun: `
+        • **__NEW__** \`<prefix>chess\`, \`fishington\`, \`betrayal\`, \`poker\`
+        Starts an activity in the current VC namely for Chess in the Park, Fishington.io, Betrayal.io and Poker Night.
+        • **__NEW__** \`<prefix>youtube\`
+        Starts a YouTube Together activity in the current VC to watch and listen together!
+        **Note:** Since Sept. 2021, this replaces the Music module. Learn more on the **[support server](${links.discord})**.
+
         • \`<prefix>8ball\`
         Asks your question to 8-Ball, and retrieves its answer. 
         • \`<prefix>bird\`, \`cat\`, \`dog\`, \`fox\`, \`koala\` or \`panda\`
@@ -68,7 +74,7 @@ module.exports = {
         Bulk deletes a specified number of messages in the current channel.
         • \`<prefix>snipe\`
         Finds the latest deleted message on the current channel, or on a specified channel (if any).
-        `,
+        `,/*
         music: `
         • \`<prefix>play\`
         Queues or directly plays the song of your choice.
@@ -80,7 +86,7 @@ module.exports = {
         Disconnects <botname> from its voice channels and clears the queue.
         • \`<prefix>volume\`
         Gives you volume controls or manually sets the volume.
-        `,/*
+        `,
         nsfw: `
         Warning: Contains unsuitable language for minor audiences.
         ||• \`<prefix>blowjob\`

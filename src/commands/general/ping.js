@@ -43,8 +43,7 @@ $wait[50ms]
 $let[id;$apiMessage[$channelID;;
 {title:$get[progress-$getGlobalUserVar[language]]}
 {color:$getGlobalUserVar[color]}
-;
-;$messageID:false;yes]]
+;;$messageID:false;yes]]
 
 $let[progress-enUS;Pinging...]
 
