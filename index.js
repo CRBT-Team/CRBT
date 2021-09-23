@@ -9,8 +9,8 @@ const bot = new Bot({
     prefix: ["$getServerVar[prefix]"],
     mobile: false, sharding: false, cache: true,
     databasePath: "./new-database/",
-//    errorMessage: "{execute:generic}",
-//    suppressAll: true
+    errorMessage: "{execute:generic}",
+    suppressAll: true
 });
 
 // Export the bot, configuration files and instance to be accessed better by commands

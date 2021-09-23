@@ -10,7 +10,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.error} Beep boop, you there?]
-$let[description-enUS;You need to be part of a voice channel in order to play music/use this command.]
+$let[description-enUS;You need to be part of a voice channel in order to use this command.]
 
 $let[title-enUK;${emojis.error} Ring ring. Anyone there?]
 $let[description-enUK;You need to be a part of a voice channel in order to play music/use this command.]

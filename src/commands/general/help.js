@@ -178,7 +178,7 @@ Get any kind of info with $username[$clientID]'s commands, including user pfps, 
 Moderate your server using $username[$clientID]'s mute, warn, kick & ban system.
 :yes}
 
-{field:$get[music] Logs:
+{field:$get[logs] Message logs:
 Use $username[$clientID]'s logging capabilities to track deleted and edited messages.
 :yes}
 
@@ -199,7 +199,7 @@ $let[economy;$replaceText[$replaceText[$getServerVar[module_economy];true;$get[o
 $let[fun;$replaceText[$replaceText[$getServerVar[module_fun];true;$get[on]];false;$get[off]]]
 $let[info;$replaceText[$replaceText[$getServerVar[module_info];true;$get[on]];false;$get[off]]]
 $let[moderation;$replaceText[$replaceText[$getServerVar[module_moderation];true;$get[on]];false;$get[off]]]
-$let[music;$replaceText[${emojis.toggle.foff};:;#COLON#]]
+$let[logs;$replaceText[$replaceText[$getServerVar[module_messageLogs];true;$get[on]];false;$get[off]]]
 $let[tools;$replaceText[$replaceText[$getServerVar[module_tools];true;$get[on]];false;$get[off]]]
 
 $let[forced;$replaceText[${emojis.toggle.fon};:;#COLON#]]

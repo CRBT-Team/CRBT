@@ -20,11 +20,15 @@ $getObjectProperty[translated.text]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$djsEval[d.object.lang = require("../../../../../data/misc/languageShortCodes.json");]
-
 $onlyIf[$getObjectProperty[status]==200;{execute:args}]
 
 $createObject[$jsonRequest[https://translate-api.ml/translate?text=$uri[encode;$messageSlice[1]]&lang=$message[1]]]
+
+$onlyIf[$getObjectProperty[lang.enUS.$toLowercase[$getObjectProperty[translated.lang]]]!=;{execute:args}]
+
+$djsEval[
+d.object.lang = require("../../../../../data/misc/languageShortCodes.json")
+;]
 
 $argsCheck[>2;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

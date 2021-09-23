@@ -8,7 +8,6 @@ $reply[$messageID;
 {description:$get[description-$getGlobalUserVar[language]]}
 {color:${colors.error}}
 ;no]
-
 $let[title-enUS;${emojis.error} Yikes! A generic error message!]
-$let[description-enUS;An error has occurred. Please try again later. We sent command details to the developers so they can fix it.]
+$let[description-enUS;An error has occurred. Please try again later or \`$getServerVar[prefix]report\` this error. Make sure to include the command name and arguments, and a screenshot of the context, if possible.]
     `}
