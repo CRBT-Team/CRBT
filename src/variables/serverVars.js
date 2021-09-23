@@ -3,7 +3,7 @@ module.exports.variables = {
 //server settings
     prefix: "//",
     muted_role: "none",
-    volume: 50, //which is interprated as 100 on CRBT
+//  volume: 50,
 //  allowedChannels: "", //the allowlist for channels
     messagelogs_channel: "none", 
     modlogs_channel: "none",
@@ -25,7 +25,7 @@ module.exports.variables = {
 //server related misc data
     webhook_token: "", webhook_id: "",
     locked: false,
-    music_channel: "",
+//  music_channel: "",
     strikes: "", 
     strikelog: "",
     snipeContent: "",
@@ -47,6 +47,5 @@ module.exports.variables = {
 //  can't be disabled
     module_general: true, //Misc (previously "Basic")
     module_settings: true, //Settings
-//  module_partnerCmd: true, //Partner command
     module_admin: true, //Admin
 }

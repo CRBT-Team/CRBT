@@ -8,8 +8,8 @@ module.exports.command = {
     usage_enUS: "<item to remove>",
     slashCmd: 'todo check item:<args>',
     code: `
-$setGlobalUserVar[todolist;$replaceText[$get[newlist];
-• $get[item];]]
+$setGlobalUserVar[todolist;$replaceTextWithRegex[$get[newlist];
+• $get[item];;]]
 
 $reply[$messageID;
 {title:${emojis.success} Item removed from your To-Do list!}

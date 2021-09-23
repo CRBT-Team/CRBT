@@ -5,8 +5,6 @@ module.exports.variables = {
 //user settings
     color: `${colors.lightred.toLowerCase()}`,
     language: "enUS",
-//  telemetry: "complete", //two states: minimal or complete 
-//  paintedColor: "", //for name color
 
 //work related stuff
     job_type: "unemployed", 
@@ -15,13 +13,6 @@ module.exports.variables = {
     job_level: 1, 
     job_propositions: "",
 
-//experiments
-    experimentalFeatures: false, //to enable experimental features
-    
-//experimentalFeatures flag
-    r34Query: "", //last query for ()rule34
-    todolist: "", //for now we're using the old to-do lists since we ain't got time
-
 //user related misc data
     blocklisted: false,
     lastCmd: "", //export last used cmd
@@ -29,6 +20,7 @@ module.exports.variables = {
     city: "", //last city entered in ()weather
     hourly_streak: 0,
     helpSuggestions: "",
+    todolist: "", //for now we're using the old to-do lists since we ain't got time
 
 //economy
     user_bank: 0, 

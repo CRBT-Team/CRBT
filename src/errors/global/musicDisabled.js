@@ -10,5 +10,7 @@ $reply[$messageID;
 ;no]
 
 $let[title-enUS;${emojis.error} CRBT Music has came to an end.]
-$let[description-enUS;We're super duper sorry to announce this, but just like competing bots we are closing the music module. To learn more, visit our **[support server](${links.discord})**.]
+$let[description-enUS;We're super duper sorry to announce this, but just like competing bots we are closing the music module. 
+We recommend you use \`$getServerVar[prefix]youtube-together\` to create a YouTube Together activity, which allows you to listen to music together as well!
+To learn more, visit our **[support server](${links.discord})**.]
     `}

@@ -59,6 +59,8 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $onlyIf[$getGlobalUserVar[experimentalFeatures]==true;{execute:experimentalFeatures}]
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
 $setGlobalUserVar[lastCmd;$commandName]
+
+$onlyIf[1==2;{execute:nsfwDisabled}]
     `}
 
 // $reactionCollector[$botLastMessageID;$authorID;10m;${emojis.music.loop};shufflensfw;yes]

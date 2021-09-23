@@ -40,7 +40,7 @@ d.object.final = Math.floor(a - d.object.start - 50)
 
 $wait[50ms]
 
-$let[id;$apiMessage[;
+$let[id;$apiMessage[$channelID;;
 {title:$get[progress-$getGlobalUserVar[language]]}
 {color:$getGlobalUserVar[color]}
 ;

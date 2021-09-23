@@ -54,6 +54,11 @@ $elseIf[$checkContains[ $toLowercase[$message] ; music ]==true]
 $loop[1;musicDisabled]
 
 $endelseIf
+$elseIf[$checkContains[ $toLowercase[$message] ; nsfw ]==true]
+
+$loop[1;nsfwDisabled]
+
+$endelseIf
 $else
 
 $reply[$messageID;
@@ -150,6 +155,7 @@ $endif
     $endif
 
 $onlyIf[$commandInfo[$message;module]!=music;{execute:musicDisabled}]
+$onlyIf[$commandInfo[$message;module]!=nsfw;{execute:nsfwDisabled}]
 $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif

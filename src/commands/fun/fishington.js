@@ -1,10 +1,10 @@
 const {emojis, colors} = require("../../../index");
 
 module.exports.command = {
-    name: "yt",
+    name: "fishington",
     module: "fun",
-    aliases: ["youtube", "yttogether", "w2g"],
-    description_enUS: "Allows you to create a YouTube Together activity within a voice channel.",
+    aliases: ["fishingtonio", "playfishington", "playfish", "fish"],
+    description_enUS: "Starts a Fishington.io activity within a voice channel.",
     botPerms: "createinvite",
     code: `
 $apiMessage[$channelID;;
@@ -15,12 +15,12 @@ $apiMessage[$channelID;;
 ;$messageID:false;no]
 
 $let[title-enUS;${emojis.success} You're all set!]
-$let[description-enUS;Click on the button below to join the YouTube Together Discord activity.]
+$let[description-enUS;Click on the button below to join the Fishington.io activity.]
 
 $djsEval[
 const { DiscordTogether } = require('discord-together');
 client.discordTogether = new DiscordTogether(client);
-client.discordTogether.createTogetherCode('$voiceID', 'youtube').then(async invite => {
+client.discordTogether.createTogetherCode('$voiceID', 'fish').then(async invite => {
 d.object.invite = invite.code;
 });]
 

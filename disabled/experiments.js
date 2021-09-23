@@ -1,4 +1,4 @@
-const { emojis, colors, links } = require("../../../index")
+const { emojis, colors, links } = require("../index")
 
 module.exports.command = {
     name: "experiments",

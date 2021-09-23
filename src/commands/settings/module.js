@@ -44,9 +44,9 @@ All commands belonging to this module will now be executable in $serverName.
 $onlyIf[$getServerVar[module_$get[module2]]==false;{execute:moduleAlr}]
 
 $onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
-$onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
+$onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];general];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];add;];+;];enable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]
@@ -69,9 +69,9 @@ All commands belonging to this module will no longer execute in $serverName.
 $onlyIf[$getServerVar[module_$get[module2]]==true;{execute:moduleAlr}]
 
 $onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
-$onlyIf[$checkContains[ $get[module2] ; basic ; misc ; admin ; partnercmd]==false;{execute:moduleFalse}]
+$onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];basic;misc];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];general];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];remove;];-;];disable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]
@@ -97,7 +97,7 @@ $replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggle.on}];
 ]
 $let[essentials-enUS;Essential modules:
 You can't disable any of these modules.
-${emojis.toggle.fon} Basic
+${emojis.toggle.fon} General
 ${emojis.toggle.fon} Settings
 ]
 

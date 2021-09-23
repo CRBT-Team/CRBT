@@ -1,3 +1,5 @@
+const { misc } = require("../../..");
+
 module.exports.command = {
     name: "anime",
     aliases: ['searchanime','animesearch'],
@@ -49,7 +51,11 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[endDate]==];true;Si
 
 $onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
+$if[$clientID==${misc.CRBTid}]
 $createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message;;Unfortunately, the API is down...]
+$else
+$createObject[$jsonRequest[https://api.clembs.xyz/other/anime/$message;;Unfortunately, the API is down...]
+$endif
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
