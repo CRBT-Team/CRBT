@@ -3,7 +3,7 @@ module.exports.command = {
     aliases: ["servericon"],
     module: "info",
     description_enUS: "Retrieves a specified user's profile picture in multiple resolutions and formats. Returns yours if no arguments are used.",
-    usage_enUS: "<user ID | username | @mention> (optional)",
+    usage_enUS: "<server ID (optional)>",
     code: `
 $reply[$messageID;
 {author:$get[title-$getGlobalUserVar[language]]:$get[avatar]}
@@ -34,7 +34,7 @@ $if[$message==]
     $onlyIf[$channelType!=dm;{execute:guildOnly}]
 $else
     $let[id;$message]
-    $onlyIf[$serverExists[$message]==true;{execute:args}]
+    $onlyIf[$serverExists[$message]==true;{execute:queryNotFound}]
 $endif
 
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]
