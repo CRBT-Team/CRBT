@@ -45,16 +45,15 @@ let theUptimeInMS = tools.parseToMS("$replaceText[$uptime; ;]")
 d.object.uptime = tools.parseMS(theUptimeInMS)
 d.object.ms = theUptimeInMS]
 
-$let[id;$splitText[1]]
-
-$textSplit[$apiMessage[;
+$let[id;$apiMessage[$channelID;;
 {title:Loading...}
 {color:${colors.orange}}
-;{actionRow:$get[web]:$get[invite]:$get[server]}
-;$messageID:false;yes]; ]
+;{actionRow:$get[web]:$get[invite]:$get[server]:$get[github]}
+;$messageID:false;yes]]
 
-$let[server;Discord,2,5,$replaceText[${links.info.discord};:;#COLON#]]
-$let[invite;Invite,2,5,$replaceText[${links.invite};:;#COLON#]]
+$let[github;GitHub,2,5,$replaceText[${links.github};:;#COLON#]]
+$let[server;Discord,2,5,$replaceText[${links.discord};:;#COLON#]]
+$let[invite;Invite,2,5,$replaceText[${links.invite.fullInvite};:;#COLON#]]
 $let[web;Website,2,5,$replaceText[${links.baseURL};:;#COLON#]]
 
 $argsCheck[0;{execute:args}]

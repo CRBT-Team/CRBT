@@ -46,7 +46,7 @@ $onlyIf[$getServerVar[module_$get[module2]]==false;{execute:moduleAlr}]
 $onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];general];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];add;];+;];enable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]
@@ -71,7 +71,7 @@ $onlyIf[$getServerVar[module_$get[module2]]==true;{execute:moduleAlr}]
 $onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];general];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];remove;];-;];disable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]

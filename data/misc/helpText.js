@@ -67,6 +67,12 @@ module.exports = {
         • \`<prefix>urbandictionary <word or expression>\`
         • \`<prefix>weather <city>\`
         `,
+        logs: `
+        Allows you to read the previously deleted or edited messages within the server, granted that you have the permissions to view the logs channel.
+
+        The messages are currently sent to <mlChannel>.
+        
+        `,
         moderation: `
         • \`<prefix>kick\`, \`<prefix>ban\`, \`<prefix>warn\`, \`<prefix>mute\`
         Kicks, bans, gives a muted role or a warning to a specified user (via its user ID or a @mention)
@@ -139,6 +145,7 @@ module.exports = {
         fun: `Fun commands`,
         info: `Info commands`,
         moderation: `Moderation commands`,
+        logs: `Logging`,
 //        music: `Music commands`,
 //        nsfw: `NSFW commands (18+)`,
         settings: `Settings`,

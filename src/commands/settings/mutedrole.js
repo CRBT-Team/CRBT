@@ -18,7 +18,6 @@ $if[$message==]
 
     $forEachGuildChannel[addMutedPerms]
     $wait[250ms]
-    $setServerVar[muted_role;$findRole[Muted]]
 
 $reply[$messageID;
 {title:${emojis.success} Muted role created}
@@ -27,15 +26,18 @@ $username[$clientID] edited all channels it can access to restrict talk/voice/re
 This role will now be given upon using the \`$getServerVar[prefix]mute\` command.
 }
 {field:Previous:
-$replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==];true;None];false;<@&$getServerVar[muted_role]>]
+$replaceText[$replaceText[$checkCondition[$getServerVar[muted_role]==$getVar[muted_role]];true;None];false;<@&$getServerVar[muted_role]>]
 :yes}
 {field:New:
-<@&$findRole[Muted]>
+<@&$getServerVar[muted_role]> ($getServerVar[muted_role]) 
 :yes}
 {color:${colors.success}}
 ;no]
+$wait[$math[$dbPing*3]ms]
 
-$wait[250ms]
+$setServerVar[muted_role;$findRole[Muted]]
+
+$wait[300ms]
 
 $createRole[Muted;${colors.red};no;yes]
 

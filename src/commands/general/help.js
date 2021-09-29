@@ -20,6 +20,7 @@ $reply[$messageID;
 
 {description:
 If you need information on a command, use \`$get[p]help <command name>\`.
+To expand a module and see its features and commands, use \`$get[p]help <module name>\`
 }
 
 $get[modules]
@@ -27,21 +28,51 @@ $get[modules]
 {color:$getGlobalUserVar[color]}
 ;no]
 
-$elseIf[$checkContains[ $toLowercase[$message] ; economy & profiles ; profiles ; mod ; general ; economy ; fun ; info ; moderation ; tools ; settings ; administration ]==true]
+$elseIf[$checkContains[ $toLowercase[$message] ; economy & profiles ; profiles ; mod ; general ; economy ; fun ; info ; moderation ; tools ; settings ; administration ; logs ]==true]
 
 $reply[$messageID;
 {author:$username[$clientID] - Help:$userAvatar[$clientID;64]}
 {description:
 If you need information on a command, use \`$get[p]help <command name>\`.
+For more general information, use \`$get[p]help\`.
 }
 
-{field:$getObjectProperty[moduleNames.$get[module]]:
-$replaceText[$replaceText[$getServerVar[module_$get[module]];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
-$replaceText[$replaceText[$getObjectProperty[modules.$get[module]];<botname>;$username[$clientID]];<prefix>;$get[p]]
-:yes}
+$get[$replaceText[$replaceText[$checkContains[$get[module];general;settings];true;essential];false;$replaceText[$replaceText[$checkContains[$get[module];logs];true;mlogs];false;generic]]]
 
 {color:$getGlobalUserVar[color]}
 ;no]
+
+$let[generic;
+{field:$getObjectProperty[moduleNames.$get[module]]:
+$replaceText[$replaceText[$getServerVar[module_$replaceText[$get[module];logs;messageLogs]];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
+$replaceText[$replaceText[$getObjectProperty[modules.$get[module]];<botname>;$username[$clientID]];<prefix>;$get[p]]
+:yes}]
+
+$let[essential;
+{field:$getObjectProperty[moduleNames.$get[module]]:
+${emojis.toggle.fon} This module can't be disabled.
+$replaceText[$replaceText[$getObjectProperty[modules.$get[module]];<botname>;$username[$clientID]];<prefix>;$get[p]]
+:yes}]
+
+$let[mlogs;
+{field:Message logs:
+$replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
+
+Allows you to read the previously deleted or edited messages within the server, granted that you have the permissions to view the logs channel.
+
+$replaceText[$replaceText[$getServerVar[module_messageLogs];true;The logs are currently sent to <#$getServerVar[messagelogs_channel]>.
+
+Use \`$get[p]messagelogs <channel>\` to change where message logs should go.];false;]
+:no}
+{field:Moderation logs:
+$replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
+
+Sends a detailed message upon using a CRBT moderation command (if they are enabled).
+
+$replaceText[$replaceText[$getServerVar[module_modLogs];true;The logs are currently sent to <#$getServerVar[modlogs_channel]>.
+
+Use \`$get[p]modlogs <channel>\` to change where moderation logs should go.];false;]
+:no}]
 
 $djsEval[d.object.moduleNames = require("../../../../../data/misc/helpText").moduleNames
 d.object.modules = require("../../../../../data/misc/helpText").modules]
@@ -178,8 +209,8 @@ Get any kind of info with $username[$clientID]'s commands, including user pfps, 
 Moderate your server using $username[$clientID]'s mute, warn, kick & ban system.
 :yes}
 
-{field:$get[logs] Message logs:
-Use $username[$clientID]'s logging capabilities to track deleted and edited messages.
+{field:$get[logs] Logging:
+Use $username[$clientID]'s logging capabilities to track deleted and edited messages, as well as CRBT moderation actions.
 :yes}
 
 {field:$get[tools] Tools:
@@ -199,7 +230,7 @@ $let[economy;$replaceText[$replaceText[$getServerVar[module_economy];true;$get[o
 $let[fun;$replaceText[$replaceText[$getServerVar[module_fun];true;$get[on]];false;$get[off]]]
 $let[info;$replaceText[$replaceText[$getServerVar[module_info];true;$get[on]];false;$get[off]]]
 $let[moderation;$replaceText[$replaceText[$getServerVar[module_moderation];true;$get[on]];false;$get[off]]]
-$let[logs;$replaceText[$replaceText[$getServerVar[module_messageLogs];true;$get[on]];false;$get[off]]]
+$let[logs;$replaceText[$replaceText[$replaceText[$replaceText[$getServerVar[module_messageLogs]$getServerVar[module_modLogs];truetrue;$get[on]];falsefalse;$get[off]];truefalse;$get[off]];falsetrue;$get[off]]]
 $let[tools;$replaceText[$replaceText[$getServerVar[module_tools];true;$get[on]];false;$get[off]]]
 
 $let[forced;$replaceText[${emojis.toggle.fon};:;#COLON#]]
