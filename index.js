@@ -31,6 +31,10 @@ function config(path) {
 }
 const { colors, emojis, illustrations, jobs, links, logos, misc, items, tokens } = config("./data/config");
 
+module.exports = {
+    bot, colors, emojis, illustrations, jobs, links, logos, misc, items, tokens
+};
+
 // Listeners
 bot.onMessage({ guildOnly: true });
 bot.onGuildJoin();
@@ -43,7 +47,3 @@ require("./loadCmds")();
 
 // Start the API
 require("./api/api");
-
-module.exports = {
-    bot, colors, emojis, illustrations, jobs, links, logos, misc, items, tokens
-};

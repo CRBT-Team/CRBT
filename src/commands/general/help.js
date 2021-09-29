@@ -59,19 +59,19 @@ $let[mlogs;
 $replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
 
 Allows you to read the previously deleted or edited messages within the server, granted that you have the permissions to view the logs channel.
-
-$replaceText[$replaceText[$getServerVar[module_messageLogs];true;The logs are currently sent to <#$getServerVar[messagelogs_channel]>.
-
-Use \`$get[p]messagelogs <channel>\` to change where message logs should go.];false;]
+$replaceText[$replaceText[$getServerVar[module_messageLogs];true;
+The logs are currently sent to <#$getServerVar[messagelogs_channel]>.
+];false;]
+Use \`$get[p]messagelogs <channel>\` to change where message logs should go.
 :no}
 {field:Moderation logs:
 $replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
 
 Sends a detailed message upon using a CRBT moderation command (if they are enabled).
-
-$replaceText[$replaceText[$getServerVar[module_modLogs];true;The logs are currently sent to <#$getServerVar[modlogs_channel]>.
-
-Use \`$get[p]modlogs <channel>\` to change where moderation logs should go.];false;]
+$replaceText[$replaceText[$getServerVar[module_modLogs];true;
+The logs are currently sent to <#$getServerVar[modlogs_channel]>.
+];false;]
+Use \`$get[p]modlogs <channel>\` to change where moderation logs should go.
 :no}]
 
 $djsEval[d.object.moduleNames = require("../../../../../data/misc/helpText").moduleNames
@@ -209,7 +209,7 @@ Get any kind of info with $username[$clientID]'s commands, including user pfps, 
 Moderate your server using $username[$clientID]'s mute, warn, kick & ban system.
 :yes}
 
-{field:$get[logs] Logging:
+{field:$get[logs] Logs:
 Use $username[$clientID]'s logging capabilities to track deleted and edited messages, as well as CRBT moderation actions.
 :yes}
 
