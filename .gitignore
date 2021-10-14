@@ -1,11 +1,5 @@
-new-database/
 node_modules/
-old/
-old dev/
 .env
-assets/
-package-lock.json
-lavalink/
-database/
 yarn.lock
 yarn-error.log
+dist

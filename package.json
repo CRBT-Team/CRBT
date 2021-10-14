@@ -1,38 +1,31 @@
 {
     "name": "crbt",
     "version": "2021.10.54",
-    "private": true,
     "description": "The Discord companion made for you.",
+    "private": true,
+    "scripts": {
+        "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
+        "dev": "node ./node_modules/purplet/dist/index.mjs dev",
+        "build": "node ./node_modules/purplet/dist/index.mjs dev"
+    },
+    "dependencies": {
+        "discord.js": "^13.2.0",
+        "purplet": "1"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.0.0",
+        "eslint": "^8.0.1",
+        "prettier": "^2.4.1",
+        "prettier-plugin-jsdoc": "^0.3.24",
+        "prettier-plugin-organize-imports": "^2.3.4"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/CRBT-Team/CRBT"
     },
-    "license": "UNLICENSED",
     "author": {
         "name": "CRBT Developers",
         "url": "https://crbt.ga/"
-    },
-    "scripts": {
-        "start": "node index.js"
-    },
-    "dependencies": {
-        "aoi.js": "github:clembs/aoi.js",
-        "canvas": "^2.8.0",
-        "dbd.js-utils": "^0.1.1",
-        "discord-snowflake": "^1.0.1",
-        "discord-together": "^1.1.14",
-        "discord-webhook-node": "^1.1.8",
-        "emoji-unicode": "^2.0.1",
-        "expr-eval": "^2.0.2",
-        "express": "^4.17.1",
-        "express-validator": "^6.12.0",
-        "ffmpeg-static": "^4.3.0",
-        "fs-extra": "^9.1.0",
-        "kitsu.js": "^2.0.0",
-        "node-fetch": "^2.6.1"
-    },
-    "engines": {
-        "node": ">=15.5.0",
-        "npm": ">=5.0.0"
     }
 }
