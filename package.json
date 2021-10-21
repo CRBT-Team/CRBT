@@ -1,38 +1,21 @@
 {
-    "name": "crbt",
-    "version": "2021.10.54",
-    "private": true,
-    "description": "The Discord companion made for you.",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/CRBT-Team/CRBT"
-    },
-    "license": "UNLICENSED",
-    "author": {
-        "name": "CRBT Developers",
-        "url": "https://crbt.ga/"
-    },
-    "scripts": {
-        "start": "node index.js"
-    },
-    "dependencies": {
-        "aoi.js": "github:clembs/aoi.js",
-        "canvas": "^2.8.0",
-        "dbd.js-utils": "^0.1.1",
-        "discord-snowflake": "^1.0.1",
-        "discord-together": "^1.1.14",
-        "discord-webhook-node": "^1.1.8",
-        "emoji-unicode": "^2.0.1",
-        "expr-eval": "^2.0.2",
-        "express": "^4.17.1",
-        "express-validator": "^6.12.0",
-        "ffmpeg-static": "^4.3.0",
-        "fs-extra": "^9.1.0",
-        "kitsu.js": "^2.0.0",
-        "node-fetch": "^2.6.1"
-    },
-    "engines": {
-        "node": ">=15.5.0",
-        "npm": ">=5.0.0"
-    }
+  "version": "10.3.1",
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "@vitalets/google-translate-api": "^7.0.0",
+    "aoi.js": "github:clembs/aoi.js",
+    "canvas": "^2.8.0",
+    "dbd.js-utils": "^0.1.1",
+    "discord-snowflake": "^1.0.1",
+    "discord-together": "^1.1.14",
+    "discord-webhook-node": "^1.1.8",
+    "emoji-unicode": "^2.0.1",
+    "expr-eval": "^2.0.2",
+    "express": "^4.17.1",
+    "fs-extra": "^9.1.0",
+    "kitsu.js": "^2.0.0",
+    "node-fetch": "^2.6.1"
+  }
 }

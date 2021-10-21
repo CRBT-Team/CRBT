@@ -1,49 +1,31 @@
-// Imports
-const { Bot } = require("aoi.js");
-const { readdirSync } = require('fs-extra')
-require("dotenv").config();
+const { Bot } = require('aoi.js');
+require('dotenv').config();
 
-// Creating the bot
 const bot = new Bot({
-    token: process.env.DISCORD_TOKEN,
-    prefix: ["$getServerVar[prefix]"],
-    mobile: false, sharding: false, cache: true,
-    databasePath: "./new-database/",
-    errorMessage: "{execute:generic}",
-    suppressAll: true
+  token: process.env.DISCORD_TOKEN,
+  prefix: '$getServerVar[prefix]',
+  mobile: false, sharding: false, cache: true,
+  databasePath: './new-database/',
+  errorMessage: '{execute:generic}',
+  suppressAll: true
 });
 
-// Export the bot, configuration files and instance to be accessed better by commands
-function config(path) {
-    const configFolder = readdirSync(path).filter((file) => file.endsWith(".json"));
+module.exports.colors = require('./data/config/colors.json');
+module.exports.emojis = require('./data/config/emojis.json');
+module.exports.illustrations = require('./data/config/illustrations.json');
+module.exports.items = require('./data/config/items.json');
+module.exports.jobs = require('./data/config/jobs.json');
+module.exports.links = require('./data/config/links.json');
+module.exports.logos = require('./data/config/logos.json');
+module.exports.misc = require('./data/config/misc.json');
+module.exports.tokens = require('./data/config/tokens.json');
+module.exports.bot = bot;
 
-    let configs = {};
-    for (const file of configFolder) {
-    try {
-        const config = require(`${path}/${file}`);
-        configs[file.split('.')[0]] = config
-
-    } catch (e) {
-        return console.log(e);
-    }
-    }
-    return configs;
-}
-const { colors, emojis, illustrations, jobs, links, logos, misc, items, tokens } = config("./data/config");
-
-module.exports = {
-    bot, colors, emojis, illustrations, jobs, links, logos, misc, items, tokens
-};
-
-// Listeners
 bot.onMessage({ guildOnly: true });
 bot.onGuildJoin();
 bot.onGuildLeave();
 bot.onMessageDelete();
 bot.onMessageUpdate();
 
-// Command handler
-require("./loadCmds")();
-
-// Start the API
-require("./api/api");
+require('./loadCmds')();
+require('./api/api');

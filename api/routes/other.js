@@ -1,68 +1,75 @@
-const pédiluve = require("../../data/api/pédiluveImages.json");
-const router = require("express").Router();
-const { createCanvas } = require("canvas");
-const { param, body, validationResult } = require("express-validator");
-let kitsu = require('kitsu.js')
-const kitsus = new kitsu()
+const router = require('express').Router();
+const pédiluve = require('../../data/api/pédiluveImages.json');
+const languages = require('../../data/misc/languageShortCodes.json');
+const { createCanvas } = require('canvas');
+const Kitsu = require('kitsu.js');
+const kitsu = new Kitsu();
+const translate = require('@vitalets/google-translate-api');
 
-router.get("/pediluve", async function (req, res) {
-    res.json({
-        status: 200,
-        image: pédiluve[Math.floor(Math.random() * (pédiluve.length - 0 + 1))],
-    });
+router.get('/pediluve', function (req, res) {
+  res.status(200).json({
+    status: 200,
+    image: pédiluve[Math.floor(Math.random() * (pédiluve.length - 0 + 1))],
+  });
 });
 
-router.get("/anime/:title", async function(req, res) {
-    if (!req.params.title) return res.json({success: "false", message: "You need to input a title."});
-    
-    let query = req.params.title
-    let a = query.split('+') || query.split('%20') || query.split(' ')
-    let searched = a.join(' ')
-    
-    let result = await kitsus.searchAnime(searched)
-    if (!result[0]) return res.json({success: "false", message: "Couldn't find this anime."});
-    let anime = result[0]
-    res.json(anime)
-})
+router.get('/anime', async function(req, res) {
+  const query = req.query.title
+  if (!query) return res.status(400).json({ status: 400, error: 'No query was entered.' });
+      
+  const result = await kitsu.searchAnime(query);
+  
+  if (!result[0]) return res.json({
+    success: 'false', 
+    message: "Couldn't find this anime."
+  });
 
-router.get(
-    "/color/:hex",
-    [
-        param("hex")
-        .isLength({ min: 6, max: 6 })
-        .withMessage({
-            status: 400,
-            error: `Hex code must be an exact length of 6 characters.`,
-        })
-        .isAlphanumeric()
-        .withMessage({
-            status: 400,
-            error: `Hex code must be A-Z and 0-9`,
-        }),
-    ],
-    async function (req, res) {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-        return res
-            .status(errors.array()[0].msg.status || 500)
-            .json(errors.array()[0].msg || "Unexpected Error");
-        }
+  result[0].status = 200;
+  res.status(200).json(result[0]);
+});
 
-        const canvas = createCanvas(200, 200);
-        const ctx = canvas.getContext("2d");
+router.get('/color/:hex', function(req, res) {
+  const color = `#${req.params.hex}`;
+  const hexRegex = new RegExp(/^#[0-9A-F]{6}$/i);
+  if(!hexRegex.test(color)) return res.status(400).json({ status: 400, error: 'Invalid hex code. (Note: using # before the code will result into an error)' });
 
-        ctx.fillStyle = `#${req.params.hex}`;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const canvas = createCanvas(200, 200);
+  const ctx = canvas.getContext('2d');
 
-        const png = canvas.toBuffer();
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        res.writeHead(200, {
-        "Content-Type": "image/png",
-        "Content-Length": png.length,
-        });
+  const png = canvas.toBuffer();
 
-        res.end(png);
+  res.writeHead(200, {
+    'Content-Type': 'image/png',
+    'Content-Length': png.length,
+  });
+
+  res.end(png);
+});
+
+router.get('/translate', async function(req, res) {
+  const to = req.query.to ?? 'en';
+  const from = req.query.from ?? 'auto';
+  const text = req.query.text;
+
+  if (!text) return res.status(400).json({ status: 400, error: 'No text was entered.' });
+
+  const tr = await translate(text, {from, to});
+
+  res.status(200).json({
+    status: 200,
+    from: {
+      text: text,
+      language: languages[tr.raw[1][1]],
+      didYouMean: tr.from.text.didYouMean ? tr.from.text.value : null,
+    },
+    to: {
+      text: tr.text,
+      language: languages[tr.from.language.iso],
     }
-);
+  })
+})
 
 module.exports = router;

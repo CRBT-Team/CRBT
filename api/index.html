@@ -1,29 +1,31 @@
 <html>
-    <head>
-        <title>Clembs API</title>
-    </head>
+  <head>
+    <title>Clembs API</title>
+  </head>
 
-    <body>
-        <h1>Clembs API</h1>
-        <h3>Note that the API is incomplete and still in beta.</h3>
-        <h3>
-            <a href="https://clembs.xyz/discord">Discord server</a> - 
-            <a href="https://clembs.xyz">Website</a>
-        </h3>
+  <body>
+    <h1>Clembs API</h1>
+    <h3>This API is for now in beta, and will remain as such until the full release, planned alongside the release of CRBT v11.</h3>
+    <h3>
+      <del>GitHub repository (soon) - </del>
+      <a href="https://clembs.xyz/discord">Discord server</a> - 
+      <a href="https://clembs.xyz">Website</a>
+    </h3>
 
-        <h2>Endpoints:</h2>
-        
-        <h3>CRBT:</h3>
-        <p>
-        GET /crbt: Retrieves info on CRBT & its latest version.<br />
-        GET /crbt/meaning: wHaT dOeS cRbT mEan?????????2?<br />
-        GET /crbt/command/&ltcommand name (e.g. help, crbt, pfp)&gt: Gives all of a specified command's property.<br />
-        </p>
+    <h2>Endpoints:</h2>
+    
+    <h3><a href="https://crbt.ga" target="_blank">CRBT:</a></h3>
+    <p>
+    GET /crbt/meaning: Acronyms for CRBT<br />
+    GET /crbt/command?name=&lt;command name (e.g. help, crbt, pfp)&gt;: Gives information for a command.<br />
+    <b>Coming in v11:</b> a real CRBT API.
+    </p>
 
-        <h3>Other:</h3>
-        <p>
-        GET /other/anime/&ltanime name&gt: Searches a specified anime on kitsu.io.<br />
-        GET /other/color/&ltHEX color&gt: Gives you an image of the specified HEX color code.<br />
-        </p>
-    </body>
+    <h3>Other:</h3>
+    <p>
+    GET /other/anime?name=&lt;anime name&gt;: Gives the first result for your query on Kitsu.io.<br />
+    GET /other/color/&lt;HEX color&gt;: Returns an image of the specified HEX color code.<br />
+    GET /translate?text=&lt;text to translate&gt;&#38;to=&lt;target language (optional)&gt;&#38;from=&lt;Source language (optional)&gt;: Translates text to any language.<br />
+    </p>
+  </body>
 </html>
