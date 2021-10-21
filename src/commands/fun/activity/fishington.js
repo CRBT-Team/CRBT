@@ -1,4 +1,4 @@
-const {emojis, colors} = require("../../../index");
+const {emojis, colors} = require("../../../..");
 
 module.exports.command = {
     name: "fishington",
@@ -9,13 +9,28 @@ module.exports.command = {
     code: `
 $apiMessage[$channelID;;
 {title:$get[title-$getGlobalUserVar[language]]}
-{description:$get[description-$getGlobalUserVar[language]]}
+{description:$get[description-$getGlobalUserVar[language]]
+$if[$getGlobalUserVar[activity_notice]==false]
+$get[notice]}
+$endif
 {color:${colors.success}}
 ;{actionRow:Join Activity,2,5,$replaceText[$getObjectProperty[invite];:;#COLON#]}
 ;$messageID:false;no]
 
 $let[title-enUS;${emojis.success} You're all set!]
-$let[description-enUS;Click on the button below to join the Fishington.io activity.]
+$let[description-enUS;Click on the button below to join the **$get[activity]** activity.]
+
+$let[notice;
+**⚠ Some things to be aware of**:
+
+• Activities are not available on mobile yet.
+• They're in **BETA** and developed by Discord, so you shouldn't report any errors you may find to the CRBT devs.
+• At least one person must have their Activity Status enabled.
+(<:settings:585767366743293952> User Settings > "Activity Status" > "Display current activity as status message" ${emojis.toggle.on})
+• People who join the activity will not show as "Playing $get[activity]" unless they have their Activity Status enabled.
+]
+
+$let[activity;Fishington.io]
 
 $djsEval[
 const { DiscordTogether } = require('discord-together');

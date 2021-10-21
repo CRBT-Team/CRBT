@@ -51,10 +51,10 @@ $replaceText[$replaceText[$checkCondition[$getObjectProperty[endDate]==];true;Si
 
 $onlyIf[$getObjectProperty[success]!=false;{execute:queryNotFound}]
 
-$if[$clientID==${misc.CRBTid}]
-$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime/$message;;Unfortunately, the API is down...]
+$if[$clientID!=${misc.CRBTid}]
+$createObject[$jsonRequest[http://localhost:${process.env.port}/other/anime?title=$message;;Unfortunately, the API is down...]
 $else
-$createObject[$jsonRequest[https://api.clembs.xyz/other/anime/$message;;Unfortunately, the API is down...]
+$createObject[$jsonRequest[https://api.clembs.xyz/other/anime?title=$message;;Unfortunately, the API is down...]
 $endif
 
 $argsCheck[>1;{execute:args}]

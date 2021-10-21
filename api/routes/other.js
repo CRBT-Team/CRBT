@@ -62,12 +62,12 @@ router.get('/translate', async function(req, res) {
     status: 200,
     from: {
       text: text,
-      language: languages[tr.raw[1][1]],
-      didYouMean: tr.from.text.didYouMean ? tr.from.text.value : null,
+      lang: languages[tr.raw[1][1]],
+      correctedText: tr.from.text.didYouMean ? tr.from.text.value : null,
     },
     to: {
       text: tr.text,
-      language: languages[tr.from.language.iso],
+      lang: languages[tr.from.language.iso],
     }
   })
 })

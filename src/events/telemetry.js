@@ -36,7 +36,7 @@ $let[a;$commandInfo[$toLowercase[$get[commandname]];module]]
 $onlyIf[$commandInfo[$toLowercase[$get[commandname]];name]!=djseval;]
 $onlyIf[$commandInfo[$toLowercase[$get[commandname]];name]!=eval;]
 
-$let[args;$advancedTextSplit[$message;$get[commandname];1]]
+$let[args;$advancedTextSplit[$message;$get[commandname];2]]
 $let[commandname;$replaceText[$replaceText[ $message; $getServerVar[prefix] ;]; $getServerVar[prefix];]]
 
 $onlyIf[$isBot[$authorID]==false;]
