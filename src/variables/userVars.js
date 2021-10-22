@@ -1,7 +1,7 @@
-const { colors } = require('../..');
+const { colors, bot, misc, dev } = require('../..');
 
 module.exports.variables = {
-  color: `${colors.lightred.toLowerCase()}`,
+  color: dev ? colors.lightblue.toLowerCase() : colors.lightred.toLowerCase(),
   language: 'enUS',
 
   job_type: 'unemployed', 

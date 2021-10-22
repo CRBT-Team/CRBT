@@ -35,14 +35,14 @@ $replaceText[$replaceText[$getObjectProperty[from.correctedText];#LEFT#;**];#RIG
 $onlyIf[$getObjectProperty[status]==200;{execute:args}]
 
 $if[$clientID!=${misc.CRBTid}]
-$createObject[$jsonRequest[http://localhost:${process.env.port}/other/translate?text=$get[text]&from=$get[from]&to=$get[to];;{execute:args}]
+$createObject[$jsonRequest[http://localhost:${process.env.port}/other/translate?text=$uri[encode;$get[text]]&from=$get[from]&to=$get[to];;{execute:translateLang}]
 $else
-$createObject[$jsonRequest[https://api.clembs.xyz/other/translate?text=$get[text]&from=$get[from]&to=$get[to];;{execute:args}]
+$createObject[$jsonRequest[https://api.clembs.xyz/other/translate?text=$uri[encode;$get[text]]&from=$get[from]&to=$get[to];;{execute:args}]
 $endif
 
 $let[text;$advancedTextSplit[$messageSlice[1]; -from ;1]]
 $let[from;$advancedTextSplit[$messageSlice[1]; -from ;2]]
-$let[to;$message[1]]
+$let[to;$replaceText[$message[1];chinese;zh-CN]]
 
 $argsCheck[>2;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

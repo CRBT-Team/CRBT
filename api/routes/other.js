@@ -56,18 +56,23 @@ router.get('/translate', async function(req, res) {
 
   if (!text) return res.status(400).json({ status: 400, error: 'No text was entered.' });
 
-  const tr = await translate(text, {from, to});
+  let tr;
+  try {
+    tr = await translate(text, {from, to});
+  } catch (error) {
+    return res.status(400).json({ status: 400, error: 'Invalid language code.' });
+  }
 
   res.status(200).json({
     status: 200,
     from: {
       text: text,
-      lang: languages[tr.raw[1][1]],
+      lang: languages[tr.from.language.iso],
       correctedText: tr.from.text.didYouMean ? tr.from.text.value : null,
     },
     to: {
       text: tr.text,
-      lang: languages[tr.from.language.iso],
+      lang: languages[tr.raw[1][1]],
     }
   })
 })
