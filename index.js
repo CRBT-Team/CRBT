@@ -1,8 +1,7 @@
 const { Bot } = require('aoi.js');
 require('dotenv').config();
 
-const dev = require('os').cpus()[0].model !== 'Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz';
-// const dev = process.env.NODE_ENV === 'development';
+const dev = process.argv.includes('-dev');
 
 const bot = new Bot({
   token: process.env.DISCORD_TOKEN,
@@ -10,7 +9,7 @@ const bot = new Bot({
   mobile: false, sharding: false, cache: true,
   databasePath: './new-database/',
   errorMessage: dev ? null : '{execute:generic}',
-  suppressAll: dev
+  suppressAll: !dev
 });
 
 module.exports.colors = require('./data/config/colors.json');
@@ -29,6 +28,8 @@ bot.onMessage({ guildOnly: true });
 bot.onGuildJoin();
 bot.onGuildLeave();
 bot.onMessageDelete();
+bot.onJoined();
+bot.onLeave();
 bot.onMessageUpdate();
 
 require('./loadCmds')();

@@ -72,6 +72,7 @@ $onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
 $onlyIf[$memberExists[$get[id]]==true;{execute:modAlready}]
 $onlyBotPerms[kick;{execute:botPerms}]
 $onlyPerms[kick;{execute:userPerms}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modNotFound}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

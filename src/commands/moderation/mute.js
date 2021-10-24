@@ -76,6 +76,7 @@ $onlyIf[$roleExists[$getServerVar[muted_role]]==true;{execute:noMutedRole}]
 $onlyIf[$getServerVar[muted_role]!=none;{execute:noMutedRole}]
 $onlyBotPerms[manageroles;{execute:botPerms}]
 $onlyPerms[manageroles;{execute:userPerms}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modNotFound}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

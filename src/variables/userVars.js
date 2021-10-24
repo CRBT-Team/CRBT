@@ -17,6 +17,8 @@ module.exports.variables = {
   helpSuggestions: '',
   todolist: '', //for now we're using the old to-do lists since we ain't got time
 
+  activity_notice: false,
+
   user_bank: 0, 
   invbanner: '', 
   invmisc: '', 

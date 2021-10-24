@@ -67,6 +67,7 @@ $endif
 $onlyIf[$get[id]!=$ownerID;{execute:modCantStrike}]
 $onlyIf[$get[id]!=$authorID;{execute:modCantStrike}]
 $onlyIf[$checkContains[$hasPerms[$authorID;managemessages]$hasPerms[$authorID;manageserver]$checkContains[$toLowercase[$userRoles];crbt mod];true]==true;{execute:mods}]
+$onlyIf[$memberExists[$get[id]]==true;{execute:modNotFound}]
 $onlyIf[$userExists[$get[id]]==true;{execute:args}]
 
 $let[id;$replaceText[$replaceText[$replaceText[$message[1];<@!;];<@;];>;]]

@@ -187,6 +187,7 @@ $endif
 
 $onlyIf[$commandInfo[$message;module]!=music;{execute:musicDisabled}]
 $onlyIf[$commandInfo[$message;module]!=nsfw;{execute:nsfwDisabled}]
+$onlyIf[$commandInfo[$message;module]!=admin;{execute:cmdDoesntExist}]
 $onlyIf[$commandInfo[$message;module]!=;{execute:cmdDoesntExist}]
 
 $endif

@@ -2,11 +2,11 @@ module.exports.variables = {
     
     prefix: "//",
     muted_role: "none",
-//  allowedChannels: "", //the allowlist for channels
+    allowedChannels: "",
     messagelogs_channel: "none", 
     modlogs_channel: "none",
+    memberlogs_channel: "none",
     autoPublishedChannels: "",
-//  memberLogsChannel: "none",
 //  serverLogsChannel: "none", 
 
     webhook_token: "", webhook_id: "",
@@ -22,6 +22,7 @@ module.exports.variables = {
     module_fun: true,
     module_info: true,
     module_messageLogs: false,
+    module_memberLogs: false,
     module_modLogs: false,
     module_moderation: true,
     module_tools: true,

@@ -11,8 +11,10 @@ $apiMessage[$channelID;;
 {title:$get[title-$getGlobalUserVar[language]]}
 {description:$get[description-$getGlobalUserVar[language]]
 $if[$getGlobalUserVar[activity_notice]==false]
-$get[notice]}
+$get[notice]
+$setGlobalUserVar[activity_notice;true]
 $endif
+}
 {color:${colors.success}}
 ;{actionRow:Join Activity,2,5,$replaceText[$getObjectProperty[invite];:;#COLON#]}
 ;$messageID:false;no]

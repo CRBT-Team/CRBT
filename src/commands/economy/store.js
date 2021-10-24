@@ -62,11 +62,10 @@ $endif
 {color:$getGlobalUserVar[color]}
 ;$channelID]
 
-$let[id;$apiMessage[;
+$let[id;$apiMessage[$channelID;;
 {title:Loading...}
 {color:${colors.orange}}
-;
-;$messageID:false;yes]]
+;;$messageID:false;yes]]
 
 $let[purplets;Balance:${emojis.purplet} $getGlobalUserVar[user_bank] Purplets]
 
