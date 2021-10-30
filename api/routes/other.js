@@ -27,7 +27,6 @@ router.get('/anime', async function(req, res) {
   result[0].status = 200;
   res.status(200).json(result[0]);
 });
-
 router.get('/color/:hex', function(req, res) {
   const color = `#${req.params.hex}`;
   const hexRegex = new RegExp(/^#[0-9A-F]{6}$/i);

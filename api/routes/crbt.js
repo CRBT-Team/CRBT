@@ -63,12 +63,16 @@ router.post('/vars', async function(req, res) {
 
     console.log(req.rawHeaders);
     if(req.rawHeaders.find((h) => h.includes('aoi.js'))) {
-      const request = JSON.parse(Object.keys(req.body)[0]);
-      console.log(request);
-      returns.variable = request.var;
-      returns.id = request.id;
-      returns.value = request.value;
-      return returns;
+      try {
+        const request = JSON.parse(Object.keys(req.body)[0]);
+        console.log(request);
+        returns.variable = request.var;
+        returns.id = request.id;
+        returns.value = request.value;
+        return returns;
+      } catch {
+        res.status(400).json({ status: 400, error: 'Invalid request.' });
+      }
     } else {
       returns.variable = req.body.var;
       returns.id = req.body.id;

@@ -64,6 +64,15 @@ The logs are currently sent to <#$getServerVar[messagelogs_channel]>.
 ];false;]
 Use \`$get[p]messagelogs <channel>\` to change where message logs should go.
 :no}
+{field:**NEW** Member logs:
+$replaceText[$replaceText[$getServerVar[module_memberLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
+
+Sends a message whenever someone joins or leaves the server.
+$replaceText[$replaceText[$getServerVar[module_memberLogs];true;
+The logs are currently sent to <#$getServerVar[memberlogs_channel]>.
+];false;]
+Use \`$get[p]memberlogs <channel>\` to change where moderation logs should go.
+:no}
 {field:Moderation logs:
 $replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
 
@@ -198,20 +207,20 @@ $let[modules;
 Work and get your hourly Purplets to master the wonderous world of $username[$clientID]'s economy system.
 :yes}
 
-{field:$get[fun] Fun:
-Play around with $username[$clientID]'s ""fun"" commands, including webhook support & animal facts!
+{field:**NEW** $get[fun] Fun:
+Create activities, watch together, use webhooks in a wacky way, get animal facts and more!
 :yes}
 
 {field:$get[info] Info:
-Get any kind of info with $username[$clientID]'s commands, including user pfps, anime, emojis, Minecraft skins, etc!
+Get any kind of info with $username[$clientID]'s commands, including avatars, anime info, emojis, Minecraft skins, etc!
 :yes}
 
 {field:$get[moderation] Moderation:
 Moderate your server using $username[$clientID]'s mute, warn, kick & ban system.
 :yes}
 
-{field:$get[logs] Logs:
-Use $username[$clientID]'s logging capabilities to track deleted and edited messages, as well as CRBT moderation actions.
+{field:**NEW** Logs:
+Track deleted and edited messages, moderation actions and member activity using $username[$clientID]'s logging capabilities.
 :yes}
 
 {field:$get[tools] Tools:
@@ -231,7 +240,6 @@ $let[economy;$replaceText[$replaceText[$getServerVar[module_economy];true;$get[o
 $let[fun;$replaceText[$replaceText[$getServerVar[module_fun];true;$get[on]];false;$get[off]]]
 $let[info;$replaceText[$replaceText[$getServerVar[module_info];true;$get[on]];false;$get[off]]]
 $let[moderation;$replaceText[$replaceText[$getServerVar[module_moderation];true;$get[on]];false;$get[off]]]
-$let[logs;$replaceText[$replaceText[$replaceText[$replaceText[$getServerVar[module_messageLogs]$getServerVar[module_modLogs];truetrue;$get[on]];falsefalse;$get[off]];truefalse;$get[off]];falsetrue;$get[off]]]
 $let[tools;$replaceText[$replaceText[$getServerVar[module_tools];true;$get[on]];false;$get[off]]]
 
 $let[forced;$replaceText[${emojis.toggle.fon};:;#COLON#]]
@@ -245,29 +253,28 @@ $onlyIf[$getServerVar[module_$commandInfo[$commandName;module]]==true;{execute:m
 $onlyIf[$hasPermsInChannel[$channelID;$clientID;embedlinks]==true;{execute:embeds}]
     `}
 
-/*
+// $let[logs;$replaceText[$replaceText[$replaceText[$replaceText[$getServerVar[module_messageLogs]$getServerVar[module_modLogs];truetrue;$get[on]];falsefalse;$get[off]];truefalse;$get[off]];falsetrue;$get[off]]]
 
-{field:$get[modules-$getGlobalUserVar[language]]}
+// {field:$get[modules-$getGlobalUserVar[language]]}
 
 
-partner crap
+// partner crap
 
-$if[$commandInfo[$message;module]==partnerCmd]
-{field:Module:
-${emojis.partner} Partner command
-:yes}
-{field:Accessible on:
-$if[$serverExists[$commandInfo[$message;server]]==true]
-$serverName[$commandInfo[$message;server]]
-$else
-Can't access server
-$endif
-:yes}
-$else
-{field:Module:
-$replaceText[$replaceText[$checkContains[$commandInfo[$message;module];general;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggle.on}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
-$replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
-$replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
-:yes}
-$endif
-*/
+// $if[$commandInfo[$message;module]==partnerCmd]
+// {field:Module:
+// ${emojis.partner} Partner command
+// :yes}
+// {field:Accessible on:
+// $if[$serverExists[$commandInfo[$message;server]]==true]
+// $serverName[$commandInfo[$message;server]]
+// $else
+// Can't access server
+// $endif
+// :yes}
+// $else
+// {field:Module:
+// $replaceText[$replaceText[$checkContains[$commandInfo[$message;module];general;admin;settings];false;$replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;${emojis.toggle.on}];false;${emojis.toggleoff}] $toLocaleUppercase[$commandInfo[$message;module]]
+// $replaceText[$replaceText[$hasPerms[$authorID;admin];true;Use \`$getServerVar[prefix]module $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] $commandInfo[$message;module]\` to $replaceText[$replaceText[$getServerVar[module_$commandInfo[$message;module]];true;disable];false;enable] this module.];false;]];true;${emojis.forcedon} $toLocaleUppercase[$commandInfo[$message;module]]
+// $replaceText[$replaceText[$hasPerms[$authorID;admin];true;\`You can't disable this module.\`];false;]]
+// :yes}
+// $endif

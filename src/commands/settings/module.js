@@ -6,7 +6,7 @@ module.exports.command = {
     usage_enUS: "<enable | + | - | disable (optional)> <module name (optional)>",
     examples_enUS: [
         "modules",
-        "module enable message logs",
+        "module enable member logs",
         "cfg remove Moderation",
         "md +autopublish"
     ],
@@ -43,10 +43,10 @@ All commands belonging to this module will now be executable in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==false;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; memberLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];memberlogs;memberLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];add;];+;];enable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]
@@ -68,10 +68,10 @@ All commands belonging to this module will no longer execute in $serverName.
 
 $onlyIf[$getServerVar[module_$get[module2]]==true;{execute:moduleAlr}]
 
-$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
+$onlyIf[$checkContains[ $get[module2] ; autoPublish ; modLogs ; messageLogs ; memberLogs ; economy ; fun ; info ; tools ; moderation ]==true;{execute:queryNotFound}]
 $onlyIf[$checkContains[ $get[module2] ; general ; admin ]==false;{execute:moduleFalse}]
 
-$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];autopublish;autoPublish]]
+$let[module2;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$get[module1];economy&profiles;economy];profiles;economy];messagelogs;messageLogs];modlogs;modLogs];memberlogs;memberLogs];autopublish;autoPublish]]
 $let[module1;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message];-;]; ;];remove;];-;];disable;]]
 
 $onlyPerms[manageserver;{execute:userPerms}]
@@ -92,6 +92,7 @@ $replaceText[$replaceText[$getServerVar[module_fun];true;${emojis.toggle.on}];fa
 $replaceText[$replaceText[$getServerVar[module_info];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Info
 $replaceText[$replaceText[$getServerVar[module_messageLogs];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Message logs
 $replaceText[$replaceText[$getServerVar[module_modLogs];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Moderation logs
+$replaceText[$replaceText[$getServerVar[module_memberLogs];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Member logs
 $replaceText[$replaceText[$getServerVar[module_moderation];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Moderation
 $replaceText[$replaceText[$getServerVar[module_tools];true;${emojis.toggle.on}];false;${emojis.toggle.off}] Tools
 ]

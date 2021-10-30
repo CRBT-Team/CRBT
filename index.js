@@ -27,10 +27,12 @@ module.exports.dev = dev;
 bot.onMessage({ guildOnly: true });
 bot.onGuildJoin();
 bot.onGuildLeave();
-bot.onMessageDelete();
 bot.onJoined();
 bot.onLeave();
 bot.onMessageUpdate();
+bot.onMessageDelete();
+bot.onVoiceStateUpdate();
+
 
 require('./loadCmds')();
 require('./api/api');

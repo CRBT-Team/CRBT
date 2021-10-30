@@ -62,6 +62,18 @@ Changes the role given to a user muted with the \`$getServerVar[prefix]mute\` co
 Change it with \`$getServerVar[prefix]mutedrole <role>\`
 :no}
 
+{field:Auto-published channels:
+$replaceText[$replaceText[$getServerVar[module_autoPublish]
+;true;Automatically publish messages sent in announcement channels.
+$replaceText[${emojis.toggle.on};:;#COLON#] Enabled
+**Current list:**
+$replaceText[$getServerVar[autoPublishedChannels];>;>, ]$replaceText[$replaceText[$checkContains[$getServerVar[autoPublishedChannels]==];true;, ];false;]
+Add more with \`$getServerVar[prefix]autopublish <channel>\` and remove them with \`$getServerVar[prefix]unpublish <channel>\`.]
+;false;Automatically publish messages sent in announcement channels.
+$replaceText[${emojis.toggle.off};:;#COLON#] Disabled
+Enable it and add channels with \`$getServerVar[prefix]autopublish <channel>\`]
+}
+
 {field:Message logs:
 $replaceText[$replaceText[$getServerVar[module_messageLogs]
 ;true;$replaceText[${emojis.toggle.on};:;#COLON#] Enabled
@@ -81,27 +93,38 @@ Disable it with \`$getServerVar[prefix]module disable modlogs\`]
 ;false;$replaceText[${emojis.toggle.off};:;#COLON#] Disabled
 Enable it with \`$getServerVar[prefix]modlogs <channel>\`]
 :yes}
+
+{field:Member logs:
+$replaceText[$replaceText[$getServerVar[module_memberLogs]
+;true;$replaceText[${emojis.toggle.on};:;#COLON#] Enabled
+Sent to <#$getServerVar[memberlogs_channel]>
+Change it with \`$getServerVar[prefix]memberlogs <channel>\`
+Disable it with \`$getServerVar[prefix]module disable memberlogs\`]
+;false;$replaceText[${emojis.toggle.off};:;#COLON#] Disabled
+Enable it with \`$getServerVar[prefix]memberlogs <channel>\`]
+:yes}
 ]
 
 $let[user;
 {field:Language:
-:flag_us: Set to English (American) - \`$getGlobalUserVar[language]\`.
+Set to English (American) - \`$getGlobalUserVar[language]\`.
 Changes $username[$clientID]'s language for when you use it.
 Not changeable at the moment.
 :no}
 
 {field:Accent color:
-Set to #$getGlobalUserVar[color].
+Set to \`#$getGlobalUserVar[color]\`.
 Changes the color of most embeds for commands you use with CRBT.
-Chnage it with \`$getServerVar[prefix]color\`
+Change it with \`$getServerVar[prefix]color\`
 :no}
 
 {field:Telemetry:
 ${emojis.toggle.fon} Enabled
-**Note:** As of the August 2021 update, telemetry can no longer be disabled.
+**Note:** Since the August 2021 update, telemetry features can no longer be disabled.
 You can read CRBT's privacy policy **[here](${links.privacypolicy})**.
 :no}
 
+{thumbnail:https://api.clembs.xyz/other/color/$getGlobalUserVar[color]}
 ]
 
 $onlyIf[$checkContains[$checkCondition[$toLowercase[$message]==]$checkCondition[$toLowercase[$message]==server]$checkCondition[$toLowercase[$message]==user];true]==true;{execute:args}]

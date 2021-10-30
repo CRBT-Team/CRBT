@@ -9,7 +9,7 @@ $reply[$messageID;
 {color:${colors.error}}
 ;no]
 
-$let[title-enUS;${emojis.error} You don't have a Profile Color!]
-$let[description-enUS;To change your Discord Profile Color, go to your user settings and click the color picker under "Profile Color". From then you can run the command again to use it as your CRBT accent color!
+$let[title-enUS;${emojis.error} You don't have a profile color!]
+$let[description-enUS;To change your Discord profile color, go to your user settings and click the color picker under "Profile Color". From then you can run the command again to use it as your CRBT accent color!
 Otherwize you can just see all of the available default CRBT colors with \`$getServerVar[prefix]color\`.]
     `}

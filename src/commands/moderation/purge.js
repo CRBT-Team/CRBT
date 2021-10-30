@@ -11,7 +11,7 @@ $if[$getServerVar[modlogs_channel]!=none]
     
 $channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];true;$getServerVar[modlogs_channel]];false;];
 
-{author:$userTag - Message Clear:$authorAvatar}
+{author:$channelName - Message clear}
 
 {field:Moderator:
 <@$authorID>
@@ -23,19 +23,19 @@ $channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlo
 
 {field:Amount cleared:
 $message
-:yes}
+:no}
     
 {color:${colors.success}}
 ]
 $endif
     
-$deleteMessage[$botLastMessageID]
+$deleteMessage[$get[id]]
 $wait[1s]
     
-$sendMessage[
+$let[id;$sendMessage[
 {title:${emojis.success} $message messages purged.}
 {color:${colors.success}}
-;no]
+;yes]]
 
 $clear[$sum[$message;1]]
 $deletecommand

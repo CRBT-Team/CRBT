@@ -1,5 +1,6 @@
 {
-  "version": "10.3.3",
+  "version": "10.3.4",
+  "versionName": "October 2021",
   "scripts": {
     "start": "node index",
     "dev": "node index -dev"

@@ -50,8 +50,9 @@ ${emojis.colors.white} \`White\`
     ;no]
 
     $let[title-enUS;CRBT Settings - Accent color]
-    $let[description-enUS;**Current color:** #$getGlobalUserVar[color]
-This color is applied across most commands you use on CRBT.\nYou can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).\n**New:** You can now use your Discord Profile Color (if you have any) as your CRBT accent color! Simply use \`$getServerVar[prefix]$commandName profile\`.]
+    $let[description-enUS;**Current color:** \`#$getGlobalUserVar[color]\`
+This color is applied across most commands you use on CRBT.\nYou can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).
+You can also use your Discord profile color (if you have any) as your CRBT accent color! Simply use \`$getServerVar[prefix]$commandName profile\`.]
     $let[default-enUS;default]
 
 $else
