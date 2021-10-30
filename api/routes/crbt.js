@@ -41,9 +41,11 @@ router.get('/command', async function(req, res) {
 
 router.get('/vars', async function(req, res) {
   const variable = req.query.var;
+  const key = req.query.APIKey;
   const id = req.query.id;
   const vars = Object.assign(require('../../src/variables/serverVars').variables, require('../../src/variables/userVars').variables);
   
+  if(key !== process.env.API_KEY) return res.status(401).json({ status: 401, error: 'Invalid API key.' });
   if(!variable) return res.status(400).json({ status: 400, error: 'No variable was entered.' });
   if(!vars[variable]) return res.status(404).json({ status: 404, error: `Couldn't find the variable '${variable}'` });
   if(!id) return res.status(200).json({ status: 200, value: vars[variable] });
@@ -69,6 +71,7 @@ router.post('/vars', async function(req, res) {
         returns.variable = request.var;
         returns.id = request.id;
         returns.value = request.value;
+        returns.key = request.key;
         return returns;
       } catch {
         res.status(400).json({ status: 400, error: 'Invalid request.' });
@@ -77,13 +80,14 @@ router.post('/vars', async function(req, res) {
       returns.variable = req.body.var;
       returns.id = req.body.id;
       returns.value = req.body.value;
+      returns.key = req.body.key;
       return returns;
     }
   }
   
-  const { vars, variable, id, value } = aoiJsMode();
+  const { vars, variable, id, value, key } = aoiJsMode();
 
-  console.log(variable, id, value);
+  if(key !== process.env.API_KEY) return res.status(401).json({ status: 401, error: 'Invalid API key.' });
   
   if(!variable) return res.status(400).json({ status: 400, error: 'No variable was entered.' });
   if(!vars[variable]) return res.status(404).json({ status: 404, error: `Couldn't find the variable '${variable}'` });
