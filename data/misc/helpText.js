@@ -135,8 +135,8 @@ Picks one choice among multiple options.
 Reminds you of a specified subject in the given time.
 • \`<prefix>rng\`
 Gives you a random number from the minimum to the maximum.
-• \`<prefix>translate\`
-Translates given text into the target language.
+• **__NEW__** \`<prefix>translate\`
+Translates given text into the target language, from a source language (if any).
 `,
 }
 

@@ -64,7 +64,7 @@ The logs are currently sent to <#$getServerVar[messagelogs_channel]>.
 ];false;]
 Use \`$get[p]messagelogs <channel>\` to change where message logs should go.
 :no}
-{field:**NEW** Member logs:
+{field:**__NEW__** Member logs:
 $replaceText[$replaceText[$getServerVar[module_memberLogs];true;${emojis.toggle.on} This module is enabled on this server.];false;${emojis.toggle.off} This module is disabled on this server.]
 
 Sends a message whenever someone joins or leaves the server.
@@ -207,7 +207,7 @@ $let[modules;
 Work and get your hourly Purplets to master the wonderous world of $username[$clientID]'s economy system.
 :yes}
 
-{field:**NEW** $get[fun] Fun:
+{field:**__NEW__** $get[fun] Fun:
 Create activities, watch together, use webhooks in a wacky way, get animal facts and more!
 :yes}
 
@@ -219,11 +219,11 @@ Get any kind of info with $username[$clientID]'s commands, including avatars, an
 Moderate your server using $username[$clientID]'s mute, warn, kick & ban system.
 :yes}
 
-{field:**NEW** Logs:
+{field:**__NEW__** Logs:
 Track deleted and edited messages, moderation actions and member activity using $username[$clientID]'s logging capabilities.
 :yes}
 
-{field:$get[tools] Tools:
+{field:**__NEW__** $get[tools] Tools:
 Get things done quickly with a calculator, customizable reminders, currency conversion, and much much more!
 :yes}
 

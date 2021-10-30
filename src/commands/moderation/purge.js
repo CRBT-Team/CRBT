@@ -11,18 +11,18 @@ $if[$getServerVar[modlogs_channel]!=none]
     
 $channelSendMessage[$replaceText[$replaceText[$channelExists[$getServerVar[modlogs_channel]];true;$getServerVar[modlogs_channel]];false;];
 
-{author:$channelName - Message clear}
-
-{field:Moderator:
-<@$authorID>
-:yes}
+{author:#$channelName - Message clear}
 
 {field:Channel:
 <#$channelID>
 :yes}
 
+{field:Moderator:
+<@$authorID>
+:yes}
+    
 {field:Amount cleared:
-$message
+$message messages
 :no}
     
 {color:${colors.success}}
