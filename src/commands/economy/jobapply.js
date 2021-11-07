@@ -1,4 +1,4 @@
-const { emojis, colors } = require("../../../index");
+const { emojis, colors } = require('../../..');
 
 module.exports.command = {
     name: "jobapply",
@@ -11,7 +11,7 @@ $setGlobalUserVar[job_type;$get[message]]
 $deleteGlobalUserVar[job_propositions]
 
 $reply[$messageID;
-{title:${emojis.success} You will now work as a $replaceText[$replaceText[$replaceText[$get[message];mcdoemployee;fast food employee];youtuber;videast];policeman;police officer]!}
+{title:${emojis.success} You will now work as a $replaceText[$replaceText[$replaceText[$get[message];mcdoemployee;fast food employee];youtuber;videomaker];policeman;police officer]!}
 {description:You can now use \`$getServerVar[prefix]work\` to earn some Purplets and Job XP, and \`$getServerVar[prefix]jobinfo\` to get your current stats and info.
 To leave your job at any moment, use \`$getServerVar[prefix]jobquit\`.}
 {color:${colors.success}}
@@ -19,7 +19,7 @@ To leave your job at any moment, use \`$getServerVar[prefix]jobquit\`.}
 
 $onlyIf[$checkContains[$getGlobalUserVar[job_propositions]; $get[message] ]==true;{execute:notProposed}]
 
-$let[message;$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];fastfoodemployee;mcdoemployee];videast;youtuber];policeofficer;policeman]]
+$let[message;$replaceText[$replaceText[$replaceText[$replaceText[$toLowercase[$message]; ;];fastfoodemployee;mcdoemployee];videomaker;youtuber];policeofficer;policeman]]
 
 $argsCheck[>1;{execute:args}]
 $onlyIf[$getGlobalUserVar[blocklisted]==false;{execute:blocklist}]

@@ -1,4 +1,4 @@
-const { items } = require("../../../index");
+const { items } = require('../../..');
 
 module.exports.command = {
     name: "jobsearch",
@@ -32,9 +32,9 @@ $if[$getGlobalUserVar[job_propositions]==]
 
     $setGlobalUserVar[job_propositions; $get[random1] $get[random2] $get[random3] ]
 
-    $let[job3;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random3]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
-    $let[job2;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random2]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
-    $let[job1;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random1]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
+    $let[job3;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random3]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
+    $let[job2;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random2]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
+    $let[job1;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random1]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
 
     $let[random3;$randomText[$joinSplitText[;]]]
     $textSplit[$get[pool3];|]
@@ -48,9 +48,9 @@ $if[$getGlobalUserVar[job_propositions]==]
 
 $else
 
-    $let[job3;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random3]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
-    $let[job2;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random2]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
-    $let[job1;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random1]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
+    $let[job3;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random3]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
+    $let[job2;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random2]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
+    $let[job1;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$get[random1]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
 
     $let[random3;$splitText[3]]
     $let[random2;$splitText[2]]
@@ -70,7 +70,7 @@ $let[cashier-description;Scan these barcodes and nail your way to become the ult
 **Salary:**\nMidly Low to Midly High
 **Cooldown:**\nVery Low to Midly High]
 
-$let[youtuber-description;Work your way to become to best videast in town!
+$let[youtuber-description;Work your way to become to best videomaker in town!
 
 **Salary:**\nVery Low to Very High
 **Cooldown:**\nMedium to High]

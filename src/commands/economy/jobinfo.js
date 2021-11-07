@@ -1,4 +1,4 @@
-const { emojis } = require("../../../index");
+const { emojis } = require('../../..');
 
 module.exports.command = {
     name: "jobinfo",
@@ -29,7 +29,7 @@ $let[cooldowns-enUS;Cooldowns:\`$getServerVar[prefix]hourly\`#COLON# $replaceTex
 $let[job-enUS;Job:$get[jobname] $replaceText[$replaceText[$checkCondition[$get[id]$get[jobname]==$authorIDUnemployed];true;(\`$getServerVar[prefix]jobsearch\`)];false;]]
 $let[level-enUS;Level:$replaceText[$getGlobalUserVar[job_level;$get[id]]/4;4/4;**MAX**]]
 
-$let[jobname;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$getGlobalUserVar[job_type;$get[id]]];Mcdoemployee;Fast food employee];Youtuber;Videast];Policeman;Police officer]]
+$let[jobname;$replaceText[$replaceText[$replaceText[$toLocaleUppercase[$getGlobalUserVar[job_type;$get[id]]];Mcdoemployee;Fast food employee];Youtuber;Videomaker];Policeman;Police officer]]
 
 $let[xp-enUS;XP:$replaceText[$replaceText[$checkCondition[$getGlobalUserVar
 [job_level;$get[id]]==4];true;**MAX**];false;$getGlobalUserVar[job_xp;$get[id]]/$getGlobalUserVar[job_req;$get[id]]]]

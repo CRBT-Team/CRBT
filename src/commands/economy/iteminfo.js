@@ -22,7 +22,8 @@ $if[$checkContains[$toLowercase[$message[1]];banner]==true]
     :yes}
 
     {field:Value: 
-    $replaceText[$replaceText[$getObjectProperty[banners.$get[a].available];true;${emojis.purplet} **$getObjectProperty[banners.$get[a].value] Purplets**\n\`$getServerVar[prefix]buy banner $toLowercase[$message[2]]\`];false;Not for sale]
+    ${emojis.purplet} **$getObjectProperty[banners.$get[a].value] Purplets**
+    $replaceText[$replaceText[$checkCondition[$getObjectProperty[banners.$get[a].season]==available];false;Not for sale];true;\n\`$getServerVar[prefix]buy banner $toLowercase[$message[2]]\`]
     :yes}
 
     {image:${links.banners}$getObjectProperty[banners.$get[a].season]/$getObjectProperty[banners.$get[a].contents]}
@@ -50,7 +51,7 @@ $elseIf[$checkContains[$toLowercase[$message[1]];badge]==true]
     :yes}
 
     {field:Value: 
-    $replaceText[$replaceText[$getObjectProperty[badges.$get[a].available];true;${emojis.purplet} **$getObjectProperty[badges.$get[a].value] Purplets**\n\`$getServerVar[prefix]buy badge $toLowercase[$message[2]]\`];false;Not for sale]
+    $replaceText[$replaceText[$getObjectProperty[badges.$get[a].available];true;${emojis.purplet} **$getObjectProperty[badges.$get[a].value] Purplets**$getServerVar[prefix]buy badge $toLowercase[$message[2]]\`];false;Not for sale]
     :yes}
 
     {color:$getGlobalUserVar[color]}

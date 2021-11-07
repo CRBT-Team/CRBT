@@ -7,7 +7,7 @@
       "contents": "christmas2020.png",
       "description": "Made for the Christmas 2020 giveaway and originally won by navy#9255",
       "credits": "Dee Jeh, edited by Clembs",
-      "available": false
+      "available": "false"
     },
     "halloween2020": {
       "name": "Halloween 2020",
@@ -16,7 +16,7 @@
       "contents": "halloween2020.png",
       "description": "Made for the Halloween 2020 giveaway, features CRBT's original design and was won by Username *#5522",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "summer2021" : {
       "name": "Summer 2020",
@@ -25,16 +25,16 @@
       "contents": "summer2021.png",
       "description": "A decomposition of CRBT's new facial features, made as a prize for July 2nd's CRBT fan-art contest.",
       "credits": "CRBT Design Team",
-      "available": false
+      "available": "false"
     },
     "halloween2021": {
       "name": "Halloween 2021",
       "season": "special",
       "value": 5500,
       "contents": "halloween2021.png",
-      "description": "A creepy new halloween banner made for 2021's giveaway, yet to be won by anyone.",
+      "description": "A creepy new halloween banner made for 2021's giveaway, won by zlby, karl2883 and Y0urD0ctor.",
       "credits": "CRBT Design Team",
-      "available": false
+      "available": "false"
     },
     "red": {
       "name": "Red",
@@ -43,7 +43,7 @@
       "contents": "red.png",
       "description": "A cool red banner",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "green": {
       "name": "Green",
@@ -52,7 +52,7 @@
       "contents": "green.png",
       "description": "A cool green banner",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "blue": {
       "name": "Blue",
@@ -61,7 +61,7 @@
       "contents": "blue.png",
       "description": "A cool blue banner",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "darkblue": {
       "name": "Dark blue",
@@ -70,7 +70,7 @@
       "contents": "dark%20blue.png",
       "description": "A cool dark blue banner",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "turquoise": {
       "name": "Turquoise",
@@ -79,7 +79,7 @@
       "contents": "turquoise.png",
       "description": "A cool turquoise banner",
       "credits": "delnyn",
-      "available": false
+      "available": "false"
     },
     "pink": {
       "name": "Pink",
@@ -88,7 +88,7 @@
       "contents": "pink.png",
       "description": "A cool pink banner",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "purple": {
       "name": "Purple",
@@ -97,7 +97,7 @@
       "contents": "purple.png",
       "description": "A cool purple banner",
       "credits": "Onyxcode",
-      "available": false
+      "available": "false"
     },
     "bars": {
       "name": "Bars",
@@ -106,7 +106,7 @@
       "contents": "bars.png",
       "description": "idk bars",
       "credits": "navy",
-      "available": false
+      "available": "false"
     },
     "curve": {
       "name": "Curve",
@@ -115,7 +115,7 @@
       "contents": "curve.png",
       "description": "the curve that reflects the beauty of... idk",
       "credits": "Username *",
-      "available": false
+      "available": "false"
     },
     "minefield": {
       "name": "Minefield",
@@ -124,7 +124,7 @@
       "contents": "minefield.png",
       "description": "actually why is it called minefield there aren't any mines and this is not a field",
       "credits": "venn2x",
-      "available": false
+      "available": "false"
     },
     "waves": {
       "name": "Waves",
@@ -133,7 +133,7 @@
       "contents": "waves.png",
       "description": "yum wavy waves",
       "credits": "Leap of Azzam",
-      "available": false
+      "available": "false"
     },
     "sunrise": {
       "name": "Sunrise",
@@ -142,7 +142,7 @@
       "contents": "sunrise.png",
       "description": "special mention to the lovers of the sun ☀️",
       "credits": "Clembs",
-      "available": false
+      "available": "false"
     },
     "wallpaper": {
       "name": "Wallpaper",
@@ -151,7 +151,7 @@
       "contents": "wallpaper.png",
       "description": "because this looks like wallpaper",
       "credits": "Username *",
-      "available": false
+      "available": "false"
     },
     "sweet": {
       "name": "Sweet",
@@ -160,7 +160,7 @@
       "contents": "sweet.png",
       "description": "yum its so sweet",
       "credits": "james.",
-      "available": false
+      "available": "false"
     },
     "flower": {
       "name": "Flower",
@@ -169,7 +169,7 @@
       "contents": "flower.png",
       "description": "A sort of translucent flower on a very spring-like background.",
       "credits": "Clembs",
-      "available": true
+      "available": "true"
     },
     "cake": {
       "name": "Cake",
@@ -178,16 +178,16 @@
       "contents": "cake.png",
       "description": "Who wouldn't like a piece of cake?",
       "credits": "Addy Visuals",
-      "available": true
+      "available": "true"
     },
     "mountain": {
       "name": "Mountain",
       "season": 3,
       "value": 250,
-      "contents": "mountain.png",
+      "contents": "mountains.png",
       "description": "a mountain",
       "credits": "Clembs",
-      "available": true
+      "available": "true"
     },
     "stripes": {
       "name": "Stripes",
@@ -196,7 +196,7 @@
       "contents": "stripes.png",
       "description": "Aligned stripes made of some cool material",
       "credits": "CRBT Design Team",
-      "available": true
+      "available": "true"
     },
     "blood": {
       "name": "Blood",
@@ -205,7 +205,7 @@
       "contents": "blood.png",
       "description": "What would blood look as a banner? It'd look pretty cool, we think",
       "credits": "CRBT Design Team",
-      "available": true
+      "available": "true"
     },
     "space": {
       "name": "Space",
@@ -214,7 +214,7 @@
       "contents": "space.png",
       "description": "The deep navy blue sky with a white stripe on top reflecting the space we live in",
       "credits": "bkly",
-      "available": true
+      "available": "true"
     },
     "bubbles": {
       "name": "Bubbles",
@@ -223,7 +223,7 @@
       "contents": "bubbles.png",
       "description": "bubble planets idk",
       "credits": "Username *",
-      "available": true
+      "available": "true"
     }
 },
 "badges": {
@@ -232,161 +232,161 @@
       "type": "flags",
       "value": 150,
       "contents": "🇷🇺",
-      "available": true
+      "available": "true"
     },
     "france": {
       "name": "French flag",
       "type": "flags",
       "value": 150,
       "contents": "🇫🇷",
-      "available": true
+      "available": "true"
     },
     "usa": {
       "name": "American flag",
       "type": "flags",
       "value": 150,
       "contents": "🇺🇸",
-      "available": true
+      "available": "true"
     },
     "brazil": {
       "name": "Brazilian flag",
       "type": "flags",
       "value": 170,
       "contents": "🇧🇷",
-      "available": true
+      "available": "true"
     },
     "poland": {
       "name": "Polish flag",
       "type": "flags",
       "value": 150,
       "contents": "🇵🇱",
-      "available": true
+      "available": "true"
     },
     "goodmeal": {
       "name": "Good meal",
       "type": "familiar faces",
       "value": 1000,
       "contents": "<:good_meal:750034917743919256>",
-      "available": true
+      "available": "true"
     },
     "dollidot": {
       "name": "Dollidot",
       "type": "familiar faces",
       "value": 420,
       "contents": "<:dollidot:730074523277197333>",
-      "available": false
+      "available": "false"
     },
     "udu": {
       "name": "udu",
       "type": "familiar faces",
       "value": 444,
       "contents": "<:udu:800716716627853332>",
-      "available": true
+      "available": "true"
     },
     "developer": {
       "name": "Developer",
       "type": "jobs",
       "value": 150,
       "contents": "🧑‍💻",
-      "available": true
+      "available": "true"
     },
     "doctor": {
       "name": "Doctor",
       "type": "jobs",
       "value": 150,
       "contents": "🧑‍⚕️",
-      "available": true
+      "available": "true"
     },
     "musician": {
       "name": "Musician",
       "type": "jobs",
       "value": 150,
       "contents": "🧑‍🎤",
-      "available": true
+      "available": "true"
     },
     "illustrator": {
       "name": "Illustrator",
       "type": "jobs",
       "value": 150,
       "contents": "🧑‍🎨",
-      "available": true
+      "available": "true"
     },
     "partner": {
       "name": "CRBT Partner",
       "type": "special",
       "value": 0,
       "contents": "<:partner:866113174314287125>",
-      "available": false
+      "available": "false"
     },
     "purplet": {
       "name": "Purplet",
       "type": "special",
       "value": 0,
       "contents": "<:purplet:866116902215745576>",
-      "available": false
+      "available": "false"
     },
     "dave": {
       "name": "dave",
       "type": "special",
       "value": 0,
       "contents": "<:davecool:789190897803591740>",
-      "available": false
+      "available": "false"
     },
     "flushed": {
       "name": "Flushed face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cflushed:843530751738642492>",
-      "available": true
+      "available": "true"
     },
     "joy": {
       "name": "Laughing face",
       "type": "emotions",
       "value": 500,
       "contents": "<:cjoy:843530751182241842>",
-      "available": true
+      "available": "true"
     },
     "smile": {
       "name": "Smiling face",
       "type": "emotions",
       "value": 400,
       "contents": "<:csmile:843530751152357396>",
-      "available": true
+      "available": "true"
     },
     "thinking": {
       "name": "Thinking face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cthinking_face:843530751144493126>",
-      "available": true
+      "available": "true"
     },
     "winktongue": {
       "name": "Tongue out winking face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cstuck_out_tongue_winking_eye:843530751014207541>",
-      "available": true
+      "available": "true"
     },
     "starstruck": {
       "name": "Star struck face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cstar_struck:843530751177261087>",
-      "available": true
+      "available": "true"
     },
     "pensive": {
       "name": "Pensive face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cpensive:843530751118409759>",
-      "available": true
+      "available": "true"
     },
     "wink": {
       "name": "Winking face",
       "type": "emotions",
       "value": 400,
       "contents": "<:cwink:843530751454216212>",
-      "available": true
+      "available": "true"
     }
   }
 }
