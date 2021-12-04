@@ -6,8 +6,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "strictNullChecks": false,
     "paths": {
-      "$lib": ["./src/lib/index.ts"],
+      "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]
     }
   },
