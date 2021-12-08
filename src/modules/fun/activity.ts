@@ -1,5 +1,5 @@
 import { colors, emojis } from '$lib/db';
-import { button } from '$lib/functions';
+import { button } from '$lib/functions/button';
 import { DiscordTogether } from 'discord-together';
 import { GuildMember, MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand, Choice, OptionBuilder } from 'purplet';
@@ -7,7 +7,7 @@ import { ChatCommand, Choice, OptionBuilder } from 'purplet';
 const activities: Choice[] = [
   {
     name: 'Watch Together',
-    value: 'youtubedev',
+    value: 'youtube',
   },
   {
     name: 'Poker Night',
@@ -23,7 +23,7 @@ const activities: Choice[] = [
   },
   {
     name: 'Chess in the Park',
-    value: 'chessdev',
+    value: 'chess',
   },
   {
     name: 'Letter Tile',

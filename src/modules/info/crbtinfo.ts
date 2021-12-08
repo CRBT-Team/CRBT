@@ -1,4 +1,6 @@
-import { avatar, button } from '$lib/functions';
+import { avatar } from '$lib/functions/avatar';
+import { button } from '$lib/functions/button';
+import { getVar } from '$lib/functions/getVar';
 import dayjs from 'dayjs';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
@@ -32,7 +34,7 @@ export default ChatCommand({
             { name: 'Online since', value: `<t:${uptime}> (<t:${uptime}:R>)` },
           ])
           .setThumbnail(avatar(this.client.user))
-          .setColor('NAVY'),
+          .setColor(`#${await getVar('color', this.user.id)}`),
       ],
       components: [
         new MessageActionRow().addComponents(

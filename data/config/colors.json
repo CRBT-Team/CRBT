@@ -3,10 +3,6 @@
   "error": "FF2A2A",
   "default": "F27187",
 
-  "black": "000001",
-  "gray": "C8C5C9",
-  "white": "FFFFFE",
-  "brown": "A84D32",
   "lightred": "F27187",
   "red": "FF2A2A",
   "darkred": "4B0920",
@@ -24,9 +20,15 @@
   "purple": "6A21FF",
   "darkpurple": "29007E",
   "pink": "DC79E4",
+  "brown": "A84D32",
+  "black": "000001",
+  "gray": "C8C5C9",
+  "white": "FFFFFE",
 
   "clembs": "826FE5",
   "akaï": "123324",
   "navy": "004BAA",
-  "tomato": "FF475D"
+  "tomato": "FF475D",
+  "trubiso": "FFC600",
+  "crbt": "F27187"
 }

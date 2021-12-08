@@ -1,4 +1,5 @@
-import { avatar, button } from '$lib/functions';
+import { avatar } from '$lib/functions/avatar';
+import { button } from '$lib/functions/button';
 import { getVar } from '$lib/functions/getVar';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
