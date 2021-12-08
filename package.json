@@ -7,11 +7,11 @@
     "build": "node ./node_modules/purplet/dist/index.mjs dev"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^1.28.5",
-    "dayjs": "^1.10.7",
-    "discord-together": "^1.3.25",
+    "@supabase/supabase-js": "1.28",
+    "dayjs": "1.10",
+    "discord-together": "1.3",
     "discord.js": "13",
-    "dotenv": "^10.0.0",
+    "dotenv": "10",
     "purplet": "1"
   },
   "devDependencies": {

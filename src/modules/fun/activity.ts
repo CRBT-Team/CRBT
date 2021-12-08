@@ -1,3 +1,4 @@
+import { colors, emojis } from '$lib/db';
 import { button } from '$lib/functions';
 import { DiscordTogether } from 'discord-together';
 import { GuildMember, MessageActionRow, MessageEmbed } from 'discord.js';
@@ -46,13 +47,13 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`All set!`)
+          .setTitle(`${emojis.success} All set!`)
           .setDescription(
             `Click the button below to join your ${
               activities.find((item) => item.value === activity).name
             } activity in ${vc}.`
           )
-          .setColor('GREEN'),
+          .setColor(`#${colors.success}`),
       ],
       components: [new MessageActionRow().addComponents(button('LINK', `Join Activity`, code))],
     });

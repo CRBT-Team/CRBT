@@ -6,6 +6,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
     "strictNullChecks": false,
     "paths": {
       "$lib": ["./src/lib"],

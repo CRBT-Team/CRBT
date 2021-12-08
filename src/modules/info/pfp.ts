@@ -1,4 +1,5 @@
 import { avatar, button } from '$lib/functions';
+import { getVar } from '$lib/functions/getVar';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -48,7 +49,10 @@ export default ChatCommand({
     const av = avatar(u, size ?? 2048, format ?? 'png');
     await this.reply({
       embeds: [
-        new MessageEmbed().setAuthor(`${u.tag} - Profile picture`, avatar(u, 64)).setImage(av),
+        new MessageEmbed()
+          .setAuthor(`${u.tag} - Profile picture`, avatar(u, 64))
+          .setImage(av)
+          .setColor(`#${await getVar('color', u.id)}`),
       ],
       components: [
         new MessageActionRow().addComponents(
