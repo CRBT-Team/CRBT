@@ -54,7 +54,10 @@ export default ChatCommand({
       const emojiUni = emojiData.codes.replaceAll(' ', '-').toLowerCase();
 
       const emojiImg = {
-        google: `https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-136/${emojiUni}.png`,
+        google: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/313/${emojiData.name.replaceAll(
+          ' ',
+          '-'
+        )}_${emojiUni}.png`,
         twitter: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/282/${emojiData.name.replaceAll(
           ' ',
           '-'
@@ -67,25 +70,27 @@ export default ChatCommand({
         )}_${emojiUni}.png`,
       };
 
-      if (this.isButton()) {
-        console.log(this);
-      }
+      const emojiURL = emojiData.unicode === '14.0' ? emojiImg.google : emojiImg.twitter;
 
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(`${toTitleCase(emojiData.name)} - Emoji info`, emojiImg.twitter)
+            .setAuthor(`${toTitleCase(emojiData.name)} - Emoji info`, emojiURL)
             .setDescription(`**[View on Emojipedia](https://emojipedia.org/${emoji})**`)
             .addField('Unicode', emojiData.codes, true)
+            .addField(
+              'Available since',
+              `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
+              true
+            )
             .addField(
               'Designs',
               Object.entries(emojiImg)
                 .map(([brand, url]) => `**[${brand[0].toUpperCase() + brand.slice(1)}](${url})**`)
-                .join(' | '),
-              false
+                .join(' | ')
             )
             .addField('Category', emojiData.category, true)
-            .setImage(emojiImg.twitter)
+            .setImage(emojiURL)
             .setColor(`#${await getVar('color', this.user.id)}`),
         ],
       });
