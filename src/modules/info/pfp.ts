@@ -47,7 +47,7 @@ export default ChatCommand({
     ]),
   async handle({ user, size, format }) {
     const u = user ?? this.user;
-    const av = avatar(u, size ?? 2048, format ?? 'png');
+    const av = avatar(u, size ?? 2048, format ?? 'png', !!format);
     await this.reply({
       embeds: [
         new MessageEmbed()
@@ -57,7 +57,16 @@ export default ChatCommand({
       ],
       components: [
         new MessageActionRow().addComponents(
-          button('LINK', `Download (${size ?? 2048}px, ${(format ?? 'png').toUpperCase()})`, av)
+          button(
+            'LINK',
+            !av.includes('embed/avatars')
+              ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
+                  ? 'GIF'
+                  : format ?? 'png'
+                ).toUpperCase()})`
+              : 'Download (256px - PNG)',
+            av
+          )
         ),
       ],
     });

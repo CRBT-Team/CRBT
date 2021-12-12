@@ -15,7 +15,8 @@ export default ChatCommand({
   ),
   async handle({ color }) {
     if (color) {
-      console.log(this.user);
+      const user = await this.client.users.fetch(this.user, { force: true });
+      console.log(user);
       const text = color.toLowerCase().replaceAll(/ |#/g, '');
       const finalColor = colors[text] ? colors[text] : text;
 
@@ -33,7 +34,7 @@ export default ChatCommand({
           ephemeral: true,
         });
       } else if (text === 'profile') {
-        if (!this.user.hexAccentColor) {
+        if (!user.hexAccentColor) {
           await this.reply(
             CRBTError(
               'custom',
@@ -41,7 +42,7 @@ export default ChatCommand({
             )
           );
         } else {
-          await setVar('color', this.user.id, 'profile');
+          await setVar('color', user.id, 'profile');
           await this.reply({
             embeds: [
               new MessageEmbed()
@@ -49,7 +50,7 @@ export default ChatCommand({
                 .setDescription(
                   "Your Discord profile color will be synced to your access color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
                 )
-                .setColor(this.user.hexAccentColor),
+                .setColor(user.hexAccentColor),
             ],
             ephemeral: true,
           });

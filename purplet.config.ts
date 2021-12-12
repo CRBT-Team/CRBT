@@ -7,6 +7,8 @@ export default defineConfig({
       allowedMentions: {
         repliedUser: false,
       },
+      //@ts-ignore
+      intents: ['GUILD_PRESENCES'],
     },
   },
   handlers: [

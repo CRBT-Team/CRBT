@@ -1,11 +1,92 @@
+import { avatar } from '$lib/functions/avatar';
+import { banner } from '$lib/functions/banner';
+import { customStatus } from '$lib/functions/customStatus';
+import { getVar } from '$lib/functions/getVar';
+import { activities } from '$lib/functions/userActivities';
+import { userBadges } from '$lib/functions/userBadges';
+import dayjs from 'dayjs';
+import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'hello',
-  description: 'Sends an hello world (with an optional name)',
-  options: new OptionBuilder().user('name', 'Name you want to use', false),
-  async handle() {
-    const user = this.options.getUser('name') ?? this.user;
-    await this.reply(`hello `);
+  name: 'userinfo',
+  description: 'Get all info on a Discord user.',
+  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
+  async handle({ user }) {
+    const u = await this.client.users.fetch(user ?? this.user, { force: true });
+    const m: GuildMember | null = await (await this.guild.fetch()).members
+      .fetch({ user: u, withPresences: true, force: true })
+      .catch(() => null);
+
+    enum UserStatus {
+      online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
+      idle = 'https://cdn.discordapp.com/attachments/782584672772423684/851805544507113542/unknown.png',
+      dnd = 'https://cdn.discordapp.com/attachments/782584672772423684/851805534527946762/unknown.png',
+      offline = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
+      invisible = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
+    }
+
+    const e = new MessageEmbed();
+
+    if (m) {
+      e.setAuthor(
+        `${u.tag} - User info`,
+        m.presence ? UserStatus[m.presence.status] : UserStatus.offline
+      );
+      e.setDescription(
+        (await userBadges(u)).join(' ') +
+          '\n' +
+          `Profile picture: **[2048px](${avatar(u, 2048)})** | **[512px](${avatar(
+            u,
+            512
+          )})** | **[256px](${avatar(u, 256)})**`
+      );
+      e.addField('ID', u.id);
+
+      if (m.nickname) e.addField('Display name', m.nickname);
+
+      const acts = activities(m);
+      if (m.presence && acts.length > 0)
+        if (acts.length === 1) e.addField('Activity', acts.toString(), true);
+        else e.addField(`Activities (${acts.length})`, `• ${acts.join('\n• ')}`, true);
+
+      if (m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
+        e.addField('Custom status', `${customStatus(m)}`, true);
+
+      e.addField(
+        `${m.roles.cache.size === 1 ? 'Role' : 'Roles'} (${m.roles.cache.size})`,
+        m.roles.cache.size > 0
+          ? m.roles.cache.map((r) => r.toString()).join(', ')
+          : "*This user doesn't have any roles...*"
+      );
+
+      //TODO add the permissions and then we're good
+
+      e.addField('Joined Discord', `<t:${dayjs(u.createdAt).unix()}>`, true);
+      e.setImage(banner(u, 2048));
+      e.setThumbnail(avatar(u, 256));
+      e.setColor(`#${await getVar('color', u.id)}`);
+      e.addField('Joined server', `<t:${dayjs(m.joinedAt).unix()}>`, true);
+    } else {
+      e.setAuthor(`${u.tag} - User info`);
+      e.setDescription(
+        (await userBadges(u)).join(' ') +
+          '\n' +
+          `Profile picture: **[2048px](${avatar(u, 2048)})** | **[512px](${avatar(
+            u,
+            512
+          )})** | **[256px](${avatar(u, 256)})**`
+      );
+      e.addField('ID', u.id);
+      e.addField('Display name', u.username);
+      e.addField('Joined Discord', `<t:${dayjs(u.createdAt).unix()}>`);
+      e.setImage(banner(u, 2048));
+      e.setThumbnail(avatar(u, 256));
+      e.setColor(`#${await getVar('color', u.id)}`);
+    }
+
+    await this.reply({
+      embeds: [e],
+    });
   },
 });
