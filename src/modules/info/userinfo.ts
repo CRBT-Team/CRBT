@@ -36,10 +36,9 @@ export default ChatCommand({
       e.setDescription(
         (await userBadges(u)).join(' ') +
           '\n' +
-          `Profile picture: **[2048px](${avatar(u, 2048)})** | **[512px](${avatar(
-            u,
-            512
-          )})** | **[256px](${avatar(u, 256)})**`
+          `Profile picture: ${[2048, 512, 256]
+            .map((size) => `**[${size}px](${avatar(u, size)})**`)
+            .join(' | ')} | \`/pfp${u.equals(this.user) ? '`' : ` user:${u.id}\``}`
       );
       e.addField('ID', u.id);
 
@@ -50,23 +49,32 @@ export default ChatCommand({
         if (acts.length === 1) e.addField('Activity', acts.toString(), true);
         else e.addField(`Activities (${acts.length})`, `• ${acts.join('\n• ')}`, true);
 
-      if (m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
+      if (m.presence && m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
         e.addField('Custom status', `${customStatus(m)}`, true);
 
+      const roles = m.roles.cache.filter((r) => r.id !== this.guild.id);
       e.addField(
-        `${m.roles.cache.size === 1 ? 'Role' : 'Roles'} (${m.roles.cache.size})`,
-        m.roles.cache.size > 0
-          ? m.roles.cache.map((r) => r.toString()).join(', ')
+        `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
+        roles.size > 0
+          ? roles.map((r) => r.toString()).join(' ')
           : "*This user doesn't have any roles...*"
       );
 
       //TODO add the permissions and then we're good
 
-      e.addField('Joined Discord', `<t:${dayjs(u.createdAt).unix()}>`, true);
+      e.addField(
+        'Joined Discord',
+        `<t:${dayjs(u.createdAt).unix()}> (<t:${dayjs(u.createdAt).unix()}:R>)`,
+        true
+      );
       e.setImage(banner(u, 2048));
       e.setThumbnail(avatar(u, 256));
       e.setColor(`#${await getVar('color', u.id)}`);
-      e.addField('Joined server', `<t:${dayjs(m.joinedAt).unix()}>`, true);
+      e.addField(
+        'Joined server',
+        `<t:${dayjs(m.joinedAt).unix()}> (<t:${dayjs(m.joinedAt).unix()}:R>)`,
+        true
+      );
     } else {
       e.setAuthor(`${u.tag} - User info`);
       e.setDescription(

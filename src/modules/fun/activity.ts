@@ -32,13 +32,12 @@ export default ChatCommand({
     if (!vc)
       await this.reply(
         CRBTError(
-          'custom',
           'You need to be in a voice channel, or to choose a voice channel using the `channel` option.'
         )
       );
     else if (vc.type !== 'GUILD_VOICE')
       await this.reply(
-        CRBTError('custom', 'You need to choose a voice channel in order to start an activity!')
+        CRBTError('You need to choose a voice channel in order to start an activity!')
       );
     else {
       const { code } = await new DiscordTogether(this.client).createTogetherCode(vc.id, activity);

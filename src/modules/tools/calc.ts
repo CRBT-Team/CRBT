@@ -20,8 +20,8 @@ export default ChatCommand({
             .setColor(await getVar('color', this.user.id)),
         ],
       });
-    } catch (error) {
-      await this.reply(CRBTError('custom', String(error)));
+    } catch (e) {
+      await this.reply(CRBTError(String(e)));
     }
   },
 });

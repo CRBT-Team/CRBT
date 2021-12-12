@@ -37,7 +37,6 @@ export default ChatCommand({
         if (!user.hexAccentColor) {
           await this.reply(
             CRBTError(
-              'custom',
               'You do not have a Discord profile color to sync from! To set one, go to your Discord "User Profile" settings and click the color picker below "Profile Color".'
             )
           );
@@ -58,7 +57,6 @@ export default ChatCommand({
       } else {
         await this.reply(
           CRBTError(
-            'custom',
             'You need to enter a valid or a color name. Use the command again with no options for more info.'
           )
         );

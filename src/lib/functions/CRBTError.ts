@@ -2,7 +2,6 @@ import { colors, illustrations } from '$lib/db';
 import { InteractionReplyOptions, MessageEmbed } from 'discord.js';
 
 export function CRBTError(
-  type: 'custom',
   desc: string = '',
   title: string = 'An error occured!',
   footer: string = ''
