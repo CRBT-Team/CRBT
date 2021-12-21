@@ -1,5 +1,5 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import { snowStamp } from '$lib/functions/snowStamp';
 import { toTitleCase } from '$lib/functions/toTitleCase';
 import { EmojiRegex } from '$lib/util/regex';
@@ -46,7 +46,7 @@ export default ChatCommand({
               `<t:${emojiData.createdAt.unix()}> (<t:${emojiData.createdAt.unix()}:R>)`
             )
             .setImage(emojiData.url)
-            .setColor(`#${await getVar('color', this.user.id)}`),
+            .setColor(await getColor(this.user)),
         ],
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
@@ -91,7 +91,7 @@ export default ChatCommand({
             )
             .addField('Category', emojiData.category, true)
             .setImage(emojiURL)
-            .setColor(`#${await getVar('color', this.user.id)}`),
+            .setColor(await getColor(this.user)),
         ],
       });
     } else {

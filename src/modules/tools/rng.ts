@@ -1,4 +1,4 @@
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -15,9 +15,7 @@ export default ChatCommand({
 
     const num = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
 
-    const e = new MessageEmbed()
-      .setTitle(`= ${num}`)
-      .setColor(`#${await getVar('color', this.user.id)}`);
+    const e = new MessageEmbed().setTitle(`= ${num}`).setColor(await getColor(this.user));
     if (comment) e.setAuthor(`Comment: "${comment}"`);
 
     await this.reply({

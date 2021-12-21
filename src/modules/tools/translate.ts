@@ -1,5 +1,5 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import translate from '@vitalets/google-translate-api';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, Choice, OptionBuilder } from 'purplet';
@@ -35,7 +35,7 @@ export default ChatCommand({
               { name: langJSON[tr.from.language.iso], value: text },
               { name: langJSON[tr.raw[1][1]], value: tr.text },
             ])
-            .setColor(`#${await getVar('color', this.user.id)}`),
+            .setColor(await getColor(this.user)),
         ],
       });
     } catch (e) {

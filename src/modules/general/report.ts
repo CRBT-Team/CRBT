@@ -1,6 +1,6 @@
 import { colors, emojis, misc } from '$lib/db';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
-import { ChatCommand, escapeMarkdown, OptionBuilder } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
@@ -33,8 +33,8 @@ export default ChatCommand({
               ((await this.fetchReply()) as Message).url
             })**` +
               '\n' +
-              `\`\`\`\n${escapeMarkdown(message)}\`\`\``
-          : `Anonymously reported\n\`\`\`\n${escapeMarkdown(message)}\`\`\``
+              `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
+          : `Anonymously reported\n\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
       )
       .setColor(`#${colors.yellow}`);
 

@@ -1,5 +1,5 @@
 import { avatar } from '$lib/functions/avatar';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
@@ -36,7 +36,7 @@ export default ChatCommand({
                 value: `<t:${uptime}> (<t:${uptime}:R>)`,
               },
             ])
-            .setColor(`#${await getVar('color', this.user.id)}`),
+            .setColor(await getColor(this.user)),
         ],
       });
     }, 300);

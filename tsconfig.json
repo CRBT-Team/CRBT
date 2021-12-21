@@ -9,6 +9,7 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]

@@ -1,5 +1,5 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import { MessageEmbed } from 'discord.js';
 import { Parser } from 'expr-eval';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -17,7 +17,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor(expr)
             .setTitle(`= ${result}`)
-            .setColor(await getVar('color', this.user.id)),
+            .setColor(await getColor(this.user)),
         ],
       });
     } catch (e) {

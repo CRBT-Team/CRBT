@@ -1,6 +1,6 @@
 import { colors, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import { setVar } from '$lib/functions/setVar';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -16,12 +16,11 @@ export default ChatCommand({
   async handle({ color }) {
     if (color) {
       const user = await this.client.users.fetch(this.user, { force: true });
-      console.log(user);
       const text = color.toLowerCase().replaceAll(/ |#/g, '');
       const finalColor = colors[text] ? colors[text] : text;
 
       if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
-        await setVar('color', this.user.id, finalColor);
+        await setVar('color', user.id, finalColor);
         await this.reply({
           embeds: [
             new MessageEmbed()
@@ -62,7 +61,7 @@ export default ChatCommand({
         );
       }
     } else {
-      const userColor = await getVar('color', this.user.id);
+      const userColor = await getColor(this.user);
       const filteredColors = Object.entries(colors).filter((value) => emojis.colors[value[0]]);
       const formattedColorList = [[], [], []];
       for (const [name, hex] of filteredColors) {
@@ -82,7 +81,7 @@ export default ChatCommand({
         .setAuthor('CRBT Settings - Accent color', illustrations.settings)
         .setThumbnail(`https://api.clembs.xyz/other/color${userColor}`)
         .setDescription(
-          `**Current color:** \`#${userColor}\`` +
+          `**Current color:** \`${userColor}\`` +
             '\n' +
             "This color is used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them." +
             '\n' +
@@ -90,7 +89,7 @@ export default ChatCommand({
             '\n' +
             'You can sync your CRBT accent color with your Discord profile color by using `/set-color profile`.'
         )
-        .setColor(`#${userColor}`);
+        .setColor(userColor);
       for (const colors of formattedColorList) {
         e.addField('‎', colors.join('\n'), true);
       }

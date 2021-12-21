@@ -1,10 +1,13 @@
 {
   "name": "crbt",
-  "version": "11.1.04",
+  "version": "11.0.05",
   "scripts": {
-    "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
+    "start": "echo This works? && node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs dev",
     "build": "node ./node_modules/purplet/dist/index.mjs dev"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "dependencies": {
     "@supabase/supabase-js": "1.28",

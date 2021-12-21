@@ -1,7 +1,8 @@
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { customStatus } from '$lib/functions/customStatus';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
+import { keyPerms } from '$lib/functions/keyPerms';
 import { activities } from '$lib/functions/userActivities';
 import { userBadges } from '$lib/functions/userBadges';
 import dayjs from 'dayjs';
@@ -60,7 +61,12 @@ export default ChatCommand({
           : "*This user doesn't have any roles...*"
       );
 
-      //TODO add the permissions and then we're good
+      e.addField(
+        `Global key permissions`,
+        m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
+          ? 'Administrator (all permissions)'
+          : keyPerms(m.permissions).join(', ')
+      );
 
       e.addField(
         'Joined Discord',
@@ -69,7 +75,7 @@ export default ChatCommand({
       );
       e.setImage(banner(u, 2048));
       e.setThumbnail(avatar(u, 256));
-      e.setColor(`#${await getVar('color', u.id)}`);
+      e.setColor(await getColor(u));
       e.addField(
         'Joined server',
         `<t:${dayjs(m.joinedAt).unix()}> (<t:${dayjs(m.joinedAt).unix()}:R>)`,
@@ -90,7 +96,7 @@ export default ChatCommand({
       e.addField('Joined Discord', `<t:${dayjs(u.createdAt).unix()}>`);
       e.setImage(banner(u, 2048));
       e.setThumbnail(avatar(u, 256));
-      e.setColor(`#${await getVar('color', u.id)}`);
+      e.setColor(await getColor(u));
     }
 
     await this.reply({

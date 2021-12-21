@@ -44,6 +44,5 @@ export function keyPerms(perms: Permissions) {
       }
     })
     .filter((perm) => perm !== null);
-  console.log(permissions);
   return permissions;
 }

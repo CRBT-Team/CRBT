@@ -1,5 +1,5 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getVar } from '$lib/functions/getVar';
+import { getColor } from '$lib/functions/getColor';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -58,7 +58,7 @@ export default ChatCommand({
                 currencies.find((t) => t.value === to).name
               }`
             )
-            .setColor(`#${await getVar('color', this.user.id)}`),
+            .setColor(await getColor(this.user)),
         ],
       });
     } catch (e) {
