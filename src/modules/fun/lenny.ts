@@ -8,9 +8,11 @@ export default ChatCommand({
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
   options: new OptionBuilder().string('message', 'Your message.'),
   async handle({ message }) {
-    const content = message ? Util.cleanContent(message, this.channel) + ' ( ͡° ͜ʖ ͡°)' : '( ͡° ͜ʖ ͡°)';
+    const content = message
+      ? Util.cleanContent(message.trim(), this.channel) + ' ( ͡° ͜ʖ ͡°)'
+      : '( ͡° ͜ʖ ͡°)';
 
-    await this.deferReply({ ephemeral: true });
+    await this.deferReply();
     try {
       const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
 
@@ -27,7 +29,7 @@ export default ChatCommand({
         username: this.user.username,
         content,
       });
-      await this.editReply('Sent!');
+      await this.deleteReply();
     } catch (e) {
       await this.editReply(CRBTError(String(e)));
     }

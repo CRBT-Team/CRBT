@@ -1,6 +1,7 @@
 import { keyPerms } from '$lib/functions/keyPerms';
+import canvas from 'canvas';
 import dayjs from 'dayjs';
-import { MessageEmbed } from 'discord.js';
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -8,11 +9,11 @@ export default ChatCommand({
   description: 'Gives information about a role.',
   options: new OptionBuilder().role('role', 'The role to give info about.', true),
   async handle({ role }) {
-    console.log(
-      role.permissions.has('ADMINISTRATOR', true) || role.permissions.toArray().length === 0
-        ? 'Administrator (all permissions)'
-        : keyPerms(role.permissions).join(', ')
-    );
+    const img = canvas.createCanvas(512, 512);
+    const ctx = img.getContext('2d');
+    ctx.fillStyle = role.hexColor;
+    ctx.fillRect(0, 0, img.width, img.height);
+
     await this.reply({
       embeds: [
         new MessageEmbed()
@@ -47,8 +48,10 @@ export default ChatCommand({
               ? 'Administrator (all permissions)'
               : keyPerms(role.permissions).join(', ')
           )
+          .setThumbnail('attachment://role.png')
           .setColor(role.hexColor !== '#000000' ? role.hexColor : '#B9BBBE'),
       ],
+      files: role.hexColor !== '#000000' ? [new MessageAttachment(img.toBuffer(), 'role.png')] : [],
     });
   },
 });

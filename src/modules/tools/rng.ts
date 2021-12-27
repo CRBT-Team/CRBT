@@ -15,7 +15,9 @@ export default ChatCommand({
 
     const num = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
 
-    const e = new MessageEmbed().setTitle(`= ${num}`).setColor(await getColor(this.user));
+    const e = new MessageEmbed()
+      .setTitle(`From ${minNum} to ${maxNum}: __${num}__`)
+      .setColor(await getColor(this.user));
     if (comment) e.setAuthor(`Comment: "${comment}"`);
 
     await this.reply({

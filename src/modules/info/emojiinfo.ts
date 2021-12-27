@@ -13,14 +13,6 @@ export default ChatCommand({
   options: new OptionBuilder().string('emoji', 'The emoji to get information about.', true),
   async handle({ emoji }) {
     if (emoji.match(EmojiRegex)) {
-      // const eArray = new Collection();
-      // for (const guild of this.client.guilds.cache.values()) {
-      //   const server = await guild.fetch();
-      //   for (const emoji of (await server.emojis.fetch()).values()) {
-      //     eArray.set(emoji.toString(), emoji);
-      //   }
-      // }
-      // console.log(eArray);
       const emojiData = {
         animated: emoji.split(':')[0] === '<a',
         name: emoji.split(':')[1],
@@ -75,7 +67,10 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(`${toTitleCase(emojiData.name)} - Emoji info`, emojiURL)
+            .setAuthor({
+              name: `${toTitleCase(emojiData.name)} - Emoji info`,
+              iconURL: emojiURL,
+            })
             .setDescription(`**[View on Emojipedia](https://emojipedia.org/${emoji})**`)
             .addField('Unicode', emojiData.codes, true)
             .addField(

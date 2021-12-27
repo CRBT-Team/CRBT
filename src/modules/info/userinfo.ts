@@ -30,10 +30,10 @@ export default ChatCommand({
     const e = new MessageEmbed();
 
     if (m) {
-      e.setAuthor(
-        `${u.tag} - User info`,
-        m.presence ? UserStatus[m.presence.status] : UserStatus.offline
-      );
+      e.setAuthor({
+        name: `${u.tag} - User info`,
+        iconURL: m.presence ? UserStatus[m.presence.status] : UserStatus.offline,
+      });
       e.setDescription(
         (await userBadges(u)).join(' ') +
           '\n' +

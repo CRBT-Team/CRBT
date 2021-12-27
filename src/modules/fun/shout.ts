@@ -10,7 +10,7 @@ export default ChatCommand({
   async handle({ message }) {
     const content = `**${Util.cleanContent(message, this.channel).toUpperCase()}!!!**`;
 
-    await this.deferReply({ ephemeral: true });
+    await this.deferReply();
     try {
       const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
 
@@ -27,7 +27,7 @@ export default ChatCommand({
         username: this.user.username.toUpperCase(),
         content,
       });
-      await this.editReply('Sent!');
+      await this.deleteReply();
     } catch (e) {
       await this.editReply(CRBTError(String(e)));
     }

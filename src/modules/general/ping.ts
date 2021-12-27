@@ -6,29 +6,28 @@ import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'ping',
-  description: 'Pings CRBT and sends its latency.',
+  description: 'Pings CRBT and sends info on its latency.',
   async handle() {
     await this.deferReply();
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();
-      const ping = {
-        msg: this.createdTimestamp - Date.now(),
-        ws: this.client.ws.ping,
-      };
       await this.editReply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(`${this.client.user.username} - Ping`, avatar(this.client.user, 64))
+            .setAuthor({
+              name: `${this.client.user.username} - Ping`,
+              iconURL: avatar(this.client.user, 64),
+            })
             .addFields([
               {
                 name: 'WebSocket',
-                value: `${ping.ws}ms`,
+                value: `${this.client.ws.ping}ms`,
                 inline: true,
               },
               {
-                name: 'Message',
-                value: `${ping.msg}ms`,
+                name: 'Interaction',
+                value: `${Date.now() - this.createdTimestamp}ms`,
                 inline: true,
               },
               {

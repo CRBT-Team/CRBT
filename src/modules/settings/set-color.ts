@@ -2,7 +2,8 @@ import { colors, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { setVar } from '$lib/functions/setVar';
-import { MessageEmbed } from 'discord.js';
+import canvas from 'canvas';
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -77,9 +78,13 @@ export default ChatCommand({
           ).replace('Light red', 'Light red - Default')}\``
         );
       }
+      const img = canvas.createCanvas(512, 512);
+      const ctx = img.getContext('2d');
+      ctx.fillStyle = userColor;
+      ctx.fillRect(0, 0, img.width, img.height);
       const e = new MessageEmbed()
-        .setAuthor('CRBT Settings - Accent color', illustrations.settings)
-        .setThumbnail(`https://api.clembs.xyz/other/color${userColor}`)
+        .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: illustrations.settings })
+        .setThumbnail(`attachment://color.png`)
         .setDescription(
           `**Current color:** \`${userColor}\`` +
             '\n' +
@@ -96,6 +101,7 @@ export default ChatCommand({
 
       await this.reply({
         embeds: [e],
+        files: [new MessageAttachment(img.toBuffer(), 'color.png')],
         ephemeral: true,
       });
     }

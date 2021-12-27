@@ -29,12 +29,12 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor(
-              `Translated from ${langJSON[tr.from.language.iso]} to ${langJSON[tr.raw[1][1]]}`
+              `Translated from ${langJSON[tr.from.language.iso] ?? tr.from.language.iso} to ${
+                langJSON[tr.raw[1][1]] ?? tr.raw[1][1]
+              }`
             )
-            .setFields([
-              { name: langJSON[tr.from.language.iso], value: text },
-              { name: langJSON[tr.raw[1][1]], value: tr.text },
-            ])
+            .addField(langJSON[tr.from.language.iso] ?? tr.from.language.iso, text)
+            .addField(langJSON[tr.raw[1][1]] ?? tr.raw[1][1], tr.text)
             .setColor(await getColor(this.user)),
         ],
       });

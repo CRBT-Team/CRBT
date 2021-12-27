@@ -1,21 +1,33 @@
-import { colors, emojis } from '$lib/db';
+import { colors, emojis, links } from '$lib/db';
 import { blankServerIcon } from '$lib/functions/blankServerIcon';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { toTitleCase } from '$lib/functions/toTitleCase';
 import dayjs from 'dayjs';
 import { AllowedImageSize, MessageAttachment, MessageEmbed, PresenceStatus } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
-import { ChatCommand } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'serverinfo',
-  description: 'Gives information on the current server. Support for other guilds coming soon!',
-  async handle() {
-    const guild = await this.guild.fetch();
+  description:
+    'Gives information on a Discord server of the provided ID, or the current one if none is used.',
+  options: new OptionBuilder().string(
+    'id',
+    'ID of the guild to get info on. Defaults to the current server.'
+  ),
+  async handle({ id }) {
+    if (id && !this.client.guilds.cache.has(id))
+      return await this.reply(
+        CRBTError(
+          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
+          `Who's that?`
+        )
+      );
 
-    const guildBlankIcon = new MessageAttachment(blankServerIcon(guild.nameAcronym), 'icon.png');
+    const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
     const e = new MessageEmbed()
-      .setAuthor(`${guild.name} - Server info`, guild.iconURL({ dynamic: true }))
+      .setAuthor({ name: `${guild.name} - Server info`, iconURL: guild.iconURL({ dynamic: true }) })
       .setDescription(
         (guild.partnered ?? guild.verified ? emojis.badges.partner + ' ' : '') +
           (guild.description ? guild.description + '\n' : '') +
@@ -32,24 +44,27 @@ export default ChatCommand({
             : '')
       )
       .addField('ID', guild.id, true)
-      .addField('Owner', (await guild.fetchOwner()).user.toString(), true)
+      .addField('Owner', `<@!${guild.ownerId}>`, true)
       .addField(
         'Creation date',
         `<t:${dayjs(guild.createdAt).unix()}> (<t:${dayjs(guild.createdAt).unix()}:R>)`
       )
-      .setThumbnail(guild.iconURL({ dynamic: true }) ?? 'attachment://icon.png')
+      .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
       .setColor(`#${colors.default}`);
 
     const channels = guild.channels.cache;
-    const cFilter = (c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>) =>
-      channels.filter((channel) => channel.type === c).size;
+    function cFilter(c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>): number {
+      return channels.filter((channel) => channel.type === c).size as number;
+    }
     e.addField(
       `Channels (${channels.size})`,
       `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text` +
         '\n' +
         `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice` +
         '\n' +
-        `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} categories` +
+        `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${
+          cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
+        }` +
         '\n' +
         `${emojis.channels.news} ${cFilter('GUILD_NEWS')} announcement` +
         '\n' +
@@ -103,18 +118,27 @@ export default ChatCommand({
       true
     );
 
-    const roles = guild.roles.cache.filter((r) => r.id !== this.guild.id);
-    if (roles.size > 0)
+    const roles = guild.roles.cache
+      .sort((a, b) => a.position - b.position)
+      .filter((r) => r.id !== r.guild.id)
+      .map((r) => (r.guild.id === this.guild.id ? r.toString() : r.name));
+    if (roles.length > 0)
       e.addField(
-        `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
-        roles.map((r) => r.toString()).join(' ')
+        `${roles.length === 1 ? 'Role' : 'Roles'} (${roles.length})`,
+        roles.length < 10 ? roles.join(', ') : trimArray(roles).join(', ')
       );
 
+    const boostingPlans = {
+      NONE: 'Free',
+      TIER_1: 'Friends',
+      TIER_2: 'Groups',
+      TIER_3: 'Communities',
+    };
     e.addField(
-      'Boosts',
-      `${guild.premiumSubscriptionCount} boosts (level ${
-        guild.premiumTier === 'NONE' ? 0 : guild.premiumTier.replace('TIER_', '')
-      })`,
+      'Boosting',
+      `Has ${guild.premiumSubscriptionCount} boosts\nCurrent plan: ${
+        boostingPlans[guild.premiumTier]
+      }`,
       true
     );
 
@@ -128,6 +152,20 @@ export default ChatCommand({
       true
     );
 
-    await this.reply({ embeds: [e], files: [guildBlankIcon] });
+    await this.reply({
+      embeds: [e],
+      files: guild.icon
+        ? []
+        : [new MessageAttachment(blankServerIcon(guild.nameAcronym), 'icon.png')],
+    });
   },
 });
+
+const trimArray = (arr: string[], max: number = 10) => {
+  if (arr.length > max) {
+    const len = arr.length - max;
+    arr = arr.slice(0, max);
+    arr.push(`...and ${len} more`);
+  }
+  return arr;
+};

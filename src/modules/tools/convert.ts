@@ -38,14 +38,9 @@ export default ChatCommand({
     .enum('currency', 'The currency to convert from.', currencies, true)
     .enum('to', 'The currency to convert to.', currencies, true),
   async handle({ amount, currency, to }) {
-    const url = `https://api.exchangerate.host/convert?from=${currency}&to=${to}&amount=${amount}&source=${
-      ['BTC', 'LTC', 'ETH', 'BCH', 'DOGE'].includes(to) ? 'crypto' : 'ecb'
-    }`;
-
-    const res: any = await fetch(url).then((res) => res.json());
-
-    console.log(url);
-    console.log(res);
+    const res: any = await fetch(
+      `https://api.exchangerate.host/convert?from=${currency}&to=${to}&amount=${amount}`
+    ).then((res) => res.json());
 
     try {
       await this.reply({

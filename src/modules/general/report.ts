@@ -36,6 +36,7 @@ export default ChatCommand({
               `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
           : `Anonymously reported\n\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
       )
+      .addField('Status', 'Pending', true)
       .setColor(`#${colors.yellow}`);
 
     if (attachment && attachment.match(/(https?:\/\/.*\.(?:png|jpg|webp|gif))/i)) {

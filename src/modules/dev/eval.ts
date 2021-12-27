@@ -5,9 +5,6 @@ import { TextCommand } from 'purplet';
 
 export default TextCommand({
   name: 'eval',
-  meta: {
-    description: '',
-  },
   async handle(args) {
     if (this.author.id !== ((await this.client.application.fetch()).owner as Team).ownerId) {
       this.reply('shush');

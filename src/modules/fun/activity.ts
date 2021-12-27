@@ -45,14 +45,14 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setTitle(`${emojis.success} All set!`)
-            .setDescription(
-              `Click the button below to join your ${
-                activities.find((item) => item.value === activity).name
-              } activity in ${vc}.`
-            )
+            .setDescription(`Click the button below to join your activity in ${vc}.`)
             .setColor(`#${colors.success}`),
         ],
-        components: [new MessageActionRow().addComponents(button('LINK', `Join Activity`, code))],
+        components: [
+          new MessageActionRow().addComponents(
+            button('LINK', `Join ${activities.find((item) => item.value === activity).name}`, code)
+          ),
+        ],
       });
     }
   },
