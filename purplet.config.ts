@@ -2,7 +2,7 @@ import { ChatCommandHandler, defineConfig, TextCommandHandler } from 'purplet';
 
 export default defineConfig({
   discord: {
-    commandGuilds: ['782584672298729473', '832924281519341638'],
+//     commandGuilds: [],
     clientOptions: {
       allowedMentions: {
         repliedUser: false,
