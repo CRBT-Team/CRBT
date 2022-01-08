@@ -1,14 +1,15 @@
-import { avatar } from '$lib/functions/avatar';
+import { links } from '$lib/db';
 import { button } from '$lib/functions/button';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
+import { AllowedImageSize, DynamicImageFormat, MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'pfp',
-  description: `Gets a user's profile picture, or yours if you don't specify one.`,
+  name: 'server icon',
+  description: `Gets a server's icon with its ID, or of the current one if none is used.`,
   options: new OptionBuilder()
-    .user('user', 'The user to get the profile picture of.')
+    .string('id', 'ID of the server you want to get the icon from. Defaults to the current server.')
     .enum('size', 'The size of the profile picture.', [
       {
         name: 'Small (128x128px)',
@@ -27,7 +28,7 @@ export default ChatCommand({
         value: '4096',
       },
     ])
-    .enum('format', 'The format of the profile picture.', [
+    .enum('format', 'The format of the icon.', [
       {
         name: 'PNG',
         value: 'png',
@@ -45,13 +46,26 @@ export default ChatCommand({
         value: 'gif',
       },
     ]),
-  async handle({ user, size, format }) {
-    const u = user ?? this.user;
-    const av = avatar(u, size ?? 2048, format ?? 'png', !!format);
+  async handle({ id, size, format }) {
+    if (id && !this.client.guilds.cache.has(id))
+      return await this.reply(
+        CRBTError(
+          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
+          `Who's that?`
+        )
+      );
+
+    const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
+
+    const av = guild.iconURL({
+      size: (size ?? 2048) as AllowedImageSize,
+      format: (format ?? 'png') as DynamicImageFormat,
+      dynamic: !!format,
+    });
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setAuthor(`${u.tag} - Profile picture`, avatar(u, 64))
+          .setAuthor({ name: `${guild.name} - Server icon`, iconURL: av })
           .setImage(av)
           .setColor(await getColor(this.user)),
       ],

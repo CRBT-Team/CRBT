@@ -28,11 +28,11 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(
-              `Translated from ${langJSON[tr.from.language.iso] ?? tr.from.language.iso} to ${
+            .setAuthor({
+              name: `Translated from ${langJSON[tr.from.language.iso] ?? tr.from.language.iso} to ${
                 langJSON[tr.raw[1][1]] ?? tr.raw[1][1]
-              }`
-            )
+              }`,
+            })
             .addField(langJSON[tr.from.language.iso] ?? tr.from.language.iso, text)
             .addField(langJSON[tr.raw[1][1]] ?? tr.raw[1][1], tr.text)
             .setColor(await getColor(this.user)),

@@ -1,4 +1,4 @@
-import { ChatCommandHandler, defineConfig, TextCommandHandler } from 'purplet';
+import { ChatCommandHandler, defineConfig, OnEventHandler, TextCommandHandler } from 'purplet';
 
 export default defineConfig({
   discord: {
@@ -8,7 +8,7 @@ export default defineConfig({
         repliedUser: false,
       },
       //@ts-ignore
-      intents: ['GUILD_PRESENCES', 'GUILDS'],
+      intents: ['GUILDS'],
     },
   },
   handlers: [
@@ -16,5 +16,6 @@ export default defineConfig({
     new TextCommandHandler({
       prefix: ['//'],
     }),
+    new OnEventHandler(),
   ],
 });

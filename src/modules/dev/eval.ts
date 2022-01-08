@@ -1,6 +1,7 @@
 import * as all from '$lib/db';
-import { colors, emojis, illustrations } from '$lib/db';
-import { MessageEmbed, Team } from 'discord.js';
+import { emojis } from '$lib/db';
+import { CRBTError } from '$lib/functions/CRBTError';
+import { Team } from 'discord.js';
 import { TextCommand } from 'purplet';
 
 export default TextCommand({
@@ -25,14 +26,7 @@ export default TextCommand({
         this.react('🏳');
       } catch (error) {
         this.react('❌');
-        this.reply({
-          embeds: [
-            new MessageEmbed()
-              .setAuthor(`Error ${emojis.other.angry_pink}`, illustrations.error)
-              .setDescription(`\`\`\`\n${error}\`\`\``)
-              .setColor(`#${colors.red}`),
-          ],
-        });
+        this.reply(CRBTError(`\`\`\`\n${error}\`\`\``, `Error ${emojis.other.angry_pink}`));
       }
     }
   },

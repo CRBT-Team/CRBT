@@ -9,7 +9,7 @@ import { ChatCommand } from 'purplet';
 import pjson from '../../../package.json';
 
 export default ChatCommand({
-  name: 'crbtinfo',
+  name: 'crbt info',
   description: 'Gives info about CRBT.',
   async handle() {
     await this.deferReply();

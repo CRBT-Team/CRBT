@@ -9,10 +9,10 @@ export function CRBTError(
   return {
     embeds: [
       new MessageEmbed()
-        .setAuthor(title, illustrations.error)
+        .setAuthor({ name: title, iconURL: illustrations.error })
         .setDescription(desc)
         .setColor(`#${colors.error}`)
-        .setFooter(footer),
+        .setFooter({ text: footer }),
     ],
     ephemeral: true,
   };

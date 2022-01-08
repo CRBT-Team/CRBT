@@ -5,7 +5,7 @@ import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'roleinfo',
+  name: 'role info',
   description: 'Gives information about a role.',
   options: new OptionBuilder().role('role', 'The role to give info about.', true),
   async handle({ role }) {
@@ -17,7 +17,7 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setAuthor(`${role.name} - Role info`)
+          .setAuthor({ name: `${role.name} - Role info` })
           .addField('ID', role.id)
           .addField('Members', `${role.members.size}`, true)
           .addField('Color', role.hexColor.replace('#0000000', 'None'), true)

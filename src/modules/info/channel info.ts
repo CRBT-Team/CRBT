@@ -8,7 +8,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 dayjs.extend(duration);
 
 export default ChatCommand({
-  name: 'channelinfo',
+  name: 'channel info',
   description: 'Gives info on a given channel.',
   options: new OptionBuilder().channel(
     'channel',
@@ -25,10 +25,10 @@ export default ChatCommand({
 
     if (c.type === 'GUILD_TEXT') {
       const info: D.TextChannel = c as D.TextChannel;
-      e.setAuthor(
-        `${info.name} - Channel info`,
-        c.equals(this.guild.rulesChannel) ? i.rules : i.text
-      );
+      e.setAuthor({
+        name: `${info.name} - Channel info`,
+        iconURL: c.equals(this.guild.rulesChannel) ? i.rules : i.text,
+      });
       if (info.topic) e.setDescription(info.topic);
       if (info.threads.cache.size > 0) {
         e.addField(
@@ -44,14 +44,14 @@ export default ChatCommand({
       );
     } else if (c.type === 'GUILD_VOICE') {
       const info: D.VoiceChannel = c as D.VoiceChannel;
-      e.setAuthor(`${info.name} - Channel info`, i.voice)
+      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.voice })
         .addField('Region', info.rtcRegion ? info.rtcRegion : 'Automatic', true)
         .addField('User limit', info.userLimit ? `${info.userLimit}` : 'Unlimited', true)
         .addField('Bitrate', `${info.bitrate / 1000}kbps`, true)
         .addField('Parent category', info.parent.name);
     } else if (c.type === 'GUILD_CATEGORY') {
       const info: D.CategoryChannel = c as D.CategoryChannel;
-      e.setAuthor(`${info.name} - Channel info`, i.category).addField(
+      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.category }).addField(
         'Position',
         `${info.position} of ${categories} categories`
       );
@@ -62,18 +62,18 @@ export default ChatCommand({
       const info: D.ThreadChannel = c as unknown as D.ThreadChannel;
       const lm = await info.lastMessage.fetch();
       console.log(lm);
-      e.setAuthor(`${c.name} - Thread info`)
+      e.setAuthor({ name: `${c.name} - Thread info` })
         .addField('Archiving', `<t:// calculate the time left, from the createdTimestamp:R>`)
         .addField('Parent channel', info.parent.name);
     } else if (c.type === 'GUILD_NEWS') {
       const info: D.NewsChannel = c as D.NewsChannel;
-      e.setAuthor(`${info.name} - Channel info`, i.news);
+      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.news });
     } else if (c.type === 'GUILD_STORE') {
       const info: D.StoreChannel = c as D.StoreChannel;
-      e.setAuthor(`${info.name} - Channel info`, i.store);
+      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.store });
     } else if (c.type === 'GUILD_STAGE_VOICE') {
       const info: D.StageChannel = c as D.StageChannel;
-      e.setAuthor(`${info.name} - Channel info`);
+      e.setAuthor({ name: `${info.name} - Channel info` });
     }
 
     await this.reply({

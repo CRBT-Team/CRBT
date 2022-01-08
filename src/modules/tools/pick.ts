@@ -16,7 +16,7 @@ export default ChatCommand({
     const e = new MessageEmbed()
       .setTitle(`"${randomValue.trim()}" was picked from the ${valuesArray.length} values.`)
       .setColor(await getColor(this.user));
-    if (comment) e.setAuthor(`Comment: "${comment}"`);
+    if (comment) e.setAuthor({ name: `Comment: "${comment}"` });
 
     await this.reply({
       embeds: [e],

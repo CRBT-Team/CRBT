@@ -8,7 +8,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 import emojiJSON from '../../../data/misc/emoji.json';
 
 export default ChatCommand({
-  name: 'emojiinfo',
+  name: 'emoji info',
   description: 'Returns information about a given emoji.',
   options: new OptionBuilder().string('emoji', 'The emoji to get information about.', true),
   async handle({ emoji }) {
@@ -26,7 +26,7 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(`${emojiData.name} - Emoji info`, emojiData.url)
+            .setAuthor({ name: `${emojiData.name} - Emoji info`, iconURL: emojiData.url })
             .addField(
               'Resolutions (in pixels)',
               [1024, 512, 256, 128].map((r) => `**[${r}](${emojiData.url}?size=${r})**`).join(' | ')
