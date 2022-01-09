@@ -7,7 +7,7 @@ import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'set-color',
+  name: 'set color',
   description:
     'Gives information about your color, or changes it if any color name/hex code is given.',
   options: new OptionBuilder().string(

@@ -1,19 +1,19 @@
 import { colors, emojis, links } from '$lib/db';
-import { blankServerIcon } from '$lib/functions/blankServerIcon';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { toTitleCase } from '$lib/functions/toTitleCase';
+import canvas from 'canvas';
 import dayjs from 'dayjs';
-import { AllowedImageSize, MessageAttachment, MessageEmbed, PresenceStatus } from 'discord.js';
+import { AllowedImageSize, MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'serverinfo',
+  name: 'server info',
   description:
     'Gives information on a Discord server of the provided ID, or the current one if none is used.',
   options: new OptionBuilder().string(
     'id',
-    'ID of the guild to get info on. Defaults to the current server.'
+    'ID of the server to get info on. Defaults to the current server.'
   ),
   async handle({ id }) {
     if (id && !this.client.guilds.cache.has(id))
@@ -97,24 +97,25 @@ export default ChatCommand({
       );
 
     const members = guild.members.cache;
-    const mStatus = (presence: PresenceStatus) =>
-      members.filter((m) => m.presence && m.presence.status === presence).size;
+    // const mStatus = (presence: PresenceStatus) =>
+    //   members.filter((m) => m.presence && m.presence.status === presence).size;
 
     e.addField(
       `Members (${members.size})`,
-      `${emojis.users.status.online} ${mStatus('online')} ` +
-        `${emojis.users.status.idle} ${mStatus('idle')}` +
-        '\n' +
-        `${emojis.users.status.dnd} ${mStatus('dnd')} ` +
-        `${emojis.users.status.invisible} ${
-          guild.memberCount - (mStatus('online') + mStatus('idle') + mStatus('dnd'))
-        }` +
-        '\n' +
-        `${emojis.users.humans} ${
-          guild.memberCount - guild.members.cache.filter((m) => m.user.bot).size
-        } humans` +
-        '\n' +
-        `${emojis.users.bots} ${guild.members.cache.filter((m) => m.user.bot).size} bots`,
+      `${emojis.users.humans} ${guild.approximateMemberCount} ${guild.approximatePresenceCount}`,
+      // `${emojis.users.status.online} ${mStatus('online')} ` +
+      //   `${emojis.users.status.idle} ${mStatus('idle')}` +
+      //   '\n' +
+      //   `${emojis.users.status.dnd} ${mStatus('dnd')} ` +
+      //   `${emojis.users.status.invisible} ${
+      //     guild.memberCount - (mStatus('online') + mStatus('idle') + mStatus('dnd'))
+      //   }` +
+      //   '\n' +
+      //   `${emojis.users.humans} ${
+      //     guild.memberCount - guild.members.cache.filter((m) => m.user.bot).size
+      //   } humans` +
+      //   '\n' +
+      //   `${emojis.users.bots} ${guild.members.cache.filter((m) => m.user.bot).size} bots`,
       true
     );
 
@@ -152,11 +153,20 @@ export default ChatCommand({
       true
     );
 
+    canvas.registerFont('data/misc/whitney.otf', { family: 'Whitney' });
+    const img = canvas.createCanvas(512, 512);
+    const ctx = img.getContext('2d');
+    ctx.fillStyle = `#${colors.blurple}`;
+    ctx.fillRect(0, 0, img.width, img.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'normal 152px Whitney';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(guild.nameAcronym, 256, 256);
+
     await this.reply({
       embeds: [e],
-      files: guild.icon
-        ? []
-        : [new MessageAttachment(blankServerIcon(guild.nameAcronym), 'icon.png')],
+      files: guild.icon ? [] : [new MessageAttachment(img.toBuffer(), 'icon.png')],
     });
   },
 });
@@ -165,7 +175,7 @@ const trimArray = (arr: string[], max: number = 10) => {
   if (arr.length > max) {
     const len = arr.length - max;
     arr = arr.slice(0, max);
-    arr.push(`...and ${len} more`);
+    arr.push(`and ${len} more...`);
   }
   return arr;
 };

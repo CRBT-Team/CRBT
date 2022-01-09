@@ -10,7 +10,7 @@ import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'userinfo',
+  name: 'user info',
   description: 'Get all info on a Discord user.',
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
@@ -39,7 +39,7 @@ export default ChatCommand({
           '\n' +
           `Profile picture: ${[2048, 512, 256]
             .map((size) => `**[${size}px](${avatar(u, size)})**`)
-            .join(' | ')} | \`/pfp${u.equals(this.user) ? '`' : ` user:${u.id}\``}`
+            .join(' | ')} | \`/user avatar${u.equals(this.user) ? '`' : ` user:${u.id}\``}`
       );
       e.addField('ID', u.id);
 

@@ -1,4 +1,4 @@
-import { ChatCommandHandler, defineConfig, TextCommandHandler } from 'purplet';
+import { ChatCommandHandler, defineConfig, OnEventHandler, TextCommandHandler } from 'purplet';
 
 export default defineConfig({
   discord: {
@@ -8,13 +8,20 @@ export default defineConfig({
         repliedUser: false,
       },
       //@ts-ignore
-      intents: ['GUILD_PRESENCES', 'GUILDS'],
+      intents: ['GUILDS'],
     },
   },
   handlers: [
     new ChatCommandHandler(),
     new TextCommandHandler({
-      prefix: ['//'],
+      prefix: [
+        '<@!859369676140314624>',
+        '<@859369676140314624>',
+        '<@!595731552709771264>',
+        '<@595731552709771264>',
+        '()',
+      ],
     }),
+    new OnEventHandler(),
   ],
 });

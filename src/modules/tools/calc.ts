@@ -15,7 +15,7 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor(expr)
+            .setAuthor({ name: expr })
             .setTitle(`= ${result}`)
             .setColor(await getColor(this.user)),
         ],

@@ -9,8 +9,8 @@ import { ChatCommand } from 'purplet';
 import pjson from '../../../package.json';
 
 export default ChatCommand({
-  name: 'crbtinfo',
-  description: 'Gives info about CRBT.',
+  name: 'crbt info',
+  description: `Gives info about CRBT.`,
   async handle() {
     await this.deferReply();
 
@@ -49,7 +49,7 @@ export default ChatCommand({
             },
             {
               name: 'Ping',
-              value: `≈${this.createdTimestamp - Date.now()} milliseconds (\`/ping\`)`,
+              value: `≈${Date.now() - this.createdTimestamp} milliseconds (\`/ping\`)`,
             },
             { name: 'Created', value: `<t:${created}> (<t:${created}:R>)` },
             { name: 'Online since', value: `<t:${uptime}> (<t:${uptime}:R>)` },

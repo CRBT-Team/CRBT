@@ -6,8 +6,8 @@ export default ChatCommand({
   name: 'rng',
   description: 'Picks a number at random from the given range, or from 1 to 100 if none is given.',
   options: new OptionBuilder()
-    .number('min', 'The minimum number to pick. Defaults to 1.')
     .number('max', 'The maximum number to pick. Defaults to 100.')
+    .number('min', 'The minimum number to pick. Defaults to 1.')
     .string('comment', 'The comment to display when picking.'),
   async handle({ min, max, comment }) {
     const minNum = min ?? 1;
@@ -18,7 +18,7 @@ export default ChatCommand({
     const e = new MessageEmbed()
       .setTitle(`From ${minNum} to ${maxNum}: __${num}__`)
       .setColor(await getColor(this.user));
-    if (comment) e.setAuthor(`Comment: "${comment}"`);
+    if (comment) e.setAuthor({ name: `Comment: "${comment}"` });
 
     await this.reply({
       embeds: [e],
