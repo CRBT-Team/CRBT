@@ -14,7 +14,13 @@ export default defineConfig({
   handlers: [
     new ChatCommandHandler(),
     new TextCommandHandler({
-      prefix: ['//'],
+      prefix: [
+        '<@!859369676140314624>',
+        '<@859369676140314624>',
+        '<@!595731552709771264>',
+        '<@595731552709771264>',
+        '()',
+      ],
     }),
     new OnEventHandler(),
   ],
