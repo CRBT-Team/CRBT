@@ -8,30 +8,34 @@ export default ChatCommand({
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
   options: new OptionBuilder().string('message', 'Your message.'),
   async handle({ message }) {
-    const content = message
-      ? Util.cleanContent(message.trim(), this.channel) + ' ( ͡° ͜ʖ ͡°)'
-      : '( ͡° ͜ʖ ͡°)';
+    if (this.channel.type !== 'DM') {
+      const content = message
+        ? Util.cleanContent(message.trim(), this.channel) + ' ( ͡° ͜ʖ ͡°)'
+        : '( ͡° ͜ʖ ͡°)';
 
-    await this.deferReply();
-    try {
-      const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
+      await this.deferReply();
+      try {
+        const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
 
-      const hook =
-        webhooks.find(
-          (hook) => hook.name === 'CRBT Webhook' && hook.owner.id === this.client.user.id
-        ) ??
-        (await ((await this.channel.fetch()) as TextChannel)
-          .createWebhook('CRBT Webhook')
-          .then((hook) => hook));
+        const hook =
+          webhooks.find(
+            (hook) => hook.name === 'CRBT Webhook' && hook.owner.id === this.client.user.id
+          ) ??
+          (await ((await this.channel.fetch()) as TextChannel)
+            .createWebhook('CRBT Webhook')
+            .then((hook) => hook));
 
-      await hook.send({
-        avatarURL: avatar(this.user),
-        username: this.user.username,
-        content,
-      });
-      await this.deleteReply();
-    } catch (e) {
-      await this.editReply(CRBTError(String(e)));
+        await hook.send({
+          avatarURL: avatar(this.user),
+          username: this.user.username,
+          content,
+        });
+        await this.deleteReply();
+      } catch (e) {
+        await this.editReply(CRBTError(this, String(e)));
+      }
+    } else {
+      this.reply(CRBTError(this, 'This command cannot be used in DMs.'));
     }
   },
 });

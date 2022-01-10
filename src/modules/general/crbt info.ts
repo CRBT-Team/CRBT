@@ -26,10 +26,7 @@ export default ChatCommand({
             url: 'https://crbt.ga',
           })
           .setDescription(
-            `Version ${pjson.version} on **[Purplet](https://github.com/CRBT-Team/Purplet)** v${
-              ((await fetch('https://api.npms.io/v2/package/purplet').then((r) => r.json())) as any)
-                .collected.metadata.version
-            }`
+            `Version ${pjson.version} on **[Purplet](${pjson.dependencies["purplet"].slice(1)})**`
           )
           .addFields([
             {

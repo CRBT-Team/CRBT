@@ -8,28 +8,32 @@ export default ChatCommand({
   description: 'Reverses your message.',
   options: new OptionBuilder().string('message', 'Your message.', true),
   async handle({ message }) {
-    const content = Util.cleanContent(message, this.channel).split('').reverse().join('');
+    if (this.channel.type !== 'DM') {
+      const content = Util.cleanContent(message, this.channel).split('').reverse().join('');
 
-    await this.deferReply();
-    try {
-      const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
+      await this.deferReply();
+      try {
+        const webhooks = await ((await this.channel.fetch()) as TextChannel).fetchWebhooks();
 
-      const hook =
-        webhooks.find(
-          (hook) => hook.name === 'CRBT Webhook' && hook.owner.id === this.client.user.id
-        ) ??
-        (await ((await this.channel.fetch()) as TextChannel)
-          .createWebhook('CRBT Webhook')
-          .then((hook) => hook));
+        const hook =
+          webhooks.find(
+            (hook) => hook.name === 'CRBT Webhook' && hook.owner.id === this.client.user.id
+          ) ??
+          (await ((await this.channel.fetch()) as TextChannel)
+            .createWebhook('CRBT Webhook')
+            .then((hook) => hook));
 
-      await hook.send({
-        avatarURL: avatar(this.user),
-        username: this.user.username.split('').reverse().join(''),
-        content,
-      });
-      await this.deleteReply();
-    } catch (e) {
-      await this.editReply(CRBTError(String(e)));
+        await hook.send({
+          avatarURL: avatar(this.user),
+          username: this.user.username.split('').reverse().join(''),
+          content,
+        });
+        await this.deleteReply();
+      } catch (e) {
+        await this.editReply(CRBTError(this, String(e)));
+      }
+    } else {
+      this.reply(CRBTError(this, 'This command cannot be used in DMs.'));
     }
   },
 });

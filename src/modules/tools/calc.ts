@@ -21,7 +21,7 @@ export default ChatCommand({
         ],
       });
     } catch (e) {
-      await this.reply(CRBTError(String(e)));
+      await this.reply(CRBTError(this, String(e)));
     }
   },
 });

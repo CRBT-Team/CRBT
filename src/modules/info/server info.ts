@@ -19,6 +19,7 @@ export default ChatCommand({
     if (id && !this.client.guilds.cache.has(id))
       return await this.reply(
         CRBTError(
+          this,
           `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
           `Who's that?`
         )
@@ -96,13 +97,13 @@ export default ChatCommand({
         true
       );
 
-    const members = guild.members.cache;
+    // const members = guild.members.cache;
     // const mStatus = (presence: PresenceStatus) =>
     //   members.filter((m) => m.presence && m.presence.status === presence).size;
 
     e.addField(
-      `Members (${members.size})`,
-      `${emojis.users.humans} ${guild.approximateMemberCount} ${guild.approximatePresenceCount}`,
+      `Members`,
+      `${emojis.users.humans} ${guild.approximateMemberCount}`,
       // `${emojis.users.status.online} ${mStatus('online')} ` +
       //   `${emojis.users.status.idle} ${mStatus('idle')}` +
       //   '\n' +

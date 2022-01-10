@@ -1,15 +1,12 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
-// import [ stream ] from 'node:fs';
-// import { pipeline } from 'stream';
-// import { promisify } from 'util';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'define',
-  description: 'Looks up the definition of a word on Google Dictionary.',
+  description: 'Looks up the definition of a given word on an english dictionary.',
   options: new OptionBuilder().string('word', 'The word to define.', true),
   async handle({ word }) {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);
@@ -44,22 +41,23 @@ export default ChatCommand({
         }
         await this.reply({
           embeds: [e],
-          files: def.phonetics[0].audio
-            ? [
-                new MessageAttachment(
-                  await fetch(`https:${def.phonetics[0].audio}`)
-                    .then((res) => res.arrayBuffer())
-                    .then((buffer) => Buffer.from(buffer)),
-                  'Pronounciation.mp3'
-                ),
-              ]
-            : null,
+          files:
+            def.phonetics && def.phonetics[0].audio
+              ? [
+                  new MessageAttachment(
+                    await fetch(`https:${def.phonetics[0].audio}`)
+                      .then((res) => res.arrayBuffer())
+                      .then((buffer) => Buffer.from(buffer)),
+                    'Pronounciation.mp3'
+                  ),
+                ]
+              : null,
         });
       } catch (e) {
-        await this.reply(CRBTError(String(e)));
+        await this.reply(CRBTError(this, String(e)));
       }
     } else {
-      await this.reply(CRBTError('this aint an english word to me'));
+      await this.reply(CRBTError(this, 'this aint an english word to me'));
     }
   },
 });

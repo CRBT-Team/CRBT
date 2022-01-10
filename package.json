@@ -1,20 +1,19 @@
 {
   "name": "crbt",
-  "version": "11.1.02",
+  "version": "11.1.03",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs dev",
     "build": "node ./node_modules/purplet/dist/index.mjs build"
   },
   "engines": {
-    "node": ">16.x"
+    "node": ">=16.x"
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.29.1",
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.8.0",
     "dayjs": "^1.10.7",
-    "discord-together": "^1.3.25",
     "discord.js": "^13.5.0",
     "dotenv": "^10.0.0",
     "expr-eval": "^2.0.2",

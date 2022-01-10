@@ -1,5 +1,4 @@
 import * as all from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
 import { Team } from 'discord.js';
 import { TextCommand } from 'purplet';
 import { inspect } from 'util';
@@ -40,7 +39,7 @@ export default TextCommand({
         this.react('🏳');
       } catch (error) {
         this.react('❌');
-        this.reply(CRBTError(`\`\`\`\n${error}\`\`\``, `Error!!!!!1 :(`));
+        this.reply(`\`\`\`\n${error}\`\`\``);
       }
     }
   },

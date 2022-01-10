@@ -2,7 +2,7 @@ import { ChatCommandHandler, defineConfig, OnEventHandler, TextCommandHandler } 
 
 export default defineConfig({
   discord: {
-//     commandGuilds: [],
+    commandGuilds: ['782584672298729473'],
     clientOptions: {
       allowedMentions: {
         repliedUser: false,

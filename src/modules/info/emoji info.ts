@@ -90,7 +90,12 @@ export default ChatCommand({
         ],
       });
     } else {
-      await this.reply(CRBTError('This emoji doesnt exist'));
+      await this.reply(
+        CRBTError(
+          this,
+          'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji.'
+        )
+      );
     }
   },
 });
