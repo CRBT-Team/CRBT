@@ -7,15 +7,19 @@ export default ChatCommand({
   description: 'Send a bug report to the CRBT developers.',
   options: new OptionBuilder()
     .string('message', 'The bug report to send (in english, please).', true)
-    .string('attachment', 'An image to send with the report.')
-    .boolean('anonymous', 'Whether to send the report anonymously.'),
-  async handle({ message, attachment, anonymous }) {
+    .string('image_url', 'An image URL (PNG, JPG, WEBP or GIF) to attach to the report.')
+    .boolean(
+      'anonymous',
+      "Whether to send the report anonymously. You won't be able to receive a DM once it's fixed."
+    ),
+  async handle({ message, image_url, anonymous }) {
     await this.reply({
       embeds: [
         new MessageEmbed()
           .setTitle(`${emojis.success} Bug report sent!`)
           .setDescription(
-            `Your bug report has been sent to the CRBT developers.\nWe will review and try our best to fix it as soon as possible.\nA message will be sent to you whenever the bug is fixed.`
+            `Your bug report has been sent to the CRBT developers.\nWe will review it and try our best to fix it as soon as possible.` +
+              (!anonymous ? '\nA message will be sent to you whenever the bug is fixed.' : '')
           )
           .setColor(`#${colors.success}`),
       ],
@@ -31,16 +35,14 @@ export default ChatCommand({
         !anonymous
           ? `${this.user} in **[${(await this.guild.fetch()).name}](${
               ((await this.fetchReply()) as Message).url
-            })**` +
-              '\n' +
-              `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
+            })**` + `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
           : `Anonymously reported\n\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
       )
       .addField('Status', 'Pending', true)
       .setColor(`#${colors.yellow}`);
 
-    if (attachment && attachment.match(/(https?:\/\/.*\.(?:png|jpg|webp|gif))/i)) {
-      e.setImage(attachment);
+    if (image_url && image_url.match(/(https?:\/\/.*\.(?:png|jpg|webp|gif))/i)) {
+      e.setImage(image_url);
     }
 
     await channel.send({

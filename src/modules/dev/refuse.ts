@@ -1,10 +1,10 @@
-import { colors, illustrations, links, misc } from '$lib/db';
+import { colors, emojis, illustrations, links, misc } from '$lib/db';
 import { button } from '$lib/functions/button';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { TextCommand } from 'purplet';
 
 export default TextCommand({
-  name: 'reply',
+  name: 'refuse',
   async handle([id, ...message]) {
     if (this.author.id !== '327690719085068289')
       this.reply('You do not have permission to use this command.');
@@ -21,10 +21,24 @@ export default TextCommand({
           new MessageEmbed()
             .setTitle(embed.title)
             .setDescription(embed.description)
-            .addFields(embed.fields ?? [{ name: 'Status', value: 'Pending' }])
-            .addField(`Message from ${this.author.tag}`, message.join(' '))
+            .setFields([
+              {
+                name: 'Status',
+                value: `${emojis.error} ${
+                  embed.title === 'Bug report'
+                    ? "Ignored/Not a bug/Won't be fixed"
+                    : 'Will not be added'
+                }`,
+              },
+              message
+                ? {
+                    name: `Message from ${this.author.tag}`,
+                    value: message.join(' '),
+                  }
+                : null,
+            ])
             .setImage(embed.image ? embed.image.url : null)
-            .setColor(`#${colors.yellow}`),
+            .setColor(`#${colors.error}`),
         ],
       });
 
@@ -45,13 +59,13 @@ export default TextCommand({
               )
               .addField(
                 'Subject',
-                `${embed.title} "${
+                `Your ${embed.title === 'Bug report' ? 'report' : 'suggestion'} "${
                   report.length > 30 ? `${report.substring(0, 30).trim()}...` : report
-                }"`
+                }" was refused.`
               )
               .addField(`Message from ${this.author.tag}`, message.join(' '))
               .setFooter({ text: "Note: You can't reply back to a CRBT message." })
-              .setColor(`#${colors.success}`),
+              .setColor(`#${colors.error}`),
           ],
           components: [
             new MessageActionRow().addComponents(

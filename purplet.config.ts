@@ -1,14 +1,14 @@
+import { Intents } from 'discord.js';
 import { ChatCommandHandler, defineConfig, OnEventHandler, TextCommandHandler } from 'purplet';
-
 export default defineConfig({
   discord: {
-    commandGuilds: [],
+    commandGuilds: process.argv.includes('--dev') ? ['782584672298729473'] : [],
     clientOptions: {
       allowedMentions: {
         repliedUser: false,
       },
       //@ts-ignore
-      intents: ['GUILDS'],
+      intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
     },
   },
   handlers: [

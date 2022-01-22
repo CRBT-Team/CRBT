@@ -3,43 +3,32 @@ import { button } from '$lib/functions/button';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, Choice, OptionBuilder } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
-const activities: Choice[] = [
-  { name: 'Watch Together', value: 'youtube' },
-  { name: 'Poker Night', value: 'poker' },
-  { name: 'Betrayal.io', value: 'betrayal' },
-  { name: 'Fishington.io', value: 'fishing' },
-  { name: 'Chess in the Park', value: 'chess' },
-  { name: 'Letter Tile', value: 'lettertile' },
-  { name: 'Word Snacks', value: 'wordsnack' },
-  { name: 'Doodle Crew', value: 'doodlecrew' },
-  { name: 'Awkword', value: 'awkword' },
-  { name: 'Spell Cast', value: 'spellcast' },
-  { name: 'Checkers in the Park', value: 'checkers' },
-  { name: 'Putt Party', value: 'puttparty' },
+const activities = [
+  { name: 'Watch Together', id: '880218394199220334' },
+  { name: 'Poker Night', id: '755827207812677713' },
+  { name: 'Betrayal.io', id: '773336526917861400' },
+  { name: 'Fishington.io', id: '814288819477020702' },
+  { name: 'Chess in the Park', id: '832012774040141894' },
+  { name: 'Letter Tile', id: '879863686565621790' },
+  { name: 'Word Snacks', id: '879863976006127627' },
+  { name: 'Doodle Crew', id: '878067389634314250' },
+  { name: 'Awkword', id: '879863881349087252' },
+  { name: 'Spell Cast', id: '852509694341283871' },
+  { name: 'Checkers in the Park', id: '832013003968348200' },
+  { name: 'Putt Party', id: '763133495793942528' },
 ];
 
-const applications = {
-  youtube: '880218394199220334',
-  poker: '755827207812677713',
-  betrayal: '773336526917861400',
-  fishing: '814288819477020702',
-  chess: '832012774040141894',
-  lettertile: '879863686565621790',
-  wordsnack: '879863976006127627',
-  doodlecrew: '878067389634314250',
-  awkword: '879863881349087252',
-  spellcast: '852509694341283871',
-  checkers: '832013003968348200',
-  puttparty: '763133495793942528',
-};
+const choices = activities.map(({ name }) => {
+  return { name, value: name.toLowerCase().replaceAll(' ', '-').replaceAll('.', '') };
+});
 
 export default ChatCommand({
   name: 'activity',
   description: 'Starts a new Discord activity in a voice channel.',
   options: new OptionBuilder()
-    .enum('activity', 'The activity you want to start.', activities, true)
+    .enum('activity', 'The activity you want to start.', choices, true)
     .channel('channel', 'The channel you want to start the activity in.'),
   async handle({ activity, channel }) {
     const user = await this.guild.members.fetch(this.user);
@@ -63,7 +52,7 @@ export default ChatCommand({
         body: JSON.stringify({
           max_age: 86400,
           max_uses: 0,
-          target_application_id: applications[activity],
+          target_application_id: activities.find[activity],
           target_type: 2,
           temporary: false,
           validate: null,
@@ -87,7 +76,7 @@ export default ChatCommand({
         ],
         components: [
           new MessageActionRow().addComponents(
-            button('LINK', `Join ${activities.find((item) => item.value === activity).name}`, code)
+            button('LINK', `Join ${choices.find((item) => item.value === activity).name}`, code)
           ),
         ],
       });

@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.1.03",
+  "version": "11.2.01",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs dev",
