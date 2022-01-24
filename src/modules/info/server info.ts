@@ -41,7 +41,7 @@ export default ChatCommand({
                       dynamic: true,
                     })})**`
                 )
-                .join(' | ')} | \`/icon\``
+                .join(' | ')} | \`/server icon${id ? ` id:${id}` : ''}\``
             : '')
       )
       .addField('ID', guild.id, true)

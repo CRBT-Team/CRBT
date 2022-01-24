@@ -1,6 +1,8 @@
+import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
+import { button } from '$lib/functions/button';
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
@@ -28,8 +30,13 @@ export default ChatCommand({
     if (this.guild.ownerId !== this.user.id) {
       e.addField('Like CRBT?', 'Support us by adding it to your server!');
     }
-    this.reply({
+
+    await this.reply({
       embeds: [e],
+      components:
+        this.guild.ownerId !== this.user.id
+          ? [new MessageActionRow().addComponents(button('LINK', 'Add to Server', links.invite))]
+          : null,
     });
   },
 });

@@ -41,7 +41,7 @@ export default ChatCommand({
       .addField('Status', 'Pending', true)
       .setColor(`#${colors.yellow}`);
 
-    if (image_url && image_url.match(/(https?:\/\/.*\.(?:png|jpg|webp|gif))/i)) {
+    if (image_url && image_url.match(/(https?:\/\/.*\.(?:png|jpeg|jpg|webp|gif))/i)) {
       e.setImage(image_url);
     }
 

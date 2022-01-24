@@ -32,8 +32,12 @@ export default ChatCommand({
     .channel('channel', 'The channel you want to start the activity in.'),
   async handle({ activity, channel }) {
     const user = await this.guild.members.fetch(this.user);
-    console.log(user);
     const vc = channel ?? (await this.guild.members.fetch(this.user)).voice.channel;
+
+    console.log(
+      activities.find(({ name }) => name === choices.find(({ value }) => value === activity).name)
+    );
+    console.log();
 
     if (!vc)
       await this.reply(
@@ -52,7 +56,9 @@ export default ChatCommand({
         body: JSON.stringify({
           max_age: 86400,
           max_uses: 0,
-          target_application_id: activities.find[activity],
+          target_application_id: activities.find(
+            ({ name }) => name === choices.find(({ value }) => value === activity).name
+          ).id,
           target_type: 2,
           temporary: false,
           validate: null,
