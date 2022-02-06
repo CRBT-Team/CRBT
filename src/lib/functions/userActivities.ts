@@ -4,6 +4,7 @@ export function activities(member: GuildMember) {
   const acts = [];
   if (!member.presence || member.presence.status.match(/offline|invisible/)) return null;
   for (const activity of member.presence.activities.values()) {
+    // console.log(activity);
     switch (activity.type) {
       case 'STREAMING':
         acts.push(`Streaming **[${activity.name}](${activity.url})** on **${activity.details}**`);

@@ -9,6 +9,8 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
 });
 
 export const botJoin = OnEvent('guildCreate', async (guild) => {
+  console.log(guild);
+
   ((await guild.client.channels.fetch(misc.channels.guildJoinLeave)) as TextChannel).send({
     embeds: [{ title: `Joined ${guild.name} - ${guild.id}`, color: `#${colors.success}` }],
   });

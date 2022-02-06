@@ -9,8 +9,6 @@ export default ChatCommand({
   description: 'Looks up the definition of a given word on an english dictionary.',
   options: new OptionBuilder().string('word', 'The word to define.', true),
   async handle({ word }) {
-    await this.deferReply();
-
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);
 
     if (res.status !== 200) {
@@ -48,7 +46,7 @@ export default ChatCommand({
               : '')
         );
       }
-      await this.editReply({
+      await this.reply({
         embeds: [e],
         files:
           def.phonetics && def.phonetics[0].audio

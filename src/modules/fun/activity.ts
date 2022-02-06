@@ -34,6 +34,11 @@ export default ChatCommand({
     const user = await this.guild.members.fetch(this.user);
     const vc = channel ?? (await this.guild.members.fetch(this.user)).voice.channel;
 
+    console.log(
+      activities.find(({ name }) => name === choices.find(({ value }) => value === activity).name)
+    );
+    console.log();
+
     if (!vc)
       await this.reply(
         CRBTError(

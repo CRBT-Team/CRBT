@@ -1,6 +1,7 @@
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { setVar } from '$lib/functions/setVar';
 import canvas from 'canvas';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -39,14 +40,11 @@ export const colorset = ChatCommand({
     const finalColor = colors[text] ? colors[text] : text;
 
     if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
-      await db
-        .from('profiles')
-        .update({ crbt_accent_color: `#${finalColor}` })
-        .eq('id', user.id);
+      await setVar('color', user.id, finalColor);
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.success} Accent color updated.`)
+            .setTitle(`${emojis.success} Access color updated.`)
             .setDescription(
               "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
             )
@@ -63,11 +61,11 @@ export const colorset = ChatCommand({
           )
         );
       } else {
-        await db.from('profiles').update({ crbt_accent_color: 'profile' }).eq('id', user.id);
+        await setVar('color', user.id, 'profile');
         await this.reply({
           embeds: [
             new MessageEmbed()
-              .setTitle(`${emojis.success} Accent color updated.`)
+              .setTitle(`${emojis.success} Access color updated.`)
               .setDescription(
                 "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
               )
