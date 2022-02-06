@@ -103,7 +103,7 @@ export default ChatCommand({
 
     e.addField(
       `Members`,
-      `${emojis.users.humans} ${guild.approximateMemberCount}`,
+      `${emojis.users.humans} ${guild.members.cache.size ?? guild.approximateMemberCount}`,
       // `${emojis.users.status.online} ${mStatus('online')} ` +
       //   `${emojis.users.status.idle} ${mStatus('idle')}` +
       //   '\n' +

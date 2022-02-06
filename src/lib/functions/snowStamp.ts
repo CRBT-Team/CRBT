@@ -2,7 +2,5 @@
 
 import dayjs from 'dayjs';
 
-export function snowStamp(snowflake: string, epoch = DISCORD_EPOCH) {
-  return dayjs(parseInt(snowflake) / 4194304 + epoch);
-}
-export const DISCORD_EPOCH = 1420070400000;
+export const snowStamp = (snowflake: string) =>
+  dayjs(parseInt(snowflake) / 4194304 + 1420070400000);

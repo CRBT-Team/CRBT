@@ -1,10 +1,9 @@
-import { links } from '$lib/db';
+import { links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { button } from '$lib/functions/button';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand } from 'purplet';
 import pjson from '../../../package.json';
 
@@ -26,12 +25,18 @@ export default ChatCommand({
             url: 'https://crbt.ga',
           })
           .setDescription(
-            `Version ${pjson.version} on **[Purplet](${pjson.dependencies["purplet"].slice(1)})**`
+            `Version ${pjson.version} on **[Purplet ${pjson.dependencies['purplet'].slice(
+              1
+            )}](https://crbt.ga/purplet)**`
           )
           .addFields([
             {
               name: 'Members',
-              value: `${this.client.users.cache.size.toLocaleString()}`,
+              value: `${
+                this.client.user.id === misc.CRBTid
+                  ? "Can't get member count"
+                  : this.client.users.cache.size.toLocaleString()
+              }`,
               inline: true,
             },
             {
