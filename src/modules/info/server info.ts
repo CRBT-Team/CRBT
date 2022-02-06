@@ -172,7 +172,7 @@ export default ChatCommand({
   },
 });
 
-const trimArray = (arr: string[], max: number = 10) => {
+const trimArray = (arr: string[], max = 10) => {
   if (arr.length > max) {
     const len = arr.length - max;
     arr = arr.slice(0, max);

@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.2.03",
+  "version": "11.3.01",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs dev",
@@ -12,7 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^1.29.1",
     "@vitalets/google-translate-api": "^7.0.0",
-    "canvas": "^2.8.0",
+    "canvas": "^2.9.0",
     "dayjs": "^1.10.7",
     "discord.js": "^13.5.0",
     "dotenv": "^10.0.0",
@@ -23,9 +23,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^8.0.1",
+    "@types/ms": "^0.7.31",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4"

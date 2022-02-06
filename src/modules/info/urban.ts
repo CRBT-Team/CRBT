@@ -1,11 +1,11 @@
 import { emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { Urban } from '$lib/types/apis/urbandictionary';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { Urban } from '../../lib/types/apis/urbandictionary';
 
 export default ChatCommand({
   name: 'urban',

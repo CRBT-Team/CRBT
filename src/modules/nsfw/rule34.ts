@@ -1,11 +1,11 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { Yamlr34 } from '$lib/types/apis/rule34xxx';
 import dayjs from 'dayjs';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { xml2js } from 'xml-js';
+import { Yamlr34 } from '../../lib/types/apis/rule34xxx';
 
 export default ChatCommand({
   name: 'nsfw rule34',
@@ -18,6 +18,9 @@ export default ChatCommand({
     if (!(this.channel as TextChannel).nsfw) {
       return this.reply(CRBTError(this, 'This command can only be used in NSFW channels.'));
     }
+
+    await this.deferReply();
+
     const allTags = ['sort:updated:desc'];
 
     include_tags.split(',').forEach((tag) => allTags.push(tag.trim().replaceAll(' ', '_')));
@@ -29,8 +32,6 @@ export default ChatCommand({
     if (safe_only) {
       allTags.push('rating:safe');
     }
-
-    console.log(allTags);
 
     const req = await fetch(
       'https://rule34.xxx/index.php?' +
@@ -55,7 +56,7 @@ export default ChatCommand({
 
     // console.log(post);
 
-    await this.reply({
+    await this.editReply({
       embeds: [
         new MessageEmbed()
           .setAuthor({ name: 'Rule 34 - Results', iconURL: 'https://rule34.xxx/favicon.png' })
@@ -68,10 +69,12 @@ export default ChatCommand({
           )
           .addField(
             'Tags',
-            `\`\`\`\n${post.tags
-              .split(' ')
-              .slice(1, post.tags.split(' ').length - 1)
-              .join(', ')}\`\`\``
+            post.tags.length > 10
+              ? `\`\`\`\n${post.tags
+                  .split(' ')
+                  .slice(1, post.tags.split(' ').length - 1)
+                  .join(', ')}\`\`\``
+              : `\`\`\`\n${post.tags.split(' ').slice(1, 10).join(', ')} \`\`\``
           )
           .addField(
             'Created on',

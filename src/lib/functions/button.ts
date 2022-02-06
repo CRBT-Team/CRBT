@@ -5,7 +5,7 @@ export function button(
   style: MessageButtonStyle,
   label: string,
   id: string,
-  active: boolean = true,
+  active = true,
   emoji?: string
 ) {
   enum ButtonStyle {

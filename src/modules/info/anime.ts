@@ -1,10 +1,10 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { Anime } from '$lib/types/apis/kitsuio';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { Anime } from '../../lib/types/apis/kitsuio';
 
 export default ChatCommand({
   name: 'anime',

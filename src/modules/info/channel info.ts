@@ -15,7 +15,7 @@ export default ChatCommand({
     'The channel to get info from. Leave blank to get the current one.'
   ),
   async handle({ channel }) {
-    let c: D.GuildChannel = (channel ?? (await this.channel.fetch())) as D.GuildChannel;
+    const c: D.GuildChannel = (channel ?? (await this.channel.fetch())) as D.GuildChannel;
     const i = illustrations.channels;
     const categories = (await this.guild.fetch()).channels.cache.filter(
       (c) => c.type === 'GUILD_CATEGORY'
