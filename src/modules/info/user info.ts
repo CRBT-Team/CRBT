@@ -4,8 +4,8 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { keyPerms } from '$lib/functions/keyPerms';
 import dayjs from 'dayjs';
-import { GuildMember, MessageEmbed, User } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { GuildMember, MessageEmbed, User, UserContextMenuInteraction } from 'discord.js';
+import { ChatCommand, OptionBuilder, UserContextCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'user info',
@@ -109,6 +109,58 @@ export default ChatCommand({
     await this.reply({
       embeds: [e],
     });
+  },
+});
+
+export const ctxCommand = UserContextCommand({
+  name: 'Get User Info',
+  async handle(user) {
+    const member = (this as UserContextMenuInteraction).targetMember as GuildMember;
+    const roles = member.roles.cache.filter((r) => r.id !== this.guild.id);
+
+    const e = new MessageEmbed()
+      .setAuthor({
+        name: `${user.tag} - User info`,
+        iconURL: avatar(user, 64),
+      })
+      .setDescription(
+        (await userBadges(user)).join(' ') +
+          '\n' +
+          `Profile picture: ${[2048, 512, 256]
+            .map((size) => `**[${size}px](${avatar(user, size)})**`)
+            .join(' | ')} | \`/user pfp user:${user.id}\``
+      )
+      .addField('ID', user.id);
+
+    if (member.nickname) e.addField('Server nickname', member.nickname);
+
+    e.addField(
+      `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
+      roles.size > 0
+        ? roles.map((r) => r.toString()).join(' ')
+        : "*This user doesn't have any roles...*"
+    )
+      .addField(
+        `Global key permissions`,
+        member.permissions.has('ADMINISTRATOR', true) || member.permissions.toArray().length === 0
+          ? 'Administrator (all permissions)'
+          : keyPerms(member.permissions).join(', ')
+      )
+      .addField(
+        'Joined Discord',
+        `<t:${dayjs(user.createdAt).unix()}>\n(<t:${dayjs(user.createdAt).unix()}:R>)`,
+        true
+      )
+      .addField(
+        'Joined server',
+        `<t:${dayjs(member.joinedAt).unix()}>\n(<t:${dayjs(member.joinedAt).unix()}:R>)`,
+        true
+      )
+      .setImage(banner(user, 2048))
+      .setThumbnail(avatar(user, 256))
+      .setColor(await getColor(user));
+
+    await this.reply({ embeds: [e], ephemeral: true });
   },
 });
 

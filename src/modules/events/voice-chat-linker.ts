@@ -1,5 +1,5 @@
-// import { OnEvent } from 'purplet';
+import { OnEvent } from 'purplet';
 
-// OnEvent('voiceStateUpdate', (voiceState) => {
-//   console.log(voiceState);
-// });
+OnEvent('voiceStateUpdate', (voiceState) => {
+  console.log(voiceState);
+});

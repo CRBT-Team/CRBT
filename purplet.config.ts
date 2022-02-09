@@ -1,5 +1,11 @@
 import { Intents } from 'discord.js';
-import { ChatCommandHandler, defineConfig, OnEventHandler, TextCommandHandler } from 'purplet';
+import {
+  ChatCommandHandler,
+  ContextCommandHandler,
+  defineConfig,
+  TextCommandHandler,
+} from 'purplet';
+
 export default defineConfig({
   discord: {
     commandGuilds: process.argv.includes('--dev') ? ['782584672298729473'] : [],
@@ -8,11 +14,16 @@ export default defineConfig({
         repliedUser: false,
       },
       //@ts-ignore
-      intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_MESSAGES,
+      ],
     },
   },
   handlers: [
     new ChatCommandHandler(),
+    new ContextCommandHandler(),
     new TextCommandHandler({
       prefix: [
         '<@!859369676140314624>',
@@ -22,6 +33,13 @@ export default defineConfig({
         '()',
       ],
     }),
-    new OnEventHandler(),
   ],
 });
+
+// export const activity = ActivityProvider({
+//   getActivity() {
+//     return {
+//       name: '/crbt info | crbt.ga',
+//     };
+//   },
+// });

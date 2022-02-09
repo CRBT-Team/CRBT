@@ -1,9 +1,9 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
-import { MessageEmbed, TextChannel } from 'discord.js';
+import { Interaction, MessageEmbed, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { xml2js } from 'xml-js';
 import { Yamlr34 } from '../../lib/types/apis/rule34xxx';
 
@@ -13,13 +13,12 @@ export default ChatCommand({
   options: new OptionBuilder()
     .string('include_tags', 'The tags to search for (seperated by a comma).', true)
     .string('exclude_tags', 'The tags to exclude (seperated by a comma).')
-    .boolean('safe_only', 'Whether to only search for SFW images.'),
-  async handle({ include_tags, exclude_tags, safe_only }) {
+    .boolean('safe_only', 'Whether to only search for SFW images.')
+    .boolean('incognito', 'Whether to send message publicly.'),
+  async handle({ include_tags, exclude_tags, safe_only, incognito }) {
     if (!(this.channel as TextChannel).nsfw) {
       return this.reply(CRBTError(this, 'This command can only be used in NSFW channels.'));
     }
-
-    await this.deferReply();
 
     const allTags = ['sort:updated:desc'];
 
@@ -33,30 +32,46 @@ export default ChatCommand({
       allTags.push('rating:safe');
     }
 
+    await this.reply(Object.assign(await loadImg(allTags, 0, this), { ephemeral: incognito }));
+  },
+});
+
+export const Refresh = ButtonComponent({
+  async handle(opts: { tags: string[]; index: number }) {
+    console.log(opts.index);
+    return this.update(await loadImg(opts.tags, opts.index, this));
+  },
+});
+
+const loadImg = async (tags: string[], index: number, i: Interaction) => {
+  console.log(index);
+
+  try {
     const req = await fetch(
-      'https://rule34.xxx/index.php?' +
+      'https://api.rule34.xxx/index.php?' +
         new URLSearchParams({
           page: 'dapi',
           s: 'post',
           q: 'index',
-          tags: allTags.join(' '),
+          tags: tags.join(' '),
           limit: '15',
         })
     );
 
     if (req.status !== 200) {
-      return this.reply(CRBTError(this, "Invalid tags. Make sure they're valid and try again."));
+      return CRBTError(null, "Invalid tags. Make sure they're valid and try again.");
     }
 
     const xml = xml2js(await req.text(), {
       compact: true,
     }) as Yamlr34;
 
-    const post = xml.posts.post[Math.floor(Math.random() * xml.posts.post.length)]._attributes;
+    const postsLength = xml.posts.post.length;
+    const { _attributes: post } =
+      postsLength < index + 1 ? xml.posts.post[0] : xml.posts.post[index];
 
-    // console.log(post);
-
-    await this.editReply({
+    return {
+      content: index.toString(),
       embeds: [
         new MessageEmbed()
           .setAuthor({ name: 'Rule 34 - Results', iconURL: 'https://rule34.xxx/favicon.png' })
@@ -82,9 +97,23 @@ export default ChatCommand({
             true
           )
           .addField('Score', post.score, true)
-          .setColor(await getColor(this.user))
+          .setColor(await getColor(i.user))
           .setImage(post.sample_url),
       ],
-    });
-  },
-});
+      components: components(
+        row(
+          new Refresh({ tags, index: index - 1 })
+            .setStyle('SECONDARY')
+            .setLabel('Previous image')
+            .setDisabled(index === 0),
+          new Refresh({ tags, index: index + 1 })
+            .setStyle('SECONDARY')
+            .setLabel('Next image')
+            .setDisabled(index === postsLength)
+        )
+      ),
+    };
+  } catch (e) {
+    return CRBTError(null, 'An error occured while trying to get the image.');
+  }
+};

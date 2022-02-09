@@ -1,30 +1,26 @@
 import { colors, illustrations, misc } from '$lib/db';
-import {
-  CacheType,
-  CommandInteraction,
-  InteractionReplyOptions,
-  MessageEmbed,
-  TextChannel,
-} from 'discord.js';
+import { CommandInteraction, InteractionReplyOptions, MessageEmbed, TextChannel } from 'discord.js';
 import { getDiscordClient } from 'purplet';
 // import { getFullCommand } from '../../modules/events/interaction';
 
 export function CRBTError(
-  context: CommandInteraction<CacheType>,
+  context: CommandInteraction | null,
   desc: string = '',
   title: string = 'An error occured!',
   footer: string = ''
 ): InteractionReplyOptions {
-  (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
-    embeds: [
-      new MessageEmbed()
-        .setAuthor({ name: 'An error occured!', iconURL: illustrations.error })
-        .setDescription(`\`\`\`\n${desc}\`\`\``)
-        .addField('Command', `\`\`\`\n${context}\`\`\``)
-        .addField('User ID', context.user.id)
-        .setColor(`#${colors.error}`),
-    ],
-  });
+  if (context) {
+    (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({ name: 'An error occured!', iconURL: illustrations.error })
+          .setDescription(`\`\`\`\n${desc}\`\`\``)
+          .addField('Command', `\`\`\`\n${context}\`\`\``)
+          .addField('User ID', context?.user.id)
+          .setColor(`#${colors.error}`),
+      ],
+    });
+  }
 
   return {
     embeds: [
