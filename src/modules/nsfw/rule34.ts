@@ -38,14 +38,11 @@ export default ChatCommand({
 
 export const Refresh = ButtonComponent({
   async handle(opts: { tags: string[]; index: number }) {
-    console.log(opts.index);
     return this.update(await loadImg(opts.tags, opts.index, this));
   },
 });
 
 const loadImg = async (tags: string[], index: number, i: Interaction) => {
-  console.log(index);
-
   try {
     const req = await fetch(
       'https://api.rule34.xxx/index.php?' +

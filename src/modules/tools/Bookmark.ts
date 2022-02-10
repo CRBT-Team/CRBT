@@ -36,15 +36,15 @@ export default MessageContextCommand({
     });
 
     this.reply({
-      content: `Sent message by DM!`,
-      components: components(
-        row(
-          new MessageButton()
-            .setLabel('Open DMs')
-            .setStyle('LINK')
-            .setURL(`https://discord.com/channels/@me/${this.user.dmChannel.id}`)
-        )
-      ),
+      content: `Sent this message by DM!`,
+      // components: components(
+      //   row(
+      //     new MessageButton()
+      //       .setLabel('Open DMs')
+      //       .setStyle('LINK')
+      //       .setURL(`https://discord.com/channels/@me/${this.user.dmChannel.id}`)
+      //   )
+      // ),
       ephemeral: true,
     });
   },

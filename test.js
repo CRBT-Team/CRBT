@@ -1,15 +1,22 @@
-const dayjs = require('dayjs');
+const roles = [
+  {
+    name: 'h',
+    id: 1,
+  },
+  {
+    name: 'e',
+    id: 2,
+  },
+  {
+    name: 'l',
+    id: 3,
+  },
+];
 
-let expiration;
-let timeMS;
-const w = 'tomorrow';
+// create object from roles with "id" as key and "name" as value
+const rolesMap = roles.reduce((acc, cur) => {
+  acc[cur.id] = cur.name;
+  return acc;
+}, {});
 
-if (w.trim().toLowerCase().startsWith('tomorrow')) {
-  const tomorrow = dayjs().add(1, 'day');
-  const time = w.split(' ').length === 1 ? null : w.split(' ')[1];
-  expiration = time ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${time}Z`) : tomorrow;
-  timeMS = expiration.diff(dayjs());
-}
-
-console.log(expiration);
-console.log(timeMS);
+console.log(rolesMap);
