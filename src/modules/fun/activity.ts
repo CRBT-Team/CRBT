@@ -8,16 +8,18 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 const activities = [
   { name: 'Watch Together', id: '880218394199220334' },
   { name: 'Poker Night', id: '755827207812677713' },
-  { name: 'Betrayal.io', id: '773336526917861400' },
-  { name: 'Fishington.io', id: '814288819477020702' },
-  { name: 'Chess in the Park', id: '832012774040141894' },
-  { name: 'Letter Tile', id: '879863686565621790' },
-  { name: 'Word Snacks', id: '879863976006127627' },
-  { name: 'Doodle Crew', id: '878067389634314250' },
-  { name: 'Awkword', id: '879863881349087252' },
-  { name: 'Spell Cast', id: '852509694341283871' },
-  { name: 'Checkers in the Park', id: '832013003968348200' },
-  { name: 'Putt Party', id: '763133495793942528' },
+  // { name: 'Betrayal.io', id: '773336526917861400' },
+  // { name: 'Fishington.io', id: '814288819477020702' },
+  { name: 'Chess In The Park', id: '832012774040141894' },
+  { name: 'Letter League', id: '879863686565621790' },
+  // { name: 'Word Snacks', id: '879863976006127627' },
+  // { name: 'Doodle Crew', id: '878067389634314250' },
+  // { name: 'Awkword', id: '879863881349087252' },
+  { name: 'SpellCast', id: '852509694341283871' },
+  { name: 'Checkers In The Park', id: '832013003968348200' },
+  // { name: 'Putt Party', id: '763133495793942528' },
+  { name: 'Ocho', id: '832025144389533716' },
+  { name: 'Sketch Heads', id: '902271654783242291' },
 ];
 
 const choices = activities.map(({ name }) => {
