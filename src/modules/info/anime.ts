@@ -8,7 +8,7 @@ import { Anime } from '../../lib/types/apis/kitsuio';
 
 export default ChatCommand({
   name: 'anime',
-  description: 'Searches anime information from kitsu.io.',
+  description: 'Search anime information from kitsu.io.',
   options: new OptionBuilder().string(
     'title',
     'The title of the anime you want to search for.',
@@ -81,7 +81,8 @@ export default ChatCommand({
             true
           )
           .setThumbnail(anime.attributes.posterImage.medium)
-          .setColor(await getColor(this.user)),
+          .setColor(await getColor(this.user))
+          .setFooter({ text: 'Source: kitsu.io' }),
       ],
     });
   },

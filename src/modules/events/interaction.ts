@@ -3,7 +3,8 @@ import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discor
 import { OnEvent } from 'purplet';
 
 export default OnEvent('interactionCreate', async (i) => {
-  // if (i.client.user.id !== misc.CRBTid || i.client.user.id !== '859369676140314624') return;
+  if (i.client.user.id !== misc.CRBTid ?? i.client.user.id !== '859369676140314624') return;
+
   if (i.isCommand()) {
     (i.client.channels.cache.get(misc.channels.telemetry) as TextChannel).send({
       embeds: [

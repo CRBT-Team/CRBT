@@ -29,7 +29,8 @@ export default ChatCommand({
           name: `${def.word} - ${def.meanings.length === 1 ? 'Definition' : 'Definitions'}`,
         })
         .addField('Phonetics', def.phonetic ? def.phonetic : '*None available*', true)
-        .setColor(await getColor(this.user));
+        .setColor(await getColor(this.user))
+        .setFooter({ text: 'Source: Dictionary API' });
 
       for (const meaning of def.meanings) {
         e.addField(

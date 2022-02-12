@@ -1,0 +1,1387 @@
+{
+  "result": "ok",
+  "response": "collection",
+  "data": [
+    {
+      "id": "84ec6569-a03a-4a40-b82f-d3732c363fe1",
+      "type": "manga",
+      "attributes": {
+        "title": {
+          "en": "Kono Subarashii Sekai ni Shukufuku wo! - KazuMegu Will Get Married In 100 days (Doujinshi)"
+        },
+        "altTitles": [
+          {
+            "ja": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u795d\u798f\u3092! -\u300c100\u65e5\u5f8c\u306b\u7d50\u5a5a\u3059\u308b\u30ab\u30ba\u3081\u3050\u300d"
+          }
+        ],
+        "description": {
+          "en": "A parody of [\"This Croc Will Die In 100 Days\"](https://mangadex.org/title/44625/this-croc-will-die-in-100-days)"
+        },
+        "isLocked": true,
+        "links": {
+          "kt": "61413",
+          "raw": "https://twitter.com/suke_yuno/status/1251471051382378498"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "",
+        "lastChapter": "",
+        "publicationDemographic": null,
+        "status": "ongoing",
+        "year": null,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "423e2eae-a7a2-4a8b-ac03-a8351462d71d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Romance" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "ace04997-f6bd-436e-b261-779182193d3d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Isekai" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "b13b2a48-c720-44a9-9c77-39c9979373fb",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Doujinshi" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Slice of Life" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f5ba408b-0e7a-484d-8d49-4e9125ac96de",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Full Color" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2020-06-26T06:24:22+00:00",
+        "updatedAt": "2022-01-31T05:28:43+00:00",
+        "version": 5
+      },
+      "relationships": [
+        { "id": "05dc4e2a-beb2-4a3d-a250-6229a6ff95c2", "type": "author" },
+        { "id": "05dc4e2a-beb2-4a3d-a250-6229a6ff95c2", "type": "artist" },
+        { "id": "45708200-0368-4fa6-aeed-656c06de0fc4", "type": "cover_art" },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "based_on" }
+      ]
+    },
+    {
+      "id": "bcfa196d-d162-45f5-a224-61d26b04a077",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Sekai ni Shukufuku wo!" },
+        "altTitles": [
+          { "en": "Gifting this Wonderful World with Blessings!" },
+          { "en": "Konosuba: God\u2019s Blessing on This Wonderful World!" },
+          { "ja-ro": "Konosuba" },
+          { "fr": "Konosuba : Sois B\u00e9ni Monde Merveilleux !" },
+          {
+            "ru": "\u0414\u0430 \u0431\u0443\u0434\u0435\u0442 \u0431\u043b\u0430\u0433\u043e\u0441\u043b\u043e\u0432\u0435\u043d\u0435\u043d \u044d\u0442\u043e\u0442 \u043f\u0440\u0435\u043a\u0440\u0430\u0441\u043d\u044b\u0439 \u043c\u0438\u0440!"
+          },
+          {
+            "th": "\u0e02\u0e2d\u0e43\u0e2b\u0e49\u0e42\u0e0a\u0e04\u0e14\u0e35\u0e21\u0e35\u0e0a\u0e31\u0e22\u0e43\u0e19\u0e42\u0e25\u0e01\u0e41\u0e1f\u0e19\u0e15\u0e32\u0e0b\u0e35!"
+          },
+          {
+            "ja": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u795d\u798f\u3092!"
+          },
+          { "zh": "\u4e3a\u7f8e\u597d\u7684\u4e16\u754c\u732e\u4e0a\u795d\u798f\uff01" },
+          { "ko": "\uc774 \uba4b\uc9c4 \uc138\uacc4\uc5d0 \ucd95\ubcf5\uc744!" }
+        ],
+        "description": {
+          "en": "Kazuma Sato is a video game-loving shut-in-or at least he was, until a humiliating traffic accident brings his young life to an untimely end. But after his death, a beautiful girl claiming to be a goddess invites him to enter another world and gain some respectable perks in the process. But Kazuma\u2019s choice is going to have serious consequences for the goddess and the dead man alike\u2026",
+          "ru": "\u041a\u0430\u0434\u0437\u0443\u043c\u0430 \u0421\u0430\u0442\u043e - \u0445\u0438\u043a\u043a\u0438\u043a\u043e\u043c\u043e\u0440\u0438, \u0437\u0430\u043a\u043e\u0440\u0435\u043d\u0435\u043b\u044b\u0439 \u0444\u0430\u043d\u0430\u0442 \u0438\u0433\u0440, \u0430\u043d\u0438\u043c\u0435 \u0438 \u043c\u0430\u043d\u0433\u0438. \u0412 \u043a\u0430\u043a\u043e\u0439-\u0442\u043e \u043c\u043e\u043c\u0435\u043d\u0442, \u0432 \u043f\u043e\u043f\u044b\u0442\u043a\u0435 \u0441\u043f\u0430\u0441\u0442\u0438 \u0447\u0435\u043b\u043e\u0432\u0435\u043a\u0430 \u043e\u043d \u043f\u043e\u043f\u0430\u0434\u0430\u0435\u0442 \u0432 \u0434\u043e\u0440\u043e\u0436\u043d\u0443\u044e \u043a\u0430\u0442\u0430\u0441\u0442\u0440\u043e\u0444\u0443 \u0438 \u0435\u0433\u043e \u0436\u0438\u0437\u043d\u044c \u043e\u0431\u0440\u044b\u0432\u0430\u0435\u0442\u0441\u044f. \u041a\u0430\u0437\u0430\u043b\u043e\u0441\u044c \u0431\u044b \u0436\u0438\u0437\u043d\u044c \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0430\u0441\u044c? \u041d\u043e \u041a\u0430\u0434\u0437\u0443\u043c\u0430 \u043f\u0440\u043e\u0441\u044b\u043f\u0430\u0435\u0442\u0441\u044f \u0438 \u0432\u0438\u0434\u0438\u0442 \u043f\u0435\u0440\u0435\u0434 \u0441\u043e\u0431\u043e\u0439 \u043a\u0440\u0430\u0441\u0430\u0432\u0438\u0446\u0443, \u043a\u043e\u0442\u043e\u0440\u0430\u044f \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442 \u0441\u0435\u0431\u044f \u0431\u043e\u0433\u0438\u043d\u0435\u0439. \u041e\u043d\u0430 \u0441\u043f\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u0442, \u0445\u043e\u0447\u0435\u0442 \u043b\u0438 \u043e\u043d \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c\u0441\u044f \u0432 \u0434\u0440\u0443\u0433\u043e\u0439 \u043c\u0438\u0440? \u0421 \u0443\u0441\u043b\u043e\u0432\u0438\u0435\u043c, \u0447\u0442\u043e \u043e\u043d \u043c\u043e\u0436\u0435\u0442 \u0432\u0437\u044f\u0442\u044c \u0441 \u0441\u043e\u0431\u043e\u0439 \u0442\u043e\u043b\u044c\u043a\u043e \u043e\u0434\u043d\u0443 \u0432\u0435\u0449\u044c. \u041a\u0430\u0434\u0437\u0443\u043c\u0430 \u0441\u0440\u0430\u0437\u0443 \u0436\u0435 \u0436\u0435\u043b\u0430\u0435\u0442 \u0432\u0437\u044f\u0442\u044c \u0441 \u0441\u043e\u0431\u043e\u0439 \u0431\u043e\u0433\u0438\u043d\u044e. \u0422\u0430\u043a \u0438 \u043d\u0430\u0447\u0438\u043d\u0430\u0435\u0442\u0441\u044f \u0435\u0433\u043e \u043d\u0435\u0432\u0435\u0440\u043e\u044f\u0442\u043d\u043e\u0435 \u043f\u0440\u0438\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0442\u0438\u0432 \u043a\u043e\u0440\u043e\u043b\u044f \u0434\u0435\u043c\u043e\u043d\u043e\u0432, \u043d\u043e \u043f\u0435\u0440\u0435\u0434 \u044d\u0442\u0438\u043c \u043d\u0443\u0436\u043d\u043e \u0437\u0430\u043d\u044f\u0442\u044c\u0441\u044f \u0434\u0440\u0443\u0433\u0438\u043c\u0438 \u0434\u0435\u043b\u0430\u043c\u0438. \u041d\u0430\u043f\u0440\u0438\u043c\u0435\u0440, \u043d\u0430\u0439\u0442\u0438 \u043f\u0438\u0449\u0443, \u043e\u0434\u0435\u0436\u0434\u0443 \u0438 \u0443\u0431\u0435\u0436\u0438\u0449\u0435. \u041a\u0430\u0434\u0437\u0443\u043c\u0430 \u0445\u043e\u0447\u0435\u0442 \u0436\u0438\u0442\u044c \u0432 \u043c\u0438\u0440\u0435 \u0438 \u0441\u043f\u043e\u043a\u043e\u0439\u0441\u0442\u0432\u0438\u044f, \u043d\u043e \u0431\u043e\u0433\u0438\u043d\u044f \u043d\u0430\u0445\u043e\u0434\u0438\u0442 \u043e\u0434\u043d\u0443 \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0443 \u0437\u0430 \u0434\u0440\u0443\u0433\u043e\u0439. \u0410 \u043a\u0440\u043e\u043c\u0435 \u0442\u043e\u0433\u043e, \u0430\u0440\u043c\u0438\u044f \u0434\u0435\u043c\u043e\u043d\u043e\u0432 \u0438\u043c\u0435\u0435\u0442 \u043a\u0430\u043a\u0438\u0435-\u0442\u043e \u0441\u0432\u043e\u0438 \u0432\u0438\u0434\u044b \u043d\u0430 \u043d\u0435\u0433\u043e."
+        },
+        "isLocked": false,
+        "links": {
+          "al": "85702",
+          "ap": "konosuba-gods-blessing-on-this-wonderful-world",
+          "bw": "series/42841",
+          "kt": "26785",
+          "mu": "113872",
+          "nu": "kono-subarashii-sekai-ni-shukufuku-o",
+          "amz": "https://www.amazon.co.jp/gp/product/B07572LT5X",
+          "cdj": "https://www.cdjapan.co.jp/product/NEOBK-2656044",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/307947/",
+          "mal": "80385",
+          "engtl": "https://yenpress.com/series-search/?series=yen58-Konosuba-Manga"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "",
+        "lastChapter": "",
+        "publicationDemographic": "shounen",
+        "status": "ongoing",
+        "year": 2014,
+        "contentRating": "suggestive",
+        "tags": [
+          {
+            "id": "0bc90acb-ccc1-44ca-a34a-b9f3a73259d0",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Reincarnation" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "2d1f5d56-a1e5-4d0d-a961-2193588b08ec",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Loli" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "36fd93ea-e8b8-445e-b836-358f02b3d33d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Monsters" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "391b0423-d847-456f-aff0-8b0cfc03066b",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Action" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "3de8c75d-8ee3-48ff-98ee-e20a65c86451",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Animals" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "423e2eae-a7a2-4a8b-ac03-a8351462d71d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Romance" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "631ef465-9aba-4afb-b0fc-ea10efe274a8",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Zombies" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "87cc87cd-a395-47af-b27a-93258283bbc6",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adventure" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "a1f53773-c69a-4ce5-8cab-fffcd90b1565",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Magic" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "aafb99c1-7f60-43fa-b75f-fc9502ce29c7",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Harem" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "ace04997-f6bd-436e-b261-779182193d3d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Isekai" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "dd1f77c5-dea9-4e2b-97ae-224af09caf99",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Monster Girls" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Slice of Life" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "eabc5b4c-6aff-42f3-b657-3e90cbd00b75",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Supernatural" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "ee968100-4191-4968-93d3-f82d72be7e46",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Mystery" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f4122d1c-3b44-44d0-9936-ff7502c39ad3",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adaptation" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2018-10-06T18:03:51+00:00",
+        "updatedAt": "2022-01-29T00:26:48+00:00",
+        "version": 10
+      },
+      "relationships": [
+        { "id": "2be83606-b862-46a9-bd36-6af1f56bd459", "type": "author" },
+        { "id": "297c0959-1576-491f-a31f-2018b83c8b1d", "type": "artist" },
+        { "id": "bd1325a2-044d-4fb0-8486-a162e445238c", "type": "cover_art" },
+        { "id": "03426dd2-63c5-493e-853e-485d7c7dc9c0", "type": "manga", "related": "spin_off" },
+        { "id": "07e8c4d7-8fbb-4c47-8131-0c0f863019c8", "type": "manga", "related": "doujinshi" },
+        { "id": "098019b8-b2fc-402b-8b56-912a6e72349c", "type": "manga", "related": "based_on" },
+        { "id": "13b43e88-e514-40e4-ad16-f7b40f5263fe", "type": "manga", "related": "doujinshi" },
+        { "id": "1526ffe4-5a2a-4507-b6fc-90a590982c4b", "type": "manga", "related": "doujinshi" },
+        { "id": "1607d8c1-37bc-436a-a6ed-61d1c5944ba5", "type": "manga", "related": "doujinshi" },
+        { "id": "18c41d02-408a-4a84-9aba-713eb3269376", "type": "manga", "related": "doujinshi" },
+        { "id": "19c274ed-d3b9-417b-9014-9b1b469c37c2", "type": "manga", "related": "doujinshi" },
+        { "id": "1a0c0766-0401-4a69-90b8-2da84dd3d955", "type": "manga", "related": "doujinshi" },
+        { "id": "1aa1d09e-ab5c-420b-8fb0-78c2b910a91a", "type": "manga", "related": "doujinshi" },
+        { "id": "1bde51d1-373b-4e3e-9236-30ce675ae65d", "type": "manga", "related": "doujinshi" },
+        { "id": "1db694da-29e8-425a-8aae-4dcaad439432", "type": "manga", "related": "doujinshi" },
+        { "id": "23a09b03-6df4-4d80-8cae-bd2ac5d71116", "type": "manga", "related": "spin_off" },
+        { "id": "25190684-e9a2-4fa4-8e19-030cd3e9520d", "type": "manga", "related": "doujinshi" },
+        { "id": "2938ea04-e44f-4aad-8129-8e9dca8ef7bf", "type": "manga", "related": "doujinshi" },
+        { "id": "294c0b9a-b23d-4d0b-a429-4402c8193127", "type": "manga", "related": "doujinshi" },
+        { "id": "2fb6066b-b7a3-4152-9815-779dba2de342", "type": "manga", "related": "doujinshi" },
+        { "id": "354e4279-029f-4a26-9fb5-ce3e1f3587e1", "type": "manga", "related": "doujinshi" },
+        { "id": "38ad35d1-1c99-4c6e-b9e0-531a0ed22ba7", "type": "manga", "related": "doujinshi" },
+        { "id": "3fea5768-fc42-4f0d-ae08-19cebb55e5c8", "type": "manga", "related": "doujinshi" },
+        { "id": "40043d1d-b5cb-4531-b5b8-dfd658dcc705", "type": "manga", "related": "doujinshi" },
+        { "id": "41319d3f-2b4a-442a-8201-0f4ba45ac92f", "type": "manga", "related": "doujinshi" },
+        { "id": "4350c50f-bc3b-4799-8ed8-7d6216b705fa", "type": "manga", "related": "spin_off" },
+        { "id": "45c67464-367b-4b2e-932e-35d83f4a0514", "type": "manga", "related": "doujinshi" },
+        { "id": "46867e7c-b0c8-450d-818a-d1d7ff0edaf3", "type": "manga", "related": "doujinshi" },
+        { "id": "46fedc8a-7d9d-4662-bd2b-a3211544db5d", "type": "manga", "related": "doujinshi" },
+        { "id": "4f59c24c-cd69-4276-9a55-44aa95660594", "type": "manga", "related": "doujinshi" },
+        { "id": "57088ed9-0bfd-473a-a466-35f931b6f891", "type": "manga", "related": "doujinshi" },
+        { "id": "57a39796-0eeb-4e4e-b99d-b4e9c4bc26cc", "type": "manga", "related": "doujinshi" },
+        { "id": "5fd921c3-3dc5-481a-9746-c4ef4a8b6a0f", "type": "manga", "related": "doujinshi" },
+        { "id": "6200471d-c739-4d59-a704-46aa4228929a", "type": "manga", "related": "doujinshi" },
+        { "id": "65702f0b-0aed-483f-9786-35310a115db1", "type": "manga", "related": "doujinshi" },
+        { "id": "6771fa6c-3038-4dc6-aa49-0bbd02f05178", "type": "manga", "related": "doujinshi" },
+        { "id": "69c32e83-bc57-4fd7-868d-b012886fa8b6", "type": "manga", "related": "doujinshi" },
+        { "id": "6a9c055d-aa00-4121-8ae2-f4ea7d2e0850", "type": "manga", "related": "doujinshi" },
+        { "id": "6e15b61d-f63d-431f-afd1-bf99402b6c17", "type": "manga", "related": "doujinshi" },
+        { "id": "6ea6156d-43a3-45fe-8d93-408b30a41f12", "type": "manga", "related": "doujinshi" },
+        { "id": "7708533d-cd44-4da7-8fe8-ffd3d02e3682", "type": "manga", "related": "doujinshi" },
+        { "id": "7c42363e-6bb7-4674-b7f4-e3fb789fb7cd", "type": "manga", "related": "doujinshi" },
+        { "id": "7cf945be-d5f5-4d09-82c5-46f6f28302ec", "type": "manga", "related": "doujinshi" },
+        { "id": "83c0e794-7b5c-4f61-9386-2a6be0e7865d", "type": "manga", "related": "doujinshi" },
+        { "id": "83eb2a15-88bd-4a76-ad49-7e1be265162d", "type": "manga", "related": "doujinshi" },
+        { "id": "84ec6569-a03a-4a40-b82f-d3732c363fe1", "type": "manga", "related": "doujinshi" },
+        { "id": "85e3f91c-8a83-49e0-a0f4-ac0cf742efbc", "type": "manga", "related": "doujinshi" },
+        { "id": "8741fa2e-34fd-496e-82c6-a25fe090b535", "type": "manga", "related": "doujinshi" },
+        { "id": "8c98a7b6-39ec-4334-b884-79dc96083990", "type": "manga", "related": "doujinshi" },
+        { "id": "8d7a5754-f134-4274-9660-e551c33e2df1", "type": "manga", "related": "doujinshi" },
+        { "id": "8e5134a0-0456-4430-b8b8-f98459933a73", "type": "manga", "related": "doujinshi" },
+        { "id": "90e4ec47-264a-4a3c-9b60-a1ccfff44db8", "type": "manga", "related": "doujinshi" },
+        { "id": "939de251-3c43-42fd-ac6b-5676b3328e9d", "type": "manga", "related": "spin_off" },
+        { "id": "95c43d03-5552-49e1-915f-6cf7530176c7", "type": "manga", "related": "doujinshi" },
+        { "id": "965da0d6-2d7c-4d72-b0ad-3d72ae71935f", "type": "manga", "related": "spin_off" },
+        { "id": "96e853af-0414-4f71-b14d-16e65ef30f01", "type": "manga", "related": "doujinshi" },
+        { "id": "97bd0699-d9d0-4ef4-b502-bbdbfacdcb46", "type": "manga", "related": "doujinshi" },
+        { "id": "980c85f4-8ae4-4f3c-a384-d664bf32e0b0", "type": "manga", "related": "doujinshi" },
+        { "id": "a114bf7c-8d3f-4683-9eca-561f1a41f2ab", "type": "manga", "related": "doujinshi" },
+        { "id": "a73b6bee-9b4e-4354-8f3a-753607d48c3a", "type": "manga", "related": "doujinshi" },
+        { "id": "a947706c-82a6-45a0-901c-6385089564ed", "type": "manga", "related": "doujinshi" },
+        { "id": "ab1ee2dc-0a6a-4b62-ad30-78cdff800b41", "type": "manga", "related": "doujinshi" },
+        { "id": "ac2ff6ad-b9e7-4e32-89f3-1cd1ff8ba5a2", "type": "manga", "related": "doujinshi" },
+        { "id": "b0cf4a5a-8cd1-49ad-921e-699994cad456", "type": "manga", "related": "doujinshi" },
+        { "id": "b11f5afb-b2cd-4f42-b015-89daa75b3f1d", "type": "manga", "related": "side_story" },
+        { "id": "b3caf81d-1fc2-437b-8e9e-f824766652e1", "type": "manga", "related": "doujinshi" },
+        { "id": "b5edf70c-15a3-47be-8ea4-fe829c91b038", "type": "manga", "related": "doujinshi" },
+        { "id": "b80e6e0c-582f-42d3-8ab8-14044ac202e6", "type": "manga", "related": "doujinshi" },
+        { "id": "c22bfb83-81df-45d7-a55f-3f79594d8dbd", "type": "manga", "related": "doujinshi" },
+        { "id": "c36c9ef8-0868-4f42-808d-811bd834455a", "type": "manga", "related": "based_on" },
+        { "id": "c546300c-1bdb-4ed6-a451-1af1f77ec321", "type": "manga", "related": "doujinshi" },
+        { "id": "cced1d08-17a4-42cf-873d-efa794aff269", "type": "manga", "related": "doujinshi" },
+        { "id": "ce18ebfd-e227-4fbe-a16a-e9bad1b77e44", "type": "manga", "related": "doujinshi" },
+        { "id": "d1c92d9d-bc43-4895-bc24-dae9c63fb183", "type": "manga", "related": "doujinshi" },
+        { "id": "d6005e60-fbe1-4504-bf98-62c1b3526c84", "type": "manga", "related": "doujinshi" },
+        { "id": "d61313dc-a436-4c46-a580-94c622f806a2", "type": "manga", "related": "doujinshi" },
+        { "id": "d8ae6086-a47b-4308-9cd3-33cf7b14efab", "type": "manga", "related": "doujinshi" },
+        { "id": "da888059-da7f-4c4d-b669-12c38b40cb48", "type": "manga", "related": "doujinshi" },
+        { "id": "daeb959d-134e-4122-a882-89ca6ebaa554", "type": "manga", "related": "doujinshi" },
+        { "id": "e0aa1745-8d1b-4e31-a192-eb2abd13ea91", "type": "manga", "related": "doujinshi" },
+        { "id": "e2b5a24e-adda-44d1-96dd-c15556f93d79", "type": "manga", "related": "doujinshi" },
+        { "id": "e8d724f2-5b9a-4b53-ae15-97be2b2fd011", "type": "manga", "related": "doujinshi" },
+        { "id": "ecb87396-f846-4e27-9497-5817ff29ad36", "type": "manga", "related": "spin_off" },
+        { "id": "ecbd2eae-6371-4131-9072-1f2a2399b09e", "type": "manga", "related": "doujinshi" },
+        { "id": "f199df9e-8e68-4851-b28b-20d400825a2f", "type": "manga", "related": "doujinshi" }
+      ]
+    },
+    {
+      "id": "c733e0ab-485b-45a2-9575-f9982d54f729",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Sekai ni Shukufuku wo! - KazuMegu's Tanabata" },
+        "altTitles": [
+          {
+            "ja": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u795d\u798f\u3092! - \u4e03\u5915"
+          }
+        ],
+        "description": {
+          "en": "[![](https://i.imgur.com/dQCXZkU.png) Artist\u2019s Twitter](https://twitter.com/suke_yuno)  \n[![](https://i.imgur.com/oiVINmy.png) Artist\u2019s Pixiv](https://www.pixiv.net/en/users/26410504)"
+        },
+        "isLocked": false,
+        "links": [],
+        "originalLanguage": "ja",
+        "lastVolume": "",
+        "lastChapter": "",
+        "publicationDemographic": null,
+        "status": "completed",
+        "year": null,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "0234a31e-a729-4e28-9d6a-3f87c4966b9e",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Oneshot" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "423e2eae-a7a2-4a8b-ac03-a8351462d71d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Romance" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "b13b2a48-c720-44a9-9c77-39c9979373fb",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Doujinshi" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e197df38-d0e7-43b5-9b09-2842d0c326dd",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Web Comic" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f5ba408b-0e7a-484d-8d49-4e9125ac96de",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Full Color" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2020-10-27T18:24:02+00:00",
+        "updatedAt": "2021-12-08T22:52:55+00:00",
+        "version": 3
+      },
+      "relationships": [
+        { "id": "05dc4e2a-beb2-4a3d-a250-6229a6ff95c2", "type": "author" },
+        { "id": "05dc4e2a-beb2-4a3d-a250-6229a6ff95c2", "type": "artist" },
+        { "id": "a8458bfe-146f-4ff4-930f-4f38ebd2c265", "type": "cover_art" }
+      ]
+    },
+    {
+      "id": "965da0d6-2d7c-4d72-b0ad-3d72ae71935f",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Zoku, Kono Subarashii Sekai ni Bakuen wo!" },
+        "altTitles": [
+          { "en": "Continued, Gifting this Wonderful World with Explosions!" },
+          { "en": "Konosuba: Zoku Bakuen" },
+          {
+            "ru": "\u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0435\u043c, \u0434\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0437\u043e\u0440\u0432\u0430\u043d \u044d\u0442\u043e\u0442 \u043f\u0440\u0435\u043a\u0440\u0430\u0441\u043d\u044b\u0439 \u043c\u0438\u0440!"
+          },
+          {
+            "ja": "\u7d9a\u30fb\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u7206\u7114\u3092!"
+          }
+        ],
+        "description": {
+          "en": "The 3rd spin-off of Gifting this Wonderful World with Blessings! The spin-off focuses on the activities of Megumin, Yunyun, and Alice(?) during the timeframe between volumes 8-9 of the main series. Megumin, inspired by a mysterious masked thief, forms a chivalrous thieving group for the sake of the people!  \n\n\n---",
+          "ru": "\u0422\u0440\u0435\u0442\u0438\u0439 \u0441\u043f\u0438\u043d-\u043e\u0444\u0444 \u00abKono Subarashii Sekai ni Shukufuku wo!\u00bb, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0440\u0430\u0441\u0441\u043a\u0430\u0436\u0435\u0442 \u043e \u0441\u043e\u0431\u044b\u0442\u0438\u044f \u043f\u0440\u043e\u0438\u0441\u0445\u043e\u0434\u044f\u0449\u0438\u0445 \u0441 \u041c\u0435\u0433\u0443\u043c\u0438\u043d, \u0432 \u043f\u0435\u0440\u0438\u043e\u0434 \u043c\u0435\u0436\u0434\u0443 8 \u0438 9 \u0442\u043e\u043c\u043e\u043c \u043e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 \u0438\u0441\u0442\u043e\u0440\u0438\u0438, \u0433\u0434\u0435 \u043e\u043d\u0430, \u0432\u0434\u043e\u0445\u043d\u043e\u0432\u043b\u0451\u043d\u043d\u0430\u044f \u0437\u0430\u0433\u0430\u0434\u043e\u0447\u043d\u044b\u043c \u0432\u043e\u0440\u043e\u043c \u0432 \u043c\u0430\u0441\u043a\u0435, \u0441\u043e\u0431\u0438\u0440\u0430\u0435\u0442 \u0441\u0432\u043e\u044e \u0433\u0440\u0443\u043f\u043f\u0443 \u0431\u043b\u0430\u0433\u043e\u0440\u043e\u0434\u043d\u044b\u0445 \u0432\u043e\u0440\u043e\u0432 \u043d\u0430 \u0431\u043b\u0430\u0433\u043e \u043b\u044e\u0434\u0435\u0439!"
+        },
+        "isLocked": false,
+        "links": {
+          "al": "102169",
+          "ap": "konosuba-continued-an-explosion-on-this-wonderful-world",
+          "bw": "series/170332",
+          "kt": "41211",
+          "mu": "147017",
+          "nu": "zoku-kono-subarashii-sekai-ni-bakuen-wo",
+          "amz": "https://www.amazon.co.jp/gp/product/B07QMB14VY?ref_=dbs_p_pwh_rwt_anx_b_lnk&storeType=ebooks",
+          "cdj": "https://www.cdjapan.co.jp/product/NEOBK-2500013",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/472558/",
+          "mal": "114989"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "4",
+        "lastChapter": "25",
+        "publicationDemographic": "shounen",
+        "status": "completed",
+        "year": 2018,
+        "contentRating": "suggestive",
+        "tags": [
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Slice of Life" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f4122d1c-3b44-44d0-9936-ff7502c39ad3",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adaptation" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2019-03-19T05:54:50+00:00",
+        "updatedAt": "2022-01-24T21:59:57+00:00",
+        "version": 4
+      },
+      "relationships": [
+        { "id": "2be83606-b862-46a9-bd36-6af1f56bd459", "type": "author" },
+        { "id": "5a17a284-d83c-443c-9eb9-9f72ec652f89", "type": "artist" },
+        { "id": "05c6ba1b-e348-4ffb-ae47-2e500fd867db", "type": "cover_art" },
+        {
+          "id": "03426dd2-63c5-493e-853e-485d7c7dc9c0",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "939de251-3c43-42fd-ac6b-5676b3328e9d", "type": "manga", "related": "prequel" },
+        {
+          "id": "b11f5afb-b2cd-4f42-b015-89daa75b3f1d",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "adapted_from" }
+      ]
+    },
+    {
+      "id": "939de251-3c43-42fd-ac6b-5676b3328e9d",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Sekai ni Bakuen wo!" },
+        "altTitles": [
+          { "en": "\u00a1Dotando a este Maravilloso Mundo con Explosiones!" },
+          { "en": "Fiery Explosions for this Wonderful World!" },
+          { "en": "Gifting this Wonderful World with Explosions!" },
+          { "en": "Konosuba: Bakuen" },
+          {
+            "en": "\u0414\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0437\u043e\u0440\u0432\u0430\u043d \u044d\u0442\u043e\u0442 \u043f\u0440\u0435\u043a\u0440\u0430\u0441\u043d\u044b\u0439 \u043c\u0438\u0440!"
+          },
+          {
+            "en": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u7206\u7114\u3092\uff01"
+          }
+        ],
+        "description": {
+          "en": "A spin-off of Kono Subarashii Sekai ni Shukufuku wo! that focuses on Megumin.  \n\n\n---\n\n",
+          "ru": "\u0421\u043f\u0438\u043d-\u043e\u0444\u0444 \u00abKono Subarashii Sekai ni Shukufuku wo!\u00bb, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0440\u0430\u0441\u0441\u043a\u0430\u0436\u0435\u0442 \u043e \u041c\u0435\u0433\u0443\u043c\u0438\u043d.  \n  \nAdapted from the light novel series of the same name."
+        },
+        "isLocked": false,
+        "links": {
+          "al": "97080",
+          "ap": "konosuba-an-explosion-on-this-wonderful-world",
+          "bw": "series/153437",
+          "kt": "37520",
+          "mu": "133467",
+          "nu": "kono-subarashii-sekai-ni-bakuen-o",
+          "amz": "https://www.amazon.co.jp/gp/product/B074CFNY5H",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/391160/",
+          "mal": "97722",
+          "engtl": "http://www.b2c.hachettebookgroup.com/series/konosuba-an-explosion-on-this-wonderful-world-manga/?yen"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "5",
+        "lastChapter": "20",
+        "publicationDemographic": "shounen",
+        "status": "completed",
+        "year": null,
+        "contentRating": "suggestive",
+        "tags": [
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "87cc87cd-a395-47af-b27a-93258283bbc6",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adventure" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f4122d1c-3b44-44d0-9936-ff7502c39ad3",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adaptation" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2019-01-01T10:43:04+00:00",
+        "updatedAt": "2022-01-24T21:29:25+00:00",
+        "version": 4
+      },
+      "relationships": [
+        { "id": "2be83606-b862-46a9-bd36-6af1f56bd459", "type": "author" },
+        { "id": "5a17a284-d83c-443c-9eb9-9f72ec652f89", "type": "artist" },
+        { "id": "2bb3062a-1a0b-4f3f-8cf6-fe700491f807", "type": "cover_art" },
+        {
+          "id": "03426dd2-63c5-493e-853e-485d7c7dc9c0",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "965da0d6-2d7c-4d72-b0ad-3d72ae71935f", "type": "manga", "related": "sequel" },
+        {
+          "id": "b11f5afb-b2cd-4f42-b015-89daa75b3f1d",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "adapted_from" }
+      ]
+    },
+    {
+      "id": "69c32e83-bc57-4fd7-868d-b012886fa8b6",
+      "type": "manga",
+      "attributes": {
+        "title": {
+          "en": "Kono Subarashii Sekai ni Shukufuku wo! - Kono Isekai Shoujo to Renai wo!? (Doujinshi)"
+        },
+        "altTitles": [
+          { "en": "Konosuba - Kono Isekai Shoujo to Renai wo!>" },
+          { "en": "Konosuba - Romans z t\u0105 dziewczyn\u0105 nie z tego \u015bwiata!?" },
+          { "en": "Romance with this Girl from Another World!?" },
+          { "en": "Romance with this Isekai Girl!?" },
+          { "en": "\u3053\u306e\u7570\u4e16\u754c\u5c11\u5973\u3068\u604b\u611b\u3092!?" }
+        ],
+        "description": {
+          "en": "Oneshot reverse isekai manga where Megumin gets sent to modern Japan."
+        },
+        "isLocked": false,
+        "links": { "raw": "https://www.melonbooks.co.jp/detail/detail.php?product_id=567486" },
+        "originalLanguage": "ja",
+        "lastVolume": null,
+        "lastChapter": null,
+        "publicationDemographic": null,
+        "status": "completed",
+        "year": null,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "0234a31e-a729-4e28-9d6a-3f87c4966b9e",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Oneshot" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "b13b2a48-c720-44a9-9c77-39c9979373fb",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Doujinshi" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2020-04-24T13:58:56+00:00",
+        "updatedAt": "2022-01-25T03:49:16+00:00",
+        "version": 3
+      },
+      "relationships": [
+        { "id": "0e190c5d-7b19-4e58-84c5-1d0b7e3dad2b", "type": "author" },
+        { "id": "8010d877-97f1-4a3e-980a-b00b9d8c0c22", "type": "author" },
+        { "id": "0e190c5d-7b19-4e58-84c5-1d0b7e3dad2b", "type": "artist" },
+        { "id": "8010d877-97f1-4a3e-980a-b00b9d8c0c22", "type": "artist" },
+        { "id": "c7c451cf-ddec-4f99-b5a0-e552ada8bbe7", "type": "cover_art" },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "based_on" }
+      ]
+    },
+    {
+      "id": "1a7d8492-16d9-4302-82b0-b9161b52f10b",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Unmei ni Shukufuku wo! (Doujinshi)" },
+        "altTitles": [
+          { "en": "Gifting this Wonderful Fate with Blessings!" },
+          {
+            "en": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u904b\u547d\u306b\u795d\u798f\u3092\uff01"
+          }
+        ],
+        "description": {
+          "en": "April Fools Jokes  \n  \nI started drawing these on April 1st, so that means they're for April Fools.  \n  \n- posted April 3rd by takanasu05"
+        },
+        "isLocked": false,
+        "links": { "raw": "https://www.pixiv.net/artworks/80522929" },
+        "originalLanguage": "ja",
+        "lastVolume": null,
+        "lastChapter": null,
+        "publicationDemographic": null,
+        "status": "completed",
+        "year": null,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "0234a31e-a729-4e28-9d6a-3f87c4966b9e",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Oneshot" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "b13b2a48-c720-44a9-9c77-39c9979373fb",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Doujinshi" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2020-06-12T12:36:15+00:00",
+        "updatedAt": "2021-05-25T15:39:56+00:00",
+        "version": 2
+      },
+      "relationships": [
+        { "id": "e1987fb4-22fb-40d5-aeb8-92fe91681eca", "type": "author" },
+        { "id": "e1987fb4-22fb-40d5-aeb8-92fe91681eca", "type": "artist" },
+        { "id": "dd61ed7a-0064-4f2e-b3d7-19a7c9448722", "type": "cover_art" }
+      ]
+    },
+    {
+      "id": "03426dd2-63c5-493e-853e-485d7c7dc9c0",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Sekai ni Nichijou wo!" },
+        "altTitles": [
+          { "en": "Everyday Life in This Wonderful World!" },
+          { "ja-ro": "Kono Subarashii Sekai ni Nichijou o!" },
+          { "ja-ro": "Kono Subarashii Sekai ni Nichijou wo!" },
+          { "ja-ro": "Kono Subarashiii Sekai ni NICHI-JO wo!" },
+          { "ja-ro": "Konosuba: Nichijou" },
+          {
+            "ru": "\u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u0430\u044f \u0436\u0438\u0437\u043d\u044c \u0432 \u044d\u0442\u043e\u043c \u043f\u0440\u0435\u043a\u0440\u0430\u0441\u043d\u043e\u043c \u043c\u0438\u0440\u0435!"
+          },
+          {
+            "ja": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u65e5\u5e38\u3092\uff01"
+          }
+        ],
+        "description": {
+          "en": "Spinoff of the KonoSuba series, featuring the daily life of Kazuma and Co.",
+          "ru": "\u0421\u043f\u0438\u043d-\u043e\u0444\u0444 \u043e \u043f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u043e\u0439 \u0436\u0438\u0437\u043d\u0438 \u041a\u0430\u0437\u0443\u043c\u044b \u0438 \u0435\u0433\u043e \u0442\u043e\u0432\u0430\u0440\u0438\u0449\u0435\u0439."
+        },
+        "isLocked": false,
+        "links": {
+          "al": "99850",
+          "ap": "konosuba-everyday-life-in-this-wonderful-world",
+          "bw": "series/153436",
+          "kt": "39722",
+          "mu": "140313",
+          "amz": "https://www.amazon.co.jp/-/en/gp/product/B082887QLR",
+          "cdj": "http://www.cdjapan.co.jp/product/NEOBK-2058116",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/400974/",
+          "mal": "106218",
+          "raw": "https://comic-walker.com/contents/detail/KDCW_MF00000029010000_68/"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "3",
+        "lastChapter": "32",
+        "publicationDemographic": "shounen",
+        "status": "completed",
+        "year": 2016,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "0bc90acb-ccc1-44ca-a34a-b9f3a73259d0",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Reincarnation" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "2d1f5d56-a1e5-4d0d-a961-2193588b08ec",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Loli" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "36fd93ea-e8b8-445e-b836-358f02b3d33d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Monsters" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "391b0423-d847-456f-aff0-8b0cfc03066b",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Action" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "39730448-9a5f-48a2-85b0-a70db87b1233",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Demons" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "3de8c75d-8ee3-48ff-98ee-e20a65c86451",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Animals" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "423e2eae-a7a2-4a8b-ac03-a8351462d71d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Romance" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "87cc87cd-a395-47af-b27a-93258283bbc6",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adventure" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "a1f53773-c69a-4ce5-8cab-fffcd90b1565",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Magic" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "aafb99c1-7f60-43fa-b75f-fc9502ce29c7",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Harem" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "ace04997-f6bd-436e-b261-779182193d3d",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Isekai" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "dd1f77c5-dea9-4e2b-97ae-224af09caf99",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Monster Girls" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Slice of Life" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "eabc5b4c-6aff-42f3-b657-3e90cbd00b75",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Supernatural" },
+              "description": [],
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2019-02-17T06:09:16+00:00",
+        "updatedAt": "2022-02-03T14:44:15+00:00",
+        "version": 7
+      },
+      "relationships": [
+        { "id": "2be83606-b862-46a9-bd36-6af1f56bd459", "type": "author" },
+        { "id": "202e82e4-d8d7-4103-9ec8-b2c3488cfad4", "type": "artist" },
+        { "id": "1f6a8a18-b776-4ff7-8a32-b8295b45aa3f", "type": "cover_art" },
+        {
+          "id": "939de251-3c43-42fd-ac6b-5676b3328e9d",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        {
+          "id": "965da0d6-2d7c-4d72-b0ad-3d72ae71935f",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        {
+          "id": "b11f5afb-b2cd-4f42-b015-89daa75b3f1d",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "adapted_from" }
+      ]
+    },
+    {
+      "id": "b11f5afb-b2cd-4f42-b015-89daa75b3f1d",
+      "type": "manga",
+      "attributes": {
+        "title": {
+          "en": "Kono Subarashii Sekai ni Shukufuku wo! Spin-off: Kono Kamen no Akuma ni Soudan wo!"
+        },
+        "altTitles": [
+          { "en": "Consulting with this masked devil" },
+          { "en": "Kono Kamen no Akuma ni Sodan wo!" },
+          { "en": "Kono Kamen no Akuma ni Soudan wo!" },
+          { "en": "Konosuba: Kamen no Akuma" },
+          {
+            "en": "\u041f\u043e\u0441\u043e\u0432\u0435\u0442\u0443\u0435\u043c\u0441\u044f \u0436\u0435 \u0441 \u044d\u0442\u0438\u043c \u0434\u0435\u043c\u043e\u043d\u043e\u043c \u0432 \u043c\u0430\u0441\u043a\u0435!"
+          },
+          { "en": "\u3053\u306e\u4eee\u9762\u306e\u60aa\u9b54\u306b\u76f8\u8ac7\u3092\uff01" }
+        ],
+        "description": {
+          "en": "After Wiz wastes all the money Vanir made from Kazuma\u2019s patents on high quality Manatite, Vanir is forced to take up a job in consulting to pay the monthly rent of the shop.  \nAqua couldn\u2019t fall asleep, and decided to invade Wiz\u2019s shop to inquire about her and Vanir\u2019s past.  \nVarious characters consult Vanir for help.  \n\n\n---\n\n",
+          "ru": "\u041c\u0430\u043d\u0433\u0430-\u0430\u0434\u0430\u043f\u0442\u0430\u0446\u0438\u044f \u0441\u043f\u0438\u043d-\u043e\u0444\u0444\u0430 \u043e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 \u0441\u0435\u0440\u0438\u0438, \u0432 \u0446\u0435\u043d\u0442\u0440\u0435 \u0441\u044e\u0436\u0435\u0442\u0430 \u043a\u043e\u0442\u043e\u0440\u043e\u0433\u043e \u043d\u0430\u0445\u043e\u0434\u0438\u0442\u0441\u044f \u0432\u0441\u0435\u0432\u0438\u0434\u044f\u0449\u0438\u0439 \u0434\u0435\u043c\u043e\u043d \u0412\u0430\u043d\u0438\u0440. \u041f\u043e\u0441\u043b\u0435 \u0442\u043e\u0433\u043e, \u043a\u0430\u043a \u0412\u0438\u0437 \u0442\u0440\u0430\u0442\u0438\u0442 \u0432\u0441\u0435 \u0434\u0435\u043d\u044c\u0433\u0438 \u0412\u0430\u043d\u0438\u0440\u0430, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043e\u043d \u0437\u0430\u0440\u0430\u0431\u043e\u0442\u0430\u043b \u043d\u0430 \u0438\u0437\u043e\u0431\u0440\u0435\u0442\u0435\u043d\u0438\u044f\u0445 \u041a\u0430\u0437\u0443\u043c\u044b, \u0438 \u043f\u043e\u043a\u0443\u043f\u0430\u0435\u0442 \u0432\u044b\u0441\u043e\u043a\u043e\u043a\u0430\u0447\u0435\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u043c\u0430\u043d\u0430\u0442\u0438\u0442, \u0432\u0441\u0435\u0432\u0438\u0434\u044f\u0449\u0435\u043c\u0443 \u0434\u0435\u043c\u043e\u043d\u0443 \u043f\u0440\u0438\u0445\u043e\u0434\u0438\u0442\u0441\u044f \u0438\u0441\u043a\u0430\u0442\u044c \u043d\u043e\u0432\u044b\u0439 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043a\u0430, \u0434\u0430\u0431\u044b \u0431\u044b\u043b\u043e \u0447\u0435\u043c \u043f\u043b\u0430\u0442\u0438\u0442\u044c \u0437\u0430 \u0430\u0440\u0435\u043d\u0434\u0443 \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0430. \u0412 \u0442\u043e \u0436\u0435 \u0432\u0440\u0435\u043c\u044f \u0410\u043a\u0432\u0435 \u0431\u0443\u043a\u0432\u0430\u043b\u044c\u043d\u043e \u043d\u0435 \u0434\u0430\u0451\u0442 \u0441\u043f\u0430\u0442\u044c \u0437\u0430\u0433\u0430\u0434\u043e\u0447\u043d\u043e\u0435 \u043f\u0440\u043e\u0448\u043b\u043e\u0435 \u0412\u0438\u0437 \u0438 \u0412\u0430\u043d\u0438\u0440\u0430, \u0438 \u043e\u043d\u0430 \u0440\u0435\u0448\u0430\u0435\u0442 \u043f\u0440\u0438\u0445\u043e\u0434\u0438\u0442\u044c \u0432 \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0447\u0438\u043a \u043d\u0435\u043f\u0443\u0442\u0451\u0432\u043e\u0439 \u0445\u043e\u0437\u044f\u0439\u043a\u0438-\u043b\u0438\u0447\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c, \u0447\u0442\u043e\u0431\u044b \u0440\u0430\u0437\u0443\u0437\u043d\u0430\u0442\u044c \u043e \u043d\u0438\u0445 \u043f\u043e\u0431\u043e\u043b\u044c\u0448\u0435."
+        },
+        "isLocked": false,
+        "links": {
+          "al": "102170",
+          "ap": "konosuba-consulting-with-this-masked-devil",
+          "bw": "series/170326",
+          "kt": "41210",
+          "mu": "147635",
+          "nu": "kono-kamen-no-akuma-ni-sodan-wo",
+          "amz": "https://www.amazon.co.jp/dp/B07G9WHC59/",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/472649/A001921991/",
+          "mal": "114664"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "2",
+        "lastChapter": "12",
+        "publicationDemographic": "shounen",
+        "status": "completed",
+        "year": null,
+        "contentRating": "safe",
+        "tags": [
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "87cc87cd-a395-47af-b27a-93258283bbc6",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adventure" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "f4122d1c-3b44-44d0-9936-ff7502c39ad3",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adaptation" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2019-03-18T06:10:05+00:00",
+        "updatedAt": "2021-05-25T15:46:34+00:00",
+        "version": 2
+      },
+      "relationships": [
+        { "id": "2be83606-b862-46a9-bd36-6af1f56bd459", "type": "author" },
+        { "id": "202e82e4-d8d7-4103-9ec8-b2c3488cfad4", "type": "artist" },
+        { "id": "c3b0970c-10de-4f2c-8b9c-c6a76f35bb0e", "type": "cover_art" },
+        {
+          "id": "03426dd2-63c5-493e-853e-485d7c7dc9c0",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        {
+          "id": "939de251-3c43-42fd-ac6b-5676b3328e9d",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        {
+          "id": "965da0d6-2d7c-4d72-b0ad-3d72ae71935f",
+          "type": "manga",
+          "related": "shared_universe"
+        },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "main_story" }
+      ]
+    },
+    {
+      "id": "ecb87396-f846-4e27-9497-5817ff29ad36",
+      "type": "manga",
+      "attributes": {
+        "title": { "en": "Kono Subarashii Sekai ni Shukufuku wo! Megumin Anthology Aka" },
+        "altTitles": [
+          {
+            "en": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u795d\u798f\u3092! \u3081\u3050\u307f\u3093\u30a2\u30f3\u30bd\u30ed\u30b8\u30fc \u7d05Aka"
+          }
+        ],
+        "description": {
+          "en": "The second 13-part anthology revolving around Konosuba's Megumin and her daily activities."
+        },
+        "isLocked": false,
+        "links": {
+          "al": "107262",
+          "bw": "series/94619",
+          "mu": "153445",
+          "amz": "https://www.amazon.co.jp/dp/B07JWJT771",
+          "ebj": "https://ebookjapan.yahoo.co.jp/books/391161/"
+        },
+        "originalLanguage": "ja",
+        "lastVolume": "1",
+        "lastChapter": "13",
+        "publicationDemographic": "shounen",
+        "status": "completed",
+        "year": null,
+        "contentRating": "suggestive",
+        "tags": [
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Comedy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "51d83883-4103-437c-b4b1-731cb73d786c",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Anthology" },
+              "description": [],
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "87cc87cd-a395-47af-b27a-93258283bbc6",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Adventure" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Fantasy" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": { "en": "Slice of Life" },
+              "description": [],
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2019-10-10T07:36:42+00:00",
+        "updatedAt": "2021-05-25T15:49:15+00:00",
+        "version": 2
+      },
+      "relationships": [
+        { "id": "29c4b49a-812d-4687-863d-2e4f5e58fb4a", "type": "author" },
+        { "id": "29c4b49a-812d-4687-863d-2e4f5e58fb4a", "type": "artist" },
+        { "id": "24c93959-516a-4f6c-b5a2-ac8c6148466d", "type": "cover_art" },
+        { "id": "23a09b03-6df4-4d80-8cae-bd2ac5d71116", "type": "manga", "related": "prequel" },
+        { "id": "bcfa196d-d162-45f5-a224-61d26b04a077", "type": "manga", "related": "adapted_from" }
+      ]
+    }
+  ],
+  "limit": 10,
+  "offset": 0,
+  "total": 13
+}

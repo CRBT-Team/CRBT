@@ -1,9 +1,8 @@
 import { links } from '$lib/db';
-import { button } from '$lib/functions/button';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { AllowedImageSize, DynamicImageFormat, MessageActionRow, MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { AllowedImageSize, DynamicImageFormat, MessageButton, MessageEmbed } from 'discord.js';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'server icon',
@@ -70,20 +69,21 @@ export default ChatCommand({
           .setImage(av)
           .setColor(await getColor(this.user)),
       ],
-      components: [
-        new MessageActionRow().addComponents(
-          button(
-            'LINK',
-            !av.includes('embed/avatars')
-              ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                  ? 'GIF'
-                  : format ?? 'png'
-                ).toUpperCase()})`
-              : 'Download (256px - PNG)',
-            av
-          )
-        ),
-      ],
+      components: components(
+        row(
+          new MessageButton()
+            .setStyle('LINK')
+            .setLabel(
+              !av.includes('embed/avatars')
+                ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
+                    ? 'GIF'
+                    : format ?? 'png'
+                  ).toUpperCase()})`
+                : 'Download (256px - PNG)'
+            )
+            .setURL(av)
+        )
+      ),
     });
   },
 });

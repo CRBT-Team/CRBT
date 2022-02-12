@@ -11,6 +11,7 @@ export default ChatCommand({
   async handle({ user, deletemessages, duration, reason }) {
     await this.guild.members.ban(user, {
       days: parseInt(deletemessages),
+      reason,
     });
   },
 });

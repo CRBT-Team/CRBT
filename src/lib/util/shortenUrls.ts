@@ -7,18 +7,14 @@ export const clembsWatchUrl =
 export const shortenUrl = (url: string) => {
   if (youtubeUrl.test(url)) {
     const short = url.replace(youtubeUrl, 'yt:$6');
-    console.log(short);
     return short;
   } else if (soundCloudUrl.test(url)) {
     const short = url.replace(soundCloudUrl, 'sc:$3');
-    console.log(short);
     return short;
   } else if (clembsWatchUrl.test(url)) {
     const short = url.replace(clembsWatchUrl, 'cw:$1');
-    console.log(short);
     return short;
   } else {
-    console.log(url.match(clembsWatchUrl));
     return url;
   }
 };

@@ -1,15 +1,14 @@
 import { avatar } from '$lib/functions/avatar';
-import { button } from '$lib/functions/button';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import {
   AllowedImageSize,
   DynamicImageFormat,
-  MessageActionRow,
+  MessageButton,
   MessageEmbed,
   User,
 } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'user banner',
@@ -65,18 +64,19 @@ export default ChatCommand({
           .setImage(banner)
           .setColor(await getColor(this.user)),
       ],
-      components: [
-        new MessageActionRow().addComponents(
-          button(
-            'LINK',
-            `Download (${size ?? 2048}px - ${(banner.includes('.gif')
-              ? 'GIF'
-              : format ?? 'png'
-            ).toUpperCase()})`,
-            banner
-          )
-        ),
-      ],
+      components: components(
+        row(
+          new MessageButton()
+            .setStyle('LINK')
+            .setLabel(
+              `Download (${size ?? 2048}px - ${(banner.includes('.gif')
+                ? 'GIF'
+                : format ?? 'png'
+              ).toUpperCase()})`
+            )
+            .setURL(banner)
+        )
+      ),
     });
   },
 });

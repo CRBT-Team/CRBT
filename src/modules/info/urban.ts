@@ -63,7 +63,8 @@ export default ChatCommand({
         `${emojis.misc.thumbsup} **${post.thumbs_up}** | ${emojis.misc.thumbsdown} **${post.thumbs_down}**`,
         true
       )
-      .setColor(await getColor(this.user));
+      .setColor(await getColor(this.user))
+      .setFooter({ text: 'Source: Urban Dictionary' });
 
     this.reply({ embeds: [e] });
   },

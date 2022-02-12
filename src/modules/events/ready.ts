@@ -1,12 +1,11 @@
 import { db, emojis } from '$lib/db';
-import { button } from '$lib/functions/button';
 import { getColor } from '$lib/functions/getColor';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
 import { userDMsEnabled } from '$lib/functions/userDMsEnabled';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs from 'dayjs';
-import { GuildTextBasedChannel, MessageActionRow, MessageEmbed } from 'discord.js';
-import { OnEvent } from 'purplet';
+import { GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
+import { components, OnEvent, row } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({
@@ -34,9 +33,9 @@ export default OnEvent('ready', async (client) => {
             .addField('Reminder', reminder.reminder)
             .setColor(await getColor(await client.users.fetch(reminder.user_id))),
         ],
-        components: [
-          new MessageActionRow().addComponents(button('LINK', 'Jump to message', reminder.url)),
-        ],
+        components: components(
+          row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
+        ),
       });
 
       await db

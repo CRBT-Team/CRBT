@@ -1,9 +1,8 @@
 import { colors, emojis } from '$lib/db';
-import { button } from '$lib/functions/button';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
+import { MessageButton, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 const activities = [
   { name: 'Watch Together', id: '880218394199220334' },
@@ -77,11 +76,14 @@ export default ChatCommand({
             .setDescription(`Click the button below to join your activity in ${vc}.`)
             .setColor(`#${colors.success}`),
         ],
-        components: [
-          new MessageActionRow().addComponents(
-            button('LINK', `Join ${choices.find((item) => item.value === activity).name}`, code)
-          ),
-        ],
+        components: components(
+          row(
+            new MessageButton()
+              .setStyle('LINK')
+              .setLabel(`Join ${choices.find((item) => item.value === activity).name}`)
+              .setURL(code)
+          )
+        ),
       });
     }
   },

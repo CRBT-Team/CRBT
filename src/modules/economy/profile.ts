@@ -1,11 +1,10 @@
 import { db, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
-import { button } from '$lib/functions/button';
 import { getColor } from '$lib/functions/getColor';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
+import { MessageButton, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 const Pronouns = {
   unspecified: 'Unspecified',
@@ -75,11 +74,14 @@ export default ChatCommand({
 
     this.reply({
       embeds: [e],
-      components: [
-        new MessageActionRow().addComponents(
-          button('LINK', 'Open in CRBT.app', `https://betacrbt.netlify.app/users/${u.id}`)
-        ),
-      ],
+      components: components(
+        row(
+          new MessageButton()
+            .setStyle('LINK')
+            .setLabel(`Open in CRBT.app`)
+            .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+        )
+      ),
       // content: JSON.stringify(profile, null, 2),
     });
   },

@@ -1,22 +1,13 @@
-const roles = [
-  {
-    name: 'h',
-    id: 1,
-  },
-  {
-    name: 'e',
-    id: 2,
-  },
-  {
-    name: 'l',
-    id: 3,
-  },
-];
+const data = require('./anime.json');
 
-// create object from roles with "id" as key and "name" as value
-const rolesMap = roles.reduce((acc, cur) => {
-  acc[cur.id] = cur.name;
-  return acc;
-}, {});
+const manga = data.data.filter(
+  (manga) => !manga.attributes.tags.find((tag) => tag.attributes.name.en === 'Doujinshi')
+)[0];
 
-console.log(rolesMap);
+console.log(
+  Object.entries(manga.attributes.links).filter(([, link]) =>
+    link.match(
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+    )
+  )[0]
+);

@@ -1,5 +1,4 @@
 import { colors, db, emojis } from '$lib/db';
-import { button } from '$lib/functions/button';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { ms } from '$lib/functions/ms';
@@ -7,8 +6,8 @@ import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
 import { userDMsEnabled } from '$lib/functions/userDMsEnabled';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
-import { GuildTextBasedChannel, Message, MessageActionRow, MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { GuildTextBasedChannel, Message, MessageButton, MessageEmbed } from 'discord.js';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'remind me',
@@ -129,9 +128,9 @@ export default ChatCommand({
             .addField('Reminder', reminder.reminder)
             .setColor(await getColor(this.user)),
         ],
-        components: [
-          new MessageActionRow().addComponents(button('LINK', 'Jump to message', reminder.url)),
-        ],
+        components: components(
+          row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
+        ),
       });
       await db
         .from<Reminder>('reminders')
