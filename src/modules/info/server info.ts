@@ -19,7 +19,6 @@ export default ChatCommand({
     if (id && !this.client.guilds.cache.has(id))
       return await this.reply(
         CRBTError(
-          this,
           `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
           `Who's that?`
         )

@@ -55,7 +55,10 @@ export default ChatCommand({
     const u = user ?? this.user;
     const banner = await getBanner(u, size ?? 2048, format ?? 'png', !!format);
 
-    if (!banner) return this.reply(CRBTError(this, "This user doesn't have any profile banner!"));
+    if (!banner)
+      return this.reply(
+        CRBTError(`${u === this.user ? "You don't" : "This user doesn't"} have any profile banner!`)
+      );
 
     await this.reply({
       embeds: [

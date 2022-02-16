@@ -10,17 +10,15 @@ export default ChatCommand({
     .channel('voice', 'The voice channel to link to.', true)
     .channel('text', 'The text channel to link to.', true),
   async handle({ voice, text }) {
-    console.log((text as TextChannel).permissionsFor(this.guild.me).toArray());
-
     const m = this.guild.members.cache.get(this.user.id);
     if (!m.permissions.has(Permissions.FLAGS.ADMINISTRATOR, true)) {
-      return this.reply(CRBTError(null, 'You must be an administrator to use this command.'));
+      return this.reply(CRBTError('You must be an administrator to use this command.'));
     }
     if (text.type !== 'GUILD_TEXT') {
-      return this.reply(CRBTError(null, 'The text channel must be a text channel.'));
+      return this.reply(CRBTError('The text channel must be a text channel.'));
     }
     if (!voice.isVoice()) {
-      return this.reply(CRBTError(null, 'The voice channel must be a voice channel.'));
+      return this.reply(CRBTError('The voice channel must be a voice channel.'));
     }
     // check if bot can manage perms of text channel
     if (
@@ -28,13 +26,13 @@ export default ChatCommand({
         .permissionsFor(this.guild.me)
         .has([Permissions.FLAGS.MANAGE_CHANNELS, Permissions.FLAGS.VIEW_CHANNEL])
     ) {
-      return this.reply(CRBTError(null, 'I do not have permission to manage the text channel.'));
+      return this.reply(CRBTError('I do not have permission to manage the text channel.'));
     }
 
     try {
       (text as TextChannel).permissionOverwrites.create(this.guild.id, { VIEW_CHANNEL: false });
     } catch (e) {
-      return this.reply(CRBTError(null, 'I do not have permission to manage the text channel.'));
+      return this.reply(CRBTError('I do not have permission to manage the text channel.'));
     }
     await this.deferReply();
 

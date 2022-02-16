@@ -25,7 +25,7 @@ export default ChatCommand({
     .role('role10', 'A tenth role to use for the roles picker.'),
   async handle(roles) {
     if (this.user.id !== '327690719085068289') {
-      return this.reply(CRBTError(null, 'h'));
+      return this.reply(CRBTError('h'));
     }
 
     await this.deferReply({

@@ -1,13 +1,12 @@
 import { colors, db, emojis } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
-import { getColor } from '$lib/functions/getColor';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
-import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
+import { setReminder } from '$lib/functions/setReminder';
 import { userDMsEnabled } from '$lib/functions/userDMsEnabled';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
-import { GuildTextBasedChannel, Message, MessageButton, MessageEmbed } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'remind me',
@@ -46,7 +45,7 @@ export default ChatCommand({
         timeMS = expiration.diff(dayjs());
       } else {
         return this.reply(
-          CRBTError(this, 'You cannot set a reminder for a time in the past.', 'Time traveling?')
+          CRBTError('You cannot set a reminder for a time in the past.', 'Time traveling?')
         );
       }
     } else if (!!ms(w) && !dayjs(w).isValid()) {
@@ -56,13 +55,11 @@ export default ChatCommand({
 
     if (!expiration || !timeMS || timeMS < 0) {
       return this.reply(
-        CRBTError(this, 'The time you entered is in an invalid format, or below 0 seconds.')
+        CRBTError('The time you entered is in an invalid format, or below 0 seconds.')
       );
     }
     if (timeMS > ms('2y')) {
-      return this.reply(
-        CRBTError(this, 'You cannot set a reminder for more than 2 years from now.')
-      );
+      return this.reply(CRBTError('You cannot set a reminder for more than 2 years from now.'));
     }
 
     //check if the destination is a valid text channel and if both the user & the bot can send messages
@@ -70,27 +67,15 @@ export default ChatCommand({
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
         return this.reply(
-          CRBTError(
-            this,
-            'The channel you specified is not a valid text channel.',
-            'Invalid channel'
-          )
+          CRBTError('The channel you specified is not a valid text channel.', 'Invalid channel')
         );
       } else if (!channel.permissionsFor(this.user).has('SEND_MESSAGES')) {
         return this.reply(
-          CRBTError(
-            this,
-            'You do not have permission to send messages in that channel.',
-            'No permission'
-          )
+          CRBTError('You do not have permission to send messages in that channel.', 'No permission')
         );
       } else if (!channel.permissionsFor(this.guild.me).has('SEND_MESSAGES')) {
         return this.reply(
-          CRBTError(
-            this,
-            'I do not have permission to send messages in that channel.',
-            'No permission'
-          )
+          CRBTError('I do not have permission to send messages in that channel.', 'No permission')
         );
       }
     }
@@ -99,7 +84,7 @@ export default ChatCommand({
     ).body;
 
     if (userReminders.length >= 5) {
-      await this.reply(CRBTError(this, 'You can only have 5 reminders at a time.'));
+      await this.reply(CRBTError('You can only have 5 reminders at a time.'));
     }
 
     await this.deferReply();
@@ -112,55 +97,62 @@ export default ChatCommand({
       user_id: this.user.id,
       url: ((await this.fetchReply()) as Message).url,
     };
-    const req = await db.from<Reminder>('reminders').insert(reminder);
 
-    setLongerTimeout(async () => {
-      const dest =
-        !destination && userDMsEnabled(this.user)
-          ? this.user
-          : (destination as GuildTextBasedChannel);
-      dest.send({
-        content: destination ? `<@${reminder.user_id}>` : null,
-        embeds: [
-          new MessageEmbed()
-            .setTitle(`${emojis.misc.reminder} Reminder`)
-            .setDescription(`Set on <t:${now.unix()}> (<t:${now.unix()}:R>).`)
-            .addField('Reminder', reminder.reminder)
-            .setColor(await getColor(this.user)),
-        ],
-        components: components(
-          row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
-        ),
-      });
-      await db
-        .from<Reminder>('reminders')
-        .delete()
-        .eq('id', req.body[0].id)
-        .eq('user_id', this.user.id);
-    }, timeMS);
+    // const req = await db.from<Reminder>('reminders').insert(reminder);
+
+    // setLongerTimeout(async () => {
+    //   const dest =
+    //     !destination && userDMsEnabled(this.user)
+    //       ? this.user
+    //       : (destination as GuildTextBasedChannel);
+    //   dest.send({
+    //     content: destination ? `<@${reminder.user_id}>` : null,
+    //     embeds: [
+    //       new MessageEmbed()
+    //         .setTitle(`${emojis.misc.reminder} Reminder`)
+    //         .setDescription(`Set on <t:${now.unix()}> (<t:${now.unix()}:R>).`)
+    //         .addField('Reminder', reminder.reminder)
+    //         .setColor(await getColor(this.user)),
+    //     ],
+    //     components: components(
+    //       row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
+    //     ),
+    //   });
+    //   await db
+    //     .from<Reminder>('reminders')
+    //     .delete()
+    //     .eq('id', req.body[0].id)
+    //     .eq('user_id', this.user.id);
+    // }, timeMS);
 
     const expUnix = reminder.expiration.unix();
 
-    await this.editReply({
-      embeds: [
-        new MessageEmbed()
-          .setTitle(`${emojis.success} Reminder set!`)
-          .setDescription(
-            (destination
-              ? `You will be reminded in ${destination}`
-              : userDMsEnabled(this.user)
-              ? 'You will be reminded by DM'
-              : `Your DMs are currently disabled or you may have block ${this.client.user.username}. Make sure to change your privacy settings so a message can be sent in there. Otherwize, we'll ping you on here.`) +
-              `\n` +
-              (reminder.expiration.date() === now.date()
-                ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
-                : reminder.expiration.date() === now.date() + 1
-                ? `Tomorrow at <t:${expUnix}:T> • <t:${expUnix}:R>.`
-                : `<t:${expUnix}> • <t:${expUnix}:R>.`)
-          )
-          .addField('Subject', subject)
-          .setColor(`#${colors.success}`),
-      ],
-    });
+    try {
+      await setReminder(reminder);
+
+      await this.editReply({
+        embeds: [
+          new MessageEmbed()
+            .setTitle(`${emojis.success} Reminder set!`)
+            .setDescription(
+              (destination
+                ? `You will be reminded in ${destination}`
+                : userDMsEnabled(this.user)
+                ? 'You will be reminded by DM'
+                : `Your DMs are currently disabled or you may have blocked ${this.client.user.username}. Make sure to change your privacy settings so a message can be sent in there. Otherwize, we'll ping you on here.`) +
+                `\n` +
+                (reminder.expiration.date() === now.date()
+                  ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
+                  : reminder.expiration.date() === now.date() + 1
+                  ? `Tomorrow at <t:${expUnix}:T> • <t:${expUnix}:R>.`
+                  : `<t:${expUnix}> • <t:${expUnix}:R>.`)
+            )
+            .addField('Subject', subject)
+            .setColor(`#${colors.success}`),
+        ],
+      });
+    } catch (error) {
+      await this.editReply(UnknownError(this, String(error)));
+    }
   },
 });

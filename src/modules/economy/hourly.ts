@@ -1,4 +1,5 @@
-import { db } from '$lib/db';
+import { db, local } from '$lib/db';
+import { CooldownError } from '$lib/functions/CRBTError';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { ChatCommand } from 'purplet';
 
@@ -6,6 +7,10 @@ export default ChatCommand({
   name: 'hourly',
   description: 'Get a few Purplets',
   async handle() {
+    if (Date.now() < (await local.get(`cooldown.hourly.${this.user.id}`))) {
+      return this.reply(CooldownError(await local.get(`cooldown.hourly.${this.user.id}`)));
+    }
+    local.set(`cooldown.hourly.${this.user.id}`, Date.now() + 30000);
     const user = (await db.from<APIProfile>('profiles').select('*').eq('id', this.user.id)).body[0];
     const income = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
     if (user) {

@@ -40,11 +40,3 @@ export default defineConfig({
     }),
   ],
 });
-
-// export const activity = ActivityProvider({
-//   getActivity() {
-//     return {
-//       name: '/crbt info | crbt.ga',
-//     };
-//   },
-// });

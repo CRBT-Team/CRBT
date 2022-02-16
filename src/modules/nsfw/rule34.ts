@@ -1,4 +1,4 @@
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
 import { Interaction, MessageEmbed, TextChannel } from 'discord.js';
@@ -17,7 +17,7 @@ export default ChatCommand({
     .boolean('incognito', 'Whether to send message publicly.'),
   async handle({ include_tags, exclude_tags, safe_only, incognito }) {
     if (!(this.channel as TextChannel).nsfw) {
-      return this.reply(CRBTError(this, 'This command can only be used in NSFW channels.'));
+      return this.reply(CRBTError('This command can only be used in NSFW channels.'));
     }
 
     const allTags = ['sort:updated:desc'];
@@ -54,10 +54,6 @@ const loadImg = async (tags: string[], index: number, i: Interaction) => {
           limit: '15',
         })
     );
-
-    if (req.status !== 200) {
-      return CRBTError(null, "Invalid tags. Make sure they're valid and try again.");
-    }
 
     const xml = xml2js(await req.text(), {
       compact: true,
@@ -111,6 +107,6 @@ const loadImg = async (tags: string[], index: number, i: Interaction) => {
       ),
     };
   } catch (e) {
-    return CRBTError(null, 'An error occured while trying to get the image.');
+    return UnknownError(null, String(e));
   }
 };

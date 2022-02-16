@@ -38,13 +38,12 @@ export default ChatCommand({
     if (!vc)
       await this.reply(
         CRBTError(
-          this,
           'You need to be in a voice channel, or to choose a voice channel using the `channel` option.'
         )
       );
     else if (vc.type !== 'GUILD_VOICE')
       await this.reply(
-        CRBTError(this, 'You need to choose a voice channel in order to start an activity!')
+        CRBTError('You need to choose a voice channel in order to start an activity!')
       );
     else {
       const code = await fetch(`https://discord.com/api/v9/channels/${vc.id}/invites`, {

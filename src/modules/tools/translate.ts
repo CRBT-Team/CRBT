@@ -1,4 +1,4 @@
-import { CRBTError } from '$lib/functions/CRBTError';
+import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import translate from '@vitalets/google-translate-api';
 import { MessageEmbed } from 'discord.js';
@@ -39,7 +39,7 @@ export default ChatCommand({
         ],
       });
     } catch (e) {
-      await this.reply(CRBTError(this, String(e)));
+      await this.reply(UnknownError(this, String(e)));
     }
   },
 });
@@ -65,7 +65,7 @@ export const ctxCommand = MessageContextCommand({
         ephemeral: true,
       });
     } catch (e) {
-      await this.reply(CRBTError(null, String(e)));
+      await this.reply(UnknownError(this, String(e)));
     }
   },
 });

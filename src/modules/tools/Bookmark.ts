@@ -9,7 +9,7 @@ export default MessageContextCommand({
   async handle(message) {
     if (!userDMsEnabled(this.user)) {
       return this.reply(
-        CRBTError(null, 'In order to bookmark messages, you must enable your DMs or unblock CRBT.')
+        CRBTError('In order to bookmark messages, you must enable your DMs or unblock CRBT.')
       );
     }
 

@@ -1,4 +1,4 @@
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -16,7 +16,6 @@ export default ChatCommand({
     if (res.status !== 200) {
       return await this.reply(
         CRBTError(
-          this,
           "I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (`/urban`)"
         )
       );
@@ -64,7 +63,7 @@ export default ChatCommand({
             : null,
       });
     } catch (e) {
-      await this.reply(CRBTError(this, String(e)));
+      await this.reply(UnknownError(this, String(e)));
     }
   },
 });

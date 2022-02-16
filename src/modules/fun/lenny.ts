@@ -1,5 +1,5 @@
 import { avatar } from '$lib/functions/avatar';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { TextChannel, Util } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -32,10 +32,10 @@ export default ChatCommand({
         });
         await this.deleteReply();
       } catch (e) {
-        await this.editReply(CRBTError(this, String(e)));
+        await this.editReply(UnknownError(this, String(e)));
       }
     } else {
-      this.reply(CRBTError(this, 'This command cannot be used in DMs.'));
+      this.reply(CRBTError('This command cannot be used in DMs.'));
     }
   },
 });

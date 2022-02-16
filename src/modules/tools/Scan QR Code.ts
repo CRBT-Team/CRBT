@@ -11,7 +11,7 @@ export default MessageContextCommand({
       !message.attachments.size ??
       !message.embeds.some((embed) => embed.image && embed.image.url)
     ) {
-      return this.reply(CRBTError(null, "This message doesn't have any images!"));
+      return this.reply(CRBTError("This message doesn't have any images!"));
     }
     await this.deferReply({ ephemeral: true });
 
@@ -23,22 +23,21 @@ export default MessageContextCommand({
       }`
     );
 
-    if (req.ok) {
-      const data: any = await req.json();
-      if (data[0].symbol[0].data) {
-        await this.editReply({
-          embeds: [
-            new MessageEmbed()
-              .setAuthor({ name: 'QR Code scanned!' })
-              .addField('Parsed text or URL', data[0].symbol[0].data)
-              .setColor(await getColor(this.user)),
-          ],
-        });
-      } else {
-        await this.editReply(CRBTError(null, "This message doesn't have any QR codes!"));
-      }
+    if (!req.ok) {
+      await this.editReply(CRBTError("This message doesn't have any QR codes!"));
+    }
+    const data: any = await req.json();
+    if (data[0].symbol[0].data) {
+      await this.editReply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({ name: 'QR Code scanned!' })
+            .addField('Parsed text or URL', data[0].symbol[0].data)
+            .setColor(await getColor(this.user)),
+        ],
+      });
     } else {
-      await this.editReply(CRBTError(null, "This message doesn't have any QR codes!"));
+      await this.editReply(CRBTError("This message doesn't have any QR codes!"));
     }
   },
 });

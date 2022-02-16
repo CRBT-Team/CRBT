@@ -16,10 +16,9 @@ export default ChatCommand({
 
     const req = await fetch(`https://discord.com/api/invites/${inviteCode}`);
 
-    if (req.status !== 200) {
+    if (!req.ok) {
       this.reply(
         CRBTError(
-          this,
           "Invalid invite code or URL. Make sure it hasn't expired and anyone has access to it."
         )
       );
