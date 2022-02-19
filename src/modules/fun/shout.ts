@@ -1,4 +1,4 @@
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { webhookSend } from '$lib/functions/webhookSend';
 import { Util } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -9,7 +9,7 @@ export default ChatCommand({
   options: new OptionBuilder().string('message', 'YOUR MESSAGE!!!', true),
   async handle({ message }) {
     if (this.channel.type === 'DM') {
-      return this.reply(CRBTError(this, 'This command cannot be used in DMs'));
+      return this.reply(CRBTError('This command cannot be used in DMs'));
     }
     const content = `**${Util.cleanContent(message, this.channel).toUpperCase()}!!!**`;
 
@@ -19,7 +19,7 @@ export default ChatCommand({
         this.deleteReply()
       );
     } catch (e) {
-      await this.editReply(CRBTError(this, String(e)));
+      await this.editReply(UnknownError(this, String(e)));
     }
   },
 });

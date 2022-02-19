@@ -8,9 +8,7 @@ import { setLongerTimeout } from './setLongerTimeout';
 import { userDMsEnabled } from './userDMsEnabled';
 
 export const setReminder = async (reminder: Reminder) => {
-  const id = reminder.id
-    ? reminder.id
-    : (await db.from<Reminder>('reminders').insert(reminder)).body[0].id;
+  const id = reminder.id ? reminder.id : (await db.set<Reminder>('reminders', reminder)).id;
 
   setLongerTimeout(async () => {
     const user = await getDiscordClient().users.fetch(reminder.user_id);
