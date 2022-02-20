@@ -32,6 +32,9 @@ export default ChatCommand({
     .enum('activity', 'The activity you want to start.', choices, true)
     .channel('channel', 'The channel you want to start the activity in.'),
   async handle({ activity, channel }) {
+    if (this.channel.type === 'DM') {
+      return this.reply(CRBTError('This command cannot be used in DMs'));
+    }
     const user = await this.guild.members.fetch(this.user);
     const vc = channel ?? (await this.guild.members.fetch(this.user)).voice.channel;
 

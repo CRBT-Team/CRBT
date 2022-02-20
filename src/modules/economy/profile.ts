@@ -1,8 +1,9 @@
-import { items, local } from '$lib/db';
+import { db, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
+import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { getColor } from '$lib/functions/getColor';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { MessageButton, MessageEmbed, User } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { EditProfileBtn } from './editProfile';
@@ -38,9 +39,10 @@ export default ChatCommand({
   async handle({ user }) {
     const u = user ?? this.user;
 
-    const profile: APIProfile = await local.get(`profile.${u.id}`);
+    const profile = (await db.profiles.findFirst({
+      where: { id: u.id },
+    })) as APIProfile;
 
-    // const profile = (await db.from<APIProfile>('profiles').select('*').eq('id', u.id)).body[0];
     const pronouns = (
       (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${u.id}`).then((res) =>
         res.json()
@@ -52,10 +54,10 @@ export default ChatCommand({
         name: `${u.tag} - Profile`,
         iconURL: avatar(u, 64),
       })
-      .setTitle(profile?.username ?? u.username)
+      .setTitle(profile?.name ?? u.username)
       .setDescription(
-        profile
-          ? profile.bio ?? `*This user doesn't have a bio yet...*`
+        profile && profile.bio
+          ? await CRBTscriptParser(profile.bio, u, this.guild)
           : "*This user doesn't have a bio yet...*"
       )
       .setImage(
@@ -78,31 +80,41 @@ export default ChatCommand({
 
     this.reply({
       embeds: [e],
-      components: components(
+      components:
         u.id === this.user.id
-          ? row(
-              new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
-              new MessageButton()
-                .setStyle('LINK')
-                .setLabel(`Open in CRBT.app`)
-                .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+          ? components(
+              row(
+                new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+              )
             )
-          : row(
-              new MessageButton()
-                .setStyle('LINK')
-                .setLabel(`Open in CRBT.app`)
-                .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-            )
-      ),
+          : null,
+      // components: components(
+      //   u.id === this.user.id
+      // ? row(
+      //     new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
+      //     new MessageButton()
+      //       .setStyle('LINK')
+      //       .setLabel(`Open in CRBT.app`)
+      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+      //   )
+      // : row(
+      //     new MessageButton()
+      //       .setStyle('LINK')
+      //       .setLabel(`Open in CRBT.app`)
+      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+      //   )
+      // ),
     });
   },
 });
 
 export const ctxProfile = UserContextCommand({
   name: 'View CRBT Profile',
-  async handle(u: User) {
-    const profile: APIProfile = await local.get(`profile.${u.id}`);
-    // const profile = (await db.from<APIProfile>('profiles').select('*').eq('id', u.id)).body[0];
+  async handle(u) {
+    const profile = (await db.profiles.findFirst({
+      where: { id: u.id },
+    })) as APIProfile;
+
     const pronouns = (
       (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${u.id}`).then((res) =>
         res.json()
@@ -114,10 +126,10 @@ export const ctxProfile = UserContextCommand({
         name: `${u.tag} - Profile`,
         iconURL: avatar(u, 64),
       })
-      .setTitle(profile?.username ?? u.username)
+      .setTitle(profile?.name ?? u.username)
       .setDescription(
-        profile
-          ? profile.bio ?? `*This user doesn't have a bio yet...*`
+        profile && profile.bio
+          ? await CRBTscriptParser(profile.bio, u, this.guild)
           : "*This user doesn't have a bio yet...*"
       )
       .setImage(
@@ -140,23 +152,31 @@ export const ctxProfile = UserContextCommand({
 
     this.reply({
       embeds: [e],
-      components: components(
+      components:
         u.id === this.user.id
-          ? row(
-              new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
-              new MessageButton()
-                .setStyle('LINK')
-                .setLabel(`Open in CRBT.app`)
-                .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+          ? components(
+              row(
+                new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+              )
             )
-          : row(
-              new MessageButton()
-                .setStyle('LINK')
-                .setLabel(`Open in CRBT.app`)
-                .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-            )
-      ),
-      // content: JSON.stringify(profile, null, 2),
+          : null,
+      // components: components(
+      //   u.id === this.user.id
+      // ? row(
+      //     new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
+      //     new MessageButton()
+      //       .setStyle('LINK')
+      //       .setLabel(`Open in CRBT.app`)
+      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+      //   )
+      // : row(
+      //     new MessageButton()
+      //       .setStyle('LINK')
+      //       .setLabel(`Open in CRBT.app`)
+      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
+      //   )
+      // ),
+      ephemeral: u.id !== this.user.id,
     });
   },
 });

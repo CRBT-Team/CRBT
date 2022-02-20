@@ -60,7 +60,7 @@ export default ChatCommand({
 
     if (guild.features.includes('COMMUNITY')) {
       e.setDescription(
-        guild.nsfw
+        !guild.nsfw
           ? guild.description ?? guild.welcome_screen
             ? guild.welcome_screen.description
             : null

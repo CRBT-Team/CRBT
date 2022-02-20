@@ -1,4 +1,6 @@
-import { colors, emojis, local } from '$lib/db';
+import { colors, db, emojis } from '$lib/db';
+import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { ButtonInteraction, InteractionWebhook, MessageEmbed } from 'discord.js';
 import { OnEvent } from 'purplet';
@@ -18,54 +20,69 @@ interface ModalInteraction extends ButtonInteraction {
 
 //@ts-ignore
 export default OnEvent('modalSubmit', async (modal: ModalInteraction) => {
-  const username = modal.getTextInputValue('profile_username');
+  const name = modal.getTextInputValue('profile_name');
   const bio = modal.getTextInputValue('profile_bio');
-  // console.log(await modal.fetchReply());
 
   const msg = await modal.channel.messages.fetch(modal.customId);
   const { author, color, fields, image, thumbnail, title } = msg.embeds[0];
 
-  const profile: APIProfile = await local.get(`profile.${modal.user.id}`);
+  const profile = (await db.profiles.findFirst({
+    where: { id: modal.user.id },
+  })) as APIProfile;
 
-  if (profile) {
-    await local.set(`profile.${modal.user.id}`, {
-      crbt_badges: profile.crbt_badges,
-      crbt_banner: profile.crbt_banner,
-      crbt_accent_color: profile.crbt_accent_color,
-      purplets: profile.purplets,
-      verified: profile.verified,
-      bio,
-      username,
-    } as APIProfile);
-  } else {
-    await local.set(`profile.${modal.user.id}`, {
-      bio,
-      username,
-    });
-  }
+  try {
+    if (profile) {
+      await db.profiles.update({
+        data: {
+          name,
+          bio,
+        },
+        where: { id: modal.user.id },
+      });
+    } else {
+      await db.profiles.create({
+        data: {
+          id: modal.user.id,
+          name,
+          bio,
+          purplets: 0,
+        },
+      });
+    }
 
-  msg.edit({
-    embeds: [
-      new MessageEmbed({
-        author,
-        fields,
-        image,
-        color,
-        thumbnail,
-      })
-        .setTitle(username ?? title)
-        .setDescription(bio ?? "*This user doesn't have a bio yet...*"),
-    ],
-  });
-
-  modal
-    .reply({
+    msg.edit({
       embeds: [
-        new MessageEmbed()
-          .setTitle(`${emojis.success} Profile updated!`)
-          .setColor(`#${colors.success}`),
+        new MessageEmbed({
+          author,
+          fields,
+          image,
+          color,
+          thumbnail,
+        })
+          .setTitle(name)
+          .setDescription(
+            bio
+              ? await CRBTscriptParser(bio, modal.user, modal.guild)
+              : "*This user doesn't have a bio yet...*"
+          ),
       ],
-    })
-    .then(() => setTimeout(() => modal.deleteReply(), 1000))
-    .catch(() => {});
+    });
+
+    modal
+      .reply({
+        embeds: [
+          new MessageEmbed()
+            .setTitle(`${emojis.success} Profile updated!`)
+            .setColor(`#${colors.success}`),
+        ],
+      })
+      .then(() => setTimeout(() => modal.deleteReply(), 1000))
+      .catch(() => {});
+  } catch (error) {
+    if (String(error).includes('Unique constraint failed on the fields: (`name`)')) {
+      modal
+        .reply(CRBTError('This profile name is already taken.', 'An error occured!', null, false))
+        .then(() => setTimeout(() => modal.deleteReply(), 1000));
+    }
+  }
 });

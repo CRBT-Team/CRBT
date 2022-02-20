@@ -21,11 +21,9 @@ const handleError = (
     (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
       embeds: [
         new MessageEmbed({
-          author: {
-            iconURL: illustrations.error,
-            name: title,
-          },
-          description: title.includes('generic') ? description.split('\n')[0] : description,
+          description: title.includes('generic')
+            ? `\`\`\`\n${description.split('\n').slice(1).join('\n')}\`\`\``
+            : description,
           fields: fields || [],
           color: `#${colors.error}`,
         }),
@@ -42,16 +40,19 @@ const handleError = (
     footer: {
       text: footer,
     },
+    fields: log ? [] : fields,
     color: `#${colors.error}`,
   });
 };
 
 export function CRBTError(
   desc: string,
-  title: string = 'An error occured!',
-  footer: string = ''
+  title = 'An error occured!',
+  footer = '',
+  ephemeral = true,
+  fields?: EmbedField[]
 ): InteractionReplyOptions {
-  return { embeds: [handleError(title, desc, footer)], ephemeral: true };
+  return { embeds: [handleError(title, desc, footer, fields)], ephemeral };
 }
 
 export function UnknownError(context: Interaction, desc: string): InteractionReplyOptions {
@@ -64,22 +65,23 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
         [
           {
             name: 'Context',
-            value: context.toString(),
+            value: `\`\`\`\n${context.toString()}\`\`\``,
             inline: false,
           },
           {
             name: 'User ID',
-            value: context.user.id,
+            value: `\`\`\`\n${context.user.id}\`\`\``,
             inline: false,
           },
-        ]
+        ],
+        true
       ),
     ],
     ephemeral: true,
   };
 }
 
-export function CooldownError(relativetime: number): InteractionReplyOptions {
+export function CooldownError(context: Interaction, relativetime: number): InteractionReplyOptions {
   return {
     embeds: [
       handleError(
@@ -89,7 +91,7 @@ export function CooldownError(relativetime: number): InteractionReplyOptions {
     ],
     components: components(
       row(
-        new RemindButton(relativetime)
+        new RemindButton({ relativetime, userId: context.user.id })
           .setStyle('SECONDARY')
           .setLabel('Add Reminder')
           .setEmoji(emojis.misc.reminder)

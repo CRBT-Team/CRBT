@@ -33,9 +33,13 @@ export default ChatCommand({
       .setTitle('Bug report')
       .setDescription(
         !anonymous
-          ? `${this.user} in **[${(await this.guild.fetch()).name}](${
-              ((await this.fetchReply()) as Message).url
-            })**` + `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
+          ? `${this.user} in **[${
+              this.channel.type === 'DM'
+                ? `${(await this.guild.fetch()).name}](${
+                    ((await this.fetchReply()) as Message).url
+                  })**`
+                : `DMs`
+            }` + `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
           : `Anonymously reported\n\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
       )
       .addField('Status', 'Pending', true)

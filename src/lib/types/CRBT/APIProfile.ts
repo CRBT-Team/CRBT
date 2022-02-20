@@ -5,7 +5,7 @@ type Banner = keyof typeof items.banners;
 
 export type APIProfile = {
   id: string;
-  username?: string;
+  name?: string;
   verified?: boolean;
   bio?: string;
   purplets?: number;

@@ -28,14 +28,14 @@ export default ChatCommand({
       )
       .setColor(await getColor(this.user));
 
-    if (this.guild.ownerId !== this.user.id) {
+    if (this.channel.type === 'DM' ?? this.guild.ownerId !== this.user.id) {
       e.addField('Like CRBT?', 'Support us by adding it to your server!');
     }
 
     await this.reply({
       embeds: [e],
       components:
-        this.guild.ownerId !== this.user.id
+        this.channel.type === 'DM' ?? this.guild.ownerId !== this.user.id
           ? components(
               row(
                 new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)

@@ -16,7 +16,7 @@ export default ChatCommand({
     'ID of the server to get info on. Defaults to the current server.'
   ),
   async handle({ id }) {
-    if (id && !this.client.guilds.cache.has(id))
+    if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
           `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
