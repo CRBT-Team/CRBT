@@ -65,8 +65,7 @@ export default OnEvent('modalSubmit', async (modal: ModalInteraction) => {
           .setTitle(`${emojis.success} Profile updated!`)
           .setColor(`#${colors.success}`),
       ],
-      ephemeral: true,
     })
-    .then(() => setTimeout(() => modal.deleteReply(), 200))
+    .then(() => setTimeout(() => modal.deleteReply(), 1000))
     .catch(() => {});
 });

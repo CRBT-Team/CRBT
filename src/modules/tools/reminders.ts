@@ -1,6 +1,5 @@
 import { db } from '$lib/db';
 import { getColor } from '$lib/functions/getColor';
-import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
@@ -9,9 +8,7 @@ export default ChatCommand({
   name: 'reminders',
   description: 'Get a list of all of your reminders set with /remind me.',
   async handle() {
-    const userReminders = (
-      await db.from<Reminder>('reminders').select('*').eq('user_id', this.user.id)
-    ).body;
+    const userReminders = await db.reminders.findMany({ where: { user_id: this.user.id } });
 
     await this.reply({
       embeds: [

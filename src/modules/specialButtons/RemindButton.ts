@@ -8,7 +8,7 @@ export const RemindButton = ButtonComponent({
   async handle(relativetime: number) {
     await setReminder({
       reminder: 'Command reminder from CRBT.',
-      expiration: dayjs(relativetime),
+      expiration: dayjs(relativetime).toISOString(),
       user_id: this.user.id,
       destination: 'dm',
       url: (this.message as Message).url,

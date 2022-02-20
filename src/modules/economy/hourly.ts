@@ -1,28 +1,39 @@
-import { db, local } from '$lib/db';
+import { db } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { ChatCommand } from 'purplet';
+
+const usersOnCooldown = new Map();
 
 export default ChatCommand({
   name: 'hourly',
   description: 'Get a few Purplets',
   async handle() {
-    if (Date.now() < (await local.get(`cooldown.hourly.${this.user.id}`))) {
-      return this.reply(CooldownError(await local.get(`cooldown.hourly.${this.user.id}`)));
+    if (usersOnCooldown.has(this.user.id)) {
+      return this.reply(CooldownError(await usersOnCooldown.get(this.user.id)));
     }
-    local.set(`cooldown.hourly.${this.user.id}`, Date.now() + 30000);
-    const user = (await db.from<APIProfile>('profiles').select('*').eq('id', this.user.id)).body[0];
+    usersOnCooldown.set(this.user.id, Date.now() + 30000);
+    setTimeout(() => usersOnCooldown.delete(this.user.id), 30000);
+
+    const user = await db.profiles.findFirst({ where: { id: this.user.id } });
     const income = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
+
     if (user) {
-      await db.rpc('increment', { x: income, row_id: this.user.id });
+      await db.profiles.update({
+        where: {
+          id: this.user.id,
+        },
+        data: {
+          purplets: user.purplets + income,
+        },
+      });
     } else {
-      await db.from<APIProfile>('profiles').insert({
-        id: this.user.id,
-        purplets: income,
+      await db.profiles.create({
+        data: {
+          id: this.user.id,
+          purplets: income,
+        },
       });
     }
-    // add income to user's purplets
-
     await this.reply(`You earned ${income} Purplets!`);
   },
 });

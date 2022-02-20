@@ -16,6 +16,7 @@ export default ChatCommand({
     .string('subject', 'Whatever you need to be reminded about.', true)
     .channel('destination', 'Where the reminder should go (leave blank to send a DM).'),
   async handle({ when, subject, destination }) {
+    const now = dayjs();
     const w = when
       .trim()
       .replaceAll('and', '')
@@ -27,22 +28,21 @@ export default ChatCommand({
     let timeMS: number;
 
     if (w.trim().toLowerCase().startsWith('today')) {
-      const now = dayjs();
       const time = w.split(' ').length === 1 ? null : w.split(' ')[1];
       expiration = time ? dayjs(`${now.format('YYYY-MM-DD')}T${time}Z`) : now.add(30, 'm');
       timeMS = expiration.diff(now);
     }
     if (w.trim().toLowerCase().startsWith('tomorrow')) {
-      const tomorrow = dayjs().add(1, 'day');
+      const tomorrow = now.add(1, 'day');
       const time = w.split(' ').length === 1 ? null : w.split(' ')[1];
       expiration = time ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${time}Z`) : tomorrow;
-      timeMS = tomorrow.diff(dayjs());
+      timeMS = tomorrow.diff(now);
     }
 
     if (!ms(w) && dayjs(w).isValid()) {
-      if (dayjs(w).isAfter(dayjs())) {
+      if (dayjs(w).isAfter(now)) {
         expiration = dayjs(w);
-        timeMS = expiration.diff(dayjs());
+        timeMS = expiration.diff(now);
       } else {
         return this.reply(
           CRBTError('You cannot set a reminder for a time in the past.', 'Time traveling?')
@@ -50,7 +50,7 @@ export default ChatCommand({
       }
     } else if (!!ms(w) && !dayjs(w).isValid()) {
       timeMS = ms(w);
-      expiration = dayjs().add(timeMS, 'ms');
+      expiration = now.add(timeMS, 'ms');
     }
 
     if (!expiration || !timeMS || timeMS < 0) {
@@ -79,9 +79,9 @@ export default ChatCommand({
         );
       }
     }
-    const userReminders = (
-      await db.from<Reminder>('reminders').select('*').eq('user_id', this.user.id)
-    ).body;
+    const userReminders = await db.reminders.findMany({
+      where: { user_id: this.user.id },
+    });
 
     if (userReminders.length >= 5) {
       await this.reply(CRBTError('You can only have 5 reminders at a time.'));
@@ -89,43 +89,17 @@ export default ChatCommand({
 
     await this.deferReply();
 
-    const now = dayjs();
+    const then = now.add(timeMS, 'ms');
+
     const reminder: Reminder = {
       destination: destination ? destination.id : 'dm',
-      expiration: dayjs().add(timeMS, 'ms'),
+      expiration: then.toISOString(),
       reminder: subject,
       user_id: this.user.id,
       url: ((await this.fetchReply()) as Message).url,
     };
 
-    // const req = await db.from<Reminder>('reminders').insert(reminder);
-
-    // setLongerTimeout(async () => {
-    //   const dest =
-    //     !destination && userDMsEnabled(this.user)
-    //       ? this.user
-    //       : (destination as GuildTextBasedChannel);
-    //   dest.send({
-    //     content: destination ? `<@${reminder.user_id}>` : null,
-    //     embeds: [
-    //       new MessageEmbed()
-    //         .setTitle(`${emojis.misc.reminder} Reminder`)
-    //         .setDescription(`Set on <t:${now.unix()}> (<t:${now.unix()}:R>).`)
-    //         .addField('Reminder', reminder.reminder)
-    //         .setColor(await getColor(this.user)),
-    //     ],
-    //     components: components(
-    //       row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
-    //     ),
-    //   });
-    //   await db
-    //     .from<Reminder>('reminders')
-    //     .delete()
-    //     .eq('id', req.body[0].id)
-    //     .eq('user_id', this.user.id);
-    // }, timeMS);
-
-    const expUnix = reminder.expiration.unix();
+    const expUnix = then.unix();
 
     try {
       await setReminder(reminder);
@@ -141,9 +115,9 @@ export default ChatCommand({
                 ? 'You will be reminded by DM'
                 : `Your DMs are currently disabled or you may have blocked ${this.client.user.username}. Make sure to change your privacy settings so a message can be sent in there. Otherwize, we'll ping you on here.`) +
                 `\n` +
-                (reminder.expiration.date() === now.date()
+                (then.date() === now.date()
                   ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
-                  : reminder.expiration.date() === now.date() + 1
+                  : then.date() === now.date() + 1
                   ? `Tomorrow at <t:${expUnix}:T> • <t:${expUnix}:R>.`
                   : `<t:${expUnix}> • <t:${expUnix}:R>.`)
             )

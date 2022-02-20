@@ -1,5 +1,6 @@
 import { colors, db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { Prisma } from '@prisma/client';
 import { MessageEmbed, Permissions, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -36,30 +37,33 @@ export default ChatCommand({
     }
     await this.deferReply();
 
-    const current = await db.from('servers').select('id,voice_linker').eq('id', this.guild.id);
+    const current = (await db.servers.findFirst({
+      where: {
+        id: this.guild.id,
+      },
+      select: {
+        voice_linker: true,
+      },
+    })) as Prisma.JsonObject;
 
-    const req = await db
-      .from('servers')
-      .update({ voice_linker: { voice: voice.id, text: text.id } })
-      .eq('id', this.guild.id);
+    await db.servers.update({
+      where: { id: this.guild.id },
+      data: { voice_linker: { voice: text.id, text: voice.id } },
+    });
 
-    if (req.status === 200) {
-      await this.editReply({
-        embeds: [
-          new MessageEmbed()
-            .setTitle(`${emojis.success} Voice linker set!`)
-            .setDescription(
-              `Whenever someone joins ${voice}, they will now get access to ${text}.` +
-                (current.body[0] && current.body[0].voice_linker
-                  ? `\nThe previous linker between <#${current.body[0].voice_linker.text}> and <#${current.body[0].voice_linker.voice}> was removed\n`
-                  : '\n') +
-                `Note: This will not affect any other channels. When ${this.client.user.username} is offline, the feature will not work and a manual permission overwrite may be needed. `
-            )
-            .setColor(`#${colors.success}`),
-        ],
-      });
-    } else {
-      await this.editReply('Bad');
-    }
+    await this.editReply({
+      embeds: [
+        new MessageEmbed()
+          .setTitle(`${emojis.success} Voice linker set!`)
+          .setDescription(
+            `Whenever someone joins ${voice}, they will now get access to ${text}.` +
+              (current.voice_linker
+                ? `\nThe previous linker between <#${current.text}> and <#${current.voice}> was removed\n`
+                : '\n') +
+              `Note: This will not affect any other channels. When ${this.client.user.username} is offline, the feature will not work and a manual permission overwrite may be needed. `
+          )
+          .setColor(`#${colors.success}`),
+      ],
+    });
   },
 });

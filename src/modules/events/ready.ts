@@ -8,7 +8,7 @@ export default OnEvent('ready', async (client) => {
     name: '/crbt info | crbt.ga',
   });
 
-  (await db.from<Reminder>('reminders').select('*')).body.forEach(async (reminder) => {
+  (await db.reminders.findMany()).forEach(async (reminder: Reminder) => {
     await setReminder(reminder);
   });
 });

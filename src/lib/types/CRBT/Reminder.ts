@@ -1,10 +1,8 @@
-import { Dayjs } from 'dayjs';
-
 export type Reminder = {
-  id?: number;
-  expiration: Dayjs;
+  id?: bigint | number;
+  reminder?: string;
+  expiration: string | Date;
   user_id: string;
-  destination: string | 'dm';
-  reminder: string;
+  destination: string;
   url: string;
 };

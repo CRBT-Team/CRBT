@@ -1,15 +1,17 @@
 {
   "name": "crbt",
-  "version": "11.3.08.5",
+  "version": "11.3.09",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs dev",
-    "build": "node ./node_modules/purplet/dist/index.mjs build"
+    "build": "node ./node_modules/purplet/dist/index.mjs build",
+    "generate": "yarn prisma generate"
   },
   "engines": {
     "node": ">=16.x"
   },
   "dependencies": {
+    "@prisma/client": "^3.9.2",
     "@supabase/supabase-js": "^1.29.1",
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
@@ -29,6 +31,7 @@
     "@types/ms": "^0.7.31",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
-    "prettier-plugin-organize-imports": "^2.3.4"
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "prisma": "^3.9.2"
   }
 }

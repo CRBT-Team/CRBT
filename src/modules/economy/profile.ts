@@ -2,7 +2,7 @@ import { items, local } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { MessageButton, MessageEmbed } from 'discord.js';
+import { MessageButton, MessageEmbed, User } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { EditProfileBtn } from './editProfile';
@@ -39,6 +39,7 @@ export default ChatCommand({
     const u = user ?? this.user;
 
     const profile: APIProfile = await local.get(`profile.${u.id}`);
+
     // const profile = (await db.from<APIProfile>('profiles').select('*').eq('id', u.id)).body[0];
     const pronouns = (
       (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${u.id}`).then((res) =>
@@ -93,14 +94,13 @@ export default ChatCommand({
                 .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
             )
       ),
-      // content: JSON.stringify(profile, null, 2),
     });
   },
 });
 
 export const ctxProfile = UserContextCommand({
   name: 'View CRBT Profile',
-  async handle(u) {
+  async handle(u: User) {
     const profile: APIProfile = await local.get(`profile.${u.id}`);
     // const profile = (await db.from<APIProfile>('profiles').select('*').eq('id', u.id)).body[0];
     const pronouns = (

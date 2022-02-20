@@ -8,7 +8,13 @@ import { setLongerTimeout } from './setLongerTimeout';
 import { userDMsEnabled } from './userDMsEnabled';
 
 export const setReminder = async (reminder: Reminder) => {
-  const id = reminder.id ? reminder.id : (await db.set<Reminder>('reminders', reminder)).id;
+  const id = reminder.id
+    ? reminder.id
+    : (
+        await db.reminders.create({
+          data: reminder,
+        })
+      ).id;
 
   setLongerTimeout(async () => {
     const user = await getDiscordClient().users.fetch(reminder.user_id);
@@ -37,6 +43,10 @@ export const setReminder = async (reminder: Reminder) => {
       ),
     });
 
-    await db.from<Reminder>('reminders').delete().eq('id', id).eq('user_id', reminder.user_id);
+    await db.reminders.delete({
+      where: {
+        id,
+      },
+    });
   }, dayjs(reminder.expiration).diff(new Date()));
 };
