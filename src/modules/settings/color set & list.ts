@@ -4,7 +4,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import canvas from 'canvas';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ButtonComponent, ChatCommand, OptionBuilder } from 'purplet';
 
 const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
@@ -40,11 +40,19 @@ export const colorset = ChatCommand({
     const finalColor = colors[text] ? colors[text] : text;
 
     if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
-      cache.set(`color_${user.id}`, `#${finalColor}`);
-      await db.profiles.update({
-        data: { crbt_accent_color: `#${finalColor}` },
-        where: { id: user.id },
-      });
+      if (finalColor === colors.default) {
+        cache.del(`color_${this.user.id}`);
+        await db.profiles.update({
+          data: { crbt_accent_color: null },
+          where: { id: this.user.id },
+        });
+      } else {
+        cache.set(`color_${user.id}`, `#${finalColor}`);
+        await db.profiles.update({
+          data: { crbt_accent_color: `#${finalColor}` },
+          where: { id: user.id },
+        });
+      }
       await this.reply({
         embeds: [
           new MessageEmbed()
@@ -123,7 +131,59 @@ export const colorlist = ChatCommand({
           '\n' +
           "This color is used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them." +
           '\n' +
-          'You can either choose one of these colors below or use your own [hexadecimal color](https://htmlcolorcodes.com/color-picker/).' +
+          'You can either choose one of these colors below or provide your own [HEX color value](https://htmlcolorcodes.com/color-picker/).' +
+          '\n' +
+          '**To change your accent color, use `/color set`**' +
+          '\n' +
+          'You can sync your CRBT accent color with your Discord profile color by using `/color set Discord Profile Color`.'
+      )
+      .setColor(userColor);
+
+    colorRows.forEach((row) => {
+      if (row.length !== 0) e.addField('‎', row.join('\n'), true);
+    });
+
+    await this.reply({
+      embeds: [e],
+      files: [new MessageAttachment(img.toBuffer(), 'color.png')],
+      ephemeral: true,
+    });
+  },
+});
+
+export const EditColorBtn = ButtonComponent({
+  async handle() {
+    const userColor = await getColor(this.user);
+    const colorRows = [[], [], []];
+    const filteredColorsMap = colorsMap.filter(
+      (colorObj) => !(colorObj.private || colorObj.value === 'profile')
+    );
+
+    filteredColorsMap.forEach((colorObj) => {
+      let currentRow = 0;
+      const maxLength = Math.round(filteredColorsMap.length / 3);
+
+      if (colorRows[0].length >= maxLength) currentRow = 1;
+      if (colorRows[1].length >= maxLength) currentRow = 2;
+
+      colorRows[currentRow].push(`${colorObj.emoji} \`${colorObj.fullName}\``);
+    });
+
+    const img = canvas.createCanvas(512, 512);
+    const ctx = img.getContext('2d');
+    ctx.fillStyle = userColor;
+    ctx.fillRect(0, 0, img.width, img.height);
+    const e = new MessageEmbed()
+      .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: illustrations.settings })
+      .setThumbnail(`attachment://color.png`)
+      .setDescription(
+        `**Current color:** \`${userColor}\`` +
+          '\n' +
+          "This color is used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them." +
+          '\n' +
+          'You can either choose one of these colors below or provide your own [HEX color value](https://htmlcolorcodes.com/color-picker/).' +
+          '\n' +
+          '**To change your accent color, use `/color set`**' +
           '\n' +
           'You can sync your CRBT accent color with your Discord profile color by using `/color set Discord Profile Color`.'
       )

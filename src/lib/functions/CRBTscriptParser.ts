@@ -1,27 +1,45 @@
-import { db } from '$lib/db';
+import { emojis } from '$lib/db';
+import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { Guild, User } from 'discord.js';
 import { avatar } from './avatar';
 import { banner } from './banner';
 import { getColor } from './getColor';
 
-export const CRBTscriptParser = async (text: string, user: User, guild: Guild) => {
-  const profile = await db.profiles.findFirst({
-    where: { id: user.id },
-  });
+export const CRBTscriptParser = async (
+  text: string,
+  user: User,
+  profile: APIProfile,
+  guild?: Guild
+) => {
+  // const profile = await db.profiles.findFirst({
+  //   where: { id: user.id },
+  // });
+  const member = guild ? await guild.members.fetch(user.id) : undefined;
 
   let values = {
     '<user.name>': user.username,
-    '<user.id>': user.id,
+    '<user.discrim>': user.discriminator,
     '<user.tag>': user.tag,
-    '<purplets>': profile.purplets,
+    '<user.id>': user.id,
     '<user.avatar>': avatar(user),
     '<user.banner>': banner(user) ?? 'None',
-    // '<user.status>': (await customStatus(guild, user)) ?? 'None',
-    '<user.nickname>': (await guild.members.fetch(user)).nickname,
-    '<newline>': '\n',
-    '<profile.bio>': profile.bio ?? '',
+    '<user.nickname>': member ? member.nickname : user.username,
+    '<user.created>': user.createdAt.toISOString(),
+
+    '<server.name>': guild ? guild.name : '',
+    '<server.created>': guild ? guild.createdAt.toISOString() : '',
+    '<server.owner>': guild ? guild.ownerId : '',
+    '<server.icon>': guild ? guild.iconURL({ size: 2048, dynamic: true }) : '',
+    '<server.id>': guild ? guild.id : '',
+
     '<profile.name>': profile.name ?? '',
-    '<profile.color>': (await getColor(user)) ?? 'None',
+    '<profile.bio>': profile.bio ?? '',
+    '<profile.color>': await getColor(user),
+    '<profile.verified>': profile.verified ? emojis.misc.verified : 'false',
+    '<profile.purplets>': profile.purplets,
+
+    '<newline>': '\n',
+    '<purplets>': profile.purplets,
   };
   for (const val of Object.keys(values)) {
     text = text.replaceAll(val, values[val]);

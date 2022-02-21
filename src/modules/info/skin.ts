@@ -18,12 +18,13 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: `${name} - Minecraft info`,
+              iconURL: `https://visage.surgeplay.com/face/64/${id}`,
             })
             .setDescription(
-              `**[Open in NameMC](https://namemc.com/profile/${name})** | **[Open skin](https://crafatar.com/skins/${id})**`
+              `**[Open in NameMC](https://namemc.com/profile/${name})** | **[Open skin](https://visage.surgeplay.com/skin/${id})**`
             )
             .addField('UUID', id, true)
-            .setImage(`https://crafatar.com/renders/body/${id}?overlay`)
+            .setImage(`https://visage.surgeplay.com/full/512/${id}`)
             .setColor(await getColor(this.user)),
         ],
       });

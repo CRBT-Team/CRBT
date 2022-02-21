@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.3.10",
+  "version": "11.3.11",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "yarn start --dev",

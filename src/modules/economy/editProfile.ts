@@ -24,17 +24,31 @@ export const EditProfileBtn = ButtonComponent({
           .setRequired(true),
         new TextInputComponent()
           .setCustomId('profile_bio')
-          .setLabel('A bio')
+          .setLabel('Bio')
           .setStyle('LONG')
           .setPlaceholder('Tell us about yourself. CRBTscript tags accepted.')
           .setMinLength(10)
-          .setMaxLength(100)
+          .setMaxLength(150)
           .setRequired(false)
       );
 
     showModal(modal, {
       client: this.client,
       interaction: this,
+    });
+  },
+});
+
+export const EditPronounsBtn = ButtonComponent({
+  handle() {
+    const pronouns = this.message.embeds[0].fields.find((f) => f.name === 'Pronouns').value;
+    this.reply({
+      content:
+        `**${this.client.user.username}** gets pronoun data from the open **[PronounDB](<https://pronoundb.org/>)** service.\n` +
+        (pronouns === 'Unspecified'
+          ? '**[Register an account](<https://pronoundb.org/register>)** with Discord to display your pronouns on your CRBT profile!'
+          : `You can edit your pronouns from the **[My Account page](<https://pronoundb.org/me>)**.`),
+      ephemeral: true,
     });
   },
 });

@@ -6,7 +6,8 @@ import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { EditProfileBtn } from './editProfile';
+import { EditColorBtn } from '../settings/color set & list';
+import { EditProfileBtn, EditPronounsBtn } from './editProfile';
 
 const Pronouns = {
   unspecified: 'Unspecified',
@@ -57,7 +58,7 @@ export default ChatCommand({
       .setTitle(profile?.name ?? u.username)
       .setDescription(
         profile && profile.bio
-          ? await CRBTscriptParser(profile.bio, u, this.guild)
+          ? await CRBTscriptParser(profile.bio, u, profile, this.guild)
           : "*This user doesn't have a bio yet...*"
       )
       .setImage(
@@ -84,7 +85,15 @@ export default ChatCommand({
         u.id === this.user.id
           ? components(
               row(
-                new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+                new EditProfileBtn(u.id)
+                  .setStyle('PRIMARY')
+                  .setEmoji('✏️')
+                  .setLabel('Edit Profile'),
+                new EditColorBtn()
+                  .setStyle('SECONDARY')
+                  .setEmoji('🎨')
+                  .setLabel('Edit Accent Color'),
+                new EditPronounsBtn().setStyle('SECONDARY').setEmoji('🗣').setLabel('Edit Pronouns')
               )
             )
           : null,
@@ -129,7 +138,7 @@ export const ctxProfile = UserContextCommand({
       .setTitle(profile?.name ?? u.username)
       .setDescription(
         profile && profile.bio
-          ? await CRBTscriptParser(profile.bio, u, this.guild)
+          ? await CRBTscriptParser(profile.bio, u, profile, this.guild)
           : "*This user doesn't have a bio yet...*"
       )
       .setImage(
@@ -156,7 +165,15 @@ export const ctxProfile = UserContextCommand({
         u.id === this.user.id
           ? components(
               row(
-                new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+                new EditProfileBtn(u.id)
+                  .setStyle('PRIMARY')
+                  .setEmoji('✏️')
+                  .setLabel('Edit Profile'),
+                new EditColorBtn()
+                  .setStyle('SECONDARY')
+                  .setEmoji('🎨')
+                  .setLabel('Edit Accent Color'),
+                new EditPronounsBtn().setStyle('SECONDARY').setEmoji('🗣').setLabel('Edit Pronouns')
               )
             )
           : null,

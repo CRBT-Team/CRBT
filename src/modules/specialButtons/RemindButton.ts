@@ -16,7 +16,7 @@ export const RemindButton = ButtonComponent({
       expiration: dayjs(relativetime).toISOString(),
       user_id: this.user.id,
       destination: 'dm',
-      url: (this.message as Message).url,
+      url: (this.message as Message).url.replace('https://discord.com/channels/', ''),
     }).then(async () => {
       await this.update({
         components: [],

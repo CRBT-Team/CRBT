@@ -1,4 +1,4 @@
-import { UnknownError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import translate from '@vitalets/google-translate-api';
 import { MessageEmbed } from 'discord.js';
@@ -47,6 +47,13 @@ export default ChatCommand({
 export const ctxCommand = MessageContextCommand({
   name: 'Translate Message',
   async handle(message) {
+    if (!message.content) {
+      return this.reply(
+        CRBTError(
+          "This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using `/translate`."
+        )
+      );
+    }
     try {
       const tr = await translate(message.content, { to: this.locale.split('-')[0] });
 

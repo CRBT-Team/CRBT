@@ -29,11 +29,11 @@ export default ChatCommand({
             .setAuthor({ name: `${u.tag} - Balance`, iconURL: avatar(u, 64) })
             .setDescription(
               `
-            ${emojis.purplet} **${req?.purplets ?? 0} Purplets**`
+            ${emojis.purplet} **${req ? req.purplets : 0} Purplets**`
             )
             .addField(
               'Leaderboard rank',
-              !req.purplets
+              !req
                 ? 'Not on the global leaderboard (`/leaderboard`)'
                 : `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}** out of ${
                     leaderboard.length

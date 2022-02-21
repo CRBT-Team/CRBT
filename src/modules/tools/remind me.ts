@@ -2,7 +2,6 @@ import { colors, db, emojis } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setReminder } from '$lib/functions/setReminder';
-import { userDMsEnabled } from '$lib/functions/userDMsEnabled';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
 import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
@@ -20,22 +19,31 @@ export default ChatCommand({
     const w = when
       .trim()
       .replaceAll('and', '')
-      .replaceAll('at', '')
-      .replaceAll('on', '')
-      .replaceAll('in', '')
-      .trim();
+      .replace('at', '')
+      .replace('on', '')
+      .replace('in', '')
+      .trim()
+      .replaceAll('  ', ' ');
+
+    console.log(w);
     let expiration: Dayjs;
     let timeMS: number;
 
-    if (w.trim().toLowerCase().startsWith('today')) {
-      const time = w.split(' ').length === 1 ? null : w.split(' ')[1];
-      expiration = time ? dayjs(`${now.format('YYYY-MM-DD')}T${time}Z`) : now.add(30, 'm');
+    if (w.trim().toLowerCase().startsWith('today') || when.trim().toLowerCase().startsWith('at')) {
+      const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
+      expiration = time
+        ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
+        : now.add(30, 'm');
       timeMS = expiration.diff(now);
     }
     if (w.trim().toLowerCase().startsWith('tomorrow')) {
       const tomorrow = now.add(1, 'day');
-      const time = w.split(' ').length === 1 ? null : w.split(' ')[1];
-      expiration = time ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${time}Z`) : tomorrow;
+      const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
+      // console.log(time);
+      expiration = !!time
+        ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
+        : tomorrow;
+      // console.log(expiration);
       timeMS = tomorrow.diff(now);
     }
 
@@ -62,7 +70,6 @@ export default ChatCommand({
       return this.reply(CRBTError('You cannot set a reminder for more than 2 years from now.'));
     }
 
-    //check if the destination is a valid text channel and if both the user & the bot can send messages
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
@@ -84,22 +91,20 @@ export default ChatCommand({
     });
 
     if (userReminders.length >= 5) {
-      await this.reply(CRBTError('You can only have 5 reminders at a time.'));
+      return this.reply(CRBTError('You can only have 5 reminders at a time.'));
     }
 
     await this.deferReply();
 
-    const then = now.add(timeMS, 'ms');
-
     const reminder: Reminder = {
       destination: destination ? destination.id : 'dm',
-      expiration: then.toISOString(),
+      expiration: expiration.toISOString(),
       reminder: subject,
       user_id: this.user.id,
-      url: ((await this.fetchReply()) as Message).url,
+      url: ((await this.fetchReply()) as Message).url.replace('https://discord.com/channels/', ''),
     };
 
-    const expUnix = then.unix();
+    const expUnix = expiration.unix();
 
     try {
       await setReminder(reminder);
@@ -111,13 +116,11 @@ export default ChatCommand({
             .setDescription(
               (destination
                 ? `You will be reminded in ${destination}`
-                : userDMsEnabled(this.user)
-                ? 'You will be reminded by DM'
-                : `Your DMs are currently disabled or you may have blocked ${this.client.user.username}. Make sure to change your privacy settings so a message can be sent in there. Otherwize, we'll ping you on here.`) +
+                : 'You will be reminded by DM') +
                 `\n` +
-                (then.date() === now.date()
+                (expiration.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
                   ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
-                  : then.date() === now.date() + 1
+                  : expiration.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
                   ? `Tomorrow at <t:${expUnix}:T> • <t:${expUnix}:R>.`
                   : `<t:${expUnix}> • <t:${expUnix}:R>.`)
             )
@@ -130,3 +133,19 @@ export default ChatCommand({
     }
   },
 });
+
+const convertTime12to24 = (time12h: string) => {
+  const [time, modifier] = time12h.toLowerCase().split(/ |p|a/);
+
+  let [hours, minutes]: (string | number)[] = time.split(':');
+
+  if (hours === '12') {
+    hours = '00';
+  }
+
+  if (time12h.toLowerCase().endsWith('pm')) {
+    hours = parseInt(hours, 10) + 12;
+  }
+
+  return minutes ? `${hours}:${minutes}` : `${hours}:00`;
+};

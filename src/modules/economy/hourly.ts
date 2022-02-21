@@ -21,8 +21,8 @@ export default ChatCommand({
       await local.set(`${this.user.id}`, 0, { table: 'hstreak' });
     }
 
-    usersOnCooldown.set(this.user.id, Date.now() + 30000);
-    setTimeout(() => usersOnCooldown.delete(this.user.id), 30000);
+    usersOnCooldown.set(this.user.id, Date.now() + 3.6e6);
+    setTimeout(() => usersOnCooldown.delete(this.user.id), 3.6e6);
 
     const user = await db.profiles.findFirst({
       where: { id: this.user.id },
@@ -53,19 +53,20 @@ export default ChatCommand({
         new MessageEmbed()
           .setTitle(`${emojis.success} Hourly Purplets`)
           .setDescription(
-            currentStreak < 5
+            (currentStreak < 5
               ? `You claimed your hourly **${
                   emojis.purplet
                 } ${income} Purplets**.\nCurrent streak: **${currentStreak}/5** (${
                   5 - currentStreak
                 } more to go for a bonus!)`
-              : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (5 streak bonus!)`
+              : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (5 streak bonus!)`) +
+              '\nClick the button below to set yourself a reminder to claim your hourly Purplets again.'
           )
           .setColor(`#${colors.success}`),
       ],
       components: components(
         row(
-          new RemindButton({ relativetime: Date.now() + 30000, userId: this.user.id })
+          new RemindButton({ relativetime: Date.now() + 3.6e6, userId: this.user.id })
             // new RemindButton(3.6e6)
             .setStyle('SECONDARY')
             .setLabel('Add Reminder')

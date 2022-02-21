@@ -14,6 +14,11 @@ export default ChatCommand({
       embeds: [
         new MessageEmbed()
           .setTitle(`Your CRBT reminders (${userReminders.length})`)
+          .setDescription(
+            userReminders.length === 0
+              ? "Uh oh, you don't have any reminders set. Use /remind me to set one!"
+              : 'You can create a new reminder with `/remind me`!'
+          )
           .setFields(
             userReminders
               .sort((a, b) => (dayjs(a.expiration).isBefore(b.expiration) ? -1 : 1))
@@ -29,6 +34,7 @@ export default ChatCommand({
           )
           .setColor(await getColor(this.user)),
       ],
+      ephemeral: true,
     });
   },
 });

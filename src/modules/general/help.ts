@@ -14,28 +14,23 @@ export default ChatCommand({
         iconURL: avatar(this.client.user, 64),
       })
       .setDescription(
-        "Most of CRBT's commands are **Slash Commands**, which always start with `/`. Type slash in the chat box and choose CRBT to get started!\n" +
-          'There are also some **Context menu Commands**, which are used by right clicking a message or a user! (Desktop only)\n' +
-          'To get a full list of commands, just type `/` and click <:CRBT:860947227887403048>!\n' +
-          "Here's a few things you can do with CRBT:" +
-          '- Right click a user to get their avatar or their full info.\n' +
-          '- Right click a message to save it for later, translate it to your language or even scan any QR codes!\n' +
-          '- `/emoji info`, which enlarges any Discord emoji and gets you extra info about it!\n' +
-          "- `/color set` to change CRBT's accent color for you, as seen on the side of its messages.\n" +
-          '- `/voice-linker set`, links a text channel\'s visibility to the voice channel of your choice! Useful for "no-mic" or "voice-text" channels!\n' +
-          '- `/remind me` to remind you of anything at any given time.\n\n' +
-          `...and many more to come each month! Stay tuned by joining **[our server](${links.discord})**!`
+        'Type `/` in the chat box and click <:CRBT:860947227887403048> to get a list of commands!\n' +
+          'There are also some commands you can quickly access by right clicking on a message or a user! (Desktop only)\n' +
+          'You can do some much with CRBT, like:\n' +
+          "Setting reminders, linking text to voice channels, getting info on a anything you want... or use CRBT's new economy commands like `/hourly` and `/profile`!\n\n" +
+          `...with many more to come! Stay updated on **[our Discord server](${links.discord})**!`
       )
+      .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
       .setColor(await getColor(this.user));
 
-    if (this.channel.type === 'DM' ?? this.guild.ownerId !== this.user.id) {
+    if (this.channel.type === 'DM' || this.guild.ownerId !== this.user.id) {
       e.addField('Like CRBT?', 'Support us by adding it to your server!');
     }
 
     await this.reply({
       embeds: [e],
       components:
-        this.channel.type === 'DM' ?? this.guild.ownerId !== this.user.id
+        this.channel.type === 'DM' || this.guild.ownerId !== this.user.id
           ? components(
               row(
                 new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)

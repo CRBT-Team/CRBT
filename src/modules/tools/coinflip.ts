@@ -3,7 +3,7 @@ import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
-  name: 'coin flip',
+  name: 'coinflip',
   description: 'Flips a coin and returns the result.',
   async handle() {
     const randomValues: [any, number][] = [

@@ -5,7 +5,6 @@ import { GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
-import { userDMsEnabled } from './userDMsEnabled';
 
 export const setReminder = async (reminder: Reminder) => {
   const id = reminder.id
@@ -19,29 +18,62 @@ export const setReminder = async (reminder: Reminder) => {
   setLongerTimeout(async () => {
     const user = await getDiscordClient().users.fetch(reminder.user_id);
     const dest =
-      reminder.destination === 'dm' && userDMsEnabled(user)
+      reminder.destination === 'dm'
         ? user
         : ((await getDiscordClient().channels.fetch(
             reminder.destination
           )) as GuildTextBasedChannel);
 
-    await dest.send({
-      content: reminder.destination !== 'dm' ? `<@${reminder.user_id}>` : null,
-      embeds: [
-        new MessageEmbed()
-          .setTitle(`${emojis.misc.reminder} Reminder`)
-          .setDescription(
-            `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
-              reminder.expiration
-            ).unix()}:R>).`
+    await dest
+      .send({
+        content: reminder.destination !== 'dm' ? `<@${reminder.user_id}>` : null,
+        embeds: [
+          new MessageEmbed()
+            .setTitle(`${emojis.misc.reminder} Reminder`)
+            .setDescription(
+              `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
+                reminder.expiration
+              ).unix()}:R>).`
+            )
+            .addField('Reminder', reminder.reminder)
+            .setColor(await getColor(await getDiscordClient().users.fetch(reminder.user_id))),
+        ],
+        components: components(
+          row(
+            new MessageButton()
+              .setStyle('LINK')
+              .setLabel('Jump to message')
+              .setURL(`https://discord.com/channels/${reminder.url}`)
           )
-          .addField('Reminder', reminder.reminder)
-          .setColor(await getColor(await getDiscordClient().users.fetch(reminder.user_id))),
-      ],
-      components: components(
-        row(new MessageButton().setStyle('LINK').setLabel('Jump to message').setURL(reminder.url))
-      ),
-    });
+        ),
+      })
+      .catch(async () => {
+        const dest = (await getDiscordClient().channels.fetch(
+          reminder.url.split('/')[1]
+        )) as GuildTextBasedChannel;
+        await dest.send({
+          content: `<@${reminder.user_id}>`,
+          embeds: [
+            new MessageEmbed()
+              .setTitle(`${emojis.misc.reminder} Reminder`)
+              .setDescription(
+                `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
+                  reminder.expiration
+                ).unix()}:R>).`
+              )
+              .addField('Reminder', reminder.reminder)
+              .setColor(await getColor(await getDiscordClient().users.fetch(reminder.user_id))),
+          ],
+          components: components(
+            row(
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel('Jump to message')
+                .setURL(`https://discord.com/channels/${reminder.url}`)
+            )
+          ),
+        });
+      });
 
     await db.reminders.delete({
       where: {

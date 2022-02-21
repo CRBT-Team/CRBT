@@ -46,10 +46,22 @@ export default ChatCommand({
       },
     })) as Prisma.JsonObject;
 
-    await db.servers.update({
-      where: { id: this.guild.id },
-      data: { voice_linker: { voice: text.id, text: voice.id } },
-    });
+    if (current) {
+      await db.servers.update({
+        where: { id: this.guild.id },
+        data: { voice_linker: { voice: text.id, text: voice.id } },
+      });
+    } else {
+      await db.servers.create({
+        data: {
+          id: this.guild.id,
+          voice_linker: {
+            voice: voice.id,
+            text: text.id,
+          },
+        },
+      });
+    }
 
     await this.editReply({
       embeds: [
@@ -57,7 +69,7 @@ export default ChatCommand({
           .setTitle(`${emojis.success} Voice linker set!`)
           .setDescription(
             `Whenever someone joins ${voice}, they will now get access to ${text}.` +
-              (current.voice_linker
+              (current
                 ? `\nThe previous linker between <#${current.text}> and <#${current.voice}> was removed\n`
                 : '\n') +
               `Note: This will not affect any other channels. When ${this.client.user.username} is offline, the feature will not work and a manual permission overwrite may be needed. `

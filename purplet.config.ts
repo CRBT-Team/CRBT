@@ -8,7 +8,13 @@ import {
 
 export default defineConfig({
   discord: {
-    commandGuilds: process.argv.includes('--dev') ? ['782584672298729473'] : [],
+    commandGuilds: process.argv.includes('--dev')
+      ? [
+          '782584672298729473', // CRBT Community
+          // '843530687260524585', // Clembs Emoji
+          // '832924281519341638', // CRBT Demo
+        ]
+      : [],
     clientOptions: {
       allowedMentions: {
         repliedUser: false,
@@ -30,13 +36,9 @@ export default defineConfig({
     new ChatCommandHandler(),
     new ContextCommandHandler(),
     new TextCommandHandler({
-      prefix: [
-        '<@!859369676140314624>',
-        '<@859369676140314624>',
-        '<@!595731552709771264>',
-        '<@595731552709771264>',
-        '()',
-      ],
+      prefix: process.argv.includes('--dev')
+        ? ['<@!859369676140314624>', '<@859369676140314624>', '()']
+        : ['<@!595731552709771264>', '<@595731552709771264>'],
     }),
   ],
 });
