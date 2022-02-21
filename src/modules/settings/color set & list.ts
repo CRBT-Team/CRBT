@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { colors, db, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
@@ -40,13 +41,13 @@ export const colorset = ChatCommand({
 
     if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
       if (finalColor === colors.default) {
-        // cache.del(`color_${this.user.id}`);
+        cache.del(`color_${this.user.id}`);
         await db.profiles.update({
           data: { crbt_accent_color: null },
           where: { id: this.user.id },
         });
       } else {
-        // cache.set(`color_${user.id}`, `#${finalColor}`);
+        cache.set(`color_${user.id}`, `#${finalColor}`);
         await db.profiles.update({
           data: { crbt_accent_color: `#${finalColor}` },
           where: { id: user.id },
@@ -71,7 +72,7 @@ export const colorset = ChatCommand({
           )
         );
       } else {
-        // cache.set(`color_${user.id}`, 'profile');
+        cache.set(`color_${user.id}`, 'profile');
         await db.profiles.update({
           data: { crbt_accent_color: 'profile' },
           where: { id: user.id },
