@@ -10,9 +10,8 @@
     ".eslintignore": true,
     "yarn.lock": true,
     "node_modules": true,
-    "dist": true,
+    // "dist": true,
     ".prettierrc": true,
-    ".vscode": true,
     ".gitattributes": true
   },
   "typescript.tsdk": "node_modules\\typescript\\lib"

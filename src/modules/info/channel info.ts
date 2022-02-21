@@ -1,4 +1,5 @@
 import { illustrations } from '$lib/db';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
@@ -15,7 +16,11 @@ export default ChatCommand({
     'The channel to get info from. Leave blank to get the current one.'
   ),
   async handle({ channel }) {
-    let c: D.GuildChannel = (channel ?? (await this.channel.fetch())) as D.GuildChannel;
+    if (this.channel.type === 'DM') {
+      return this.reply(CRBTError('This command cannot be used in DMs'));
+    }
+
+    const c: D.GuildChannel = (channel ?? (await this.channel.fetch())) as D.GuildChannel;
     const i = illustrations.channels;
     const categories = (await this.guild.fetch()).channels.cache.filter(
       (c) => c.type === 'GUILD_CATEGORY'

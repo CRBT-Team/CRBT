@@ -15,11 +15,12 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "Create new Purplet command": {
+  "Create new Purplet slash command": {
     "scope": "javascript,typescript",
-    "prefix": "purplet",
+    "prefix": "command",
     "body": [
       "import { ChatCommand, OptionBuilder } from 'purplet';",
+      "import { MessageEmbed } from 'discord.js';",
       "",
       "export default ChatCommand({",
       "  name: '$1',",
@@ -30,6 +31,38 @@
       "  },",
       "});"
     ],
-    "description": "Create new Purplet command"
+    "description": "Create new Purplet slash command"
+  },
+  "Create new Purplet message context menu command": {
+    "scope": "javascript,typescript",
+    "prefix": "messagectx",
+    "body": [
+      "import { MessageContextCommand } from 'purplet';",
+      "import { MessageEmbed } from 'discord.js';",
+      "",
+      "export default MessageContextCommand({",
+      "  name: '$1',",
+      "  async handle({ message }) {",
+      "    $2",
+      "  },",
+      "});"
+    ],
+    "description": "Create new Purplet message context menu command"
+  },
+  "Create new Purplet user context menu command": {
+    "scope": "javascript,typescript",
+    "prefix": "userctx",
+    "body": [
+      "import { UserContextCommand } from 'purplet';",
+      "import { MessageEmbed } from 'discord.js';",
+      "",
+      "export default UserContextCommand({",
+      "  name: '$1',",
+      "  async handle({ message }) {",
+      "    $2",
+      "  },",
+      "});"
+    ],
+    "description": "Create new Purplet user context menu command"
   }
 }

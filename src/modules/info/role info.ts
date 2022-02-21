@@ -1,3 +1,4 @@
+import { CRBTError } from '$lib/functions/CRBTError';
 import { keyPerms } from '$lib/functions/keyPerms';
 import canvas from 'canvas';
 import dayjs from 'dayjs';
@@ -9,6 +10,10 @@ export default ChatCommand({
   description: 'Gives information about a role.',
   options: new OptionBuilder().role('role', 'The role to give info about.', true),
   async handle({ role }) {
+    if (this.channel.type === 'DM') {
+      return this.reply(CRBTError('This command cannot be used in DMs'));
+    }
+
     const img = canvas.createCanvas(512, 512);
     const ctx = img.getContext('2d');
     ctx.fillStyle = role.hexColor;

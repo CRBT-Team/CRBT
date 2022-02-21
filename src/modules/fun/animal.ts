@@ -1,9 +1,9 @@
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
+import { Interaction, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, Choice, OptionBuilder } from 'purplet';
+import { ButtonComponent, ChatCommand, Choice, components, OptionBuilder, row } from 'purplet';
 
-const animals = [
+const animals = <const>[
   {
     name: 'Dog',
     emoji: ['🐶'],
@@ -39,21 +39,32 @@ export default ChatCommand({
   description: 'Get a random cute animal!',
   options: new OptionBuilder().enum('type', 'Which animal do you want to see?', choices, true),
   async handle({ type }) {
-    const emojis = animals.find(({ name }) => name.toLowerCase() === type).emoji;
-    const baseUrl = 'https://some-random-api.ml/';
-
-    const img = ((await fetch(baseUrl + 'img/' + type).then((res) => res.json())) as any).link;
-    const fact = ((await fetch(baseUrl + 'facts/' + type).then((res) => res.json())) as any).fact;
-    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setTitle(`${emoji} Random ${type}!`)
-          .addField('Did you know?', fact)
-          .setImage(img)
-          .setColor(await getColor(this.user)),
-      ],
-    });
+    await this.reply(await loadAnimal(type, this));
   },
 });
+
+export const Refresh = ButtonComponent({
+  async handle(animal: string) {
+    this.update(await loadAnimal(animal, this));
+  },
+});
+
+const loadAnimal = async (animal: string, i: Interaction) => {
+  const emojis = animals.find(({ name }) => name.toLowerCase() === animal).emoji;
+  const baseUrl = 'https://some-random-api.ml/';
+
+  const img = ((await fetch(baseUrl + 'img/' + animal).then((res) => res.json())) as any).link;
+  const fact = ((await fetch(baseUrl + 'facts/' + animal).then((res) => res.json())) as any).fact;
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+  return {
+    embeds: [
+      new MessageEmbed()
+        .setTitle(`${emoji} Random ${animal}!`)
+        .addField('Did you know?', fact)
+        .setImage(img)
+        .setColor(await getColor(i.user)),
+    ],
+    components: components(row(new Refresh(animal).setStyle('SECONDARY').setLabel('Another one!'))),
+  };
+};

@@ -16,10 +16,9 @@ export default ChatCommand({
     'ID of the server to get info on. Defaults to the current server.'
   ),
   async handle({ id }) {
-    if (id && !this.client.guilds.cache.has(id))
+    if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
-          this,
           `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
           `Who's that?`
         )
@@ -103,7 +102,7 @@ export default ChatCommand({
 
     e.addField(
       `Members`,
-      `${emojis.users.humans} ${guild.approximateMemberCount}`,
+      `${emojis.users.humans} ${guild.members.cache.size ?? guild.approximateMemberCount}`,
       // `${emojis.users.status.online} ${mStatus('online')} ` +
       //   `${emojis.users.status.idle} ${mStatus('idle')}` +
       //   '\n' +

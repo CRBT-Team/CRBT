@@ -1,4 +1,4 @@
-import { CRBTError } from '$lib/functions/CRBTError';
+import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageEmbed } from 'discord.js';
 import { Parser } from 'expr-eval';
@@ -21,7 +21,7 @@ export default ChatCommand({
         ],
       });
     } catch (e) {
-      await this.reply(CRBTError(this, String(e)));
+      await this.reply(UnknownError(this, String(e)));
     }
   },
 });

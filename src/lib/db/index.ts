@@ -1,3 +1,4 @@
 export * from './config';
-export { db } from './supabase';
+export { local } from './local';
+export { db } from './prisma';
 export { vars } from './variables';

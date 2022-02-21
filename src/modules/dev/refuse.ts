@@ -1,7 +1,6 @@
 import { colors, emojis, illustrations, links, misc } from '$lib/db';
-import { button } from '$lib/functions/button';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
-import { TextCommand } from 'purplet';
+import { MessageButton, MessageEmbed } from 'discord.js';
+import { components, row, TextCommand } from 'purplet';
 
 export default TextCommand({
   name: 'refuse',
@@ -67,15 +66,14 @@ export default TextCommand({
               .setFooter({ text: "Note: You can't reply back to a CRBT message." })
               .setColor(`#${colors.error}`),
           ],
-          components: [
-            new MessageActionRow().addComponents(
-              button(
-                'LINK',
-                `Jump to ${embed.title === 'Bug report' ? 'report' : 'suggestion'}`,
-                msg.url
-              )
-            ),
-          ],
+          components: components(
+            row(
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(`Jump to ${embed.title === 'Bug report' ? 'report' : 'suggestion'}`)
+                .setURL(msg.url)
+            )
+          ),
         });
       }
       await this.delete();

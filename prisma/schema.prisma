@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model color {
+  id    String @id @unique(map: "color_user_key")
+  value String @default("F27187")
+}
+
+model profiles {
+  id                String   @id
+  verified          Boolean? @default(false)
+  crbt_banner       Json?    @db.Json
+  crbt_accent_color String?
+  bio               String?
+  purplets          Float    @db.Real
+  name              String?  @unique
+  crbt_badges       String[]
+}
+
+model reminders {
+  id          BigInt   @id @default(autoincrement())
+  expiration  DateTime @db.Timestamptz(6)
+  user_id     String
+  destination String
+  reminder    String?
+  url         String
+}
+
+model servers {
+  id           String @id
+  voice_linker Json?  @db.Json
+}

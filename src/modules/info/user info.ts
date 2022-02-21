@@ -1,11 +1,11 @@
+import { emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { keyPerms } from '$lib/functions/keyPerms';
-import { userBadges } from '$lib/functions/userBadges';
 import dayjs from 'dayjs';
-import { GuildMember, MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { GuildMember, MessageEmbed, User, UserContextMenuInteraction } from 'discord.js';
+import { ChatCommand, OptionBuilder, UserContextCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'user info',
@@ -111,3 +111,141 @@ export default ChatCommand({
     });
   },
 });
+
+export const ctxCommand = UserContextCommand({
+  name: 'Get User Info',
+  async handle(user) {
+    const member = (this as UserContextMenuInteraction).targetMember as GuildMember;
+    const roles = member.roles.cache.filter((r) => r.id !== this.guild.id);
+
+    const e = new MessageEmbed()
+      .setAuthor({
+        name: `${user.tag} - User info`,
+        iconURL: avatar(user, 64),
+      })
+      .setDescription(
+        (await userBadges(user)).join(' ') +
+          '\n' +
+          `Profile picture: ${[2048, 512, 256]
+            .map((size) => `**[${size}px](${avatar(user, size)})**`)
+            .join(' | ')} | \`/user pfp user:${user.id}\``
+      )
+      .addField('ID', user.id);
+
+    if (member.nickname) e.addField('Server nickname', member.nickname);
+
+    e.addField(
+      `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
+      roles.size > 0
+        ? roles.map((r) => r.toString()).join(' ')
+        : "*This user doesn't have any roles...*"
+    )
+      .addField(
+        `Global key permissions`,
+        member.permissions.has('ADMINISTRATOR', true) || member.permissions.toArray().length === 0
+          ? 'Administrator (all permissions)'
+          : keyPerms(member.permissions).join(', ')
+      )
+      .addField(
+        'Joined Discord',
+        `<t:${dayjs(user.createdAt).unix()}>\n(<t:${dayjs(user.createdAt).unix()}:R>)`,
+        true
+      )
+      .addField(
+        'Joined server',
+        `<t:${dayjs(member.joinedAt).unix()}>\n(<t:${dayjs(member.joinedAt).unix()}:R>)`,
+        true
+      )
+      .setImage(banner(user, 2048))
+      .setThumbnail(avatar(user, 256))
+      .setColor(await getColor(user));
+
+    await this.reply({ embeds: [e], ephemeral: true });
+  },
+});
+
+// function customStatus(member: GuildMember) {
+//   const status = member.presence.activities.find((a) => a.type === 'CUSTOM');
+//   if (!status) return null;
+//   else return status.emoji ? `${status.emoji} ${status.state}` : status.state;
+// }
+
+// function activities(member: GuildMember) {
+//   const acts = [];
+//   if (!member.presence || member.presence.status.match(/offline|invisible/)) return null;
+//   for (const activity of member.presence.activities.values()) {
+//     switch (activity.type) {
+//       case 'STREAMING':
+//         acts.push(`Streaming **[${activity.name}](${activity.url})** on **${activity.details}**`);
+//         break;
+
+//       case 'LISTENING':
+//         if (activity.name === 'Spotify')
+//           acts.push(
+//             `<:spotify:771863394709536768> **[${activity.details}](https://open.spotify.com/track/${activity.syncId})**`
+//           );
+//         else acts.push(`Listening to **${activity.name}**`);
+//         break;
+
+//       case 'PLAYING':
+//         // if (activity.state) acts.push(`**${activity.name}**, ${activity.state}`);
+//         acts.push(`${activity.name}`);
+//         break;
+
+//       case 'WATCHING':
+//         acts.push(`Watching ${activity.name}`);
+//         break;
+//       case 'COMPETING':
+//         acts.push(`Competing in ${activity.name}`);
+//         break;
+//     }
+//   }
+//   return acts;
+// }
+
+async function userBadges(user: User) {
+  const e = emojis.badges;
+  const badges = [];
+  const flags = (await user.fetchFlags()).toArray();
+  for (const flag of flags) {
+    switch (flag) {
+      case 'HOUSE_BRILLIANCE':
+        badges.push(e.houses.brilliance);
+        break;
+      case 'HOUSE_BALANCE':
+        badges.push(e.houses.balance);
+        break;
+      case 'HOUSE_BRAVERY':
+        badges.push(e.houses.bravery);
+        break;
+      case 'BUGHUNTER_LEVEL_1':
+        badges.push(e.bugHunter1);
+        break;
+      case 'BUGHUNTER_LEVEL_2':
+        badges.push(e.bugHunter1);
+        break;
+      case 'EARLY_SUPPORTER':
+        badges.push(e.earlySupporter);
+        break;
+      case 'HYPESQUAD_EVENTS':
+        badges.push(e.hypesquad);
+        break;
+      case 'DISCORD_EMPLOYEE':
+        badges.push(e.discordStaff);
+        break;
+      case 'PARTNERED_SERVER_OWNER':
+        badges.push(e.partner);
+        break;
+      case 'EARLY_VERIFIED_BOT_DEVELOPER':
+        badges.push(e.developer);
+        break;
+      case 'VERIFIED_BOT':
+        badges.push(e.verifiedBot);
+        break;
+      case 'DISCORD_CERTIFIED_MODERATOR':
+        badges.push('certified mod (no emoji for now)');
+        break;
+    }
+  }
+  return badges;
+}

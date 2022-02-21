@@ -1,11 +1,9 @@
-import { links } from '$lib/db';
+import { links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
-import { button } from '$lib/functions/button';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
-import { ChatCommand } from 'purplet';
+import { MessageButton, MessageEmbed } from 'discord.js';
+import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
 export default ChatCommand({
@@ -26,12 +24,18 @@ export default ChatCommand({
             url: 'https://crbt.ga',
           })
           .setDescription(
-            `Version ${pjson.version} on **[Purplet](${pjson.dependencies["purplet"].slice(1)})**`
+            `Version ${pjson.version} on **[Purplet ${pjson.dependencies['purplet'].slice(
+              1
+            )}](https://crbt.ga/purplet)**`
           )
           .addFields([
             {
               name: 'Members',
-              value: `${this.client.users.cache.size.toLocaleString()}`,
+              value: `${
+                this.client.user.id === misc.CRBTid
+                  ? "Can't get member count"
+                  : this.client.users.cache.size.toLocaleString()
+              }`,
               inline: true,
             },
             {
@@ -54,13 +58,13 @@ export default ChatCommand({
           .setThumbnail(avatar(this.client.user))
           .setColor(await getColor(this.user)),
       ],
-      components: [
-        new MessageActionRow().addComponents(
-          button('LINK', 'Website', 'https://crbt.ga'),
-          button('LINK', 'Add to Server', links.invite),
-          button('LINK', 'Join the Community', links.discord)
-        ),
-      ],
+      components: components(
+        row(
+          new MessageButton().setStyle('LINK').setLabel('Website').setURL('https://crbt.ga'),
+          new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite),
+          new MessageButton().setStyle('LINK').setLabel('Join the Community').setURL(links.discord)
+        )
+      ),
     });
   },
 });
