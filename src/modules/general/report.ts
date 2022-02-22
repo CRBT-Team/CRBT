@@ -33,14 +33,12 @@ export default ChatCommand({
       .setTitle('Bug report')
       .setDescription(
         !anonymous
-          ? `${this.user} in **[${
-              this.channel.type === 'DM'
-                ? `${(await this.guild.fetch()).name}](${
-                    ((await this.fetchReply()) as Message).url
-                  })**`
-                : `DMs`
-            }` + `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
-          : `Anonymously reported\n\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``
+          ? `${this.user} in ` + this.channel.type === 'DM'
+            ? `DMs`
+            : `**[${(await this.guild.fetch()).name}](${
+                ((await this.fetchReply()) as Message).url
+              })**` + `\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``
+          : `Anonymously reported\n\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``
       )
       .addField('Status', 'Pending', true)
       .setColor(`#${colors.yellow}`);

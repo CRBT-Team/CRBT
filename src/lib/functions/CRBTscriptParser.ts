@@ -11,9 +11,6 @@ export const CRBTscriptParser = async (
   profile: APIProfile,
   guild?: Guild
 ) => {
-  // const profile = await db.profiles.findFirst({
-  //   where: { id: user.id },
-  // });
   const member = guild ? await guild.members.fetch(user.id) : undefined;
 
   let values = {
@@ -35,7 +32,7 @@ export const CRBTscriptParser = async (
     '<profile.name>': profile.name ?? '',
     '<profile.bio>': profile.bio ?? '',
     '<profile.color>': await getColor(user),
-    '<profile.verified>': profile.verified ? emojis.misc.verified : 'false',
+    '<profile.verified>': profile.verified ? emojis.verified : 'false',
     '<profile.purplets>': profile.purplets,
 
     '<newline>': '\n',

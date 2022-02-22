@@ -46,7 +46,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           color,
           thumbnail,
         })
-          .setTitle(name)
+          .setTitle(name + (profile?.verified ? ` ${emojis.partner}` : ''))
           .setDescription(
             bio
               ? await CRBTscriptParser(bio, modal.user, modal.guild)

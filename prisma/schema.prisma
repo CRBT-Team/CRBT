@@ -7,15 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model color {
-  id    String @id @unique(map: "color_user_key")
-  value String @default("F27187")
-}
-
 model profiles {
   id                String   @id
   verified          Boolean? @default(false)
-  crbt_banner       Json?    @db.Json
+  crbt_banner       String?
   crbt_accent_color String?
   bio               String?
   purplets          Float    @db.Real

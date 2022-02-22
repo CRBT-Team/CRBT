@@ -1,9 +1,9 @@
 {
   "name": "crbt",
-  "version": "11.3.12",
+  "version": "11.3.13",
   "scripts": {
-    "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
-    "dev": "yarn start --dev",
+    "start": "yarn generate && node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
+    "dev": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs --dev",
     "build": "node ./node_modules/purplet/dist/index.mjs build",
     "generate": "yarn prisma generate"
   },

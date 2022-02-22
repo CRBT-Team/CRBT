@@ -1,13 +1,58 @@
-import { db, items } from '$lib/db';
+import { db, emojis, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { getColor } from '$lib/functions/getColor';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { MessageEmbed } from 'discord.js';
+import { Guild, MessageEmbed, User } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { EditColorBtn } from '../settings/color set & list';
 import { EditProfileBtn, EditPronounsBtn } from './editProfile';
+
+const getProfile = async (user: User, guild: Guild) => {
+  const profile = (await db.profiles.findFirst({
+    where: { id: user.id },
+  })) as APIProfile;
+
+  const pronouns = (
+    (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then((res) =>
+      res.json()
+    )) as { pronouns: string }
+  ).pronouns;
+
+  const e = new MessageEmbed()
+    .setAuthor({
+      name: `${user.tag} - Profile`,
+      iconURL: avatar(user, 64),
+    })
+    .setTitle(
+      profile?.name ? profile.name + (profile?.verified ? ` ${emojis.partner}` : '') : user.username
+    )
+    .setDescription(
+      profile && profile.bio
+        ? await CRBTscriptParser(profile.bio, user, profile, guild)
+        : "*This user doesn't have a bio yet...*"
+    )
+    .setImage(
+      profile && profile.crbt_banner
+        ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
+            profile.crbt_banner
+          }.png`
+        : null
+    )
+    .setColor(await getColor(user));
+
+  if (profile && profile.crbt_badges && profile.crbt_badges.length > 0) {
+    e.addField(
+      `Badges (${profile.crbt_badges.length})`,
+      profile.crbt_badges.map((badge) => items.badges[badge].contents).join(' '),
+      true
+    );
+  }
+  e.addField('Pronouns', Pronouns[pronouns].replace('username', user.username), true);
+
+  return e;
+};
 
 const Pronouns = {
   unspecified: 'Unspecified',
@@ -40,47 +85,8 @@ export default ChatCommand({
   async handle({ user }) {
     const u = user ?? this.user;
 
-    const profile = (await db.profiles.findFirst({
-      where: { id: u.id },
-    })) as APIProfile;
-
-    const pronouns = (
-      (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${u.id}`).then((res) =>
-        res.json()
-      )) as { pronouns: string }
-    ).pronouns;
-
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${u.tag} - Profile`,
-        iconURL: avatar(u, 64),
-      })
-      .setTitle(profile?.name ?? u.username)
-      .setDescription(
-        profile && profile.bio
-          ? await CRBTscriptParser(profile.bio, u, profile, this.guild)
-          : "*This user doesn't have a bio yet...*"
-      )
-      .setImage(
-        profile && profile.crbt_banner
-          ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
-              profile.crbt_banner
-            }.png`
-          : ''
-      )
-      .setColor(await getColor(u));
-
-    if (profile && profile.crbt_badges && profile.crbt_badges.length > 0) {
-      e.addField(
-        `Badges (${profile.crbt_badges.length})`,
-        profile.crbt_badges.map((badge) => items.badges[badge].contents).join(' '),
-        true
-      );
-    }
-    e.addField('Pronouns', Pronouns[pronouns].replace('username', u.username), true);
-
-    this.reply({
-      embeds: [e],
+    await this.reply({
+      embeds: [await getProfile(u, this.guild)],
       components:
         u.id === this.user.id
           ? components(
@@ -97,22 +103,6 @@ export default ChatCommand({
               )
             )
           : null,
-      // components: components(
-      //   u.id === this.user.id
-      // ? row(
-      //     new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
-      //     new MessageButton()
-      //       .setStyle('LINK')
-      //       .setLabel(`Open in CRBT.app`)
-      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-      //   )
-      // : row(
-      //     new MessageButton()
-      //       .setStyle('LINK')
-      //       .setLabel(`Open in CRBT.app`)
-      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-      //   )
-      // ),
     });
   },
 });
@@ -120,47 +110,8 @@ export default ChatCommand({
 export const ctxProfile = UserContextCommand({
   name: 'View CRBT Profile',
   async handle(u) {
-    const profile = (await db.profiles.findFirst({
-      where: { id: u.id },
-    })) as APIProfile;
-
-    const pronouns = (
-      (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${u.id}`).then((res) =>
-        res.json()
-      )) as { pronouns: string }
-    ).pronouns;
-
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${u.tag} - Profile`,
-        iconURL: avatar(u, 64),
-      })
-      .setTitle(profile?.name ?? u.username)
-      .setDescription(
-        profile && profile.bio
-          ? await CRBTscriptParser(profile.bio, u, profile, this.guild)
-          : "*This user doesn't have a bio yet...*"
-      )
-      .setImage(
-        profile && profile.crbt_banner
-          ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
-              profile.crbt_banner
-            }.png`
-          : ''
-      )
-      .setColor(await getColor(u));
-
-    if (profile && profile.crbt_badges && profile.crbt_badges.length > 0) {
-      e.addField(
-        `Badges (${profile.crbt_badges.length})`,
-        profile.crbt_badges.map((badge) => items.badges[badge].contents).join(' '),
-        true
-      );
-    }
-    e.addField('Pronouns', Pronouns[pronouns].replace('username', u.username), true);
-
     this.reply({
-      embeds: [e],
+      embeds: [await getProfile(u, this.guild)],
       components:
         u.id === this.user.id
           ? components(
@@ -177,22 +128,6 @@ export const ctxProfile = UserContextCommand({
               )
             )
           : null,
-      // components: components(
-      //   u.id === this.user.id
-      // ? row(
-      //     new EditProfileBtn(u.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile'),
-      //     new MessageButton()
-      //       .setStyle('LINK')
-      //       .setLabel(`Open in CRBT.app`)
-      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-      //   )
-      // : row(
-      //     new MessageButton()
-      //       .setStyle('LINK')
-      //       .setLabel(`Open in CRBT.app`)
-      //       .setURL(`https://betacrbt.netlify.app/users/${u.id}`)
-      //   )
-      // ),
       ephemeral: u.id !== this.user.id,
     });
   },

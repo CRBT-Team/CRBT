@@ -26,15 +26,15 @@ export default ChatCommand({
       this.client.user.id === misc.CRBTid ? misc.channels.report : misc.channels.reportDev
     )) as TextChannel;
 
-    const e = new MessageEmbed()
-      .setTitle('Suggestion')
-      .setDescription(`${this.user}:` + `\`\`\`\n${message.replace('\\', '\\\\')}\`\`\``)
-      .addField('Status', 'Pending', true)
-      .setColor(`#${colors.yellow}`);
-
     await channel
       .send({
-        embeds: [e],
+        embeds: [
+          new MessageEmbed()
+            .setTitle('Suggestion')
+            .setDescription(`${this.user}:` + `\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``)
+            .addField('Status', 'Pending', true)
+            .setColor(`#${colors.yellow}`),
+        ],
       })
       .then((msg) => {
         msg.react(emojis.misc.thumbsup).then(() => msg.react(emojis.misc.thumbsdown));
