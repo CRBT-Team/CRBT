@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.3.11",
+  "version": "11.3.12",
   "scripts": {
     "start": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "yarn start --dev",
@@ -15,8 +15,7 @@
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
     "dayjs": "^1.10.7",
-    "discord-modals": "^1.1.5",
-    "discord.js": "^13.6.0",
+    "discord.js": "monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
     "expr-eval": "^2.0.2",
     "node-cache": "^5.1.2",

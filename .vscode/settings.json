@@ -9,7 +9,7 @@
     ".prettierignore": true,
     ".eslintignore": true,
     "yarn.lock": true,
-    "node_modules": true,
+    "node_modules": false,
     // "dist": true,
     ".prettierrc": true,
     ".gitattributes": true

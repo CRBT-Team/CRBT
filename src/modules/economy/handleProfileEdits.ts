@@ -2,26 +2,13 @@ import { colors, db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { ButtonInteraction, InteractionWebhook, MessageEmbed } from 'discord.js';
+import { MessageEmbed, ModalSubmitInteraction } from 'discord.js';
 import { OnEvent } from 'purplet';
 
-interface ModalSubmitField {
-  type: 'TEXT_INPUT';
-  customId: string;
-  value: string;
-}
-
-interface ModalInteraction extends ButtonInteraction {
-  version: number;
-  fields: ModalSubmitField[];
-  webhook: InteractionWebhook;
-  getTextInputValue: (id: string) => string;
-}
-
 //@ts-ignore
-export default OnEvent('modalSubmit', async (modal: ModalInteraction) => {
-  const name = modal.getTextInputValue('profile_name');
-  const bio = modal.getTextInputValue('profile_bio');
+export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
+  const name = modal.fields.getTextInputValue('profile_name');
+  const bio = modal.fields.getTextInputValue('profile_bio');
 
   const msg = await modal.channel.messages.fetch(modal.customId);
   const { author, color, fields, image, thumbnail, title } = msg.embeds[0];
@@ -68,16 +55,16 @@ export default OnEvent('modalSubmit', async (modal: ModalInteraction) => {
       ],
     });
 
-    modal
-      .reply({
-        embeds: [
-          new MessageEmbed()
-            .setTitle(`${emojis.success} Profile updated!`)
-            .setColor(`#${colors.success}`),
-        ],
-      })
-      .then(() => setTimeout(() => modal.deleteReply(), 1000))
-      .catch(() => {});
+    modal.reply({
+      embeds: [
+        new MessageEmbed()
+          .setTitle(`${emojis.success} Profile updated!`)
+          .setColor(`#${colors.success}`),
+      ],
+      ephemeral: true,
+    });
+    // .then(() => setTimeout(() => modal.deleteReply(), 1000))
+    // .catch(() => {});
   } catch (error) {
     if (String(error).includes('Unique constraint failed on the fields: (`name`)')) {
       modal

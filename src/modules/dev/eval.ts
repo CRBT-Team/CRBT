@@ -1,4 +1,3 @@
-import * as all from '$lib/db';
 import { Team } from 'discord.js';
 import { TextCommand } from 'purplet';
 import { inspect } from 'util';
@@ -12,7 +11,6 @@ export default TextCommand({
       let evalArgs = args.join(' ').replaceAll('```', '').replace('ts', '').replace('js', '');
       const evaluation =
         `
-        const db = ${JSON.stringify(all)};
         const This = {
           channel: ${JSON.stringify(this)},
           client: ${JSON.stringify(this.client)},
