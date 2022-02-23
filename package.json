@@ -2,10 +2,10 @@
   "name": "crbt",
   "version": "11.3.13",
   "scripts": {
-    "start": "yarn generate && node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
+    "start": "npm run generate && node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs",
     "dev": "node ./node_modules/purplet/dist/index.mjs build && node dist/bot.mjs --dev",
     "build": "node ./node_modules/purplet/dist/index.mjs build",
-    "generate": "yarn prisma generate"
+    "generate": "node ./node_modules/prisma generate"
   },
   "engines": {
     "node": "~16.x"
