@@ -1,4 +1,4 @@
-import { colors, emojis, illustrations, misc } from '$lib/db';
+import { colors, db, emojis, illustrations, misc } from '$lib/db';
 import dayjs from 'dayjs';
 import {
   EmbedField,
@@ -81,7 +81,21 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
   };
 }
 
-export function CooldownError(context: Interaction, relativetime: number): InteractionReplyOptions {
+export async function CooldownError(
+  context: Interaction,
+  relativetime: number
+): Promise<InteractionReplyOptions> {
+  const reminder = await db.reminders.findFirst({
+    where: {
+      user_id: context.user.id,
+      destination: 'dm',
+      reminder: 'Command reminder from CRBT.',
+    },
+    orderBy: {
+      expiration: 'desc',
+    },
+  });
+
   return {
     embeds: [
       handleError(
@@ -89,14 +103,17 @@ export function CooldownError(context: Interaction, relativetime: number): Inter
         `You will be able to use this command <t:${dayjs(relativetime).unix()}:R>...`
       ),
     ],
-    components: components(
-      row(
-        new RemindButton({ relativetime, userId: context.user.id })
-          .setStyle('SECONDARY')
-          .setLabel('Add Reminder')
-          .setEmoji(emojis.misc.reminder)
-      )
-    ),
+    components:
+      reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
+        ? null
+        : components(
+            row(
+              new RemindButton({ relativetime, userId: context.user.id })
+                .setStyle('SECONDARY')
+                .setLabel('Add Reminder')
+                .setEmoji(emojis.misc.reminder)
+            )
+          ),
     ephemeral: true,
   };
 }

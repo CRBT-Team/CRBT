@@ -1,8 +1,8 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { snowStamp } from '$lib/functions/snowStamp';
-import { toTitleCase } from '$lib/functions/toTitleCase';
 import { EmojiRegex } from '$lib/util/regex';
+import { capitalCase } from 'change-case';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import emojiJSON from '../../../data/misc/emoji.json';
@@ -68,7 +68,7 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: `${toTitleCase(emojiData.name)} - Emoji info`,
+              name: `${capitalCase(emojiData.name)} - Emoji info`,
               iconURL: emojiURL,
             })
             .setDescription(`**[View on Emojipedia](https://emojipedia.org/${emoji})**`)
@@ -92,7 +92,6 @@ export default ChatCommand({
     } else {
       await this.reply(
         CRBTError(
-          this,
           'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji.'
         )
       );

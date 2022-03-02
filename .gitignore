@@ -4,3 +4,5 @@ yarn.lock
 yarn-error.log
 dist
 json.sqlite
+# Supabase
+.supabase

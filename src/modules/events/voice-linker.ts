@@ -1,5 +1,4 @@
 import { db } from '$lib/db';
-import { Prisma } from '@prisma/client';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -17,7 +16,7 @@ export default OnEvent('voiceStateUpdate', async (oldState, newState) => {
         voice_linker: true,
       },
     })
-  ).voice_linker as Prisma.JsonObject;
+  )?.voice_linker as any;
 
   if (req) {
     const textChannel = (await newState.guild.channels.fetch(req.text as string)) as TextChannel;

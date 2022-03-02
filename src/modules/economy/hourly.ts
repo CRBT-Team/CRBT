@@ -1,4 +1,4 @@
-import { colors, db, emojis, local } from '$lib/db';
+import { colors, db, emojis } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
@@ -11,14 +11,29 @@ export default ChatCommand({
   description: 'Get a few Purplets',
   async handle() {
     if (usersOnCooldown.has(this.user.id)) {
-      return this.reply(CooldownError(this, await usersOnCooldown.get(this.user.id)));
+      return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id)));
     }
 
-    const currentStreak = ((await local.get(`${this.user.id}`, { table: 'hstreak' })) ?? 0) + 1;
+    const currentStreak =
+      ((
+        await db.misc.findFirst({
+          where: { id: this.user.id },
+          select: { hstreak: true },
+        })
+      )?.hstreak ?? 0) + 1;
+
     if (currentStreak < 5) {
-      await local.add(`${this.user.id}`, 1, { table: 'hstreak' });
+      await db.misc.upsert({
+        create: { hstreak: currentStreak, id: this.user.id },
+        update: { hstreak: currentStreak },
+        where: { id: this.user.id },
+      });
     } else {
-      await local.set(`${this.user.id}`, 0, { table: 'hstreak' });
+      await db.misc.upsert({
+        create: { hstreak: 0, id: this.user.id },
+        update: { hstreak: 0 },
+        where: { id: this.user.id },
+      });
     }
 
     usersOnCooldown.set(this.user.id, Date.now() + 3.6e6);

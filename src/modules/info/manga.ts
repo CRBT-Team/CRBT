@@ -1,6 +1,6 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { toTitleCase } from '$lib/functions/toTitleCase';
+import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -99,9 +99,9 @@ export default ChatCommand({
                 .join(', '),
               true
             )
-            .addField('Demographic', toTitleCase(attr.publicationDemographic), true)
+            .addField('Demographic', capitalCase(attr.publicationDemographic), true)
             .addField('Chapters', attr.status === 'ongoing' ? `Ongoing` : attr.lastChapter, true)
-            .addField('Rating', toTitleCase(attr.contentRating), true)
+            .addField('Rating', capitalCase(attr.contentRating), true)
             // .addField(
             //   'Score',
             //   `${anime.attributes.averageRating}/100\nTop ${

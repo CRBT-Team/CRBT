@@ -6,7 +6,7 @@ import { OnEvent } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({
-    name: '/crbt info | crbt.ga',
+    name: '🇺🇦 • crbt.ga',
   });
 
   (await db.reminders.findMany()).forEach(async (reminder: Reminder) => {

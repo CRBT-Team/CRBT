@@ -26,7 +26,7 @@ export const setReminder = async (reminder: Reminder) => {
 
     await dest
       .send({
-        content: reminder.destination !== 'dm' ? `<@${reminder.user_id}>` : null,
+        content: reminder.destination !== 'dm' ? user.toString() : null,
         embeds: [
           new MessageEmbed()
             .setTitle(`${emojis.misc.reminder} Reminder`)
@@ -52,7 +52,7 @@ export const setReminder = async (reminder: Reminder) => {
           reminder.url.split('/')[1]
         )) as GuildTextBasedChannel;
         await dest.send({
-          content: `<@${reminder.user_id}>`,
+          content: user.toString(),
           embeds: [
             new MessageEmbed()
               .setTitle(`${emojis.misc.reminder} Reminder`)
