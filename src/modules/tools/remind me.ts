@@ -25,7 +25,7 @@ export default ChatCommand({
       .trim()
       .replaceAll('  ', ' ');
 
-    console.log(w);
+    // console.log(w);
     let expiration: Dayjs;
     let timeMS: number;
 

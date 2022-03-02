@@ -1,7 +1,7 @@
 import { colors, emojis, links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { toTitleCase } from '$lib/functions/toTitleCase';
 import canvas from 'canvas';
+import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
 import { AllowedImageSize, MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
@@ -145,9 +145,9 @@ export default ChatCommand({
 
     e.addField(
       'Security',
-      `Verification level: ${toTitleCase(
+      `Verification level: ${capitalCase(
         guild.verificationLevel.replace('_', ' ')
-      )}\nContent filter: ${toTitleCase(
+      )}\nContent filter: ${capitalCase(
         guild.explicitContentFilter.replace('_', ' ')
       )}\n2FA for Moderation: ${guild.mfaLevel === 'NONE' ? 'No' : 'Yes'}`,
       true

@@ -9,7 +9,7 @@ export const EditProfileBtn = ButtonComponent({
       return this.reply(CRBTError('You can only edit your own profile.'));
     }
 
-    const { bio, name } = await db.profiles.findFirst({
+    const profile = await db.profiles.findFirst({
       where: { id: userId },
       select: { name: true, bio: true },
     });
@@ -25,7 +25,7 @@ export const EditProfileBtn = ButtonComponent({
             .setLabel('Name')
             .setStyle('SHORT')
             .setPlaceholder('Your CRBT profile name, should be unique.')
-            .setValue(name ?? '')
+            .setValue(profile?.name ?? '')
             .setMinLength(3)
             .setMaxLength(20)
             .setRequired(true)
@@ -36,7 +36,7 @@ export const EditProfileBtn = ButtonComponent({
             .setLabel('Bio')
             .setStyle('PARAGRAPH')
             .setPlaceholder('Tell us about yourself. CRBTscript tags accepted.')
-            .setValue(bio ?? '')
+            .setValue(profile?.bio ?? '')
             .setMinLength(10)
             .setMaxLength(150)
         )

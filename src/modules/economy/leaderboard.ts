@@ -20,19 +20,18 @@ export default ChatCommand({
           new MessageEmbed()
             .setTitle(
               'Global Purplets leaderboard ' +
-                (leaderboard.length > 20
-                  ? `(Top 20/${leaderboard.length})`
+                (leaderboard.length > 10
+                  ? `(Top 10/${leaderboard.length})`
                   : `(${leaderboard.length})`)
             )
             .setDescription(
-              leaderboard
-                .map(
-                  (u, i) =>
-                    `**${i + 1}.** ${this.client.users.cache.get(u.id).username} - **${
-                      emojis.purplet
-                    } ${u.purplets} Purplets**`
-                )
-                .slice(0, 20)
+              assignLeaderboardRanks(leaderboard)
+                .map((u) => {
+                  return `**${u.rank}.** ${this.client.users.cache.get(u.id).username} - **${
+                    emojis.purplet
+                  } ${u.purplets} Purplets**`;
+                })
+                .slice(0, 10)
                 .join('\n')
             )
             .addField(
@@ -53,3 +52,16 @@ export default ChatCommand({
     }
   },
 });
+
+const assignLeaderboardRanks = (leaderboard: any[]) => {
+  let rank = 1;
+  return leaderboard.map((u, i) => {
+    const { purplets } = u;
+
+    if (i > 0 && purplets < leaderboard[i - 1].purplets) {
+      rank = i + 1;
+    }
+
+    return { ...u, rank };
+  });
+};

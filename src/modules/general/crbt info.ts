@@ -1,4 +1,4 @@
-import { links, misc } from '$lib/db';
+import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
@@ -30,22 +30,8 @@ export default ChatCommand({
           )
           .addFields([
             {
-              name: 'Members',
-              value: `${
-                this.client.user.id === misc.CRBTid
-                  ? "Can't get member count"
-                  : this.client.users.cache.size.toLocaleString()
-              }`,
-              inline: true,
-            },
-            {
-              name: 'Servers',
+              name: 'Server count',
               value: `${this.client.guilds.cache.size.toLocaleString()}`,
-              inline: true,
-            },
-            {
-              name: 'Channels',
-              value: `${this.client.channels.cache.size.toLocaleString()}`,
               inline: true,
             },
             {
