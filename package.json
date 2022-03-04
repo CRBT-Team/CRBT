@@ -1,9 +1,10 @@
 {
   "name": "crbt",
-  "version": "11.3.13",
+  "version": "11.4.01",
   "scripts": {
     "start": "npx purplet build && node dist/bot.mjs",
     "dev": "yarn purplet build && node dist/bot.mjs --dev",
+    "db": "supabase start",
     "build": "npx purplet build",
     "generate": "npx prisma generate"
   },

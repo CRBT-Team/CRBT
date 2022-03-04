@@ -18,24 +18,19 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
   })) as APIProfile;
 
   try {
-    if (profile) {
-      await db.profiles.update({
-        data: {
-          name,
-          bio,
-        },
-        where: { id: modal.user.id },
-      });
-    } else {
-      await db.profiles.create({
-        data: {
-          id: modal.user.id,
-          name,
-          bio,
-          purplets: 0,
-        },
-      });
-    }
+    await db.profiles.upsert({
+      update: {
+        name,
+        bio,
+      },
+      create: {
+        id: modal.user.id,
+        name,
+        bio,
+        purplets: 0,
+      },
+      where: { id: modal.user.id },
+    });
 
     msg.edit({
       embeds: [
@@ -46,7 +41,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           color,
           thumbnail,
         })
-          .setTitle(name + (profile?.verified ? ` ${emojis.partner}` : ''))
+          .setTitle(`@${name}${profile?.verified ? ` ${emojis.verified}` : ''}`)
           .setDescription(
             bio
               ? await CRBTscriptParser(bio, modal.user, modal.guild)
@@ -58,7 +53,10 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     modal.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Profile updated!`)
+          .setAuthor({
+            name: 'Profile updated!',
+            iconURL: modal.user.avatarURL(),
+          })
           .setColor(`#${colors.success}`),
       ],
       ephemeral: true,
@@ -67,9 +65,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     // .catch(() => {});
   } catch (error) {
     if (String(error).includes('Unique constraint failed on the fields: (`name`)')) {
-      modal
-        .reply(CRBTError('This profile name is already taken.', 'An error occured!', null, false))
-        .then(() => setTimeout(() => modal.deleteReply(), 1000));
+      modal.reply(CRBTError('This profile name is already taken.'));
     }
   }
 });

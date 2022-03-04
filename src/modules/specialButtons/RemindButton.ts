@@ -1,8 +1,8 @@
-import { colors, db, emojis } from '$lib/db';
+import { db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { setReminder } from '$lib/functions/setReminder';
 import dayjs from 'dayjs';
-import { Message, MessageButton, MessageEmbed } from 'discord.js';
+import { Message, MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const RemindButton = ButtonComponent({
@@ -24,39 +24,10 @@ export const RemindButton = ButtonComponent({
         destination: 'dm',
         reminder: 'Command reminder from CRBT.',
       },
-      orderBy: {
-        expiration: 'desc',
-      },
+      orderBy: { expiration: 'desc' },
     });
 
-    if (reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000) {
-      await this.update({
-        components: components(
-          row(
-            new MessageButton()
-              .setCustomId('none')
-              .setStyle('SECONDARY')
-              .setLabel('Reminder Set')
-              .setEmoji(emojis.success)
-              .setDisabled(true)
-          )
-        ),
-      });
-
-      await this.followUp({
-        embeds: [
-          new MessageEmbed()
-            .setTitle(`${emojis.success} Reminder already set!`)
-            .setDescription(
-              `It seems like you already added a reminder for this command.\nYou will be reminded by DM to use this command in <t:${dayjs(
-                relativetime
-              ).unix()}:R>...`
-            )
-            .setColor(`#${colors.yellow}`),
-        ],
-        ephemeral: true,
-      });
-    } else {
+    if (!reminder || Math.abs(reminder.expiration.getTime() - relativetime) > 60000) {
       await setReminder({
         reminder: 'Command reminder from CRBT.',
         expiration: dayjs(relativetime).toISOString(),
@@ -67,32 +38,18 @@ export const RemindButton = ButtonComponent({
             ? this.message.url.replace('https://discord.com/channels/', '')
             : `@me/${this.user.dmChannel}/${this.message.id}`,
       });
-      await this.update({
-        components: components(
-          row(
-            new MessageButton()
-              .setCustomId('none')
-              .setStyle('SECONDARY')
-              .setLabel('Reminder Set')
-              .setEmoji(emojis.success)
-              .setDisabled(true)
-          )
-        ),
-      });
-
-      await this.followUp({
-        embeds: [
-          new MessageEmbed()
-            .setTitle(`${emojis.success} Reminder set!`)
-            .setDescription(
-              `You will be reminded by DM to use this command in <t:${dayjs(
-                relativetime
-              ).unix()}:R>...`
-            )
-            .setColor(`#${colors.success}`),
-        ],
-        ephemeral: true,
-      });
     }
+    await this.update({
+      components: components(
+        row(
+          new MessageButton()
+            .setCustomId('none')
+            .setStyle('SECONDARY')
+            .setLabel('Reminder set!')
+            .setEmoji(emojis.success)
+            .setDisabled(true)
+        )
+      ),
+    });
   },
 });
