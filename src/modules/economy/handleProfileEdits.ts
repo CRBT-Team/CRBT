@@ -9,15 +9,24 @@ import { OnEvent } from 'purplet';
 
 //@ts-ignore
 export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
-  const name = trimSpecialChars(modal.fields.getTextInputValue('profile_name'));
-  const bio = modal.fields.getTextInputValue('profile_bio');
+  const name = trimSpecialChars(modal.fields.getTextInputValue('profile_name')).trim();
+  const bio = modal.fields.getTextInputValue('profile_bio').trim();
 
   const msg = await modal.channel.messages.fetch(modal.customId);
-  const { author, color, fields, image, thumbnail, title } = msg.embeds[0];
+  const { author, color, fields, image, thumbnail } = msg.embeds[0];
 
   const oldProfile = (await db.profiles.findFirst({
     where: { id: modal.user.id },
   })) as APIProfile;
+
+  if (
+    cache
+      .get<string[]>('profiles')
+      .map((p) => p.toLowerCase())
+      .includes(name.toLowerCase())
+  ) {
+    modal.reply(CRBTError('This profile name is already taken.'));
+  }
 
   try {
     const profile =
@@ -76,10 +85,6 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       ephemeral: true,
     });
   } catch (error) {
-    if (String(error).includes('Unique constraint failed on the fields: (`name`)')) {
-      modal.reply(CRBTError('This profile name is already taken.'));
-    } else {
-      modal.reply(UnknownError(modal, String(error)));
-    }
+    modal.reply(UnknownError(modal, String(error)));
   }
 });
