@@ -52,9 +52,7 @@ export default ChatCommand({
         expiration = dayjs(w);
         timeMS = expiration.diff(now);
       } else {
-        return this.reply(
-          CRBTError('You cannot set a reminder for a time in the past.', 'Time traveling?')
-        );
+        return this.reply(CRBTError('You cannot set a reminder for a time in the past.'));
       }
     } else if (!!ms(w) && !dayjs(w).isValid()) {
       timeMS = ms(w);
@@ -73,17 +71,13 @@ export default ChatCommand({
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
-        return this.reply(
-          CRBTError('The channel you specified is not a valid text channel.', 'Invalid channel')
-        );
+        return this.reply(CRBTError('The channel you specified is not a valid text channel.'));
       } else if (!channel.permissionsFor(this.user).has('SEND_MESSAGES')) {
         return this.reply(
-          CRBTError('You do not have permission to send messages in that channel.', 'No permission')
+          CRBTError('You do not have permission to send messages in that channel.')
         );
       } else if (!channel.permissionsFor(this.guild.me).has('SEND_MESSAGES')) {
-        return this.reply(
-          CRBTError('I do not have permission to send messages in that channel.', 'No permission')
-        );
+        return this.reply(CRBTError('I do not have permission to send messages in that channel.'));
       }
     }
     const userReminders = await db.reminders.findMany({

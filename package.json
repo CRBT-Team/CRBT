@@ -1,9 +1,10 @@
 {
   "name": "crbt",
-  "version": "11.3.13",
+  "version": "11.4.01",
   "scripts": {
     "start": "npx purplet build && node dist/bot.mjs",
     "dev": "yarn purplet build && node dist/bot.mjs --dev",
+    "db": "supabase start",
     "build": "npx purplet build",
     "generate": "npx prisma generate"
   },
@@ -15,6 +16,7 @@
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
     "change-case": "^4.1.2",
+    "convert-units": "^2.3.4",
     "dayjs": "^1.10.7",
     "discord.js": "monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
@@ -25,6 +27,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@types/convert-units": "^2.3.5",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",

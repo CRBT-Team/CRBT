@@ -24,7 +24,7 @@ export const setReminder = async (reminder: Reminder) => {
             reminder.destination
           )) as GuildTextBasedChannel);
 
-    await dest
+    dest
       .send({
         content: reminder.destination !== 'dm' ? user.toString() : null,
         embeds: [
@@ -47,7 +47,7 @@ export const setReminder = async (reminder: Reminder) => {
           )
         ),
       })
-      .catch(async () => {
+      .catch(async (err) => {
         const dest = (await getDiscordClient().channels.fetch(
           reminder.url.split('/')[1]
         )) as GuildTextBasedChannel;

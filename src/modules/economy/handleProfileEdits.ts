@@ -1,40 +1,48 @@
+import { cache } from '$lib/cache';
 import { colors, db, emojis } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
+import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { MessageEmbed, ModalSubmitInteraction } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 //@ts-ignore
 export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
-  const name = modal.fields.getTextInputValue('profile_name');
+  const name = trimSpecialChars(modal.fields.getTextInputValue('profile_name'));
   const bio = modal.fields.getTextInputValue('profile_bio');
 
   const msg = await modal.channel.messages.fetch(modal.customId);
   const { author, color, fields, image, thumbnail, title } = msg.embeds[0];
 
-  const profile = (await db.profiles.findFirst({
+  const oldProfile = (await db.profiles.findFirst({
     where: { id: modal.user.id },
   })) as APIProfile;
 
   try {
-    if (profile) {
-      await db.profiles.update({
-        data: {
-          name,
-          bio,
-        },
-        where: { id: modal.user.id },
-      });
-    } else {
-      await db.profiles.create({
-        data: {
-          id: modal.user.id,
-          name,
-          bio,
-          purplets: 0,
-        },
-      });
+    const profile =
+      name === oldProfile.name && bio === oldProfile.bio
+        ? oldProfile
+        : ((await db.profiles.upsert({
+            update: {
+              name,
+              bio,
+            },
+            create: {
+              id: modal.user.id,
+              name: name,
+              bio,
+              purplets: 0,
+            },
+            where: { id: modal.user.id },
+          })) as APIProfile);
+    if (name !== oldProfile.name) {
+      const map = name;
+      const fromCache = cache.get<string[]>('profiles');
+      cache.set<string[]>('profiles', [
+        ...fromCache.filter((name) => name !== oldProfile.name),
+        map,
+      ]);
     }
 
     msg.edit({
@@ -46,10 +54,10 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           color,
           thumbnail,
         })
-          .setTitle(name + (profile?.verified ? ` ${emojis.partner}` : ''))
+          .setTitle(`@${name}${profile?.verified ? ` ${emojis.verified}` : ''}`)
           .setDescription(
             bio
-              ? await CRBTscriptParser(bio, modal.user, modal.guild)
+              ? await CRBTscriptParser(bio, modal.user, profile, modal.guild)
               : "*This user doesn't have a bio yet...*"
           ),
       ],
@@ -58,18 +66,20 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     modal.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Profile updated!`)
+          .setAuthor({
+            name: 'Profile updated!',
+            iconURL: modal.user.avatarURL(),
+          })
+          .setDescription('Note: Some characters may have been removed as they are not allowed.')
           .setColor(`#${colors.success}`),
       ],
       ephemeral: true,
     });
-    // .then(() => setTimeout(() => modal.deleteReply(), 1000))
-    // .catch(() => {});
   } catch (error) {
     if (String(error).includes('Unique constraint failed on the fields: (`name`)')) {
-      modal
-        .reply(CRBTError('This profile name is already taken.', 'An error occured!', null, false))
-        .then(() => setTimeout(() => modal.deleteReply(), 1000));
+      modal.reply(CRBTError('This profile name is already taken.'));
+    } else {
+      modal.reply(UnknownError(modal, String(error)));
     }
   }
 });

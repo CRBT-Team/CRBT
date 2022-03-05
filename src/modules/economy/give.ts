@@ -54,7 +54,7 @@ export default ChatCommand({
 
       if (!userPurplets || !userPurplets.purplets || userPurplets.purplets < amount) {
         return this.reply(
-          CRBTError(null, "You don't have enough Purplets!", null, true, [
+          CRBTError("You don't have enough Purplets!", true, [
             {
               name: 'Your current balance',
               value: `**${emojis.purplet} ${userPurplets.purplets} Purplets**`,

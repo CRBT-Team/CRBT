@@ -84,33 +84,40 @@ export default ChatCommand({
               true
             )
             .addField(
-              'Genre',
-              attr.tags
-                .filter((tag) => tag.attributes.group === 'genre')
-                .map((tag) => `**[${tag.attributes.name.en}](https://mangadex.org/tag/${tag.id})**`)
-                .join(', '),
+              'Genres',
+              attr.tags.filter((tag) => tag.attributes.group === 'genre').length > 0
+                ? attr.tags
+                    .filter((tag) => tag.attributes.group === 'genre')
+                    .map(
+                      (tag) => `**[${tag.attributes.name.en}](https://mangadex.org/tag/${tag.id})**`
+                    )
+                    .join(', ')
+                : 'None',
               true
             )
             .addField(
               'Themes',
-              attr.tags
-                .filter((tag) => tag.attributes.group === 'theme')
-                .map((tag) => `**[${tag.attributes.name.en}](https://mangadex.org/tag/${tag.id})**`)
-                .join(', '),
+              attr.tags.filter((tag) => tag.attributes.group === 'theme').length > 0
+                ? attr.tags
+                    .filter((tag) => tag.attributes.group === 'theme')
+                    .map(
+                      (tag) => `**[${tag.attributes.name.en}](https://mangadex.org/tag/${tag.id})**`
+                    )
+                    .join(', ')
+                : 'None',
               true
             )
-            .addField('Demographic', capitalCase(attr.publicationDemographic), true)
+            .addField(
+              'Demographic',
+              attr.publicationDemographic ? capitalCase(attr.publicationDemographic) : 'Unknown',
+              true
+            )
             .addField('Chapters', attr.status === 'ongoing' ? `Ongoing` : attr.lastChapter, true)
-            .addField('Rating', capitalCase(attr.contentRating), true)
-            // .addField(
-            //   'Score',
-            //   `${anime.attributes.averageRating}/100\nTop ${
-            //     anime.attributes.ratingRank
-            //   } on **[kitsu.io](https://kitsu.io)**\n${anime.attributes.favoritesCount} ${
-            //     anime.attributes.favoritesCount === 1 ? 'favorite' : 'favorites'
-            //   }`,
-            //   true
-            // )
+            .addField(
+              'Rating',
+              attr.contentRating ? capitalCase(attr.contentRating) : 'Unrated',
+              true
+            )
             .addField('Created at', ` <t:${dayjs(attr.createdAt).unix()}>`, true)
             .addField('Updated at', ` <t:${dayjs(attr.updatedAt).unix()}>`, true)
             // .setThumbnail(anime.attributes.posterImage.medium)

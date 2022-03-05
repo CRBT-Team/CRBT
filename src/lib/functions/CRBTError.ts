@@ -1,5 +1,6 @@
 import { colors, db, emojis, illustrations, misc } from '$lib/db';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
 import {
   EmbedField,
   Interaction,
@@ -10,20 +11,20 @@ import {
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/specialButtons/RemindButton';
 
+dayjs.extend(relativeTime);
+
 const handleError = (
-  title: string,
   description: string,
-  footer?: string,
+  details?: string,
   fields?: EmbedField[],
-  log?: boolean
+  log?: boolean,
+  title?: string
 ) => {
   if (log) {
     (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
       embeds: [
         new MessageEmbed({
-          description: title.includes('generic')
-            ? `\`\`\`\n${description.split('\n').slice(1).join('\n')}\`\`\``
-            : description,
+          description: `\`\`\`\n${details}\`\`\``,
           fields: fields || [],
           color: `#${colors.error}`,
         }),
@@ -34,12 +35,9 @@ const handleError = (
   return new MessageEmbed({
     author: {
       iconURL: illustrations.error,
-      name: title,
+      name: title ?? description,
     },
-    description,
-    footer: {
-      text: footer,
-    },
+    description: title ? description : null,
     fields: log ? [] : fields,
     color: `#${colors.error}`,
   });
@@ -47,21 +45,18 @@ const handleError = (
 
 export function CRBTError(
   desc: string,
-  title = 'An error occured!',
-  footer = '',
   ephemeral = true,
   fields?: EmbedField[]
 ): InteractionReplyOptions {
-  return { embeds: [handleError(title, desc, footer, fields)], ephemeral };
+  return { embeds: [handleError(desc, null, fields)], ephemeral };
 }
 
 export function UnknownError(context: Interaction, desc: string): InteractionReplyOptions {
   return {
     embeds: [
       handleError(
-        'Oh no! A generic error!',
-        `We have no clue what this issue may be. Here's what the error says:\n${desc}\n\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
-        null,
+        `We have no clue what this issue may be. Here's what the error says:\n\`\`\`\n${desc}\`\`\`\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
+        desc,
         [
           {
             name: 'Context',
@@ -74,7 +69,8 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
             inline: false,
           },
         ],
-        true
+        true,
+        'An unknown error has occurred'
       ),
     ],
     ephemeral: true,
@@ -98,10 +94,7 @@ export async function CooldownError(
 
   return {
     embeds: [
-      handleError(
-        'Hold up!',
-        `You will be able to use this command <t:${dayjs(relativetime).unix()}:R>...`
-      ),
+      handleError(`You will be able to use this command ${dayjs(relativetime).fromNow()}...`),
     ],
     components:
       reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
