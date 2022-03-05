@@ -25,7 +25,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       .map((p) => p.toLowerCase())
       .includes(name.toLowerCase())
   ) {
-    modal.reply(CRBTError('This profile name is already taken.'));
+    return modal.reply(CRBTError('This profile name is already taken.'));
   }
 
   try {
