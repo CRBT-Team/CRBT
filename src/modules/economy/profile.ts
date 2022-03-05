@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { db, emojis, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
@@ -90,6 +91,10 @@ export default ChatCommand({
   options: new OptionBuilder()
     .string('lookup_name', 'Search a profile by their CRBT profile name.', false)
     .autocomplete('lookup_name', async ({ lookup_name }) => {
+      return cache
+        .get<string[]>('profiles')
+        .filter((name) => name.toLowerCase().includes(lookup_name.replace('@', '')))
+        .map((name) => ({ name: `@${name}`, value: name }));
       return (
         await db.profiles.findMany({
           where: {
@@ -135,7 +140,9 @@ export default ChatCommand({
       }
     } catch (error) {
       return this.reply(
-        CRBTError("Couldn't find a profile with that username. Make sure to use the autocomplete")
+        CRBTError(
+          "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+        )
       );
     }
 

@@ -28,7 +28,6 @@ export default ChatCommand({
         .addField('Phonetics', def.phonetic ? def.phonetic : '*None available*', true)
         .setColor(await getColor(this.user))
         .setFooter({ text: 'Source: Dictionary API' });
-
       for (const meaning of def.meanings) {
         e.addField(
           `*${meaning.partOfSpeech}*`,
@@ -49,10 +48,10 @@ export default ChatCommand({
       await this.reply({
         embeds: [e],
         files:
-          def.phonetics && def.phonetics[0].audio
+          def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
             ? [
                 new MessageAttachment(
-                  await fetch(`https:${def.phonetics[0].audio}`)
+                  await fetch(`${def.phonetics[0].audio}`)
                     .then((res) => res.arrayBuffer())
                     .then((buffer) => Buffer.from(buffer)),
                   'Pronounciation.mp3'

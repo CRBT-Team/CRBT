@@ -37,6 +37,8 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
     select: { id: true, purplets: true, name: true },
   });
 
+  const userProfile = leaderboard.find((u) => u.id === ctx.user.id);
+
   return {
     embeds: [
       new MessageEmbed()
@@ -47,7 +49,10 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
           assignLeaderboardRanks(leaderboard)
             .map((u) => {
               return `**${u.rank}.** ${
-                u.name ? `@${u.name}` : ctx.client.users.cache.get(u.id).username
+                u.name
+                  ? `@${u.name}`
+                  : ctx.client.users.cache.get(u.id)?.username ??
+                    ctx.client.users.fetch(u.id).then((u) => u.username)
               } - **${emojis.purplet} ${u.purplets} Purplets**`;
             })
             .slice((page - 1) * 10, page * 10)
@@ -55,13 +60,11 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
         )
         .addField(
           'Your position',
-          !leaderboard.find((x) => x.id === ctx.user.id)
+          !userProfile
             ? 'Not on the leaderboard'
             : `**${leaderboard.findIndex((x) => x.id === ctx.user.id) + 1}.** ${
-                ctx.user.username
-              } - ${emojis.purplet} **${
-                leaderboard.find((x) => x.id === ctx.user.id).purplets
-              } Purplets**`
+                userProfile.name ? `@${userProfile.name}` : ctx.user.username
+              } - ${emojis.purplet} **${userProfile.purplets} Purplets**`
         )
         .setColor(await getColor(ctx.user)),
     ],

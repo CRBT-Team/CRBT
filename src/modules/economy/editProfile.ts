@@ -24,7 +24,7 @@ export const EditProfileBtn = ButtonComponent({
             .setCustomId('profile_name')
             .setLabel('Name')
             .setStyle('SHORT')
-            .setPlaceholder('Your CRBT profile name, should be unique.')
+            .setPlaceholder('A unique name, can only have letters, numbers or spaces.')
             .setValue(profile?.name ?? '')
             .setMinLength(3)
             .setMaxLength(20)

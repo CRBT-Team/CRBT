@@ -17,13 +17,14 @@ const handleError = (
   description: string,
   details?: string,
   fields?: EmbedField[],
-  log?: boolean
+  log?: boolean,
+  title?: string
 ) => {
   if (log) {
     (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
       embeds: [
         new MessageEmbed({
-          description: details,
+          description: `\`\`\`\n${details}\`\`\``,
           fields: fields || [],
           color: `#${colors.error}`,
         }),
@@ -34,8 +35,9 @@ const handleError = (
   return new MessageEmbed({
     author: {
       iconURL: illustrations.error,
-      name: description,
+      name: title ?? description,
     },
+    description: title ? description : null,
     fields: log ? [] : fields,
     color: `#${colors.error}`,
   });
@@ -53,7 +55,7 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
   return {
     embeds: [
       handleError(
-        `We have no clue what this issue may be. Here's what the error says:\n\`\`\`\n${desc}\`\`\`\n\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
+        `We have no clue what this issue may be. Here's what the error says:\n\`\`\`\n${desc}\`\`\`\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
         desc,
         [
           {
@@ -67,7 +69,8 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
             inline: false,
           },
         ],
-        true
+        true,
+        'An unknown error has occurred'
       ),
     ],
     ephemeral: true,
