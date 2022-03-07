@@ -64,5 +64,26 @@
       "});"
     ],
     "description": "Create new Purplet user context menu command"
+  },
+  "Init a base CRBT language file": {
+    "scope": "json,jsonc",
+    "prefix": "lang",
+    "body": [
+      "{",
+      "  \"meta\": {",
+      "    \"name\": \"$1\",",
+      "    \"description\": \"$2\",",
+      "    \"options\": {",
+      "      \"$3\": \"$4\"$5",
+      "    },",
+      "    \"errors\": {",
+      "      \"$6\": \"$7\"$8",
+      "    },",
+      "    \"strings\": {",
+      "      \"$9\": \"$10\"$11",
+      "    }",
+      "  }",
+      "}"
+    ]
   }
 }
