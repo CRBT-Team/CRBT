@@ -2,8 +2,9 @@ import { colors, db, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
+import { polls } from '@prisma/client';
 import dayjs from 'dayjs';
-import { MessageButton, MessageEmbed } from 'discord.js';
+import { MessageButton, MessageEmbed, Snowflake } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -13,9 +14,15 @@ import {
   SelectMenuComponent,
 } from 'purplet';
 
+export interface Poll {
+  id: string;
+  creator_id: string;
+  choices: String[][];
+}
+
 export default ChatCommand({
   name: 'poll start',
-  description: 'Create a poll with the given options.',
+  description: 'Create a poll with the given choice.',
   options: new OptionBuilder()
     .string('title', "What's your poll about?", true)
     .channel('channel', 'The channel to send the poll in.', true)
@@ -31,25 +38,25 @@ export default ChatCommand({
       ],
       true
     )
-    .string('option1', 'The first option a user can chose. Make it short preferably.', true)
-    .string('option2', 'An other option a user can choose.', true)
-    .string('option3', 'Same as option 1 and 2, not required.')
-    .string('option4', "Yup it's still the same idea.")
-    .string('option5', 'Again, same deal.')
-    .string('option6', 'Yet another option someone can choose.')
-    .string('option7', 'Yes that is another option.')
-    .string('option8', 'Still 3 more optional options to go.')
-    .string('option9', 'We are almost at the option limit!')
+    .string('choice1', 'The first choice a user can chose. Make it short preferably.', true)
+    .string('choice2', 'An other choice a user can choose.', true)
+    .string('choice3', 'Same as choice 1 and 2, not required.')
+    .string('choice4', "Yup it's still the same idea.")
+    .string('choice5', 'Again, same deal.')
+    .string('choice6', 'Yet another choice someone can choose.')
+    .string('choice7', 'Yes that is another choice.')
+    .string('choice8', 'Still 3 more optional choices to go.')
+    .string('choice9', 'We are almost at the choice limit!')
     .string(
-      'option10',
-      "And the last option you can add to your poll. Phew, what a complicated poll you're making."
+      'choice10',
+      "And the last choice you can add to your poll. Phew, what a complicated poll you're making."
     ),
-  async handle({ title, channel, end_date, ...options }) {
+  async handle({ title, channel, end_date, ...choices }) {
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
 
-    const pollOptions = Object.values(options).filter((option) => option);
+    const pollChoices = Object.values(choices).filter((choices) => choices);
 
     if (!channel.isText()) {
       return this.reply(CRBTError('You can only create polls in text-based channels.'));
@@ -63,12 +70,12 @@ export default ChatCommand({
           })
           .setTitle(title)
           .setDescription(
-            'Vote by clicking an option below this message!' +
+            'Vote by clicking an choice below this message!' +
               (end_date !== 'never' ? `\nEnds <t:${dayjs().add(ms(end_date)).unix()}:R>` : '')
           )
           .addFields(
-            pollOptions.map((option) => ({
-              name: option,
+            pollChoices.map((choices) => ({
+              name: choices,
               value: `${emojis.progress.empty.repeat(10)}\n(0% - 0 votes)`,
             }))
           )
@@ -76,37 +83,44 @@ export default ChatCommand({
           .setColor(`#${colors.default}`),
       ],
       components:
-        pollOptions.length <= 3
+        pollChoices.length <= 3
           ? components(
               row().addComponents(
-                pollOptions.map((option, index) => {
-                  return new PollButton({ optionId: index }).setLabel(option).setStyle('PRIMARY');
+                pollChoices.map((choices, index) => {
+                  return new PollButton({ choiceId: index.toString() })
+                    .setLabel(choices)
+                    .setStyle('PRIMARY');
                 })
               )
             )
           : components(
               row(
-                new PollSelector().setPlaceholder('Vote').addOptions(
-                  pollOptions.map((option, index) => {
-                    return {
-                      label: option,
-                      description: `Vote for "${option}".`,
-                      value: index.toString(),
-                    };
-                  })
-                )
+                new PollSelector()
+                  .setPlaceholder('Vote')
+                  .addOptions(
+                    pollChoices.map((choices, index) => {
+                      return {
+                        label: choices,
+                        description: `Vote for "${choices}".`,
+                        value: index.toString(),
+                      };
+                    })
+                  )
+                  .setMinValues(0)
+                  .setMaxValues(1)
               )
             ),
     });
 
     msg.edit({
-      embeds: [{ ...msg.embeds[0], footer: { text: `Total votes: 0 - ${msg.id}` } }],
+      embeds: [{ ...msg.embeds[0], footer: { text: `Total votes: 0 - Poll ID: ${msg.id}` } }],
     });
 
     await db.polls.create({
       data: {
         id: `${channel.id}/${msg.id}`,
-        voters: [],
+        creator_id: this.user.id,
+        choices: JSON.stringify(pollChoices.map((choice) => [choice])),
       },
     });
 
@@ -118,11 +132,11 @@ export default ChatCommand({
             name: 'Poll created!',
           })
           .setDescription(
-            `People can now vote on your poll, that has been sent in ${channel}.` +
+            `People can now vote on your poll, that has been sent in ${channel}.\n` +
               (end_date !== 'never'
-                ? `The poll will end <t:${dayjs(
-                    end_date
-                  ).unix()}:R>\nYou can end it prematurely using \`/poll end id:${
+                ? `The poll will end <t:${dayjs()
+                    .add(ms(end_date))
+                    .unix()}:R>\nYou can end it prematurely using \`/poll end id:${
                     msg.id
                   }\` within ${channel}.`
                 : `To end it, use \`/poll end id:${msg.id}\` in ${channel}.`)
@@ -171,7 +185,7 @@ export default ChatCommand({
                 .setDescription(
                   `"**${ranking[0].name}**" has won with ${ranking[0].votes} ${
                     ranking[0].votes === 1 ? 'vote' : 'votes'
-                  } out of ${totalVotes}!`
+                  } out of ${totalVotes}!\nClick the button below to view the full results.`
                 )
                 .setColor(`#${colors.success}`),
             ],
@@ -186,44 +200,16 @@ export default ChatCommand({
 });
 
 export const PollButton = ButtonComponent({
-  async handle({ optionId }: { optionId: number }) {
+  async handle({ choiceId }) {
     const pollData = await db.polls.findFirst({
       where: { id: `${this.channel.id}/${this.message.id}` },
     });
-
-    const userVote = pollData.voters.find((voter: any) => voter.user_id === this.user.id) as any;
-
-    if (userVote) {
-      userVote.option_id = optionId;
-    } else {
-      pollData.voters.push({
-        user_id: this.user.id,
-        option_id: optionId,
-      });
-    }
-
-    await db.polls.update({
-      where: { id: `${this.channel.id}/${this.message.id}` },
-      data: { voters: pollData.voters },
-    });
-
     const poll = this.message.embeds[0] as MessageEmbed;
-    const totalVotes = pollData.voters.length;
-    poll.fields.forEach((option, index) => {
-      // from the pollData, rerender the poll
-      const votes = pollData.voters.filter((voter: any) => voter.option_id === index).length;
-      const percentage = Math.round((votes / totalVotes) * 100);
 
-      poll.fields[index].value = `${
-        // render a progress bar where the percentage is the length of the bar in emojis
-        emojis.progress.fill.repeat(Math.round(percentage / 10)) +
-        emojis.progress.empty.repeat(10 - Math.round(percentage / 10))
-      }\n${percentage}% - ${votes} ${votes === 1 ? 'vote' : 'votes'}`;
-    });
-    poll.footer.text = `Total votes: ${totalVotes} - Poll ID: ${this.message.id}`;
+    const e = await renderPoll(choiceId, this.user.id, pollData, poll);
 
     this.update({
-      embeds: [poll],
+      embeds: [e],
     });
   },
 });
@@ -233,40 +219,51 @@ export const PollSelector = SelectMenuComponent({
     const pollData = await db.polls.findFirst({
       where: { id: `${this.channel.id}/${this.message.id}` },
     });
-
-    const userVote = pollData.voters.find((voter: any) => voter.user_id === this.user.id) as any;
-
-    if (userVote) {
-      userVote.option_id = this.values[0];
-    } else {
-      pollData.voters.push({
-        user_id: this.user.id,
-        option_id: this.values[0],
-      });
-    }
-
-    await db.polls.update({
-      where: { id: `${this.channel.id}/${this.message.id}` },
-      data: { voters: pollData.voters },
-    });
-
     const poll = this.message.embeds[0] as MessageEmbed;
-    const totalVotes = pollData.voters.length;
-    poll.fields.forEach((option, index) => {
-      // from the pollData, rerender the poll
-      const votes = pollData.voters.filter((voter: any) => voter.option_id === index).length;
-      const percentage = Math.round((votes / totalVotes) * 100);
 
-      poll.fields[index].value = `${
-        // render a progress bar where the percentage is the length of the bar in emojis
-        emojis.progress.fill.repeat(Math.round(percentage / 10)) +
-        emojis.progress.empty.repeat(10 - Math.round(percentage / 10))
-      }\n${percentage}% - ${votes} ${votes === 1 ? 'vote' : 'votes'}`;
-    });
-    poll.footer.text = `Total votes: ${totalVotes} - Poll ID: ${this.message.id}`;
+    const e = await renderPoll(this.values[0], this.user.id, pollData, poll);
 
     this.update({
-      embeds: [poll],
+      embeds: [e],
     });
   },
 });
+
+const renderPoll = async (
+  choiceId: string,
+  userId: Snowflake,
+  pollData: polls,
+  pollEmbed: MessageEmbed
+) => {
+  const choices: string[][] = JSON.parse(pollData.choices);
+
+  const userChoice = choices.findIndex((choice) => choice.find((voter) => voter === userId));
+
+  if (userChoice) {
+    choices[userChoice].splice(
+      choices[userChoice].findIndex((voter) => voter === userId),
+      1
+    );
+  }
+  choices[choiceId].push(userId);
+
+  await db.polls.update({
+    where: { id: pollData.id },
+    data: { choices: JSON.stringify(choices) },
+  });
+
+  const totalVotes = choices.length - (userChoice.toString() === choiceId ? 1 : 0);
+
+  pollEmbed.fields.forEach((choice, id) => {
+    const votes = choices[id].length;
+    const percentage = Math.round((votes / totalVotes) * 100);
+
+    pollEmbed.fields[id].value = `${
+      emojis.progress.fill.repeat(Math.round(percentage / 10)) +
+      emojis.progress.empty.repeat(10 - Math.round(percentage / 10))
+    }\n${percentage}% - ${votes} ${votes === 1 ? 'vote' : 'votes'}`;
+  });
+  pollEmbed.footer.text = `Total votes: ${totalVotes} - Poll ID: ${pollData.id.split('/')[1]}`;
+
+  return pollEmbed;
+};

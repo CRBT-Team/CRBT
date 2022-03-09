@@ -10,10 +10,10 @@
     "errors": {
       "reminderPast": "You cannot set a reminder in the past.",
       "invalidTimeBelowZero": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "reminderTooLong": "You cannot set a reminder for more than 2 years from.",
+      "reminderTooLong": "You cannot set a reminder for more than 2 years from now.",
       "invalidChannelType": "The channel you specified is not a valid text channel.",
-      "botMissingChannelPerms": "I do not have permission to send messages in that channel.",
-      "userMissingChannelPerms": "You do not have permission to send messages in that channel.",
+      "botMissingChannelPerms": "I do not have permission to send messages in this channel.",
+      "userMissingChannelPerms": "You do not have permission to send messages in this channel.",
       "tooManyReminders": "You cannot set more than 5 reminders at once."
     },
     "strings": {

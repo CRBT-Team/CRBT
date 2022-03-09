@@ -40,5 +40,5 @@ model misc {
 model polls {
   id          String   @id
   creator_id  String
-  voters      Json[]
+  choices     String
 }
