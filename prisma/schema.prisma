@@ -36,3 +36,9 @@ model misc {
   id      String @id
   hstreak Int    @default(0) @db.SmallInt
 }
+
+model polls {
+  id          String   @id
+  creator_id  String
+  voters      Json[]
+}

@@ -91,9 +91,7 @@ export const colorset = ChatCommand({
       }
     } else {
       await this.reply(
-        CRBTError(
-          'You need to enter a valid or a color name. Use the command again with no options for more info.'
-        )
+        CRBTError('You need to enter a valid or a color name. Use `/color list` for more info.')
       );
     }
   },
@@ -135,7 +133,7 @@ export const colorlist = ChatCommand({
           '\n' +
           '**To change your accent color, use `/color set`**' +
           '\n' +
-          'You can sync your CRBT accent color with your Discord profile color by using `/color set Discord Profile Color`.'
+          'You can sync your CRBT accent color with your Discord profile color by using `/color set Sync Discord Profile Color`.'
       )
       .setColor(userColor);
 
@@ -185,7 +183,7 @@ export const EditColorBtn = ButtonComponent({
           '\n' +
           '**To change your accent color, use `/color set`**' +
           '\n' +
-          'You can sync your CRBT accent color with your Discord profile color by using `/color set Discord Profile Color`.'
+          'You can sync your CRBT accent color with your Discord profile color by using `/color set Sync Discord Profile Color`.'
       )
       .setColor(userColor);
 
