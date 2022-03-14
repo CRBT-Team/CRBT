@@ -4,22 +4,31 @@ import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { getColor } from '$lib/functions/getColor';
+import { row } from '$lib/functions/row';
+import { trimURL } from '$lib/functions/trimURL';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { Guild, Interaction, MessageEmbed, User } from 'discord.js';
+import dayjs from 'dayjs';
+import {
+  Guild,
+  Interaction,
+  InteractionReplyOptions,
+  MessageButton,
+  MessageEmbed,
+  User,
+} from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { EditColorBtn } from '../settings/color set & list';
-import { EditProfileBtn, EditPronounsBtn } from './editProfile';
+import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
+import { EditProfileBtn } from './editProfile';
 
 export const renderProfile = async (
   profile: APIProfile,
   user: User,
   guild: Guild,
   ctx: Interaction
-) => {
+): Promise<InteractionReplyOptions> => {
   const pronouns = (
-    (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then((res) =>
-      res.json()
+    (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then((r) =>
+      r.json()
     )) as { pronouns: string }
   ).pronouns;
 
@@ -34,12 +43,13 @@ export const renderProfile = async (
         : user.username
     )
     .setDescription(
-      profile && profile.bio
+      profile?.bio
         ? await CRBTscriptParser(profile.bio, user, profile, guild)
         : user.equals(ctx.user)
         ? 'You don\'t have a bio! Set yourself one by clicking "Edit Profile" below.'
         : "*This user doesn't have a bio yet...*"
     )
+    .setThumbnail(avatar(user, 256))
     .setImage(
       profile && profile.crbt_banner
         ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
@@ -49,16 +59,49 @@ export const renderProfile = async (
     )
     .setColor(await getColor(user));
 
-  if (profile && profile.crbt_badges && profile.crbt_badges.length > 0) {
+  if (profile?.crbt_badges && profile?.crbt_badges.length > 0) {
     e.addField(
       `Badges (${profile.crbt_badges.length})`,
       profile.crbt_badges.map((badge) => items.badges[badge].contents).join(' '),
-      profile.crbt_badges.length > 6
+      profile.crbt_badges.length < 6
     );
   }
   e.addField('Pronouns', Pronouns[pronouns].replace('username', user.username), true);
 
-  return e;
+  if (profile?.birthday) {
+    const bday = dayjs(profile.birthday);
+    e.addField(
+      'Birthday',
+      `<t:${bday.unix()}:D> • <t:${bday.year(dayjs().year()).unix()}:R>`,
+      false
+    );
+  }
+  if (profile?.url) {
+    e.addField('Website', `**[${trimURL(profile.url)}](${profile.url})**`, true);
+  }
+  if (profile?.location) {
+    e.addField('Location', profile.location, true);
+  }
+
+  return {
+    embeds: [e],
+    components: components(
+      row(
+        profile?.url
+          ? new MessageButton()
+              .setStyle('LINK')
+              .setLabel(trimURL(profile.url))
+              .setURL(profile.url)
+              .setEmoji('🔗')
+          : null,
+
+        user.equals(ctx.user)
+          ? new EditProfileBtn(user.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+          : null
+      )
+    ),
+    ephemeral: !user.equals(ctx.user),
+  };
 };
 
 const Pronouns = {
@@ -95,21 +138,6 @@ export default ChatCommand({
         .get<string[]>('profiles')
         .filter((name) => name.toLowerCase().includes(lookup_name.replace('@', '')))
         .map((name) => ({ name: `@${name}`, value: name }));
-      return (
-        await db.profiles.findMany({
-          where: {
-            name: {
-              contains: lookup_name.replace('@', ''),
-              mode: 'insensitive',
-            },
-          },
-        })
-      ).map((p) => {
-        return {
-          name: `@${p.name}`,
-          value: p.name,
-        };
-      });
     })
     .user('lookup_user', 'Search a profile by their Discord user ID or name.', false),
   async handle({ lookup_user, lookup_name }) {
@@ -146,25 +174,7 @@ export default ChatCommand({
       );
     }
 
-    await this.reply({
-      embeds: [await renderProfile(profile, u, this.guild, this)],
-      components:
-        u.id === this.user.id
-          ? components(
-              row(
-                new EditProfileBtn(u.id)
-                  .setStyle('PRIMARY')
-                  .setEmoji('✏️')
-                  .setLabel('Edit Profile'),
-                new EditColorBtn()
-                  .setStyle('SECONDARY')
-                  .setEmoji('🎨')
-                  .setLabel('Edit Accent Color'),
-                new EditPronounsBtn().setStyle('SECONDARY').setEmoji('🗣').setLabel('Edit Pronouns')
-              )
-            )
-          : null,
-    });
+    await this.reply(await renderProfile(profile, u, this.guild, this));
   },
 });
 
@@ -174,25 +184,7 @@ export const ctxProfile = UserContextCommand({
     const profile = (await db.profiles.findFirst({
       where: { id: u.id },
     })) as APIProfile;
-    this.reply({
-      embeds: [await renderProfile(profile, u, this.guild, this)],
-      components:
-        u.id === this.user.id
-          ? components(
-              row(
-                new EditProfileBtn(u.id)
-                  .setStyle('PRIMARY')
-                  .setEmoji('✏️')
-                  .setLabel('Edit Profile'),
-                new EditColorBtn()
-                  .setStyle('SECONDARY')
-                  .setEmoji('🎨')
-                  .setLabel('Edit Accent Color'),
-                new EditPronounsBtn().setStyle('SECONDARY').setEmoji('🗣').setLabel('Edit Pronouns')
-              )
-            )
-          : null,
-      ephemeral: u.id !== this.user.id,
-    });
+
+    await this.reply(await renderProfile(profile, u, this.guild, this));
   },
 });

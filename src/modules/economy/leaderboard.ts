@@ -42,9 +42,10 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
   return {
     embeds: [
       new MessageEmbed()
-        .setTitle(
-          `Global Purplets leaderboard (Page ${page}/${Math.ceil(leaderboard.length / 10)})`
-        )
+        .setAuthor({
+          name: `Global Purplets leaderboard (Page ${page}/${Math.ceil(leaderboard.length / 10)})`,
+          iconURL: 'https://cdn.discordapp.com/emojis/866116902215745576.png',
+        })
         .setDescription(
           assignLeaderboardRanks(leaderboard)
             .map((u) => {

@@ -11,7 +11,7 @@ export const EditProfileBtn = ButtonComponent({
 
     const profile = await db.profiles.findFirst({
       where: { id: userId },
-      select: { name: true, bio: true },
+      select: { name: true, bio: true, url: true, birthday: true, location: true },
     });
 
     const modal = new Modal()
@@ -39,6 +39,36 @@ export const EditProfileBtn = ButtonComponent({
             .setValue(profile?.bio ?? '')
             .setMinLength(10)
             .setMaxLength(150)
+        ),
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('profile_url')
+            .setLabel('Website')
+            .setStyle('SHORT')
+            .setPlaceholder('A link to your website, blog, Twitter...')
+            .setValue(profile?.url ?? '')
+            .setMinLength(3)
+            .setMaxLength(50)
+        ),
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('profile_birthday')
+            .setLabel('Birthday')
+            .setStyle('SHORT')
+            .setPlaceholder('YYYY-MM-DD')
+            .setValue(profile?.birthday?.toISOString()?.split('T')[0] ?? '')
+            .setMinLength(10)
+            .setMaxLength(10)
+        ),
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('profile_location')
+            .setLabel('Location')
+            .setStyle('SHORT')
+            .setPlaceholder('Where are you from?')
+            .setValue(profile?.location ?? '')
+            .setMinLength(3)
+            .setMaxLength(20)
         )
       );
 

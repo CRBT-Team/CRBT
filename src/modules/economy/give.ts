@@ -33,7 +33,7 @@ export default ChatCommand({
   description: 'Give a given amount of your Purplets to a user. Check your balance with /balance.',
   options: new OptionBuilder()
     .user('user', 'The user to give your Purplets to.', true)
-    .number('amount', 'The amount of Purplets you want to give.', true),
+    .integer('amount', 'The amount of Purplets you want to give.', true),
   async handle({ user, amount }) {
     if (user.bot) {
       return this.reply(CRBTError('You cannot give Purplets to a bot.'));

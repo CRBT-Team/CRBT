@@ -1,5 +1,5 @@
 import { emojis, items } from '$lib/db';
-import { MessageButton, MessageEmbed } from 'discord.js';
+import { MessageAttachment, MessageButton, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 
 export default ChatCommand({
@@ -7,17 +7,10 @@ export default ChatCommand({
   description: 'lorem ipsum',
   async handle() {
     await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: '@Clembs - Profile',
-            iconURL:
-              'https://cdn.discordapp.com/avatars/327690719085068289/e650c7d6444a26107045efef3f353b41.png',
-          })
-          .setImage(
-            'https://media.discordapp.net/attachments/949329978972045382/952640713378631700/unknown.png'
-          )
-          .setColor('#6543ff'),
+      files: [
+        new MessageAttachment('profile.png').setFile(
+          'https://media.discordapp.net/attachments/949329978972045382/952640713378631700/unknown.png'
+        ),
       ],
       components: components(
         row(

@@ -12,9 +12,7 @@ export const RemindButton = ButtonComponent({
     }
     if (relativetime < new Date().getTime()) {
       return this.reply(
-        CRBTError(
-          "You can't set this reminder as the cooldown has already passed! You can use the command right now."
-        )
+        CRBTError("You can't set this reminder as the cooldown for this command has passed.")
       );
     }
 

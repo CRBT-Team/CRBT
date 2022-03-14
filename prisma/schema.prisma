@@ -9,17 +9,17 @@ datasource db {
 
 model profiles {
   id                String    @id
+  name              String?   @unique
   verified          Boolean?  @default(false)
+  bio               String?
+  purplets          Float     @default(0) @db.Real
+  crbt_badges       String[]
   crbt_banner       String?
   crbt_accent_color String?
-  bio               String?
-  purplets          Float     @db.Real
-  name              String?   @unique
-  crbt_badges       String[]
   url               String?
   location          String?
   pronouns          String?
-  likes             Int       @db.Integer
+  likes             String[]
   birthday          DateTime? @db.Timestamptz(6)
 }
 

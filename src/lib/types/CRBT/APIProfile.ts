@@ -8,8 +8,13 @@ export type APIProfile = {
   name?: string;
   verified?: boolean;
   bio?: string;
-  purplets?: number;
+  purplets: number;
   crbt_badges?: Badge[];
   crbt_banner?: Banner;
   crbt_accent_color?: `#${string}` | 'profile';
+  url?: string;
+  location?: string;
+  pronouns?: string;
+  likes?: string[];
+  birthday?: Date;
 };
