@@ -8,14 +8,19 @@ datasource db {
 }
 
 model profiles {
-  id                String   @id
-  verified          Boolean? @default(false)
+  id                String    @id
+  verified          Boolean?  @default(false)
   crbt_banner       String?
   crbt_accent_color String?
   bio               String?
-  purplets          Float    @db.Real
-  name              String?  @unique
+  purplets          Float     @db.Real
+  name              String?   @unique
   crbt_badges       String[]
+  url               String?
+  location          String?
+  pronouns          String?
+  likes             Int       @db.Integer
+  birthday          DateTime? @db.Timestamptz(6)
 }
 
 model reminders {
@@ -28,13 +33,19 @@ model reminders {
 }
 
 model servers {
-  id           String @id
-  voice_linker Json?  @db.Json
+  id              String  @id
+  voice_linker    Json?   @db.Json
+  welcome_channel String?
+  welcome_message Json?   @db.Json
+  goodbye_channel String?
+  goodbye_message Json?   @db.Json
 }
 
 model misc {
-  id      String @id
-  hstreak Int    @default(0) @db.SmallInt
+  id        String   @id
+  hstreak   Int      @default(0) @db.SmallInt
+  telemetry Boolean  @default(true)
+  todolist  String[]
 }
 
 model polls {
