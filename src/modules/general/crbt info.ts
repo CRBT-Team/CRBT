@@ -8,7 +8,7 @@ import pjson from '../../../package.json';
 
 export default ChatCommand({
   name: 'crbt info',
-  description: `Gives info about CRBT.`,
+  description: 'Returns info about CRBT.',
   async handle() {
     await this.deferReply();
 

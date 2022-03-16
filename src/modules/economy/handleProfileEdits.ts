@@ -1,38 +1,42 @@
 import { cache } from '$lib/cache';
 import { colors, db, illustrations } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { row } from '$lib/functions/row';
 import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import dayjs from 'dayjs';
-import { MessageEmbed, ModalSubmitInteraction } from 'discord.js';
-import { OnEvent } from 'purplet';
+import { MessageButton, MessageEmbed, ModalSubmitInteraction } from 'discord.js';
+import { components, OnEvent } from 'purplet';
 import { renderProfile } from './profile';
 
 const urlRegex =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  /(?:(?:https?:\/\/)?(?:[\w-]{2,255}(?:\.\w{2,6}){1,2}(?:\:\d{1,5})?(?:\/[^\s\n]*)?))/;
 
 //@ts-ignore
 export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
   const bday = dayjs(modal.fields.getTextInputValue('profile_birthday').trim() + 'T12:00:00');
-  const url = modal.fields.getTextInputValue('profile_url').trim();
+  let url = modal.fields.getTextInputValue('profile_url').trim();
 
   const newProfile = {
     name: trimSpecialChars(modal.fields.getTextInputValue('profile_name')).trim(),
     bio: modal.fields.getTextInputValue('profile_bio').trim(),
-    birthday: bday.isValid() ? bday.toDate() : undefined,
+    birthday: bday.isValid() && bday.isBefore(new Date()) ? bday.toDate() : null,
     location: modal.fields.getTextInputValue('profile_location').trim(),
-    url: url.match(urlRegex) ? url : undefined,
+    url: url.match(urlRegex)
+      ? url.startsWith('http://') || url.startsWith('https://')
+        ? url
+        : 'https://' + url
+      : null,
   } as APIProfile;
 
-  const msg = await modal.channel.messages.fetch(modal.customId);
+  const msg = await modal.channel.messages.fetch(modal.customId).catch(() => null);
 
   const oldProfile = (await db.profiles.findFirst({
     where: { id: modal.user.id },
-    select: { name: true, bio: true, birthday: true, location: true, url: true },
   })) as APIProfile;
 
   if (
-    newProfile.name !== oldProfile.name &&
+    newProfile.name !== oldProfile?.name &&
     cache
       .get<string[]>('profiles')
       .map((p) => p.toLowerCase())
@@ -62,7 +66,9 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       ]);
     }
 
-    msg.edit(await renderProfile(profile, modal.user, modal.guild, modal));
+    if (msg) {
+      await msg.edit(await renderProfile(profile, modal.user, modal.guild, modal));
+    }
 
     modal.reply({
       embeds: [
@@ -76,6 +82,11 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           )
           .setColor(`#${colors.success}`),
       ],
+      components: msg
+        ? components(
+            row(new MessageButton().setLabel('Jump to Profile').setURL(msg.url).setStyle('LINK'))
+          )
+        : null,
       ephemeral: true,
     });
   } catch (error) {

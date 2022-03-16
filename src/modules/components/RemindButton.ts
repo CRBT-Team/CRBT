@@ -2,7 +2,7 @@ import { db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { setReminder } from '$lib/functions/setReminder';
 import dayjs from 'dayjs';
-import { Message, MessageButton } from 'discord.js';
+import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const RemindButton = ButtonComponent({
@@ -51,3 +51,41 @@ export const RemindButton = ButtonComponent({
     });
   },
 });
+
+export const SnoozeButton = ButtonComponent({
+  async handle() {
+    if (this.channel.type !== 'DM' && (this.message.mentions as MessageMentions).has(this.user)) {
+      return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
+    }
+    const url = (this.message.components[0].components[0] as MessageButton).url.replace(
+      'https://discord.com/channels/',
+      ''
+    );
+    await setReminder({
+      reminder: this.message.embeds[0].fields[0].value,
+      user_id: this.user.id,
+      expiration: dayjs().add(15, 'minutes').toDate(),
+      destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
+      url,
+    });
+
+    this.update({
+      components: components(
+        row(
+          new MessageButton()
+            .setStyle('LINK')
+            .setLabel('Jump to message')
+            .setURL(`https://discord.com/channels/${url}`),
+          new MessageButton()
+            .setStyle('SECONDARY')
+            .setEmoji(emojis.success)
+            .setCustomId('none')
+            .setLabel('Snoozed for 15 minutes')
+            .setDisabled(true)
+        )
+      ),
+    });
+  },
+});
+// https://discord.com/channels/403966971147845636/532551630562787328/952271389786771477
+// https://discord.com/channels/@me/639241740800491566/952657528771211315

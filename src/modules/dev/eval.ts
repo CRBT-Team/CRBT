@@ -23,7 +23,6 @@ export default TextCommand({
       try {
         if (evalArgs.includes('this.reply(')) {
           const send = evalArgs.replace(/this\.reply\((.*)/, '$1');
-          console.log(send);
           const evaled = (0, eval)(send[send.length - 1]);
           const cleaned = await clean(evaled);
 

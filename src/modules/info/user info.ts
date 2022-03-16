@@ -4,24 +4,24 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { keyPerms } from '$lib/functions/keyPerms';
 import dayjs from 'dayjs';
-import { GuildMember, MessageEmbed, User, UserContextMenuInteraction } from 'discord.js';
-import { ChatCommand, OptionBuilder, UserContextCommand } from 'purplet';
+import {
+  GuildMember,
+  Interaction,
+  InteractionReplyOptions,
+  MessageEmbed,
+  User,
+  UserContextMenuInteraction,
+} from 'discord.js';
+import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
+import { navBar } from '../components/navBar';
 
 export default ChatCommand({
   name: 'user info',
   description: 'Get all info on a Discord user.',
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
-    const u = await this.client.users.fetch(user ?? this.user, { force: true });
-    const m: GuildMember | null = await (
-      await this.guild.fetch()
-    ).members
-      .fetch({
-        user: u,
-        // withPresences: true,
-        force: true,
-      })
-      .catch(() => null);
+    const u = await (user ?? this.user).fetch();
+    const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
 
     // enum UserStatus {
     //   online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
@@ -31,84 +31,14 @@ export default ChatCommand({
     //   invisible = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
     // }
 
-    const e = new MessageEmbed();
+    // const acts = activities(m);
+    // if (m.presence && acts.length > 0)
+    //   if (acts.length === 1) e.addField('Activity', acts.toString(), true);
+    //   else e.addField(`Activities (${acts.length})`, `• ${acts.join('\n• ')}`, true);
 
-    if (m) {
-      e.setAuthor({
-        name: `${u.tag} - User info`,
-        iconURL: avatar(u, 64),
-        // iconURL: m.presence ? UserStatus[m.presence.status] : UserStatus.offline,
-      });
-      e.setDescription(
-        (await userBadges(u)).join(' ') +
-          '\n' +
-          `Profile picture: ${[2048, 512, 256]
-            .map((size) => `**[${size}px](${avatar(u, size)})**`)
-            .join(' | ')} | \`/user pfp${u.equals(this.user) ? '`' : ` user:${u.id}\``}`
-      );
-      e.addField('ID', u.id);
-
-      if (m.nickname) e.addField('Server nickname', m.nickname);
-
-      // const acts = activities(m);
-      // if (m.presence && acts.length > 0)
-      //   if (acts.length === 1) e.addField('Activity', acts.toString(), true);
-      //   else e.addField(`Activities (${acts.length})`, `• ${acts.join('\n• ')}`, true);
-
-      // if (m.presence && m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
-      //   e.addField('Custom status', `${customStatus(m)}`, true);
-
-      const roles = m.roles.cache.filter((r) => r.id !== this.guild.id);
-      e.addField(
-        `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
-        roles.size > 0
-          ? roles.map((r) => r.toString()).join(' ')
-          : "*This user doesn't have any roles...*"
-      );
-
-      e.addField(
-        `Global key permissions`,
-        m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
-          ? 'Administrator (all permissions)'
-          : keyPerms(m.permissions).join(', ')
-      );
-
-      e.addField(
-        'Joined Discord',
-        `<t:${dayjs(u.createdAt).unix()}>\n(<t:${dayjs(u.createdAt).unix()}:R>)`,
-        true
-      );
-      e.setImage(banner(u, 2048));
-      e.setThumbnail(avatar(u, 256));
-      e.setColor(await getColor(u));
-      e.addField(
-        'Joined server',
-        `<t:${dayjs(m.joinedAt).unix()}>\n(<t:${dayjs(m.joinedAt).unix()}:R>)`,
-        true
-      );
-    } else {
-      e.setAuthor({ name: `${u.tag} - User info`, iconURL: avatar(u, 64) });
-      e.setDescription(
-        (await userBadges(u)).join(' ') +
-          '\n' +
-          `Profile picture: **[2048px](${avatar(u, 2048)})** | **[512px](${avatar(
-            u,
-            512
-          )})** | **[256px](${avatar(u, 256)})** | \`/user pfp user:${u.id}\``
-      );
-      e.addField('ID', u.id);
-      e.addField(
-        'Joined Discord',
-        `<t:${dayjs(u.createdAt).unix()}> (<t:${dayjs(u.createdAt).unix()}:R>)`
-      );
-      e.setImage(banner(u, 2048));
-      e.setThumbnail(avatar(u, 256));
-      e.setColor(await getColor(u));
-    }
-
-    await this.reply({
-      embeds: [e],
-    });
+    // if (m.presence && m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
+    //   e.addField('Custom status', `${customStatus(m)}`, true);
+    await this.reply(await renderUser(this, u, m));
   },
 });
 
@@ -116,51 +46,11 @@ export const ctxCommand = UserContextCommand({
   name: 'Get User Info',
   async handle(user) {
     const member = (this as UserContextMenuInteraction).targetMember as GuildMember;
-    const roles = member.roles.cache.filter((r) => r.id !== this.guild.id);
 
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${user.tag} - User info`,
-        iconURL: avatar(user, 64),
-      })
-      .setDescription(
-        (await userBadges(user)).join(' ') +
-          '\n' +
-          `Profile picture: ${[2048, 512, 256]
-            .map((size) => `**[${size}px](${avatar(user, size)})**`)
-            .join(' | ')} | \`/user pfp user:${user.id}\``
-      )
-      .addField('ID', user.id);
-
-    if (member.nickname) e.addField('Server nickname', member.nickname);
-
-    e.addField(
-      `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
-      roles.size > 0
-        ? roles.map((r) => r.toString()).join(' ')
-        : "*This user doesn't have any roles...*"
-    )
-      .addField(
-        `Global key permissions`,
-        member.permissions.has('ADMINISTRATOR', true) || member.permissions.toArray().length === 0
-          ? 'Administrator (all permissions)'
-          : keyPerms(member.permissions).join(', ')
-      )
-      .addField(
-        'Joined Discord',
-        `<t:${dayjs(user.createdAt).unix()}>\n(<t:${dayjs(user.createdAt).unix()}:R>)`,
-        true
-      )
-      .addField(
-        'Joined server',
-        `<t:${dayjs(member.joinedAt).unix()}>\n(<t:${dayjs(member.joinedAt).unix()}:R>)`,
-        true
-      )
-      .setImage(banner(user, 2048))
-      .setThumbnail(avatar(user, 256))
-      .setColor(await getColor(user));
-
-    await this.reply({ embeds: [e], ephemeral: true });
+    await this.reply({
+      ...(await renderUser(this, user, member)),
+      ephemeral: true,
+    });
   },
 });
 
@@ -203,49 +93,82 @@ export const ctxCommand = UserContextCommand({
 //   return acts;
 // }
 
-async function userBadges(user: User) {
-  const e = emojis.badges;
-  const badges = [];
-  const flags = (await user.fetchFlags()).toArray();
-  for (const flag of flags) {
+export async function renderUser(
+  ctx: Interaction,
+  u: User,
+  m?: GuildMember,
+  navCtx?: { userId: string; cmdUID: string }
+): Promise<InteractionReplyOptions> {
+  const { badges } = emojis;
+  const flags = (await u.fetchFlags()).toArray();
+  const userBadges = flags.map((flag) => {
     switch (flag) {
-      case 'HOUSE_BRILLIANCE':
-        badges.push(e.houses.brilliance);
-        break;
-      case 'HOUSE_BALANCE':
-        badges.push(e.houses.balance);
-        break;
-      case 'HOUSE_BRAVERY':
-        badges.push(e.houses.bravery);
-        break;
-      case 'BUGHUNTER_LEVEL_1':
-        badges.push(e.bugHunter1);
-        break;
-      case 'BUGHUNTER_LEVEL_2':
-        badges.push(e.bugHunter1);
-        break;
-      case 'EARLY_SUPPORTER':
-        badges.push(e.earlySupporter);
-        break;
-      case 'HYPESQUAD_EVENTS':
-        badges.push(e.hypesquad);
-        break;
-      case 'DISCORD_EMPLOYEE':
-        badges.push(e.discordStaff);
-        break;
-      case 'PARTNERED_SERVER_OWNER':
-        badges.push(e.partner);
-        break;
-      case 'EARLY_VERIFIED_BOT_DEVELOPER':
-        badges.push(e.developer);
-        break;
       case 'VERIFIED_BOT':
-        badges.push(e.verifiedBot);
-        break;
+        return badges.verifiedBot;
+      case 'DISCORD_EMPLOYEE':
+        return badges.discordStaff;
+      case 'PARTNERED_SERVER_OWNER':
+        return badges.partner;
       case 'DISCORD_CERTIFIED_MODERATOR':
-        badges.push('certified mod (no emoji for now)');
-        break;
+        return badges.cerifiedMod;
+      case 'HYPESQUAD_EVENTS':
+        return badges.hypesquad;
+      case 'HOUSE_BRILLIANCE':
+        return badges.houses.brilliance;
+      case 'HOUSE_BALANCE':
+        return badges.houses.balance;
+      case 'HOUSE_BRAVERY':
+        return badges.houses.bravery;
+      case 'BUGHUNTER_LEVEL_1':
+        return badges.bugHunter1;
+      case 'BUGHUNTER_LEVEL_2':
+        return badges.bugHunter1;
+      case 'EARLY_SUPPORTER':
+        return badges.earlySupporter;
+      case 'EARLY_VERIFIED_BOT_DEVELOPER':
+        return badges.developer;
     }
+  });
+
+  const e = new MessageEmbed()
+    .setAuthor({
+      name: `${u.tag} - User info`,
+      iconURL: avatar(u, 64),
+    })
+    .setDescription(userBadges.join('‎ '))
+    .addField('ID', u.id)
+    .setImage(banner(u, 2048))
+    .setThumbnail(avatar(u, 256))
+    .setColor(await getColor(u));
+
+  const joinedDiscord = dayjs(u.createdAt).unix();
+
+  if (m) {
+    const roles = m.roles.cache.filter((r) => r.id !== ctx.guild.id);
+    const joinedServer = dayjs(m.joinedAt).unix();
+
+    if (m.nickname) e.addField('Server nickname', m.nickname);
+
+    e.addField(
+      `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
+      roles.size > 0
+        ? roles.map((r) => r.toString()).join(' ')
+        : "*This user doesn't have any roles...*"
+    )
+      .addField(
+        `Global key permissions`,
+        m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
+          ? 'Administrator (all permissions)'
+          : keyPerms(m.permissions).join(', ')
+      )
+      .addField('Joined Discord', `<t:${joinedDiscord}>\n<t:${joinedDiscord}:R>`, true)
+      .addField('Joined server', `<t:${joinedServer}>\n<t:${joinedServer}:R>`, true);
+  } else {
+    e.addField('Joined Discord', `<t:${joinedDiscord}> (<t:${joinedDiscord}:R>)`);
   }
-  return badges;
+
+  return {
+    embeds: [e],
+    components: components(navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, 'userinfo')),
+  };
 }

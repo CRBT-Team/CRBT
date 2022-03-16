@@ -1,5 +1,7 @@
 export const trimURL = (url: string) => {
-  const regex = /^https?:\/\/(?:www\.)?([^\/]+)/i;
-  const match = url.match(regex);
-  return match ? match[1] : url;
+  // trim out the https part trailing slashes and the params
+  return url
+    .replace(/^https?:\/\/(www\.)?/i, '')
+    .replace(/\?.*$/, '')
+    .replace(/\/$/, '');
 };

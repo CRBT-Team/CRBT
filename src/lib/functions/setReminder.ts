@@ -3,6 +3,7 @@ import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs from 'dayjs';
 import { GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
+import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
 
@@ -69,7 +70,11 @@ export const setReminder = async (reminder: Reminder) => {
               new MessageButton()
                 .setStyle('LINK')
                 .setLabel('Jump to message')
-                .setURL(`https://discord.com/channels/${reminder.url}`)
+                .setURL(`https://discord.com/channels/${reminder.url}`),
+              new SnoozeButton()
+                .setStyle('SECONDARY')
+                .setEmoji(emojis.misc.reminder)
+                .setLabel('Snooze')
             )
           ),
         });

@@ -9,7 +9,7 @@ import {
   TextChannel,
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
-import { RemindButton } from '../../modules/specialButtons/RemindButton';
+import { RemindButton } from '../../modules/components/RemindButton';
 
 dayjs.extend(relativeTime);
 

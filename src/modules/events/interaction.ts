@@ -22,7 +22,8 @@ export default OnEvent('interactionCreate', async (i) => {
                 : `message:${(i as MessageContextMenuInteraction).targetMessage.id}`
             }\`\`\``
           )
-          .addField('User ID', i.user.id),
+          .addField('User ID', i.user.id)
+          .addField('Platform', i.channel.type),
       ],
     });
   }

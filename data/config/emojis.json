@@ -54,7 +54,7 @@
     },
     "thumbsup": "<:thumbsup:868200292024467486>",
     "thumbsdown": "<:thumbsdown:868200320868708393>",
-    "reminder": "<:bell:868193178149347338> "
+    "reminder": "<:bell:868193178149347338>"
   },
   "badges": {
     "houses": {
@@ -67,6 +67,7 @@
     "partner": "<:DiscordPartner:843189287552942142>",
     "earlySupporter": "<:supporter:585763690868113455>",
     "verifiedBot": "",
+    "cerifiedMod": "<:certifiedmod:853274382339670046>",
     "boost": "<:Boosting:782585506646982668>",
     "discordStaff": "<:DiscordStaff:843179936771604503>",
     "bugHunter1": "<:bughunter:585765206769139723>",

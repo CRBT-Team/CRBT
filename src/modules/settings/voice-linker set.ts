@@ -1,4 +1,4 @@
-import { colors, db, emojis } from '$lib/db';
+import { colors, db, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { Prisma } from '@prisma/client';
 import { MessageEmbed, Permissions, TextChannel } from 'discord.js';
@@ -6,7 +6,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'voice-linker set',
-  description: 'Limits access to a text channel to a voice channel.',
+  description: 'Links access to a text channel to users in a voice channel.',
   options: new OptionBuilder()
     .channel('voice', 'The voice channel to link to.', true)
     .channel('text', 'The text channel to link to.', true),
@@ -21,7 +21,6 @@ export default ChatCommand({
     if (!voice.isVoice()) {
       return this.reply(CRBTError('The voice channel must be a voice channel.'));
     }
-    // check if bot can manage perms of text channel
     if (
       !(text as TextChannel)
         .permissionsFor(this.guild.me)
@@ -66,7 +65,10 @@ export default ChatCommand({
     await this.editReply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Voice linker set!`)
+          .setAuthor({
+            name: 'Voice-Text Linker set!',
+            iconURL: illustrations.success,
+          })
           .setDescription(
             `Whenever someone joins ${voice}, they will now get access to ${text}.` +
               (current

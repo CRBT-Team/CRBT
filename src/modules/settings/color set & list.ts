@@ -56,7 +56,10 @@ export const colorset = ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.success} Accent color updated.`)
+            .setAuthor({
+              name: 'Accent color updated.',
+              iconURL: illustrations.success,
+            })
             .setDescription(
               "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
             )
@@ -80,7 +83,10 @@ export const colorset = ChatCommand({
         await this.reply({
           embeds: [
             new MessageEmbed()
-              .setTitle(`${emojis.success} Accent color updated.`)
+              .setAuthor({
+                name: 'Accent color updated.',
+                iconURL: illustrations.success,
+              })
               .setDescription(
                 "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
               )

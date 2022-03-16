@@ -3,7 +3,6 @@ import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export default OnEvent('voiceStateUpdate', async (oldState, newState) => {
-  const member = newState.guild.members.cache.get(newState.id);
   const req = (
     await db.servers.findFirst({
       where: {
@@ -19,6 +18,7 @@ export default OnEvent('voiceStateUpdate', async (oldState, newState) => {
   )?.voice_linker as any;
 
   if (req) {
+    const member = newState.guild.members.cache.get(newState.id);
     const textChannel = (await newState.guild.channels.fetch(req.text as string)) as TextChannel;
 
     try {

@@ -1,11 +1,13 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { MessageButton, MessageEmbed } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
+import { row } from '$lib/functions/row';
+import { Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
+import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
+import { navBar } from '../components/navBar';
 
 export default ChatCommand({
   name: 'user pfp',
-  description: `Gets a user's avatar, or yours if you don't specify one.`,
+  description: `Get a user's default avatar, or yours if you don't specify one.`,
   options: new OptionBuilder()
     .user('user', 'The user to get the avatar of.')
     .enum(
@@ -25,70 +27,48 @@ export default ChatCommand({
     ),
   async handle({ user, size, format }) {
     const u = user ?? this.user;
-    const av = avatar(u, size ?? 2048, format ?? 'png', !!format);
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({ name: `${u.tag} - Avatar`, iconURL: avatar(u, 64) })
-          .setImage(av)
-          .setColor(await getColor(u)),
-      ],
-      components: components(
-        row(
-          new MessageButton()
-            .setLabel(
-              !av.includes('embed/avatars')
-                ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                    ? 'GIF'
-                    : format ?? 'png'
-                  ).toUpperCase()})`
-                : 'Download (256px - PNG)'
-            )
-            .setStyle('LINK')
-            .setURL(av)
-        )
-      ),
-    });
+    await this.reply(await renderPfp(u, this, size, format));
   },
 });
 
 export const ctxCommand = UserContextCommand({
   name: 'Get Avatar',
   async handle(user) {
-    const av = avatar(user, 2048, 'png', true);
-
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({ name: `${user.tag} - Avatar`, iconURL: avatar(user, 64) })
-          .setImage(av)
-          .setColor(await getColor(user)),
-      ],
-      components: components(
-        row(
-          new MessageButton()
-            .setLabel(
-              !av.includes('embed/avatars')
-                ? `Download (2048px - ${av.includes('.gif') ? 'GIF' : 'PNG'})`
-                : 'Download (256px - PNG)'
-            )
-            .setStyle('LINK')
-            .setURL(av)
-        )
-      ),
-      ephemeral: true,
-    });
+    await this.reply(await renderPfp(user, this));
   },
 });
 
-// export const Btn = ButtonComponent({
-//   handle() {
-//     this;
-//   },
-// });
+export async function renderPfp(
+  user: User,
+  ctx: Interaction,
+  size = '2048',
+  format?: string,
+  navCtx?: {
+    userId: string;
+    cmdUID: string;
+  }
+) {
+  const av = avatar(user, size, format ?? 'png', !!format);
 
-// SelectMenuComponent({
-//   handle() {},
-// });
-
-// new Btn();
+  return {
+    embeds: [
+      new MessageEmbed()
+        .setAuthor({ name: `${user.tag} - Avatar`, iconURL: avatar(user, 64) })
+        .setImage(av)
+        .setColor(await getColor(user)),
+    ],
+    components: components(
+      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, 'pfp'),
+      row(
+        new MessageButton()
+          .setLabel(
+            !av.includes('embed/avatars')
+              ? `Download (2048px - ${av.includes('.gif') ? 'GIF' : 'PNG'})`
+              : 'Download (256px - PNG)'
+          )
+          .setStyle('LINK')
+          .setURL(av)
+      )
+    ),
+  };
+}

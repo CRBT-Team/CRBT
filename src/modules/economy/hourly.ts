@@ -1,8 +1,8 @@
-import { colors, db, emojis } from '$lib/db';
+import { colors, db, emojis, illustrations } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
-import { RemindButton } from '../specialButtons/RemindButton';
+import { RemindButton } from '../components/RemindButton';
 
 const usersOnCooldown = new Map();
 
@@ -66,7 +66,10 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Hourly Purplets`)
+          .setAuthor({
+            name: 'Hourly Purplets claimed!',
+            iconURL: illustrations.success,
+          })
           .setDescription(
             (currentStreak < 5
               ? `You claimed your hourly **${

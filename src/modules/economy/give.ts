@@ -1,4 +1,4 @@
-import { colors, db, emojis } from '$lib/db';
+import { colors, db, emojis, illustrations } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -99,7 +99,10 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.success} Purplets transfer`)
+            .setAuthor({
+              name: 'Purplets transfer',
+              iconURL: illustrations.success,
+            })
             .setDescription(
               `You successfully gave ${emojis.purplet} **${amount} Purplets** to ${user}.`
             )

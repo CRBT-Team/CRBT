@@ -9,8 +9,6 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
 });
 
 export const botJoin = OnEvent('guildCreate', async (guild) => {
-  console.log(guild);
-
   ((await guild.client.channels.fetch(misc.channels.guildJoinLeave)) as TextChannel).send({
     embeds: [{ title: `Joined ${guild.name} - ${guild.id}`, color: `#${colors.success}` }],
   });
@@ -21,10 +19,8 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
         new MessageEmbed()
           .setTitle(`Thanks for inviting ${guild.client.user.username} to your server!`)
           .setDescription(
-            `${guild.client.user.username} is now in ${guild.client.guilds.cache.size} servers!` +
-              '\n' +
-              'To get started with CRBT, simply type `/` and click its avatar!' +
-              '\n' +
+            `${guild.client.user.username} is now in ${guild.client.guilds.cache.size} servers!\n` +
+              'To get started with CRBT, simply type `/` and click its avatar!\n' +
               `For more help and info, visit the **[support server](${links.discord})**.`
           )
           .setImage(illustrations.welcome)

@@ -1,4 +1,3 @@
-import { links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { AllowedImageSize, DynamicImageFormat, MessageButton, MessageEmbed } from 'discord.js';
@@ -6,58 +5,36 @@ import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'server icon',
-  description: `Gets a server's icon with its ID, or of the current one if none is used.`,
+  description: `Get a chosen server's icon or the current server's icon.`,
   options: new OptionBuilder()
-    .string('id', 'ID of the server you want to get the icon from. Defaults to the current server.')
-    .enum('size', 'The size of the profile picture.', [
-      {
-        name: 'Small (128x128px)',
-        value: '128',
-      },
-      {
-        name: 'Medium (512x512px)',
-        value: '512',
-      },
-      {
-        name: 'Default (2048x2048px)',
-        value: '2048',
-      },
-      {
-        name: 'Large (4096x4096px)',
-        value: '4096',
-      },
-    ])
-    .enum('format', 'The format of the icon.', [
-      {
-        name: 'PNG',
-        value: 'png',
-      },
-      {
-        name: 'JPG',
-        value: 'jpg',
-      },
-      {
-        name: 'WEBP',
-        value: 'webp',
-      },
-      {
-        name: 'GIF',
-        value: 'gif',
-      },
-    ]),
+    .string('id', 'The ID of the server to get the icon of.')
+    .enum(
+      'size',
+      'The size of the icon.',
+      [
+        ['Small', 128],
+        ['Medium', 512],
+        ['Default', 2048],
+        ['Large', 4096],
+      ].map(([name, size]) => ({ name: `${name} (${size}x${size}px)`, value: `${size}` }))
+    )
+    .enum(
+      'format',
+      'The format of the icon.',
+      ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
+    ),
   async handle({ id, size, format }) {
-    if (this.channel.type === 'DM' && !id || id && !this.client.guilds.cache.has(id))
+    if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
-          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
-          `Who's that?`
+          `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.ga/invite.`
         )
       );
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
     const av = guild.iconURL({
-      size: (size ?? 2048) as AllowedImageSize,
+      size: parseInt(size ?? '2048') as AllowedImageSize,
       format: (format ?? 'png') as DynamicImageFormat,
       dynamic: !!format,
     });

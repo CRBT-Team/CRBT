@@ -1,5 +1,6 @@
 import { colors, emojis, links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { trimArray } from '$lib/functions/trimArray';
 import canvas from 'canvas';
 import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
@@ -19,8 +20,7 @@ export default ChatCommand({
     if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
-          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`,
-          `Who's that?`
+          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`
         )
       );
 
@@ -170,12 +170,3 @@ export default ChatCommand({
     });
   },
 });
-
-const trimArray = (arr: string[], max: number = 10) => {
-  if (arr.length > max) {
-    const len = arr.length - max;
-    arr = arr.slice(0, max);
-    arr.push(`and ${len} more...`);
-  }
-  return arr;
-};

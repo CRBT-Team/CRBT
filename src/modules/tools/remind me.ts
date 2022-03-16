@@ -1,11 +1,18 @@
-import { colors, db, emojis } from '$lib/db';
+import { colors, db, illustrations } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
+import { row } from '$lib/functions/row';
 import { setReminder } from '$lib/functions/setReminder';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
-import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import {
+  GuildTextBasedChannel,
+  Message,
+  MessageButton,
+  MessageEmbed,
+  TextChannel,
+} from 'discord.js';
+import { ChatCommand, components, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'remind me',
@@ -15,6 +22,10 @@ export default ChatCommand({
     .string('subject', 'Whatever you need to be reminded about.', true)
     .channel('destination', 'Where the reminder should go (leave blank to send a DM).'),
   async handle({ when, subject, destination }) {
+    if (subject.length > 120) {
+      return this.reply(CRBTError('Subject must be 120 characters or less.'));
+    }
+
     const now = dayjs();
     const w = when
       .trim()
@@ -106,7 +117,10 @@ export default ChatCommand({
       await this.editReply({
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.success} Reminder set!`)
+            .setAuthor({
+              name: 'Reminder set.',
+              iconURL: illustrations.success,
+            })
             .setDescription(
               (destination
                 ? `You will be reminded in ${destination}`
@@ -121,6 +135,30 @@ export default ChatCommand({
             .addField('Subject', subject)
             .setColor(`#${colors.success}`),
         ],
+        components: components(
+          row(
+            new MessageButton()
+              .setStyle('LINK')
+              .setLabel('Add as Google Calendar event')
+              .setURL(
+                `https://calendar.google.com/calendar/render?${new URLSearchParams({
+                  action: 'TEMPLATE',
+                  text: subject,
+                  dates: `${expiration.format('YYYYMMDD')}/${expiration
+                    .add(1, 'day')
+                    .format('YYYYMMDD')}`,
+                  details: `Set by CRBT Reminders. You will also be reminded ${
+                    destination && destination?.isText()
+                      ? `in #${(destination as TextChannel).name}, in ${
+                          (destination as TextChannel).guild.name
+                        }`
+                      : 'by DM'
+                  }`,
+                  location: ((await this.fetchReply()) as Message).url,
+                })}`
+              )
+          )
+        ),
       });
     } catch (error) {
       await this.editReply(UnknownError(this, String(error)));

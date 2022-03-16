@@ -1,4 +1,4 @@
-import { colors, emojis, misc } from '$lib/db';
+import { colors, illustrations, misc } from '$lib/db';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -16,10 +16,13 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Bug report sent!`)
+          .setAuthor({
+            name: 'Bug report sent.',
+            iconURL: illustrations.success,
+          })
           .setDescription(
-            `Your bug report has been sent to the CRBT developers.\nWe will review it and try our best to fix it as soon as possible.` +
-              (!anonymous ? '\nA message will be sent to you whenever the bug is fixed.' : '')
+            `We will review it and try our best to fix it as soon as possible.` +
+              (!anonymous ? '\nA message will be sent to you whenever we review it.' : '')
           )
           .setColor(`#${colors.success}`),
       ],

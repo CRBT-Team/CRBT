@@ -6,7 +6,7 @@ import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'ping',
-  description: 'Pings CRBT and sends info on its latency.',
+  description: 'Ping CRBT. Returns latency and connection info.',
   async handle() {
     await this.deferReply();
 

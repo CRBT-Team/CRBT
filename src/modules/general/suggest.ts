@@ -1,22 +1,25 @@
-import { colors, emojis, misc } from '$lib/db';
+import { colors, emojis, illustrations, misc } from '$lib/db';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'suggest',
-  description: 'Send a bug report to the CRBT developers.',
+  description: 'Send a suggestion to the CRBT developers.',
   options: new OptionBuilder().string(
     'message',
-    'The bug report to send (in english, please).',
+    'The suggestion to send (in english, please).',
     true
   ),
   async handle({ message }) {
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setTitle(`${emojis.success} Thanks!`)
+          .setAuthor({
+            name: 'Suggestion sent.',
+            iconURL: illustrations.success,
+          })
           .setDescription(
-            `Your suggestion has been sent to the CRBT developers.\nWe will review it and who knows, it may be added!. If it does, we will DM you with the results.`
+            `We will review it and who knows, it may be added! Whatever the case, we will DM once your suggestion is reviewed.`
           )
           .setColor(`#${colors.success}`),
       ],
