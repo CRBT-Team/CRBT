@@ -84,7 +84,7 @@ export interface PackumentVersion extends PackageJson {
   id: string;
   npmVersion: string;
   nodeVersion: string;
-  npmUser: Maintainer;
+  _npmUser: Maintainer;
   maintainers: Maintainer[];
   dist: Dist;
   _hasShrinkwrap?: boolean;

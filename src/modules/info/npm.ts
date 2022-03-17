@@ -20,58 +20,70 @@ export default ChatCommand({
     }
 
     const res = (await req.json()) as Packument;
-    const cur = res[res['dist-tags'].latest] as PackumentVersion;
+    const cur = res.versions[res['dist-tags'].latest] as PackumentVersion;
+    const { downloads } = (await fetch(
+      `https://api.npmjs.org/downloads/point/last-week/${encodeURIComponent(pkg)}`
+    ).then((r) => r.json())) as any;
 
     const e = new MessageEmbed()
       .setAuthor({
-        name: `${cur.name} - NPM package info`,
-        url: cur.links.npm,
+        name: `${res.name} - NPM package info`,
+        url: `https://npmjs.org/package/${cur.name}`,
         iconURL: 'https://cdn.clembs.xyz/ZgJCsA8.png',
       })
       .setDescription(
-        `**[Open in browser](${pkgInfo.metadata.links.npm})**\n${
-          pkgInfo.metadata.description.length > 1024
-            ? `${pkgInfo.metadata.description.slice(0, 1021)}...`
-            : pkgInfo.metadata.description
+        `**[Open in browser](https://npmjs.org/package/${cur.name})**\n${
+          cur.description.length > 1024 ? `${cur.description.slice(0, 1021)}...` : cur.description
         }`
       )
       .addField(
         'Current version',
-        `${pkgInfo.metadata.version} - Published on <t:${dayjs(pkgInfo.metadata.date).unix()}>`
+        `${res['dist-tags'].latest} - Published on <t:${dayjs(res.time.modified).unix()}>`
       )
-      .addField('Weekly Downloads', pkgInfo.npm.downloads.at(-1).count.toLocaleString())
+      .addField('Weekly Downloads', downloads.toLocaleString())
       .setColor(await getColor(this.user))
       .setFooter({
-        text: `Source: npms.io • Analyzed at ${analyzedAt.split('T')[0]}`,
+        text: `Source: npmjs.org`,
       });
 
-    if (pkgInfo.metadata.keywords && pkgInfo.metadata.keywords.length > 0) {
-      e.addField('Keywords', `\`\`\`\n${pkgInfo.metadata.keywords.join(', ')}\`\`\``);
+    if (cur.keywords && cur.keywords.length > 0) {
+      e.addField('Keywords', `\`\`\`\n${cur.keywords.join(', ')}\`\`\``);
     }
-    if (pkgInfo.metadata.license) {
-      e.addField('License', pkgInfo.metadata.license, true);
+    if (cur.license) {
+      e.addField('License', cur.license, true);
     }
-    e.addField('Publisher', pkgInfo.metadata.publisher.username, true).addField(
+    e.addField(
+      'Publisher',
+      typeof cur._npmUser === 'string'
+        ? cur._npmUser
+        : `**[${cur._npmUser.name}](${cur._npmUser.url})**${
+            cur._npmUser.email ? ` - ${cur._npmUser.email}` : ''
+          }`,
+      true
+    ).addField(
       'Maintainers',
-      pkgInfo.metadata.maintainers.map((m) => m.username).join(', '),
+      cur.maintainers.map((m) => (typeof m === 'string' ? m : `${m.name}`)).join(', '),
       true
     );
 
-    if (pkgInfo.metadata.author) {
+    if (cur.author) {
       e.addField(
         'Author',
-        `**[${pkgInfo.metadata.author.name}](${pkgInfo.metadata.author.url})**`,
+        typeof cur.author === 'string'
+          ? `**${cur.author}**`
+          : `**[${cur.author.name}](${cur.author.url})**${
+              cur.author.email ? ` - ${cur.author.email}` : ''
+            }`,
         true
       );
     }
-    if (pkgInfo.metadata.repository) {
+    if (cur.repository) {
       e.addField(
         'Repository',
-        `**${pkgInfo.metadata.repository.url.replace(
-          // regex to remove git+ prefix and the .git suffix
-          /^git\+https:\/\/github.com\/(.+)\.git$/,
-          '$1'
-        )}**`
+        typeof cur.repository === 'string'
+          ? `**${cur.repository.replace(/^git\+(.+)\.git$/, '$1')}**`
+          : `**${cur.repository.url.replace(/^git\+(.+)\.git$/, '$1')}**`,
+        true
       );
     }
 

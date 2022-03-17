@@ -110,6 +110,9 @@ export const renderProfile = async (
           }.png`
         : null
     )
+    .setFooter({
+      text: `${user.id} • ${profile.purplets} Purplets`,
+    })
     .setColor(await getColor(user));
 
   if (profile?.crbt_badges && profile?.crbt_badges.length > 0) {

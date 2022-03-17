@@ -21,7 +21,7 @@ export interface Poll {
 }
 
 export default ChatCommand({
-  name: 'poll start',
+  name: 'poll create',
   description: 'Create a poll with the given choice.',
   options: new OptionBuilder()
     .string('title', "What's your poll about?", true)
