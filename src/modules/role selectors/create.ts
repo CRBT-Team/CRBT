@@ -13,7 +13,7 @@ export default ChatCommand({
   name: 'roleselector create',
   description: 'Create a Role Selector.',
   options: new OptionBuilder()
-    .enum('behavior', 'How the role selector should behave.', [{ name: 'a', value: 'e' }])
+    .enum('behavior', 'How the role selector should behave.', [{ name: 'a', value: 'e' }], true)
     .role('role1', 'The role to use for the roles picker.', true)
     .role('role2', 'A second role to use for the roles picker.', true)
     .role('role3', 'A third role to use for the roles picker.')

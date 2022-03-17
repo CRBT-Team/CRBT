@@ -11,7 +11,7 @@ export default ChatCommand({
   async handle({ word }) {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);
 
-    if (res.status !== 200) {
+    if (!res.ok) {
       return await this.reply(
         CRBTError(
           "I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (/urban)"
