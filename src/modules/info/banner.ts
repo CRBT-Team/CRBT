@@ -11,8 +11,8 @@ import {
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
-  name: 'user banner',
-  description: `Gets a user's Discord profile banner, or yours if you don't specify one.`,
+  name: 'banner',
+  description: `Get the Discord profile banner of a chosen user, or yours by default.`,
   options: new OptionBuilder()
     .user('user', 'The user to get the profile banner of.')
     .enum('size', 'The size of the profile banner.', [

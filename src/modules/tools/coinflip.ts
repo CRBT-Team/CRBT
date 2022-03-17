@@ -4,7 +4,7 @@ import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'coinflip',
-  description: 'Flips a coin and returns the result.',
+  description: 'Flip a coin!',
   async handle() {
     const randomValues: [any, number][] = [
       [{ res: 'heads', img: 'https://cdn.clembs.xyz/zBYEdTb.png' }, 45],

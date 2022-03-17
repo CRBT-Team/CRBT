@@ -36,8 +36,8 @@ const choices: Choice[] = animals.map(({ name }) => {
 
 export default ChatCommand({
   name: 'animal',
-  description: 'Get a random cute animal!',
-  options: new OptionBuilder().enum('type', 'Which animal do you want to see?', choices, true),
+  description: 'Get a random animal image and fact.',
+  options: new OptionBuilder().enum('type', 'The animal to display.', choices, true),
   async handle({ type }) {
     await this.reply(await loadAnimal(type, this));
   },

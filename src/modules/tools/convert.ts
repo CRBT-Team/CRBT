@@ -32,7 +32,7 @@ const currencies = [
 
 export default ChatCommand({
   name: 'convert',
-  description: 'Converts a specified amount from a current to another one.',
+  description: 'Convert a specified amount from one currency to another.',
   options: new OptionBuilder()
     .number('amount', 'The amount to convert.', true)
     .enum('currency', 'The currency to convert from.', currencies, true)

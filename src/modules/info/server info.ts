@@ -11,7 +11,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'server info',
   description:
-    'Gives information on a Discord server of the provided ID, or the current one if none is used.',
+    'Get information on a given Discord server, or the current one if no server is specified.',
   options: new OptionBuilder().string(
     'id',
     'ID of the server to get info on. Defaults to the current server.'

@@ -7,7 +7,11 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'mc skin',
   description: 'Get a Minecraft skin from a username.',
-  options: new OptionBuilder().string('player_name', 'The username of the player.', true),
+  options: new OptionBuilder().string(
+    'player_name',
+    'The username of the player. (Java Edition only)',
+    true
+  ),
   async handle({ player_name }) {
     try {
       const req = await fetch(`https://api.mojang.com/users/profiles/minecraft/${player_name}`);

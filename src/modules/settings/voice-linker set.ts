@@ -6,7 +6,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'voice-linker set',
-  description: 'Links access to a text channel to users in a voice channel.',
+  description: 'Link access to a text channel to users in a voice channel.',
   options: new OptionBuilder()
     .channel('voice', 'The voice channel to link to.', true)
     .channel('text', 'The text channel to link to.', true),

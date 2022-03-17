@@ -6,7 +6,7 @@ import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purp
 import { navBar } from '../components/navBar';
 
 export default ChatCommand({
-  name: 'user pfp',
+  name: 'avatar',
   description: `Get a user's default avatar, or yours if you don't specify one.`,
   options: new OptionBuilder()
     .user('user', 'The user to get the avatar of.')

@@ -7,8 +7,8 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'role info',
-  description: 'Gives information about a role.',
-  options: new OptionBuilder().role('role', 'The role to give info about.', true),
+  description: 'Get information about a specified server role.',
+  options: new OptionBuilder().role('role', 'The role whose info to get.', true),
   async handle({ role }) {
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError('This command cannot be used in DMs'));

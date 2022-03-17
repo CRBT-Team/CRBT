@@ -21,7 +21,7 @@ const colorsMap = Object.entries(colors).map(([key, hex]) => ({
 
 export const colorset = ChatCommand({
   name: 'color set',
-  description: 'Changes your CRBT accent color.',
+  description: 'Change your CRBT accent color.',
   options: new OptionBuilder()
     .string(
       'color',
@@ -105,7 +105,7 @@ export const colorset = ChatCommand({
 
 export const colorlist = ChatCommand({
   name: 'color list',
-  description: 'Lists all CRBT color names.',
+  description: 'Returns a list of CRBT accent color names and info.',
   async handle() {
     const userColor = await getColor(this.user);
     const colorRows = [[], [], []];

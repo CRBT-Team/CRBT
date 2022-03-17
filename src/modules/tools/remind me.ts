@@ -16,7 +16,7 @@ import { ChatCommand, components, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'remind me',
-  description: 'Sets a reminder for the specified user.',
+  description: 'Set a reminder.',
   options: new OptionBuilder()
     .string('when', 'The time to remind the user (e.g. 2 hours, 3w2d, 20:30).', true)
     .string('subject', 'Whatever you need to be reminded about.', true)

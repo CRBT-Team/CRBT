@@ -4,7 +4,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'rng',
-  description: 'Picks a number at random from the given range, or from 1 to 100 if none is given.',
+  description: 'Pick a number at random from the given range.',
   options: new OptionBuilder()
     .number('max', 'The maximum number to pick. Defaults to 100.')
     .number('min', 'The minimum number to pick. Defaults to 1.')

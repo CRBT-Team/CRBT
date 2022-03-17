@@ -9,8 +9,12 @@ import emojiJSON from '../../../data/misc/emoji.json';
 
 export default ChatCommand({
   name: 'emoji info',
-  description: 'Returns information about a given emoji.',
-  options: new OptionBuilder().string('emoji', 'The emoji to get information about.', true),
+  description: 'Get info on a given emoji. 👀',
+  options: new OptionBuilder().string(
+    'emoji',
+    'The emoji whose info to get. Works with custom emojis and standard Unicode emoji. 😜',
+    true
+  ),
   async handle({ emoji }) {
     if (emoji.match(EmojiRegex)) {
       const emojiData = {
@@ -92,7 +96,7 @@ export default ChatCommand({
     } else {
       await this.reply(
         CRBTError(
-          'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji.'
+          'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃'
         )
       );
     }

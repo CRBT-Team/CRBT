@@ -25,7 +25,7 @@ const choices = activities.map(({ name }) => {
 
 export default ChatCommand({
   name: 'activity',
-  description: 'Starts a new Discord activity in a voice channel.',
+  description: 'Start an activity in a voice channel.',
   options: new OptionBuilder()
     .enum('activity', 'The activity you want to start.', choices, true)
     .channel('channel', 'The channel you want to start the activity in.'),

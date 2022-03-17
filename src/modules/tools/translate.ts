@@ -14,7 +14,7 @@ const langs: Choice[] = Object.entries(langJSON).map((lang) => {
 
 export default ChatCommand({
   name: 'translate',
-  description: 'Translates given text to the specified language.',
+  description: 'Translate text to another language.',
   options: new OptionBuilder()
     .string('text', 'The text to translate.', true)
     .enum('target', 'The language to translate to. Defaults to your Discord locale.', langs)

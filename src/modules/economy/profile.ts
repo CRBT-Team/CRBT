@@ -16,7 +16,7 @@ import { EditProfileBtn } from './editProfile';
 
 export default ChatCommand({
   name: 'profile',
-  description: "Gets a user's profile.",
+  description: "Get a user's CRBT profile, or yours.",
   options: new OptionBuilder()
     .string('lookup_name', 'Search a profile by their CRBT profile name.', false)
     .autocomplete('lookup_name', async ({ lookup_name }) => {

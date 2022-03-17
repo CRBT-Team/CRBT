@@ -6,7 +6,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'calc',
-  description: 'Calculates a given expression.',
+  description: 'Calculate an expression.',
   options: new OptionBuilder().string('expr', 'The expression to calculate.', true),
   async handle({ expr }) {
     const math = new Parser();

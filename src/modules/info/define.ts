@@ -6,7 +6,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'define',
-  description: 'Looks up the definition of a given word on an english dictionary.',
+  description: 'Look up the definition of a given word on a dictionary.',
   options: new OptionBuilder().string('word', 'The word to define.', true),
   async handle({ word }) {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);
@@ -14,7 +14,7 @@ export default ChatCommand({
     if (res.status !== 200) {
       return await this.reply(
         CRBTError(
-          "I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (`/urban`)"
+          "I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (/urban)"
         )
       );
     }

@@ -8,8 +8,8 @@ import { xml2js } from 'xml-js';
 import { Yamlr34 } from '../../lib/types/apis/rule34xxx';
 
 export default ChatCommand({
-  name: 'nsfw rule34',
-  description: 'Get a random image from rule34 (Not Safe For Work).',
+  name: 'rule34',
+  description: 'Get a random image from that website (+18).',
   options: new OptionBuilder()
     .string('include_tags', 'The tags to search for (seperated by a comma).', true)
     .string('exclude_tags', 'The tags to exclude (seperated by a comma).')
@@ -17,7 +17,7 @@ export default ChatCommand({
     .boolean('incognito', 'Whether to send message publicly.'),
   async handle({ include_tags, exclude_tags, safe_only, incognito }) {
     if (!(this.channel as TextChannel).nsfw) {
-      return this.reply(CRBTError('This command can only be used in NSFW channels.'));
+      return this.reply(CRBTError('This command can only be used in age-restricted channels.'));
     }
 
     const allTags = ['sort:updated:desc'];

@@ -5,8 +5,8 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: '8ball',
-  description: 'Asks the magic 8 ball a question.',
-  options: new OptionBuilder().string('question', 'The question to ask the 8 ball.', true),
+  description: 'Ask a question to 8-Ball.',
+  options: new OptionBuilder().string('question', 'A question to ask.', true),
   async handle({ question }) {
     const answers = readFileSync('./src/lib/util/8ball.txt', 'utf8').split('\n');
     const answer = answers[Math.floor(Math.random() * answers.length)].split(' ');

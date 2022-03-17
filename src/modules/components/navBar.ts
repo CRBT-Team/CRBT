@@ -3,8 +3,8 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { ButtonComponent, row } from 'purplet';
 import { renderProfile } from '../economy/profile';
+import { renderPfp } from '../info/avatar';
 import { renderUser } from '../info/user info';
-import { renderPfp } from '../info/user pfp';
 
 export const UserInfoBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {

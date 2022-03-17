@@ -2,7 +2,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'shuffletext',
-  description: 'Shuffles the words of a text.',
+  description: 'Shuffles the words in a given text.',
   options: new OptionBuilder().string('text', 'The text to shuffle.', true),
   async handle({ text }) {
     const words = text.split(' ');

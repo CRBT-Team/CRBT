@@ -22,7 +22,7 @@ export interface Poll {
 
 export default ChatCommand({
   name: 'poll create',
-  description: 'Create a poll with the given choice.',
+  description: 'Create a poll with the given choices.',
   options: new OptionBuilder()
     .string('title', "What's your poll about?", true)
     .channel('channel', 'The channel to send the poll in.', true)
@@ -31,7 +31,6 @@ export default ChatCommand({
       'When the poll should end.',
       [
         { name: 'Never, end it manually', value: 'never' },
-        { name: 'In 5 seconds (for debugging)', value: '5s' },
         { name: 'In 1 hour', value: '1h' },
         { name: 'In 24 hours', value: '24h' },
         { name: 'In 1 week', value: '1w' },

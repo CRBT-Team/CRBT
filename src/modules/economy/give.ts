@@ -30,7 +30,7 @@ const Pronouns = {
 
 export default ChatCommand({
   name: 'give',
-  description: 'Give a given amount of your Purplets to a user. Check your balance with /balance.',
+  description: 'Give a given amount of your Purplets to a user.',
   options: new OptionBuilder()
     .user('user', 'The user to give your Purplets to.', true)
     .integer('amount', 'The amount of Purplets you want to give.', true),

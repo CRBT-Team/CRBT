@@ -17,7 +17,7 @@ import { navBar } from '../components/navBar';
 
 export default ChatCommand({
   name: 'user info',
-  description: 'Get all info on a Discord user.',
+  description: "Get a user's Discord information.",
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
     const u = await (user ?? this.user).fetch();

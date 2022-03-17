@@ -8,7 +8,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'balance',
   description: "View a user's Purplet balance, or yours.",
-  options: new OptionBuilder().user('user', 'The user whole balance you wish to view.'),
+  options: new OptionBuilder().user('user', 'The user to view the balance of.'),
   async handle({ user }) {
     const u = user ?? this.user;
 

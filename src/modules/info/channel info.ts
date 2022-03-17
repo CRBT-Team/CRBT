@@ -73,9 +73,6 @@ export default ChatCommand({
     } else if (c.type === 'GUILD_NEWS') {
       const info: D.NewsChannel = c as D.NewsChannel;
       e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.news });
-    } else if (c.type === 'GUILD_STORE') {
-      const info: D.StoreChannel = c as D.StoreChannel;
-      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.store });
     } else if (c.type === 'GUILD_STAGE_VOICE') {
       const info: D.StageChannel = c as D.StageChannel;
       e.setAuthor({ name: `${info.name} - Channel info` });
