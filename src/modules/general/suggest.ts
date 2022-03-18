@@ -3,19 +3,15 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'suggest',
-  description: 'Send a suggestion to the CRBT developers.',
-  options: new OptionBuilder().string(
-    'message',
-    'The suggestion to send (in english, please).',
-    true
-  ),
+  name: 'issue create',
+  description: 'Send a bug report or a suggestion to the CRBT developers.',
+  options: new OptionBuilder().string('message', 'The message to send (in english, please).', true),
   async handle({ message }) {
     await this.reply({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: 'Suggestion sent.',
+            name: 'Issue sent.',
             iconURL: illustrations.success,
           })
           .setDescription(
@@ -33,7 +29,7 @@ export default ChatCommand({
       .send({
         embeds: [
           new MessageEmbed()
-            .setTitle('Suggestion')
+            .setTitle('Issue')
             .setDescription(`${this.user}:` + `\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``)
             .addField('Status', 'Pending', true)
             .setColor(`#${colors.yellow}`),

@@ -1,9 +1,26 @@
-import { misc } from '$lib/db';
+import { cache } from '$lib/cache';
+import { db, misc } from '$lib/db';
 import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export default OnEvent('interactionCreate', async (i) => {
   if (!['859369676140314624', misc.CRBTid].includes(i.client.user.id)) return;
+
+  let value = cache.get(`tlm_${i.user.id}`);
+
+  if (!value) {
+    value = cache.set(
+      `tlm_${i.user.id}`,
+      (
+        await db.misc.findFirst({
+          where: { id: i.user.id },
+          select: { telemetry: true },
+        })
+      ).telemetry
+    );
+  }
+
+  if (value === false) return;
 
   if (i.isCommand()) {
     (i.client.channels.cache.get(misc.channels.telemetry) as TextChannel).send({

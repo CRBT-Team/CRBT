@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { db, emojis, illustrations, links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
@@ -8,14 +9,14 @@ export default ChatCommand({
   name: 'privacy',
   description: 'Review your CRBT privacy settings and edit them.',
   async handle() {
-    const enabled = (
-      await db.misc.findFirst({
-        where: { id: this.user.id },
-        select: { telemetry: true },
-      })
-    ).telemetry;
-
-    // todo: add caching so we don't use the db 3928748985T7378983644 times per day
+    const enabled =
+      cache.get(`tlm_${this.user.id}`) ??
+      (
+        await db.misc.findFirst({
+          where: { id: this.user.id },
+          select: { telemetry: true },
+        })
+      ).telemetry;
 
     await this.reply({
       embeds: [
@@ -25,7 +26,9 @@ export default ChatCommand({
             `You can review our **[Privacy Policy on the website](${links.privacypolicy})**.\n` +
               `${emojis.toggle[enabled ? 'on' : 'off']} Telemetry for all commands is currently ${
                 enabled ? 'enabled, but' : 'disabled, and'
-              } you can always turn it ${enabled ? 'off' : 'on'} with the button below.`
+              } you can always turn it ${
+                enabled ? 'off' : 'on'
+              } with the button below.\nNote: Turning telemetry off won't delete any logs, it just stops them from being sent. Unknown error messages will still be sent regardless of this setting.`
           ),
       ],
       components: components(
@@ -49,6 +52,7 @@ export const ToggleTelemetryBtn = ButtonComponent({
       where: { id: this.user.id },
       data: { telemetry: enabled },
     });
+    cache.set(`tlm_${this.user.id}`, enabled);
 
     await this.update({
       embeds: [
@@ -56,9 +60,11 @@ export const ToggleTelemetryBtn = ButtonComponent({
           .setAuthor({ name: 'CRBT Settings - Privacy', iconURL: illustrations.settings })
           .setDescription(
             `You can review our **[Privacy Policy on the website](${links.privacypolicy})**.\n` +
-              `${emojis.toggle[enabled ? 'on' : 'off']} Telemetry is currently ${
+              `${emojis.toggle[enabled ? 'on' : 'off']} Telemetry for all commands is currently ${
                 enabled ? 'enabled, but' : 'disabled, and'
-              } you can always turn it ${enabled ? 'off' : 'on'} with the button below.`
+              } you can always turn it ${
+                enabled ? 'off' : 'on'
+              } with the button below.\nNote: Turning telemetry off won't delete any logs, it just stops them from being sent. Unknown error messages will still be sent regardless of this setting.`
           ),
       ],
       components: components(
