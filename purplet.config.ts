@@ -17,6 +17,7 @@ export default defineConfig({
       : [],
     clientOptions: {
       allowedMentions: {
+        parse: ['users'],
         repliedUser: false,
       },
       //@ts-ignore

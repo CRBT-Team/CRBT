@@ -20,7 +20,7 @@
     "change-case": "^4.1.2",
     "convert-units": "^2.3.4",
     "dayjs": "^1.10.7",
-    "discord.js": "monbrey/discord.js#modals",
+    "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
     "expr-eval": "^2.0.2",
     "ffmpeg-static": "^5.0.0",

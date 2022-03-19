@@ -4,20 +4,19 @@ import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discor
 import { OnEvent } from 'purplet';
 
 export default OnEvent('interactionCreate', async (i) => {
+  if (i.isModalSubmit()) return;
+
   if (!['859369676140314624', misc.CRBTid].includes(i.client.user.id)) return;
 
   let value = cache.get(`tlm_${i.user.id}`);
+  const fromDB = await db.misc.findFirst({
+    where: { id: i.user.id },
+    select: { telemetry: true },
+  });
 
-  if (!value) {
-    value = cache.set(
-      `tlm_${i.user.id}`,
-      (
-        await db.misc.findFirst({
-          where: { id: i.user.id },
-          select: { telemetry: true },
-        })
-      ).telemetry
-    );
+  if (value === undefined) {
+    cache.set(`tlm_${i.user.id}`, fromDB?.telemetry === undefined ? true : fromDB?.telemetry);
+    value = fromDB?.telemetry === undefined ? true : fromDB?.telemetry;
   }
 
   if (value === false) return;

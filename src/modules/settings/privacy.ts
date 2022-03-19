@@ -1,6 +1,7 @@
 import { cache } from '$lib/cache';
 import { db, emojis, illustrations, links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
 import { MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components } from 'purplet';
@@ -16,7 +17,8 @@ export default ChatCommand({
           where: { id: this.user.id },
           select: { telemetry: true },
         })
-      ).telemetry;
+      )?.telemetry ??
+      true;
 
     await this.reply({
       embeds: [
@@ -29,7 +31,8 @@ export default ChatCommand({
               } you can always turn it ${
                 enabled ? 'off' : 'on'
               } with the button below.\nNote: Turning telemetry off won't delete any logs, it just stops them from being sent. Unknown error messages will still be sent regardless of this setting.`
-          ),
+          )
+          .setColor(await getColor(this.user)),
       ],
       components: components(
         row(
@@ -48,9 +51,10 @@ export const ToggleTelemetryBtn = ButtonComponent({
       return this.reply(CRBTError('Only the person who used this command can use this button.'));
     }
 
-    await db.misc.update({
+    await db.misc.upsert({
       where: { id: this.user.id },
-      data: { telemetry: enabled },
+      create: { telemetry: enabled, id: this.user.id },
+      update: { telemetry: enabled },
     });
     cache.set(`tlm_${this.user.id}`, enabled);
 
@@ -65,7 +69,8 @@ export const ToggleTelemetryBtn = ButtonComponent({
               } you can always turn it ${
                 enabled ? 'off' : 'on'
               } with the button below.\nNote: Turning telemetry off won't delete any logs, it just stops them from being sent. Unknown error messages will still be sent regardless of this setting.`
-          ),
+          )
+          .setColor(await getColor(this.user)),
       ],
       components: components(
         row(

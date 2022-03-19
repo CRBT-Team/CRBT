@@ -1,7 +1,8 @@
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { showModal } from '$lib/functions/showModal';
 import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
-import { ButtonComponent, getRestClient } from 'purplet';
+import { ButtonComponent } from 'purplet';
 
 export const EditProfileBtn = ButtonComponent({
   async handle(userId: string) {
@@ -72,16 +73,18 @@ export const EditProfileBtn = ButtonComponent({
         )
       );
 
-    await getRestClient().post(`/interactions/${this.id}/${this.token}/callback`, {
-      body: {
-        type: 9,
-        data: modal.toJSON(),
-      },
-      headers: {
-        Authorization: `Bot ${this.client.token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    await showModal(modal, this);
+
+    // await getRestClient().post(`/interactions/${this.id}/${this.token}/callback`, {
+    //   body: {
+    //     type: 9,
+    //     data: modal.toJSON(),
+    //   },
+    //   headers: {
+    //     Authorization: `Bot ${this.client.token}`,
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
   },
 });
 

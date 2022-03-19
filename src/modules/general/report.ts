@@ -1,58 +1,41 @@
-import { colors, illustrations, misc } from '$lib/db';
-import { Message, MessageEmbed, TextChannel } from 'discord.js';
+import { showModal } from '$lib/functions/showModal';
+import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
-  description: 'Send a bug report to the CRBT developers.',
-  options: new OptionBuilder()
-    .string('message', 'The bug report to send (in english, please).', true)
-    .string('image_url', 'An image URL (PNG, JPG, WEBP or GIF) to attach to the report.')
-    .boolean(
-      'anonymous',
-      "Whether to send the report anonymously. You won't be able to receive a DM once it's fixed."
-    ),
-  async handle({ message, image_url, anonymous }) {
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Bug report sent.',
-            iconURL: illustrations.success,
-          })
-          .setDescription(
-            `We will review it and try our best to fix it as soon as possible.` +
-              (!anonymous ? '\nA message will be sent to you whenever we review it.' : '')
-          )
-          .setColor(`#${colors.success}`),
-      ],
-    });
+  description: 'File a new issue on the Discord server.',
+  options: new OptionBuilder().string(
+    'image_url',
+    'An image URL (PNG, JPG, WEBP or GIF) to attach to the report.'
+  ),
+  async handle({ image_url }) {
+    const modal = new Modal()
+      .setTitle('New issue')
+      .setCustomId(`issue_${image_url}`)
+      .setComponents(
+        //@ts-ignore
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('issue_title')
+            .setLabel('Title')
+            .setPlaceholder("What's the issue?")
+            .setStyle('SHORT')
+            .setMinLength(10)
+            .setMaxLength(50)
+            .setRequired(true)
+        ),
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('issue_description')
+            .setLabel('Description')
+            .setPlaceholder('Describe your issue in detail.')
+            .setStyle('PARAGRAPH')
+            .setMinLength(10)
+            .setMaxLength(500)
+        )
+      );
 
-    const channel = (await this.client.channels.fetch(
-      this.client.user.id === misc.CRBTid ? misc.channels.report : misc.channels.reportDev
-    )) as TextChannel;
-
-    const e = new MessageEmbed()
-      .setTitle('Bug report')
-      .setDescription(
-        !anonymous
-          ? `${this.user} in ` +
-              (this.channel.type === 'DM'
-                ? `DMs`
-                : `**[${(await this.guild.fetch()).name}](${
-                    ((await this.fetchReply()) as Message).url
-                  })**` + `\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``)
-          : `Anonymously reported\n\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``
-      )
-      .addField('Status', 'Pending', true)
-      .setColor(`#${colors.yellow}`);
-
-    if (image_url && image_url.match(/(https?:\/\/.*\.(?:png|jpeg|jpg|webp|gif))/i)) {
-      e.setImage(image_url);
-    }
-
-    await channel.send({
-      embeds: [e],
-    });
+    await showModal(modal, this);
   },
 });

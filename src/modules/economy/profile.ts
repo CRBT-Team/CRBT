@@ -111,7 +111,8 @@ export const renderProfile = async (
         : null
     )
     .setFooter({
-      text: `${user.id} • ${profile.purplets} Purplets`,
+      // text: `${user.id} • ${profile.purplets} Purplets`,
+      text: `${profile.purplets} Purplets`,
     })
     .setColor(await getColor(user));
 
@@ -126,11 +127,7 @@ export const renderProfile = async (
 
   if (profile?.birthday) {
     const bday = dayjs(profile.birthday);
-    e.addField(
-      'Birthday',
-      `<t:${bday.unix()}:D> • <t:${bday.year(dayjs().year()).unix()}:R>`,
-      false
-    );
+    e.addField('Birthday', `<t:${bday.unix()}:D> • ${bday.year(dayjs().year()).fromNow()}`, false);
   }
   if (profile?.url) {
     e.addField('Website', `**[${trimURL(profile.url)}](${profile.url})**`, true);

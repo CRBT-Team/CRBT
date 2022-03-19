@@ -1,42 +1,39 @@
-import { colors, emojis, illustrations, misc } from '$lib/db';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { showModal } from '$lib/functions/showModal';
+import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
+import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
-  name: 'issue create',
-  description: 'Send a bug report or a suggestion to the CRBT developers.',
-  options: new OptionBuilder().string('message', 'The message to send (in english, please).', true),
-  async handle({ message }) {
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Issue sent.',
-            iconURL: illustrations.success,
-          })
-          .setDescription(
-            `We will review it and who knows, it may be added! Whatever the case, we will DM once your suggestion is reviewed.`
-          )
-          .setColor(`#${colors.success}`),
-      ],
-    });
+  name: 'suggest',
+  description: 'Send a suggestion for CRBT on the Discord server.',
+  async handle() {
+    const modal = new Modal()
+      .setTitle('New suggestion')
+      .setCustomId(`suggestion`)
+      .setComponents(
+        //@ts-ignore
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('suggest_title')
+            .setLabel('Title')
+            .setPlaceholder('What do you want to suggest?')
+            .setStyle('SHORT')
+            .setMinLength(10)
+            .setMaxLength(50)
+            .setRequired(true)
+        ),
+        new MessageActionRow().setComponents(
+          new TextInputComponent()
+            .setCustomId('suggest_description')
+            .setLabel('Description')
+            .setPlaceholder(
+              'Describe your suggestion. What would it do? How would it improve CRBT?'
+            )
+            .setStyle('PARAGRAPH')
+            .setMinLength(10)
+            .setMaxLength(500)
+        )
+      );
 
-    const channel = (await this.client.channels.fetch(
-      this.client.user.id === misc.CRBTid ? misc.channels.report : misc.channels.reportDev
-    )) as TextChannel;
-
-    await channel
-      .send({
-        embeds: [
-          new MessageEmbed()
-            .setTitle('Issue')
-            .setDescription(`${this.user}:` + `\`\`\`\n${message.replaceAll('\\', '\\\\')}\`\`\``)
-            .addField('Status', 'Pending', true)
-            .setColor(`#${colors.yellow}`),
-        ],
-      })
-      .then((msg) => {
-        msg.react(emojis.misc.thumbsup).then(() => msg.react(emojis.misc.thumbsdown));
-      });
+    await showModal(modal, this);
   },
 });

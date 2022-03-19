@@ -69,24 +69,14 @@ export default ChatCommand({
         );
       }
 
-      const targetUserPurplets = await db.profiles.findFirst({
+      const targetUserPurplets = await db.profiles.upsert({
         where: { id: user.id },
-        select: { purplets: true },
+        update: { purplets: { increment: amount } },
+        create: { id: user.id, purplets: amount },
       });
 
-      if (!targetUserPurplets) {
-        await db.profiles.create({
-          data: { id: user.id, purplets: amount },
-        });
-      } else {
-        await db.profiles.update({
-          data: { purplets: targetUserPurplets.purplets + amount },
-          where: { id: user.id },
-        });
-      }
-
       await db.profiles.update({
-        data: { purplets: userPurplets.purplets - amount },
+        data: { purplets: { increment: amount } },
         where: { id: this.user.id },
       });
 
@@ -115,9 +105,9 @@ export default ChatCommand({
             )
             .addField(
               `${Pronouns[pronouns].replace('username', user.username)} balance`,
-              `Previous: **${emojis.purplet} ${targetUserPurplets.purplets}**\nNew: **${
+              `Previous: **${emojis.purplet} ${targetUserPurplets.purplets - amount}**\nNew: **${
                 emojis.purplet
-              } ${targetUserPurplets.purplets + amount}**`,
+              } ${targetUserPurplets.purplets}**`,
               true
             )
             .setColor(`#${colors.success}`),
