@@ -16,20 +16,20 @@ export default ChatCommand({
 
     const currentStreak =
       ((
-        await db.misc.findFirst({
+        await db.users.findFirst({
           where: { id: this.user.id },
           select: { hstreak: true },
         })
       )?.hstreak ?? 0) + 1;
 
     if (currentStreak < 5) {
-      await db.misc.upsert({
+      await db.users.upsert({
         create: { hstreak: currentStreak, id: this.user.id },
         update: { hstreak: currentStreak },
         where: { id: this.user.id },
       });
     } else {
-      await db.misc.upsert({
+      await db.users.upsert({
         create: { hstreak: 0, id: this.user.id },
         update: { hstreak: 0 },
         where: { id: this.user.id },

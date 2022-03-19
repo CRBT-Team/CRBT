@@ -9,7 +9,7 @@ export default OnEvent('interactionCreate', async (i) => {
   if (!['859369676140314624', misc.CRBTid].includes(i.client.user.id)) return;
 
   let value = cache.get(`tlm_${i.user.id}`);
-  const fromDB = await db.misc.findFirst({
+  const fromDB = await db.users.findFirst({
     where: { id: i.user.id },
     select: { telemetry: true },
   });

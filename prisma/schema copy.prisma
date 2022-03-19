@@ -9,18 +9,18 @@ datasource db {
 
 model profiles {
   id                String    @id
+  name              String?   @unique
   verified          Boolean?  @default(false)
-  crbt_banner       String?
-  crbt_accent_color String?
   bio               String?
   purplets          Float     @default(0) @db.Real
-  name              String?   @unique
   crbt_badges       String[]
+  crbt_banner       String?
+  crbt_accent_color String?
   url               String?
   location          String?
   pronouns          String?
-  birthday          DateTime? @db.Timestamptz(6)
   likes             String[]
+  birthday          DateTime? @db.Timestamptz(6)
 }
 
 model reminders {
@@ -42,13 +42,16 @@ model servers {
 }
 
 model users {
-  id        String  @id(map: "misc_pkey")
-  hstreak   Int     @default(0) @db.SmallInt
-  telemetry Boolean @default(true)
+  id             String   @id
+  hstreak        Int      @default(0) @db.SmallInt
+  telemetry      Boolean  @default(true)
+  todolist       String[]
+  past_usernames String[]
+  past_avatars   String[] 
 }
 
 model polls {
-  id         String @id
-  creator_id String
-  choices    String
+  id          String   @id
+  creator_id  String
+  choices     String   // in reality this is an array of array that's stringified because prisma doesn't allow me to have that :(
 }

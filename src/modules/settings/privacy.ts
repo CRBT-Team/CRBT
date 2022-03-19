@@ -13,7 +13,7 @@ export default ChatCommand({
     const enabled =
       cache.get(`tlm_${this.user.id}`) ??
       (
-        await db.misc.findFirst({
+        await db.users.findFirst({
           where: { id: this.user.id },
           select: { telemetry: true },
         })
@@ -51,7 +51,7 @@ export const ToggleTelemetryBtn = ButtonComponent({
       return this.reply(CRBTError('Only the person who used this command can use this button.'));
     }
 
-    await db.misc.upsert({
+    await db.users.upsert({
       where: { id: this.user.id },
       create: { telemetry: enabled, id: this.user.id },
       update: { telemetry: enabled },

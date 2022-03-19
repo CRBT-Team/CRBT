@@ -53,6 +53,7 @@ export default ChatCommand({
         })) as APIProfile;
       }
     } catch (error) {
+      console.error(error);
       return this.reply(
         CRBTError(
           "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"

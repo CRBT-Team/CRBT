@@ -3,7 +3,7 @@ import { OnEvent } from 'purplet';
 
 export default OnEvent('userUpdate', (oldUser, newUser) => {
   if (oldUser.tag !== newUser.tag) {
-    db.misc.update({
+    db.users.update({
       where: { id: newUser.id },
       data: {
         past_usernames: {
@@ -13,7 +13,7 @@ export default OnEvent('userUpdate', (oldUser, newUser) => {
     });
   }
   if (oldUser.avatar !== newUser.avatar) {
-    db.misc.update({
+    db.users.update({
       where: { id: newUser.id },
       data: {
         past_avatars: {
