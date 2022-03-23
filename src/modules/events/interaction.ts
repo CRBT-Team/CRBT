@@ -23,7 +23,7 @@ export default OnEvent('interactionCreate', async (i) => {
 
     if (value === false) return;
   } catch (e) {
-    UnknownError(this, String(e));
+    UnknownError(i, String(e));
   }
   if (i.isCommand()) {
     (i.client.channels.cache.get(misc.channels.telemetry) as TextChannel).send({
