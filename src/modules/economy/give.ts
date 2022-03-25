@@ -76,7 +76,7 @@ export default ChatCommand({
       });
 
       await db.profiles.update({
-        data: { purplets: { increment: amount } },
+        data: { purplets: { decrement: amount } },
         where: { id: this.user.id },
       });
 
