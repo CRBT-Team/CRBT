@@ -79,7 +79,8 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
 
 export async function CooldownError(
   context: Interaction,
-  relativetime: number
+  relativetime: number,
+  showButton = true
 ): Promise<InteractionReplyOptions> {
   const reminder = await db.reminders.findFirst({
     where: {
@@ -94,19 +95,23 @@ export async function CooldownError(
 
   return {
     embeds: [
-      handleError(`You will be able to use this command ${dayjs(relativetime).fromNow()}...`),
+      handleError(
+        `You will be able to use this ${
+          context.type === 'APPLICATION_COMMAND' ? 'command' : 'component'
+        } ${dayjs(relativetime).fromNow()}...`
+      ),
     ],
     components:
-      reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
-        ? null
-        : components(
+      showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
+        ? components(
             row(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
                 .setLabel('Add Reminder')
                 .setEmoji(emojis.misc.reminder)
             )
-          ),
+          )
+        : null,
     ephemeral: true,
   };
 }

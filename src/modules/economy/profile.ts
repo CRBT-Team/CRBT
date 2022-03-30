@@ -113,7 +113,7 @@ export const renderProfile = async (
     )
     .setFooter({
       // text: `${user.id} • ${profile.purplets} Purplets`,
-      text: `${profile.purplets} Purplets`,
+      text: `${profile?.purplets ?? 0} Purplets`,
     })
     .setColor(await getColor(user));
 
