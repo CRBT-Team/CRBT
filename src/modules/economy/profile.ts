@@ -1,18 +1,10 @@
 import { cache } from '$lib/cache';
-import { db, emojis, items } from '$lib/db';
-import { avatar } from '$lib/functions/avatar';
+import { colors, db, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
-import { getColor } from '$lib/functions/getColor';
-import { row } from '$lib/functions/row';
-import { trimURL } from '$lib/functions/trimURL';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import dayjs from 'dayjs';
 import { Guild, Interaction, InteractionReplyOptions, MessageEmbed, User } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
-import { navBar } from '../components/navBar';
-import { EditProfileBtn } from './editProfile';
+import { ChatCommand, OptionBuilder, UserContextCommand } from 'purplet';
 
 export default ChatCommand({
   name: 'profile',
@@ -92,61 +84,72 @@ export const renderProfile = async (
     )) as { pronouns: string }
   ).pronouns;
 
+  // const e = new MessageEmbed()
+  //   .setAuthor({
+  // name: `${user.tag} - Profile`,
+  // iconURL: avatar(user, 64),
+  //   })
+  //   .setTitle(
+  //     profile?.name
+  //       ? `@${profile.name}${profile?.verified ? ` ${emojis.verified}` : ''}`
+  //       : user.username
+  //   )
+  //   .setDescription(profile?.bio ? await CRBTscriptParser(profile.bio, user, profile, guild) : '')
+  //   .setThumbnail(avatar(user, 256))
+  //   .setImage(
+  //     profile && profile.crbt_banner
+  //       ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
+  //           profile.crbt_banner
+  //         }.png`
+  //       : null
+  //   )
+  //   .setFooter({
+  //     // text: `${user.id} • ${profile.purplets} Purplets`,
+  //     text: `${profile?.purplets ?? 0} Purplets`,
+  //   })
+  //   .setColor(await getColor(user));
+
+  // if (profile?.crbt_badges && profile?.crbt_badges.length > 0) {
+  //   e.addField(
+  //     `Badges (${profile.crbt_badges.length})`,
+  //     profile.crbt_badges.map((badge) => items.badges[badge].contents).join('‎ '),
+  //     profile.crbt_badges.length < 6
+  //   );
+  // }
+  // e.addField('Pronouns', Pronouns[pronouns].replace('username', user.username), true);
+
+  // if (profile?.birthday) {
+  //   const bday = dayjs(profile.birthday);
+  //   e.addField('Birthday', `<t:${bday.unix()}:D> • ${bday.year(dayjs().year()).fromNow()}`, false);
+  // }
+  // if (profile?.url) {
+  //   e.addField('Website', `**[${trimURL(profile.url)}](${profile.url})**`, true);
+  // }
+  // if (profile?.location) {
+  //   e.addField('Location', profile.location, true);
+  // }
+
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${user.tag} - Profile`,
-      iconURL: avatar(user, 64),
+      name: 'No CRBT Premium subscription detected.',
+      iconURL: illustrations.error,
+      // name: `${user.tag} - Profile`,
+      // iconURL: avatar(user, 64),
     })
-    .setTitle(
-      profile?.name
-        ? `@${profile.name}${profile?.verified ? ` ${emojis.verified}` : ''}`
-        : user.username
+    .setDescription(
+      `You need to subscribe to **[CRBT Premium](https://crbt.ga/premium)** in order to view this profile.`
     )
-    .setDescription(profile?.bio ? await CRBTscriptParser(profile.bio, user, profile, guild) : '')
-    .setThumbnail(avatar(user, 256))
-    .setImage(
-      profile && profile.crbt_banner
-        ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
-            profile.crbt_banner
-          }.png`
-        : null
-    )
-    .setFooter({
-      // text: `${user.id} • ${profile.purplets} Purplets`,
-      text: `${profile?.purplets ?? 0} Purplets`,
-    })
-    .setColor(await getColor(user));
-
-  if (profile?.crbt_badges && profile?.crbt_badges.length > 0) {
-    e.addField(
-      `Badges (${profile.crbt_badges.length})`,
-      profile.crbt_badges.map((badge) => items.badges[badge].contents).join('‎ '),
-      profile.crbt_badges.length < 6
-    );
-  }
-  e.addField('Pronouns', Pronouns[pronouns].replace('username', user.username), true);
-
-  if (profile?.birthday) {
-    const bday = dayjs(profile.birthday);
-    e.addField('Birthday', `<t:${bday.unix()}:D> • ${bday.year(dayjs().year()).fromNow()}`, false);
-  }
-  if (profile?.url) {
-    e.addField('Website', `**[${trimURL(profile.url)}](${profile.url})**`, true);
-  }
-  if (profile?.location) {
-    e.addField('Location', profile.location, true);
-  }
-
+    .setColor(`#${colors.error}`);
   return {
     embeds: [e],
-    components: user.equals(ctx.user) // || profile?.url
-      ? components(
-          navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, 'profile'),
-          row(
-            new EditProfileBtn(user.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
-          )
-        )
-      : null,
+    // components: user.equals(ctx.user) // || profile?.url
+    //   ? components(
+    //       navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, 'profile'),
+    //       row(
+    //         new EditProfileBtn(user.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
+    //       )
+    //     )
+    //   : null,
   };
 };
 

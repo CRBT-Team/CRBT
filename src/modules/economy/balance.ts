@@ -28,8 +28,8 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({ name: `${u.tag} - Balance`, iconURL: avatar(u, 64) })
             .setDescription(
-              `
-            ${emojis.purplet} **${req ? req.purplets : 0} Purplets**`
+              `${emojis.purplet} **0 Purplets**\nNote: Starting from April 1st, you will no longer be able to obtain Purplets without a **[CRBT Premium](https://crbt.ga/premium)** subscription.`
+              // `${emojis.purplet} **${req ? req.purplets : 0} Purplets**`
             )
             .addField(
               'Leaderboard rank',
