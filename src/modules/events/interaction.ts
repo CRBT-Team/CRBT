@@ -27,7 +27,7 @@ export default OnEvent('interactionCreate', async (i) => {
           new MessageButton()
             .setLabel('Learn more about CRBT Premium')
             .setStyle('LINK')
-            .setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
+            .setURL('https://crbt.ga/premium')
         )
       ),
     })
