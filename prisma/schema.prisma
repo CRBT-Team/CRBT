@@ -41,17 +41,40 @@ model servers {
   goodbye_message Json?   @db.Json
 }
 
-model misc {
-  id             String   @id
-  hstreak        Int      @default(0) @db.SmallInt
-  telemetry      Boolean  @default(true)
+model users {
+  id             String  @id(map: "misc_pkey")
+  hstreak        Int     @default(0) @db.SmallInt
+  telemetry      Boolean @default(true)
   todolist       String[]
   past_usernames String[]
   past_avatars   String[] 
+  job_type       Jobs?
+  job_exp        Int     @default(0) @db.SmallInt
 }
 
 model polls {
   id          String   @id
   creator_id  String
   choices     String // in reality this is an array of array that's stringified because prisma doesn't allow me to have that :(
+}
+
+enum Jobs {
+  FARMER
+  CASHIER
+  BAKER
+  COOK
+  DEVELOPER
+  DOCTOR
+  TEACHER
+  ENGINEER
+  POLICE_OFFICER
+  FIREFIGHTER
+  NURSE
+  LAWYER
+  MUSICIAN
+  ATHLETE
+  STREAMER
+  ARTIST
+  WRITER
+  INFLUENCER
 }

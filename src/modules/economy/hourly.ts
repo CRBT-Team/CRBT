@@ -36,15 +36,13 @@ export default ChatCommand({
       });
     }
 
-    usersOnCooldown.set(this.user.id, Date.now() + 3.6e6);
-    setTimeout(() => usersOnCooldown.delete(this.user.id), 3.6e6);
-
     const user = await db.profiles.findFirst({
       where: { id: this.user.id },
       select: { purplets: true },
     });
 
-    const income = currentStreak < 5 ? Math.floor(Math.random() * (50 - 20 + 1)) + 20 : 100;
+    const rawIncome = getPurplets(user.purplets);
+    const income = currentStreak > 5 ? rawIncome.out * 1.3 : rawIncome.out;
 
     if (user) {
       await db.profiles.update({
@@ -77,7 +75,7 @@ export default ChatCommand({
                 } ${income} Purplets**.\nCurrent streak: **${currentStreak}/5** (${
                   5 - currentStreak
                 } more to go for a bonus!)`
-              : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (5 streak bonus!)`) +
+              : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (+30% bonus from current streak!)`) +
               '\nClick the button below to set yourself a reminder to claim your hourly Purplets again.'
           )
           .setColor(`#${colors.success}`),
@@ -92,5 +90,18 @@ export default ChatCommand({
         )
       ),
     });
+
+    usersOnCooldown.set(this.user.id, Date.now() + 3.6e6);
+    setTimeout(() => usersOnCooldown.delete(this.user.id), 3.6e6);
   },
 });
+
+function getPurplets(n: number) {
+  if (n > 20000) {
+    return { range: [0, 20], out: Math.floor(Math.random() * (0 - 20 + 1) + 0) };
+  }
+  const max = Math.floor(-0.004 * n + 100);
+  const min = max - 20;
+  const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+  return { range: [min, max], out: rand };
+}

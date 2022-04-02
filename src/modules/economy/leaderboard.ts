@@ -54,7 +54,7 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
                   ? `@${u.name}`
                   : ctx.client.users.cache.get(u.id)?.username ??
                     ctx.client.users.fetch(u.id).then((u) => u.username)
-              } - **${emojis.purplet} ${u.purplets} Purplets**`;
+              } - **${emojis.purplet} ${u.purplets.toLocaleString()} Purplets**`;
             })
             .slice((page - 1) * 10, page * 10)
             .join('\n')
@@ -65,7 +65,7 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
             ? 'Not on the leaderboard'
             : `**${leaderboard.findIndex((x) => x.id === ctx.user.id) + 1}.** ${
                 userProfile.name ? `@${userProfile.name}` : ctx.user.username
-              } - ${emojis.purplet} **${userProfile.purplets} Purplets**`
+              } - ${emojis.purplet} **${userProfile.purplets.toLocaleString()} Purplets**`
         )
         .setColor(await getColor(ctx.user)),
     ],
