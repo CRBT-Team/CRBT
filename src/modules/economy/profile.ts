@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
 import { db, emojis, items } from '$lib/db';
+import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { getColor } from '$lib/functions/getColor';
@@ -11,7 +12,6 @@ import { Guild, Interaction, InteractionReplyOptions, MessageEmbed, User } from 
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
-import avatar from '../info/avatar';
 import { EditProfileBtn } from './editProfile';
 
 export default ChatCommand({

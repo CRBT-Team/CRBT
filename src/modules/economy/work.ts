@@ -16,9 +16,9 @@ export default ChatCommand({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id)));
     }
 
-    const job = {
-      type: 'CASHIER',
-      exp: 300,
+    const job: { type: keyof typeof jobs; exp: number } = {
+      type: 'DOCTOR',
+      exp: 1660,
     };
 
     if (!job) {

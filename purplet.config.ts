@@ -38,7 +38,7 @@ export default defineConfig({
     new ContextCommandHandler(),
     new TextCommandHandler({
       prefix: process.argv.includes('--dev')
-        ? ['<@!859369676140314624>', '<@859369676140314624>', '()']
+        ? ['<@!859369676140314624>', '<@859369676140314624>', '<@!959733838140026900>', '()']
         : ['<@!595731552709771264>', '<@595731552709771264>'],
     }),
   ],

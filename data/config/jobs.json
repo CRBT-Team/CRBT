@@ -47,17 +47,6 @@
       "You are chatting with your viewers on stream as a Vtuber visits your channel, and their fans donate you {purplets}"
     ]
   },
-  "FAST_FOOD_EMPLOYEE": {
-    "income": [20, 23, 26, 30],
-    "cooldown": [60, 30, 10, 15],
-    "maxloses": 5,
-    "strings": [
-      "You worked really hard and almost burnt your hand in the fryer, but at the end of the day you get {purplets}",
-      "You sold a piece of paper on a rock to a blind man. He enjoys his broken teeth and you enjoy your tip of {purplets}",
-      "You sold 50 cheeseburgers! Yum, you got {purplets}",
-      "Your new menu idea was a success! Your boss enjoys it and congrats you with {purplets}"
-    ]
-  },
   "MUSICIAN": {
     "income": [5, 10, 30, 250],
     "cooldown": [60, 100, 120, 200],
@@ -110,16 +99,6 @@
       "Today was quite quiet... That was until a rookie said that, then all heck broke loose. You were paid {purplets}",
       "You and the boys catch a drug dealer on the street! You get {purplets}",
       "You find a dead body and report it. Its discovery makes you gain {purplets}"
-    ]
-  },
-  "ADULT_PERFORMER": {
-    "income": [100, 150, 200, 250],
-    "cooldown": [250, 300, 350, 320],
-    "maxloses": 30,
-    "strings": [
-      "You accidentally burped during the recording! Everyone laughed and your video got a lot of engagement and {purplets}",
-      "You do very naughty things and you get {purplets}",
-      "Your very naughty livestream got a lot of fans engaged that donated {purplets}"
     ]
   }
 }
