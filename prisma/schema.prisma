@@ -45,11 +45,11 @@ model users {
   id             String  @id(map: "misc_pkey")
   hstreak        Int     @default(0) @db.SmallInt
   telemetry      Boolean @default(true)
-  todolist       String[]
-  past_usernames String[]
-  past_avatars   String[] 
-  job_type       Jobs?
-  job_exp        Int     @default(0) @db.SmallInt
+  // todolist       String[]
+  // past_usernames String[]
+  // past_avatars   String[] 
+  // job_type       Jobs?
+  // job_exp        Int     @default(0) @db.SmallInt
 }
 
 model polls {
