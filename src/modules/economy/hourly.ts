@@ -15,6 +15,13 @@ export default ChatCommand({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id)));
     }
 
+    await this.deferReply();
+
+    const user = await db.profiles.findFirst({
+      where: { id: this.user.id },
+      select: { purplets: true },
+    });
+
     const currentStreak =
       ((
         await db.users.findFirst({
@@ -23,64 +30,39 @@ export default ChatCommand({
         })
       )?.hstreak ?? 0) + 1;
 
-    if (currentStreak < 5) {
-      await db.users.upsert({
-        create: { hstreak: currentStreak, id: this.user.id },
-        update: { hstreak: currentStreak },
-        where: { id: this.user.id },
-      });
-    } else {
-      await db.users.upsert({
-        create: { hstreak: 0, id: this.user.id },
-        update: { hstreak: 0 },
-        where: { id: this.user.id },
-      });
-    }
+    const rawIncome = getPurplets(user.purplets);
+    const income = currentStreak > 5 ? rawIncome * 1.3 : rawIncome;
 
-    const user = await db.profiles.findFirst({
+    await db.users.upsert({
+      create: { hstreak: currentStreak < 5 ? currentStreak : 0, id: this.user.id },
+      update: { hstreak: currentStreak < 5 ? currentStreak : 0 },
       where: { id: this.user.id },
-      select: { purplets: true },
     });
 
-    const rawIncome = getPurplets(user.purplets);
-    const income = currentStreak > 5 ? rawIncome.out * 1.3 : rawIncome.out;
+    await db.profiles.upsert({
+      create: { purplets: income, id: this.user.id },
+      update: { purplets: { increment: income } },
+      where: { id: this.user.id },
+    });
 
-    if (user) {
-      await db.profiles.update({
-        where: {
-          id: this.user.id,
-        },
-        data: {
-          purplets: user.purplets + income,
-        },
-      });
-    } else {
-      await db.profiles.create({
-        data: {
-          id: this.user.id,
-          purplets: income,
-        },
-      });
-    }
-
-    await this.reply({
+    await this.editReply({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: 'Hourly Purplets not claimed.',
-            iconURL: illustrations.information,
+            name: 'Hourly Purplets claimed!',
+            iconURL: illustrations.success,
           })
           .setDescription(
-            (currentStreak < 5
-              ? `You claimed your hourly **${
-                  emojis.purplet
-                } ${income} Purplets**.\nCurrent streak: **${currentStreak}/5** (${
-                  5 - currentStreak
-                } more to go for a bonus!)`
-              : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (+30% bonus from current streak!)`) +
+            `You claimed your hourly **${
+              emojis.purplet
+            } ${income} Purplets**.\nCurrent streak: **${currentStreak}/5** ${
+              currentStreak < 5
+                ? `(${5 - currentStreak} more to go for a bonus!)`
+                : '(+30% bonus from current streak!)'
+            }` +
               '\nClick the button below to set yourself a reminder to claim your hourly Purplets again.'
           )
-          .setColor(`#${colors.yellow}`),
+          .setColor(`#${colors.success}`),
       ],
       components: components(
         row(
@@ -99,10 +81,12 @@ export default ChatCommand({
 
 function getPurplets(n: number) {
   if (n > 20000) {
-    return { range: [0, 20], out: Math.floor(Math.random() * (0 - 20 + 1) + 0) };
+    return Math.floor(Math.random() * (0 - 20 + 1) + 0);
+    // return { range: [0, 20], out: Math.floor(Math.random() * (0 - 20 + 1) + 0) };
   }
   const max = Math.floor(-0.004 * n + 100);
   const min = max - 20;
   const rand = Math.floor(Math.random() * (max - min + 1)) + min;
-  return { range: [min, max], out: rand };
+  return rand;
+  // return { range: [min, max], out: rand };
 }
