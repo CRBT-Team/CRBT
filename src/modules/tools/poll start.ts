@@ -1,5 +1,5 @@
 import { colors, db, emojis, illustrations } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
 import { polls } from '@prisma/client';
@@ -19,6 +19,8 @@ export interface Poll {
   creator_id: string;
   choices: String[][];
 }
+
+const usersOnCooldown = new Map();
 
 export default ChatCommand({
   name: 'poll create',
@@ -119,7 +121,7 @@ export default ChatCommand({
       data: {
         id: `${channel.id}/${msg.id}`,
         creator_id: this.user.id,
-        choices: JSON.stringify(pollChoices.map((choice) => [choice])),
+        choices: JSON.stringify(pollChoices.map((_) => [])),
       },
     });
 
@@ -200,6 +202,10 @@ export default ChatCommand({
 
 export const PollButton = ButtonComponent({
   async handle({ choiceId }) {
+    if (usersOnCooldown.has(this.user.id) && usersOnCooldown.get(this.user.id) > Date.now()) {
+      return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
+    }
+
     const pollData = await db.polls.findFirst({
       where: { id: `${this.channel.id}/${this.message.id}` },
     });
@@ -210,11 +216,16 @@ export const PollButton = ButtonComponent({
     this.update({
       embeds: [e],
     });
+    usersOnCooldown.set(this.user.id, Date.now() + 3000);
   },
 });
 
 export const PollSelector = SelectMenuComponent({
   async handle(ctx: null) {
+    if (usersOnCooldown.has(this.user.id) && usersOnCooldown.get(this.user.id) > Date.now()) {
+      return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
+    }
+
     const pollData = await db.polls.findFirst({
       where: { id: `${this.channel.id}/${this.message.id}` },
     });
@@ -225,6 +236,8 @@ export const PollSelector = SelectMenuComponent({
     this.update({
       embeds: [e],
     });
+
+    usersOnCooldown.set(this.user.id, Date.now() + 3000);
   },
 });
 
@@ -235,29 +248,41 @@ const renderPoll = async (
   pollEmbed: MessageEmbed
 ) => {
   const choices: string[][] = JSON.parse(pollData.choices);
+  const newChoiceId = Number(choiceId);
+  const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
 
-  const userChoice = choices.findIndex((choice) => choice.find((voter) => voter === userId));
+  console.log('choiceId', choiceId);
+  console.log('previousChoiceId', previousChoiceId);
+  console.log('choices', choices);
 
-  if (userChoice) {
-    choices[userChoice].splice(
-      choices[userChoice].findIndex((voter) => voter === userId),
+  if (previousChoiceId !== -1) {
+    choices[previousChoiceId]?.splice(
+      choices[previousChoiceId].findIndex((voter) => voter === userId),
       1
     );
   }
-  choices[choiceId].push(userId);
+  if (previousChoiceId !== newChoiceId) {
+    choices[newChoiceId]?.push(userId);
+  }
+
+  console.log('choices', choices);
 
   await db.polls.update({
     where: { id: pollData.id },
     data: { choices: JSON.stringify(choices) },
   });
 
-  const totalVotes = choices.length - (userChoice.toString() === choiceId ? 1 : 0);
+  const totalVotes = choices.flat().length;
 
   pollEmbed.fields.forEach((choice, id) => {
     const votes = choices[id].length;
-    const percentage = Math.round((votes / totalVotes) * 100);
+    let percentage = Math.round((votes / totalVotes) * 100);
+    if (isNaN(percentage)) percentage = 0;
+    if (percentage === Infinity) percentage = 100;
 
-    pollEmbed.fields[id].value = `${
+    console.log('votes for ' + id, votes, `${percentage}%`);
+
+    choice.value = `${
       emojis.progress.fill.repeat(Math.round(percentage / 10)) +
       emojis.progress.empty.repeat(10 - Math.round(percentage / 10))
     }\n${percentage}% - ${votes} ${votes === 1 ? 'vote' : 'votes'}`;

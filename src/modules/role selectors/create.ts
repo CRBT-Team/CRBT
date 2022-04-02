@@ -10,20 +10,42 @@
 // } from 'purplet';
 
 // export default ChatCommand({
-//   name: 'roleselector create',
-//   description: 'Create a Role Selector.',
+//   name: 'role-selector create',
+//   description: 'Create a new Role Selector.',
 //   options: new OptionBuilder()
-//     .enum('behavior', 'How the role selector should behave.', [{ name: 'a', value: 'e' }], true)
-//     .role('role1', 'The role to use for the roles picker.', true)
-//     .role('role2', 'A second role to use for the roles picker.', true)
-//     .role('role3', 'A third role to use for the roles picker.')
-//     .role('role4', 'A fourth role to use for the roles picker.')
-//     .role('role5', 'A fifth role to use for the roles picker.')
-//     .role('role6', 'A sixth role to use for the roles picker.')
-//     .role('role7', 'A seventh role to use for the roles picker.')
-//     .role('role8', 'A eighth role to use for the roles picker.')
-//     .role('role9', 'A ninth role to use for the roles picker.')
-//     .role('role10', 'A tenth role to use for the roles picker.'),
+//     .enum(
+//       'behavior',
+//       'How the Role Selector should behave.',
+//       [
+//         {
+//           name: 'Give/remove when selected/unselected',
+//           value: 'e',
+//         },
+//         {
+//           name: 'Only give when selected',
+//           value: 'g',
+//         },
+//         {
+//           name: 'Only remove when selected',
+//           value: 'r',
+//         },
+//         {
+//           name: 'Limit selection to one',
+//           value: 'l',
+//         },
+//       ],
+//       true
+//     )
+//     .role('role1', 'A role to give or remove when selected.', true)
+//     .role('role2', 'A role to give or remove when selected.')
+//     .role('role3', 'A role to give or remove when selected.')
+//     .role('role4', 'A role to give or remove when selected.')
+//     .role('role5', 'A role to give or remove when selected.')
+//     .role('role6', 'A role to give or remove when selected.')
+//     .role('role7', 'A role to give or remove when selected.')
+//     .role('role8', 'A role to give or remove when selected.')
+//     .role('role9', 'A role to give or remove when selected.')
+//     .role('role10', 'A role to give or remove when selected.'),
 //   async handle({ behavior, ...roles }) {
 //     if (this.user.id !== '327690719085068289') {
 //       return this.reply(CRBTError('h'));

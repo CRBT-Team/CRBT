@@ -23,7 +23,9 @@ const urlRegex =
 //@ts-ignore
 export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
   if (modal.customId.startsWith('issue_')) {
-    const reportChannel = modal.client.channels.cache.get(misc.channels.reportDev) as TextChannel;
+    const reportChannel = modal.client.channels.cache.get(
+      misc.channels[modal.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
+    ) as TextChannel;
     const url = modal.customId.replace('issue_', '');
     const title = modal.fields.getTextInputValue('issue_title');
     const desc = modal.fields.getTextInputValue('issue_description');
@@ -64,7 +66,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     const title = modal.fields.getTextInputValue('suggest_title');
     const desc = modal.fields.getTextInputValue('suggest_description');
     const channel = (await modal.client.channels.fetch(
-      modal.client.user.id === misc.CRBTid ? misc.channels.report : misc.channels.reportDev
+      misc.channels[modal.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
     )) as TextChannel;
 
     const msg = await channel.send({

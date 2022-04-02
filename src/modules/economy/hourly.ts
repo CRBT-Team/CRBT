@@ -1,7 +1,8 @@
 import { colors, db, emojis, illustrations } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
+import { row } from '$lib/functions/row';
 import { MessageEmbed } from 'discord.js';
-import { ChatCommand, components, row } from 'purplet';
+import { ChatCommand, components } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
 
 const usersOnCooldown = new Map();
@@ -16,20 +17,20 @@ export default ChatCommand({
 
     const currentStreak =
       ((
-        await db.misc.findFirst({
+        await db.users.findFirst({
           where: { id: this.user.id },
           select: { hstreak: true },
         })
       )?.hstreak ?? 0) + 1;
 
     if (currentStreak < 5) {
-      await db.misc.upsert({
+      await db.users.upsert({
         create: { hstreak: currentStreak, id: this.user.id },
         update: { hstreak: currentStreak },
         where: { id: this.user.id },
       });
     } else {
-      await db.misc.upsert({
+      await db.users.upsert({
         create: { hstreak: 0, id: this.user.id },
         update: { hstreak: 0 },
         where: { id: this.user.id },
@@ -61,12 +62,13 @@ export default ChatCommand({
         },
       });
     }
+
     await this.reply({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: 'Hourly Purplets claimed!',
-            iconURL: illustrations.success,
+            name: 'Hourly Purplets not claimed.',
+            iconURL: illustrations.information,
           })
           .setDescription(
             (currentStreak < 5
@@ -78,12 +80,11 @@ export default ChatCommand({
               : `You claimed your hourly **${emojis.purplet} ${income} Purplets**. (+30% bonus from current streak!)`) +
               '\nClick the button below to set yourself a reminder to claim your hourly Purplets again.'
           )
-          .setColor(`#${colors.success}`),
+          .setColor(`#${colors.yellow}`),
       ],
       components: components(
         row(
           new RemindButton({ relativetime: Date.now() + 3.6e6, userId: this.user.id })
-            // new RemindButton(3.6e6)
             .setStyle('SECONDARY')
             .setLabel('Add Reminder')
             .setEmoji(emojis.misc.reminder)

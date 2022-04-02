@@ -2,19 +2,19 @@
   "name": "crbt",
   "version": "11.4.01",
   "scripts": {
-    "start": "npx purplet build && node dist/bot.mjs",
+    "start": "npm run generate && npx purplet build && node dist/bot.mjs",
     "dev": "yarn purplet build && node dist/bot.mjs --dev",
     "db": "supabase start",
     "build": "npx purplet build",
     "generate": "npx prisma generate"
   },
   "engines": {
-    "node": "~16.x"
+    "node": "~16.14.x"
   },
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
     "@discordjs/voice": "^0.8.0",
-    "@prisma/client": "^3.10.0",
+    "@prisma/client": "^3.11.0",
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
     "change-case": "^4.1.2",
@@ -36,6 +36,6 @@
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",
-    "prisma": "^3.10.0"
+    "prisma": "^3.11.0"
   }
 }

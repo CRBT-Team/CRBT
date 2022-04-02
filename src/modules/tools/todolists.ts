@@ -8,7 +8,7 @@
 //   description: 'Add an item to your To-Do list.',
 //   options: new OptionBuilder().string('item', 'The item to add to the todo list', true),
 //   async handle({ item }) {
-//     const todolist = await db.misc.upsert({
+//     const todolist = await db.users.upsert({
 //       where: { id: this.user.id },
 //       update: {
 //         todolist: {
@@ -40,7 +40,7 @@
 //   name: 'todo view',
 //   description: 'View your To-Do list.',
 //   async handle() {
-//     const todolist = await db.misc.findFirst({
+//     const todolist = await db.users.findFirst({
 //       where: { id: this.user.id },
 //       select: { todolist: true },
 //     });

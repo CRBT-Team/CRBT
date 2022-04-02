@@ -248,13 +248,6 @@
       "contents": "🧑‍🎨",
       "available": true
     },
-    "partner": {
-      "name": "CRBT Partner",
-      "type": "special",
-      "value": 0,
-      "contents": "<:partner:866113174314287125>",
-      "available": false
-    },
     "purplet": {
       "name": "Purplet",
       "type": "special",
@@ -267,6 +260,13 @@
       "type": "special",
       "value": 0,
       "contents": "<:davecool:789190897803591740>",
+      "available": false
+    },
+    "issuefinder": {
+      "name": "Issue Finder",
+      "type": "special",
+      "value": 0,
+      "contents": "<:issuefinder:957010384768893008>",
       "available": false
     },
     "flushed": {

@@ -1,6 +1,6 @@
 import { cache } from '$lib/cache';
 import { db, emojis, illustrations, links } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
 import { MessageEmbed } from 'discord.js';
@@ -10,15 +10,21 @@ export default ChatCommand({
   name: 'privacy',
   description: 'Review your CRBT privacy settings and edit them.',
   async handle() {
-    const enabled =
-      cache.get(`tlm_${this.user.id}`) ??
-      (
-        await db.misc.findFirst({
-          where: { id: this.user.id },
-          select: { telemetry: true },
-        })
-      )?.telemetry ??
-      true;
+    let enabled;
+    try {
+      const fromCache = cache.get(this.user.id);
+      if (fromCache === undefined) {
+        const fromDB = (
+          await db.users.findFirst({
+            where: { id: this.user.id },
+            select: { telemetry: true },
+          })
+        )?.telemetry;
+        enabled = fromDB ?? true;
+      }
+    } catch (e) {
+      return this.reply(UnknownError(this, String(e)));
+    }
 
     await this.reply({
       embeds: [
@@ -51,7 +57,7 @@ export const ToggleTelemetryBtn = ButtonComponent({
       return this.reply(CRBTError('Only the person who used this command can use this button.'));
     }
 
-    await db.misc.upsert({
+    await db.users.upsert({
       where: { id: this.user.id },
       create: { telemetry: enabled, id: this.user.id },
       update: { telemetry: enabled },

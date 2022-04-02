@@ -102,7 +102,7 @@ export const issueReply = async (
 
     await msg.thread
       .setName(`${type === 'fix' ? '✅' : '❌'} - ${title}`)
-      .then((t) => t.setLocked(true, `Suggestion ${type === 'fix' ? 'accepted' : 'denied'}`));
+      .then((t) => t.setArchived(true, `Suggestion ${type === 'fix' ? 'accepted' : 'denied'}`));
   }
 
   await target
