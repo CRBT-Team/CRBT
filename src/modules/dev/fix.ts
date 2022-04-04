@@ -1,6 +1,7 @@
-import { colors, emojis, illustrations, links, misc } from '$lib/db';
+import { colors, emojis, illustrations, misc } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
+import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { showModal } from '$lib/functions/showModal';
 import { Message, MessageButton, MessageEmbed, Modal, TextInputComponent, User } from 'discord.js';
 import { ButtonComponent, components, TextCommand } from 'purplet';
@@ -108,25 +109,21 @@ export const issueReply = async (
   await target
     .send({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({ name: "You've got mail!", iconURL: illustrations.information })
-          .setDescription(
-            `This message was delivered by a verified CRBT developer.\nLearn more about CRBT messages **[here](${links.info.messages})**.`
-          )
-          .addField(
-            'Subject',
+        createCRBTmsg({
+          type: 'issue',
+          user,
+          subject:
             type === 'reply'
               ? `A CRBT developer has replied to your ${isSuggestion} "${trimmed}"`
               : type === 'fix'
               ? `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been ${
                   isSuggestion ? 'accepted' : 'fixed'
                 }`
-              : `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been denied`
-          )
-          .addFields(message ? [{ name: `Message from ${user.tag}`, value: message }] : [])
-          .setColor(
-            `#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`
-          ),
+              : `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been denied`,
+          message,
+        }).setColor(
+          `#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`
+        ),
       ],
       components: components(
         row(

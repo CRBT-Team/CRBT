@@ -52,6 +52,11 @@ model users {
   // job_exp        Int     @default(0) @db.SmallInt
 }
 
+model role_selectors {
+  id    String  @id
+  roles String[]
+}
+
 model polls {
   id          String   @id
   creator_id  String
