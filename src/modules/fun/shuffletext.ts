@@ -1,3 +1,5 @@
+import { UnknownError } from '$lib/functions/CRBTError';
+import { webhookSend } from '$lib/functions/webhookSend';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -7,10 +9,18 @@ export default ChatCommand({
   async handle({ text }) {
     const words = text.split(' ');
     const shuffled = [];
+
     while (words.length) {
       const index = Math.floor(Math.random() * words.length);
       shuffled.push(words.splice(index, 1)[0]);
     }
-    this.reply(shuffled.join(' '));
+
+    await this.deferReply();
+
+    try {
+      await webhookSend(this, shuffled.join(' ')).then(() => this.deleteReply());
+    } catch (e) {
+      await this.editReply(UnknownError(this, String(e)));
+    }
   },
 });

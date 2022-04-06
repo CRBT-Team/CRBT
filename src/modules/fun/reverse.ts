@@ -1,7 +1,6 @@
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { webhookSend } from '$lib/functions/webhookSend';
-import { Util } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -12,7 +11,7 @@ export default ChatCommand({
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
-    const content = Util.cleanContent(message, this.channel).split('').reverse().join('');
+    const content = message.split('').reverse().join('');
 
     await this.deferReply();
     try {
