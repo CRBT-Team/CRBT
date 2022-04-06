@@ -2,6 +2,7 @@ import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -10,31 +11,44 @@ export default ChatCommand({
   description: "View a user's Purplet balance, or yours.",
   options: new OptionBuilder().user('user', 'The user to view the balance of.'),
   async handle({ user }) {
+    const { strings, errors } = getStrings(this.locale, 'balance');
+
     const u = user ?? this.user;
 
     try {
-      const req = await db.profiles.findFirst({
-        where: { id: u.id },
-        select: { purplets: true },
-      });
+      // const req = await db.profiles.findFirst({
+      //   where: { id: u.id },
+      //   select: { purplets: true },
+      // });
       const leaderboard = await db.profiles.findMany({
         where: { purplets: { gt: 0 } },
         orderBy: { purplets: 'desc' },
         select: { id: true, purplets: true },
       });
 
+      const req = leaderboard.find((x) => x.id === u.id);
+
       this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor({ name: `${u.tag} - Balance`, iconURL: avatar(u, 64) })
-            .setDescription(`${emojis.purplet} **${req ? req.purplets : 0} Purplets**`)
+            .setAuthor({
+              name: strings.EMBED_TITLE.replace('<user>', u.tag),
+              iconURL: avatar(u, 64),
+            })
+            .setDescription(
+              `${emojis.purplet} **${strings.EMBED_DESCRIPTION.replace(
+                '<PURPLETS>',
+                `${req ? req.purplets : 0}`
+              )}**`
+            )
             .addField(
-              'Leaderboard rank',
+              strings.LEADERBOARD_TITLE,
               !req
-                ? 'Not on the global leaderboard (`/leaderboard`)'
-                : `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}** out of ${
-                    leaderboard.length
-                  } people on the global leaderboard (\`/leaderboard\`)`
+                ? strings.LEADERBOARD_NOTPRESENT
+                : `${strings.LEADERBOARD_NOTPRESENT.replace(
+                    '<PLACE>',
+                    `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}**`
+                  ).replace('<TOTAL>', leaderboard.length.toString())} (\`/leaderboard\`)`
             )
             .setColor(await getColor(u)),
         ],

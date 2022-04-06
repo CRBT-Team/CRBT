@@ -3,6 +3,7 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { row } from '$lib/functions/row';
 import { setReminder } from '$lib/functions/setReminder';
+import { getStrings } from '$lib/language';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
 import {
@@ -18,12 +19,14 @@ export default ChatCommand({
   name: 'remind me',
   description: 'Set a reminder.',
   options: new OptionBuilder()
-    .string('when', 'The time to remind the user (e.g. 2 hours, 3w2d, 20:30).', true)
-    .string('subject', 'Whatever you need to be reminded about.', true)
-    .channel('destination', 'Where the reminder should go (leave blank to send a DM).'),
+    .string('when', 'When to remind you (e.g. 2 hours, 3w2d, 20:30).', true)
+    .string('subject', 'What to remind you of.', true)
+    .channel('destination', 'Where to send the reminder (leave blank to send a DM).'),
   async handle({ when, subject, destination }) {
+    const { strings, errors } = getStrings(this.locale, 'remind me');
+
     if (subject.length > 120) {
-      return this.reply(CRBTError('Subject must be 120 characters or less.'));
+      return this.reply(CRBTError(errors.SUBJECT_MAX_LENGTH));
     }
 
     const now = dayjs();
@@ -63,7 +66,7 @@ export default ChatCommand({
         expiration = dayjs(w);
         timeMS = expiration.diff(now);
       } else {
-        return this.reply(CRBTError('You cannot set a reminder for a time in the past.'));
+        return this.reply(CRBTError(errors.PAST));
       }
     } else if (!!ms(w) && !dayjs(w).isValid()) {
       timeMS = ms(w);
@@ -71,24 +74,20 @@ export default ChatCommand({
     }
 
     if (!expiration || !timeMS || timeMS < 0) {
-      return this.reply(
-        CRBTError('The time you entered is in an invalid format, or below 0 seconds.')
-      );
+      return this.reply(CRBTError(errors.INVALID_FORMAT));
     }
     if (timeMS > ms('2y')) {
-      return this.reply(CRBTError('You cannot set a reminder for more than 2 years from now.'));
+      return this.reply(CRBTError(errors.TOO_LONG));
     }
 
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
-        return this.reply(CRBTError('The channel you specified is not a valid text channel.'));
+        return this.reply(CRBTError(errors.INVALID_CHANNEL_TYPE));
       } else if (!channel.permissionsFor(this.user).has('SEND_MESSAGES')) {
-        return this.reply(
-          CRBTError('You do not have permission to send messages in that channel.')
-        );
+        return this.reply(CRBTError(errors.USER_MISSING_PERMS));
       } else if (!channel.permissionsFor(this.guild.me).has('SEND_MESSAGES')) {
-        return this.reply(CRBTError('I do not have permission to send messages in that channel.'));
+        return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
       }
     }
     const userReminders = await db.reminders.findMany({
@@ -96,7 +95,7 @@ export default ChatCommand({
     });
 
     if (userReminders.length >= 5) {
-      return this.reply(CRBTError('You can only have 5 reminders at a time.'));
+      return this.reply(CRBTError(errors.REMINDERS_MAX_LIMIT));
     }
 
     await this.deferReply();
@@ -118,13 +117,13 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: 'Reminder set.',
+              name: strings.SUCCESS_TITLE,
               iconURL: illustrations.success,
             })
             .setDescription(
               (destination
-                ? `You will be reminded in ${destination}`
-                : 'You will be reminded by DM') +
+                ? strings.SUCCESS_CHANNEL.replace('<CHANNEL', `${destination}`)
+                : strings.SUCCESS_DM) +
                 `\n` +
                 (expiration.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
                   ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
