@@ -1,6 +1,6 @@
 {
   "errors": {
-    "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
+    "SUBJECT_MAX_LENGTH": "Le sujet doit être de 120 caractères ou moins.",
     "PAST": "You cannot set a reminder in the past.",
     "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
     "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
