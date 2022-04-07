@@ -1,6 +1,6 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Este comando no se puede utilizar en MD."
   },
   "activity": {
     "meta": {
@@ -8,8 +8,8 @@
       "description": "Start an activity in a voice channel.",
       "options": [
         {
-          "name": "activity",
-          "description": "The activity to start",
+          "name": "actividad",
+          "description": "La actividad a iniciar",
           "choices": [
             "Watch Together - Unlimited participants",
             "Sketch Heads - Up to 16 players",
@@ -23,19 +23,19 @@
           ]
         },
         {
-          "name": "channel",
-          "description": "The voice channel to start the activity in"
+          "name": "canal",
+          "description": "El canal de voz en el que iniciar la actividad"
         }
       ]
     },
     "errors": {
-      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
-      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+      "NO_CHANNEL": "Debe estar en un canal de voz, o escoger un canal de voz utilizando la opción `canal`.",
+      "NOT_VOICE": "¡Debe escoger un canal de voz para iniciar una actividad!"
     },
     "strings": {
-      "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
-      "BUTTON_LABEL": "Join Activity"
+      "EMBED_TITLE": "¡Todo listo!",
+      "EMBED_DESCRIPTION": "Haga clic en el botón de abajo para unirse a <ACTIVITY> en <CHANNEL>.\nTenga presente que las actividades no funcionan en móviles y aún se está experimentando con ellas. Espere errores y características que falten.",
+      "BUTTON_LABEL": "Unirse a la actividad"
     }
   },
   "balance": {
@@ -70,18 +70,18 @@
     },
     "colorNames": {
       "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
+      "lightred": "Rojo claro",
+      "red": "Rojo",
+      "darkred": "Rojo oscuro",
+      "orange": "Naranja",
+      "yellow": "Amarillo",
+      "lightgreen": "Verde claro",
+      "green": "Verde",
+      "darkgreen": "Verde oscuro",
+      "cyan": "Cian",
+      "lightblue": "Azul claro",
+      "blue": "Azul",
+      "darkblue": "Azul oscuro",
       "blurple": "Blurple",
       "lightpurple": "Light Purple",
       "purple": "Purple",
@@ -145,10 +145,10 @@
       "MEMBER_COUNT": "Member count",
       "SERVER_COUNT": "Server count",
       "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
+      "PING_RESULT": "≈<PING> milisegundos",
       "CREATED": "Created on",
-      "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
+      "UPTIME": "Conectado desde",
+      "BUTTON_WEBSITE": "Página web",
       "BUTTON_INVITE": "Add to Server",
       "BUTTON_DISCORD": "Join the Community"
     }
