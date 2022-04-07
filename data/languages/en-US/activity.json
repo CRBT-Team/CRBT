@@ -1,18 +1,4 @@
 {
-  "meta": {
-    "name": "activity",
-    "description": "Starts a new Discord activity in a voice channel.",
-    "options": [
-      {
-        "name": "activity",
-        "description": "The activity to start."
-      },
-      {
-        "name": "channel",
-        "description": "The voice channel to start the activity in."
-      }
-    ]
-  },
   "errors": {
     "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
     "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
