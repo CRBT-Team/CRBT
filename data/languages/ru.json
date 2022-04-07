@@ -155,7 +155,7 @@
   },
   "profile": {
     "meta": {
-      "name": "profile",
+      "name": "профиль",
       "description": "Get a user's CRBT profile, or yours.",
       "options": [
         {
