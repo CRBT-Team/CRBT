@@ -5,11 +5,11 @@
   "activity": {
     "meta": {
       "name": "activité",
-      "description": "Start an activity in a voice channel.",
+      "description": "Démarrer une activité dans un salon vocal.",
       "options": [
         {
-          "name": "activity",
-          "description": "The activity to start",
+          "name": "activité",
+          "description": "L'activité à démarrer",
           "choices": [
             "Watch Together - Unlimited participants",
             "Sketch Heads - Up to 16 players",
@@ -23,8 +23,8 @@
           ]
         },
         {
-          "name": "channel",
-          "description": "The voice channel to start the activity in"
+          "name": "salon",
+          "description": "Le salon vocal dans lequel démarrer l'activité"
         }
       ]
     },
@@ -84,7 +84,7 @@
       "darkblue": "Dark Blue",
       "blurple": "Blurple",
       "lightpurple": "Light Purple",
-      "purple": "Purple",
+      "purple": "Violet",
       "darkpurple": "Dark Purple",
       "pink": "Pink",
       "brown": "Brown",
