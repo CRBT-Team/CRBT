@@ -155,57 +155,57 @@
   },
   "profile": {
     "meta": {
-      "name": "profile",
-      "description": "Get a user's CRBT profile, or yours.",
+      "name": "profil",
+      "description": "Schauen Sie sich das CRBT-Profil eines Benutzers an, oder Ihrs.",
       "options": [
         {
-          "name": "lookup_name",
-          "description": "Search a profile by their CRBT profile name."
+          "name": "Suchname",
+          "description": "Suche ein Profil nach dem Namen des CRBT-Profils."
         },
         {
-          "name": "lookup_discord",
-          "description": "Search a profile by their Discord user ID or name."
+          "name": "Such-Discord-ID",
+          "description": "Suche ein Profil mit anhand der Discord-Benutzer-ID oder dem Namen."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "CRBT-Profil ansehen"
     },
     "pronouns": {
-      "unspecified": "Unspecified",
-      "hh": "He/Him",
-      "hi": "He/it",
-      "hs": "He/She",
-      "ht": "He/They",
-      "ih": "It/Him",
-      "ii": "It/Its",
-      "is": "It/She",
-      "it": "It/They",
-      "shh": "She/He",
-      "sh": "She/Her",
-      "si": "She/It",
-      "st": "She/They",
-      "th": "They/He",
-      "ti": "They/It",
-      "ts": "They/She",
-      "tt": "They/Them",
-      "any": "Any",
-      "other": "Other",
-      "ask": "Ask me",
+      "unspecified": "Keine Angabe",
+      "hh": "Er/Ihn",
+      "hi": "Er/es",
+      "hs": "Er/Sie",
+      "ht": "Er/Sie",
+      "ih": "Es/Ihm",
+      "ii": "Es/Sein",
+      "is": "Es/Sie",
+      "it": "Es/Sie",
+      "shh": "Sie/Er",
+      "sh": "Sie/Ihr",
+      "si": "Sie/Es",
+      "st": "Sie/Sie",
+      "th": "Sie/Er",
+      "ti": "Sie/Es",
+      "ts": "Sie/Sie",
+      "tt": "Sie/Sie",
+      "any": "Beliebig",
+      "other": "Andere",
+      "ask": "Frag mich",
       "avoid": "<USERNAME>"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+      "NOT_FOUND": "Konnte kein Profil mit diesem Benutzernamen finden. Bitte verwenden Sie die Autovervollständigung, um Profile zu finden!"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "PRONOUNS": "Pronouns",
-      "BIRTHDAY": "Birthday",
-      "WEBSITE": "Website",
-      "LOCATION": "Location",
-      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_TITLE": "<USER> - Profil",
+      "PRONOUNS": "Pronomen",
+      "BIRTHDAY": "Geburtstag",
+      "WEBSITE": "Webseite",
+      "LOCATION": "Standort",
+      "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
-      "BUTTON_EDIT_PROFILE": "Edit Profile"
+      "BUTTON_EDIT_PROFILE": "Profil bearbeiten"
     }
   }
 }
