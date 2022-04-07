@@ -1,7 +1,7 @@
 import { items } from '$lib/db';
 
-type Badge = keyof typeof items.badges;
-type Banner = keyof typeof items.banners;
+export type BadgeNames = keyof typeof items.badges;
+export type BannerNames = keyof typeof items.banners;
 
 export type APIProfile = {
   id: string;
@@ -9,8 +9,8 @@ export type APIProfile = {
   verified?: boolean;
   bio?: string;
   purplets: number;
-  crbt_badges?: Badge[];
-  crbt_banner?: Banner;
+  crbt_badges?: BadgeNames[];
+  crbt_banner?: BannerNames;
   crbt_accent_color?: `#${string}` | 'profile';
   url?: string;
   location?: string;

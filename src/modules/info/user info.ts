@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import {
   GuildMember,
   Interaction,
-  InteractionReplyOptions,
   MessageEmbed,
   User,
   UserContextMenuInteraction,
@@ -98,7 +97,7 @@ export async function renderUser(
   u: User,
   m?: GuildMember,
   navCtx?: { userId: string; cmdUID: string }
-): Promise<InteractionReplyOptions> {
+) {
   const { badges } = emojis;
   const flags = (await u.fetchFlags()).toArray();
   const userBadges = flags.map((flag) => {

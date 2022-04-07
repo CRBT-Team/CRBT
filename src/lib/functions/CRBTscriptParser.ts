@@ -1,18 +1,14 @@
+import { CRBTUser } from '$lib/classes/CRBTUser';
 import { emojis } from '$lib/db';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
-import { Guild, User } from 'discord.js';
+import { Guild } from 'discord.js';
 import { getDiscordClient } from 'purplet';
 import pjson from '../../../package.json';
 import { avatar } from './avatar';
 import { banner } from './banner';
 import { getColor } from './getColor';
 
-export const CRBTscriptParser = async (
-  text: string,
-  user: User,
-  profile: APIProfile,
-  guild?: Guild
-) => {
+export const CRBTscriptParser = async (text: string, profile: CRBTUser, guild?: Guild) => {
+  const { user } = profile;
   const member = guild ? await guild.members.fetch(user.id) : undefined;
   const client = getDiscordClient();
 
@@ -45,11 +41,11 @@ export const CRBTscriptParser = async (
     ['<crbt.tag>', client.user.tag],
     ['<crbt.id>', client.user.id],
     ['<crbt.version', pjson.version],
-    ['<crbt.purplet.version>', pjson.dependencies.purplet],
+    ['<crbt.purplet.version>', pjson.dependencies.purplet.slice(1)],
 
-    [/<rng.([0-9]*)>/g, (a, b) => Math.floor(Math.random() * parseInt(b))],
+    [/<rng.([0-9]*)>/g, (_, a) => Math.floor(Math.random() * parseInt(a))],
 
-    [/<([0-9]+)([+\-\*\/])([0-9]+)>/g, (a, b, c, d) => (0, eval)(b + c + d)],
+    [/<([0-9]+)([+\-\*\/])([0-9]+)>/g, (_, a, b, c) => (0, eval)(a + b + c)],
   ];
   for (const [regex, value] of values) {
     text = text.replaceAll(regex, value);

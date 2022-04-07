@@ -1,3 +1,4 @@
+import { CRBTUser } from '$lib/classes/CRBTUser';
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { APIProfile } from '$lib/types/CRBT/APIProfile';
@@ -35,11 +36,14 @@ export const ProfileBtn = ButtonComponent({
       return this.reply(CRBTError('Only the person who used this command can use this button.'));
     }
     const u = this.client.users.cache.get(userId) ?? (await this.client.users.fetch(userId));
-    const profile = (await db.profiles.findFirst({
-      where: { id: userId },
-    })) as APIProfile;
+    const profile = new CRBTUser(
+      u,
+      (await db.profiles.findFirst({
+        where: { id: userId },
+      })) as APIProfile
+    );
 
-    this.update(await renderProfile(profile, u, this.guild, this, { userId, cmdUID }));
+    this.update({ ...(await renderProfile(profile, this.guild, this, { userId, cmdUID })) });
   },
 });
 
