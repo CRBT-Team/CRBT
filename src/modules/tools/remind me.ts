@@ -3,7 +3,7 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { row } from '$lib/functions/row';
 import { setReminder } from '$lib/functions/setReminder';
-import { getStrings } from '$lib/language';
+import { languages } from '$lib/language';
 import { Reminder } from '$lib/types/CRBT/Reminder';
 import dayjs, { Dayjs } from 'dayjs';
 import {
@@ -23,7 +23,7 @@ export default ChatCommand({
     .string('subject', 'What to remind you of.', true)
     .channel('destination', 'Where to send the reminder (leave blank to send a DM).'),
   async handle({ when, subject, destination }) {
-    const { strings, errors } = getStrings(this.locale, 'remind me');
+    const { strings, errors } = languages[this.locale]['remind me'];
 
     if (subject.length > 120) {
       return this.reply(CRBTError(errors.SUBJECT_MAX_LENGTH));

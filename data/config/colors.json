@@ -3,7 +3,7 @@
   "error": "FF2A2A",
   "default": "F27187",
 
-  "Sync Discord Profile Color": "profile",
+  "sync": "profile",
   "lightred": "F27187",
   "red": "FF2A2A",
   "darkred": "4B0920",

@@ -1,59 +1,51 @@
 import { colors, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { languages } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
+const { meta } = languages['en-US'].activity;
+
 const activities = [
-  { name: 'Watch Together - Unlimited participants', id: '880218394199220334' },
-  { name: 'Sketch Heads - Up to 16 players', id: '902271654783242291' },
-  { name: 'Word Snacks - Up to 8 players', id: '879863976006127627' },
-  { name: 'Poker Night - 💎 Requires Boosting', id: '755827207812677713' },
-  { name: 'Chess In The Park - 💎 Requires Boosting', id: '832012774040141894' },
-  { name: 'Checkers In The Park - 💎 Requires Boosting', id: '832013003968348200' },
-  { name: 'Blazing 8s - 💎 Requires Boosting', id: '832025144389533716' },
-  { name: 'Letter League - 💎 Requires Boosting', id: '879863686565621790' },
-  { name: 'SpellCast - 💎 Requires Boosting', id: '852509694341283871' },
-  // { name: 'Betrayal.io', id: '773336526917861400' },
-  // { name: 'Fishington.io', id: '814288819477020702' },
-  // { name: 'Awkword', id: '879863881349087252' },
-  // { name: 'Putt Party', id: '763133495793942528' },
+  '880218394199220334', // Watch Together
+  '902271654783242291', // Sketch Heads
+  '879863976006127627', // Word Snacks
+  '755827207812677713', // Poker Night
+  '832012774040141894', // Chess In The Park
+  '832013003968348200', // Checkers In The Park
+  '832025144389533716', // Blazing 8s
+  '879863686565621790', // Letter League
+  '852509694341283871', // SpellCast
 ];
 
-const choices = activities.map(({ name }) => {
-  return { name, value: name.toLowerCase().replaceAll(' ', '-').replaceAll('.', '') };
+const choices = activities.map((id, index) => {
+  const name = meta.options[0].choices[index];
+  return { name, value: id };
 });
 
 export default ChatCommand({
-  name: 'activity',
-  description: 'Start an activity in a voice channel.',
+  ...meta,
   options: new OptionBuilder()
-    .enum('activity', 'The activity you want to start.', choices, true)
-    .channel('channel', 'The channel you want to start the activity in.'),
+    .enum('activity', meta.options[0].description, choices, true)
+    .channel('channel', meta.options[1].description),
   async handle({ activity, channel }) {
+    const { strings, errors } = languages[this.locale].activity;
+    const { GUILD_ONLY } = languages[this.locale].globalErrors;
+
     if (this.channel.type === 'DM') {
-      return this.reply(CRBTError('This command cannot be used in DMs'));
+      return this.reply(CRBTError(GUILD_ONLY));
     }
     const vc = channel ?? (await this.guild.members.fetch(this.user)).voice?.channel;
 
-    if (!vc)
-      await this.reply(
-        CRBTError(
-          'You need to be in a voice channel, or to choose a voice channel using the `channel` option.'
-        )
-      );
-    else if (vc.type !== 'GUILD_VOICE')
-      await this.reply(
-        CRBTError('You need to choose a voice channel in order to start an activity!')
-      );
+    if (!vc) await this.reply(CRBTError(errors.NO_CHANNEL));
+    else if (vc.type !== 'GUILD_VOICE') await this.reply(CRBTError(errors.NOT_VOICE));
     else {
       const code = await getRestClient()
         .post(`/channels/${vc.id}/invites`, {
           body: {
             max_age: 86400,
             max_uses: 0,
-            target_application_id: activities.find(
-              ({ name }) => name === choices.find(({ value }) => value === activity).name
-            ).id,
+            target_application_id: activity,
             target_type: 2,
             temporary: false,
             validate: null,
@@ -71,18 +63,19 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: 'All set!',
+              name: strings.EMBED_TITLE,
               iconURL: illustrations.success,
             })
             .setDescription(
-              `Click the button below to join **${
-                choices.find((item) => item.value === activity).name.split(' | ')[0]
-              }** in ${vc}.\nNote: Activities do not work on mobile and are in early development. Some features may be unavailable`
+              strings.EMBED_DESCRIPTION.replace(
+                '<ACTIVITY>',
+                `**${choices.find((item) => item.value === activity).name.split(' | ')[0]}**}`
+              ).replace('<CHANNEL>', `${vc}`)
             )
             .setColor(`#${colors.success}`),
         ],
         components: components(
-          row(new MessageButton().setStyle('LINK').setLabel(`Join Activity`).setURL(code))
+          row(new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_LABEL).setURL(code))
         ),
       });
     }

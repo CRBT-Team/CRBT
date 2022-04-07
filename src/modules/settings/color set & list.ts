@@ -2,32 +2,25 @@ import { cache } from '$lib/cache';
 import { colors, db, emojis, illustrations } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { languages } from '$lib/language';
 import canvas from 'canvas';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, OptionBuilder } from 'purplet';
 
+const { meta, colorNames } = languages['en-US']['color set'];
+
 const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
-  fullName: key
-    .replace('light', 'light ')
-    .replace('dark', 'dark ')
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' '),
+  fullName: colorNames[key],
   value: hex,
   private: !(emojis.colors[key] || hex === 'profile'),
   emoji: emojis.colors[key] || null,
 }));
 
 export const colorset = ChatCommand({
-  name: 'color set',
-  description: 'Change your CRBT accent color.',
+  ...meta,
   options: new OptionBuilder()
-    .string(
-      'color',
-      'Color to change your accent color to. Use one of the suggestions or a HEX color.',
-      true
-    )
+    .string('color', meta.options[0].description, true)
     .autocomplete('color', ({ color }) => {
       return colorsMap
         .filter((colorObj) => !colorObj.private)
@@ -35,6 +28,8 @@ export const colorset = ChatCommand({
         .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
     }),
   async handle({ color }) {
+    const { strings, errors } = languages[this.locale]['color set'];
+
     const user = await this.client.users.fetch(this.user, { force: true });
     const text = color.toLowerCase().replaceAll(/ |#/g, '');
     const finalColor = colors[text] ? colors[text] : text;
@@ -57,23 +52,17 @@ export const colorset = ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: 'Accent color updated.',
+              name: strings.EMBED_TITLE,
               iconURL: illustrations.success,
             })
-            .setDescription(
-              "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
-            )
+            .setDescription(strings.EMBED_MANUAL_COLOR)
             .setColor(finalColor),
         ],
         ephemeral: true,
       });
     } else if (text === 'profile') {
       if (!user.hexAccentColor) {
-        await this.reply(
-          CRBTError(
-            'You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.'
-          )
-        );
+        await this.reply(CRBTError(errors.NO_DISCORD_COLOR));
       } else {
         cache.set(`color_${user.id}`, 'profile');
         await db.profiles.update({
@@ -84,21 +73,17 @@ export const colorset = ChatCommand({
           embeds: [
             new MessageEmbed()
               .setAuthor({
-                name: 'Accent color updated.',
+                name: strings.EMBED_TITLE,
                 iconURL: illustrations.success,
               })
-              .setDescription(
-                "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
-              )
+              .setDescription(strings.EMBED_SYNC_COLOR)
               .setColor(user.hexAccentColor),
           ],
           ephemeral: true,
         });
       }
     } else {
-      await this.reply(
-        CRBTError('You need to enter a valid or a color name. Use `/color list` for more info.')
-      );
+      await this.reply(CRBTError(errors.INVALID_COLOR_NAME));
     }
   },
 });

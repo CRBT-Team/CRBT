@@ -1,36 +1,66 @@
+//@ts-nocheck
+import bg from '../../data/languages/bg.json';
+import cs from '../../data/languages/cs.json';
+import da from '../../data/languages/da.json';
+import de from '../../data/languages/de.json';
+import el from '../../data/languages/el.json';
+import en_GB from '../../data/languages/en-GB.json';
 import en_US from '../../data/languages/en-US.json';
+import es_ES from '../../data/languages/es-ES.json';
+import fi from '../../data/languages/fi.json';
 import fr from '../../data/languages/fr.json';
+import hi from '../../data/languages/hi.json';
+import hr from '../../data/languages/hr.json';
+import hu from '../../data/languages/hu.json';
+import it from '../../data/languages/it.json';
+import ja from '../../data/languages/ja.json';
+import ko from '../../data/languages/ko.json';
+import lt from '../../data/languages/lt.json';
+import nl from '../../data/languages/nl.json';
+import no from '../../data/languages/no.json';
+import pl from '../../data/languages/pl.json';
+import pt_BR from '../../data/languages/pt-BR.json';
+import ro from '../../data/languages/ro.json';
+import ru from '../../data/languages/ru.json';
+import sv_SE from '../../data/languages/sv-SE.json';
+import th from '../../data/languages/th.json';
+import tr from '../../data/languages/tr.json';
+import uk from '../../data/languages/uk.json';
+import vi from '../../data/languages/vi.json';
+import zh_CN from '../../data/languages/zh-CN.json';
+import zh_TW from '../../data/languages/zh-TW.json';
 
-const languages = {
+export const languages: {
+  [language: string]: typeof en_US;
+} = {
+  bg,
+  cs,
+  da,
+  de,
+  el,
   'en-US': en_US,
-  fr: fr,
-};
-
-type commandStrings = {
-  // meta: {
-  //   name: string;
-  //   description: string;
-  //   options?: Map<string, { description: string; choices: string[] }>;
-  //   // options?: Map<string, [string, string] | [string, string, string[]]>;
-  // };
-  errors?: {
-    [k: string]: string;
-  };
-  strings: {
-    [k: string]: string;
-  };
-};
-
-export const getStrings = (language: string, name: string) => {
-  // const path = `./data/languages/${language}.json`;
-
-  // const data = JSON.parse(readFileSync(path, 'utf8'));
-
-  const data = languages[language][name];
-
-  // data.meta.options = new Map(
-  //   data.meta.options.map(({ name, description, choices }) => [name, { description, choices }])
-  // );
-
-  return data as commandStrings;
+  'en-GB': en_GB,
+  'es-ES': es_ES,
+  fi,
+  fr,
+  hi,
+  hr,
+  hu,
+  it,
+  ja,
+  ko,
+  lt,
+  nl,
+  no,
+  pl,
+  'pt-BR': pt_BR,
+  ro,
+  ru,
+  'sv-SE': sv_SE,
+  th,
+  tr,
+  uk,
+  vi,
+  'zh-CN': zh_CN,
+  'zh-TW': zh_TW,
 };

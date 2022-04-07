@@ -2,16 +2,17 @@ import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { getStrings } from '$lib/language';
+import { languages } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
+const { meta } = languages['en-US'].balance;
+
 export default ChatCommand({
-  name: 'balance',
-  description: "View a user's Purplet balance, or yours.",
-  options: new OptionBuilder().user('user', 'The user to view the balance of.'),
+  ...meta,
+  options: new OptionBuilder().user('user', meta.options[0].description),
   async handle({ user }) {
-    const { strings, errors } = getStrings(this.locale, 'balance');
+    const { strings } = languages[this.locale].balance;
 
     const u = user ?? this.user;
 
