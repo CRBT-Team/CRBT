@@ -1,156 +1,211 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Dieser Command kann in Direktnachrichten nicht genutzt werden."
   },
   "activity": {
     "meta": {
-      "name": "activity",
-      "description": "Start an activity in a voice channel.",
+      "name": "aktivität",
+      "description": "Starte eine Aktivität in einem Sprachkanal.",
       "options": [
         {
-          "name": "activity",
-          "description": "The activity to start",
+          "name": "Aktivität",
+          "description": "Die zu startende Aktivität",
           "choices": [
-            "Watch Together - Unlimited participants",
-            "Sketch Heads - Up to 16 players",
-            "Word Snacks - Up to 8 players",
-            "Poker Night - 💎 Requires Boosting",
-            "Chess In The Park - 💎 Requires Boosting",
-            "Checkers In The Park - 💎 Requires Boosting",
-            "Blazing 8s - 💎 Requires Boosting",
-            "Letter League - 💎 Requires Boosting",
-            "SpellCast - 💎 Requires Boosting"
+            "Watch Together - Unbegrentzte Teilnehmer",
+            "Sketch Heads - Bis zu 16 Spieler",
+            "Word Snacks - Bis zu 8 Spieler",
+            "Poker Night - 💎 Erfordert Boosting",
+            "Ches In The Park - 💎 Benötigt Boosting",
+            "Checkers in the Park - 💎 Erfordert Boosting",
+            "Blazing 8s - 💎 Erfordert Boosting",
+            "Letter League - 💎 Erfordert Boosting",
+            "SpellCast - 💎 Erfordert Boosting"
           ]
         },
         {
-          "name": "channel",
-          "description": "The voice channel to start the activity in"
+          "name": "Kanal",
+          "description": "Der Sprachkanal, in dem die Aktivität gestartet wird"
         }
       ]
     },
     "errors": {
-      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
-      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+      "NO_CHANNEL": "Du musst in einem Sprachkanal sein oder einen Sprachkanal mit der Option `Kanal` wählen.",
+      "NOT_VOICE": "Du musst einen Sprachkanal auswählen, um eine Aktivität zu starten!"
     },
     "strings": {
-      "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
-      "BUTTON_LABEL": "Join Activity"
+      "EMBED_TITLE": "Fertig!",
+      "EMBED_DESCRIPTION": "Klicke auf den Button unten, um <ACTIVITY> in <CHANNEL> beizutreten.\nHinweis: Aktivitäten funktionieren nicht auf dem Handy und sind dort noch experimentell. Erwarte Fehler und fehlende Funktionen.",
+      "BUTTON_LABEL": "Aktivität beitreten"
     }
   },
   "balance": {
     "meta": {
-      "name": "balance",
-      "description": "View a user's Purplet balance, or yours.",
+      "name": "guthaben",
+      "description": "Sieh dir das Purplet-Guthaben eines Benutzers an, oder deins.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to view the balance of"
+          "name": "Benutzer",
+          "description": "Der Benutzer, dessen Guthaben angezeigt werden soll"
         }
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<user> - Balance",
+      "EMBED_TITLE": "<user> - Guthaben",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+      "LEADERBOARD_TITLE": "Rang in der Rangliste",
+      "LEADERBOARD_NOTPRESENT": "Nicht in der globalen Rangliste",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> von <TOTAL> Personen auf der globalen Rangliste"
     }
   },
   "color set": {
     "meta": {
-      "name": "color set",
-      "description": "Change your CRBT accent color.",
+      "name": "farbe festlegen",
+      "description": "Ändern Sie Ihre CRBT-Akzentfarbe.",
       "options": [
         {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "name": "Farbe",
+          "description": "Farbe, um die Akzentfarbe zu ändern. Verwenden Sie einen der Vorschläge oder eine HEX-Farbe."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
+      "sync": "Discord-Profilfarbe synchronisieren",
+      "lightred": "Hellrot",
+      "red": "Rot",
+      "darkred": "Dunkelrot",
       "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
+      "yellow": "Gelb",
+      "lightgreen": "Hellgrün",
+      "green": "Grün",
+      "darkgreen": "Dunkelgrün",
       "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
+      "lightblue": "Hellblau",
+      "blue": "Blau",
+      "darkblue": "Dunkelblau",
       "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "lightpurple": "Hellviolett",
+      "purple": "Violett",
+      "darkpurple": "Dunkelviolett",
+      "pink": "Rosa",
+      "brown": "Braun",
+      "black": "Schwarz",
+      "gray": "Grau",
+      "white": "Weiß"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "Du hast keine Discord-Profilfarbe, die du synchronisieren kannst! Um eine festzulegen, bearbeite dein Discord-Benutzerprofil und ändere deine Profilfarbe.",
+      "INVALID_COLOR_NAME": "Sie müssen einen gültigen Farbnamen eingeben. Verwenden Sie /color list für weitere Informationen."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
-      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+      "EMBED_TITLE": "Akzentfarbe aktualisiert.",
+      "EMBED_MANUAL_COLOR": "Diese Farbe wird für die meisten Antworten von CRBT verwendet sowie auf Ihrem Profil und auf Infokarten, wenn jemand anders sie besucht.",
+      "EMBED_SYNC_COLOR": "Deine Discord-Profilfarbe wird mit deiner CRBT-Akzentfarbe synchronisiert. Diese Farbe wird für die meisten Antworten von CRBT verwendet sowie auf deinen Profil- und Infokarten, wenn jemand anders sie besucht"
     }
   },
   "remind me": {
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "SUBJECT_MAX_LENGTH": "Der Betreff muss 120 Zeichen oder weniger sein.",
+      "PAST": "Du kannst in der Vergangenheit keine Erinnerung setzen.",
+      "INVALID_FORMAT": "Die eingegebene Zeit ist in einem ungültigen Format oder unter 0 Sekunden in der Zukunft.",
+      "TOO_LONG": "Sie können keine Erinnerung in mehr als 2 Jahren festlegen.",
+      "INVALID_CHANNEL_TYPE": "Der von Ihnen angegebene Kanal ist kein gültiger Textkanal.",
+      "BOT_MISSING_PERMS": "Ich habe keine Berechtigung, in diesem Kanal Nachrichten zu versenden.",
+      "USER_MISSING_PERMS": "Du hast keine Berechtigung in diesem Kanal Nachrichten zu versenden.",
+      "REMINDERS_MAX_LIMIT": "Sie können nicht mehr als 5 Erinnerungen gleichzeitig setzen."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+      "SUCCESS_TITLE": "Erinnerung festgelegt!",
+      "SUCCESS_CHANNEL": "Du wirst in <CHANNEL> erinnert",
+      "SUCCESS_DM": "Du wirst per Direktnachricht informiert",
+      "SUBJECT": "Betreff",
+      "BUTTON_GCALENDAR": "Als Google-Kalender-Ereignis hinzufügen"
     }
   },
   "ping": {
     "meta": {
       "name": "ping",
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "CRBT anpingen. Gibt Latenz und Verbindungsinformationen zurück."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "INTERACTION": "Interaktion",
+      "UPTIME": "Online seit",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
   "crbt info": {
     "meta": {
       "name": "crbt info",
-      "description": "Get information about CRBT"
+      "description": "Informationen über CRBT erhalten"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
+      "EMBED_TITLE": "<CRBT> - Informationen",
+      "VERSION": "Version <VERSION> mit <PURPLET>",
+      "MEMBER_COUNT": "Anzahl der Mitglieder",
+      "SERVER_COUNT": "Anzahl der Server",
       "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
-      "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "PING_RESULT": "≈<PING> Millisekunden",
+      "CREATED": "Erstellt am",
+      "UPTIME": "Online seit",
+      "BUTTON_WEBSITE": "Webseite",
+      "BUTTON_INVITE": "Zu Server hinzufügen",
+      "BUTTON_DISCORD": "Der Community beitreten"
+    }
+  },
+  "profile": {
+    "meta": {
+      "name": "profile",
+      "description": "Get a user's CRBT profile, or yours.",
+      "options": [
+        {
+          "name": "lookup_name",
+          "description": "Search a profile by their CRBT profile name."
+        },
+        {
+          "name": "lookup_discord",
+          "description": "Search a profile by their Discord user ID or name."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View CRBT Profile"
+    },
+    "pronouns": {
+      "unspecified": "Unspecified",
+      "hh": "He/Him",
+      "hi": "He/it",
+      "hs": "He/She",
+      "ht": "He/They",
+      "ih": "It/Him",
+      "ii": "It/Its",
+      "is": "It/She",
+      "it": "It/They",
+      "shh": "She/He",
+      "sh": "She/Her",
+      "si": "She/It",
+      "st": "She/They",
+      "th": "They/He",
+      "ti": "They/It",
+      "ts": "They/She",
+      "tt": "They/Them",
+      "any": "Any",
+      "other": "Other",
+      "ask": "Ask me",
+      "avoid": "<USERNAME>"
+    },
+    "errors": {
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Profile",
+      "PRONOUNS": "Pronouns",
+      "BIRTHDAY": "Birthday",
+      "WEBSITE": "Website",
+      "LOCATION": "Location",
+      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets",
+      "BUTTON_EDIT_PROFILE": "Edit Profile"
     }
   }
 }
