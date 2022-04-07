@@ -1,16 +1,54 @@
 {
+  "globalErrors": {
+    "GUILD_ONLY": "This command cannot be used in DMs."
+  },
   "activity": {
+    "meta": {
+      "name": "activity",
+      "description": "Start an activity in a voice channel.",
+      "options": [
+        {
+          "name": "activity",
+          "description": "The activity to start",
+          "choices": [
+            "Watch Together - Unlimited participants",
+            "Sketch Heads - Up to 16 players",
+            "Word Snacks - Up to 8 players",
+            "Poker Night - 💎 Requires Boosting",
+            "Chess In The Park - 💎 Requires Boosting",
+            "Checkers In The Park - 💎 Requires Boosting",
+            "Blazing 8s - 💎 Requires Boosting",
+            "Letter League - 💎 Requires Boosting",
+            "SpellCast - 💎 Requires Boosting"
+          ]
+        },
+        {
+          "name": "channel",
+          "description": "The voice channel to start the activity in"
+        }
+      ]
+    },
     "errors": {
       "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
       "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
     },
     "strings": {
       "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join your activity in",
-      "BUTTON_LABEL": "Join"
+      "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
+      "BUTTON_LABEL": "Join Activity"
     }
   },
   "balance": {
+    "meta": {
+      "name": "balance",
+      "description": "View a user's Purplet balance, or yours.",
+      "options": [
+        {
+          "name": "user",
+          "description": "The user to view the balance of"
+        }
+      ]
+    },
     "strings": {
       "EMBED_TITLE": "<user> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
@@ -20,8 +58,43 @@
     }
   },
   "color set": {
+    "meta": {
+      "name": "color set",
+      "description": "Change your CRBT accent color.",
+      "options": [
+        {
+          "name": "color",
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+        }
+      ]
+    },
+    "colorNames": {
+      "sync": "Sync Discord Profile Color",
+      "lightred": "Light Red",
+      "red": "Red",
+      "darkred": "Dark Red",
+      "orange": "Orange",
+      "yellow": "Yellow",
+      "lightgreen": "Light Green",
+      "green": "Green",
+      "darkgreen": "Dark Green",
+      "cyan": "Cyan",
+      "lightblue": "Light Blue",
+      "blue": "Blue",
+      "darkblue": "Dark Blue",
+      "blurple": "Blurple",
+      "lightpurple": "Light Purple",
+      "purple": "Purple",
+      "darkpurple": "Dark Purple",
+      "pink": "Pink",
+      "brown": "Brown",
+      "black": "Black",
+      "gray": "Gray",
+      "white": "White"
+    },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
+      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
@@ -46,6 +119,38 @@
       "SUCCESS_DM": "Vous recevrez votre rappel par MP",
       "SUBJECT": "Sujet",
       "BUTTON_GCALENDAR": "Ajouter à Google Calendrier"
+    }
+  },
+  "ping": {
+    "meta": {
+      "name": "ping",
+      "description": "Ping CRBT. Returns latency and connection info."
+    },
+    "strings": {
+      "EMBED_TITLE": "<CRBT> - Ping",
+      "WEBSOCKET": "WebSocket",
+      "INTERACTION": "Interaction",
+      "UPTIME": "Online since",
+      "FORMAT_MS": "<NUMBER>ms"
+    }
+  },
+  "crbt info": {
+    "meta": {
+      "name": "crbt info",
+      "description": "Get information about CRBT"
+    },
+    "strings": {
+      "EMBED_TITLE": "<CRBT> - Information",
+      "VERSION": "Version <VERSION> on <PURPLET>",
+      "MEMBER_COUNT": "Member count",
+      "SERVER_COUNT": "Server count",
+      "PING": "Ping",
+      "PING_RESULT": "≈<PING> milliseconds",
+      "CREATED": "Created on",
+      "UPTIME": "Online since",
+      "BUTTON_WEBSITE": "Website",
+      "BUTTON_INVITE": "Add to Server",
+      "BUTTON_DISCORD": "Join the Community"
     }
   }
 }
