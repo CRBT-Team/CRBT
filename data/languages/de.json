@@ -8,14 +8,14 @@
       "description": "Starte eine Aktivität in einem Sprachkanal.",
       "options": [
         {
-          "name": "Aktivität",
+          "name": "aktivität",
           "description": "Die zu startende Aktivität",
           "choices": [
             "Watch Together - Unbegrentzte Teilnehmer",
             "Sketch Heads - Bis zu 16 Spieler",
             "Word Snacks - Bis zu 8 Spieler",
             "Poker Night - 💎 Erfordert Boosting",
-            "Ches In The Park - 💎 Benötigt Boosting",
+            "Ches In The Park - 💎 Erfordert Boosting",
             "Checkers in the Park - 💎 Erfordert Boosting",
             "Blazing 8s - 💎 Erfordert Boosting",
             "Letter League - 💎 Erfordert Boosting",
@@ -23,7 +23,7 @@
           ]
         },
         {
-          "name": "Kanal",
+          "name": "kanal",
           "description": "Der Sprachkanal, in dem die Aktivität gestartet wird"
         }
       ]
@@ -44,7 +44,7 @@
       "description": "Sieh dir das Purplet-Guthaben eines Benutzers an, oder deins.",
       "options": [
         {
-          "name": "Benutzer",
+          "name": "benutzer",
           "description": "Der Benutzer, dessen Guthaben angezeigt werden soll"
         }
       ]
@@ -63,7 +63,7 @@
       "description": "Ändern Sie Ihre CRBT-Akzentfarbe.",
       "options": [
         {
-          "name": "Farbe",
+          "name": "farbe",
           "description": "Farbe, um die Akzentfarbe zu ändern. Verwenden Sie einen der Vorschläge oder eine HEX-Farbe."
         }
       ]
