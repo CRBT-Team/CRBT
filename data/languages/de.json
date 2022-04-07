@@ -94,7 +94,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "Du hast keine Discord-Profilfarbe, die du synchronisieren kannst! Um eine festzulegen, bearbeite dein Discord-Benutzerprofil und ändere deine Profilfarbe.",
-      "INVALID_COLOR_NAME": "Sie müssen einen gültigen Farbnamen eingeben. Verwenden Sie /color list für weitere Informationen."
+      "INVALID_COLOR_NAME": "Sie müssen einen gültigen Farbnamen eingeben. Verwenden Sie /farbe liste für weitere Informationen."
     },
     "strings": {
       "EMBED_TITLE": "Akzentfarbe aktualisiert.",
@@ -159,11 +159,11 @@
       "description": "Schauen Sie sich das CRBT-Profil eines Benutzers an, oder Ihrs.",
       "options": [
         {
-          "name": "Suchname",
+          "name": "suchname",
           "description": "Suche ein Profil nach dem Namen des CRBT-Profils."
         },
         {
-          "name": "Such-Discord-ID",
+          "name": "such_discord",
           "description": "Suche ein Profil mit anhand der Discord-Benutzer-ID oder dem Namen."
         }
       ]
