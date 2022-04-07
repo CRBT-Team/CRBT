@@ -152,5 +152,60 @@
       "BUTTON_INVITE": "Add to Server",
       "BUTTON_DISCORD": "Join the Community"
     }
+  },
+  "profile": {
+    "meta": {
+      "name": "profile",
+      "description": "Get a user's CRBT profile, or yours.",
+      "options": [
+        {
+          "name": "lookup_name",
+          "description": "Search a profile by their CRBT profile name."
+        },
+        {
+          "name": "lookup_discord",
+          "description": "Search a profile by their Discord user ID or name."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View CRBT Profile"
+    },
+    "pronouns": {
+      "unspecified": "Unspecified",
+      "hh": "He/Him",
+      "hi": "He/it",
+      "hs": "He/She",
+      "ht": "He/They",
+      "ih": "It/Him",
+      "ii": "It/Its",
+      "is": "It/She",
+      "it": "It/They",
+      "shh": "She/He",
+      "sh": "She/Her",
+      "si": "She/It",
+      "st": "She/They",
+      "th": "They/He",
+      "ti": "They/It",
+      "ts": "They/She",
+      "tt": "They/Them",
+      "any": "Any",
+      "other": "Other",
+      "ask": "Ask me",
+      "avoid": "<USERNAME>"
+    },
+    "errors": {
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Profile",
+      "PRONOUNS": "Pronouns",
+      "BIRTHDAY": "Birthday",
+      "WEBSITE": "Website",
+      "LOCATION": "Location",
+      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets",
+      "BUTTON_EDIT_PROFILE": "Edit Profile"
+    }
   }
 }
