@@ -1,9 +1,0 @@
-{
-  "strings": {
-    "EMBED_TITLE": "<user> - Balance",
-    "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-    "LEADERBOARD_TITLE": "Leaderboard rank",
-    "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-    "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
-  }
-}

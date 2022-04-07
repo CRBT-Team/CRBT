@@ -1,9 +1,0 @@
-{
-  "strings": {
-    "EMBED_TITLE": "<user> - Solde",
-    "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-    "LEADERBOARD_TITLE": "Classement mondial",
-    "LEADERBOARD_NOTPRESENT": "Vous ne figurez pas dans le classement mondial",
-    "LEADERBOARD_DESCRIPTION": "<PLACE> sur <TOTAL> personnes sur le classement mondial"
-  }
-}
