@@ -1,10 +1,10 @@
 import { cache } from '$lib/cache';
+import { CRBTUser } from '$lib/classes/CRBTUser';
 import { colors, db, illustrations, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
 import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import dayjs from 'dayjs';
 import {
   Message,
@@ -153,13 +153,13 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           ? url
           : 'https://' + url
         : null,
-    } as APIProfile;
+    };
 
     const msg = await modal.channel.messages.fetch(modal.customId.split('_')[0]).catch(() => null);
 
-    const oldProfile = (await db.profiles.findFirst({
+    const oldProfile = await db.profiles.findFirst({
       where: { id: modal.user.id },
-    })) as APIProfile;
+    });
 
     if (
       newProfile.name !== oldProfile?.name &&
@@ -172,10 +172,10 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     }
 
     try {
-      const profile =
+      const profileData =
         newProfile === oldProfile
           ? oldProfile
-          : ((await db.profiles.upsert({
+          : await db.profiles.upsert({
               update: {
                 ...newProfile,
               },
@@ -184,16 +184,17 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
                 ...newProfile,
               },
               where: { id: modal.user.id },
-            })) as APIProfile);
+            });
       if (newProfile !== oldProfile) {
         cache.set<string[]>('profiles', [
           newProfile.name,
           ...cache.get<string[]>('profiles').filter((name) => name !== oldProfile.name),
         ]);
       }
+      const profile = new CRBTUser(modal.user, profileData);
 
       if (msg) {
-        await msg.edit(await renderProfile(profile, modal.user, modal.guild, modal));
+        await msg.edit(await renderProfile(profile, modal));
       }
 
       modal.reply({

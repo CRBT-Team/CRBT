@@ -5,19 +5,25 @@ import { User } from 'discord.js';
 export async function getColor(user: User): Promise<`#${string}`> {
   let result: string;
 
+  // get from the cache, if it doesn't exist, get from the db and cache that
   if (cache.has(`color_${user.id}`)) {
-    result = cache.get<string>(`color_${user.id}`);
+    result = cache.get(`color_${user.id}`);
   } else {
-    const req = await db.profiles.findFirst({
+    const profile = await db.profiles.findFirst({
       where: { id: user.id },
-      select: { crbt_accent_color: true },
     });
-
-    result = req && req.crbt_accent_color ? req.crbt_accent_color : `#${colors.default}`;
-    cache.set(`color_${user.id}`, result);
+    if (profile) {
+      result = profile.crbt_accent_color as `#${string}`;
+      cache.set(`color_${user.id}`, result);
+    } else {
+      result = `#${colors.default}`;
+    }
   }
 
-  result = result === 'profile' ? (await user.fetch()).hexAccentColor : result;
+  if (result === 'profile') {
+    result = (await user.fetch()).hexAccentColor;
+    cache.set(`color_${user.id}`, result);
+  }
 
   return result as `#${string}`;
 }

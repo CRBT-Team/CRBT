@@ -1,5 +1,4 @@
 import { items } from '$lib/db';
-import type { BadgeNames, BannerNames } from '$lib/types/CRBT/APIProfile';
 import { EmojiRegex } from '$lib/util/regex';
 
 type APIBanner = {
@@ -18,10 +17,10 @@ export class Item {
 }
 
 export class Banner extends Item {
-  public name: BannerNames;
+  public name: string;
   public season: 'special' | number;
 
-  constructor(name: BannerNames) {
+  constructor(name: string) {
     super();
     const banner = items.banners[name] as APIBanner;
 
@@ -36,11 +35,11 @@ export class Banner extends Item {
 }
 
 export class Badge extends Item {
-  public name: BadgeNames;
+  public name: string;
   public emoji: string;
   public category: string;
 
-  constructor(name: BadgeNames) {
+  constructor(name: string) {
     super();
     const badge = items.badges[name];
 

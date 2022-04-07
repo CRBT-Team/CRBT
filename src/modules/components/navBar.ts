@@ -1,7 +1,6 @@
 import { CRBTUser } from '$lib/classes/CRBTUser';
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import { ButtonComponent, row } from 'purplet';
 import { renderProfile } from '../economy/profile';
 import { renderPfp } from '../info/avatar';
@@ -38,12 +37,12 @@ export const ProfileBtn = ButtonComponent({
     const u = this.client.users.cache.get(userId) ?? (await this.client.users.fetch(userId));
     const profile = new CRBTUser(
       u,
-      (await db.profiles.findFirst({
+      await db.profiles.findFirst({
         where: { id: userId },
-      })) as APIProfile
+      })
     );
 
-    this.update({ ...(await renderProfile(profile, this.guild, this, { userId, cmdUID })) });
+    this.update({ ...(await renderProfile(profile, this, { userId, cmdUID })) });
   },
 });
 

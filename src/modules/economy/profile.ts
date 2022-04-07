@@ -7,9 +7,8 @@ import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
 import { languages } from '$lib/language';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import dayjs from 'dayjs';
-import { Guild, Interaction, MessageEmbed } from 'discord.js';
+import { Interaction, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
@@ -35,40 +34,36 @@ export default ChatCommand({
 
     try {
       if (lookup_discord) {
-        profile = new CRBTUser(
-          lookup_discord,
-          (await db.profiles.findFirst({
-            where: { id: lookup_discord.id },
-          })) as APIProfile
-        );
+        const profileData = await db.profiles.findFirst({
+          where: { id: lookup_discord.id },
+        });
+        profile = new CRBTUser(lookup_discord, profileData);
       } else if (lookup_name) {
-        const user =
-          this.client.users.cache.get(profile.id) ?? (await this.client.users.fetch(profile.id));
-        profile = new CRBTUser(
-          user,
-          (await db.profiles.findFirst({
-            where: {
-              name: {
-                equals: lookup_name,
-                mode: 'insensitive',
-              },
+        const profileData = await db.profiles.findFirst({
+          where: {
+            name: {
+              equals: lookup_name,
+              mode: 'insensitive',
             },
-          })) as APIProfile
-        );
+          },
+        });
+
+        const user =
+          this.client.users.cache.get(profileData.id) ??
+          (await this.client.users.fetch(profileData.id));
+        profile = new CRBTUser(user, profileData);
       } else {
-        profile = new CRBTUser(
-          this.user,
-          (await db.profiles.findFirst({
-            where: { id: this.user.id },
-          })) as APIProfile
-        );
+        const profileData = await db.profiles.findFirst({
+          where: { id: this.user.id },
+        });
+        profile = new CRBTUser(this.user, profileData);
       }
     } catch (error) {
       console.error(error);
       return this.reply(CRBTError(errors.NOT_FOUND));
     }
 
-    await this.reply(await renderProfile(profile, this.guild, this));
+    await this.reply(await renderProfile(profile, this));
   },
 });
 
@@ -77,13 +72,13 @@ export const ctxProfile = UserContextCommand({
   async handle(u) {
     const profile = new CRBTUser(
       u,
-      (await db.profiles.findFirst({
+      await db.profiles.findFirst({
         where: { id: u.id },
-      })) as APIProfile
+      })
     );
 
     await this.reply({
-      ...(await renderProfile(profile, this.guild, this)),
+      ...(await renderProfile(profile, this)),
       ephemeral: !u.equals(this.user),
     });
   },
@@ -91,17 +86,25 @@ export const ctxProfile = UserContextCommand({
 
 export const renderProfile = async (
   profile: CRBTUser,
-  guild: Guild,
   ctx: Interaction,
   navCtx?: { userId: string; cmdUID: string }
 ) => {
   const { strings, pronouns: Pronouns } = languages[ctx.locale].profile;
 
-  const pronouns = (
-    (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${profile.id}`).then(
-      (r) => r.json()
-    )) as any
-  ).pronouns;
+  console.log(profile);
+
+  if (!profile.pronouns) {
+    profile.pronouns = (
+      (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${profile.id}`).then(
+        (r) => r.json()
+      )) as any
+    ).pronouns;
+
+    await db.profiles.update({
+      data: { pronouns: profile.pronouns },
+      where: { id: profile.id },
+    });
+  }
 
   const e = new MessageEmbed()
     .setAuthor({
@@ -113,7 +116,7 @@ export const renderProfile = async (
         ? `@${profile.name}${profile?.verified ? ` ${emojis.verified}` : ''}`
         : profile.user.username
     )
-    .setDescription(profile?.bio ? await profile.parseBio(guild) : '')
+    .setDescription(profile?.bio ? await profile.parseBio() : '')
     .setThumbnail(avatar(profile.user, 256))
     .setImage(profile && profile.banner ? profile.banner.url : null)
     .setFooter({
@@ -130,7 +133,7 @@ export const renderProfile = async (
   }
   e.addField(
     strings.PRONOUNS,
-    Pronouns[pronouns].replace('<USERNAME>', profile?.name ?? profile.user.username),
+    Pronouns[profile.pronouns].replace('<USERNAME>', profile?.name ?? profile.user.username),
     true
   );
 
