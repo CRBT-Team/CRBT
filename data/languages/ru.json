@@ -1,10 +1,10 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
   },
   "activity": {
     "meta": {
-      "name": "activity",
+      "name": "активность",
       "description": "Start an activity in a voice channel.",
       "options": [
         {
@@ -30,7 +30,7 @@
     },
     "errors": {
       "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
-      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+      "NOT_VOICE": "Вам нужно выбрать голосовой канал, чтобы начать активность!"
     },
     "strings": {
       "EMBED_TITLE": "All set!",
@@ -40,7 +40,7 @@
   },
   "balance": {
     "meta": {
-      "name": "balance",
+      "name": "баланс",
       "description": "View a user's Purplet balance, or yours.",
       "options": [
         {
@@ -52,7 +52,7 @@
     "strings": {
       "EMBED_TITLE": "<user> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
+      "LEADERBOARD_TITLE": "Ранг в таблице лидеров",
       "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
       "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
     }
@@ -63,34 +63,34 @@
       "description": "Change your CRBT accent color.",
       "options": [
         {
-          "name": "color",
+          "name": "цвет",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
     "colorNames": {
       "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
+      "lightred": "Светло-красный",
+      "red": "Красный",
+      "darkred": "Тёмно-красный",
+      "orange": "Оранжевый",
+      "yellow": "Жёлтый",
+      "lightgreen": "Светло-зелёный",
+      "green": "Зелёный",
+      "darkgreen": "Тёмно-зелёный",
+      "cyan": "Бирюзовый",
+      "lightblue": "Светло-синий",
+      "blue": "Синий",
+      "darkblue": "Тёмно-синий",
       "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "lightpurple": "Светло-фиолетовый",
+      "purple": "Фиолетовый",
+      "darkpurple": "Тёмно-фиолетовый",
+      "pink": "Розовый",
+      "brown": "Коричневый",
+      "black": "Чёрный",
+      "gray": "Серый",
+      "white": "Белый"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
@@ -109,8 +109,8 @@
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
+      "BOT_MISSING_PERMS": "У меня недостаточно прав, чтобы отправлять сообщения в этом канале.",
+      "USER_MISSING_PERMS": "У вас недостаточно прав, чтобы отправлять сообщения в этом канале.",
       "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
     },
     "strings": {
@@ -130,7 +130,7 @@
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "UPTIME": "В сети с",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
@@ -150,7 +150,62 @@
       "UPTIME": "Online since",
       "BUTTON_WEBSITE": "Website",
       "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_DISCORD": "Присоединиться к Сообществу"
+    }
+  },
+  "profile": {
+    "meta": {
+      "name": "profile",
+      "description": "Get a user's CRBT profile, or yours.",
+      "options": [
+        {
+          "name": "lookup_name",
+          "description": "Search a profile by their CRBT profile name."
+        },
+        {
+          "name": "lookup_discord",
+          "description": "Search a profile by their Discord user ID or name."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View CRBT Profile"
+    },
+    "pronouns": {
+      "unspecified": "Unspecified",
+      "hh": "He/Him",
+      "hi": "He/it",
+      "hs": "He/She",
+      "ht": "He/They",
+      "ih": "It/Him",
+      "ii": "It/Its",
+      "is": "It/She",
+      "it": "It/They",
+      "shh": "She/He",
+      "sh": "She/Her",
+      "si": "She/It",
+      "st": "She/They",
+      "th": "They/He",
+      "ti": "They/It",
+      "ts": "They/She",
+      "tt": "They/Them",
+      "any": "Any",
+      "other": "Other",
+      "ask": "Ask me",
+      "avoid": "<USERNAME>"
+    },
+    "errors": {
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Profile",
+      "PRONOUNS": "Pronouns",
+      "BIRTHDAY": "Birthday",
+      "WEBSITE": "Website",
+      "LOCATION": "Location",
+      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets",
+      "BUTTON_EDIT_PROFILE": "Edit Profile"
     }
   }
 }
