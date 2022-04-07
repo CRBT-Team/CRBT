@@ -1,0 +1,51 @@
+{
+  "activity": {
+    "errors": {
+      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
+      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+    },
+    "strings": {
+      "EMBED_TITLE": "All set!",
+      "EMBED_DESCRIPTION": "Click the button below to join your activity in",
+      "BUTTON_LABEL": "Join"
+    }
+  },
+  "balance": {
+    "strings": {
+      "EMBED_TITLE": "<user> - Balance",
+      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
+      "LEADERBOARD_TITLE": "Leaderboard rank",
+      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+    }
+  },
+  "color set": {
+    "errors": {
+      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+    },
+    "strings": {
+      "EMBED_TITLE": "Accent color updated.",
+      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
+      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+    }
+  },
+  "remind me": {
+    "errors": {
+      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
+      "PAST": "You cannot set a reminder in the past.",
+      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
+      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
+      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
+      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
+      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+    },
+    "strings": {
+      "SUCCESS_TITLE": "Reminder set!",
+      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
+      "SUCCESS_DM": "You will be reminded by DM",
+      "SUBJECT": "Subject",
+      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+    }
+  }
+}

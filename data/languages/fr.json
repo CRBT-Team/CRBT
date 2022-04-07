@@ -1,0 +1,51 @@
+{
+  "activity": {
+    "errors": {
+      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
+      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+    },
+    "strings": {
+      "EMBED_TITLE": "All set!",
+      "EMBED_DESCRIPTION": "Click the button below to join your activity in",
+      "BUTTON_LABEL": "Join"
+    }
+  },
+  "balance": {
+    "strings": {
+      "EMBED_TITLE": "<user> - Balance",
+      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
+      "LEADERBOARD_TITLE": "Leaderboard rank",
+      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+    }
+  },
+  "color set": {
+    "errors": {
+      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+    },
+    "strings": {
+      "EMBED_TITLE": "Accent color updated.",
+      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
+      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+    }
+  },
+  "remind me": {
+    "errors": {
+      "SUBJECT_MAX_LENGTH": "Le sujet de votre rappel ne peut pas dépasser 120 caractères.",
+      "PAST": "Vous ne pouvez pas définir un rappel dans le passé.",
+      "INVALID_FORMAT": "Le temps que vous avez entré est dans un format invalide, ou est en dessous de 0 secondes dans le futur.",
+      "TOO_LONG": "Vous ne pouvez pas définir un rappel pour plus de 2 ans.",
+      "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
+      "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
+      "USER_MISSING_PERMS": "Vous n'avez pas la permission d'envoyer des messages dans ce salon.",
+      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas avoir plus de 5 rappels à la fois."
+    },
+    "strings": {
+      "SUCCESS_TITLE": "Rappel créé !",
+      "SUCCESS_CHANNEL": "Vous recevrez votre rappel dans <CHANNEL>",
+      "SUCCESS_DM": "Vous recevrez votre rappel par MP",
+      "SUBJECT": "Sujet",
+      "BUTTON_GCALENDAR": "Ajouter à Google Calendrier"
+    }
+  }
+}
