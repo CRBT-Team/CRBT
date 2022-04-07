@@ -33,7 +33,7 @@
     "errors": {
       "SUBJECT_MAX_LENGTH": "Le sujet de votre rappel ne peut pas dépasser 120 caractères.",
       "PAST": "Vous ne pouvez pas définir un rappel dans le passé.",
-      "INVALID_FORMAT": "Le temps que vous avez entré est dans un format invalide, ou est en dessous de 0 secondes dans le futur.",
+      "INVALID_FORMAT": "Le temps que vous avez entré est dans un format invalide ou est en dessous de 0 secondes dans le futur.",
       "TOO_LONG": "Vous ne pouvez pas définir un rappel pour plus de 2 ans.",
       "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
       "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
