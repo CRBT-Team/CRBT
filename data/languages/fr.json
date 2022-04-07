@@ -1,10 +1,10 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
   "activity": {
     "meta": {
-      "name": "activity",
+      "name": "activité",
       "description": "Start an activity in a voice channel.",
       "options": [
         {
@@ -72,7 +72,7 @@
       "sync": "Sync Discord Profile Color",
       "lightred": "Light Red",
       "red": "Red",
-      "darkred": "Dark Red",
+      "darkred": "Rouge foncé",
       "orange": "Orange",
       "yellow": "Yellow",
       "lightgreen": "Light Green",
