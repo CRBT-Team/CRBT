@@ -4,8 +4,8 @@
   },
   "activity": {
     "meta": {
-      "name": "activity",
-      "description": "Start an activity in a voice channel.",
+      "name": "actividad",
+      "description": "Inicia una actividad en un canal de voz.",
       "options": [
         {
           "name": "actividad",
@@ -118,94 +118,94 @@
       "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
       "SUCCESS_DM": "You will be reminded by DM",
       "SUBJECT": "Subject",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+      "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar"
     }
   },
   "ping": {
     "meta": {
-      "name": "ping",
-      "description": "Ping CRBT. Returns latency and connection info."
+      "name": "latencia",
+      "description": "Devuelve la latencia e información de conexión de CRBT."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
+      "EMBED_TITLE": "<CRBT> - Latencia",
       "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "INTERACTION": "Interacción",
+      "UPTIME": "Conectado desde",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
   "crbt info": {
     "meta": {
-      "name": "crbt info",
-      "description": "Get information about CRBT"
+      "name": "crbt información",
+      "description": "Obtiene información sobre CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
-      "PING": "Ping",
+      "EMBED_TITLE": "<CRBT> - Información",
+      "VERSION": "Versión <VERSION> sobre <PURPLET>",
+      "MEMBER_COUNT": "Número de miembros",
+      "SERVER_COUNT": "Número de servidores",
+      "PING": "Latencia",
       "PING_RESULT": "≈<PING> milisegundos",
       "CREATED": "Created on",
       "UPTIME": "Conectado desde",
       "BUTTON_WEBSITE": "Página web",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_INVITE": "Añadir a un servidor",
+      "BUTTON_DISCORD": "Unirse a la comunidad"
     }
   },
   "profile": {
     "meta": {
-      "name": "profile",
-      "description": "Get a user's CRBT profile, or yours.",
+      "name": "perfil",
+      "description": "Obtiene el perfil CRBT de un usuario específico o el suyo.",
       "options": [
         {
-          "name": "lookup_name",
-          "description": "Search a profile by their CRBT profile name."
+          "name": "buscar_por_nombre",
+          "description": "Busca un perfil CRBT por su nombre."
         },
         {
-          "name": "lookup_discord",
-          "description": "Search a profile by their Discord user ID or name."
+          "name": "buscar_por_discord",
+          "description": "Busca un perfil CRBT por su nombre o ID de usuario de Discord."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "Ver perfil CRBT"
     },
     "pronouns": {
-      "unspecified": "Unspecified",
-      "hh": "He/Him",
-      "hi": "He/it",
-      "hs": "He/She",
-      "ht": "He/They",
-      "ih": "It/Him",
-      "ii": "It/Its",
-      "is": "It/She",
-      "it": "It/They",
-      "shh": "She/He",
-      "sh": "She/Her",
-      "si": "She/It",
-      "st": "She/They",
-      "th": "They/He",
-      "ti": "They/It",
-      "ts": "They/She",
-      "tt": "They/Them",
-      "any": "Any",
-      "other": "Other",
-      "ask": "Ask me",
+      "unspecified": "No especificado",
+      "hh": "Él/él",
+      "hi": "Él/lo",
+      "hs": "Él/ella",
+      "ht": "Él/elle",
+      "ih": "Lo/él",
+      "ii": "Lo/su",
+      "is": "Lo/ella",
+      "it": "Lo/elle",
+      "shh": "Ella/él",
+      "sh": "Ella/ella",
+      "si": "Ella/lo",
+      "st": "Ella/elle",
+      "th": "Elle/él",
+      "ti": "Elle/lo",
+      "ts": "Elle/ella",
+      "tt": "Elle/elle",
+      "any": "Cualquiera",
+      "other": "Otro",
+      "ask": "Pregúntame",
       "avoid": "<USERNAME>"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
+      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre de usuario. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "PRONOUNS": "Pronouns",
-      "BIRTHDAY": "Birthday",
-      "WEBSITE": "Website",
-      "LOCATION": "Location",
-      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_TITLE": "<USER> - Perfil",
+      "PRONOUNS": "Pronombres",
+      "BIRTHDAY": "Cumpleaños",
+      "WEBSITE": "Página web",
+      "LOCATION": "Ubicación",
+      "BADGES": "Sellos (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
-      "BUTTON_EDIT_PROFILE": "Edit Profile"
+      "BUTTON_EDIT_PROFILE": "Editar perfil"
     }
   }
 }
