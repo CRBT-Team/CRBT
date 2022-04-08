@@ -3,29 +3,29 @@
     "GUILD_ONLY": "Dieser Command kann in Direktnachrichten nicht genutzt werden."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder"
+    "BACK": "Zurück",
+    "JUMP_TO_MSG": "Zu Nachricht springen",
+    "CANCEL": "Abbrechen",
+    "CONFIRM": "Bestätigen",
+    "DELETE": "Löschen",
+    "EDIT": "Bearbeiten",
+    "PREVIOUS": "Vorheriges",
+    "NEXT": "Nächstes",
+    "SAVE": "Speichern",
+    "ADD_REMINDER": "Erinnerung hinzufügen"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Ein unbekannter Fehler ist aufgetreten.",
+      "DESCRIPTION": "Wir haben keine Ahnung, um welche n Fehler es sich handelt. Hier ist die Fehlermeldung, die wir erhalten haben:\n<MESSAGE>\nDies wurde uns automatisch gemeldet und wir werden sicherstellen, dass es so schnell wie möglich behoben wird. Entschuldigen Sie die Unannehmlichkeiten."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "TITLE": "Warte!",
+      "DESCRIPTION": "Sie können <TYPE> in <TIME> verwenden...",
+      "COMMAND": "Befehl",
+      "COMPONENT": "Komponente"
     }
   },
   "activity": {
@@ -170,7 +170,7 @@
       "VERSION": "Version <VERSION> mit <PURPLET>",
       "MEMBER_COUNT": "Anzahl der Mitglieder",
       "SERVER_COUNT": "Anzahl der Server",
-      "PROFILES_REGISTERED": "Profiles registered",
+      "PROFILES_REGISTERED": "Profile registriert",
       "PING": "Ping",
       "PING_RESULT": "≈<PING> Millisekunden",
       "CREATED": "Erstellt am",
@@ -182,12 +182,12 @@
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Nur die Person, die diesen Befehl benutzt hat, kann diesen Button verwenden."
     },
     "strings": {
-      "PROFILE": "Profile",
+      "PROFILE": "Profil",
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "Nutzerinformationen"
     }
   },
   "profile": {
@@ -243,34 +243,34 @@
       "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Profil bearbeiten",
-      "MODAL_NAME_PLACEHOLDER": "A unique name, can only have letters, numbers or spaces.",
-      "MODAL_BIO_PLACEHOLDER": "Tell us about yourself. CRBTscript tags accepted.",
-      "MODAL_WEBSITE_PLACEHOLDER": "A link to your website, blog, Twitter...",
-      "MODAL_BIRTHDAY_PLACEHOLDER": "Your birthday, in the YYYY-MM-DD format.",
-      "MODAL_LOCATION_PLACEHOLDER": "Where are you from?"
+      "MODAL_NAME_PLACEHOLDER": "Der Name muss eindeutig sein und darf nur Buchstaben, Zahlen oder Leerzeichen enthalten.",
+      "MODAL_BIO_PLACEHOLDER": "Erzählen Sie uns von Ihnen: CRBTscript-Tags akzeptiert.",
+      "MODAL_WEBSITE_PLACEHOLDER": "Ein Link zu Ihrer Website, Blog, Twitter...",
+      "MODAL_BIRTHDAY_PLACEHOLDER": "Ihr Geburtstag im Format JJJJJ-MM-TT.",
+      "MODAL_LOCATION_PLACEHOLDER": "Woher kommen Sie?"
     }
   },
   "avatar": {
     "meta": {
       "name": "avatar",
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Holen Sie sich den Standard-Avatar eines Benutzers, oder Ihren Avatar, wenn Sie keinen angeben.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to get the avatar of."
+          "name": "Benutzer",
+          "description": "Der Benutzer, von dem der Avatar angezeigt werden soll."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "Größe",
+          "description": "Die Größe des zu erhaltenden Avatars."
         },
         {
-          "name": "format",
-          "description": "The format of the avatar to get."
+          "name": "Format",
+          "description": "Das Format des zu erhaltenden Avatars."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View Avatar"
+      "name": "Avatare anzeigen"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -279,7 +279,7 @@
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
+      "EMBED_TITLE": "Danke, dass du <CRBT> in deinen Server eingeladen hast!",
       "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
     }
   },
@@ -310,15 +310,15 @@
   },
   "hourly": {
     "meta": {
-      "name": "hourly",
-      "description": "Get a few Purplets every hour."
+      "name": "stündlich",
+      "description": "Erhalte jede Stunde ein paar Purplets."
     },
     "strings": {
-      "EMBED_TITLE": "Hourly Purplets claimed!",
-      "EMBED_DESCRIPTION": "You have claimed your hourly **<EMOJI> <PURPLETS> Purplets**.\nCurrent streak: **<STREAK>/5**",
-      "STREAK_BONUS": "(+30% bonus from streak)",
-      "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
-      "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
+      "EMBED_TITLE": "Stündliche Purplets erhalten!",
+      "EMBED_DESCRIPTION": "Du hast deine stündlichen **<EMOJI> <PURPLETS> Purplets abgeholt**.\nAktuelle Streak: **<STREAK>/5**",
+      "STREAK_BONUS": "(+30%-Bonus von der Streak)",
+      "STREAK": "(<STREAK_LEFT> noch für einen Bonus!)",
+      "EMBED_REMINDER": "Klicke auf die Schaltfläche unten, um dich selbst eine Erinnerung zu setzen, um deine stündlichen Purplets erneut zu beanspruchen."
     }
   }
 }
