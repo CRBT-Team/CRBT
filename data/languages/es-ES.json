@@ -31,7 +31,7 @@
   "activity": {
     "meta": {
       "name": "actividad",
-      "description": "Inicia una actividad en un canal de voz.",
+      "description": "Iniciar una actividad en un canal de voz.",
       "options": [
         {
           "name": "actividad",
@@ -67,7 +67,7 @@
   "balance": {
     "meta": {
       "name": "balance",
-      "description": "View a user's Purplet balance, or yours.",
+      "description": "Ver el saldo de Purplets de un usuario específico o el suyo.",
       "options": [
         {
           "name": "user",
@@ -95,7 +95,7 @@
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "Sincronizar el color del perfil de Discord",
       "lightred": "Rojo claro",
       "red": "Rojo",
       "darkred": "Rojo oscuro",
@@ -108,19 +108,19 @@
       "lightblue": "Azul claro",
       "blue": "Azul",
       "darkblue": "Azul oscuro",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "blurple": "Azul violáceo",
+      "lightpurple": "Morado claro",
+      "purple": "Morado",
+      "darkpurple": "Morado oscuro",
+      "pink": "Rosa",
+      "brown": "Marrón",
+      "black": "Negro",
+      "gray": "Gris",
+      "white": "Blanco"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
+      "INVALID_COLOR_NAME": "Debe introducir un código hexadecimal válido o un nombre de color. Utilice /color lista para más información."
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
@@ -141,8 +141,8 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_CHANNEL": "Se lo recordaremos en <CHANNEL>",
+      "SUCCESS_DM": "Se lo recordaremos por MD",
       "SUBJECT": "Subject",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar"
     }
@@ -150,7 +150,7 @@
   "ping": {
     "meta": {
       "name": "latencia",
-      "description": "Devuelve la latencia e información de conexión de CRBT."
+      "description": "Obtener la latencia e información de conexión de CRBT."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Latencia",
@@ -163,7 +163,7 @@
   "crbt info": {
     "meta": {
       "name": "crbt información",
-      "description": "Obtiene información sobre CRBT"
+      "description": "Obtener información sobre CRBT"
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Información",
@@ -185,7 +185,7 @@
       "NOT_CMD_USER": "Only the person who used this command can use this button."
     },
     "strings": {
-      "PROFILE": "Profile",
+      "PROFILE": "Perfil",
       "AVATAR": "Avatar",
       "INFO": "User info"
     }
@@ -193,15 +193,15 @@
   "profile": {
     "meta": {
       "name": "perfil",
-      "description": "Obtiene el perfil CRBT de un usuario específico o el suyo.",
+      "description": "Obtener el perfil CRBT de un usuario específico o el suyo.",
       "options": [
         {
           "name": "buscar_por_nombre",
-          "description": "Busca un perfil CRBT por su nombre."
+          "description": "Buscar un perfil CRBT por su nombre."
         },
         {
           "name": "buscar_por_discord",
-          "description": "Busca un perfil CRBT por su nombre o ID de usuario de Discord."
+          "description": "Buscar un perfil CRBT por su nombre o ID de usuario de Discord."
         }
       ]
     },
@@ -243,17 +243,17 @@
       "BADGES": "Sellos (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Editar perfil",
-      "MODAL_NAME_PLACEHOLDER": "A unique name, can only have letters, numbers or spaces.",
-      "MODAL_BIO_PLACEHOLDER": "Tell us about yourself. CRBTscript tags accepted.",
-      "MODAL_WEBSITE_PLACEHOLDER": "A link to your website, blog, Twitter...",
-      "MODAL_BIRTHDAY_PLACEHOLDER": "Your birthday, in the YYYY-MM-DD format.",
-      "MODAL_LOCATION_PLACEHOLDER": "Where are you from?"
+      "MODAL_NAME_PLACEHOLDER": "Un nombre único que sólo puede contener letras, números y espacios.",
+      "MODAL_BIO_PLACEHOLDER": "Cuéntenos sobre usted. Se aceptan etiquetas CRBTscript.",
+      "MODAL_WEBSITE_PLACEHOLDER": "Un enlace a su página web, blog, Twitter...",
+      "MODAL_BIRTHDAY_PLACEHOLDER": "Su cumpleaños, en el formato AAAA-MM-DD.",
+      "MODAL_LOCATION_PLACEHOLDER": "¿De dónde es?"
     }
   },
   "avatar": {
     "meta": {
       "name": "avatar",
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Obtener el avatar por defecto de un usuario específico o el suyo.",
       "options": [
         {
           "name": "user",
@@ -298,27 +298,27 @@
   },
   "calc": {
     "meta": {
-      "name": "calc",
-      "description": "Calculate a mathematical expression.",
+      "name": "calcular",
+      "description": "Calcular una expresión matemática.",
       "options": [
         {
-          "name": "expression",
-          "description": "The expression to calculate."
+          "name": "expresión",
+          "description": "La expresión a calcular."
         }
       ]
     }
   },
   "hourly": {
     "meta": {
-      "name": "hourly",
-      "description": "Get a few Purplets every hour."
+      "name": "horario",
+      "description": "Obtener unos cuantos Purplets cada hora."
     },
     "strings": {
-      "EMBED_TITLE": "Hourly Purplets claimed!",
-      "EMBED_DESCRIPTION": "You have claimed your hourly **<EMOJI> <PURPLETS> Purplets**.\nCurrent streak: **<STREAK>/5**",
-      "STREAK_BONUS": "(+30% bonus from streak)",
-      "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
-      "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
+      "EMBED_TITLE": "¡Purplets horarios reclamados!",
+      "EMBED_DESCRIPTION": "Ha reclamado sus **<EMOJI> <PURPLETS> Purplets** horarios.\nRacha actual: **<STREAK>/5**",
+      "STREAK_BONUS": "(+30% del bonus de racha)",
+      "STREAK": "(¡<STREAK_LEFT> más para obtener un bonus!)",
+      "EMBED_REMINDER": "Haga clic en el botón de abajo para establecer un recordatorio para volver a reclamar sus Purplets horarios."
     }
   }
 }
