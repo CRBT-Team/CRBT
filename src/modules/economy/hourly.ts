@@ -1,19 +1,23 @@
 import { colors, db, emojis, illustrations } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
+import { languages } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, components } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
 
 const usersOnCooldown = new Map();
+const { meta } = languages['en-US'].hourly;
 
 export default ChatCommand({
-  name: 'hourly',
-  description: 'Get a few Purplets',
+  ...meta,
   async handle() {
     if (usersOnCooldown.has(this.user.id)) {
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id)));
     }
+
+    const { strings } = languages[this.locale].hourly;
+    const { ADD_REMINDER } = languages[this.locale].genericButtons;
 
     await this.deferReply();
 
@@ -49,18 +53,17 @@ export default ChatCommand({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: 'Hourly Purplets claimed!',
+            name: strings.EMBED_TITLE,
             iconURL: illustrations.success,
           })
           .setDescription(
-            `You claimed your hourly **${
-              emojis.purplet
-            } ${income} Purplets**.\nCurrent streak: **${currentStreak}/5** ${
+            `${strings.EMBED_DESCRIPTION.replace('<EMOJI>', emojis.purplet)
+              .replace(`PURPLETS`, `${income}`)
+              .replace('<STREAK>', `${currentStreak}`)} ${
               currentStreak < 5
-                ? `(${5 - currentStreak} more to go for a bonus!)`
-                : '(+30% bonus from current streak!)'
-            }` +
-              '\nClick the button below to set yourself a reminder to claim your hourly Purplets again.'
+                ? strings.STREAK.replace('<MISSING>', `${5 - currentStreak}`)
+                : strings.STREAK_BONUS
+            } ${strings.EMBED_REMINDER}`
           )
           .setColor(`#${colors.success}`),
       ],
@@ -68,7 +71,7 @@ export default ChatCommand({
         row(
           new RemindButton({ relativetime: Date.now() + 3.6e6, userId: this.user.id })
             .setStyle('SECONDARY')
-            .setLabel('Add Reminder')
+            .setLabel(ADD_REMINDER)
             .setEmoji(emojis.misc.reminder)
         )
       ),

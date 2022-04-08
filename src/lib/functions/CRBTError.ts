@@ -82,6 +82,8 @@ export async function CooldownError(
   showButton = true
 ): Promise<InteractionReplyOptions> {
   const { strings } = languages[context.locale].CooldownError;
+  const { ADD_REMINDER } = languages[context.locale].genericButtons;
+
   const reminder = await db.reminders.findFirst({
     where: {
       user_id: context.user.id,
@@ -112,7 +114,7 @@ export async function CooldownError(
             row(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
-                .setLabel(strings.BUTTON_ADD_REMINDER)
+                .setLabel(ADD_REMINDER)
                 .setEmoji(emojis.misc.reminder)
             )
           )

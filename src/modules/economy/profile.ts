@@ -8,11 +8,14 @@ import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
 import { languages } from '$lib/language';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { Interaction, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
 import { EditProfileBtn } from './editProfile';
+
+dayjs.extend(relativeTime);
 
 const { meta, ctxMeta } = languages['en-US'].profile;
 
@@ -90,8 +93,6 @@ export const renderProfile = async (
   navCtx?: { userId: string; cmdUID: string }
 ) => {
   const { strings, pronouns: Pronouns } = languages[ctx.locale].profile;
-
-  console.log(profile);
 
   if (!profile.pronouns) {
     profile.pronouns = (
