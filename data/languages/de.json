@@ -2,6 +2,32 @@
   "globalErrors": {
     "GUILD_ONLY": "Dieser Command kann in Direktnachrichten nicht genutzt werden."
   },
+  "genericButtons": {
+    "BACK": "Back",
+    "JUMP_TO_MSG": "Jump to message",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "SAVE": "Save"
+  },
+  "UnknownError": {
+    "strings": {
+      "TITLE": "An unknown error has occured.",
+      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+    }
+  },
+  "CooldownError": {
+    "strings": {
+      "TITLE": "Hold it!",
+      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+      "COMMAND": "command",
+      "COMPONENT": "component",
+      "BUTTON_ADD_REMINDER": "Add Reminder"
+    }
+  },
   "activity": {
     "meta": {
       "name": "aktivität",
@@ -144,6 +170,7 @@
       "VERSION": "Version <VERSION> mit <PURPLET>",
       "MEMBER_COUNT": "Anzahl der Mitglieder",
       "SERVER_COUNT": "Anzahl der Server",
+      "PROFILES_REGISTERED": "Profiles registered",
       "PING": "Ping",
       "PING_RESULT": "≈<PING> Millisekunden",
       "CREATED": "Erstellt am",
@@ -151,6 +178,16 @@
       "BUTTON_WEBSITE": "Webseite",
       "BUTTON_INVITE": "Zu Server hinzufügen",
       "BUTTON_DISCORD": "Der Community beitreten"
+    }
+  },
+  "user_navbar": {
+    "errors": {
+      "NOT_CMD_USER": "Only the person who used this command can use this button."
+    },
+    "strings": {
+      "PROFILE": "Profile",
+      "AVATAR": "Avatar",
+      "INFO": "User info"
     }
   },
   "profile": {
@@ -206,6 +243,64 @@
       "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Profil bearbeiten"
+    }
+  },
+  "avatar": {
+    "meta": {
+      "name": "avatar",
+      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "options": [
+        {
+          "name": "user",
+          "description": "The user to get the avatar of."
+        },
+        {
+          "name": "size",
+          "description": "The size of the avatar to get."
+        },
+        {
+          "name": "format",
+          "description": "The format of the avatar to get."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View Avatar"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Avatar",
+      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+    }
+  },
+  "crbt_introduction": {
+    "strings": {
+      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
+      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+    }
+  },
+  "bookmark": {
+    "ctxMeta": {
+      "name": "Bookmark Message"
+    },
+    "errors": {
+      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+    },
+    "strings": {
+      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
+      "SUCCESS_MESSAGE": "Sent this message by DM!",
+      "SUCCESS_BUTTON": "Open DMs"
+    }
+  },
+  "calc": {
+    "meta": {
+      "name": "calc",
+      "description": "Calculate a mathematical expression.",
+      "options": [
+        {
+          "name": "expression",
+          "description": "The expression to calculate."
+        }
+      ]
     }
   }
 }
