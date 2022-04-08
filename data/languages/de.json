@@ -11,7 +11,8 @@
     "EDIT": "Edit",
     "PREVIOUS": "Previous",
     "NEXT": "Next",
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "ADD_REMINDER": "Add Reminder"
   },
   "UnknownError": {
     "strings": {
@@ -24,8 +25,7 @@
       "TITLE": "Hold it!",
       "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
       "COMMAND": "command",
-      "COMPONENT": "component",
-      "BUTTON_ADD_REMINDER": "Add Reminder"
+      "COMPONENT": "component"
     }
   },
   "activity": {
@@ -242,7 +242,12 @@
       "LOCATION": "Standort",
       "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
-      "BUTTON_EDIT_PROFILE": "Profil bearbeiten"
+      "BUTTON_EDIT_PROFILE": "Profil bearbeiten",
+      "MODAL_NAME_PLACEHOLDER": "A unique name, can only have letters, numbers or spaces.",
+      "MODAL_BIO_PLACEHOLDER": "Tell us about yourself. CRBTscript tags accepted.",
+      "MODAL_WEBSITE_PLACEHOLDER": "A link to your website, blog, Twitter...",
+      "MODAL_BIRTHDAY_PLACEHOLDER": "Your birthday, in the YYYY-MM-DD format.",
+      "MODAL_LOCATION_PLACEHOLDER": "Where are you from?"
     }
   },
   "avatar": {
@@ -301,6 +306,19 @@
           "description": "The expression to calculate."
         }
       ]
+    }
+  },
+  "hourly": {
+    "meta": {
+      "name": "hourly",
+      "description": "Get a few Purplets every hour."
+    },
+    "strings": {
+      "EMBED_TITLE": "Hourly Purplets claimed!",
+      "EMBED_DESCRIPTION": "You have claimed your hourly **<EMOJI> <PURPLETS> Purplets**.\nCurrent streak: **<STREAK>/5**",
+      "STREAK_BONUS": "(+30% bonus from streak)",
+      "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
+      "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
     }
   }
 }
