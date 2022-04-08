@@ -168,6 +168,8 @@ export async function renderUser(
 
   return {
     embeds: [e],
-    components: components(navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, 'userinfo')),
+    components: components(
+      navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, ctx.locale, 'userinfo')
+    ),
   };
 }

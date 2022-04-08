@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
@@ -33,22 +34,25 @@ export default ChatCommand({
               `**[Purplet ${pjson.dependencies['purplet'].slice(1)}](https://crbt.ga/purplet)**`
             )
           )
-          .addFields([
-            {
-              name: strings.SERVER_COUNT,
-              value: `${this.client.guilds.cache.size.toLocaleString(this.locale)}`,
-              inline: true,
-            },
-            {
-              name: strings.PING,
-              value: `${strings.PING_RESULT.replace(
-                '<PING>',
-                `${Date.now() - this.createdTimestamp}`
-              )} (\`/ping\`)`,
-            },
-            { name: strings.CREATED, value: `<t:${created}> (<t:${created}:R>)` },
-            { name: strings.UPTIME, value: `<t:${uptime}> (<t:${uptime}:R>)` },
-          ])
+          .addField(
+            strings.SERVER_COUNT,
+            `${this.client.guilds.cache.size.toLocaleString(this.locale)}`,
+            true
+          )
+          .addField(
+            strings.PROFILES_REGISTERED,
+            `${cache.get<string[]>('profiles').length.toLocaleString(this.locale)}`,
+            true
+          )
+          .addField(
+            strings.PING,
+            `${strings.PING_RESULT.replace(
+              '<PING>',
+              `${Date.now() - this.createdTimestamp}`
+            )} (\`/ping\`)`
+          )
+          .addField(strings.CREATED, `<t:${created}> (<t:${created}:R>)`)
+          .addField(strings.UPTIME, `<t:${uptime}> (<t:${uptime}:R>)`)
           .setThumbnail(avatar(this.client.user))
           .setColor(await getColor(this.user)),
       ],

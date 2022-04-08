@@ -7,17 +7,17 @@ import { OnEvent } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({
-    name: '🇺🇦 • crbt.ga',
+    name: `${client.guilds.cache.size} servers • crbt.ga`,
+    type: 'WATCHING',
   });
 
   (await db.reminders.findMany()).forEach(async (reminder: Reminder) => {
     await setReminder(reminder);
   });
 
-  const profiles = [];
-  (await db.profiles.findMany({ select: { name: true } })).forEach((profile) => {
-    if (profile.name) profiles.push(profile.name);
-  });
+  const profiles = (await db.profiles.findMany({ select: { name: true } }))
+    .filter((p) => p.name)
+    .map((p) => p.name);
   cache.set('profiles', profiles);
   console.log(`${profiles.length} profiles cached`);
 

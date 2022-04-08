@@ -1,27 +1,39 @@
 import { colors, illustrations, links, misc } from '$lib/db';
+import { languages } from '$lib/language';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export const botLeave = OnEvent('guildDelete', async (guild) => {
-  ((await guild.client.channels.fetch(misc.channels.guildJoinLeave)) as TextChannel).send({
+  (guild.client.channels.cache.get(misc.channels.guildJoinLeave) as TextChannel).send({
     embeds: [{ title: `Left ${guild.name} - ${guild.id}`, color: `#${colors.error}` }],
+  });
+  guild.client.user.setActivity({
+    name: `${guild.client.guilds.cache.size} servers • crbt.ga`,
+    type: 'WATCHING',
   });
 });
 
 export const botJoin = OnEvent('guildCreate', async (guild) => {
-  ((await guild.client.channels.fetch(misc.channels.guildJoinLeave)) as TextChannel).send({
+  (guild.client.channels.cache.get(misc.channels.guildJoinLeave) as TextChannel).send({
     embeds: [{ title: `Joined ${guild.name} - ${guild.id}`, color: `#${colors.success}` }],
   });
+
+  guild.client.user.setActivity({
+    name: `${guild.client.guilds.cache.size} servers • crbt.ga`,
+    type: 'WATCHING',
+  });
+
+  const { strings } = languages[guild.preferredLocale].crbt_introduction;
 
   if (guild.systemChannel.permissionsFor(guild.client.user).has('SEND_MESSAGES')) {
     guild.systemChannel.send({
       embeds: [
         new MessageEmbed()
-          .setTitle(`Thanks for inviting ${guild.client.user.username} to your server!`)
+          .setTitle(strings.EMBED_TITLE.replace('<CRBT>', guild.client.user.username))
           .setDescription(
-            `${guild.client.user.username} is now in ${guild.client.guilds.cache.size} servers!\n` +
-              'To get started with CRBT, simply type `/` and click its avatar!\n' +
-              `For more help and info, visit the **[support server](${links.discord})**.`
+            strings.EMBED_DESCRIPTION.replace('<CRBT>', guild.client.user.username)
+              .replace('<SERVERS>', guild.client.guilds.cache.size.toString())
+              .replace('<DISCORD>', links.discord)
           )
           .setImage(illustrations.welcome)
           .setColor(`#${colors.default}`),

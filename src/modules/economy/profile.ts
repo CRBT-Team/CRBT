@@ -156,7 +156,7 @@ export const renderProfile = async (
     embeds: [e],
     components: profile.user.equals(ctx.user) // || profile?.url
       ? components(
-          navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, 'profile'),
+          navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile'),
           row(
             new EditProfileBtn(profile.id)
               .setStyle('PRIMARY')

@@ -1,6 +1,7 @@
 import { CRBTUser } from '$lib/classes/CRBTUser';
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { languages } from '$lib/language';
 import { ButtonComponent, row } from 'purplet';
 import { renderProfile } from '../economy/profile';
 import { renderPfp } from '../info/avatar';
@@ -8,8 +9,10 @@ import { renderUser } from '../info/user info';
 
 export const UserInfoBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
+    const { errors } = languages[this.locale].user_navbar;
+
     if (this.user.id !== cmdUID) {
-      return this.reply(CRBTError('Only the person who used this command can use this button.'));
+      return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = this.client.users.cache.get(userId);
     this.update(
@@ -20,8 +23,10 @@ export const UserInfoBtn = ButtonComponent({
 
 export const PfpBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
+    const { errors } = languages[this.locale].user_navbar;
+
     if (this.user.id !== cmdUID) {
-      return this.reply(CRBTError('Only the person who used this command can use this button.'));
+      return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     await this.update(
       await renderPfp(this.client.users.cache.get(userId), this, '2048', 'png', { userId, cmdUID })
@@ -31,8 +36,10 @@ export const PfpBtn = ButtonComponent({
 
 export const ProfileBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
+    const { errors } = languages[this.locale].user_navbar;
+
     if (this.user.id !== cmdUID) {
-      return this.reply(CRBTError('Only the person who used this command can use this button.'));
+      return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = this.client.users.cache.get(userId) ?? (await this.client.users.fetch(userId));
     const profile = new CRBTUser(
@@ -48,19 +55,22 @@ export const ProfileBtn = ButtonComponent({
 
 export function navBar(
   ctx: { userId: string; cmdUID: string },
+  locale: string,
   tab: 'profile' | 'pfp' | 'userinfo'
 ) {
+  const { strings } = languages[locale].user_navbar;
+
   return row(
     new ProfileBtn(ctx)
-      .setLabel('Profile')
+      .setLabel(strings.PROFILE)
       .setStyle('SECONDARY')
       .setDisabled(tab === 'profile'),
     new PfpBtn(ctx)
-      .setLabel('Avatar')
+      .setLabel(strings.AVATAR)
       .setStyle('SECONDARY')
       .setDisabled(tab === 'pfp'),
     new UserInfoBtn(ctx)
-      .setLabel('User info')
+      .setLabel(strings.INFO)
       .setStyle('SECONDARY')
       .setDisabled(tab === 'userinfo')
   );

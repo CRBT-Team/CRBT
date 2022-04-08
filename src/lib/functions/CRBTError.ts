@@ -1,6 +1,6 @@
 import { colors, db, emojis, illustrations, misc } from '$lib/db';
+import { languages } from '$lib/language';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
 import {
   EmbedField,
   Interaction,
@@ -10,8 +10,6 @@ import {
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
-
-dayjs.extend(relativeTime);
 
 const handleError = (
   description: string,
@@ -52,10 +50,11 @@ export function CRBTError(
 }
 
 export function UnknownError(context: Interaction, desc: string): InteractionReplyOptions {
+  const { strings } = languages[context.locale].UnknownError;
   return {
     embeds: [
       handleError(
-        `We have no clue what this issue may be. Here's what the error says:\n\`\`\`\n${desc}\`\`\`\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
+        strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${desc}\`\`\``),
         desc,
         [
           {
@@ -70,7 +69,7 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
           },
         ],
         true,
-        'An unknown error has occurred'
+        strings.TITLE
       ),
     ],
     ephemeral: true,
@@ -82,6 +81,7 @@ export async function CooldownError(
   relativetime: number,
   showButton = true
 ): Promise<InteractionReplyOptions> {
+  const { strings } = languages[context.locale].CooldownError;
   const reminder = await db.reminders.findFirst({
     where: {
       user_id: context.user.id,
@@ -96,9 +96,14 @@ export async function CooldownError(
   return {
     embeds: [
       handleError(
-        `You will be able to use this ${
+        strings.DESCRIPTION.replace(
+          '<TYPE>',
           context.type === 'APPLICATION_COMMAND' ? 'command' : 'component'
-        } ${dayjs(relativetime).fromNow()}...`
+        ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
+        null,
+        null,
+        false,
+        strings.TITLE
       ),
     ],
     components:
@@ -107,7 +112,7 @@ export async function CooldownError(
             row(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
-                .setLabel('Add Reminder')
+                .setLabel(strings.BUTTON_ADD_REMINDER)
                 .setEmoji(emojis.misc.reminder)
             )
           )

@@ -1,15 +1,17 @@
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { languages } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { Parser } from 'expr-eval';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
+const { meta } = languages['en-US'].calc;
+const math = new Parser();
+
 export default ChatCommand({
-  name: 'calc',
-  description: 'Calculate an expression.',
-  options: new OptionBuilder().string('expr', 'The expression to calculate.', true),
+  ...meta,
+  options: new OptionBuilder().string('expr', meta.options[0].description, true),
   async handle({ expr }) {
-    const math = new Parser();
     try {
       const result = math.evaluate(expr);
       await this.reply({
