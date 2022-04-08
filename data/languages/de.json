@@ -270,7 +270,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Avatare anzeigen"
+      "name": "Avatar anzeigen"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -280,30 +280,30 @@
   "crbt_introduction": {
     "strings": {
       "EMBED_TITLE": "Danke, dass du <CRBT> in deinen Server eingeladen hast!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_DESCRIPTION": "<CRBT> ist jetzt auf <SERVERS> Servern!\nUm mit CRBT zu beginnen, tippen Sie einfach `/` und klicken Sie auf den Avatar!\nFür weitere Hilfe und Informationen besuchen Sie den **[support server](<DISCORD>)**."
     }
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Nachricht als Lesezeichen speichern"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Sie müssen Ihre DMs aktivieren oder CRBT entsperren, um Nachrichten als Lesezeichen zu speichern."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!",
-      "SUCCESS_BUTTON": "Open DMs"
+      "BOOKMARK_AUTHOR": "<USER> (Lesezeichen-Nachricht)",
+      "SUCCESS_MESSAGE": "Nachricht per DM gesendet!",
+      "SUCCESS_BUTTON": "Öffne DMs"
     }
   },
   "calc": {
     "meta": {
-      "name": "calc",
-      "description": "Calculate a mathematical expression.",
+      "name": "rechne",
+      "description": "Berechne einen mathematischen Ausdruck.",
       "options": [
         {
-          "name": "expression",
-          "description": "The expression to calculate."
+          "name": "Ausdruck",
+          "description": "Der Ausdruck, der berechnet werden soll."
         }
       ]
     }
@@ -318,7 +318,7 @@
       "EMBED_DESCRIPTION": "Du hast deine stündlichen **<EMOJI> <PURPLETS> Purplets abgeholt**.\nAktuelle Streak: **<STREAK>/5**",
       "STREAK_BONUS": "(+30%-Bonus von der Streak)",
       "STREAK": "(<STREAK_LEFT> noch für einen Bonus!)",
-      "EMBED_REMINDER": "Klicke auf die Schaltfläche unten, um dich selbst eine Erinnerung zu setzen, um deine stündlichen Purplets erneut zu beanspruchen."
+      "EMBED_REMINDER": "Klicke auf den Button unten, um dich selbst eine Erinnerung zu setzen, um deine stündlichen Purplets erneut zu beanspruchen."
     }
   }
 }
