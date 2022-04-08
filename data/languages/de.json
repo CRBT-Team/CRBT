@@ -108,7 +108,7 @@
       "lightblue": "Hellblau",
       "blue": "Blau",
       "darkblue": "Dunkelblau",
-      "blurple": "Blurple",
+      "blurple": "Blauolett",
       "lightpurple": "Hellviolett",
       "purple": "Violett",
       "darkpurple": "Dunkelviolett",
@@ -246,7 +246,7 @@
       "MODAL_NAME_PLACEHOLDER": "Der Name muss eindeutig sein und darf nur Buchstaben, Zahlen oder Leerzeichen enthalten.",
       "MODAL_BIO_PLACEHOLDER": "Erzählen Sie uns von Ihnen: CRBTscript-Tags akzeptiert.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ein Link zu Ihrer Website, Blog, Twitter...",
-      "MODAL_BIRTHDAY_PLACEHOLDER": "Ihr Geburtstag im Format JJJJJ-MM-TT.",
+      "MODAL_BIRTHDAY_PLACEHOLDER": "Ihr Geburtstag im Format JJJJ-MM-TT.",
       "MODAL_LOCATION_PLACEHOLDER": "Woher kommen Sie?"
     }
   },
@@ -256,15 +256,15 @@
       "description": "Holen Sie sich den Standard-Avatar eines Benutzers, oder Ihren Avatar, wenn Sie keinen angeben.",
       "options": [
         {
-          "name": "Benutzer",
+          "name": "benutzer",
           "description": "Der Benutzer, von dem der Avatar angezeigt werden soll."
         },
         {
-          "name": "Größe",
+          "name": "größe",
           "description": "Die Größe des zu erhaltenden Avatars."
         },
         {
-          "name": "Format",
+          "name": "format",
           "description": "Das Format des zu erhaltenden Avatars."
         }
       ]
@@ -302,7 +302,7 @@
       "description": "Berechne einen mathematischen Ausdruck.",
       "options": [
         {
-          "name": "Ausdruck",
+          "name": "ausdruck",
           "description": "Der Ausdruck, der berechnet werden soll."
         }
       ]
