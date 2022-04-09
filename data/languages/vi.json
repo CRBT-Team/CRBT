@@ -1,6 +1,6 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Không thể sử dụng lệnh này trong tin nhắn trực tiếp."
   },
   "genericButtons": {
     "BACK": "Quay lại",
@@ -31,7 +31,7 @@
   "activity": {
     "meta": {
       "name": "activity",
-      "description": "Start an activity in a voice channel.",
+      "description": "Bắt đầu một hoạt động trong một kênh thoại.",
       "options": [
         {
           "name": "activity",
@@ -111,12 +111,12 @@
       "blurple": "Blurple",
       "lightpurple": "Light Purple",
       "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "darkpurple": "Màu tím đậm",
+      "pink": "Màu hồng",
+      "brown": "Màu nâu",
+      "black": "Màu đen",
+      "gray": "Màu xám",
+      "white": "Màu trắng"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
@@ -143,8 +143,8 @@
       "SUCCESS_TITLE": "Reminder set!",
       "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
       "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+      "SUBJECT": "Tiêu đề",
+      "BUTTON_GCALENDAR": "Thêm sự kiện vào Google Lịch"
     }
   },
   "ping": {
@@ -175,7 +175,7 @@
       "PING_RESULT": "≈<PING> milliseconds",
       "CREATED": "Created on",
       "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
+      "BUTTON_WEBSITE": "Trang web",
       "BUTTON_INVITE": "Add to Server",
       "BUTTON_DISCORD": "Join the Community"
     }
