@@ -134,7 +134,7 @@ export const usePreset = ChatCommand({
     await this.channel.send({
       embeds: [
         new MessageEmbed()
-          .setAuthor({ name: strings.EMBED_TITLE })
+          .setTitle(strings.EMBED_TITLE)
           .setDescription(
             `${presetStrings.message ?? strings.GENERIC_SELECTOR_TITLE}\n\n${rolesList
               .map((role) => `${role.emoji ?? ''} <@&${role.id}>`.trim())
@@ -178,7 +178,8 @@ export const usePreset = ChatCommand({
             name: strings.SUCCESS_TITLE,
             iconURL: illustrations.success,
           })
-          .setDescription(strings.SUCCESS_DESCRIPTION),
+          .setDescription(strings.SUCCESS_DESCRIPTION)
+          .setColor(`#${colors.success}`),
       ],
     });
   },
@@ -235,7 +236,7 @@ export const useManual = ChatCommand({
     await this.channel.send({
       embeds: [
         new MessageEmbed()
-          .setAuthor({ name: strings.EMBED_TITLE })
+          .setTitle(strings.EMBED_TITLE)
           .setDescription(
             `${description}\n\n${rolesList.map((role) => role.toString()).join('\n')}`
           )
@@ -276,7 +277,8 @@ export const useManual = ChatCommand({
             name: strings.SUCCESS_TITLE,
             iconURL: illustrations.success,
           })
-          .setDescription(strings.SUCCESS_DESCRIPTION),
+          .setDescription(strings.SUCCESS_DESCRIPTION)
+          .setColor(`#${colors.success}`),
       ],
     });
   },
