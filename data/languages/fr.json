@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
   "genericButtons": {
-    "BACK": "Back",
+    "BACK": "Arrière",
     "JUMP_TO_MSG": "Jump to message",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
@@ -314,11 +314,11 @@
       "description": "Get a few Purplets every hour."
     },
     "strings": {
-      "EMBED_TITLE": "Hourly Purplets claimed!",
-      "EMBED_DESCRIPTION": "You have claimed your hourly **<EMOJI> <PURPLETS> Purplets**.\nCurrent streak: **<STREAK>/5**",
-      "STREAK_BONUS": "(+30% bonus from streak)",
-      "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
-      "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
+      "EMBED_TITLE": "Purplets horaires réclamés !",
+      "EMBED_DESCRIPTION": "Vous avez réclamé vos **<EMOJI> <PURPLETS> Purplets** horaires.\nCombo actuel : **<STREAK>/5**",
+      "STREAK_BONUS": "(+30% de bonus grâce au combo)",
+      "STREAK": "(encore <STREAK_LEFT> avant un bonus !)",
+      "EMBED_REMINDER": "Cliquez sur le bouton ci-dessous pour créer un rappel pour réclamer vos Purplets horaires."
     }
   }
 }
