@@ -1,16 +1,80 @@
 {
+  "globalErrors": {
+    "GUILD_ONLY": "Este comando no se puede utilizar en MD."
+  },
+  "genericButtons": {
+    "BACK": "Back",
+    "JUMP_TO_MSG": "Jump to message",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "SAVE": "Save",
+    "ADD_REMINDER": "Add Reminder"
+  },
+  "UnknownError": {
+    "strings": {
+      "TITLE": "An unknown error has occured.",
+      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+    }
+  },
+  "CooldownError": {
+    "strings": {
+      "TITLE": "Hold it!",
+      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+      "COMMAND": "command",
+      "COMPONENT": "component"
+    }
+  },
   "activity": {
+    "meta": {
+      "name": "actividad",
+      "description": "Iniciar una actividad en un canal de voz.",
+      "options": [
+        {
+          "name": "actividad",
+          "description": "La actividad a iniciar",
+          "choices": [
+            "Watch Together - Unlimited participants",
+            "Sketch Heads - Up to 16 players",
+            "Word Snacks - Up to 8 players",
+            "Poker Night - 💎 Requires Boosting",
+            "Chess In The Park - 💎 Requires Boosting",
+            "Checkers In The Park - 💎 Requires Boosting",
+            "Blazing 8s - 💎 Requires Boosting",
+            "Letter League - 💎 Requires Boosting",
+            "SpellCast - 💎 Requires Boosting"
+          ]
+        },
+        {
+          "name": "canal",
+          "description": "El canal de voz en el que iniciar la actividad"
+        }
+      ]
+    },
     "errors": {
-      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
-      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
+      "NO_CHANNEL": "Debe estar en un canal de voz, o escoger un canal de voz utilizando la opción `canal`.",
+      "NOT_VOICE": "¡Debe escoger un canal de voz para iniciar una actividad!"
     },
     "strings": {
-      "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join your activity in",
-      "BUTTON_LABEL": "Join"
+      "EMBED_TITLE": "¡Todo listo!",
+      "EMBED_DESCRIPTION": "Haga clic en el botón de abajo para unirse a <ACTIVITY> en <CHANNEL>.\nTenga presente que las actividades no funcionan en móviles y aún se está experimentando con ellas. Espere errores y características que falten.",
+      "BUTTON_LABEL": "Unirse a la actividad"
     }
   },
   "balance": {
+    "meta": {
+      "name": "balance",
+      "description": "Ver el saldo de Purplets de un usuario específico o el suyo.",
+      "options": [
+        {
+          "name": "user",
+          "description": "The user to view the balance of"
+        }
+      ]
+    },
     "strings": {
       "EMBED_TITLE": "<user> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
@@ -20,8 +84,43 @@
     }
   },
   "color set": {
+    "meta": {
+      "name": "color set",
+      "description": "Change your CRBT accent color.",
+      "options": [
+        {
+          "name": "color",
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+        }
+      ]
+    },
+    "colorNames": {
+      "sync": "Sincronizar el color del perfil de Discord",
+      "lightred": "Rojo claro",
+      "red": "Rojo",
+      "darkred": "Rojo oscuro",
+      "orange": "Naranja",
+      "yellow": "Amarillo",
+      "lightgreen": "Verde claro",
+      "green": "Verde",
+      "darkgreen": "Verde oscuro",
+      "cyan": "Cian",
+      "lightblue": "Azul claro",
+      "blue": "Azul",
+      "darkblue": "Azul oscuro",
+      "blurple": "Azul violáceo",
+      "lightpurple": "Morado claro",
+      "purple": "Morado",
+      "darkpurple": "Morado oscuro",
+      "pink": "Rosa",
+      "brown": "Marrón",
+      "black": "Negro",
+      "gray": "Gris",
+      "white": "Blanco"
+    },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+      "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
+      "INVALID_COLOR_NAME": "Debe introducir un código hexadecimal válido o un nombre de color. Utilice /color lista para más información."
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
@@ -42,10 +141,184 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_CHANNEL": "Se lo recordaremos en <CHANNEL>",
+      "SUCCESS_DM": "Se lo recordaremos por MD",
       "SUBJECT": "Subject",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+      "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar"
+    }
+  },
+  "ping": {
+    "meta": {
+      "name": "latencia",
+      "description": "Obtener la latencia e información de conexión de CRBT."
+    },
+    "strings": {
+      "EMBED_TITLE": "<CRBT> - Latencia",
+      "WEBSOCKET": "WebSocket",
+      "INTERACTION": "Interacción",
+      "UPTIME": "Conectado desde",
+      "FORMAT_MS": "<NUMBER>ms"
+    }
+  },
+  "crbt info": {
+    "meta": {
+      "name": "crbt información",
+      "description": "Obtener información sobre CRBT"
+    },
+    "strings": {
+      "EMBED_TITLE": "<CRBT> - Información",
+      "VERSION": "Versión <VERSION> sobre <PURPLET>",
+      "MEMBER_COUNT": "Número de miembros",
+      "SERVER_COUNT": "Número de servidores",
+      "PROFILES_REGISTERED": "Profiles registered",
+      "PING": "Latencia",
+      "PING_RESULT": "≈<PING> milisegundos",
+      "CREATED": "Created on",
+      "UPTIME": "Conectado desde",
+      "BUTTON_WEBSITE": "Página web",
+      "BUTTON_INVITE": "Añadir a un servidor",
+      "BUTTON_DISCORD": "Unirse a la comunidad"
+    }
+  },
+  "user_navbar": {
+    "errors": {
+      "NOT_CMD_USER": "Only the person who used this command can use this button."
+    },
+    "strings": {
+      "PROFILE": "Perfil",
+      "AVATAR": "Avatar",
+      "INFO": "User info"
+    }
+  },
+  "profile": {
+    "meta": {
+      "name": "perfil",
+      "description": "Obtener el perfil CRBT de un usuario específico o el suyo.",
+      "options": [
+        {
+          "name": "buscar_por_nombre",
+          "description": "Buscar un perfil CRBT por su nombre."
+        },
+        {
+          "name": "buscar_por_discord",
+          "description": "Buscar un perfil CRBT por su nombre o ID de usuario de Discord."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "Ver perfil CRBT"
+    },
+    "pronouns": {
+      "unspecified": "No especificado",
+      "hh": "Él/él",
+      "hi": "Él/lo",
+      "hs": "Él/ella",
+      "ht": "Él/elle",
+      "ih": "Lo/él",
+      "ii": "Lo/su",
+      "is": "Lo/ella",
+      "it": "Lo/elle",
+      "shh": "Ella/él",
+      "sh": "Ella/ella",
+      "si": "Ella/lo",
+      "st": "Ella/elle",
+      "th": "Elle/él",
+      "ti": "Elle/lo",
+      "ts": "Elle/ella",
+      "tt": "Elle/elle",
+      "any": "Cualquiera",
+      "other": "Otro",
+      "ask": "Pregúntame",
+      "avoid": "<USERNAME>"
+    },
+    "errors": {
+      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre de usuario. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Perfil",
+      "PRONOUNS": "Pronombres",
+      "BIRTHDAY": "Cumpleaños",
+      "WEBSITE": "Página web",
+      "LOCATION": "Ubicación",
+      "BADGES": "Sellos (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets",
+      "BUTTON_EDIT_PROFILE": "Editar perfil",
+      "MODAL_NAME_PLACEHOLDER": "Un nombre único que sólo puede contener letras, números y espacios.",
+      "MODAL_BIO_PLACEHOLDER": "Cuéntenos sobre usted. Se aceptan etiquetas CRBTscript.",
+      "MODAL_WEBSITE_PLACEHOLDER": "Un enlace a su página web, blog, Twitter...",
+      "MODAL_BIRTHDAY_PLACEHOLDER": "Su cumpleaños, en el formato AAAA-MM-DD.",
+      "MODAL_LOCATION_PLACEHOLDER": "¿De dónde es?"
+    }
+  },
+  "avatar": {
+    "meta": {
+      "name": "avatar",
+      "description": "Obtener el avatar por defecto de un usuario específico o el suyo.",
+      "options": [
+        {
+          "name": "user",
+          "description": "The user to get the avatar of."
+        },
+        {
+          "name": "size",
+          "description": "The size of the avatar to get."
+        },
+        {
+          "name": "format",
+          "description": "The format of the avatar to get."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View Avatar"
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Avatar",
+      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+    }
+  },
+  "crbt_introduction": {
+    "strings": {
+      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
+      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+    }
+  },
+  "bookmark": {
+    "ctxMeta": {
+      "name": "Bookmark Message"
+    },
+    "errors": {
+      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+    },
+    "strings": {
+      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
+      "SUCCESS_MESSAGE": "Sent this message by DM!",
+      "SUCCESS_BUTTON": "Open DMs"
+    }
+  },
+  "calc": {
+    "meta": {
+      "name": "calcular",
+      "description": "Calcular una expresión matemática.",
+      "options": [
+        {
+          "name": "expresión",
+          "description": "La expresión a calcular."
+        }
+      ]
+    }
+  },
+  "hourly": {
+    "meta": {
+      "name": "horario",
+      "description": "Obtener unos cuantos Purplets cada hora."
+    },
+    "strings": {
+      "EMBED_TITLE": "¡Purplets horarios reclamados!",
+      "EMBED_DESCRIPTION": "Ha reclamado sus **<EMOJI> <PURPLETS> Purplets** horarios.\nRacha actual: **<STREAK>/5**",
+      "STREAK_BONUS": "(+30% del bonus de racha)",
+      "STREAK": "(¡<STREAK_LEFT> más para obtener un bonus!)",
+      "EMBED_REMINDER": "Haga clic en el botón de abajo para establecer un recordatorio para volver a reclamar sus Purplets horarios."
     }
   }
 }
