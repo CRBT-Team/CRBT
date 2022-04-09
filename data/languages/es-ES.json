@@ -170,10 +170,10 @@
       "VERSION": "Versión <VERSION> sobre <PURPLET>",
       "MEMBER_COUNT": "Número de miembros",
       "SERVER_COUNT": "Número de servidores",
-      "PROFILES_REGISTERED": "Profiles registered",
+      "PROFILES_REGISTERED": "Perfiles registrados",
       "PING": "Latencia",
       "PING_RESULT": "≈<PING> milisegundos",
-      "CREATED": "Created on",
+      "CREATED": "Fecha de creación",
       "UPTIME": "Conectado desde",
       "BUTTON_WEBSITE": "Página web",
       "BUTTON_INVITE": "Añadir a un servidor",
@@ -182,12 +182,12 @@
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Sólo la persona que ha ejecutado este comando puede usar este botón."
     },
     "strings": {
       "PROFILE": "Perfil",
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "Información de usuario"
     }
   },
   "profile": {
@@ -256,16 +256,16 @@
       "description": "Obtener el avatar por defecto de un usuario específico o el suyo.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to get the avatar of."
+          "name": "usuario",
+          "description": "El usuario del que obtener el avatar."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "tamaño",
+          "description": "El tamaño del avatar a obtener."
         },
         {
-          "name": "format",
-          "description": "The format of the avatar to get."
+          "name": "formato",
+          "description": "El formato del avatar a obtener."
         }
       ]
     },
@@ -274,13 +274,13 @@
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "DOWNLOAD": "Descargar (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_TITLE": "¡Gracias por invitar a <CRBT> a su servidor!",
+      "EMBED_DESCRIPTION": "¡<CRBT> ahora está en <SERVERS> servidores!\n¡Para empezar con CRBT, simplemente escriba `/` y haga clic en su avatar!\nPara obtener más ayuda e información, visite el **[servidor de soporte](<DISCORD>)**."
     }
   },
   "bookmark": {
@@ -315,8 +315,8 @@
     },
     "strings": {
       "EMBED_TITLE": "¡Purplets horarios reclamados!",
-      "EMBED_DESCRIPTION": "Ha reclamado sus **<EMOJI> <PURPLETS> Purplets** horarios.\nRacha actual: **<STREAK>/5**",
-      "STREAK_BONUS": "(+30% del bonus de racha)",
+      "EMBED_DESCRIPTION": "Ha reclamado sus **<EMOJI> <PURPLETS> Purplets** horarios.\nCombo actual: **<STREAK>/5**",
+      "STREAK_BONUS": "(+30% del bonus de combo)",
       "STREAK": "(¡<STREAK_LEFT> más para obtener un bonus!)",
       "EMBED_REMINDER": "Haga clic en el botón de abajo para establecer un recordatorio para volver a reclamar sus Purplets horarios."
     }
