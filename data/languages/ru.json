@@ -12,7 +12,7 @@
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
     "SAVE": "Сохранить",
-    "ADD_REMINDER": "Add Reminder"
+    "ADD_REMINDER": "Добавить напоминание"
   },
   "UnknownError": {
     "strings": {
@@ -25,16 +25,16 @@
       "TITLE": "Подождите!",
       "DESCRIPTION": "Вы сможете использовать эту <TYPE> через <TIME>...",
       "COMMAND": "команду",
-      "COMPONENT": "component"
+      "COMPONENT": "компонент"
     }
   },
   "activity": {
     "meta": {
       "name": "активность",
-      "description": "Start an activity in a voice channel.",
+      "description": "Запустить активити в голосовом канале.",
       "options": [
         {
-          "name": "activity",
+          "name": "активность",
           "description": "The activity to start",
           "choices": [
             "Watch Together - Unlimited participants",
