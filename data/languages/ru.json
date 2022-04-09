@@ -35,22 +35,22 @@
       "options": [
         {
           "name": "активность",
-          "description": "The activity to start",
+          "description": "Активити для старта",
           "choices": [
-            "Watch Together - Unlimited participants",
-            "Sketch Heads - Up to 16 players",
-            "Word Snacks - Up to 8 players",
-            "Poker Night - 💎 Requires Boosting",
-            "Chess In The Park - 💎 Requires Boosting",
-            "Checkers In The Park - 💎 Requires Boosting",
-            "Blazing 8s - 💎 Requires Boosting",
-            "Letter League - 💎 Requires Boosting",
-            "SpellCast - 💎 Requires Boosting"
+            "Watch Together - Неограниченное количество участников",
+            "Sketch Heads - До 16 игроков",
+            "Word Snacks - До 8 игроков",
+            "Poker Night - 💎 Требуется буст сервера",
+            "Chess In The Park - 💎 Требуется буст сервера",
+            "Checkers In The Park - 💎 Требуется буст сервера",
+            "Blazing 8s - 💎 Требуется буст сервера",
+            "Letter League - 💎 Требуется буст сервера",
+            "SpellCast - 💎 Требуется буст сервера"
           ]
         },
         {
           "name": "канал",
-          "description": "The voice channel to start the activity in"
+          "description": "Голосовой чат для начала активити"
         }
       ]
     },
@@ -59,9 +59,9 @@
       "NOT_VOICE": "Вам нужно выбрать голосовой канал, чтобы начать активность!"
     },
     "strings": {
-      "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
-      "BUTTON_LABEL": "Join Activity"
+      "EMBED_TITLE": "Готово!",
+      "EMBED_DESCRIPTION": "Нажмите кнопку ниже чтобы войти в <ACTIVITY> в <CHANNEL>.\nУточнение: Активити не работают на телефонах и до сих пор экспериментальны. Ожидайте баги и недоработки.",
+      "BUTTON_LABEL": "Войти в активити"
     }
   },
   "balance": {
@@ -86,7 +86,7 @@
   "color set": {
     "meta": {
       "name": "color set",
-      "description": "Change your CRBT accent color.",
+      "description": "Изменить пользовательский цвет CRBT.",
       "options": [
         {
           "name": "цвет",
@@ -95,7 +95,7 @@
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "Синхронизировать цвет профиля Discord",
       "lightred": "Светло-красный",
       "red": "Красный",
       "darkred": "Тёмно-красный",
@@ -108,7 +108,7 @@
       "lightblue": "Светло-синий",
       "blue": "Синий",
       "darkblue": "Тёмно-синий",
-      "blurple": "Blurple",
+      "blurple": "Фиолетово-синий",
       "lightpurple": "Светло-фиолетовый",
       "purple": "Фиолетовый",
       "darkpurple": "Тёмно-фиолетовый",
@@ -119,37 +119,37 @@
       "white": "Белый"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "У вас нет цвета профиля Discord для синхронизации. Чтобы поставить его, измените пользовательский профиль Discord'а и смените его цвет.",
+      "INVALID_COLOR_NAME": "Вам нужно ввести корректное имя или название цвета. Используйте /color list для дополнительной информации."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
-      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+      "EMBED_TITLE": "Пользовательский цвет обновлён.",
+      "EMBED_MANUAL_COLOR": "Этот цвет будет использоваться в большинстве ответов CRBT к вам, так же как и в вашем профиле и информационных картах, когда кто-то их еще посещает.",
+      "EMBED_SYNC_COLOR": "Ваш цвет профиля Discord будет синхронизирован с вашим цветом CRBT. Этот цвет будет использоваться в большинстве ответов CRBT на вас, а также в ваших картах профиля и информации, когда кто-то их еще посещает"
     }
   },
   "remind me": {
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
+      "SUBJECT_MAX_LENGTH": "Тема должна быть не менее 120 символов.",
+      "PAST": "Нельзя установить напоминание в прошлом.",
+      "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
+      "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
+      "INVALID_CHANNEL_TYPE": "Указанный вами текстовый канал некорректен.",
       "BOT_MISSING_PERMS": "У меня недостаточно прав, чтобы отправлять сообщения в этом канале.",
       "USER_MISSING_PERMS": "У вас недостаточно прав, чтобы отправлять сообщения в этом канале.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "REMINDERS_MAX_LIMIT": "Вы не можете установить более 5 напоминаний одновременно."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event"
+      "SUCCESS_TITLE": "Напоминание установлено!",
+      "SUCCESS_CHANNEL": "Вас уведомят в <CHANNEL>",
+      "SUCCESS_DM": "Вас уведомят в ЛС",
+      "SUBJECT": "Тема",
+      "BUTTON_GCALENDAR": "Добавить как событие календаря Google"
     }
   },
   "ping": {
     "meta": {
-      "name": "ping",
+      "name": "пинг",
       "description": "Ping CRBT. Returns latency and connection info."
     },
     "strings": {
