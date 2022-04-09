@@ -23,8 +23,8 @@
   "CooldownError": {
     "strings": {
       "TITLE": "Подождите!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
+      "DESCRIPTION": "Вы сможете использовать эту <TYPE> через <TIME>...",
+      "COMMAND": "команду",
       "COMPONENT": "component"
     }
   },
