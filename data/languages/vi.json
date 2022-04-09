@@ -3,26 +3,26 @@
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder"
+    "BACK": "Quay lại",
+    "JUMP_TO_MSG": "Đi đến tin nhắn",
+    "CANCEL": "Hủy",
+    "CONFIRM": "Xác nhận",
+    "DELETE": "Xóa",
+    "EDIT": "Chỉnh sửa",
+    "PREVIOUS": "Trước",
+    "NEXT": "Tiếp theo",
+    "SAVE": "Lưu",
+    "ADD_REMINDER": "Thêm nhắc nhỡ"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
+      "TITLE": "Một lỗi không xác định đã xảy ra.",
       "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
+      "TITLE": "Khoan đã!",
       "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
       "COMMAND": "command",
       "COMPONENT": "component"
@@ -59,7 +59,7 @@
       "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
     },
     "strings": {
-      "EMBED_TITLE": "All set!",
+      "EMBED_TITLE": "Tất cả đã sẵn sàng!",
       "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
       "BUTTON_LABEL": "Join Activity"
     }
@@ -86,7 +86,7 @@
   "color set": {
     "meta": {
       "name": "color set",
-      "description": "Change your CRBT accent color.",
+      "description": "Thay đổi màu nhấn CRBT của bạn.",
       "options": [
         {
           "name": "color",
