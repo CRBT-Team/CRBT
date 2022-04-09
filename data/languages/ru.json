@@ -4,7 +4,7 @@
   },
   "genericButtons": {
     "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
+    "JUMP_TO_MSG": "Перейти к сообщению",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
     "DELETE": "Delete",
@@ -49,13 +49,13 @@
           ]
         },
         {
-          "name": "channel",
+          "name": "канал",
           "description": "The voice channel to start the activity in"
         }
       ]
     },
     "errors": {
-      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
+      "NO_CHANNEL": "Вы должны находиться в голосовом канале, или выбрать голосовой канал опцией `канал`.",
       "NOT_VOICE": "Вам нужно выбрать голосовой канал, чтобы начать активность!"
     },
     "strings": {
