@@ -67,7 +67,7 @@
   "balance": {
     "meta": {
       "name": "баланс",
-      "description": "View a user's Purplet balance, or yours.",
+      "description": "Просмотр вашего или чужого баланса Фиолеток.",
       "options": [
         {
           "name": "пользователь",
@@ -242,7 +242,7 @@
       "LOCATION": "Местоположение",
       "BADGES": "Badges (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
-      "BUTTON_EDIT_PROFILE": "Edit Profile",
+      "BUTTON_EDIT_PROFILE": "Редактировать профиль",
       "MODAL_NAME_PLACEHOLDER": "Уникальное имя, может состоять только из букв, цифр или пробелов.",
       "MODAL_BIO_PLACEHOLDER": "Расскажите нам о себе. Теги CRBTscript принимаются.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ссылка на ваш сайт, блог, Твиттер...",
@@ -252,11 +252,11 @@
   },
   "avatar": {
     "meta": {
-      "name": "avatar",
+      "name": "аватар",
       "description": "Get a user's default avatar, or yours if you don't specify one.",
       "options": [
         {
-          "name": "user",
+          "name": "пользователь",
           "description": "The user to get the avatar of."
         },
         {
