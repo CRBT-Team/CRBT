@@ -15,15 +15,22 @@ import {
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 
+const { meta } = languages['en-US']['remind me'];
+
 export default ChatCommand({
-  name: 'remind me',
-  description: 'Set a reminder.',
+  ...meta,
   options: new OptionBuilder()
-    .string('when', 'When to remind you (e.g. 2 hours, 3w2d, 20:30).', true)
-    .string('subject', 'What to remind you of.', true)
-    .channel('destination', 'Where to send the reminder (leave blank to send a DM).'),
+    .string('when', meta.options[0].description, true)
+    .string('subject', meta.options[1].description, true)
+    .channel('destination', meta.options[2].description),
   async handle({ when, subject, destination }) {
-    const { strings, errors } = languages[this.locale]['remind me'];
+    const {
+      strings,
+      errors,
+      keywordsDetection__KEEPLOWERCASE: keywords,
+    } = languages[this.locale]['remind me'];
+
+    dayjs.locale(this.locale);
 
     if (subject.length > 120) {
       return this.reply(CRBTError(errors.SUBJECT_MAX_LENGTH));
@@ -32,10 +39,10 @@ export default ChatCommand({
     const now = dayjs();
     const w = when
       .trim()
-      .replaceAll('and', '')
-      .replace('at', '')
-      .replace('on', '')
-      .replace('in', '')
+      .replaceAll(keywords.AND, '')
+      .replace(keywords.AT, '')
+      .replace(keywords.ON, '')
+      .replace(keywords.IN, '')
       .trim()
       .replaceAll('  ', ' ');
 
@@ -43,14 +50,17 @@ export default ChatCommand({
     let expiration: Dayjs;
     let timeMS: number;
 
-    if (w.trim().toLowerCase().startsWith('today') || when.trim().toLowerCase().startsWith('at')) {
+    if (
+      w.trim().toLowerCase().startsWith(keywords.TODAY) ||
+      when.trim().toLowerCase().startsWith('at')
+    ) {
       const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
       expiration = time
         ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
         : now.add(30, 'm');
       timeMS = expiration.diff(now);
     }
-    if (w.trim().toLowerCase().startsWith('tomorrow')) {
+    if (w.trim().toLowerCase().startsWith(keywords.TOMORROW)) {
       const tomorrow = now.add(1, 'day');
       const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
       // console.log(time);
@@ -122,23 +132,23 @@ export default ChatCommand({
             })
             .setDescription(
               (destination
-                ? strings.SUCCESS_CHANNEL.replace('<CHANNEL', `${destination}`)
+                ? strings.SUCCESS_CHANNEL.replace('<CHANNEL>', `${destination}`)
                 : strings.SUCCESS_DM) +
                 `\n` +
                 (expiration.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                  ? `Today at <t:${expUnix}:T> • <t:${expUnix}:R>.`
+                  ? strings.TODAY_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                   : expiration.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                  ? `Tomorrow at <t:${expUnix}:T> • <t:${expUnix}:R>.`
+                  ? strings.TOMORROW_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                   : `<t:${expUnix}> • <t:${expUnix}:R>.`)
             )
-            .addField('Subject', subject)
+            .addField(strings.SUBJECT, subject)
             .setColor(`#${colors.success}`),
         ],
         components: components(
           row(
             new MessageButton()
               .setStyle('LINK')
-              .setLabel('Add as Google Calendar event')
+              .setLabel(strings.BUTTON_GCALENDAR)
               .setURL(
                 `https://calendar.google.com/calendar/render?${new URLSearchParams({
                   action: 'TEMPLATE',
@@ -146,12 +156,13 @@ export default ChatCommand({
                   dates: `${expiration.format('YYYYMMDD')}/${expiration
                     .add(1, 'day')
                     .format('YYYYMMDD')}`,
-                  details: `Set by CRBT Reminders. You will also be reminded ${
+                  details: `${strings.GCALENDAR_EVENT} ${
                     destination && destination?.isText()
-                      ? `in #${(destination as TextChannel).name}, in ${
-                          (destination as TextChannel).guild.name
-                        }`
-                      : 'by DM'
+                      ? strings.GCALENDAR_EVENT_CHANNEL.replace(
+                          '<CHANNEL>',
+                          `#${(destination as TextChannel).name}`
+                        ).replace('<SERVER>', (destination as TextChannel).guild.name)
+                      : strings.GCALENDAR_EVENT_DM
                   }`,
                   location: ((await this.fetchReply()) as Message).url,
                 })}`

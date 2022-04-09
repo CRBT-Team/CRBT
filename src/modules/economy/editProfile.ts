@@ -7,10 +7,11 @@ import { ButtonComponent } from 'purplet';
 
 export const EditProfileBtn = ButtonComponent({
   async handle(userId: string) {
+    const { strings, errors } = languages[this.locale].profile;
+
     if (this.user.id !== userId) {
-      return this.reply(CRBTError('You can only edit your own profile.'));
+      return this.reply(CRBTError(errors.CAN_ONLY_EDIT_OWN_PROFILE));
     }
-    const { strings } = languages[this.locale].profile;
 
     const profile = await db.profiles.findFirst({
       where: { id: userId },
@@ -18,14 +19,14 @@ export const EditProfileBtn = ButtonComponent({
     });
 
     const modal = new Modal()
-      .setTitle('Edit Profile')
+      .setTitle(strings.BUTTON_EDIT_PROFILE)
       .setCustomId(this.message.id)
       .setComponents(
         //@ts-ignore
         new MessageActionRow().setComponents(
           new TextInputComponent()
             .setCustomId('profile_name')
-            .setLabel('Name')
+            .setLabel(strings.NAME)
             .setStyle('SHORT')
             .setPlaceholder(strings.MODAL_NAME_PLACEHOLDER)
             .setValue(profile?.name ?? '')
@@ -36,7 +37,7 @@ export const EditProfileBtn = ButtonComponent({
         new MessageActionRow().setComponents(
           new TextInputComponent()
             .setCustomId('profile_bio')
-            .setLabel('Bio')
+            .setLabel(strings.BIO)
             .setStyle('PARAGRAPH')
             .setPlaceholder(strings.MODAL_BIO_PLACEHOLDER)
             .setValue(profile?.bio ?? '')
@@ -46,7 +47,7 @@ export const EditProfileBtn = ButtonComponent({
         new MessageActionRow().setComponents(
           new TextInputComponent()
             .setCustomId('profile_url')
-            .setLabel('Website')
+            .setLabel(strings.WEBSITE)
             .setStyle('SHORT')
             .setPlaceholder(strings.MODAL_WEBSITE_PLACEHOLDER)
             .setValue(profile?.url ?? '')
@@ -56,7 +57,7 @@ export const EditProfileBtn = ButtonComponent({
         new MessageActionRow().setComponents(
           new TextInputComponent()
             .setCustomId('profile_birthday')
-            .setLabel('Birthday')
+            .setLabel(strings.BIRTHDAY)
             .setStyle('SHORT')
             .setPlaceholder(strings.MODAL_BIRTHDAY_PLACEHOLDER)
             .setValue(profile?.birthday?.toISOString()?.split('T')[0] ?? '')
@@ -66,7 +67,7 @@ export const EditProfileBtn = ButtonComponent({
         new MessageActionRow().setComponents(
           new TextInputComponent()
             .setCustomId('profile_location')
-            .setLabel('Location')
+            .setLabel(strings.LOCATION)
             .setStyle('SHORT')
             .setPlaceholder(strings.MODAL_LOCATION_PLACEHOLDER)
             .setValue(profile?.location ?? '')

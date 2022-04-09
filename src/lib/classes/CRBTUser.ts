@@ -25,20 +25,20 @@ export class CRBTUser {
   public likes?: CRBTUser[];
   public birthday?: Dayjs;
 
-  constructor(public user: User, profile: profiles) {
-    this.id = profile.id;
-    this.name = profile.name;
-    this.purplets = profile.purplets;
-    this.verified = profile.verified;
-    this.bio = profile.bio;
+  constructor(public user: User, profile?: profiles) {
+    this.id = user.id;
+    this.name = profile?.name;
+    this.purplets = profile?.purplets;
+    this.verified = profile?.verified;
+    this.bio = profile?.bio;
     this.badges =
-      profile.crbt_badges.length > 0 ? profile.crbt_badges.map((b) => new Badge(b)) : null;
-    this.banner = profile.crbt_banner ? new Banner(profile.crbt_banner) : null;
-    this.accent_color = profile.crbt_accent_color as `#${string}` | 'profile';
-    this.url = profile.url;
-    this.location = profile.location;
-    this.pronouns = profile.pronouns;
-    this.birthday = profile.birthday ? dayjs(profile.birthday) : null;
+      profile?.crbt_badges.length > 0 ? profile?.crbt_badges.map((b) => new Badge(b)) : null;
+    this.banner = profile?.crbt_banner ? new Banner(profile.crbt_banner) : null;
+    this.accent_color = profile?.crbt_accent_color as `#${string}` | 'profile';
+    this.url = profile?.url;
+    this.location = profile?.location;
+    this.pronouns = profile?.pronouns;
+    this.birthday = profile?.birthday ? dayjs(profile.birthday) : null;
   }
 
   public async addPurplets(amount: number) {

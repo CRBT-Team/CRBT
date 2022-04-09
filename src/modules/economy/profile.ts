@@ -93,6 +93,7 @@ export const renderProfile = async (
   navCtx?: { userId: string; cmdUID: string }
 ) => {
   const { strings, pronouns: Pronouns } = languages[ctx.locale].profile;
+  await import(`dayjs/locale/${ctx.locale.split('-')[0]}.js`);
 
   if (!profile.pronouns) {
     profile.pronouns = (
@@ -142,7 +143,10 @@ export const renderProfile = async (
     const bday = dayjs(profile.birthday);
     e.addField(
       strings.BIRTHDAY,
-      `<t:${bday.unix()}:D> • ${bday.year(dayjs().year()).fromNow()}`,
+      `<t:${bday.unix()}:D> • ${bday
+        .year(dayjs().year())
+        .locale(ctx.locale.split('-')[0])
+        .fromNow()}`,
       false
     );
   }
@@ -155,7 +159,7 @@ export const renderProfile = async (
 
   return {
     embeds: [e],
-    components: profile.user.equals(ctx.user) // || profile?.url
+    components: profile.user.equals(ctx.user)
       ? components(
           navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile'),
           row(
@@ -165,6 +169,8 @@ export const renderProfile = async (
               .setLabel(strings.BUTTON_EDIT_PROFILE)
           )
         )
-      : null,
+      : components(
+          navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile')
+        ),
   };
 };

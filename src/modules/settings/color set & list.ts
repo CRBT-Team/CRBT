@@ -5,7 +5,7 @@ import { getColor } from '$lib/functions/getColor';
 import { languages } from '$lib/language';
 import canvas from 'canvas';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
-import { ButtonComponent, ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta, colorNames } = languages['en-US']['color set'];
 
@@ -92,6 +92,8 @@ export const colorlist = ChatCommand({
   name: 'color list',
   description: 'Returns a list of CRBT accent color names and info.',
   async handle() {
+    const { colorNames } = languages[this.locale]['color set'];
+
     const userColor = await getColor(this.user);
     const colorRows = [[], [], []];
     const filteredColorsMap = colorsMap.filter(
@@ -105,57 +107,7 @@ export const colorlist = ChatCommand({
       if (colorRows[0].length >= maxLength) currentRow = 1;
       if (colorRows[1].length >= maxLength) currentRow = 2;
 
-      colorRows[currentRow].push(`${colorObj.emoji} \`${colorObj.fullName}\``);
-    });
-
-    const img = canvas.createCanvas(512, 512);
-    const ctx = img.getContext('2d');
-    ctx.fillStyle = userColor;
-    ctx.fillRect(0, 0, img.width, img.height);
-    const e = new MessageEmbed()
-      .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: illustrations.settings })
-      .setThumbnail(`attachment://color.png`)
-      .setDescription(
-        `**Current color:** \`${userColor}\`` +
-          '\n' +
-          "This color is used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them." +
-          '\n' +
-          'You can either choose one of these colors below or provide your own [HEX color value](https://htmlcolorcodes.com/color-picker/).' +
-          '\n' +
-          '**To change your accent color, use `/color set`**' +
-          '\n' +
-          'You can sync your CRBT accent color with your Discord profile color by using `/color set Sync Discord Profile Color`.'
-      )
-      .setColor(userColor);
-
-    colorRows.forEach((row) => {
-      if (row.length !== 0) e.addField('‎', row.join('\n'), true);
-    });
-
-    await this.reply({
-      embeds: [e],
-      files: [new MessageAttachment(img.toBuffer(), 'color.png')],
-      ephemeral: true,
-    });
-  },
-});
-
-export const EditColorBtn = ButtonComponent({
-  async handle() {
-    const userColor = await getColor(this.user);
-    const colorRows = [[], [], []];
-    const filteredColorsMap = colorsMap.filter(
-      (colorObj) => !(colorObj.private || colorObj.value === 'profile')
-    );
-
-    filteredColorsMap.forEach((colorObj) => {
-      let currentRow = 0;
-      const maxLength = Math.round(filteredColorsMap.length / 3);
-
-      if (colorRows[0].length >= maxLength) currentRow = 1;
-      if (colorRows[1].length >= maxLength) currentRow = 2;
-
-      colorRows[currentRow].push(`${colorObj.emoji} \`${colorObj.fullName}\``);
+      colorRows[currentRow].push(`${colorObj.emoji} \`${colorNames[colorObj.key]}\``);
     });
 
     const img = canvas.createCanvas(512, 512);

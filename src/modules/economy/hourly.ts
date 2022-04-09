@@ -58,10 +58,10 @@ export default ChatCommand({
           })
           .setDescription(
             `${strings.EMBED_DESCRIPTION.replace('<EMOJI>', emojis.purplet)
-              .replace(`PURPLETS`, `${income}`)
+              .replace(`<PURPLETS>`, `${income}`)
               .replace('<STREAK>', `${currentStreak}`)} ${
               currentStreak < 5
-                ? strings.STREAK.replace('<MISSING>', `${5 - currentStreak}`)
+                ? strings.STREAK.replace('<STREAK_LEFT>', `${5 - currentStreak}`)
                 : strings.STREAK_BONUS
             } ${strings.EMBED_REMINDER}`
           )

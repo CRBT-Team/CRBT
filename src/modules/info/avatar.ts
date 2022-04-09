@@ -73,8 +73,11 @@ export async function renderPfp(
         new MessageButton()
           .setLabel(
             !av.includes('embed/avatars')
-              ? `${strings.DOWNLOAD} (2048px - ${av.includes('.gif') ? 'GIF' : 'PNG'})`
-              : 'Download (256px - PNG)'
+              ? strings.DOWNLOAD.replace('<SIZE>', `${size}`).replace(
+                  '<FORMAT>',
+                  av.includes('.gif') ? 'GIF' : 'PNG'
+                )
+              : strings.DOWNLOAD.replace('<SIZE>', `256`).replace('<FORMAT>', 'PNG')
           )
           .setStyle('LINK')
           .setURL(av)
