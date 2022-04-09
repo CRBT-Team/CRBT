@@ -129,6 +129,24 @@
     }
   },
   "remind me": {
+    "meta": {
+      "name": "remind me",
+      "description": "Set a reminder.",
+      "options": [
+        {
+          "name": "when",
+          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+        },
+        {
+          "name": "subject",
+          "description": "What to remind you of."
+        },
+        {
+          "name": "destination",
+          "description": "Where to send the reminder (leave blank to send reminder by DM)."
+        }
+      ]
+    },
     "errors": {
       "SUBJECT_MAX_LENGTH": "Der Betreff muss 120 Zeichen oder weniger sein.",
       "PAST": "Du kannst in der Vergangenheit keine Erinnerung setzen.",
@@ -144,7 +162,20 @@
       "SUCCESS_CHANNEL": "Du wirst in <CHANNEL> erinnert",
       "SUCCESS_DM": "Du wirst per Direktnachricht informiert",
       "SUBJECT": "Betreff",
-      "BUTTON_GCALENDAR": "Als Google-Kalender-Ereignis hinzufügen"
+      "TOMORROW_AT": "Tomorrow at <TIME>",
+      "TODAY_AT": "Today at <TIME>",
+      "BUTTON_GCALENDAR": "Als Google-Kalender-Ereignis hinzufügen",
+      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
+      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
+      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+    },
+    "keywordsDetection__KEEPLOWERCASE": {
+      "AND": "and",
+      "AT": "at",
+      "ON": "on",
+      "IN": "in",
+      "TOMORROW": "tomorrow",
+      "TODAY": "today"
     }
   },
   "ping": {
@@ -232,10 +263,13 @@
       "avoid": "<USERNAME>"
     },
     "errors": {
-      "NOT_FOUND": "Konnte kein Profil mit diesem Benutzernamen finden. Bitte verwenden Sie die Autovervollständigung, um Profile zu finden!"
+      "NOT_FOUND": "Konnte kein Profil mit diesem Benutzernamen finden. Bitte verwenden Sie die Autovervollständigung, um Profile zu finden!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Profil",
+      "NAME": "Name",
+      "BIO": "Bio",
       "PRONOUNS": "Pronomen",
       "BIRTHDAY": "Geburtstag",
       "WEBSITE": "Webseite",
@@ -319,6 +353,88 @@
       "STREAK_BONUS": "(+30%-Bonus von der Streak)",
       "STREAK": "(<STREAK_LEFT> noch für einen Bonus!)",
       "EMBED_REMINDER": "Klicke auf den Button unten, um dich selbst eine Erinnerung zu setzen, um deine stündlichen Purplets erneut zu beanspruchen."
+    }
+  },
+  "role-selectors": {
+    "manual": {
+      "meta": {
+        "name": "role-selector create manual",
+        "description": "Manually create a new Role Selector, a menu for members to choose roles themselves.",
+        "options": [
+          {
+            "name": "description",
+            "description": "Describe to your members what your Role Selector is for."
+          },
+          {
+            "name": "behavior",
+            "description": "How the Role Selector should behave.",
+            "choices": [
+              "Toggle giving/removing role(s)",
+              "Only give the role(s) once"
+            ]
+          },
+          {
+            "name": "limit",
+            "description": "How much roles can be selected. Set to 0 for unlimited."
+          },
+          {
+            "name": "role",
+            "description": "A role to assign to the member when selected."
+          }
+        ]
+      }
+    },
+    "preset": {
+      "meta": {
+        "name": "role-selector create preset",
+        "description": "Create a new Role Selector using one of the presets.",
+        "options": [
+          {
+            "name": "preset",
+            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+          }
+        ]
+      },
+      "presets": {
+        "colors": {
+          "name": "Colors",
+          "message": "Choose one of the options below to change your displayed name color in the server!"
+        },
+        "pronouns": {
+          "name": "Pronouns",
+          "message": "Use the options below to select what pronouns you'd like to display on the server!"
+        },
+        "zodiacSigns": {
+          "name": "Zodiac Signs",
+          "message": "Choose one of the options below to select your zodiac sign!"
+        },
+        "verification": {
+          "name": "Human Verification",
+          "message": "Click on the button below to verify your account."
+        }
+      }
+    },
+    "errors": {
+      "USER_MISSING_PERMS": "Only server administrators can create Role Selectors.",
+      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Selector.",
+      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
+      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
+      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+    },
+    "strings": {
+      "EMBED_TITLE": "Role Selector - Self-assignable Roles",
+      "CHOOSE_ROLE": "Choose a role",
+      "CHOOSE_ROLES": "Choose roles",
+      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
+      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
+      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
+      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
+      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
+      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
+      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
+      "SUCCESS_TITLE": "Role Selector created!",
+      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Selector message."
     }
   }
 }
