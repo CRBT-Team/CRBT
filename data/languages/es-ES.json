@@ -141,8 +141,8 @@
     },
     "strings": {
       "SUCCESS_TITLE": "¡Recordatorio establecido!",
-      "SUCCESS_CHANNEL": "Se lo recordaremos en <CHANNEL>",
-      "SUCCESS_DM": "Se lo recordaremos por MD",
+      "SUCCESS_CHANNEL": "CRBT se lo recordará en <CHANNEL>",
+      "SUCCESS_DM": "CRBT se lo recordará por MD",
       "SUBJECT": "Asunto",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar"
     }
