@@ -1,5 +1,5 @@
 import { colors, emojis, illustrations } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { languages } from '$lib/language';
 import { GuildMember, MessageEmbed, MessageSelectMenu, Role } from 'discord.js';
 import {
@@ -14,6 +14,8 @@ import {
 const { colorNames } = languages['en-US']['color set'];
 const { pronouns } = languages['en-US'].profile;
 const { preset, manual } = languages['en-US']['role-selectors'];
+
+const usersOnCooldown = new Map();
 
 const presets: {
   [key: string]: {
@@ -83,14 +85,14 @@ export const usePreset = ChatCommand({
     true
   ),
   async handle(opts) {
+    const { strings, errors } = languages[this.guildLocale]['role-selectors'];
+
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
-      return this.reply(CRBTError('Only server administrators can create Role Selectors.'));
+      return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
     if (!this.guild.me.permissions.has('MANAGE_ROLES')) {
-      return this.reply(
-        CRBTError('I need the "Manage Roles" permission in order to create a Role Selector.')
-      );
+      return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 
     await this.deferReply({
@@ -98,7 +100,6 @@ export const usePreset = ChatCommand({
     });
 
     const preset = presets[opts.preset];
-    const { strings } = languages[this.guildLocale]['role-selectors'];
     const presetStrings = languages[this.guildLocale]['role-selectors'].preset.presets[opts.preset];
 
     const rolesList = [];
@@ -214,14 +215,14 @@ export const useManual = ChatCommand({
     .role(`role9`, manual.meta.options[3].description)
     .role(`role10`, manual.meta.options[3].description),
   async handle({ description, behavior, role_limit, ...roles }) {
+    const { strings, errors } = languages[this.guildLocale]['role-selectors'];
+
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
-      return this.reply(CRBTError('Only server administrators can create Role Selectors.'));
+      return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
     if (!this.guild.me.permissions.has('MANAGE_ROLES')) {
-      return this.reply(
-        CRBTError('I need the "Manage Roles" permission in order to create a Role Selector.')
-      );
+      return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 
     await this.deferReply({
@@ -230,8 +231,6 @@ export const useManual = ChatCommand({
 
     const rolesList: Role[] = Object.values(roles);
     const limit = role_limit || rolesList.length;
-
-    const { strings } = languages[this.guildLocale]['role-selectors'];
 
     await this.channel.send({
       embeds: [
@@ -285,6 +284,20 @@ export const useManual = ChatCommand({
 
 export const RoleButton = ButtonComponent({
   async handle(role: { name: string; id: string; behavior: 'toggle' | 'once' }) {
+    if (
+      usersOnCooldown.has(`${this.guild.id}/${this.user.id}`) &&
+      usersOnCooldown.get(`${this.guild.id}/${this.user.id}`) > Date.now()
+    ) {
+      return this.reply(
+        await CooldownError(
+          this,
+          await usersOnCooldown.get(`${this.guild.id}/${this.user.id}`),
+          false
+        )
+      );
+    }
+    usersOnCooldown.set(this.user.id, Date.now() + 3000);
+
     const { strings, errors } = languages[this.locale]['role-selectors'];
 
     if (!this.guild.roles.cache.has(role.id)) {
@@ -333,6 +346,20 @@ export const RoleButton = ButtonComponent({
 
 export const RoleSelector = SelectMenuComponent({
   async handle(ctx: null) {
+    if (
+      usersOnCooldown.has(`${this.guild.id}/${this.user.id}`) &&
+      usersOnCooldown.get(`${this.guild.id}/${this.user.id}`) > Date.now()
+    ) {
+      return this.reply(
+        await CooldownError(
+          this,
+          await usersOnCooldown.get(`${this.guild.id}/${this.user.id}`),
+          false
+        )
+      );
+    }
+    usersOnCooldown.set(this.user.id, Date.now() + 3000);
+
     const { strings, errors } = languages[this.locale]['role-selectors'];
     const roleArray = (this.message.components[0].components[0] as MessageSelectMenu).options.map(
       (role) => JSON.parse(role.value)
