@@ -3,29 +3,29 @@
     "GUILD_ONLY": "Este comando no se puede utilizar en MD."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder"
+    "BACK": "Volver",
+    "JUMP_TO_MSG": "Ir al mensaje",
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Siguiente",
+    "SAVE": "Guardar",
+    "ADD_REMINDER": "Establecer recordatorio"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Ha ocurrido un error desconocido.",
+      "DESCRIPTION": "No tenemos ni idea de qué podría ser este error. Este es el mensaje que recibimos:\n<MESSAGE>\nEste problema nos ha sido reportado automáticamente y nos aseguraremos de arreglarlo lo antes posible. Pedimos disculpas por el inconveniente."
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "DESCRIPTION": "Podrás usar este <TYPE> en <TIME>...",
+      "COMMAND": "comando",
+      "COMPONENT": "componente"
     }
   },
   "activity": {
@@ -37,15 +37,15 @@
           "name": "actividad",
           "description": "La actividad a iniciar",
           "choices": [
-            "Watch Together - Unlimited participants",
-            "Sketch Heads - Up to 16 players",
-            "Word Snacks - Up to 8 players",
-            "Poker Night - 💎 Requires Boosting",
-            "Chess In The Park - 💎 Requires Boosting",
-            "Checkers In The Park - 💎 Requires Boosting",
-            "Blazing 8s - 💎 Requires Boosting",
-            "Letter League - 💎 Requires Boosting",
-            "SpellCast - 💎 Requires Boosting"
+            "Watch Together - Participantes ilimitados",
+            "Sketch Heads - Hasta 16 jugadores",
+            "Word Snacks - Hasta 8 jugadores",
+            "Poker Night - 💎 Requiere mejora del servidor",
+            "Chess In The Park - 💎 Requiere mejora del servidor",
+            "Checkers In The Park - 💎 Requiere mejora del servidor",
+            "Blazing 8s - 💎 Requiere mejora del servidor",
+            "Letter League - 💎 Requiere mejora del servidor",
+            "SpellCast - 💎 Requiere mejora del servidor"
           ]
         },
         {
@@ -66,31 +66,31 @@
   },
   "balance": {
     "meta": {
-      "name": "balance",
+      "name": "saldo",
       "description": "Ver el saldo de Purplets de un usuario específico o el suyo.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to view the balance of"
+          "name": "usuario",
+          "description": "El usuario del que ver el saldo"
         }
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<user> - Balance",
+      "EMBED_TITLE": "<user> - Saldo",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+      "LEADERBOARD_TITLE": "Clasificación global",
+      "LEADERBOARD_NOTPRESENT": "No está en la clasificación global",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> personas en la clasificación global"
     }
   },
   "color set": {
     "meta": {
-      "name": "color set",
-      "description": "Change your CRBT accent color.",
+      "name": "color establecer",
+      "description": "Cambiar su color de contraste de CRBT.",
       "options": [
         {
           "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Color al que cambiar su color de contraste. Utilice una de las sugerencias o un color hexadecimal."
         }
       ]
     },
@@ -123,27 +123,27 @@
       "INVALID_COLOR_NAME": "Debe introducir un código hexadecimal válido o un nombre de color. Utilice /color lista para más información."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
-      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+      "EMBED_TITLE": "Color de contraste actualizado.",
+      "EMBED_MANUAL_COLOR": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en su perfil y su tarjeta de información cuando otra persona los visite.",
+      "EMBED_SYNC_COLOR": "Su color de contraste de CRBT será sincronizado a su color de perfil de Discord. Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en su perfil y su tarjeta de información cuando otra persona los visite"
     }
   },
   "remind me": {
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "SUBJECT_MAX_LENGTH": "El asunto debe tener como mucho 120 caracteres.",
+      "PAST": "No se puede establecer un recordatorio en el pasado.",
+      "INVALID_FORMAT": "La fecha que ha introducido está en un formato inválido o está en el pasado.",
+      "TOO_LONG": "No se puede establecer un recordatorio para dentro de más de 2 años.",
+      "INVALID_CHANNEL_TYPE": "El canal especificado no es un canal de texto válido.",
+      "BOT_MISSING_PERMS": "No tengo permiso para enviar mensajes en ese canal.",
+      "USER_MISSING_PERMS": "No tiene permiso para enviar mensajes en ese canal.",
+      "REMINDERS_MAX_LIMIT": "No se pueden establecer más de 5 recordatorios a la vez."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
+      "SUCCESS_TITLE": "¡Recordatorio establecido!",
       "SUCCESS_CHANNEL": "Se lo recordaremos en <CHANNEL>",
       "SUCCESS_DM": "Se lo recordaremos por MD",
-      "SUBJECT": "Subject",
+      "SUBJECT": "Asunto",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar"
     }
   },
@@ -270,7 +270,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "View Avatar"
+      "name": "Ver avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
