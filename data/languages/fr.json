@@ -130,11 +130,11 @@
   },
   "remind me": {
     "meta": {
-      "name": "remind me",
-      "description": "Set a reminder.",
+      "name": "rappelle moi",
+      "description": "Définir un rappel.",
       "options": [
         {
-          "name": "when",
+          "name": "quand",
           "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
         },
         {
@@ -358,64 +358,64 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "name": "role-selector create manual",
-        "description": "Manually create a new Role Selector, a menu for members to choose roles themselves.",
+        "name": "sélecteur-roles nouveau manuel",
+        "description": "Créer un nouveau Sélecteur de Rôles, un menu permettant à vos membres de s'assigner des rôles.",
         "options": [
           {
             "name": "description",
-            "description": "Describe to your members what your Role Selector is for."
+            "description": "Décrivez à vos membres à quoi sert votre Sélecteur de Rôles."
           },
           {
-            "name": "behavior",
-            "description": "How the Role Selector should behave.",
+            "name": "comportement",
+            "description": "Comment le Sélecteur de Rôles doit se comporter.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Alterner donner/supprimer des rôles",
+              "Ne donner le(s) rôle(s) qu'une seule fois"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "limite",
+            "description": "Combien de rôles peuvent être sélectionnés à la fois. Mettez 0 pour une sélection illimité."
           },
           {
-            "name": "role",
-            "description": "A role to assign to the member when selected."
+            "name": "rôle",
+            "description": "Un rôle à assigner au membre lorsqu'il est sélectionné."
           }
         ]
       }
     },
     "preset": {
       "meta": {
-        "name": "role-selector create preset",
-        "description": "Create a new Role Selector using one of the presets.",
+        "name": "sélecteur-roles nouveau kit",
+        "description": "Créer un nouveau Sélecteur de Rôles en utilisant un kit préconçu.",
         "options": [
           {
-            "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "name": "kit",
+            "description": "Un kit à choisir. CRBT s'occupera de créer les rôles et d'envoyer un joli message."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose one of the options below to change your displayed name color in the server!"
+          "name": "Couleurs",
+          "message": "Choisissez l'une des options ci-dessous pour changer la couleur de votre nom affiché sur le serveur !"
         },
         "pronouns": {
-          "name": "Pronouns",
-          "message": "Use the options below to select what pronouns you'd like to display on the server!"
+          "name": "Pronoms",
+          "message": "Utilisez les options ci-dessous pour sélectionner les pronoms que vous souhaitez afficher sur le serveur !"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "Choose one of the options below to select your zodiac sign!"
+          "name": "Signes du zodiaque",
+          "message": "Choisissez l'une des options ci-dessous pour sélectionner votre signe zodiaque !"
         },
         "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button below to verify your account."
+          "name": "Vérification humaine",
+          "message": "Cliquez sur le bouton ci-dessous pour vérifier votre compte."
         }
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Selectors.",
+      "USER_MISSING_PERMS": "Seuls les administrateurs du serveur peuvent créer des Sélecteurs de Rôles.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Selector.",
       "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
       "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
