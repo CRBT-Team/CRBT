@@ -401,7 +401,7 @@
           "message": "Choose one of the options below to change your displayed name color in the server!"
         },
         "pronouns": {
-          "name": "Pronouns",
+          "name": "Pronombres",
           "message": "Use the options below to select what pronouns you'd like to display on the server!"
         },
         "zodiacSigns": {
