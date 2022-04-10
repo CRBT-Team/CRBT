@@ -3,29 +3,29 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
   "genericButtons": {
-    "BACK": "Arrière",
-    "JUMP_TO_MSG": "Aller au message",
-    "CANCEL": "Annuler",
-    "CONFIRM": "Confirmer",
-    "DELETE": "Supprimer",
-    "EDIT": "Éditer",
-    "PREVIOUS": "Précédent",
-    "NEXT": "Prochain",
-    "SAVE": "Sauver",
-    "ADD_REMINDER": "Envoyer un rappel"
+    "BACK": "Back",
+    "JUMP_TO_MSG": "Jump to message",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "SAVE": "Save",
+    "ADD_REMINDER": "Add Reminder"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "Une erreur inconnue s'est produite.",
-      "DESCRIPTION": "Nous n'avons aucune idée de ce que pourrait être cette question. Voici le message d'erreur que nous avons reçu :\n<MESSAGE>\nCela nous a été automatiquement signalé, et nous nous assurerons de le corriger dès que possible. Désolé pour la gêne occasionnée."
+      "TITLE": "An unknown error has occured.",
+      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Tenez!",
-      "DESCRIPTION": "Vous serez en mesure d'utiliser ceci <TYPE> dans <TIME>...",
+      "TITLE": "Hold it!",
+      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
       "COMMAND": "cette commande",
-      "COMPONENT": "composant"
+      "COMPONENT": "component"
     }
   },
   "activity": {
@@ -41,11 +41,11 @@
             "Sketch Heads - Jusqu'à 16 joueurs",
             "Word Snacks - Jusqu'à 8 joueurs",
             "Poker Night - 💎 Nécessite un boost",
-            "Échecs dans le parc - 💎 Nécessite un boost",
-            "Échecs dans le parc - 💎 Nécessite un boost",
-            "Ardente 8s - 💎 Nécessite un boost",
-            "Ligue de Lettres - 💎 Nécessite un boost",
-            "Sorcière - 💎 Nécessite un boost"
+            "Chess In The Park - 💎 Requires Boosting",
+            "Checkers In The Park - 💎 Requires Boosting",
+            "Blazing 8s - 💎 Requires Boosting",
+            "Letter League - 💎 Requires Boosting",
+            "SpellCast - 💎 Requires Boosting"
           ]
         },
         {
@@ -55,8 +55,8 @@
       ]
     },
     "errors": {
-      "NO_CHANNEL": "Vous devez être dans un salon vocal ou choisir un salon vocal en utilisant l'option `channel`.",
-      "NOT_VOICE": "Vous devez choisir un salon vocal pour démarrer une activité !"
+      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
+      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
     },
     "strings": {
       "EMBED_TITLE": "Tout est prêt !",
@@ -79,18 +79,18 @@
       "EMBED_TITLE": "<user> - Solde",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
       "LEADERBOARD_TITLE": "Classement mondial",
-      "LEADERBOARD_NOTPRESENT": "Vous ne figurez pas dans le classement mondial",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> sur <TOTAL> personnes sur le classement mondial"
+      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
     }
   },
   "color set": {
     "meta": {
-      "name": "jeu de couleurs",
-      "description": "Changez votre couleur d'accentuation CRBT.",
+      "name": "color set",
+      "description": "Change your CRBT accent color.",
       "options": [
         {
-          "name": "couleur",
-          "description": "Couleur pour changer la couleur de votre accent. Utilisez l'une des suggestions ou une couleur HEX."
+          "name": "color",
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
@@ -119,13 +119,13 @@
       "white": "Blanc"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "Vous n'avez pas de couleur de profil Discord à synchroniser ! Pour en définir une, éditez votre profil d'utilisateur Discord et modifiez la couleur de votre profil.",
-      "INVALID_COLOR_NAME": "Vous devez entrer un nom valide ou un nom de couleur. Utilisez /color list pour plus d'informations."
+      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
+      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
-      "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
-      "EMBED_MANUAL_COLOR": "Cette couleur sera utilisée pour la plupart des réponses du CRBT à vous, ainsi que sur votre profil et vos cartes d'information, lorsque quelqu'un d'autre les visite.",
-      "EMBED_SYNC_COLOR": "La couleur de votre profil Discord sera synchronisée avec votre couleur d'accentuation CRBT. Cette couleur sera utilisée pour la plupart des réponses du CRBT à vous, ainsi que sur votre profil et vos cartes d'information, quand quelqu'un d'autre les visite"
+      "EMBED_TITLE": "Accent color updated.",
+      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
+      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
     }
   },
   "remind me": {
@@ -181,20 +181,20 @@
   "ping": {
     "meta": {
       "name": "ping",
-      "description": "Ping CRBT. Retourne la latence et les informations de connexion."
+      "description": "Ping CRBT. Returns latency and connection info."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
-      "UPTIME": "Magasin en ligne",
+      "UPTIME": "Online since",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
   "crbt info": {
     "meta": {
-      "name": "infos crbt",
-      "description": "Obtenir des informations sur le CRBT"
+      "name": "crbt info",
+      "description": "Get information about CRBT"
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Information",
@@ -290,7 +290,7 @@
       "description": "Get a user's default avatar, or yours if you don't specify one.",
       "options": [
         {
-          "name": "user",
+          "name": "utilisateur",
           "description": "The user to get the avatar of."
         },
         {
