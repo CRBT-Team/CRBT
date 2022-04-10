@@ -286,7 +286,7 @@
   },
   "avatar": {
     "meta": {
-      "name": "avatar",
+      "name": "avatar default",
       "description": "Holen Sie sich den Standard-Avatar eines Benutzers, oder Ihren Avatar, wenn Sie keinen angeben.",
       "options": [
         {
