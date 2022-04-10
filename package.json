@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.4.04",
+  "version": "11.4.05",
   "scripts": {
     "start": "npm run generate && npx purplet build && node dist/bot.mjs",
     "dev": "yarn purplet build && node dist/bot.mjs --dev",

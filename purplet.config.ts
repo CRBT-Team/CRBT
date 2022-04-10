@@ -20,17 +20,27 @@ export default defineConfig({
         parse: ['users'],
         repliedUser: false,
       },
-      //@ts-ignore
-      intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_VOICE_STATES,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_PRESENCES,
-        Intents.FLAGS.GUILD_WEBHOOKS,
-        Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-      ],
+      intents: process.argv.includes('--dev')
+        ? //@ts-ignore
+          [
+            Intents.FLAGS.GUILDS,
+            Intents.FLAGS.GUILD_VOICE_STATES,
+            Intents.FLAGS.GUILD_MESSAGES,
+            Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+            Intents.FLAGS.GUILD_MEMBERS,
+            Intents.FLAGS.GUILD_PRESENCES,
+            Intents.FLAGS.GUILD_WEBHOOKS,
+            Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+          ]
+        : [
+            Intents.FLAGS.GUILDS,
+            Intents.FLAGS.GUILD_MESSAGES,
+            Intents.FLAGS.GUILD_VOICE_STATES,
+            Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+            // Intents.FLAGS.GUILD_MEMBERS,
+            Intents.FLAGS.GUILD_WEBHOOKS,
+            Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+          ],
     },
   },
   handlers: [
