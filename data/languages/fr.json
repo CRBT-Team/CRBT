@@ -359,15 +359,15 @@
     "manual": {
       "meta": {
         "name": "role-picker new",
-        "description": "Créer un nouveau Sélecteur de Rôles, un menu permettant à vos membres de s'assigner des rôles.",
+        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
         "options": [
           {
             "name": "description",
-            "description": "Décrivez à vos membres à quoi sert votre Sélecteur de Rôles."
+            "description": "Describe to your members what your Role Picker is for."
           },
           {
             "name": "comportement",
-            "description": "Comment le Sélecteur de Rôles doit se comporter.",
+            "description": "How the Role Picker should behave.",
             "choices": [
               "Alterner donner/supprimer des rôles",
               "Ne donner le(s) rôle(s) qu'une seule fois"
@@ -387,7 +387,7 @@
     "preset": {
       "meta": {
         "name": "role-picker preset",
-        "description": "Créer un nouveau Sélecteur de Rôles en utilisant un kit préconçu.",
+        "description": "Create a new Role Picker using one of the presets.",
         "options": [
           {
             "name": "kit",
@@ -415,14 +415,14 @@
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Seuls les administrateurs du serveur peuvent créer des Sélecteurs de Rôles.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Selector.",
+      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
+      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
       "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
       "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "EMBED_TITLE": "Role Selector - Self-assignable Roles",
+      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
       "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
@@ -433,8 +433,8 @@
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Selector created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Selector message."
+      "SUCCESS_TITLE": "Role Picker created!",
+      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
     }
   }
 }
