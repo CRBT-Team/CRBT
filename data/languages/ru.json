@@ -181,14 +181,14 @@
   "ping": {
     "meta": {
       "name": "пинг",
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Пинг CRBT. Возвращает задержку и информацию о соединении."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
       "UPTIME": "В сети с",
-      "FORMAT_MS": "<NUMBER>ms"
+      "FORMAT_MS": "<NUMBER>мс"
     }
   },
   "crbt info": {
