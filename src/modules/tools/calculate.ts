@@ -10,14 +10,14 @@ const math = new Parser();
 
 export default ChatCommand({
   ...meta,
-  options: new OptionBuilder().string('expr', meta.options[0].description, true),
-  async handle({ expr }) {
+  options: new OptionBuilder().string('expression', meta.options[0].description, true),
+  async handle({ expression }) {
     try {
-      const result = math.evaluate(expr);
+      const result = math.evaluate(expression);
       await this.reply({
         embeds: [
           new MessageEmbed()
-            .setAuthor({ name: expr })
+            .setAuthor({ name: expression })
             .setTitle(`= ${result}`)
             .setColor(await getColor(this.user)),
         ],

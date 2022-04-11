@@ -14,10 +14,9 @@ export const UserInfoBtn = ButtonComponent({
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const u = this.client.users.cache.get(userId);
-    this.update(
-      await renderUser(this, u, this.guild.members.cache.get(userId), { userId, cmdUID })
-    );
+    const m = this.guild.members.cache.get(userId) ?? (await this.guild.members.fetch(userId));
+    console.log(m);
+    this.update(await renderUser(this, m.user, m, { userId, cmdUID }));
   },
 });
 

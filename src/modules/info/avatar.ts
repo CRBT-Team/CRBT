@@ -36,7 +36,10 @@ export default ChatCommand({
 export const ctxCommand = UserContextCommand({
   ...ctxMeta,
   async handle(user) {
-    await this.reply(await renderPfp(user, this));
+    await this.reply({
+      ...(await renderPfp(user, this)),
+      ephemeral: true,
+    });
   },
 });
 
@@ -61,7 +64,8 @@ export async function renderPfp(
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          name: strings.EMBED_TITLE.replace('<USER>', user.tag),
+          name: user.tag,
+          // name: strings.EMBED_TITLE.replace('<USER>', user.tag),
           iconURL: avatar(user, 64),
         })
         .setImage(av)

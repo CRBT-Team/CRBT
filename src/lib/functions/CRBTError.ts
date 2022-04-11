@@ -49,13 +49,14 @@ export function CRBTError(
   return { embeds: [handleError(desc, null, fields)], ephemeral };
 }
 
-export function UnknownError(context: Interaction, desc: string): InteractionReplyOptions {
+export function UnknownError(context: Interaction, desc: any): InteractionReplyOptions {
   const { strings } = languages[context.locale].UnknownError;
+  console.error(desc);
   return {
     embeds: [
       handleError(
         strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${desc}\`\`\``),
-        desc,
+        String(desc),
         [
           {
             name: 'Context',

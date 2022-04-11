@@ -131,7 +131,8 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${u.tag} - User info`,
+      name: u.tag,
+      // name: `${u.tag} - User info`,
       iconURL: avatar(u, 64),
     })
     .setDescription(userBadges.join('‎ '))

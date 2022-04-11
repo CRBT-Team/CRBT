@@ -3,17 +3,10 @@ import { CRBTUser } from '$lib/classes/CRBTUser';
 import { colors, db, illustrations, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { row } from '$lib/functions/row';
 import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
 import dayjs from 'dayjs';
-import {
-  Message,
-  MessageButton,
-  MessageEmbed,
-  ModalSubmitInteraction,
-  TextChannel,
-} from 'discord.js';
-import { components, OnEvent } from 'purplet';
+import { Message, MessageEmbed, ModalSubmitInteraction, TextChannel } from 'discord.js';
+import { OnEvent } from 'purplet';
 import { issueReply } from '../dev/fix';
 import { renderProfile } from '../economy/profile';
 
@@ -155,8 +148,6 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         : null,
     };
 
-    const msg = await modal.channel.messages.fetch(modal.customId.split('_')[0]).catch(() => null);
-
     const oldProfile = await db.profiles.findFirst({
       where: { id: modal.user.id },
     });
@@ -193,11 +184,14 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       }
       const profile = new CRBTUser(modal.user, profileData);
 
-      if (msg) {
-        await msg.edit(await renderProfile(profile, modal));
-      }
+      // if (msg.type !== 'CONTEXT_MENU_COMMAND') {
+      //   await msg.edit(await renderProfile(profile, modal));
+      // }
 
-      modal.reply({
+      //@ts-ignore
+      await modal.update(await renderProfile(profile, modal));
+
+      modal.followUp({
         embeds: [
           new MessageEmbed()
             .setAuthor({
@@ -205,19 +199,26 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
               iconURL: illustrations.success,
             })
             .setDescription(
-              'Note: Some characters in your name may have been removed if they are not allowed.'
+              (newProfile.name !== modal.fields.getTextInputValue('profile_name')
+                ? '⚠️ Some characters in your name may have been removed if they are not allowed.'
+                : '') +
+                (!bday.isValid()
+                  ? `\n⚠️ The date you set as your birthday is invalid, so it has been removed.`
+                  : '') +
+                (url.match(urlRegex)
+                  ? ''
+                  : `\n⚠️ The URL you set is invalid, so it has been removed.`)
             )
             .setColor(`#${colors.success}`),
         ],
-        components: msg
-          ? components(
-              row(new MessageButton().setLabel('Jump to Profile').setURL(msg.url).setStyle('LINK'))
-            )
-          : null,
         ephemeral: true,
       });
     } catch (error) {
-      modal.reply(UnknownError(modal, String(error)));
+      if (!modal.replied) {
+        modal.reply(UnknownError(modal, error));
+      } else {
+        modal.followUp(UnknownError(modal, error));
+      }
     }
   }
 });

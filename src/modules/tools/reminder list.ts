@@ -16,7 +16,7 @@ export default ChatCommand({
           .setTitle(`Your CRBT reminders (${userReminders.length})`)
           .setDescription(
             userReminders.length === 0
-              ? "Uh oh, you don't have any reminders set. Use /remind me to set one!"
+              ? "Uh oh, you don't have any reminders set. Use `/reminder new` to set one!"
               : 'You can create a new reminder with `/reminder new`!'
           )
           .setFields(

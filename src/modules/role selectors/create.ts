@@ -117,7 +117,7 @@ export const usePreset = ChatCommand({
           .create({
             color: role.color,
             name: role.name,
-            reason: `New Role Selector`,
+            reason: `New Role Picker`,
           })
           .then((r) => {
             return rolesList.push({
