@@ -5,8 +5,8 @@ import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
 export default ChatCommand({
-  name: 'reminders',
-  description: 'Get a list of all of your reminders set with /remind me.',
+  name: 'reminder list',
+  description: 'Get a list of all of your reminders.',
   async handle() {
     const userReminders = await db.reminders.findMany({ where: { user_id: this.user.id } });
 
@@ -17,7 +17,7 @@ export default ChatCommand({
           .setDescription(
             userReminders.length === 0
               ? "Uh oh, you don't have any reminders set. Use /remind me to set one!"
-              : 'You can create a new reminder with `/remind me`!'
+              : 'You can create a new reminder with `/reminder new`!'
           )
           .setFields(
             userReminders

@@ -1,3 +1,6 @@
+project_id: 508776
+api_token: 933ae8d2374b0f33e87d4bb7cda20885
+
 files:
   - source: /data/languages/en-US.json
     translation: /data/languages/%locale%.json
