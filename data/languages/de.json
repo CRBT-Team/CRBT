@@ -130,7 +130,7 @@
   },
   "remind me": {
     "meta": {
-      "name": "remind me",
+      "name": "reminder new",
       "description": "Set a reminder.",
       "options": [
         {
@@ -332,7 +332,7 @@
   },
   "calc": {
     "meta": {
-      "name": "rechne",
+      "name": "calculate",
       "description": "Berechne einen mathematischen Ausdruck.",
       "options": [
         {
@@ -358,7 +358,7 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "name": "role-selector create manual",
+        "name": "role-picker new",
         "description": "Manually create a new Role Selector, a menu for members to choose roles themselves.",
         "options": [
           {
@@ -386,7 +386,7 @@
     },
     "preset": {
       "meta": {
-        "name": "role-selector create preset",
+        "name": "role-picker preset",
         "description": "Create a new Role Selector using one of the presets.",
         "options": [
           {
