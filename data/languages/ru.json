@@ -143,7 +143,7 @@
         },
         {
           "name": "destination",
-          "description": "Where to send the reminder (leave blank to send reminder by DM)."
+          "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
         }
       ]
     },
@@ -162,11 +162,11 @@
       "SUCCESS_CHANNEL": "Вас уведомят в <CHANNEL>",
       "SUCCESS_DM": "Вас уведомят в ЛС",
       "SUBJECT": "Тема",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
+      "TOMORROW_AT": "Завтра в <TIME>",
+      "TODAY_AT": "Сегодня в <TIME>",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
+      "GCALENDAR_EVENT_DM": "Вас также уведомят в ЛС.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
