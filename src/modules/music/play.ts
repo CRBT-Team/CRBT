@@ -43,7 +43,7 @@
 //     await this.editReply({
 //       embeds: [
 //         new MessageEmbed()
-//           .setAuthor({ name: 'Now Playing', iconURL: illustrations.music.information })
+//           .setAuthor({ name: 'Now Playing', iconURL: icons.music.information })
 //           .setTitle(videoDetails.title)
 //           .setURL(videoDetails.video_url)
 //           .setDescription(`\`00:00/${videoDetails.lengthSeconds}\`\nPlaying in ${channel}`)

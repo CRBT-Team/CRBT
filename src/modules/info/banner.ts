@@ -14,43 +14,22 @@ export default ChatCommand({
   name: 'banner',
   description: `Get the Discord profile banner of a chosen user, or yours by default.`,
   options: new OptionBuilder()
-    .user('user', 'The user to get the profile banner of.')
-    .enum('size', 'The size of the profile banner.', [
-      {
-        name: 'Small (128x128px)',
-        value: '128',
-      },
-      {
-        name: 'Medium (512x512px)',
-        value: '512',
-      },
-      {
-        name: 'Default (2048x2048px)',
-        value: '2048',
-      },
-      {
-        name: 'Large (4096x4096px)',
-        value: '4096',
-      },
-    ])
-    .enum('format', 'The format of the profile banner.', [
-      {
-        name: 'PNG',
-        value: 'png',
-      },
-      {
-        name: 'JPG',
-        value: 'jpg',
-      },
-      {
-        name: 'WEBP',
-        value: 'webp',
-      },
-      {
-        name: 'GIF',
-        value: 'gif',
-      },
-    ]),
+    .user('user', 'The user to get the Discord banner of.')
+    .enum(
+      'size',
+      'The size of the Discord banner to get.',
+      [
+        ['Small', 128],
+        ['Medium', 512],
+        ['Default', 2048],
+        ['Large', 4096],
+      ].map(([name, size]) => ({ name: `${name} (${size}x${size}px)`, value: `${size}` }))
+    )
+    .enum(
+      'format',
+      'The format of the Discord profile banner to get.',
+      ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
+    ),
   async handle({ user, size, format }) {
     const u = user ?? this.user;
     const banner = await getBanner(u, size ?? 2048, format ?? 'png', !!format);

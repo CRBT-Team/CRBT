@@ -12,7 +12,7 @@ export default ChatCommand({
       const lb = await renderLeaderboard(this, 1);
       return this.reply(lb);
     } catch (error) {
-      this.reply(UnknownError(this, String(error)));
+      this.reply(UnknownError(this, error));
     }
   },
 });

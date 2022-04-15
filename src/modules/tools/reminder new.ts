@@ -1,10 +1,9 @@
-import { colors, db, illustrations } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { row } from '$lib/functions/row';
 import { setReminder } from '$lib/functions/setReminder';
-import { languages } from '$lib/language';
-import { Reminder } from '$lib/types/CRBT/Reminder';
+import { getStrings } from '$lib/language';
 import dayjs, { Dayjs } from 'dayjs';
 import {
   GuildTextBasedChannel,
@@ -15,7 +14,7 @@ import {
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 
-const { meta } = languages['en-US']['remind me'];
+const { meta } = getStrings('en-US')['remind me'];
 
 export default ChatCommand({
   ...meta,
@@ -28,7 +27,7 @@ export default ChatCommand({
       strings,
       errors,
       keywordsDetection__KEEPLOWERCASE: keywords,
-    } = languages[this.locale]['remind me'];
+    } = getStrings(this.locale)['remind me'];
 
     dayjs.locale(this.locale);
 
@@ -110,9 +109,9 @@ export default ChatCommand({
 
     await this.deferReply();
 
-    const reminder: Reminder = {
+    const reminder = {
       destination: destination ? destination.id : 'dm',
-      expiration: expiration.toISOString(),
+      expiration: expiration.toDate(),
       reminder: subject,
       user_id: this.user.id,
       url: ((await this.fetchReply()) as Message).url.replace('https://discord.com/channels/', ''),
@@ -128,7 +127,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: strings.SUCCESS_TITLE,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(
               (destination

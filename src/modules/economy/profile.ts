@@ -6,7 +6,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { Interaction, MessageEmbed } from 'discord.js';
@@ -17,7 +17,7 @@ import { EditProfileBtn } from './editProfile';
 
 dayjs.extend(relativeTime);
 
-const { meta, ctxMeta } = languages['en-US'].profile;
+const { meta, ctxMeta } = getStrings('en-US').profile;
 
 export default ChatCommand({
   ...meta,
@@ -31,7 +31,7 @@ export default ChatCommand({
     })
     .user('lookup_discord', meta.options[1].description, false),
   async handle({ lookup_discord, lookup_name }) {
-    const { errors } = languages[this.locale].profile;
+    const { errors } = getStrings(this.locale).profile;
 
     let profile: CRBTUser;
 
@@ -93,7 +93,7 @@ export const renderProfile = async (
   ctx: Interaction,
   navCtx?: { userId: string; cmdUID: string }
 ) => {
-  const { strings, pronouns: Pronouns } = languages[ctx.locale].profile;
+  const { strings, pronouns: Pronouns } = getStrings(ctx.locale).profile;
   await import(`dayjs/locale/${ctx.locale.split('-')[0]}.js`);
 
   if (!profile.pronouns) {

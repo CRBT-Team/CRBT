@@ -1,5 +1,3 @@
-import { db } from '$lib/db';
-
 export const Jobs = {
   LevelReqs: {
     1: 0,
@@ -12,26 +10,6 @@ export const Jobs = {
     2: 'Apprentice',
     3: 'Journeyman',
     4: 'Master',
-  },
-  TypeNames: {
-    FARMER: 'Farmer',
-    CASHIER: 'Cashier',
-    BAKER: 'Baker',
-    COOK: 'Cook',
-    DEVELOPER: 'Developer',
-    DOCTOR: 'Doctor',
-    TEACHER: 'Teacher',
-    ENGINEER: 'Engineer',
-    POLICE_OFFICER: 'Police Officer',
-    FIREFIGHTER: 'Firefighter',
-    NURSE: 'Nurse',
-    LAWYER: 'Lawyer',
-    MUSICIAN: 'Musician',
-    ATHLETE: 'Athlete',
-    STREAMER: 'Streamer',
-    ARTIST: 'Artist',
-    WRITER: 'Writer',
-    INFLUENCER: 'Influencer',
   },
   TypeDescriptions: {
     FARMER: 'Harvest crops, and sell them for Purplets',
@@ -58,18 +36,8 @@ export const Jobs = {
 
 export function getLevelFromExp(exp: number) {
   let level = 1;
-  for (const [key, value] of Object.entries(Jobs.LevelReqs)) {
-    if (exp >= value) {
-      level = parseInt(key);
-    } else {
-      break;
-    }
-  }
+  Object.entries(Jobs.LevelReqs).forEach(([key, value]) => {
+    level = exp >= value ? Number(key) : level;
+  });
   return level;
 }
-
-db.users.create({
-  data: {
-    id: '',
-  },
-});

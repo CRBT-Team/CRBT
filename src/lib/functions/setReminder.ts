@@ -1,5 +1,5 @@
 import { db, emojis } from '$lib/db';
-import { Reminder } from '$lib/types/CRBT/Reminder';
+import { reminders } from '@prisma/client';
 import dayjs from 'dayjs';
 import { GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
@@ -7,7 +7,7 @@ import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
 
-export const setReminder = async (reminder: Reminder) => {
+export const setReminder = async (reminder: reminders) => {
   const id = reminder.id
     ? reminder.id
     : (
@@ -30,7 +30,7 @@ export const setReminder = async (reminder: Reminder) => {
         content: reminder.destination !== 'dm' ? user.toString() : null,
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.misc.reminder} Reminder`)
+            .setTitle(`${emojis.reminder} Reminder`)
             .setDescription(
               `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
                 reminder.expiration
@@ -56,7 +56,7 @@ export const setReminder = async (reminder: Reminder) => {
           content: user.toString(),
           embeds: [
             new MessageEmbed()
-              .setTitle(`${emojis.misc.reminder} Reminder`)
+              .setTitle(`${emojis.reminder} Reminder`)
               .setDescription(
                 `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
                   reminder.expiration
@@ -71,10 +71,7 @@ export const setReminder = async (reminder: Reminder) => {
                 .setStyle('LINK')
                 .setLabel('Jump to message')
                 .setURL(`https://discord.com/channels/${reminder.url}`),
-              new SnoozeButton()
-                .setStyle('SECONDARY')
-                .setEmoji(emojis.misc.reminder)
-                .setLabel('Snooze')
+              new SnoozeButton().setStyle('SECONDARY').setEmoji(emojis.reminder).setLabel('Snooze')
             )
           ),
         });

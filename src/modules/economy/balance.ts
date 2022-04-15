@@ -2,25 +2,21 @@ import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta } = languages['en-US'].balance;
+const { meta } = getStrings('en-US').balance;
 
 export default ChatCommand({
   ...meta,
   options: new OptionBuilder().user('user', meta.options[0].description),
   async handle({ user }) {
-    const { strings } = languages[this.locale].balance;
+    const { strings } = getStrings(this.locale).balance;
 
     const u = user ?? this.user;
 
     try {
-      // const req = await db.profiles.findFirst({
-      //   where: { id: u.id },
-      //   select: { purplets: true },
-      // });
       const leaderboard = await db.profiles.findMany({
         where: { purplets: { gt: 0 } },
         orderBy: { purplets: 'desc' },

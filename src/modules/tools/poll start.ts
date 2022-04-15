@@ -1,4 +1,4 @@
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
@@ -129,7 +129,7 @@ export default ChatCommand({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            iconURL: illustrations.success,
+            iconURL: icons.success,
             name: 'Poll created!',
           })
           .setDescription(

@@ -78,21 +78,21 @@ export default ChatCommand({
     if (emoji.size > 0 && stickers.size === 0)
       e.addField(
         `${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})`,
-        `${emojis.misc.emoji.static} ${emoji.filter((r) => !r.animated).size} static` +
+        `${emojis.emoji.static} ${emoji.filter((r) => !r.animated).size} static` +
           '\n' +
-          `${emojis.misc.emoji.animated} ${emoji.filter((r) => r.animated).size} animated`,
+          `${emojis.emoji.animated} ${emoji.filter((r) => r.animated).size} animated`,
         true
       );
     else if (stickers.size > 0)
       e.addField(
         `Emojis & Stickers`,
-        `${emojis.misc.emoji.static} **${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})**` +
+        `${emojis.emoji.static} **${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})**` +
           '\n' +
           `${emoji.filter((r) => !r.animated).size} static` +
           '\n' +
           `${emoji.filter((r) => r.animated).size} animated` +
           '\n' +
-          `${emojis.misc.sticker} **Stickers (${stickers.size})**`,
+          `${emojis.sticker} **Stickers (${stickers.size})**`,
         true
       );
 

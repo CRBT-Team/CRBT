@@ -1,4 +1,4 @@
-import { colors, emojis, illustrations, misc } from '$lib/db';
+import { colors, emojis, icons, misc } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
@@ -90,7 +90,7 @@ export const issueReply = async (
         new MessageEmbed()
           .setAuthor({
             name: `Suggestion ${type === 'fix' ? 'accepted' : 'denied'}`,
-            iconURL: illustrations.information,
+            iconURL: icons.information,
           })
           .setDescription(
             `As ${user.tag} ${

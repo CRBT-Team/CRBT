@@ -1,4 +1,4 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { GuildMember, MessageEmbed } from 'discord.js';
@@ -55,7 +55,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: `Successfully banned ${user.tag}`,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],

@@ -1,11 +1,11 @@
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { Parser } from 'expr-eval';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta } = languages['en-US'].calc;
+const { meta } = getStrings('en-US').calc;
 const math = new Parser();
 
 export default ChatCommand({

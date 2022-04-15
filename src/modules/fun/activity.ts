@@ -1,10 +1,10 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
-const { meta } = languages['en-US'].activity;
+const { meta } = getStrings('en-US').activity;
 
 const activities = [
   '880218394199220334', // Watch Together
@@ -29,8 +29,8 @@ export default ChatCommand({
     .enum('activity', meta.options[0].description, choices, true)
     .channel('channel', meta.options[1].description),
   async handle({ activity, channel }) {
-    const { strings, errors } = languages[this.locale].activity;
-    const { GUILD_ONLY } = languages[this.locale].globalErrors;
+    const { strings, errors } = getStrings(this.locale).activity;
+    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
 
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError(GUILD_ONLY));
@@ -64,7 +64,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: strings.EMBED_TITLE,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(
               strings.EMBED_DESCRIPTION.replace(

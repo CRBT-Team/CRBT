@@ -1,4 +1,4 @@
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -69,7 +69,7 @@ export default ChatCommand({
         );
       }
 
-      const targetUserPurplets = await db.profiles.upsert({
+      const targetUser = await db.profiles.upsert({
         where: { id: user.id },
         update: { purplets: { increment: amount } },
         create: { id: user.id, purplets: amount },
@@ -80,34 +80,36 @@ export default ChatCommand({
         where: { id: this.user.id },
       });
 
-      const pronouns = (
-        (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then(
-          (res) => res.json()
-        )) as { pronouns: string }
-      ).pronouns;
+      const pronouns =
+        targetUser?.pronouns ??
+        (
+          (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then(
+            (res) => res.json()
+          )) as { pronouns: string }
+        ).pronouns;
 
       await this.reply({
         embeds: [
           new MessageEmbed()
             .setAuthor({
               name: 'Purplets transfer',
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(
               `You successfully gave ${emojis.purplet} **${amount} Purplets** to ${user}.`
             )
             .addField(
               'Your balance',
-              `Previous: **${emojis.purplet} ${userPurplets.purplets - amount}**\nNew: **${
-                emojis.purplet
-              } ${userPurplets.purplets}**`,
+              `Previous: **${emojis.purplet} ${userPurplets.purplets}**\nNew: **${emojis.purplet} ${
+                userPurplets.purplets - amount
+              }**`,
               true
             )
             .addField(
               `${Pronouns[pronouns].replace('username', user.username)} balance`,
-              `Previous: **${emojis.purplet} ${targetUserPurplets.purplets - amount}**\nNew: **${
+              `Previous: **${emojis.purplet} ${targetUser.purplets - amount}**\nNew: **${
                 emojis.purplet
-              } ${targetUserPurplets.purplets}**`,
+              } ${targetUser.purplets}**`,
               true
             )
             .setColor(`#${colors.success}`),

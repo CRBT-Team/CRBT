@@ -1,13 +1,13 @@
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { showModal } from '$lib/functions/showModal';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
 import { ButtonComponent } from 'purplet';
 
 export const EditProfileBtn = ButtonComponent({
   async handle(userId: string) {
-    const { strings, errors } = languages[this.locale].profile;
+    const { strings, errors } = getStrings(this.locale).profile;
 
     if (this.user.id !== userId) {
       return this.reply(CRBTError(errors.CAN_ONLY_EDIT_OWN_PROFILE));

@@ -1,7 +1,7 @@
 import { Permissions } from 'discord.js';
 
 export function keyPerms(perms: Permissions) {
-  const permissions = perms
+  return perms
     .toArray()
     .map((perm) => {
       switch (perm) {
@@ -11,10 +11,10 @@ export function keyPerms(perms: Permissions) {
           return 'Kick Members';
         case 'BAN_MEMBERS':
           return 'Ban Members';
+        case 'MODERATE_MEMBERS':
+          return 'Timeout Members';
         case 'CHANGE_NICKNAME':
           return 'Change Server Profile';
-        case 'MANAGE_WEBHOOKS':
-          return 'Manage Webhooks';
         case 'MANAGE_EMOJIS_AND_STICKERS':
           return 'Manage Emojis & Stickers';
         case 'MANAGE_ROLES':
@@ -23,6 +23,12 @@ export function keyPerms(perms: Permissions) {
           return 'Manage Nicknames';
         case 'MANAGE_CHANNELS':
           return 'Manage Channels';
+        case 'MANAGE_EVENTS':
+          return 'Manage Events';
+        case 'MANAGE_THREADS':
+          return 'Manage Threads';
+        case 'MANAGE_WEBHOOKS':
+          return 'Manage Webhooks';
         case 'MANAGE_GUILD':
           return 'Manage Server';
         case 'MENTION_EVERYONE':
@@ -43,6 +49,5 @@ export function keyPerms(perms: Permissions) {
           return null;
       }
     })
-    .filter((perm) => perm !== null);
-  return permissions;
+    .filter((perm) => perm);
 }

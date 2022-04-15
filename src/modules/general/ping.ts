@@ -1,18 +1,18 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
-const { meta } = languages['en-US'].ping;
+const { meta } = getStrings('en-US').ping;
 
 export default ChatCommand({
   ...meta,
   async handle() {
     await this.deferReply();
 
-    const { strings } = languages[this.locale].ping;
+    const { strings } = getStrings(this.locale).ping;
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();

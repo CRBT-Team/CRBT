@@ -1,11 +1,11 @@
 import { cache } from '$lib/cache';
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta, colorNames } = languages['en-US']['color set'];
+const { meta, colorNames } = getStrings('en-US')['color set'];
 
 const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
@@ -26,7 +26,7 @@ export const colorset = ChatCommand({
         .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
     }),
   async handle({ color }) {
-    const { strings, errors } = languages[this.locale]['color set'];
+    const { strings, errors } = getStrings(this.locale)['color set'];
 
     const user = await this.client.users.fetch(this.user, { force: true });
     const text = color.toLowerCase().replaceAll(/ |#/g, '');
@@ -51,7 +51,7 @@ export const colorset = ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: strings.EMBED_TITLE,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(strings.EMBED_MANUAL_COLOR)
             .setColor(finalColor),
@@ -72,7 +72,7 @@ export const colorset = ChatCommand({
             new MessageEmbed()
               .setAuthor({
                 name: strings.EMBED_TITLE,
-                iconURL: illustrations.success,
+                iconURL: icons.success,
               })
               .setDescription(strings.EMBED_SYNC_COLOR)
               .setColor(user.hexAccentColor),
@@ -90,7 +90,7 @@ export const colorset = ChatCommand({
 //   name: 'color list',
 //   description: 'Returns a list of CRBT accent color names and info.',
 //   async handle() {
-//     const { colorNames } = languages[this.locale]['color set'];
+//     const { colorNames } = getStrings(this.locale)['color set'];
 
 //     const userColor = await getColor(this.user);
 //     const colorRows = [[], [], []];
@@ -113,7 +113,7 @@ export const colorset = ChatCommand({
 //     ctx.fillStyle = userColor;
 //     ctx.fillRect(0, 0, img.width, img.height);
 //     const e = new MessageEmbed()
-//       .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: illustrations.settings })
+//       .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: icons.settings })
 //       .setThumbnail(`attachment://color.png`)
 //       .setDescription(
 //         `**Current color:** \`${userColor}\`` +

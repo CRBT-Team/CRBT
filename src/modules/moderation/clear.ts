@@ -1,4 +1,4 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -26,7 +26,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: `Successfully deleted ${messagesDeleted} messages`,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],

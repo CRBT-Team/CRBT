@@ -1,6 +1,6 @@
-import { colors, emojis, illustrations } from '$lib/db';
+import { colors, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed, MessageSelectMenu, Role } from 'discord.js';
 import {
   ButtonComponent,
@@ -11,9 +11,9 @@ import {
   SelectMenuComponent,
 } from 'purplet';
 
-const { colorNames } = languages['en-US']['color set'];
-const { pronouns } = languages['en-US'].profile;
-const { preset, manual } = languages['en-US']['role-selectors'];
+const { colorNames } = getStrings('en-US')['color set'];
+const { pronouns } = getStrings('en-US').profile;
+const { preset, manual } = getStrings('en-US')['role-selectors'];
 
 const usersOnCooldown = new Map();
 
@@ -85,7 +85,7 @@ export const usePreset = ChatCommand({
     true
   ),
   async handle(opts) {
-    const { strings, errors } = languages[this.guildLocale]['role-selectors'];
+    const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
 
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
@@ -100,7 +100,9 @@ export const usePreset = ChatCommand({
     });
 
     const preset = presets[opts.preset];
-    const presetStrings = languages[this.guildLocale]['role-selectors'].preset.presets[opts.preset];
+    const presetStrings = getStrings(this.guildLocale)['role-selectors'].preset.presets[
+      opts.preset
+    ];
 
     const rolesList = [];
     preset.roles.forEach(async (role) => {
@@ -176,7 +178,7 @@ export const usePreset = ChatCommand({
         new MessageEmbed()
           .setAuthor({
             name: strings.SUCCESS_TITLE,
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(strings.SUCCESS_DESCRIPTION)
           .setColor(`#${colors.success}`),
@@ -216,7 +218,7 @@ export const useManual = ChatCommand({
     .role(`role9`, manual.meta.options[3].description)
     .role(`role10`, manual.meta.options[3].description),
   async handle({ description, behavior, role_limit, ...roles }) {
-    const { strings, errors } = languages[this.guildLocale]['role-selectors'];
+    const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
 
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
@@ -275,7 +277,7 @@ export const useManual = ChatCommand({
         new MessageEmbed()
           .setAuthor({
             name: strings.SUCCESS_TITLE,
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(strings.SUCCESS_DESCRIPTION)
           .setColor(`#${colors.success}`),
@@ -300,7 +302,7 @@ export const RoleButton = ButtonComponent({
     }
     usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
-    const { strings, errors } = languages[this.locale]['role-selectors'];
+    const { strings, errors } = getStrings(this.locale)['role-selectors'];
 
     if (!this.guild.roles.cache.has(role.id)) {
       return this.reply(CRBTError(errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name)));
@@ -321,7 +323,7 @@ export const RoleButton = ButtonComponent({
               name:
                 strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name) +
                 (role.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''),
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],
@@ -336,7 +338,7 @@ export const RoleButton = ButtonComponent({
               name:
                 strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name) +
                 (role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''),
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],
@@ -362,7 +364,7 @@ export const RoleSelector = SelectMenuComponent({
     }
     usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
-    const { strings, errors } = languages[this.locale]['role-selectors'];
+    const { strings, errors } = getStrings(this.locale)['role-selectors'];
     const roleArray = (this.message.components[0].components[0] as MessageSelectMenu).options.map(
       (role) => JSON.parse(role.value)
     );
@@ -393,7 +395,7 @@ export const RoleSelector = SelectMenuComponent({
         new MessageEmbed()
           .setAuthor({
             name: strings.SELECT_MENU_ROLES_SUCCESS,
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `\`\`\`diff\n+ ${added.join(', ') || 'None'}\n- ${

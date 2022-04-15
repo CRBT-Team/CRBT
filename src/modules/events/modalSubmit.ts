@@ -1,6 +1,6 @@
 import { cache } from '$lib/cache';
 import { CRBTUser } from '$lib/classes/CRBTUser';
-import { colors, db, illustrations, links, misc } from '$lib/db';
+import { colors, db, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
@@ -28,7 +28,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Issue sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `Your issue has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
@@ -92,7 +92,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Suggestion sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `A discussion thread has been sent in the **[CRBT Community](${
@@ -124,7 +124,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Reply sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`
@@ -196,7 +196,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           new MessageEmbed()
             .setAuthor({
               name: 'Profile updated!',
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(
               (newProfile.name !== modal.fields.getTextInputValue('profile_name')

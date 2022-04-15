@@ -1,4 +1,4 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { MessageEmbed } from 'discord.js';
 import { readFileSync } from 'fs';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -23,7 +23,7 @@ export default ChatCommand({
       await this.editReply({
         embeds: [
           new MessageEmbed()
-            .setAuthor({ name: `8-Ball`, iconURL: illustrations.eightball })
+            .setAuthor({ name: `8-Ball`, iconURL: icons.eightball })
             .addField('Question', question)
             .addField('Answer', answer.slice(1).join(' '))
             .setColor(`#${answerType[answer[0]]}`),

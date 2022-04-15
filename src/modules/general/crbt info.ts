@@ -2,20 +2,20 @@ import { cache } from '$lib/cache';
 import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
-const { meta } = languages['en-US']['crbt info'];
+const { meta } = getStrings('en-US')['crbt info'];
 
 export default ChatCommand({
   ...meta,
   async handle() {
     await this.deferReply();
 
-    const { strings } = languages[this.locale]['crbt info'];
+    const { strings } = getStrings(this.locale)['crbt info'];
 
     const uptime = dayjs().subtract(this.client.uptime).unix();
     const created = dayjs(this.client.user.createdAt).unix();

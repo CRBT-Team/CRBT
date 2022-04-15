@@ -1,4 +1,4 @@
-import { illustrations, links } from '$lib/db';
+import { icons, links } from '$lib/db';
 import { MessageEmbed, User } from 'discord.js';
 
 export function createCRBTmsg({
@@ -17,12 +17,14 @@ export function createCRBTmsg({
   return new MessageEmbed()
     .setAuthor({
       name: "You've got mail!",
-      iconURL: illustrations.information,
+      iconURL: icons.information,
     })
     .setDescription(
-      type === 'issue'
-        ? `This message was delivered by a verified CRBT developer.\nLearn more about CRBT messages **[here](${links.info.messages})**.`
-        : `This message was delivered by a moderator from **${guildName}**.\nCRBT is not affiliated with this message this moderator and this server.\nLearn more about CRBT messages **[here](${links.info.messages})**.`
+      `${
+        type === 'issue'
+          ? `This message was delivered by a verified CRBT developer.`
+          : `This message was delivered by a moderator from **${guildName}**.\nCRBT is not affiliated with this message this moderator and this server.`
+      }\nLearn more about CRBT messages **[here](${links.blog['about-crbt-messages']})**.`
     )
     .addField('Subject', subject)
     .addFields(message ? [{ name: `Message from ${user.tag}`, value: message }] : []);

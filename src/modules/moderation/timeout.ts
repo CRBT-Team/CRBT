@@ -1,7 +1,8 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
+import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -18,6 +19,12 @@ export default ChatCommand({
       { name: '1 month', value: '1m' },
     ]),
   async handle({ user, reason, duration }) {
+    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
+
+    if (this.channel.type !== 'DM') {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
     if (!this.memberPermissions.has('MODERATE_MEMBERS')) {
       return this.reply(CRBTError('You do not have permission to timeout members.'));
     }
@@ -49,7 +56,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: `Successfully timed out ${user.tag}`,
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],

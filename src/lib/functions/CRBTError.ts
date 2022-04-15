@@ -1,5 +1,5 @@
-import { colors, db, emojis, illustrations, misc } from '$lib/db';
-import { languages } from '$lib/language';
+import { colors, db, emojis, icons, misc } from '$lib/db';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
 import {
   EmbedField,
@@ -32,7 +32,7 @@ const handleError = (
 
   return new MessageEmbed({
     author: {
-      iconURL: illustrations.error,
+      iconURL: icons.error,
       name: title ?? description,
     },
     description: title ? description : null,
@@ -50,7 +50,7 @@ export function CRBTError(
 }
 
 export function UnknownError(context: Interaction, desc: any): InteractionReplyOptions {
-  const { strings } = languages[context.locale].UnknownError;
+  const { strings } = getStrings(context.locale).UnknownError;
   console.error(desc);
   return {
     embeds: [
@@ -82,8 +82,8 @@ export async function CooldownError(
   relativetime: number,
   showButton = true
 ): Promise<InteractionReplyOptions> {
-  const { strings } = languages[context.locale].CooldownError;
-  const { ADD_REMINDER } = languages[context.locale].genericButtons;
+  const { strings } = getStrings(context.locale).CooldownError;
+  const { ADD_REMINDER } = getStrings(context.locale).genericButtons;
 
   const reminder = await db.reminders.findFirst({
     where: {
@@ -116,7 +116,7 @@ export async function CooldownError(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
                 .setLabel(ADD_REMINDER)
-                .setEmoji(emojis.misc.reminder)
+                .setEmoji(emojis.reminder)
             )
           )
         : null,

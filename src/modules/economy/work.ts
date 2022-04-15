@@ -1,4 +1,4 @@
-import { colors, emojis, illustrations, jobs } from '$lib/db';
+import { colors, emojis, jobs } from '$lib/db';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { getLevelFromExp, Jobs } from '$lib/util/Jobs';
@@ -35,10 +35,10 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setAuthor({
-            name: `You worked as a ${Jobs.TypeNames[job.type].toLowerCase()}...`,
-            iconURL: illustrations.success,
-          })
+          // .setAuthor({
+          // name: `You worked as a ${Jobs.TypeNames[job.type].toLowerCase()}...`,
+          //   iconURL: icons.success,
+          // })
           .setDescription(
             `${string.replace(
               '{purplets}',
@@ -54,7 +54,7 @@ export default ChatCommand({
           new RemindButton({ relativetime: Date.now() + cooldown, userId: this.user.id })
             .setStyle('SECONDARY')
             .setLabel('Add Reminder')
-            .setEmoji(emojis.misc.reminder)
+            .setEmoji(emojis.reminder)
         )
       ),
     });

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import bg from '../../data/languages/bg.json';
 import cs from '../../data/languages/cs.json';
 import da from '../../data/languages/da.json';
@@ -31,46 +30,44 @@ import zh_CN from '../../data/languages/zh-CN.json';
 import zh_TW from '../../data/languages/zh-TW.json';
 import { deepMerge } from './functions/deepMerge';
 
-export const languages: {
-  [k: string]: typeof en_US;
-} = {
-  bg: deepMerge(en_US, bg),
-  cs: deepMerge(en_US, cs),
-  da: deepMerge(en_US, da),
-  de: deepMerge(en_US, de),
-  el: deepMerge(en_US, el),
-  'en-GB': deepMerge(en_US, en_GB),
+export const languages = {
+  bg,
+  cs,
+  da,
+  de,
+  el,
+  'en-GB': en_GB,
   'en-US': en_US,
-  'es-ES': deepMerge(en_US, es_ES),
-  fi: deepMerge(en_US, fi),
-  fr: deepMerge(en_US, fr),
-  hi: deepMerge(en_US, hi),
-  hr: deepMerge(en_US, hr),
-  hu: deepMerge(en_US, hu),
-  it: deepMerge(en_US, it),
-  ja: deepMerge(en_US, ja),
-  ko: deepMerge(en_US, ko),
-  lt: deepMerge(en_US, lt),
-  nl: deepMerge(en_US, nl),
-  no: deepMerge(en_US, no),
-  pl: deepMerge(en_US, pl),
-  'pt-BR': deepMerge(en_US, pt_BR),
-  ro: deepMerge(en_US, ro),
-  ru: deepMerge(en_US, ru),
-  'sv-SE': deepMerge(en_US, sv_SE),
-  th: deepMerge(en_US, th),
-  tr: deepMerge(en_US, tr),
-  uk: deepMerge(en_US, uk),
-  vi: deepMerge(en_US, vi),
-  'zh-CN': deepMerge(en_US, zh_CN),
-  'zh-TW': deepMerge(en_US, zh_TW),
+  'es-ES': es_ES,
+  fi,
+  fr,
+  hi,
+  hr,
+  hu,
+  it,
+  ja,
+  ko,
+  lt,
+  nl,
+  no,
+  pl,
+  'pt-BR': pt_BR,
+  ro,
+  ru,
+  'sv-SE': sv_SE,
+  th,
+  tr,
+  uk,
+  vi,
+  'zh-CN': zh_CN,
+  'zh-TW': zh_TW,
 };
 
-// export const getStrings = (language: string) => {
-//   const dataDefault = languages['en-US'];
-//   const data = languages[language] ?? dataDefault;
-
-//   // deep merge dataDefault and data
-
-//   return deepMerge(dataDefault, data) as typeof en_US;
-// };
+export const getStrings = (language: string): typeof en_US => {
+  const dataDefault = languages['en-US'];
+  const data = languages[language];
+  if (!data) {
+    return dataDefault;
+  }
+  return deepMerge(dataDefault, data) as typeof en_US;
+};

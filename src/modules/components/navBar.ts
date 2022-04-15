@@ -1,7 +1,7 @@
 import { CRBTUser } from '$lib/classes/CRBTUser';
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { ButtonComponent, row } from 'purplet';
 import { renderProfile } from '../economy/profile';
 import { renderPfp } from '../info/avatar';
@@ -9,7 +9,7 @@ import { renderUser } from '../info/user info';
 
 export const UserInfoBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = languages[this.locale].user_navbar;
+    const { errors } = getStrings(this.locale).user_navbar;
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -22,7 +22,7 @@ export const UserInfoBtn = ButtonComponent({
 
 export const PfpBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = languages[this.locale].user_navbar;
+    const { errors } = getStrings(this.locale).user_navbar;
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -35,7 +35,7 @@ export const PfpBtn = ButtonComponent({
 
 export const ProfileBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = languages[this.locale].user_navbar;
+    const { errors } = getStrings(this.locale).user_navbar;
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -57,7 +57,7 @@ export function navBar(
   locale: string,
   tab: 'profile' | 'pfp' | 'userinfo'
 ) {
-  const { strings } = languages[locale].user_navbar;
+  const { strings } = getStrings(locale).user_navbar;
 
   return row(
     new ProfileBtn(ctx)

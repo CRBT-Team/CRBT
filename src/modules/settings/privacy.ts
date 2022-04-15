@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { db, emojis, illustrations, links } from '$lib/db';
+import { db, emojis, icons, links } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
@@ -29,9 +29,9 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setAuthor({ name: 'CRBT Settings - Privacy', iconURL: illustrations.settings })
+          .setAuthor({ name: 'CRBT Settings - Privacy', iconURL: icons.settings })
           .setDescription(
-            `You can review our **[Privacy Policy on the website](${links.privacypolicy})**.\n` +
+            `You can review our **[Privacy Policy on the website](${links.policy})**.\n` +
               `${emojis.toggle[enabled ? 'on' : 'off']} Telemetry for all commands is currently ${
                 enabled ? 'enabled, but' : 'disabled, and'
               } you can always turn it ${
@@ -67,9 +67,9 @@ export const ToggleTelemetryBtn = ButtonComponent({
     await this.update({
       embeds: [
         new MessageEmbed()
-          .setAuthor({ name: 'CRBT Settings - Privacy', iconURL: illustrations.settings })
+          .setAuthor({ name: 'CRBT Settings - Privacy', iconURL: icons.settings })
           .setDescription(
-            `You can review our **[Privacy Policy on the website](${links.privacypolicy})**.\n` +
+            `You can review our **[Privacy Policy on the website](${links.policy})**.\n` +
               `${emojis.toggle[enabled ? 'on' : 'off']} Telemetry for all commands is currently ${
                 enabled ? 'enabled, but' : 'disabled, and'
               } you can always turn it ${

@@ -1,13 +1,13 @@
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError } from '$lib/functions/CRBTError';
 import { row } from '$lib/functions/row';
-import { languages } from '$lib/language';
+import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, components } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
 
 const usersOnCooldown = new Map();
-const { meta } = languages['en-US'].hourly;
+const { meta } = getStrings('en-US').hourly;
 
 export default ChatCommand({
   ...meta,
@@ -16,8 +16,8 @@ export default ChatCommand({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id)));
     }
 
-    const { strings } = languages[this.locale].hourly;
-    const { ADD_REMINDER } = languages[this.locale].genericButtons;
+    const { strings } = getStrings(this.locale).hourly;
+    const { ADD_REMINDER } = getStrings(this.locale).genericButtons;
 
     await this.deferReply();
 
@@ -54,7 +54,7 @@ export default ChatCommand({
         new MessageEmbed()
           .setAuthor({
             name: strings.EMBED_TITLE,
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `${strings.EMBED_DESCRIPTION.replace('<EMOJI>', emojis.purplet)
@@ -72,7 +72,7 @@ export default ChatCommand({
           new RemindButton({ relativetime: Date.now() + 3.6e6, userId: this.user.id })
             .setStyle('SECONDARY')
             .setLabel(ADD_REMINDER)
-            .setEmoji(emojis.misc.reminder)
+            .setEmoji(emojis.reminder)
         )
       ),
     });
