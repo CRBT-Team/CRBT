@@ -22,6 +22,7 @@
   "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png",
   "error": "https://cdn.discordapp.com/emojis/866037872519938069.png",
   "success": "https://cdn.discordapp.com/emojis/951046132820222032.png",
+  "reminder": "https://cdn.discordapp.com/attachments/945417344656752712/964943790181875732/unknown.png",
 
   "music": {
     "queueadded": "https://cdn.discordapp.com/attachments/782584672772423684/866330146961096704/unknown.png",

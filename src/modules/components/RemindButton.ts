@@ -6,7 +6,15 @@ import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const RemindButton = ButtonComponent({
-  async handle({ relativetime, userId }: { relativetime: number; userId: string }) {
+  async handle({
+    relativetime,
+    userId,
+    locale,
+  }: {
+    relativetime: number;
+    userId: string;
+    locale: string;
+  }) {
     if (this.user.id !== userId) {
       return this.reply(CRBTError('You can only set reminders for commands you ran yourself.'));
     }
@@ -28,13 +36,15 @@ export const RemindButton = ButtonComponent({
     if (!reminder || Math.abs(reminder.expiration.getTime() - relativetime) > 60000) {
       await setReminder({
         reminder: 'Command reminder from CRBT.',
-        expiration: dayjs(relativetime).toISOString(),
+        locale,
+        expiration: dayjs(relativetime).toDate(),
         user_id: this.user.id,
         destination: 'dm',
         url:
           this.message instanceof Message
             ? this.message.url.replace('https://discord.com/channels/', '')
             : `@me/${this.user.dmChannel}/${this.message.id}`,
+        id: 0n,
       });
     }
     await this.update({
@@ -53,7 +63,7 @@ export const RemindButton = ButtonComponent({
 });
 
 export const SnoozeButton = ButtonComponent({
-  async handle() {
+  async handle(locale: string) {
     if (this.channel.type !== 'DM' && (this.message.mentions as MessageMentions).has(this.user)) {
       return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
     }
@@ -61,9 +71,11 @@ export const SnoozeButton = ButtonComponent({
       'https://discord.com/channels/',
       ''
     );
+    //@ts-ignore
     await setReminder({
       reminder: this.message.embeds[0].fields[0].value,
       user_id: this.user.id,
+      locale,
       expiration: dayjs().add(15, 'minutes').toDate(),
       destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
       url,

@@ -30,37 +30,30 @@ model reminders {
   destination String
   reminder    String?
   url         String
+  locale      String
 }
 
 model servers {
-  id              String  @id
-  voice_linker    Json?   @db.Json
-  welcome_channel String?
-  welcome_message Json?   @db.Json
-  goodbye_channel String?
-  goodbye_message Json?   @db.Json
+  id           String  @id
+  voice_linker Json?   @db.Json
+  join_chnl    String?
+  join_msg     Json?   @db.Json
+  leave_chnl   String?
+  leave_msg    Json?   @db.Json
 }
 
 model users {
-  id             String  @id(map: "misc_pkey")
-  hstreak        Int     @default(0) @db.SmallInt
-  telemetry      Boolean @default(true)
-  // todolist       String[]
-  // past_usernames String[]
-  // past_avatars   String[] 
-  // job_type       Jobs?
-  // job_exp        Int     @default(0) @db.SmallInt
-}
-
-model role_selectors {
-  id    String  @id
-  roles String[]
+  id        String  @id(map: "misc_pkey")
+  hstreak   Int     @default(0) @db.SmallInt
+  telemetry Boolean @default(true)
+  job_type  Jobs?
+  job_exp   Int     @default(0)
 }
 
 model polls {
-  id          String   @id
-  creator_id  String
-  choices     String // in reality this is an array of array that's stringified because prisma doesn't allow me to have that :(
+  id         String @id
+  creator_id String
+  choices    String
 }
 
 enum Jobs {

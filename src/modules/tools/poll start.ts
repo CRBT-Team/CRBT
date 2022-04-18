@@ -251,10 +251,6 @@ const renderPoll = async (
   const newChoiceId = Number(choiceId);
   const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
 
-  console.log('choiceId', choiceId);
-  console.log('previousChoiceId', previousChoiceId);
-  console.log('choices', choices);
-
   if (previousChoiceId !== -1) {
     choices[previousChoiceId]?.splice(
       choices[previousChoiceId].findIndex((voter) => voter === userId),
@@ -264,8 +260,6 @@ const renderPoll = async (
   if (previousChoiceId !== newChoiceId) {
     choices[newChoiceId]?.push(userId);
   }
-
-  console.log('choices', choices);
 
   await db.polls.update({
     where: { id: pollData.id },
@@ -279,8 +273,6 @@ const renderPoll = async (
     let percentage = Math.round((votes / totalVotes) * 100);
     if (isNaN(percentage)) percentage = 0;
     if (percentage === Infinity) percentage = 100;
-
-    console.log('votes for ' + id, votes, `${percentage}%`);
 
     choice.value = `${
       emojis.progress.fill.repeat(Math.round(percentage / 10)) +

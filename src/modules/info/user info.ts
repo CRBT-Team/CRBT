@@ -20,7 +20,8 @@ export default ChatCommand({
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
     const u = await (user ?? this.user).fetch();
-    const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
+    const m = (user ? this.options.getMember('user') : this.member) as GuildMember;
+    // const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
 
     // enum UserStatus {
     //   online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
@@ -131,9 +132,9 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: u.tag,
-      // name: `${u.tag} - User info`,
-      iconURL: avatar(u, 64),
+      // name: u.tag,
+      name: `${u.tag} - User info`,
+      iconURL: avatar(m ?? u, 64),
     })
     .setDescription(userBadges.join('‎ '))
     .addField('ID', u.id)

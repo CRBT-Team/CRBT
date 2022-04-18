@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { colors, db, emojis } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';

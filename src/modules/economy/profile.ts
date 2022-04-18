@@ -111,8 +111,8 @@ export const renderProfile = async (
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: profile.user.tag,
-      // name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
+      // name: profile.user.tag,
+      name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
       iconURL: avatar(profile.user, 64),
     })
     .setTitle(

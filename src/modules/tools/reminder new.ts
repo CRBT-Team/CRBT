@@ -113,6 +113,7 @@ export default ChatCommand({
       destination: destination ? destination.id : 'dm',
       expiration: expiration.toDate(),
       reminder: subject,
+      locale: this.locale,
       user_id: this.user.id,
       url: ((await this.fetchReply()) as Message).url.replace('https://discord.com/channels/', ''),
     };
@@ -120,6 +121,7 @@ export default ChatCommand({
     const expUnix = expiration.unix();
 
     try {
+      //@ts-ignore
       await setReminder(reminder);
 
       await this.editReply({

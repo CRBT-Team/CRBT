@@ -3,7 +3,7 @@ import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { getStrings } from '$lib/language';
-import { MessageEmbed } from 'discord.js';
+import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta } = getStrings('en-US').balance;
@@ -14,6 +14,7 @@ export default ChatCommand({
   async handle({ user }) {
     const { strings } = getStrings(this.locale).balance;
 
+    const m = (this.options.getMember('user') ?? this.member) as GuildMember;
     const u = user ?? this.user;
 
     try {
@@ -30,7 +31,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: strings.EMBED_TITLE.replace('<user>', u.tag),
-              iconURL: avatar(u, 64),
+              iconURL: avatar(m, 64),
             })
             .setDescription(
               `${emojis.purplet} **${strings.EMBED_DESCRIPTION.replace(

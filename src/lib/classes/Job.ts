@@ -1,27 +1,43 @@
 import { jobs } from '$lib/db';
-import { Jobs } from '$lib/util/Jobs';
+import { ms } from '$lib/functions/ms';
+
+export const LevelReqs = {
+    1: 0,
+    2: 800,
+    3: 2400,
+    4: 4800,
+  },
+  LevelNames = {
+    1: 'Beginner',
+    2: 'Apprentice',
+    3: 'Journeyman',
+    4: 'Master',
+  };
 
 export class Job {
-  public id: string;
-  public name: string;
-  public description: string;
+  public type: string;
+  public income: number;
+  public cooldown: number;
+  public maxloss: number;
+  public exp: number;
+  public level: number;
 
-  constructor(jobType: string) {
-    this.id = jobType;
+  constructor(jobType: string, exp: number) {
+    this.type = jobType;
 
-    const findJob = jobs[this.id];
-    this.name = Jobs.TypeNames[findJob.name];
+    const findJob = jobs[this.type];
+    this.exp = exp;
+    this.level = this.getLevel();
+    this.income = findJob.income[this.level - 1];
+    this.cooldown = ms(findJob.cooldown[this.level - 1] + 'm');
+    this.maxloss = findJob.maxloss;
   }
 
-  public getLevelFromExp(exp: number) {
+  public getLevel() {
     let level = 1;
-    for (const [key, value] of Object.entries(Jobs.LevelReqs)) {
-      if (exp >= value) {
-        level = parseInt(key);
-      } else {
-        break;
-      }
-    }
+    Object.entries(LevelReqs).forEach(([key, value]) => {
+      level = this.exp >= value ? Number(key) : level;
+    });
     return level;
   }
 }

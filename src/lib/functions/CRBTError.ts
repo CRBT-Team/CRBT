@@ -101,7 +101,7 @@ export async function CooldownError(
       handleError(
         strings.DESCRIPTION.replace(
           '<TYPE>',
-          context.type === 'APPLICATION_COMMAND' ? 'command' : 'component'
+          context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
         ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
         null,
         null,
@@ -113,7 +113,7 @@ export async function CooldownError(
       showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
         ? components(
             row(
-              new RemindButton({ relativetime, userId: context.user.id })
+              new RemindButton({ relativetime, userId: context.user.id, locale: context.locale })
                 .setStyle('SECONDARY')
                 .setLabel(ADD_REMINDER)
                 .setEmoji(emojis.reminder)

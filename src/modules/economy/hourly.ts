@@ -69,7 +69,11 @@ export default ChatCommand({
       ],
       components: components(
         row(
-          new RemindButton({ relativetime: Date.now() + 3.6e6, userId: this.user.id })
+          new RemindButton({
+            relativetime: Date.now() + 3.6e6,
+            userId: this.user.id,
+            locale: this.locale,
+          })
             .setStyle('SECONDARY')
             .setLabel(ADD_REMINDER)
             .setEmoji(emojis.reminder)

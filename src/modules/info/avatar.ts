@@ -53,7 +53,7 @@ export async function renderPfp(
     cmdUID: string;
   }
 ) {
-  const { strings } = getStrings[ctx.locale].avatar;
+  const { strings } = getStrings(ctx.locale).avatar;
 
   const av = avatar(user, size, format ?? 'png', !!format);
 

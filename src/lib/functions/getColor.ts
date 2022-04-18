@@ -21,7 +21,7 @@ export async function getColor(user: User): Promise<`#${string}`> {
   }
 
   if (result === 'profile') {
-    result = (await user.fetch()).hexAccentColor;
+    result = (await user.fetch()).hexAccentColor ?? `#${colors.default}`;
     cache.set(`color_${user.id}`, result);
   }
 
