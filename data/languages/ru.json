@@ -139,10 +139,10 @@
         },
         {
           "name": "тема",
-          "description": "What to remind you of."
+          "description": "Что вам напомнить."
         },
         {
-          "name": "destination",
+          "name": "адресат",
           "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
         }
       ]
@@ -165,17 +165,17 @@
       "TOMORROW_AT": "Завтра в <TIME>",
       "TODAY_AT": "Сегодня в <TIME>",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
+      "GCALENDAR_EVENT": "Установка напоминания CRBT.",
       "GCALENDAR_EVENT_DM": "Вас также уведомят в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "GCALENDAR_EVENT_CHANNEL": "Вы также будете уведомлены в <CHANNEL> на <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "и",
+      "AT": "в",
+      "ON": "вкл",
+      "IN": "в",
+      "TOMORROW": "завтра",
+      "TODAY": "сегодня"
     }
   },
   "ping": {
@@ -184,16 +184,16 @@
       "description": "Пинг CRBT. Возвращает задержку и информацию о соединении."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
+      "EMBED_TITLE": "<CRBT> - пинг",
       "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
+      "INTERACTION": "Взаимодействие",
       "UPTIME": "В сети с",
       "FORMAT_MS": "<NUMBER>мс"
     }
   },
   "crbt info": {
     "meta": {
-      "name": "crbt info",
+      "name": "информация о crbt",
       "description": "Получить информацию о CRBT"
     },
     "strings": {
@@ -202,9 +202,9 @@
       "MEMBER_COUNT": "Количество участников",
       "SERVER_COUNT": "Количество серверов",
       "PROFILES_REGISTERED": "Профилей зарегистрировано",
-      "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
+      "PING": "Пинг",
+      "PING_RESULT": "<unk><PING> миллисекунд",
+      "CREATED": "Создано",
       "UPTIME": "В сети с",
       "BUTTON_WEBSITE": "Сайт",
       "BUTTON_INVITE": "Добавить на сервер",
