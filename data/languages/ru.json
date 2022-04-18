@@ -77,7 +77,7 @@
     },
     "strings": {
       "EMBED_TITLE": "<user> - Баланс",
-      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
+      "EMBED_DESCRIPTION": "<PURPLETS> Пурпуры",
       "LEADERBOARD_TITLE": "Ранг в таблице лидеров",
       "LEADERBOARD_NOTPRESENT": "Не на глобальной таблице лидеров",
       "LEADERBOARD_DESCRIPTION": "<PLACE> из <TOTAL> человек на глобальной таблице лидеров"
@@ -85,12 +85,12 @@
   },
   "color set": {
     "meta": {
-      "name": "color set",
+      "name": "набор цветов",
       "description": "Изменить пользовательский цвет CRBT.",
       "options": [
         {
           "name": "цвет",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Цвет для изменения акцента. Используйте один из предложенных цветов или цвет в HEX формате."
         }
       ]
     },
@@ -130,15 +130,15 @@
   },
   "remind me": {
     "meta": {
-      "name": "reminder new",
-      "description": "Set a reminder.",
+      "name": "новое напоминание",
+      "description": "Установить напоминание.",
       "options": [
         {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "name": "в момент",
+          "description": "Когда напомнить вам (например, 2 hours, 3w2d, 20:30)."
         },
         {
-          "name": "subject",
+          "name": "тема",
           "description": "What to remind you of."
         },
         {
@@ -275,7 +275,7 @@
       "WEBSITE": "Сайт",
       "LOCATION": "Местоположение",
       "BADGES": "Badges (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets",
+      "EMBED_FOOTER": "<PURPLETS> Пурпуры",
       "BUTTON_EDIT_PROFILE": "Редактировать профиль",
       "MODAL_NAME_PLACEHOLDER": "Уникальное имя, может состоять только из букв, цифр или пробелов.",
       "MODAL_BIO_PLACEHOLDER": "Расскажите нам о себе. Теги CRBTscript принимаются.",
