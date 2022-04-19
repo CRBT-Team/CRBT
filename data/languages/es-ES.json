@@ -241,11 +241,11 @@
       "BADGES": "Sellos (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Editar perfil",
-      "MODAL_NAME_PLACEHOLDER": "Un nombre único que sólo puede contener letras, números y espacios.",
-      "MODAL_BIO_PLACEHOLDER": "Cuéntenos sobre usted. Se aceptan etiquetas CRBTscript.",
+      "MODAL_NAME_PLACEHOLDER": "A unique @ that can only have letters, numbers or spaces.",
+      "MODAL_BIO_PLACEHOLDER": "You can use markdown, links and CRBTscript tags.",
       "MODAL_WEBSITE_PLACEHOLDER": "Un enlace a su página web, blog, Twitter...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Su cumpleaños, en el formato AAAA-MM-DD.",
-      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
+      "MODAL_PRONOUNS_PLACEHOLDER": "e.g. they/them"
     }
   },
   "avatar": {
@@ -312,7 +312,7 @@
     },
     "strings": {
       "EMBED_TITLE": "¡Purplets horarios reclamados!",
-      "EMBED_DESCRIPTION": "Ha reclamado sus **<EMOJI> <PURPLETS> Purplets** horarios.\nCombo actual: **<STREAK>/5**",
+      "EMBED_DESCRIPTION": "You have claimed your hourly <PURPLETS>.\nCurrent streak: **<STREAK>/5**",
       "STREAK_BONUS": "(+30% del bonus de combo)",
       "STREAK": "(¡<STREAK_LEFT> más para obtener un bonus!)",
       "EMBED_REMINDER": "Haga clic en el botón de abajo para establecer un recordatorio para volver a reclamar sus Purplets horarios."
