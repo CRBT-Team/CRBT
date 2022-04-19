@@ -12,7 +12,8 @@
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
     "SAVE": "Сохранить",
-    "ADD_REMINDER": "Добавить напоминание"
+    "ADD_REMINDER": "Добавить напоминание",
+    "OPEN_DMS": "Open DMs"
   },
   "UnknownError": {
     "strings": {
@@ -28,42 +29,6 @@
       "COMPONENT": "компонент"
     }
   },
-  "activity": {
-    "meta": {
-      "name": "активность",
-      "description": "Запустить активити в голосовом канале.",
-      "options": [
-        {
-          "name": "активность",
-          "description": "Активити для старта",
-          "choices": [
-            "Watch Together - Неограниченное количество участников",
-            "Sketch Heads - До 16 игроков",
-            "Word Snacks - До 8 игроков",
-            "Poker Night - 💎 Требуется буст сервера",
-            "Chess In The Park - 💎 Требуется буст сервера",
-            "Checkers In The Park - 💎 Требуется буст сервера",
-            "Blazing 8s - 💎 Требуется буст сервера",
-            "Letter League - 💎 Требуется буст сервера",
-            "SpellCast - 💎 Требуется буст сервера"
-          ]
-        },
-        {
-          "name": "канал",
-          "description": "Голосовой чат для начала активити"
-        }
-      ]
-    },
-    "errors": {
-      "NO_CHANNEL": "Вы должны находиться в голосовом канале, или выбрать голосовой канал опцией `канал`.",
-      "NOT_VOICE": "Вам нужно выбрать голосовой канал, чтобы начать активность!"
-    },
-    "strings": {
-      "EMBED_TITLE": "Готово!",
-      "EMBED_DESCRIPTION": "Нажмите кнопку ниже чтобы войти в <ACTIVITY> в <CHANNEL>.\nУточнение: Активити не работают на телефонах и до сих пор экспериментальны. Ожидайте баги и недоработки.",
-      "BUTTON_LABEL": "Войти в активити"
-    }
-  },
   "balance": {
     "meta": {
       "name": "баланс",
@@ -76,7 +41,7 @@
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<user> - Баланс",
+      "EMBED_TITLE": "<USER> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Пурпуры",
       "LEADERBOARD_TITLE": "Ранг в таблице лидеров",
       "LEADERBOARD_NOTPRESENT": "Не на глобальной таблице лидеров",
@@ -124,8 +89,8 @@
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_MANUAL_COLOR": "Этот цвет будет использоваться в большинстве ответов CRBT к вам, так же как и в вашем профиле и информационных картах, когда кто-то их еще посещает.",
-      "EMBED_SYNC_COLOR": "Ваш цвет профиля Discord будет синхронизирован с вашим цветом CRBT. Этот цвет будет использоваться в большинстве ответов CRBT на вас, а также в ваших картах профиля и информации, когда кто-то их еще посещает"
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -143,7 +108,7 @@
         },
         {
           "name": "адресат",
-          "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
+          "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
     },
@@ -228,11 +193,11 @@
       "options": [
         {
           "name": "lookup_name",
-          "description": "Search a profile by their CRBT profile name."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "lookup_discord",
-          "description": "Search a profile by their Discord user ID or name."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -273,7 +238,6 @@
       "PRONOUNS": "Pronouns",
       "BIRTHDAY": "День рождения",
       "WEBSITE": "Сайт",
-      "LOCATION": "Местоположение",
       "BADGES": "Badges (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Пурпуры",
       "BUTTON_EDIT_PROFILE": "Редактировать профиль",
@@ -281,7 +245,7 @@
       "MODAL_BIO_PLACEHOLDER": "Расскажите нам о себе. Теги CRBTscript принимаются.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ссылка на ваш сайт, блог, Твиттер...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Ваш день рождения, в формате ГГГГ-ММ-ДД.",
-      "MODAL_LOCATION_PLACEHOLDER": "Откуда вы?"
+      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
     }
   },
   "avatar": {
@@ -326,8 +290,7 @@
     },
     "strings": {
       "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!",
-      "SUCCESS_BUTTON": "Open DMs"
+      "SUCCESS_MESSAGE": "Sent this message by DM!"
     }
   },
   "calc": {
@@ -448,12 +411,10 @@
           "You harvested a couple of melons and earned <PURPLETS>",
           "You sold 20 carrots and got <PURPLETS>",
           "You sold two pounds of turnips worth <PURPLETS>",
-          "You sold a bag aof patatoes for <PURPLETS>",
-          "You harvested, then sold two watermelons for <PURPLETS>",
+          "You sold a bag of patatoes for <PURPLETS>",
+          "You harvested and sold two watermelons for <PURPLETS>",
           "You sold two of your cows to another farmer and got <PURPLETS>",
-          "You farmed potatoes and tomatoes to make a very funny joke that no one understand but one person, who was kind enough to land you <PURPLETS>",
-          "You farm all day alone to get <PURPLETS>",
-          "You ride a TRAAAACTOOOOR on your farm and get <PURPLETS>"
+          "You farm all day alone to get <PURPLETS>"
         ]
       },
       "CASHIER": {
