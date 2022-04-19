@@ -441,17 +441,17 @@
     "meta": {},
     "jobs": {
       "FARMER": {
-        "name": "Farmer",
-        "description": "Harvest crops, and sell them for Purplets.",
+        "name": "Bauer",
+        "description": "Ernte Getreide und verkaufe sie für Purplets.",
         "strings": [
-          "You plant trees and flowers, and earn <PURPLETS>",
-          "You harvested a couple of melons and earned <PURPLETS>",
-          "You sold 20 carrots and got <PURPLETS>",
-          "You sold two pounds of turnips worth <PURPLETS>",
-          "You sold a bag aof patatoes for <PURPLETS>",
-          "You harvested, then sold two watermelons for <PURPLETS>",
-          "You sold two of your cows to another farmer and got <PURPLETS>",
-          "You farmed potatoes and tomatoes to make a very funny joke that no one understand but one person, who was kind enough to land you <PURPLETS>",
+          "Du pflanzst Bäume und Blumen und verdienst <PURPLETS>",
+          "Du hast ein paar Melonen geerntet und verdienst <PURPLETS>",
+          "Du hast 20 Karotten verkauft und bekommst <PURPLETS>",
+          "Du hast zwei Pfund Rüben im Wert von <PURPLETS> verkauft",
+          "Du hast eine Tasche Kartoffeln für <PURPLETS> verkauft",
+          "Du hast zwei Wassermelonen geerntet und sie dann für <PURPLETS> verkauft",
+          "Du hast zwei deiner Kühe an einen anderen Bauern verkauft und bekommst <PURPLETS>",
+          "Du hast Kartoffeln und Tomaten geerntet, um einen sehr lustigen Witz zu machen, den niemand versteht, außer eine Person, die freundlich genug war um dir <PURPLETS> zu beschaffen",
           "You farm all day alone to get <PURPLETS>",
           "You ride a TRAAAACTOOOOR on your farm and get <PURPLETS>"
         ]
