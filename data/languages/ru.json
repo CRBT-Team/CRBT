@@ -241,11 +241,11 @@
       "BADGES": "Badges (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Пурпуры",
       "BUTTON_EDIT_PROFILE": "Редактировать профиль",
-      "MODAL_NAME_PLACEHOLDER": "Уникальное имя, может состоять только из букв, цифр или пробелов.",
-      "MODAL_BIO_PLACEHOLDER": "Расскажите нам о себе. Теги CRBTscript принимаются.",
+      "MODAL_NAME_PLACEHOLDER": "A unique @ that can only have letters, numbers or spaces.",
+      "MODAL_BIO_PLACEHOLDER": "You can use markdown, links and CRBTscript tags.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ссылка на ваш сайт, блог, Твиттер...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Ваш день рождения, в формате ГГГГ-ММ-ДД.",
-      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
+      "MODAL_PRONOUNS_PLACEHOLDER": "e.g. they/them"
     }
   },
   "avatar": {
@@ -312,7 +312,7 @@
     },
     "strings": {
       "EMBED_TITLE": "Hourly Purplets claimed!",
-      "EMBED_DESCRIPTION": "You have claimed your hourly **<EMOJI> <PURPLETS> Purplets**.\nCurrent streak: **<STREAK>/5**",
+      "EMBED_DESCRIPTION": "You have claimed your hourly <PURPLETS>.\nCurrent streak: **<STREAK>/5**",
       "STREAK_BONUS": "(+30% bonus from streak)",
       "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
       "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
