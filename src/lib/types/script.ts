@@ -46,7 +46,6 @@ interface profile {
   banner?: profilebanner;
   accent_color?: `#${string}`;
   url?: string;
-  location?: string;
   pronouns?: string;
   likes?: number;
   birthday?: date;

@@ -1,32 +1,7 @@
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
-
-const Pronouns = {
-  unspecified: 'Their',
-  hh: 'His',
-  hi: 'His',
-  hs: 'His',
-  ht: 'His',
-  ih: 'Its',
-  ii: 'Its',
-  is: 'Its',
-  it: 'Its',
-  shh: 'Her',
-  sh: 'Her',
-  si: 'Her',
-  st: 'Her',
-  th: 'Their',
-  ti: 'Their',
-  ts: 'Their',
-  tt: 'Their',
-  any: 'Their',
-  other: 'Their',
-  ask: 'username',
-  avoid: 'username',
-};
 
 export default ChatCommand({
   name: 'give',
@@ -80,14 +55,6 @@ export default ChatCommand({
         where: { id: this.user.id },
       });
 
-      const pronouns =
-        targetUser?.pronouns ??
-        (
-          (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then(
-            (res) => res.json()
-          )) as { pronouns: string }
-        ).pronouns;
-
       await this.reply({
         embeds: [
           new MessageEmbed()
@@ -106,7 +73,7 @@ export default ChatCommand({
               true
             )
             .addField(
-              `${Pronouns[pronouns].replace('username', user.username)} balance`,
+              `Their balance`,
               `Previous: **${emojis.purplet} ${targetUser.purplets - amount}**\nNew: **${
                 emojis.purplet
               } ${targetUser.purplets}**`,

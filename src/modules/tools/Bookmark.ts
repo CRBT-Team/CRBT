@@ -10,7 +10,7 @@ export default MessageContextCommand({
   ...ctxMeta,
   async handle(message) {
     const { strings, errors } = getStrings(this.locale).bookmark;
-    const { JUMP_TO_MSG } = getStrings(this.locale).genericButtons;
+    const { JUMP_TO_MSG, OPEN_DMS } = getStrings(this.locale).genericButtons;
 
     await this.user
       .send({
@@ -38,9 +38,7 @@ export default MessageContextCommand({
         this.reply({
           content: strings.SUCCESS_MESSAGE,
           components: components(
-            row(
-              new MessageButton().setLabel(strings.SUCCESS_BUTTON).setStyle('LINK').setURL(msg.url)
-            )
+            row(new MessageButton().setLabel(OPEN_DMS).setStyle('LINK').setURL(msg.url))
           ),
           ephemeral: true,
         });

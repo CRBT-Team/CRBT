@@ -15,7 +15,7 @@ export const EditProfileBtn = ButtonComponent({
 
     const profile = await db.profiles.findFirst({
       where: { id: userId },
-      select: { name: true, bio: true, url: true, birthday: true, location: true },
+      select: { name: true, bio: true, url: true, birthday: true, pronouns: true },
     });
 
     const modal = new Modal()
@@ -66,13 +66,13 @@ export const EditProfileBtn = ButtonComponent({
         ),
         new MessageActionRow().setComponents(
           new TextInputComponent()
-            .setCustomId('profile_location')
-            .setLabel(strings.LOCATION)
+            .setCustomId('profile_pronouns')
+            .setLabel(strings.PRONOUNS)
             .setStyle('SHORT')
-            .setPlaceholder(strings.MODAL_LOCATION_PLACEHOLDER)
-            .setValue(profile?.location ?? '')
-            .setMinLength(3)
-            .setMaxLength(20)
+            .setPlaceholder(strings.MODAL_PRONOUNS_PLACEHOLDER)
+            .setValue(profile?.pronouns ?? '')
+            .setMinLength(5)
+            .setMaxLength(7)
         )
       );
 

@@ -1,16 +1,16 @@
 import { cache } from '$lib/cache';
 import { CRBTUser } from '$lib/classes/CRBTUser';
-import { db, emojis } from '$lib/db';
+import { colors, db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
 import { getStrings } from '$lib/language';
+import { profiles } from '@prisma/client';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { Interaction, MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
 import { EditProfileBtn } from './editProfile';
@@ -37,9 +37,25 @@ export default ChatCommand({
 
     try {
       if (lookup_discord) {
-        const profileData = await db.profiles.findFirst({
-          where: { id: lookup_discord.id },
-        });
+        // const profileData = await db.profiles.findFirst({
+        //   where: { id: lookup_discord.id },
+        // });
+
+        const profileData: profiles = {
+          name: 'pog',
+          bio: 'poggeers',
+          crbt_accent_color: `#${colors.red}`,
+          birthday: new Date('2020-03-03'),
+          id: lookup_discord.id,
+          crbt_badges: ['developer'],
+          verified: true,
+          pronouns: 'He/Him',
+          url: 'https://clembs.xyz',
+          purplets: 0,
+          crbt_banner: null,
+          location: null,
+          likes: null,
+        };
         profile = new CRBTUser(lookup_discord, profileData);
       } else if (lookup_name) {
         const profileData = await db.profiles.findFirst({
@@ -93,26 +109,13 @@ export const renderProfile = async (
   ctx: Interaction,
   navCtx?: { userId: string; cmdUID: string }
 ) => {
-  const { strings, pronouns: Pronouns } = getStrings(ctx.locale).profile;
+  const { strings } = getStrings(ctx.locale).profile;
   await import(`dayjs/locale/${ctx.locale.split('-')[0]}.js`);
-
-  if (!profile.pronouns) {
-    profile.pronouns = (
-      (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${profile.id}`).then(
-        (r) => r.json()
-      )) as any
-    ).pronouns;
-
-    await db.profiles.update({
-      data: { pronouns: profile.pronouns },
-      where: { id: profile.id },
-    });
-  }
 
   const e = new MessageEmbed()
     .setAuthor({
-      // name: profile.user.tag,
-      name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
+      name: profile.user.tag,
+      // name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
       iconURL: avatar(profile.user, 64),
     })
     .setTitle(
@@ -120,7 +123,14 @@ export const renderProfile = async (
         ? `@${profile.name}${profile?.verified ? ` ${emojis.verified}` : ''}`
         : profile.user.username
     )
-    .setDescription(profile?.bio ? await profile.parseBio() : '')
+    .setDescription(
+      [
+        profile.pronouns ? `${strings.PRONOUNS}: ${profile.pronouns}` : null,
+        profile.url ? `**[${trimURL(profile.url)}](${profile.url})**` : null,
+      ]
+        .filter((i) => i)
+        .join(' • ')
+    )
     .setThumbnail(avatar(profile.user, 256))
     .setImage(profile && profile.banner ? profile.banner.url : null)
     .setFooter({
@@ -128,35 +138,28 @@ export const renderProfile = async (
     })
     .setColor(await getColor(profile.user));
 
+  if (profile?.bio) {
+    e.addField(strings.BIO, profile.bio);
+  }
+
+  if (profile?.birthday) {
+    const bday = dayjs(profile.birthday);
+    e.addField(
+      strings.BIRTHDAY,
+      `<t:${bday.unix()}:D>\n${bday
+        .year(dayjs().year())
+        .locale(ctx.locale.split('-')[0])
+        .fromNow()}`,
+      true
+    );
+  }
+
   if (profile?.badges && profile?.badges.length > 0) {
     e.addField(
       strings.BADGES.replace('<NUMBER>', `${profile.badges.length}`),
       profile.badges.join('‎ '),
       profile.badges.length < 6
     );
-  }
-  e.addField(
-    strings.PRONOUNS,
-    Pronouns[profile.pronouns].replace('<USERNAME>', profile?.name ?? profile.user.username),
-    true
-  );
-
-  if (profile?.birthday) {
-    const bday = dayjs(profile.birthday);
-    e.addField(
-      strings.BIRTHDAY,
-      `<t:${bday.unix()}:D> • ${bday
-        .year(dayjs().year())
-        .locale(ctx.locale.split('-')[0])
-        .fromNow()}`,
-      false
-    );
-  }
-  if (profile?.url) {
-    e.addField(strings.WEBSITE, `**[${trimURL(profile.url)}](${profile.url})**`, true);
-  }
-  if (profile?.location) {
-    e.addField(strings.LOCATION, profile.location, true);
   }
 
   return {

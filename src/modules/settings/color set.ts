@@ -53,7 +53,7 @@ export const colorset = ChatCommand({
               name: strings.EMBED_TITLE,
               iconURL: icons.success,
             })
-            .setDescription(strings.EMBED_MANUAL_COLOR)
+            .setDescription(strings.EMBED_DESCRIPTION)
             .setColor(finalColor),
         ],
         ephemeral: true,
@@ -74,7 +74,7 @@ export const colorset = ChatCommand({
                 name: strings.EMBED_TITLE,
                 iconURL: icons.success,
               })
-              .setDescription(strings.EMBED_SYNC_COLOR)
+              .setDescription(`${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`)
               .setColor(user.hexAccentColor),
           ],
           ephemeral: true,

@@ -20,7 +20,6 @@ export class CRBTUser {
   public banner?: Banner;
   public accent_color?: `#${string}` | 'profile';
   public url?: string;
-  public location?: string;
   public pronouns?: string;
   public likes?: CRBTUser[];
   public birthday?: Dayjs;
@@ -36,7 +35,6 @@ export class CRBTUser {
     this.banner = profile?.crbt_banner ? new Banner(profile.crbt_banner) : null;
     this.accent_color = profile?.crbt_accent_color as `#${string}` | 'profile';
     this.url = profile?.url;
-    this.location = profile?.location;
     this.pronouns = profile?.pronouns;
     this.birthday = profile?.birthday ? dayjs(profile.birthday) : null;
   }

@@ -140,7 +140,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       name: trimSpecialChars(modal.fields.getTextInputValue('profile_name')).trim(),
       bio: modal.fields.getTextInputValue('profile_bio').trim(),
       birthday: bday.isValid() && bday.isBefore(new Date()) ? bday.toDate() : null,
-      location: modal.fields.getTextInputValue('profile_location').trim(),
+      pronouns: modal.fields.getTextInputValue('profile_pronouns').trim(),
       url: url.match(urlRegex)
         ? url.startsWith('http://') || url.startsWith('https://')
           ? url
