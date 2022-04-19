@@ -241,11 +241,11 @@
       "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Profil bearbeiten",
-      "MODAL_NAME_PLACEHOLDER": "Der Name muss eindeutig sein und darf nur Buchstaben, Zahlen oder Leerzeichen enthalten.",
-      "MODAL_BIO_PLACEHOLDER": "Erzählen Sie uns von Ihnen: CRBTscript-Tags akzeptiert.",
+      "MODAL_NAME_PLACEHOLDER": "A unique @ that can only have letters, numbers or spaces.",
+      "MODAL_BIO_PLACEHOLDER": "You can use markdown, links and CRBTscript tags.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ein Link zu Ihrer Website, Blog, Twitter...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Ihr Geburtstag im Format JJJJ-MM-TT.",
-      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
+      "MODAL_PRONOUNS_PLACEHOLDER": "e.g. they/them"
     }
   },
   "avatar": {
@@ -312,7 +312,7 @@
     },
     "strings": {
       "EMBED_TITLE": "Stündliche Purplets erhalten!",
-      "EMBED_DESCRIPTION": "Du hast deine stündlichen **<EMOJI> <PURPLETS> Purplets abgeholt**.\nAktuelle Streak: **<STREAK>/5**",
+      "EMBED_DESCRIPTION": "You have claimed your hourly <PURPLETS>.\nCurrent streak: **<STREAK>/5**",
       "STREAK_BONUS": "(+30%-Bonus von der Streak)",
       "STREAK": "(<STREAK_LEFT> noch für einen Bonus!)",
       "EMBED_REMINDER": "Klicke auf den Button unten, um dich selbst eine Erinnerung zu setzen, um deine stündlichen Purplets erneut zu beanspruchen."
