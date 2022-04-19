@@ -12,7 +12,8 @@
     "PREVIOUS": "Previous",
     "NEXT": "Next",
     "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder"
+    "ADD_REMINDER": "Add Reminder",
+    "OPEN_DMS": "Open DMs"
   },
   "UnknownError": {
     "strings": {
@@ -28,42 +29,6 @@
       "COMPONENT": "component"
     }
   },
-  "activity": {
-    "meta": {
-      "name": "activity",
-      "description": "Start an activity in a voice channel.",
-      "options": [
-        {
-          "name": "activity",
-          "description": "The activity to start",
-          "choices": [
-            "Watch Together - Unlimited participants",
-            "Sketch Heads - Up to 16 players",
-            "Word Snacks - Up to 8 players",
-            "Poker Night - 💎 Requires Boosting",
-            "Chess In The Park - 💎 Requires Boosting",
-            "Checkers In The Park - 💎 Requires Boosting",
-            "Blazing 8s - 💎 Requires Boosting",
-            "Letter League - 💎 Requires Boosting",
-            "SpellCast - 💎 Requires Boosting"
-          ]
-        },
-        {
-          "name": "channel",
-          "description": "The voice channel to start the activity in"
-        }
-      ]
-    },
-    "errors": {
-      "NO_CHANNEL": "You need to be in a voice channel, or to choose a voice channel using the `channel` option.",
-      "NOT_VOICE": "You need to choose a voice channel in order to start an activity!"
-    },
-    "strings": {
-      "EMBED_TITLE": "All set!",
-      "EMBED_DESCRIPTION": "Click the button below to join <ACTIVITY> in <CHANNEL>.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.",
-      "BUTTON_LABEL": "Join Activity"
-    }
-  },
   "balance": {
     "meta": {
       "name": "balance",
@@ -76,7 +41,7 @@
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<user> - Balance",
+      "EMBED_TITLE": "<USER> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
       "LEADERBOARD_TITLE": "Leaderboard rank",
       "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
@@ -124,8 +89,8 @@
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
-      "EMBED_MANUAL_COLOR": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
-      "EMBED_SYNC_COLOR": "Your Discord profile color will be synced to your CRBT accent color. This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them"
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -143,7 +108,7 @@
         },
         {
           "name": "destination",
-          "description": "Where to send the reminder (leave blank to send reminder by DM)."
+          "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
     },
@@ -228,11 +193,11 @@
       "options": [
         {
           "name": "lookup_name",
-          "description": "Search a profile by their CRBT profile name."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "lookup_discord",
-          "description": "Search a profile by their Discord user ID or name."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -273,7 +238,6 @@
       "PRONOUNS": "Pronouns",
       "BIRTHDAY": "Birthday",
       "WEBSITE": "Website",
-      "LOCATION": "Location",
       "BADGES": "Badges (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Edit Profile",
@@ -281,7 +245,7 @@
       "MODAL_BIO_PLACEHOLDER": "Tell us about yourself. CRBTscript tags accepted.",
       "MODAL_WEBSITE_PLACEHOLDER": "A link to your website, blog, Twitter...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Your birthday, in the YYYY-MM-DD format.",
-      "MODAL_LOCATION_PLACEHOLDER": "Where are you from?"
+      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
     }
   },
   "avatar": {
@@ -326,8 +290,7 @@
     },
     "strings": {
       "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!",
-      "SUCCESS_BUTTON": "Open DMs"
+      "SUCCESS_MESSAGE": "Sent this message by DM!"
     }
   },
   "calc": {
@@ -448,12 +411,10 @@
           "You harvested a couple of melons and earned <PURPLETS>",
           "You sold 20 carrots and got <PURPLETS>",
           "You sold two pounds of turnips worth <PURPLETS>",
-          "You sold a bag aof patatoes for <PURPLETS>",
-          "You harvested, then sold two watermelons for <PURPLETS>",
+          "You sold a bag of patatoes for <PURPLETS>",
+          "You harvested and sold two watermelons for <PURPLETS>",
           "You sold two of your cows to another farmer and got <PURPLETS>",
-          "You farmed potatoes and tomatoes to make a very funny joke that no one understand but one person, who was kind enough to land you <PURPLETS>",
-          "You farm all day alone to get <PURPLETS>",
-          "You ride a TRAAAACTOOOOR on your farm and get <PURPLETS>"
+          "You farm all day alone to get <PURPLETS>"
         ]
       },
       "CASHIER": {
