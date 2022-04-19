@@ -12,7 +12,8 @@
     "PREVIOUS": "Vorheriges",
     "NEXT": "Nächstes",
     "SAVE": "Speichern",
-    "ADD_REMINDER": "Erinnerung hinzufügen"
+    "ADD_REMINDER": "Erinnerung hinzufügen",
+    "OPEN_DMS": "Open DMs"
   },
   "UnknownError": {
     "strings": {
@@ -28,42 +29,6 @@
       "COMPONENT": "Komponente"
     }
   },
-  "activity": {
-    "meta": {
-      "name": "aktivität",
-      "description": "Starte eine Aktivität in einem Sprachkanal.",
-      "options": [
-        {
-          "name": "aktivität",
-          "description": "Die zu startende Aktivität",
-          "choices": [
-            "Watch Together - Unbegrentzte Teilnehmer",
-            "Sketch Heads - Bis zu 16 Spieler",
-            "Word Snacks - Bis zu 8 Spieler",
-            "Poker Night - 💎 Erfordert Boosting",
-            "Ches In The Park - 💎 Erfordert Boosting",
-            "Checkers in the Park - 💎 Erfordert Boosting",
-            "Blazing 8s - 💎 Erfordert Boosting",
-            "Letter League - 💎 Erfordert Boosting",
-            "SpellCast - 💎 Erfordert Boosting"
-          ]
-        },
-        {
-          "name": "kanal",
-          "description": "Der Sprachkanal, in dem die Aktivität gestartet wird"
-        }
-      ]
-    },
-    "errors": {
-      "NO_CHANNEL": "Du musst in einem Sprachkanal sein oder einen Sprachkanal mit der Option `Kanal` wählen.",
-      "NOT_VOICE": "Du musst einen Sprachkanal auswählen, um eine Aktivität zu starten!"
-    },
-    "strings": {
-      "EMBED_TITLE": "Fertig!",
-      "EMBED_DESCRIPTION": "Klicke auf den Button unten, um <ACTIVITY> in <CHANNEL> beizutreten.\nHinweis: Aktivitäten funktionieren nicht auf dem Handy und sind dort noch experimentell. Erwarte Fehler und fehlende Funktionen.",
-      "BUTTON_LABEL": "Aktivität beitreten"
-    }
-  },
   "balance": {
     "meta": {
       "name": "guthaben",
@@ -76,7 +41,7 @@
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<user> - Guthaben",
+      "EMBED_TITLE": "<USER> - Balance",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
       "LEADERBOARD_TITLE": "Rang in der Rangliste",
       "LEADERBOARD_NOTPRESENT": "Nicht in der globalen Rangliste",
@@ -124,8 +89,8 @@
     },
     "strings": {
       "EMBED_TITLE": "Akzentfarbe aktualisiert.",
-      "EMBED_MANUAL_COLOR": "Diese Farbe wird für die meisten Antworten von CRBT verwendet sowie auf Ihrem Profil und auf Infokarten, wenn jemand anders sie besucht.",
-      "EMBED_SYNC_COLOR": "Deine Discord-Profilfarbe wird mit deiner CRBT-Akzentfarbe synchronisiert. Diese Farbe wird für die meisten Antworten von CRBT verwendet sowie auf deinen Profil- und Infokarten, wenn jemand anders sie besucht"
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -143,7 +108,7 @@
         },
         {
           "name": "destination",
-          "description": "Where to send the reminder (leave blank to send reminder by DM)."
+          "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
     },
@@ -228,11 +193,11 @@
       "options": [
         {
           "name": "suchname",
-          "description": "Suche ein Profil nach dem Namen des CRBT-Profils."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "such_discord",
-          "description": "Suche ein Profil mit anhand der Discord-Benutzer-ID oder dem Namen."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -273,7 +238,6 @@
       "PRONOUNS": "Pronomen",
       "BIRTHDAY": "Geburtstag",
       "WEBSITE": "Webseite",
-      "LOCATION": "Standort",
       "BADGES": "Abzeichen (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets",
       "BUTTON_EDIT_PROFILE": "Profil bearbeiten",
@@ -281,7 +245,7 @@
       "MODAL_BIO_PLACEHOLDER": "Erzählen Sie uns von Ihnen: CRBTscript-Tags akzeptiert.",
       "MODAL_WEBSITE_PLACEHOLDER": "Ein Link zu Ihrer Website, Blog, Twitter...",
       "MODAL_BIRTHDAY_PLACEHOLDER": "Ihr Geburtstag im Format JJJJ-MM-TT.",
-      "MODAL_LOCATION_PLACEHOLDER": "Woher kommen Sie?"
+      "MODAL_PRONOUNS_PLACEHOLDER": "What pronouns should we use for you? (e.g. they/them)"
     }
   },
   "avatar": {
@@ -326,8 +290,7 @@
     },
     "strings": {
       "BOOKMARK_AUTHOR": "<USER> (Lesezeichen-Nachricht)",
-      "SUCCESS_MESSAGE": "Nachricht per DM gesendet!",
-      "SUCCESS_BUTTON": "Öffne DMs"
+      "SUCCESS_MESSAGE": "Nachricht per DM gesendet!"
     }
   },
   "calc": {
@@ -448,12 +411,10 @@
           "Du hast ein paar Melonen geerntet und verdienst <PURPLETS>",
           "Du hast 20 Karotten verkauft und bekommst <PURPLETS>",
           "Du hast zwei Pfund Rüben im Wert von <PURPLETS> verkauft",
-          "Du hast eine Tasche Kartoffeln für <PURPLETS> verkauft",
-          "Du hast zwei Wassermelonen geerntet und sie dann für <PURPLETS> verkauft",
+          "You sold a bag of patatoes for <PURPLETS>",
+          "You harvested and sold two watermelons for <PURPLETS>",
           "Du hast zwei deiner Kühe an einen anderen Bauern verkauft und bekommst <PURPLETS>",
-          "Du hast Kartoffeln und Tomaten geerntet, um einen sehr lustigen Witz zu machen, den niemand versteht, außer eine Person, die freundlich genug war um dir <PURPLETS> zu beschaffen",
-          "You farm all day alone to get <PURPLETS>",
-          "You ride a TRAAAACTOOOOR on your farm and get <PURPLETS>"
+          "You farm all day alone to get <PURPLETS>"
         ]
       },
       "CASHIER": {
