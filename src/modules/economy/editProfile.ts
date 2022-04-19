@@ -70,7 +70,7 @@ export const EditProfileBtn = ButtonComponent({
             .setLabel(strings.PRONOUNS)
             .setStyle('SHORT')
             .setPlaceholder(strings.MODAL_PRONOUNS_PLACEHOLDER)
-            .setValue(profile?.pronouns ?? '')
+            .setValue(profile?.pronouns?.length > 2 ? profile?.pronouns : '')
             .setMinLength(5)
             .setMaxLength(7)
         )

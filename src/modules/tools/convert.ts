@@ -39,9 +39,9 @@ const currencies = [
 ].map(([name, value]) => ({ name, value }));
 
 const allUnits = [
-  ...units.map(({ abbr, plural }) => ({ name: plural, value: abbr })),
   ...currencies,
-];
+  ...units.map(({ abbr, plural }) => ({ name: plural, value: abbr })),
+].sort(() => Math.random() - 0.5);
 
 export default ChatCommand({
   name: 'convert',

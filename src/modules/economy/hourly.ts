@@ -57,9 +57,10 @@ export default ChatCommand({
             iconURL: icons.success,
           })
           .setDescription(
-            `${strings.EMBED_DESCRIPTION.replace('<EMOJI>', emojis.purplet)
-              .replace(`<PURPLETS>`, `${income}`)
-              .replace('<STREAK>', `${currentStreak}`)} ${
+            `${strings.EMBED_DESCRIPTION.replace(
+              '<PURPLETS>',
+              `${emojis.purplet} **${income} Purplets**`
+            )} ${
               currentStreak < 5
                 ? strings.STREAK.replace('<STREAK_LEFT>', `${5 - currentStreak}`)
                 : strings.STREAK_BONUS
