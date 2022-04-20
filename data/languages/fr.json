@@ -1,9 +1,9 @@
 {
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_DESCRIPTION": "Obsolète. ",
+    "DEPRECATION_TITLE": "⚠️ Annonce d'obsolescence",
+    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie Purplet sont bientôt supprimés en faveur du système de profil de Discord et d'un système d'économie pour chaque serveur bien plus puissant.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Retour",
@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "couleur",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
         }
       ]
     },
@@ -85,13 +85,13 @@
       "white": "Blanc"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "Vous n'avez pas de couleur de profil Discord à synchroniser ! Pour en définir une, modifiez votre profil d'utilisateur et modifiez votre couleur de profil.",
+      "INVALID_COLOR_NAME": "You need to enter a valid color name or use an HEX color code. Use the autocomplete for a list of color names."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
+      "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on commands that show info about you."
     }
   },
   "remind me": {
@@ -100,15 +100,15 @@
       "options": [
         {
           "name": "quand",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "description": "Quand vous en rappeler (ex : 2 hours, 3w2d, 20:30)."
         },
         {
-          "name": "subject",
-          "description": "What to remind you of."
+          "name": "sujet",
+          "description": "Ce dont vous voulez vous rappeler."
         },
         {
           "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "description": "Où envoyer le rappel (laissez vide pour l'envoyer par MP)."
         }
       ]
     },
@@ -127,12 +127,12 @@
       "SUCCESS_CHANNEL": "Vous recevrez votre rappel dans <CHANNEL>",
       "SUCCESS_DM": "Vous recevrez votre rappel par MP",
       "SUBJECT": "Sujet",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
+      "TOMORROW_AT": "Demain à <TIME>",
+      "TODAY_AT": "Aujourd'hui à <TIME>",
       "BUTTON_GCALENDAR": "Ajouter à Google Calendrier",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "GCALENDAR_EVENT": "Défini par un rappel CRBT.",
+      "GCALENDAR_EVENT_DM": "Vous en serez aussi rappelé par MP.",
+      "GCALENDAR_EVENT_CHANNEL": "Vous en serez également rappelé dans <CHANNEL>, dans <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "and",
@@ -145,158 +145,157 @@
   },
   "ping": {
     "meta": {
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Renvoie la latence et les infos de connection de CRBT."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
+      "EMBED_TITLE": "<CRBT> - Latence",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "UPTIME": "Connecté depuis",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT"
+      "description": "Obtenir des informations sur CRBT"
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
-      "PROFILES_REGISTERED": "Profiles registered",
-      "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
-      "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "VERSION": "Version <VERSION> sur <PURPLET>",
+      "MEMBER_COUNT": "Nombre de membres",
+      "SERVER_COUNT": "Nombre de membres",
+      "PING": "Latence",
+      "PING_RESULT": "≈<PING> millisecondes",
+      "CREATED": "Créé le",
+      "UPTIME": "Connecté depuis",
+      "BUTTON_WEBSITE": "Site web",
+      "BUTTON_INVITE": "Ajouter au serveur",
+      "BUTTON_DISCORD": "Rejoindre la communauté"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Seule la personne qui a utilisé cette commande peut utiliser ce bouton."
     },
     "strings": {
-      "PROFILE": "Profile",
+      "PROFILE": "Profil",
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "Infos utilisateur"
     }
   },
   "profile": {
     "meta": {
-      "description": "Get a user's CRBT profile, or yours.",
+      "description": "Obtenez le profil CRBT d'un utilisateur, ou le vôtre.",
       "options": [
         {
           "name": "lookup_name",
-          "description": "Search via CRBT profile names."
+          "description": "Search via CRBT profile name."
         },
         {
           "name": "lookup_discord",
-          "description": "Search via Discord user IDs or names."
+          "description": "Search via Discord user ID or username."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "Voir le profil CRBT"
     },
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "hh": "Il",
+      "sh": "Elle",
+      "tt": "Iel",
+      "other": "Autre",
+      "ask": "Demandez-moi"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "Vous ne pouvez modifier que votre propre profil."
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "NAME": "Name",
+      "EMBED_TITLE": "<USER> - Profil",
+      "NAME": "Nom",
       "BIO": "Bio",
       "PRONOUNS": "Pronoms",
-      "BIRTHDAY": "Birthday",
-      "WEBSITE": "Website",
+      "BIRTHDAY": "Date de naissance",
+      "WEBSITE": "Site web",
       "BADGES": "Badges (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Obtenir l'avatar par défaut d'un utilisateur ou le vôtre si vous n'en spécifiez pas.",
       "options": [
         {
           "name": "utilisateur",
-          "description": "The user to get the avatar of."
+          "description": "L'utilisateur dont vous voulez voir l'avatar."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "taille",
+          "description": "La taille de l'avatar à obtenir."
         },
         {
           "name": "format",
-          "description": "The format of the avatar to get."
+          "description": "Le format de l'avatar à obtenir."
         }
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Voir l'avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "DOWNLOAD": "Télécharger (<SIZE> pixels - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_TITLE": "Merci d'avoir invité <CRBT> sur votre serveur !",
+      "EMBED_DESCRIPTION": "<CRBT> est maintenant dans <SERVERS> serveurs !\nPour commencer avec CRBT, tapez simplement `/` et cliquez sur son avatar !\nPour plus d'aide et d'informations, visitez le **[serveur de support](<DISCORD>)**."
     }
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Sauvegarder le message"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Vous devez activer vos MP ou débloquer CRBT pour pouvoir sauvegarder des messages."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (message sauvegardé)",
+      "SUCCESS_MESSAGE": "Ce message vous a été sauvegardé par MP !"
     }
   },
   "calc": {
     "meta": {
-      "description": "Calculate a mathematical expression.",
+      "description": "Calculer une expression mathématique.",
       "options": [
         {
           "name": "expression",
-          "description": "The expression to calculate."
+          "description": "L'expression à calculer."
         }
       ]
     }
   },
   "hourly": {
     "meta": {
-      "description": "Get a few Purplets every hour."
+      "description": "Obtenez quelques Purplets chaque heure."
     }
   },
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+        "description": "Créer un Sélecteur de rôles manuellement, permettant à vos membres de s'assigner des rôles.",
         "options": [
           {
             "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
+            "description": "Décrivez à vos membres à quoi sert votre Sélecteur de rôles."
           },
           {
             "name": "comportement",
-            "description": "How the Role Picker should behave.",
+            "description": "Comment le Sélecteur de rôles doit se comporter.",
             "choices": [
-              "Alterner donner/supprimer des rôles",
+              "Alterner entre donner et retirer le(s) rôle(s)",
               "Ne donner le(s) rôle(s) qu'une seule fois"
             ]
           },
@@ -313,7 +312,7 @@
     },
     "preset": {
       "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
+        "description": "Créer un nouveau Sélecteur de rôles en utilisant un kit préconçu.",
         "options": [
           {
             "name": "kit",
@@ -341,163 +340,26 @@
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "USER_MISSING_PERMS": "Seuls les administrateurs du serveur peuvent créer des Sélecteurs de rôles.",
+      "BOT_MISSING_PERMS": "J'ai besoin de la permission \"Gérer les rôles\" pour créer un Sélecteur de rôles.",
+      "ROLE_DOES_NOT_EXIST": "Le rôle <ROLE> n'existe pas ou a été supprimé. Contactez un administrateur pour résoudre le problème.",
+      "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles que vous avez spécifiés n'existent pas ou ont été supprimés. Contactez un administrateur pour résoudre le problème.",
+      "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
-      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
-    }
-  },
-  "work": {
-    "meta": {},
-    "jobs": {
-      "FARMER": {
-        "name": "Farmer",
-        "description": "Harvest crops, and sell them for Purplets.",
-        "strings": [
-          "You plant trees and flowers, and earn <PURPLETS>",
-          "You harvested a couple of melons and earned <PURPLETS>",
-          "You sold 20 carrots and got <PURPLETS>",
-          "You sold two pounds of turnips worth <PURPLETS>",
-          "You sold a bag of patatoes for <PURPLETS>",
-          "You harvested and sold two watermelons for <PURPLETS>",
-          "You sold two of your cows to another farmer and got <PURPLETS>",
-          "You farm all day alone to get <PURPLETS>"
-        ]
-      },
-      "CASHIER": {
-        "name": "Cashier",
-        "description": "Scan these barcodes and earn some Purplets.",
-        "strings": [
-          "A person bought a lot of toilet paper you sold for <PURPLETS>",
-          "Someone gave you a tip of <PURPLETS>",
-          "You did your job well and the boss gives you <PURPLETS>",
-          "You put all your heart and soul scanning these barcodes and you earned <PURPLETS>",
-          "You recommend someone they buy extra, and they did! You get <PURPLETS>",
-          "You sit on the chair all day at your desk, watching people, waiting for customers to arrive, and boringly enough you earn <PURPLETS>"
-        ]
-      },
-      "BAKER": {
-        "name": "Baker",
-        "description": "Make cakes, bake bread, bread cakes and cake breads for Purplets 🍞."
-      },
-      "COOK": {
-        "name": "Cook",
-        "description": "Cook delicious food from around the world."
-      },
-      "DEVELOPER": {
-        "name": "Developer",
-        "description": "Develop new software, games and all kinds of fun stuff!",
-        "strings": [
-          "You hate the testers so much but you still earned <PURPLETS>",
-          "You rewrote the whole Python language in C++, everyone's minds are blown away and you get <PURPLETS>",
-          "You find a bug on CRBT and decide to report it. As a congratulation, you earned <PURPLETS>",
-          "The boss gets mad looking at your spaghetti code! Luckily, an opponent sitting right next to you had much better code so you steal it and earn <PURPLETS>",
-          "You design a much much better bot than CRBT... wait that's impossible, right???? Anyway, you earn <PURPLETS>"
-        ]
-      },
-      "DOCTOR": {
-        "name": "Doctor",
-        "description": "Save people by healing their wounds and by curing their diseases and illnesses.",
-        "strings": [
-          "You pull out a heart out of a human mannequin and earned <PURPLETS>",
-          "You managed to fake someone's death to \"revive\" them, nobody noticed the trickery and are very impressed! You get <PURPLETS>",
-          "You found a cure to this popular disease going on, and you earn <PURPLETS>",
-          "You make a sick guy eat a rock because you thought it would be funny, but turns out he somewhat got cured. So strangely enough you earn <PURPLETS>"
-        ]
-      },
-      "TEACHER": {
-        "name": "Teacher",
-        "description": "Teach people math, science, history, and many other subjects!"
-      },
-      "ENGINEER": {
-        "name": "Engineer",
-        "description": "Build advanced machinery and tools using the latest technologies."
-      },
-      "POLICE_OFFICER": {
-        "name": "Police Officer",
-        "description": "Protect people from crime and law.",
-        "strings": [
-          "You got hurt in the line of duty and had to stay a few days in hospital. But you make a full recovery. You earn <PURPLETS>",
-          "Today was quite quiet... That was until a rookie said that, then all heck broke loose. You were paid <PURPLETS>",
-          "You and the boys catch a drug dealer on the street! You get <PURPLETS>",
-          "You find a dead body and report it. Its discovery makes you gain <PURPLETS>"
-        ]
-      },
-      "FIREFIGHTER": {
-        "name": "Firefighter",
-        "description": "Fight fires, protect the city and save lives."
-      },
-      "NURSE": {
-        "name": "Nurse",
-        "description": "Treat people."
-      },
-      "LAWYER": {
-        "name": "Lawyer",
-        "description": "Sue people for their crimes and get them to pay their bills."
-      },
-      "MUSICIAN": {
-        "name": "Musician",
-        "description": "Sing songs, create music pieces and sell them to build your musician career.",
-        "strings": [
-          "You make a song while you're bored... Turns out, it gets you <PURPLETS>",
-          "You played that very sick theme everyone likes, and you got tipped <PURPLETS>",
-          "You wrote a very cool song for a big artist, their corporation gives you <PURPLETS>"
-        ]
-      },
-      "ATHLETE": {
-        "name": "Athlete",
-        "description": "Compete in all kinds of sports and win Purplets for your achievements."
-      },
-      "STREAMER": {
-        "name": "Streamer",
-        "description": "Stream your favorite games, make funny jokes and talk with your viewers to earn Purplets from them."
-      },
-      "ARTIST": {
-        "name": "Artist",
-        "description": "Create art, make posters and other art and sell them for Purplets.",
-        "strings": [
-          "You animated a fanfiction and earned <PURPLETS>",
-          "You drew an epic fanart for some big content creator! They feature you on their socials and pay you <PURPLETS>",
-          "You made a really cool piece of art that some rich people buys for <PURPLETS>"
-        ]
-      },
-      "WRITER": {
-        "name": "Writer",
-        "description": "Write stories, poems, novels, fanfics, books... and sell them for Purplets!"
-      },
-      "INFLUENCER": {
-        "name": "Influencer",
-        "description": "Spread your message, get people to follow you and get sponsors to pay you Purplets.",
-        "strings": [
-          "You made an epic video game funnies compilation and got <PURPLETS>",
-          "Someone posted a drama about you! You replied in a sponsored apology video which earned you <PURPLETS>",
-          "You uploaded a movie illegally onto YouTube flooded with ads that make you earn <PURPLETS>",
-          "You posted some funny memes, some random guy gave you <PURPLETS>",
-          "Your longplay on that hot new video game got kinda popular to the point where you get <PURPLETS>",
-          "Your latest video got shared a lot, and that reflects on your earnings! You earned <PURPLETS>",
-          "You uploaded a gaming video on YouTube and managed to get 60k views and <PURPLETS>",
-          "You made a very clickbaity video and got <PURPLETS>",
-          "You make a product placement deal that got you <PURPLETS>",
-          "A rich and famous YouTuber made a video about you and you earned <PURPLETS>",
-          "You are chatting with your viewers on stream as a Vtuber visits your channel, and their fans donate you <PURPLETS>"
-        ]
-      }
+      "EMBED_TITLE": "Sélecteur de rôles - Rôles auto-assignables",
+      "CHOOSE_ROLE": "Choisissez un rôle",
+      "CHOOSE_ROLES": "Choississez des rôles",
+      "EMBED_FOOTER": "Note : CRBT n'est affilié à aucun des noms de rôles ou au serveur.",
+      "OPTION_LABEL_GET_ROLE": "Obtenez le rôle <ROLE>.",
+      "GENERIC_SELECTOR_TITLE": "Sélectionnez un ou plusieurs rôles en les choisissant ci-dessous.",
+      "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
+      "BUTTON_ROLES_ADD": "Le rôle <ROLE> vous a été ajouté.",
+      "BUTTON_ROLES_ADD_AGAIN": "Sélectionnez-le à nouveau pour le retirer.",
+      "BUTTON_ROLES_REMOVE": "<ROLE> a été retiré de vos rôles.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Sélectionnez-le à nouveau pour l'ajouter.",
+      "SUCCESS_TITLE": "Sélecteur de rôles créé !",
+      "SUCCESS_DESCRIPTION": "Les membres pourront désormais choisir des rôles depuis ce menu. Pour le désactiver, supprimez le message du Sélecteur de rôles."
     }
   }
 }
