@@ -1,6 +1,9 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "This command cannot be used in DMs.",
+    "DEPRECATION_DESCRIPTION": "Deprecated. ",
+    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
+    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Back",
@@ -29,9 +32,26 @@
       "COMPONENT": "component"
     }
   },
+  "balance": {
+    "meta": {
+      "description": "View a user's Purplet balance, or yours.",
+      "options": [
+        {
+          "name": "user",
+          "description": "The user to view the balance of"
+        }
+      ]
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Balance",
+      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
+      "LEADERBOARD_TITLE": "Leaderboard rank",
+      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+    }
+  },
   "color set": {
     "meta": {
-      "name": "color set",
       "description": "Change your CRBT accent color.",
       "options": [
         {
@@ -76,7 +96,6 @@
   },
   "remind me": {
     "meta": {
-      "name": "reminder new",
       "description": "Set a reminder.",
       "options": [
         {
@@ -126,7 +145,6 @@
   },
   "ping": {
     "meta": {
-      "name": "ping",
       "description": "Ping CRBT. Returns latency and connection info."
     },
     "strings": {
@@ -139,7 +157,6 @@
   },
   "crbt info": {
     "meta": {
-      "name": "crbt info",
       "description": "Get information about CRBT"
     },
     "strings": {
@@ -161,27 +178,52 @@
       "NOT_CMD_USER": "Only the person who used this command can use this button."
     },
     "strings": {
+      "PROFILE": "Profile",
       "AVATAR": "Avatar",
       "INFO": "User info"
     }
   },
   "profile": {
     "meta": {
-      "name": "profile",
-      "description": "Deprecated. Use command to learn more."
+      "description": "Get a user's CRBT profile, or yours.",
+      "options": [
+        {
+          "name": "lookup_name",
+          "description": "Search via CRBT profile names."
+        },
+        {
+          "name": "lookup_discord",
+          "description": "Search via Discord user IDs or names."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View CRBT Profile"
     },
     "pronouns": {
       "hh": "He/Him",
       "sh": "She/Her",
       "tt": "They/Them",
-      "any": "Any",
       "other": "Other",
       "ask": "Ask me"
+    },
+    "errors": {
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Profile",
+      "NAME": "Name",
+      "BIO": "Bio",
+      "PRONOUNS": "Pronouns",
+      "BIRTHDAY": "Birthday",
+      "WEBSITE": "Website",
+      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
     "meta": {
-      "name": "avatar default",
       "description": "Get a user's default avatar, or yours if you don't specify one.",
       "options": [
         {
@@ -199,7 +241,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "View Avatar"
+      "name": "Get Avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -226,7 +268,6 @@
   },
   "calc": {
     "meta": {
-      "name": "calculate",
       "description": "Calculate a mathematical expression.",
       "options": [
         {
@@ -236,10 +277,14 @@
       ]
     }
   },
+  "hourly": {
+    "meta": {
+      "description": "Get a few Purplets every hour."
+    }
+  },
   "role-selectors": {
     "manual": {
       "meta": {
-        "name": "role-picker new",
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
         "options": [
           {
@@ -264,7 +309,6 @@
     },
     "preset": {
       "meta": {
-        "name": "role-picker preset",
         "description": "Create a new Role Picker using one of the presets.",
         "options": [
           {
