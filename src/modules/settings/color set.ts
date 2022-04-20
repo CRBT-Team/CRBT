@@ -35,14 +35,14 @@ export const colorset = ChatCommand({
     if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
       if (finalColor === colors.default) {
         cache.del(`color_${this.user.id}`);
-        await db.users.update({
-          data: { accent_color: null },
+        await db.profiles.update({
+          data: { crbt_accent_color: null },
           where: { id: this.user.id },
         });
       } else {
         cache.set(`color_${user.id}`, `#${finalColor}`);
-        await db.users.update({
-          data: { accent_color: `#${finalColor}` },
+        await db.profiles.update({
+          data: { crbt_accent_color: `#${finalColor}` },
           where: { id: user.id },
         });
       }
@@ -63,8 +63,8 @@ export const colorset = ChatCommand({
         await this.reply(CRBTError(errors.NO_DISCORD_COLOR));
       } else {
         cache.set(`color_${user.id}`, 'profile');
-        await db.users.update({
-          data: { accent_color: 'profile' },
+        await db.profiles.update({
+          data: { crbt_accent_color: 'profile' },
           where: { id: user.id },
         });
         await this.reply({
