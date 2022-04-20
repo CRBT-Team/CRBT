@@ -3,39 +3,39 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs"
+    "BACK": "Retour",
+    "JUMP_TO_MSG": "Aller au message",
+    "CANCEL": "Annuler",
+    "CONFIRM": "Confirmer",
+    "DELETE": "Supprimer",
+    "EDIT": "Modifier",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant",
+    "SAVE": "Enregistrer",
+    "ADD_REMINDER": "Envoyer un rappel",
+    "OPEN_DMS": "Ouvrir les MP"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Une erreur inconnue est survenue.",
+      "DESCRIPTION": "Nous n'avons aucune idée de ce que ce problème pourrait être. Voici le message d'erreur reçu :\n<MESSAGE>\nCeci nous a été signalé automatiquement, et nous nous assurerons de corriger ce problème dès que possible. Désolé pour la gêne occasionnée."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+      "TITLE": "Un instant !",
+      "DESCRIPTION": "Vous pourrez utiliser <TYPE> dans <TIME>...",
       "COMMAND": "cette commande",
-      "COMPONENT": "component"
+      "COMPONENT": "ce bouton"
     }
   },
   "color set": {
     "meta": {
       "name": "color set",
-      "description": "Change your CRBT accent color.",
+      "description": "Changez votre couleur d'accentuation CRBT.",
       "options": [
         {
-          "name": "color",
+          "name": "couleur",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
