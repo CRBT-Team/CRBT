@@ -1,6 +1,9 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
+    "GUILD_ONLY": "Эта команда не может быть использована в ЛС.",
+    "DEPRECATION_DESCRIPTION": "Deprecated. ",
+    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
+    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Назад",
@@ -29,9 +32,26 @@
       "COMPONENT": "компонент"
     }
   },
+  "balance": {
+    "meta": {
+      "description": "View a user's Purplet balance, or yours.",
+      "options": [
+        {
+          "name": "пользователь",
+          "description": "The user to view the balance of"
+        }
+      ]
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Balance",
+      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
+      "LEADERBOARD_TITLE": "Leaderboard rank",
+      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+    }
+  },
   "color set": {
     "meta": {
-      "name": "набор цветов",
       "description": "Изменить пользовательский цвет CRBT.",
       "options": [
         {
@@ -76,7 +96,6 @@
   },
   "remind me": {
     "meta": {
-      "name": "новое напоминание",
       "description": "Установить напоминание.",
       "options": [
         {
@@ -126,7 +145,6 @@
   },
   "ping": {
     "meta": {
-      "name": "пинг",
       "description": "Пинг CRBT. Возвращает задержку и информацию о соединении."
     },
     "strings": {
@@ -139,7 +157,6 @@
   },
   "crbt info": {
     "meta": {
-      "name": "информация о crbt",
       "description": "Получить информацию о CRBT"
     },
     "strings": {
@@ -147,6 +164,7 @@
       "VERSION": "Версия <VERSION> на <PURPLET>",
       "MEMBER_COUNT": "Количество участников",
       "SERVER_COUNT": "Количество серверов",
+      "PROFILES_REGISTERED": "Profiles registered",
       "PING": "Пинг",
       "PING_RESULT": "<unk><PING> миллисекунд",
       "CREATED": "Создано",
@@ -161,27 +179,52 @@
       "NOT_CMD_USER": "Только пользователь, который использовал эту команду может использовать эту кнопку."
     },
     "strings": {
+      "PROFILE": "Profile",
       "AVATAR": "Аватар",
       "INFO": "Личные данные"
     }
   },
   "profile": {
     "meta": {
-      "name": "профиль",
-      "description": "Deprecated. Use command to learn more."
+      "description": "Get a user's CRBT profile, or yours.",
+      "options": [
+        {
+          "name": "lookup_name",
+          "description": "Search via CRBT profile names."
+        },
+        {
+          "name": "lookup_discord",
+          "description": "Search via Discord user IDs or names."
+        }
+      ]
+    },
+    "ctxMeta": {
+      "name": "View CRBT Profile"
     },
     "pronouns": {
       "hh": "He/Him",
       "sh": "She/Her",
       "tt": "They/Them",
-      "any": "Any",
       "other": "Other",
       "ask": "Ask me"
+    },
+    "errors": {
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+    },
+    "strings": {
+      "EMBED_TITLE": "<USER> - Profile",
+      "NAME": "Name",
+      "BIO": "Bio",
+      "PRONOUNS": "Pronouns",
+      "BIRTHDAY": "Birthday",
+      "WEBSITE": "Сайт",
+      "BADGES": "Badges (<NUMBER>)",
+      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
     "meta": {
-      "name": "avatar default",
       "description": "Get a user's default avatar, or yours if you don't specify one.",
       "options": [
         {
@@ -199,7 +242,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "View Avatar"
+      "name": "Get Avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -226,7 +269,6 @@
   },
   "calc": {
     "meta": {
-      "name": "calculate",
       "description": "Calculate a mathematical expression.",
       "options": [
         {
@@ -236,10 +278,14 @@
       ]
     }
   },
+  "hourly": {
+    "meta": {
+      "description": "Get a few Purplets every hour."
+    }
+  },
   "role-selectors": {
     "manual": {
       "meta": {
-        "name": "role-picker new",
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
         "options": [
           {
@@ -267,7 +313,6 @@
     },
     "preset": {
       "meta": {
-        "name": "role-picker preset",
         "description": "Create a new Role Picker using one of the presets.",
         "options": [
           {
@@ -316,6 +361,143 @@
       "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
       "SUCCESS_TITLE": "Role Picker created!",
       "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+    }
+  },
+  "work": {
+    "meta": {},
+    "jobs": {
+      "FARMER": {
+        "name": "Farmer",
+        "description": "Harvest crops, and sell them for Purplets.",
+        "strings": [
+          "You plant trees and flowers, and earn <PURPLETS>",
+          "You harvested a couple of melons and earned <PURPLETS>",
+          "You sold 20 carrots and got <PURPLETS>",
+          "You sold two pounds of turnips worth <PURPLETS>",
+          "You sold a bag of patatoes for <PURPLETS>",
+          "You harvested and sold two watermelons for <PURPLETS>",
+          "You sold two of your cows to another farmer and got <PURPLETS>",
+          "You farm all day alone to get <PURPLETS>"
+        ]
+      },
+      "CASHIER": {
+        "name": "Cashier",
+        "description": "Scan these barcodes and earn some Purplets.",
+        "strings": [
+          "A person bought a lot of toilet paper you sold for <PURPLETS>",
+          "Someone gave you a tip of <PURPLETS>",
+          "You did your job well and the boss gives you <PURPLETS>",
+          "You put all your heart and soul scanning these barcodes and you earned <PURPLETS>",
+          "You recommend someone they buy extra, and they did! You get <PURPLETS>",
+          "You sit on the chair all day at your desk, watching people, waiting for customers to arrive, and boringly enough you earn <PURPLETS>"
+        ]
+      },
+      "BAKER": {
+        "name": "Baker",
+        "description": "Make cakes, bake bread, bread cakes and cake breads for Purplets 🍞."
+      },
+      "COOK": {
+        "name": "Cook",
+        "description": "Cook delicious food from around the world."
+      },
+      "DEVELOPER": {
+        "name": "Developer",
+        "description": "Develop new software, games and all kinds of fun stuff!",
+        "strings": [
+          "You hate the testers so much but you still earned <PURPLETS>",
+          "You rewrote the whole Python language in C++, everyone's minds are blown away and you get <PURPLETS>",
+          "You find a bug on CRBT and decide to report it. As a congratulation, you earned <PURPLETS>",
+          "The boss gets mad looking at your spaghetti code! Luckily, an opponent sitting right next to you had much better code so you steal it and earn <PURPLETS>",
+          "You design a much much better bot than CRBT... wait that's impossible, right???? Anyway, you earn <PURPLETS>"
+        ]
+      },
+      "DOCTOR": {
+        "name": "Doctor",
+        "description": "Save people by healing their wounds and by curing their diseases and illnesses.",
+        "strings": [
+          "You pull out a heart out of a human mannequin and earned <PURPLETS>",
+          "You managed to fake someone's death to \"revive\" them, nobody noticed the trickery and are very impressed! You get <PURPLETS>",
+          "You found a cure to this popular disease going on, and you earn <PURPLETS>",
+          "You make a sick guy eat a rock because you thought it would be funny, but turns out he somewhat got cured. So strangely enough you earn <PURPLETS>"
+        ]
+      },
+      "TEACHER": {
+        "name": "Teacher",
+        "description": "Teach people math, science, history, and many other subjects!"
+      },
+      "ENGINEER": {
+        "name": "Engineer",
+        "description": "Build advanced machinery and tools using the latest technologies."
+      },
+      "POLICE_OFFICER": {
+        "name": "Police Officer",
+        "description": "Protect people from crime and law.",
+        "strings": [
+          "You got hurt in the line of duty and had to stay a few days in hospital. But you make a full recovery. You earn <PURPLETS>",
+          "Today was quite quiet... That was until a rookie said that, then all heck broke loose. You were paid <PURPLETS>",
+          "You and the boys catch a drug dealer on the street! You get <PURPLETS>",
+          "You find a dead body and report it. Its discovery makes you gain <PURPLETS>"
+        ]
+      },
+      "FIREFIGHTER": {
+        "name": "Firefighter",
+        "description": "Fight fires, protect the city and save lives."
+      },
+      "NURSE": {
+        "name": "Nurse",
+        "description": "Treat people."
+      },
+      "LAWYER": {
+        "name": "Lawyer",
+        "description": "Sue people for their crimes and get them to pay their bills."
+      },
+      "MUSICIAN": {
+        "name": "Musician",
+        "description": "Sing songs, create music pieces and sell them to build your musician career.",
+        "strings": [
+          "You make a song while you're bored... Turns out, it gets you <PURPLETS>",
+          "You played that very sick theme everyone likes, and you got tipped <PURPLETS>",
+          "You wrote a very cool song for a big artist, their corporation gives you <PURPLETS>"
+        ]
+      },
+      "ATHLETE": {
+        "name": "Athlete",
+        "description": "Compete in all kinds of sports and win Purplets for your achievements."
+      },
+      "STREAMER": {
+        "name": "Streamer",
+        "description": "Stream your favorite games, make funny jokes and talk with your viewers to earn Purplets from them."
+      },
+      "ARTIST": {
+        "name": "Artist",
+        "description": "Create art, make posters and other art and sell them for Purplets.",
+        "strings": [
+          "You animated a fanfiction and earned <PURPLETS>",
+          "You drew an epic fanart for some big content creator! They feature you on their socials and pay you <PURPLETS>",
+          "You made a really cool piece of art that some rich people buys for <PURPLETS>"
+        ]
+      },
+      "WRITER": {
+        "name": "Writer",
+        "description": "Write stories, poems, novels, fanfics, books... and sell them for Purplets!"
+      },
+      "INFLUENCER": {
+        "name": "Influencer",
+        "description": "Spread your message, get people to follow you and get sponsors to pay you Purplets.",
+        "strings": [
+          "You made an epic video game funnies compilation and got <PURPLETS>",
+          "Someone posted a drama about you! You replied in a sponsored apology video which earned you <PURPLETS>",
+          "You uploaded a movie illegally onto YouTube flooded with ads that make you earn <PURPLETS>",
+          "You posted some funny memes, some random guy gave you <PURPLETS>",
+          "Your longplay on that hot new video game got kinda popular to the point where you get <PURPLETS>",
+          "Your latest video got shared a lot, and that reflects on your earnings! You earned <PURPLETS>",
+          "You uploaded a gaming video on YouTube and managed to get 60k views and <PURPLETS>",
+          "You made a very clickbaity video and got <PURPLETS>",
+          "You make a product placement deal that got you <PURPLETS>",
+          "A rich and famous YouTuber made a video about you and you earned <PURPLETS>",
+          "You are chatting with your viewers on stream as a Vtuber visits your channel, and their fans donate you <PURPLETS>"
+        ]
+      }
     }
   }
 }
