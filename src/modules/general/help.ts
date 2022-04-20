@@ -17,7 +17,7 @@ export default ChatCommand({
         'Type `/` in the chat box and click <:CRBT:860947227887403048> to get a list of commands!\n' +
           'There are also some commands you can quickly access by right clicking on a message or a user! (Desktop only)\n' +
           'You can do some much with CRBT, like:\n' +
-          "Setting reminders, linking text to voice channels, getting info on a anything you want... or use CRBT's new economy commands like `/hourly` and `/profile`!\n\n" +
+          "Setting reminders, linking text to voice channels, getting info on anything you want, or use CRBT's new Role Pickers and Polls...\n\n" +
           `...with many more to come! Stay updated on **[our Discord server](${links.discord})**!`
       )
       .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')

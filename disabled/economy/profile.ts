@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { Interaction, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
-import { navBar } from '../components/navBar';
+import { navBar } from '../../src/modules/components/navBar';
 import { EditProfileBtn } from './editProfile';
 
 dayjs.extend(relativeTime);

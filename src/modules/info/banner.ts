@@ -12,12 +12,12 @@ import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'banner',
-  description: `Get the Discord profile banner of a chosen user, or yours by default.`,
+  description: `Get the profile banner of a chosen user, or yours by default.`,
   options: new OptionBuilder()
-    .user('user', 'The user to get the Discord banner of.')
+    .user('user', 'The user to get the banner of.')
     .enum(
       'size',
-      'The size of the Discord banner to get.',
+      'The size of the banner to get.',
       [
         ['Small', 128],
         ['Medium', 512],
@@ -27,7 +27,7 @@ export default ChatCommand({
     )
     .enum(
       'format',
-      'The format of the Discord profile banner to get.',
+      'The format of the Discord banner to get.',
       ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
     ),
   async handle({ user, size, format }) {
@@ -42,7 +42,7 @@ export default ChatCommand({
     await this.reply({
       embeds: [
         new MessageEmbed()
-          .setAuthor({ name: `${u.tag} - Discord profile banner`, iconURL: avatar(u, 64) })
+          .setAuthor({ name: `${u.tag} - Profile banner`, iconURL: avatar(u, 64) })
           .setImage(banner)
           .setColor(await getColor(this.user)),
       ],

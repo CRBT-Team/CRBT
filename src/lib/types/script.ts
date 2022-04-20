@@ -15,17 +15,6 @@ type item = {
   url: string;
 };
 
-type profilebanner = item & {
-  name: string;
-  season: number | 'special';
-};
-
-type profilebadge = item & {
-  name: string;
-  emoji: string;
-  category: string;
-};
-
 interface date {
   year: number;
   month: number;
@@ -35,20 +24,6 @@ interface date {
   second: number;
   unix: number;
   toString: () => `<t:${number}>`;
-}
-
-interface profile {
-  name?: string;
-  verified?: boolean;
-  bio?: string;
-  purplets: number;
-  badges?: profilebadge[];
-  banner?: profilebanner;
-  accent_color?: `#${string}`;
-  url?: string;
-  pronouns?: string;
-  likes?: number;
-  birthday?: date;
 }
 
 interface user {
@@ -61,9 +36,10 @@ interface user {
   nickname: string;
   created: date;
   joined: date;
+  birthday?: date;
   isBot: boolean;
   badges: discordbadge[];
-  profile: profile;
+  accent_color?: `#${string}`;
   ban: (time?: time) => void;
   kick: () => void;
   timeout: (time: time) => void;

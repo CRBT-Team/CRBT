@@ -9,18 +9,18 @@ datasource db {
 
 model profiles {
   id                String    @id
-  verified          Boolean?  @default(false)
-  crbt_banner       String?
-  crbt_accent_color String?
-  bio               String?
-  purplets          Float     @default(0) @db.Real
+  // verified          Boolean?  @default(false)
+  // crbt_banner       String?
+  // crbt_accent_color String?
+  // bio               String?
+  // purplets          Float     @default(0) @db.Real
   name              String?   @unique
-  crbt_badges       String[]
-  url               String?
-  location          String?
-  pronouns          String?
+  // crbt_badges       String[]
+  // url               String?
+  // location          String?
+  // pronouns          String?
   birthday          DateTime? @db.Timestamptz(6)
-  likes             String[]
+  // likes             String[]
 }
 
 model reminders {
@@ -30,7 +30,7 @@ model reminders {
   destination String
   reminder    String?
   url         String
-  locale      String
+  locale      String?
 }
 
 model servers {
@@ -43,11 +43,12 @@ model servers {
 }
 
 model users {
-  id        String  @id(map: "misc_pkey")
-  hstreak   Int     @default(0) @db.SmallInt
-  telemetry Boolean @default(true)
-  job_type  Jobs?
-  job_exp   Int     @default(0)
+  id           String  @id(map: "misc_pkey")
+  hstreak      Int     @default(0) @db.SmallInt
+  telemetry    Boolean @default(true)
+  accent_color String?
+  // job_type  Jobs?
+  // job_exp   Int     @default(0)
 }
 
 model polls {
@@ -56,23 +57,23 @@ model polls {
   choices    String
 }
 
-enum Jobs {
-  FARMER
-  CASHIER
-  BAKER
-  COOK
-  DEVELOPER
-  DOCTOR
-  TEACHER
-  ENGINEER
-  POLICE_OFFICER
-  FIREFIGHTER
-  NURSE
-  LAWYER
-  MUSICIAN
-  ATHLETE
-  STREAMER
-  ARTIST
-  WRITER
-  INFLUENCER
-}
+// enum Jobs {
+//   FARMER
+//   CASHIER
+//   BAKER
+//   COOK
+//   DEVELOPER
+//   DOCTOR
+//   TEACHER
+//   ENGINEER
+//   POLICE_OFFICER
+//   FIREFIGHTER
+//   NURSE
+//   LAWYER
+//   MUSICIAN
+//   ATHLETE
+//   STREAMER
+//   ARTIST
+//   WRITER
+//   INFLUENCER
+// }

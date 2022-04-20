@@ -9,11 +9,12 @@ export async function getColor(user: User): Promise<`#${string}`> {
   if (cache.has(`color_${user.id}`)) {
     result = cache.get(`color_${user.id}`);
   } else {
-    const profile = await db.profiles.findFirst({
+    const profile = await db.users.findFirst({
       where: { id: user.id },
+      select: { accent_color: true },
     });
-    if (profile) {
-      result = profile.crbt_accent_color as `#${string}`;
+    if (profile && profile.accent_color) {
+      result = profile.accent_color as `#${string}`;
       cache.set(`color_${user.id}`, result);
     } else {
       result = `#${colors.default}`;

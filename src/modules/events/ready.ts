@@ -1,4 +1,3 @@
-import { cache } from '$lib/cache';
 import { db } from '$lib/db';
 import { setReminder } from '$lib/functions/setReminder';
 import { reminders } from '@prisma/client';
@@ -15,11 +14,11 @@ export default OnEvent('ready', async (client) => {
     await setReminder(reminder);
   });
 
-  const profiles = (await db.profiles.findMany({ select: { name: true } }))
-    .filter((p) => p.name)
-    .map((p) => p.name);
-  cache.set('profiles', profiles);
-  console.log(`${profiles.length} profiles cached`);
+  // const profiles = (await db.profiles.findMany({ select: { name: true } }))
+  //   .filter((p) => p.name)
+  //   .map((p) => p.name);
+  // cache.set('profiles', profiles);
+  // console.log(`${profiles.length} profiles cached`);
 
   client.ws.on('INTERACTION_CREATE', async (data) => {
     if (data.type === 5) {
