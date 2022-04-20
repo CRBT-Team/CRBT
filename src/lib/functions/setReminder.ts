@@ -77,7 +77,7 @@ export const setReminder = async (reminder: reminders) => {
                 .setStyle('LINK')
                 .setLabel('Jump to message')
                 .setURL(`https://discord.com/channels/${reminder.url}`),
-              new SnoozeButton(reminder.locale)
+              new SnoozeButton(reminder.locale ?? 'en-US')
                 .setStyle('SECONDARY')
                 .setEmoji(emojis.reminder)
                 .setLabel('Snooze')

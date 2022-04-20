@@ -6,13 +6,16 @@ import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
+const { DEPRECATION_DESCRIPTION } = getStrings('en-US').globalErrors;
 const { meta } = getStrings('en-US').balance;
 
 export default ChatCommand({
-  ...meta,
+  name: 'balance',
+  description: `${DEPRECATION_DESCRIPTION} ${meta.description}`,
   options: new OptionBuilder().user('user', meta.options[0].description),
   async handle({ user }) {
     const { strings } = getStrings(this.locale).balance;
+    const { DEPRECATION_TITLE, DEPRECATION_NOTICE } = getStrings(this.locale).globalErrors;
 
     const m = (this.options.getMember('user') ?? this.member) as GuildMember;
     const u = user ?? this.user;
@@ -30,7 +33,7 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: strings.EMBED_TITLE.replace('<user>', u.tag),
+              name: strings.EMBED_TITLE.replace('<USER>', u.tag),
               iconURL: avatar(m, 64),
             })
             .setDescription(
@@ -48,6 +51,7 @@ export default ChatCommand({
                     `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}**`
                   ).replace('<TOTAL>', leaderboard.length.toString())} (\`/leaderboard\`)`
             )
+            .addField(DEPRECATION_TITLE, DEPRECATION_NOTICE)
             .setColor(await getColor(u)),
         ],
       });

@@ -1,12 +1,15 @@
 import { db, emojis } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { getStrings } from '$lib/language';
 import { Interaction, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 
+const { DEPRECATION_DESCRIPTION } = getStrings('en-US').globalErrors;
+
 export default ChatCommand({
   name: 'leaderboard',
-  description: 'View the CRBT global Purplet leaderboard.',
+  description: `${DEPRECATION_DESCRIPTION} View the CRBT global Purplet leaderboard.`,
   async handle() {
     try {
       const lb = await renderLeaderboard(this, 1);
@@ -31,6 +34,9 @@ const assignLeaderboardRanks = (leaderboard: any[]) => {
 };
 
 const renderLeaderboard = async (ctx: Interaction, page: number) => {
+  const { DEPRECATION_TITLE, DEPRECATION_NOTICE } = getStrings(ctx.locale).globalErrors;
+  const { PREVIOUS, NEXT } = getStrings(ctx.locale).genericButtons;
+
   const leaderboard = await db.profiles.findMany({
     where: { purplets: { gt: 0 } },
     orderBy: { purplets: 'desc' },
@@ -67,16 +73,17 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
                 userProfile.name ? `@${userProfile.name}` : ctx.user.username
               } - ${emojis.purplet} **${userProfile.purplets.toLocaleString()} Purplets**`
         )
+        .addField(DEPRECATION_TITLE, DEPRECATION_NOTICE)
         .setColor(await getColor(ctx.user)),
     ],
     components: components(
       row(
         new PreviousBtn(page)
-          .setLabel('Previous page')
+          .setLabel(PREVIOUS)
           .setStyle('SECONDARY')
           .setDisabled(page === 1),
         new NextBtn(page)
-          .setLabel('Next page')
+          .setLabel(NEXT)
           .setStyle('SECONDARY')
           .setDisabled(page === Math.ceil(leaderboard.length / 10))
       )

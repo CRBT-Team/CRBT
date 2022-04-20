@@ -17,7 +17,8 @@ import { ChatCommand, components, OptionBuilder } from 'purplet';
 const { meta } = getStrings('en-US')['remind me'];
 
 export default ChatCommand({
-  ...meta,
+  name: 'remind new',
+  description: meta.description,
   options: new OptionBuilder()
     .string('when', meta.options[0].description, true)
     .string('subject', meta.options[1].description, true)

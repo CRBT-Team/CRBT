@@ -9,7 +9,8 @@ const { meta } = getStrings('en-US').calc;
 const math = new Parser();
 
 export default ChatCommand({
-  ...meta,
+  name: 'calculate',
+  description: meta.description,
   options: new OptionBuilder().string('expression', meta.options[0].description, true),
   async handle({ expression }) {
     try {

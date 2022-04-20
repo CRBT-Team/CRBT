@@ -54,22 +54,22 @@ export const ProfileBtn = ButtonComponent({
 export function navBar(
   ctx: { userId: string; cmdUID: string },
   locale: string,
-  tab: 'profile' | 'pfp' | 'userinfo'
+  tab: 'profile' | 'avatar' | 'userinfo'
 ) {
   const { strings } = getStrings(locale).user_navbar;
 
   return row(
-    new ProfileBtn(ctx)
-      .setLabel(strings.PROFILE)
-      .setStyle('SECONDARY')
-      .setDisabled(tab === 'profile'),
-    new PfpBtn(ctx)
-      .setLabel(strings.AVATAR)
-      .setStyle('SECONDARY')
-      .setDisabled(tab === 'pfp'),
     new UserInfoBtn(ctx)
       .setLabel(strings.INFO)
       .setStyle('SECONDARY')
-      .setDisabled(tab === 'userinfo')
+      .setDisabled(tab === 'userinfo'),
+    new PfpBtn(ctx)
+      .setLabel(strings.AVATAR)
+      .setStyle('SECONDARY')
+      .setDisabled(tab === 'avatar'),
+    new ProfileBtn(ctx)
+      .setLabel(strings.PROFILE)
+      .setStyle('SECONDARY')
+      .setDisabled(tab === 'profile')
   );
 }

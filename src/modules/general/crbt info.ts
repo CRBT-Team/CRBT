@@ -11,7 +11,8 @@ import pjson from '../../../package.json';
 const { meta } = getStrings('en-US')['crbt info'];
 
 export default ChatCommand({
-  ...meta,
+  name: 'crbt info',
+  description: meta.description,
   async handle() {
     await this.deferReply();
 

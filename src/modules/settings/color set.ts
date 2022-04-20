@@ -16,7 +16,8 @@ const colorsMap = Object.entries(colors).map(([key, hex]) => ({
 }));
 
 export const colorset = ChatCommand({
-  ...meta,
+  name: 'color set',
+  description: meta.description,
   options: new OptionBuilder()
     .string('color', meta.options[0].description, true)
     .autocomplete('color', ({ color }) => {

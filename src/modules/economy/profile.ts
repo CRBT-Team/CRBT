@@ -4,7 +4,6 @@ import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
 import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
@@ -12,14 +11,15 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { Interaction, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
-import { EditProfileBtn } from './editProfile';
 
 dayjs.extend(relativeTime);
 
 const { meta, ctxMeta } = getStrings('en-US').profile;
+const { DEPRECATION_DESCRIPTION } = getStrings('en-US').globalErrors;
 
 export default ChatCommand({
-  ...meta,
+  name: 'profile',
+  description: `${DEPRECATION_DESCRIPTION} ${meta.description}`,
   options: new OptionBuilder()
     .string('lookup_name', meta.options[0].description, false)
     .autocomplete('lookup_name', async ({ lookup_name }) => {
@@ -93,12 +93,13 @@ export const renderProfile = async (
   navCtx?: { userId: string; cmdUID: string }
 ) => {
   const { strings } = getStrings(ctx.locale).profile;
+  const { DEPRECATION_TITLE, DEPRECATION_NOTICE } = getStrings(ctx.locale).globalErrors;
   await import(`dayjs/locale/${ctx.locale.split('-')[0]}.js`);
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: profile.user.tag,
-      // name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
+      // name: profile.user.tag,
+      name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
       iconURL: avatar(profile.user, 64),
     })
     .setTitle(
@@ -140,20 +141,24 @@ export const renderProfile = async (
     e.addField(strings.WEBSITE, `**[${trimURL(profile.url)}](${profile.url})**`, true);
   }
 
+  e.addField(DEPRECATION_TITLE, DEPRECATION_NOTICE);
+
   return {
     embeds: [e],
-    components: profile.user.equals(ctx.user)
-      ? components(
-          navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile'),
-          row(
-            new EditProfileBtn(profile.id)
-              .setStyle('PRIMARY')
-              .setEmoji('✏️')
-              .setLabel(strings.BUTTON_EDIT_PROFILE)
-          )
-        )
-      : components(
-          navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile')
-        ),
+    components:
+      // profile.user.equals(ctx.user)
+      // ? components(
+      //     navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile'),
+      //     row(
+      //       new EditProfileBtn(profile.id)
+      //         .setStyle('PRIMARY')
+      //         .setEmoji('✏️')
+      //         .setLabel(strings.BUTTON_EDIT_PROFILE)
+      //     )
+      //   )
+      // :
+      components(
+        navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile')
+      ),
   };
 };

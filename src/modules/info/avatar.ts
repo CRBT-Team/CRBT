@@ -9,7 +9,8 @@ import { navBar } from '../components/navBar';
 const { meta, ctxMeta } = getStrings('en-US').avatar;
 
 export default ChatCommand({
-  ...meta,
+  name: 'avatar default',
+  description: meta.description,
   options: new OptionBuilder()
     .user('user', meta.options[0].description)
     .enum(
@@ -64,15 +65,15 @@ export async function renderPfp(
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          name: user.tag,
-          // name: strings.EMBED_TITLE.replace('<USER>', user.tag),
+          // name: user.tag,
+          name: strings.EMBED_TITLE.replace('<USER>', user.tag),
           iconURL: avatar(user, 64),
         })
         .setImage(av)
         .setColor(color),
     ],
     components: components(
-      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, ctx.locale, 'pfp'),
+      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, ctx.locale, 'avatar'),
       row(
         new MessageButton()
           .setLabel(

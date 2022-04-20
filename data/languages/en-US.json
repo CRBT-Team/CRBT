@@ -1,6 +1,9 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "This command cannot be used in DMs.",
+    "DEPRECATION_DESCRIPTION": "Deprecated. ",
+    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
+    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Back",
@@ -31,7 +34,6 @@
   },
   "balance": {
     "meta": {
-      "name": "balance",
       "description": "View a user's Purplet balance, or yours.",
       "options": [
         {
@@ -50,7 +52,6 @@
   },
   "color set": {
     "meta": {
-      "name": "color set",
       "description": "Change your CRBT accent color.",
       "options": [
         {
@@ -95,7 +96,6 @@
   },
   "remind me": {
     "meta": {
-      "name": "reminder new",
       "description": "Set a reminder.",
       "options": [
         {
@@ -145,7 +145,6 @@
   },
   "ping": {
     "meta": {
-      "name": "ping",
       "description": "Ping CRBT. Returns latency and connection info."
     },
     "strings": {
@@ -158,7 +157,6 @@
   },
   "crbt info": {
     "meta": {
-      "name": "crbt info",
       "description": "Get information about CRBT"
     },
     "strings": {
@@ -188,7 +186,6 @@
   },
   "profile": {
     "meta": {
-      "name": "profile",
       "description": "Get a user's CRBT profile, or yours.",
       "options": [
         {
@@ -205,27 +202,11 @@
       "name": "View CRBT Profile"
     },
     "pronouns": {
-      "unspecified": "Unspecified",
       "hh": "He/Him",
-      "hi": "He/it",
-      "hs": "He/She",
-      "ht": "He/They",
-      "ih": "It/Him",
-      "ii": "It/Its",
-      "is": "It/She",
-      "it": "It/They",
-      "shh": "She/He",
       "sh": "She/Her",
-      "si": "She/It",
-      "st": "She/They",
-      "th": "They/He",
-      "ti": "They/It",
-      "ts": "They/She",
       "tt": "They/Them",
-      "any": "Any",
       "other": "Other",
-      "ask": "Ask me",
-      "avoid": "<USERNAME>"
+      "ask": "Ask me"
     },
     "errors": {
       "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
@@ -239,18 +220,11 @@
       "BIRTHDAY": "Birthday",
       "WEBSITE": "Website",
       "BADGES": "Badges (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets",
-      "BUTTON_EDIT_PROFILE": "Edit Profile",
-      "MODAL_NAME_PLACEHOLDER": "A unique @ that can only have letters, numbers or spaces.",
-      "MODAL_BIO_PLACEHOLDER": "You can use markdown, links and CRBTscript tags.",
-      "MODAL_WEBSITE_PLACEHOLDER": "A link to your website, blog, Twitter...",
-      "MODAL_BIRTHDAY_PLACEHOLDER": "Your birthday, in the YYYY-MM-DD format.",
-      "MODAL_PRONOUNS_PLACEHOLDER": "e.g. they/them"
+      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
     "meta": {
-      "name": "avatar default",
       "description": "Get a user's default avatar, or yours if you don't specify one.",
       "options": [
         {
@@ -268,7 +242,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "View Avatar"
+      "name": "Get Avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -295,7 +269,6 @@
   },
   "calc": {
     "meta": {
-      "name": "calculate",
       "description": "Calculate a mathematical expression.",
       "options": [
         {
@@ -307,21 +280,12 @@
   },
   "hourly": {
     "meta": {
-      "name": "hourly",
       "description": "Get a few Purplets every hour."
-    },
-    "strings": {
-      "EMBED_TITLE": "Hourly Purplets claimed!",
-      "EMBED_DESCRIPTION": "You have claimed your hourly <PURPLETS>.\nCurrent streak: **<STREAK>/5**",
-      "STREAK_BONUS": "(+30% bonus from streak)",
-      "STREAK": "(<STREAK_LEFT> more to go for a bonus!)",
-      "EMBED_REMINDER": "Click the button below to set yourself a reminder to claim your hourly Purplets again."
     }
   },
   "role-selectors": {
     "manual": {
       "meta": {
-        "name": "role-picker new",
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
         "options": [
           {
@@ -346,7 +310,6 @@
     },
     "preset": {
       "meta": {
-        "name": "role-picker preset",
         "description": "Create a new Role Picker using one of the presets.",
         "options": [
           {

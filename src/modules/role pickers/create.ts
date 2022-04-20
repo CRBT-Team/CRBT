@@ -77,7 +77,8 @@ const presets: {
 };
 
 export const usePreset = ChatCommand({
-  ...preset.meta,
+  name: 'role-picker preset',
+  description: preset.meta.description,
   options: new OptionBuilder().enum(
     'preset',
     preset.meta.options[0].description,
@@ -188,7 +189,8 @@ export const usePreset = ChatCommand({
 });
 
 export const useManual = ChatCommand({
-  ...manual.meta,
+  name: 'role-picker create',
+  description: manual.meta.description,
   options: new OptionBuilder()
     .string('description', manual.meta.options[0].description, true)
     .enum(

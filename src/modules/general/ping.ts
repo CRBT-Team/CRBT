@@ -8,7 +8,8 @@ import { ChatCommand } from 'purplet';
 const { meta } = getStrings('en-US').ping;
 
 export default ChatCommand({
-  ...meta,
+  name: 'ping',
+  description: meta.description,
   async handle() {
     await this.deferReply();
 
