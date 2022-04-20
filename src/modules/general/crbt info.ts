@@ -1,4 +1,3 @@
-import { cache } from '$lib/cache';
 import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
@@ -38,11 +37,6 @@ export default ChatCommand({
           .addField(
             strings.SERVER_COUNT,
             `${this.client.guilds.cache.size.toLocaleString(this.locale)}`,
-            true
-          )
-          .addField(
-            strings.PROFILES_REGISTERED,
-            `${cache.get<string[]>('profiles').length.toLocaleString(this.locale)}`,
             true
           )
           .addField(
