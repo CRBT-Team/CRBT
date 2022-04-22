@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "color",
-          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
+          "description": "Color al que cambiar su color de contraste. Utilice una de las sugerencias o un color hexadecimal."
         }
       ]
     },
@@ -285,15 +285,15 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+        "description": "Crear manualmente un nuevo Selector de Roles, un menú para que los miembros escojan roles para ellos mismos.",
         "options": [
           {
-            "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
+            "name": "descripción",
+            "description": "Describa a los miembros de su servidor para qué es su Selector de Roles."
           },
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "comportamiento",
+            "description": "Cómo debería comportarse el Selector de Roles.",
             "choices": [
               "Toggle giving/removing role(s)",
               "Only give the role(s) once"
