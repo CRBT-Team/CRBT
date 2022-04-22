@@ -1,85 +1,85 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "GUILD_ONLY": "Esse comando não pode ser usado em mensagens diretas.",
+    "DEPRECATION_DESCRIPTION": "Descontinuado. ",
+    "DEPRECATION_TITLE": "⚠️ Aviso de descontinuação",
+    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor..\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs"
+    "BACK": "Voltar",
+    "JUMP_TO_MSG": "Ir para a mensagem",
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar",
+    "DELETE": "Deletar",
+    "EDIT": "Editar",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Próximo",
+    "SAVE": "Salvar",
+    "ADD_REMINDER": "Adicionar Lembrete",
+    "OPEN_DMS": "Abrir mensagens diretas"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Ocorreu um erro desconhecido.",
+      "DESCRIPTION": "Não temos a menor ideia do que pode ter acontecido. Aqui está a mensagem de erro que recebemos:\n<MESSAGE>\nIsso foi reportado automaticamente para nós, e nos certificaremos de corrigir isso o mais rápido possível. Desculpe o inconveniente."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "TITLE": "Pera lá!",
+      "DESCRIPTION": "Você conseguirá usar isso <TYPE> em <TIME>...",
+      "COMMAND": "comando",
+      "COMPONENT": "componente"
     }
   },
   "balance": {
     "meta": {
-      "description": "View a user's Purplet balance, or yours.",
+      "description": "Veja o saldo de Purplets de um usuário, ou o seu próprio saldo.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to view the balance of"
+          "name": "usuário",
+          "description": "O usuário cujo será verificado o saldo"
         }
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Balance",
+      "EMBED_TITLE": "<USER> - Saldo",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+      "LEADERBOARD_TITLE": "Ranking",
+      "LEADERBOARD_NOTPRESENT": "Não está no ranking global",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> pessoas no ranking global"
     }
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "Altere sua cor de destaque no CRBT.",
       "options": [
         {
-          "name": "color",
-          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
+          "name": "cor",
+          "description": "A cor que será usada como sua cor de destaque. Use uma das sugestões ou um código de cor HEX."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
+      "sync": "Sincronizar com a cor do perfil do Discord",
+      "lightred": "Vermelho Claro",
+      "red": "Vermelho",
+      "darkred": "Vermelho Escuro",
+      "orange": "Laranja",
+      "yellow": "Amarelo",
+      "lightgreen": "Verde Claro",
+      "green": "Verde",
+      "darkgreen": "Verde Escuro",
+      "cyan": "Ciano",
+      "lightblue": "Azul Claro",
+      "blue": "Azul",
+      "darkblue": "Azul Escuro",
+      "blurple": "Azoxo",
+      "lightpurple": "Roxo Claro",
+      "purple": "Roxo",
+      "darkpurple": "Roxo Escuro",
+      "pink": "Rosa",
+      "brown": "Marrom",
       "black": "Black",
       "gray": "Gray",
       "white": "White"
@@ -165,92 +165,92 @@
       "MEMBER_COUNT": "Member count",
       "SERVER_COUNT": "Server count",
       "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
+      "PING_RESULT": "≈<PING> milissegundos",
+      "CREATED": "Criado em",
       "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_WEBSITE": "Site",
+      "BUTTON_INVITE": "Adicionar a um servidor",
+      "BUTTON_DISCORD": "Juntar-se à comunidade"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Apenas a pessoa que usou esse comando pode usar esse botão."
     },
     "strings": {
-      "PROFILE": "Profile",
-      "AVATAR": "Avatar",
-      "INFO": "User info"
+      "PROFILE": "Perfil",
+      "AVATAR": "Foto de perfil",
+      "INFO": "Informações do usuário"
     }
   },
   "profile": {
     "meta": {
-      "description": "Get a user's CRBT profile, or yours.",
+      "description": "Obtenha o perfil CRBT de um usuário, ou seu perfil.",
       "options": [
         {
-          "name": "lookup_name",
-          "description": "Search via CRBT profile name."
+          "name": "pesquisar_nome",
+          "description": "Pesquisar através do nome do perfil CRBT."
         },
         {
-          "name": "lookup_discord",
-          "description": "Search via Discord user ID or username."
+          "name": "buscar_discord",
+          "description": "Pesquisar via ID de usuário do Discord ou nome de usuário."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "Visualizar perfil CRBT"
     },
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "hh": "Ele/Dele",
+      "sh": "Ela/Dela",
+      "tt": "El@/Del@",
+      "other": "Outros",
+      "ask": "Perguntar-me"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+      "NOT_FOUND": "Não foi possível encontrar um perfil com esse nome. Certifique-se de usar a ferramenta de auto-completar para encontrar um perfil!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "Você só pode editar o seu próprio perfil."
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "NAME": "Name",
-      "BIO": "Bio",
+      "EMBED_TITLE": "<USER> - Perfil",
+      "NAME": "Nome",
+      "BIO": "Biografia",
       "PRONOUNS": "Pronouns",
-      "BIRTHDAY": "Birthday",
-      "WEBSITE": "Website",
-      "BADGES": "Badges (<NUMBER>)",
+      "BIRTHDAY": "Aniversário",
+      "WEBSITE": "Site",
+      "BADGES": "Emblemas (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Obtenha o avatar padrão de um usuário ou o seu, se você não especificar um.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to get the avatar of."
+          "name": "usuário",
+          "description": "O usuário cujo será obtido o avatar."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "tamanho",
+          "description": "O tamanho do avatar a ser obtido."
         },
         {
-          "name": "format",
-          "description": "The format of the avatar to get."
+          "name": "formato",
+          "description": "O formato do avatar a ser obtido."
         }
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Obter foto de perfil"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "DOWNLOAD": "Baixar (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
+      "EMBED_TITLE": "Obrigado por convidar <CRBT> para o seu servidor!",
       "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
     }
   },
