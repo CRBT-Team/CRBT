@@ -305,17 +305,17 @@
           },
           {
             "name": "rol",
-            "description": "A role to assign to the member when selected."
+            "description": "Un rol que asignar al miembro que seleccione la opción correspondiente."
           }
         ]
       }
     },
     "preset": {
       "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
+        "description": "Crear un nuevo Selector de Roles utilizando una de las siguientes plantillas.",
         "options": [
           {
-            "name": "preset",
+            "name": "plantilla",
             "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
           }
         ]
