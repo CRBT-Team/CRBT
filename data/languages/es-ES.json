@@ -295,16 +295,16 @@
             "name": "comportamiento",
             "description": "Cómo debería comportarse el Selector de Roles.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Alternar entre dar y quitar rol(es)",
+              "Sólo dar el/los rol(es) una vez"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "límite",
+            "description": "Cuántos roles se pueden seleccionar. Introduzca 0 para poder seleccionar ilimitados."
           },
           {
-            "name": "role",
+            "name": "rol",
             "description": "A role to assign to the member when selected."
           }
         ]
