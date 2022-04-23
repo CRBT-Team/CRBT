@@ -16,7 +16,7 @@
     "NEXT": "Siguiente",
     "SAVE": "Guardar",
     "ADD_REMINDER": "Establecer recordatorio",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Abrir MD"
   },
   "UnknownError": {
     "strings": {
@@ -26,7 +26,7 @@
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
+      "TITLE": "¡Un momento!",
       "DESCRIPTION": "Podrás usar este <TYPE> en <TIME>...",
       "COMMAND": "comando",
       "COMPONENT": "componente"
@@ -34,20 +34,20 @@
   },
   "balance": {
     "meta": {
-      "description": "View a user's Purplet balance, or yours.",
+      "description": "Ver el saldo de Purplets de un usuario específico o el suyo.",
       "options": [
         {
           "name": "usuario",
-          "description": "The user to view the balance of"
+          "description": "El usuario del que ver el saldo"
         }
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Balance",
+      "EMBED_TITLE": "<USER> - Saldo",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+      "LEADERBOARD_TITLE": "Clasificación global",
+      "LEADERBOARD_NOTPRESENT": "No está en la clasificación global",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> personas en la clasificación global"
     }
   },
   "color set": {
@@ -86,29 +86,29 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name or use an HEX color code. Use the autocomplete for a list of color names."
+      "INVALID_COLOR_NAME": "Debe introducir un nombre de color válido o utilizar un código hexadecimal. Utilice el autocompletado para una lista de nombres de colores."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
       "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on commands that show info about you."
+      "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en los comandos que muestren información sobre usted."
     }
   },
   "remind me": {
     "meta": {
-      "description": "Set a reminder.",
+      "description": "Establecer un recordatorio.",
       "options": [
         {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "name": "cuándo",
+          "description": "Cuándo recordarle (ej. 2 horas, 3w2d, 20:30)."
         },
         {
-          "name": "subject",
-          "description": "What to remind you of."
+          "name": "asunto",
+          "description": "De qué recordarle."
         },
         {
-          "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "name": "destino",
+          "description": "A dónde enviar el recordatorio (dejar en blanco para recibirlo por MD)."
         }
       ]
     },
@@ -127,20 +127,20 @@
       "SUCCESS_CHANNEL": "CRBT se lo recordará en <CHANNEL>",
       "SUCCESS_DM": "CRBT se lo recordará por MD",
       "SUBJECT": "Asunto",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
+      "TOMORROW_AT": "Mañana a las <TIME>",
+      "TODAY_AT": "Hoy a las <TIME>",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "GCALENDAR_EVENT": "Establecido por un Recordatorio CRBT.",
+      "GCALENDAR_EVENT_DM": "También se le será recordado por MD.",
+      "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en <CHANNEL>, en <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
+      "AND": "y",
+      "AT": "a las",
       "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "IN": "en",
+      "TOMORROW": "mañana",
+      "TODAY": "hoy"
     }
   },
   "ping": {
@@ -178,27 +178,27 @@
       "NOT_CMD_USER": "Sólo la persona que ha ejecutado este comando puede usar este botón."
     },
     "strings": {
-      "PROFILE": "Profile",
+      "PROFILE": "Perfil",
       "AVATAR": "Avatar",
       "INFO": "Información de usuario"
     }
   },
   "profile": {
     "meta": {
-      "description": "Get a user's CRBT profile, or yours.",
+      "description": "Obtener el perfil CRBT de un usuario específico o el suyo.",
       "options": [
         {
-          "name": "lookup_name",
-          "description": "Search via CRBT profile name."
+          "name": "buscar_por_nombre",
+          "description": "Buscar mediante el nombre de perfil CRBT."
         },
         {
-          "name": "lookup_discord",
-          "description": "Search via Discord user ID or username."
+          "name": "buscar_por_discord",
+          "description": "Buscar mediante el ID de usuario de Discord o el nombre de usuario."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "Ver perfil CRBT"
     },
     "pronouns": {
       "hh": "Él/él",
@@ -208,17 +208,17 @@
       "ask": "Pregúntame"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "Sólo puede editar su propio perfil."
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "NAME": "Name",
-      "BIO": "Bio",
+      "EMBED_TITLE": "<USER> - Perfil",
+      "NAME": "Nombre",
+      "BIO": "Biografía",
       "PRONOUNS": "Pronombres",
-      "BIRTHDAY": "Birthday",
+      "BIRTHDAY": "Cumpleaños",
       "WEBSITE": "Página web",
-      "BADGES": "Badges (<NUMBER>)",
+      "BADGES": "Sellos (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
@@ -241,7 +241,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Obtener avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -256,14 +256,14 @@
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Marcar mensaje como favorito"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Debe habilitar sus MD o desbloquear CRBT para poder marcar mensajes como favoritos."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (Mensaje marcado)",
+      "SUCCESS_MESSAGE": "¡Se le ha enviado este mensaje por MD!"
     }
   },
   "calc": {
@@ -279,7 +279,7 @@
   },
   "hourly": {
     "meta": {
-      "description": "Get a few Purplets every hour."
+      "description": "Obtener unos cuantos Purplets cada hora."
     }
   },
   "role-selectors": {
@@ -351,15 +351,15 @@
       "CHOOSE_ROLE": "Escoja un rol",
       "CHOOSE_ROLES": "Escoja roles",
       "EMBED_FOOTER": "Nota: CRBT no está afiliado con ninguno de los nombres de los roles o con el servidor.",
-      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "OPTION_LABEL_GET_ROLE": "Obtener el rol <ROLE>.",
+      "GENERIC_SELECTOR_TITLE": "Seleccione uno o varios roles escogiéndolos a continuación.",
+      "SELECT_MENU_ROLES_SUCCESS": "Se actualizaron correctamente sus roles.",
+      "BUTTON_ROLES_ADD": "Se ha añadido <ROLE> a tus roles.",
+      "BUTTON_ROLES_ADD_AGAIN": "Selecciónelo de nuevo para eliminarlo.",
+      "BUTTON_ROLES_REMOVE": "Se ha eliminado <ROLE> de tus roles.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Selecciónelo de nuevo para añadirlo.",
+      "SUCCESS_TITLE": "¡Selector de Roles creado!",
+      "SUCCESS_DESCRIPTION": "Los miembros del servidor ahora podrán seleccionar roles de este menú. Para deshabilitarlo, simplemente elimine el mensaje del Selector de Roles."
     }
   }
 }
