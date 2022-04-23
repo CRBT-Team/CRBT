@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Color al que cambiar su color de contraste. Utilice una de las sugerencias o un color hexadecimal."
         }
       ]
     },
@@ -86,12 +86,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Debe introducir un código hexadecimal válido o un nombre de color. Utilice /color list para más información."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Su color de perfil de Discord se sincronizará con su color de contraste CRBT.",
+      "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en su perfil y su tarjeta de información cuando otra persona los visite."
     }
   },
   "remind me": {
@@ -137,7 +137,7 @@
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "y",
       "AT": "a las",
-      "ON": "on",
+      "ON": "el",
       "IN": "en",
       "TOMORROW": "mañana",
       "TODAY": "hoy"
@@ -189,11 +189,11 @@
       "options": [
         {
           "name": "buscar_por_nombre",
-          "description": "Search via CRBT profile names."
+          "description": "Buscar mediante el nombre de perfil CRBT."
         },
         {
           "name": "buscar_por_discord",
-          "description": "Search via Discord user IDs or names."
+          "description": "Buscar mediante el ID de usuario de Discord o el nombre de usuario."
         }
       ]
     },
@@ -208,7 +208,7 @@
       "ask": "Pregúntame"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
+      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre de usuario. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!",
       "CAN_ONLY_EDIT_OWN_PROFILE": "Sólo puede editar su propio perfil."
     },
     "strings": {
@@ -316,26 +316,26 @@
         "options": [
           {
             "name": "plantilla",
-            "description": "Una plantilla que escoger. CRBT automáticamente creará los roles y enviará un bonito embed."
+            "description": "Una plantilla que escoger. CRBT automáticamente creará los roles y enviará una bonita inserción."
           }
         ]
       },
       "presets": {
         "colors": {
           "name": "Colores",
-          "message": "¡Elija una de las siguientes opciones para cambiar su color en el servidor!"
+          "message": "Elija un color para su nombre de pantalla."
         },
         "pronouns": {
           "name": "Pronombres",
-          "message": "¡Escoja alguna de las opciones a continuación para seleccionar qué pronombres le gustaría mostrar en el servidor!"
+          "message": "¿Cuáles son sus pronombres?"
         },
         "zodiacSigns": {
           "name": "Signos del Zodiaco",
-          "message": "¡Escoja alguna de las opciones a continuación para seleccionar su signo del zodiaco!"
+          "message": "¿Cuál es su signo del zodiaco?"
         },
         "verification": {
           "name": "Verificación humana",
-          "message": "Haga clic en el botón a continuación para verificar su cuenta."
+          "message": "Haga clic en el botón para verificar su cuenta."
         }
       }
     },
