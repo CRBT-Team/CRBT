@@ -157,7 +157,7 @@ export async function renderUser(
         : "*This user doesn't have any roles...*"
     )
       .addField(
-        `Global key permissions`,
+        `Global major permissions`,
         m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
           ? 'Administrator (all permissions)'
           : keyPerms(m.permissions).join(', ')

@@ -121,6 +121,7 @@ export const usePreset = ChatCommand({
             color: role.color,
             name: role.name,
             reason: `New Role Picker`,
+            permissions: 0,
           })
           .then((r) => {
             return rolesList.push({
@@ -164,7 +165,7 @@ export const usePreset = ChatCommand({
                   rolesList.map((role) => {
                     return {
                       label: role.label ?? role.name,
-                      description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
+                      // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
                       value: JSON.stringify({ name: role.name, id: role.id }),
                       emoji: role.emoji,
                     };
@@ -265,7 +266,7 @@ export const useManual = ChatCommand({
                   rolesList.map((role) => {
                     return {
                       label: role.name,
-                      description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
+                      // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
                       value: JSON.stringify({ name: role.name, id: role.id }),
                     };
                   })

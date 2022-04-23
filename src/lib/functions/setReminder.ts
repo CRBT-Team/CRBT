@@ -8,6 +8,7 @@ import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
 
 export const setReminder = async (reminder: reminders) => {
+  reminder.locale = reminder.locale || 'en-US';
   if (!reminder) {
     await db.reminders.create({
       data: reminder,
@@ -77,7 +78,7 @@ export const setReminder = async (reminder: reminders) => {
                 .setStyle('LINK')
                 .setLabel('Jump to message')
                 .setURL(`https://discord.com/channels/${reminder.url}`),
-              new SnoozeButton(reminder.locale ?? 'en-US')
+              new SnoozeButton(reminder.locale)
                 .setStyle('SECONDARY')
                 .setEmoji(emojis.reminder)
                 .setLabel('Snooze')
