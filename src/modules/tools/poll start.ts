@@ -102,7 +102,7 @@ export default ChatCommand({
                     pollChoices.map((choices, index) => {
                       return {
                         label: choices,
-                        description: `Vote for "${choices}".`,
+                        // description: `Vote for "${choices}".`,
                         value: index.toString(),
                       };
                     })

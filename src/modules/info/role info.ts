@@ -48,7 +48,7 @@ export default ChatCommand({
             true
           )
           .addField(
-            'Global key permissions',
+            'Global major permissions',
             role.permissions.has('ADMINISTRATOR', true) || role.permissions.toArray().length === 0
               ? 'Administrator (all permissions)'
               : keyPerms(role.permissions).join(', ')
