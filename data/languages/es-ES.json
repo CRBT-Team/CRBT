@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "color",
-          "description": "Color al que cambiar su color de contraste. Utilice una de las sugerencias o un color hexadecimal."
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
@@ -86,12 +86,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "Debe introducir un nombre de color válido o utilizar un código hexadecimal. Utilice el autocompletado para una lista de nombres de colores."
+      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
-      "EMBED_SYNC_INFO": "Su color de contraste de CRBT será sincronizado su color del perfil de Discord.",
-      "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en los comandos que muestren información sobre usted."
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -189,11 +189,11 @@
       "options": [
         {
           "name": "buscar_por_nombre",
-          "description": "Buscar mediante el nombre de perfil CRBT."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "buscar_por_discord",
-          "description": "Buscar mediante el ID de usuario de Discord o el nombre de usuario."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -208,7 +208,7 @@
       "ask": "Pregúntame"
     },
     "errors": {
-      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!",
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
       "CAN_ONLY_EDIT_OWN_PROFILE": "Sólo puede editar su propio perfil."
     },
     "strings": {
