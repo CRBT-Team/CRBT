@@ -316,41 +316,41 @@
         "options": [
           {
             "name": "plantilla",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "description": "Una plantilla que escoger. CRBT automáticamente creará los roles y enviará un bonito embed."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose one of the options below to change your displayed name color in the server!"
+          "name": "Colores",
+          "message": "¡Elija una de las siguientes opciones para cambiar su color en el servidor!"
         },
         "pronouns": {
           "name": "Pronombres",
-          "message": "Use the options below to select what pronouns you'd like to display on the server!"
+          "message": "¡Escoja alguna de las opciones a continuación para seleccionar qué pronombres le gustaría mostrar en el servidor!"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "Choose one of the options below to select your zodiac sign!"
+          "name": "Signos del Zodiaco",
+          "message": "¡Escoja alguna de las opciones a continuación para seleccionar su signo del zodiaco!"
         },
         "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button below to verify your account."
+          "name": "Verificación humana",
+          "message": "Haga clic en el botón a continuación para verificar su cuenta."
         }
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "USER_MISSING_PERMS": "Sólo los administradores del servidor pueden crear Selectores de Roles.",
+      "BOT_MISSING_PERMS": "Necesito el permiso \"Gestionar roles\" para poder crear un Selector de Roles.",
+      "ROLE_DOES_NOT_EXIST": "El rol <ROLE> no existe o ha sido eliminado. Contacte a un administrador para solucionar el problema.",
+      "ROLES_DO_NOT_EXIST": "Uno o más de los roles que ha especificado no existen o han sido eliminados. Contacte a un administrador para solucionar el problema.",
+      "BUTTON_ROLES_ONCE": "Sólo puede seleccionar este rol una vez, y no puede quitárselo."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
+      "EMBED_TITLE": "Selector de Roles - Roles autoasignables",
+      "CHOOSE_ROLE": "Escoja un rol",
+      "CHOOSE_ROLES": "Escoja roles",
+      "EMBED_FOOTER": "Nota: CRBT no está afiliado con ninguno de los nombres de los roles o con el servidor.",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
