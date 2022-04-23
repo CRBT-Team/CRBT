@@ -1,9 +1,9 @@
 {
   "globalErrors": {
     "GUILD_ONLY": "Este comando no se puede utilizar en MD.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_DESCRIPTION": "Obsoleto. ",
+    "DEPRECATION_TITLE": "⚠️ Aviso de obsolescencia",
+    "DEPRECATION_NOTICE": "Los perfiles de CRBT y el sistema de economía de Purplets se dejarán de utilizar a favor del sistema propio de Discord de perfiles y un sistema más potente de economía por servidor.\nTodavía podrá ver perfiles y saldos de usuarios hasta mayo de 2022.\nPara más información, consulte **[este artículo](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Volver",
@@ -90,7 +90,7 @@
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "Su color de contraste de CRBT será sincronizado su color del perfil de Discord.",
       "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en los comandos que muestren información sobre usted."
     }
   },
