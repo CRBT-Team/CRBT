@@ -323,19 +323,19 @@
       "presets": {
         "colors": {
           "name": "Couleurs",
-          "message": "Choisissez l'une des options ci-dessous pour changer la couleur de votre nom affiché sur le serveur !"
+          "message": "Choose a color for your display name."
         },
         "pronouns": {
           "name": "Pronoms",
-          "message": "Utilisez les options ci-dessous pour sélectionner les pronoms que vous souhaitez afficher sur le serveur !"
+          "message": "What are your pronouns?"
         },
         "zodiacSigns": {
           "name": "Signes du zodiaque",
-          "message": "Choisissez l'une des options ci-dessous pour sélectionner votre signe zodiaque !"
+          "message": "What's your zodiac sign?"
         },
         "verification": {
           "name": "Vérification humaine",
-          "message": "Cliquez sur le bouton ci-dessous pour vérifier votre compte."
+          "message": "Click on the button to verify your account."
         }
       }
     },
