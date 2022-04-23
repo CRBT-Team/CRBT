@@ -16,7 +16,7 @@ export default ChatCommand({
       { name: '1 hour', value: '1h' },
       { name: '1 day', value: '1d' },
       { name: '1 week', value: '1w' },
-      { name: '1 month', value: '1m' },
+      { name: 'Max (28 days)', value: '28d' },
     ]),
   async handle({ user, reason, duration }) {
     const { GUILD_ONLY } = getStrings(this.locale).globalErrors;

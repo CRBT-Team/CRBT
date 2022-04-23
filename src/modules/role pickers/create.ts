@@ -1,5 +1,5 @@
 import { colors, emojis, icons } from '$lib/db';
-import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
+import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed, MessageSelectMenu, Role } from 'discord.js';
 import {
@@ -61,7 +61,7 @@ const presets: {
       ['Capricorn', '♑'],
       ['Aquarius', '♒'],
       ['Pisces', '♓'],
-    ].map(([name, emoji]) => ({ name, emoji, color: '#9266CC' })),
+    ].map(([name, emoji]) => ({ name, emoji })),
   },
   verification: {
     behavior: 'once',
@@ -100,92 +100,104 @@ export const usePreset = ChatCommand({
       ephemeral: true,
     });
 
-    const preset = presets[opts.preset];
-    const presetStrings = getStrings(this.guildLocale)['role-selectors'].preset.presets[
-      opts.preset
-    ];
+    try {
+      const preset = presets[opts.preset];
+      const presetStrings = getStrings(this.guildLocale)['role-selectors'].preset.presets[
+        opts.preset
+      ];
 
-    const rolesList = [];
-    preset.roles.forEach(async (role) => {
-      const find = this.guild.roles.cache.find((r) => r.name === role.name);
-      if (find) {
-        return rolesList.push({
-          label: role.label,
-          name: find.name,
-          id: find.id,
-          emoji: role.emoji,
-        });
-      } else {
-        this.guild.roles
-          .create({
-            color: role.color,
-            name: role.name,
-            reason: `New Role Picker`,
-            permissions: 0,
-          })
-          .then((r) => {
-            return rolesList.push({
-              label: role.label,
-              name: r.name,
-              id: r.id,
-              emoji: role.emoji,
-            });
+      const rolesList = [];
+      preset.roles.forEach(async (role) => {
+        const find = this.guild.roles.cache.find((r) => r.name === role.name);
+        if (find) {
+          return rolesList.push({
+            label: role.label,
+            name: find.name,
+            id: find.id,
+            emoji: role.emoji,
           });
-      }
-    });
-    const limit = preset.limit || rolesList.length;
+        } else {
+          this.guild.roles
+            .create({
+              color: role.color,
+              name: role.name,
+              reason: `New Role Picker`,
+              permissions: 0n,
+            })
+            .then((r) => {
+              return rolesList.push({
+                label: role.label,
+                name: r.name,
+                id: r.id,
+                emoji: role.emoji,
+              });
+            });
+        }
+      });
+      const limit = preset.limit || rolesList.length;
 
-    await this.channel.send({
-      embeds: [
-        new MessageEmbed()
-          .setTitle(strings.EMBED_TITLE)
-          .setDescription(
-            `${presetStrings.message ?? strings.GENERIC_SELECTOR_TITLE}\n\n${rolesList
-              .map((role) => `${role.emoji ?? ''} <@&${role.id}>`.trim())
-              .join('\n')}`
-          )
-          .setColor(`#${colors.default}`),
-      ],
-      components: components(
-        rolesList.length <= 5 && limit === 1
-          ? row().addComponents(
-              rolesList.map(({ name, id, emoji }) => {
-                return new RoleButton({ name, id, behavior: preset.behavior })
-                  .setLabel(name)
-                  .setStyle('SECONDARY')
-                  .setEmoji(emoji);
-              })
+      // while (rolesList.length < preset.roles.length) {
+      //   await new Promise((resolve) => setTimeout(resolve, 100));
+      // }
+      this.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({ name: strings.EMBED_TITLE })
+            .setTitle(presetStrings.message ?? strings.GENERIC_SELECTOR_TITLE)
+            .setDescription(
+              `${rolesList
+                .map((role) => `${role.emoji ?? ''} <@&${role.id}>`.trim())
+                .join(rolesList.length > 3 ? '\n' : ', ')}`
             )
-          : row(
-              new RoleSelector()
-                .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
-                .setMinValues(0)
-                .setMaxValues(limit)
-                .setOptions(
-                  rolesList.map((role) => {
-                    return {
-                      label: role.label ?? role.name,
-                      // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
-                      value: JSON.stringify({ name: role.name, id: role.id }),
-                      emoji: role.emoji,
-                    };
-                  })
-                )
-            )
-      ),
-    });
+            .setColor(`#${colors.default}`),
+        ],
+        components: components(
+          rolesList.length <= 5 && limit === 1
+            ? row().addComponents(
+                rolesList.map(({ name, id, emoji }) => {
+                  return new RoleButton({ name, id, behavior: preset.behavior })
+                    .setLabel(name)
+                    .setStyle('SECONDARY')
+                    .setEmoji(emoji);
+                })
+              )
+            : row(
+                new RoleSelector()
+                  .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
+                  .setMinValues(0)
+                  .setMaxValues(limit)
+                  .setOptions(
+                    rolesList.map((role) => {
+                      return {
+                        label: role.label ?? role.name,
+                        // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
+                        value: JSON.stringify({
+                          name: role.name,
+                          id: role.id,
+                          behavior: preset.behavior,
+                        }),
+                        emoji: role.emoji,
+                      };
+                    })
+                  )
+              )
+        ),
+      });
 
-    await this.editReply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: strings.SUCCESS_TITLE,
-            iconURL: icons.success,
-          })
-          .setDescription(strings.SUCCESS_DESCRIPTION)
-          .setColor(`#${colors.success}`),
-      ],
-    });
+      this.editReply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              name: strings.SUCCESS_TITLE,
+              iconURL: icons.success,
+            })
+            .setDescription(strings.SUCCESS_DESCRIPTION)
+            .setColor(`#${colors.success}`),
+        ],
+      });
+    } catch (error) {
+      await this.editReply(UnknownError(this, error));
+    }
   },
 });
 
@@ -241,9 +253,12 @@ export const useManual = ChatCommand({
     await this.channel.send({
       embeds: [
         new MessageEmbed()
-          .setTitle(strings.EMBED_TITLE)
+          .setAuthor({ name: strings.EMBED_TITLE })
+          .setTitle(description)
           .setDescription(
-            `${description}\n\n${rolesList.map((role) => role.toString()).join('\n')}`
+            `${rolesList
+              .map((role) => `<@&${role.id}>`.trim())
+              .join(rolesList.length > 3 ? '\n' : ', ')}`
           )
           .setFooter({
             text: strings.EMBED_FOOTER,
@@ -267,7 +282,7 @@ export const useManual = ChatCommand({
                     return {
                       label: role.name,
                       // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
-                      value: JSON.stringify({ name: role.name, id: role.id }),
+                      value: JSON.stringify({ name: role.name, id: role.id, behavior }),
                     };
                   })
                 )
@@ -296,16 +311,15 @@ export const RoleButton = ButtonComponent({
       usersOnCooldown.get(`${this.guild.id}/${this.user.id}`) > Date.now()
     ) {
       return this.reply(
-        await CooldownError(
-          this,
-          await usersOnCooldown.get(`${this.guild.id}/${this.user.id}`),
-          false
-        )
+        await CooldownError(this, usersOnCooldown.get(`${this.guild.id}/${this.user.id}`), false)
       );
     }
     usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
     const { strings, errors } = getStrings(this.locale)['role-selectors'];
+
+    console.log(this.guild.roles.cache.get(role.id));
+    console.log(role);
 
     if (!this.guild.roles.cache.has(role.id)) {
       return this.reply(CRBTError(errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name)));
@@ -323,9 +337,9 @@ export const RoleButton = ButtonComponent({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name:
-                strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name) +
-                (role.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''),
+              name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+                role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+              }`,
               iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
@@ -338,9 +352,9 @@ export const RoleButton = ButtonComponent({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name:
-                strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name) +
-                (role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''),
+              name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
+                role.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
+              }`,
               iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
@@ -371,43 +385,80 @@ export const RoleSelector = SelectMenuComponent({
     const roleArray = (this.message.components[0].components[0] as MessageSelectMenu).options.map(
       (role) => JSON.parse(role.value)
     );
+    const member = this.member as GuildMember;
     const added = [];
     const removed = [];
     const nope = [];
 
     const chosen = this.values.map((role) => JSON.parse(role));
     roleArray.forEach((role) => {
-      if (!this.guild.roles.cache.has(role.id)) {
+      if (!this.guild.roles.cache.get(role.id)) {
         nope.push(role.name);
       }
-      if (!chosen.some((r) => r.id === role.id)) {
-        (this.member as GuildMember).roles.remove(role.id);
+      if (!chosen.some((r) => r.id === role.id) && member.roles.cache.has(role.id)) {
+        member.roles.remove(role.id);
         removed.push(role.name);
       }
-      if (chosen.some((r) => r.id === role.id)) {
-        (this.member as GuildMember).roles.add(role.id);
+      if (chosen.some((r) => r.id === role.id) && !member.roles.cache.has(role.id)) {
+        member.roles.add(role.id);
         added.push(role.name);
       }
     });
-    if (nope.length === chosen.length) {
+
+    console.log(added, removed, nope);
+    console.log(chosen);
+    if (nope.length > 0) {
       return this.reply(CRBTError(errors.ROLES_DO_NOT_EXIST));
     }
+    if ((this.component as MessageSelectMenu).maxValues !== 1) {
+      this.reply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              name: strings.SELECT_MENU_ROLES_SUCCESS,
+              iconURL: icons.success,
+            })
+            .setDescription(
+              `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${
+                removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
+              }\n\`\`\``
+            )
+            .setColor(`#${colors.success}`),
+        ],
+        ephemeral: true,
+      });
+    } else {
+      const role = chosen[0];
 
-    this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: strings.SELECT_MENU_ROLES_SUCCESS,
-            iconURL: icons.success,
-          })
-          .setDescription(
-            `\`\`\`diff\n+ ${added.join(', ') || 'None'}\n- ${
-              removed.join(', ') || 'None'
-            }\n\`\`\`` + (nope.length ? errors.ROLES_DO_NOT_EXIST : '')
-          )
-          .setColor(`#${colors.success}`),
-      ],
-      ephemeral: true,
-    });
+      if (!member.roles.cache.has(role.id)) {
+        this.reply({
+          embeds: [
+            new MessageEmbed()
+              .setAuthor({
+                name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+                  role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+                }`,
+                iconURL: icons.success,
+              })
+              .setColor(`#${colors.success}`),
+          ],
+          ephemeral: true,
+        });
+      } else {
+        this.reply({
+          embeds: [
+            new MessageEmbed()
+              .setAuthor({
+                name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
+                  role.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
+                }`,
+                iconURL: icons.success,
+              })
+              .setColor(`#${colors.success}`),
+          ],
+          ephemeral: true,
+        });
+      }
+    }
   },
 });

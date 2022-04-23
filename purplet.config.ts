@@ -16,9 +16,9 @@ export default defineConfig({
   discord: {
     commandGuilds: process.argv.includes('--dev')
       ? [
-          '949329353047687189', // CRBT Development
+          // '949329353047687189', // CRBT Development
           // '843530687260524585', // Clembs Emoji
-          // '832924281519341638', // CRBT Demo
+          '832924281519341638', // CRBT Demo
         ]
       : [],
     clientOptions: {
