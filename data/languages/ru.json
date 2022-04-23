@@ -38,7 +38,7 @@
       "options": [
         {
           "name": "пользователь",
-          "description": "The user to view the balance of"
+          "description": "Пользователь для просмотра баланса"
         }
       ]
     },
@@ -228,14 +228,14 @@
       "options": [
         {
           "name": "пользователь",
-          "description": "The user to get the avatar of."
+          "description": "Пользователь для просмотра аватара."
         },
         {
-          "name": "size",
+          "name": "размер",
           "description": "The size of the avatar to get."
         },
         {
-          "name": "format",
+          "name": "формат",
           "description": "The format of the avatar to get."
         }
       ]
