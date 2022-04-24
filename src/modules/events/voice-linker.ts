@@ -25,7 +25,7 @@ export default OnEvent('voiceStateUpdate', async (oldState, newState) => {
       if (newState.channelId && !oldState.channelId) {
         await textChannel.permissionOverwrites.create(member, { VIEW_CHANNEL: true });
       } else if (oldState.channelId && !newState.channelId) {
-        await textChannel.permissionOverwrites.edit(member, { VIEW_CHANNEL: false });
+        await textChannel.permissionOverwrites.delete(member);
       }
     } catch (e) {}
   }

@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import {
   GuildMember,
   Interaction,
-  InteractionReplyOptions,
   MessageEmbed,
   User,
   UserContextMenuInteraction,
@@ -21,7 +20,8 @@ export default ChatCommand({
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
     const u = await (user ?? this.user).fetch();
-    const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
+    const m = (user ? this.options.getMember('user') : this.member) as GuildMember;
+    // const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
 
     // enum UserStatus {
     //   online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
@@ -98,7 +98,7 @@ export async function renderUser(
   u: User,
   m?: GuildMember,
   navCtx?: { userId: string; cmdUID: string }
-): Promise<InteractionReplyOptions> {
+) {
   const { badges } = emojis;
   const flags = (await u.fetchFlags()).toArray();
   const userBadges = flags.map((flag) => {
@@ -132,8 +132,9 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
+      // name: u.tag,
       name: `${u.tag} - User info`,
-      iconURL: avatar(u, 64),
+      iconURL: avatar(m ?? u, 64),
     })
     .setDescription(userBadges.join('‎ '))
     .addField('ID', u.id)
@@ -156,7 +157,7 @@ export async function renderUser(
         : "*This user doesn't have any roles...*"
     )
       .addField(
-        `Global key permissions`,
+        `Global major permissions`,
         m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
           ? 'Administrator (all permissions)'
           : keyPerms(m.permissions).join(', ')
@@ -169,6 +170,8 @@ export async function renderUser(
 
   return {
     embeds: [e],
-    components: components(navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, 'userinfo')),
+    components: components(
+      navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, ctx.locale, 'userinfo')
+    ),
   };
 }

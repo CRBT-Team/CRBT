@@ -9,10 +9,10 @@ import emojiJSON from '../../../data/misc/emoji.json';
 
 export default ChatCommand({
   name: 'emoji info',
-  description: 'Get info on a given emoji. 👀',
+  description: 'Get info on a given emoji.',
   options: new OptionBuilder().string(
     'emoji',
-    'The emoji whose info to get. Works with custom emojis and standard Unicode emoji. 😜',
+    'The emoji whose info to get. Works with custom emojis and standard Unicode emoji.',
     true
   ),
   async handle({ emoji }) {
@@ -47,26 +47,20 @@ export default ChatCommand({
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
       const emojiData = emojiJSON.find((e) => e.char === emoji);
-      const emojiUni = emojiData.codes.replaceAll(' ', '-').toLowerCase();
-
+      const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes.replace(
+        / /g,
+        '-'
+      )}`;
+      // eye_1f441-fe0f.png
       const emojiImg = {
-        google: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/313/${emojiData.name.replaceAll(
-          ' ',
-          '-'
-        )}_${emojiUni}.png`,
-        twitter: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/282/${emojiData.name.replaceAll(
-          ' ',
-          '-'
-        )}_${emojiUni}.png`,
-        meta: `https://raw.githubusercontent.com/iamcal/emoji-data/master/img-facebook-96/${emojiUni}.png`,
-        apple: `https://raw.githubusercontent.com/iamcal/emoji-data/master/img-apple-160/${emojiUni}.png`,
-        microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/310/${emojiData.name.replaceAll(
-          ' ',
-          '-'
-        )}_${emojiUni}.png`,
+        google: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/313/${emojipediaCode}.png`,
+        twitter: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/${emojipediaCode}.png`,
+        facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/304/${emojipediaCode}.png`,
+        apple: `https://raw.githubusercontent.com/iamcal/emoji-data/master/img-apple-160/${emojipediaCode}.png`,
+        microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/310/${emojipediaCode}.png`,
       };
 
-      const emojiURL = emojiData.unicode === '14.0' ? emojiImg.google : emojiImg.twitter;
+      const emojiURL = emojiImg.twitter;
 
       await this.reply({
         embeds: [

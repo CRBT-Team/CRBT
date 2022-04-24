@@ -1,6 +1,6 @@
-import { colors, db, emojis, illustrations, misc } from '$lib/db';
+import { colors, db, emojis, icons, misc } from '$lib/db';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
 import {
   EmbedField,
   Interaction,
@@ -10,8 +10,6 @@ import {
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
-
-dayjs.extend(relativeTime);
 
 const handleError = (
   description: string,
@@ -34,7 +32,7 @@ const handleError = (
 
   return new MessageEmbed({
     author: {
-      iconURL: illustrations.error,
+      iconURL: icons.error,
       name: title ?? description,
     },
     description: title ? description : null,
@@ -51,12 +49,14 @@ export function CRBTError(
   return { embeds: [handleError(desc, null, fields)], ephemeral };
 }
 
-export function UnknownError(context: Interaction, desc: string): InteractionReplyOptions {
+export function UnknownError(context: Interaction, desc: any): InteractionReplyOptions {
+  const { strings } = getStrings(context.locale).UnknownError;
+  console.error(desc);
   return {
     embeds: [
       handleError(
-        `We have no clue what this issue may be. Here's what the error says:\n\`\`\`\n${desc}\`\`\`\nThis was reported to us, and we'll make sure to fix it as soon as possible!`,
-        desc,
+        strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${desc}\`\`\``),
+        String(desc),
         [
           {
             name: 'Context',
@@ -70,7 +70,7 @@ export function UnknownError(context: Interaction, desc: string): InteractionRep
           },
         ],
         true,
-        'An unknown error has occurred'
+        strings.TITLE
       ),
     ],
     ephemeral: true,
@@ -82,6 +82,9 @@ export async function CooldownError(
   relativetime: number,
   showButton = true
 ): Promise<InteractionReplyOptions> {
+  const { strings } = getStrings(context.locale).CooldownError;
+  const { ADD_REMINDER } = getStrings(context.locale).genericButtons;
+
   const reminder = await db.reminders.findFirst({
     where: {
       user_id: context.user.id,
@@ -96,19 +99,24 @@ export async function CooldownError(
   return {
     embeds: [
       handleError(
-        `You will be able to use this ${
-          context.type === 'APPLICATION_COMMAND' ? 'command' : 'component'
-        } ${dayjs(relativetime).fromNow()}...`
+        strings.DESCRIPTION.replace(
+          '<TYPE>',
+          context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
+        ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
+        null,
+        null,
+        false,
+        strings.TITLE
       ),
     ],
     components:
       showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
         ? components(
             row(
-              new RemindButton({ relativetime, userId: context.user.id })
+              new RemindButton({ relativetime, userId: context.user.id, locale: context.locale })
                 .setStyle('SECONDARY')
-                .setLabel('Add Reminder')
-                .setEmoji(emojis.misc.reminder)
+                .setLabel(ADD_REMINDER)
+                .setEmoji(emojis.reminder)
             )
           )
         : null,

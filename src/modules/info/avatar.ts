@@ -1,18 +1,21 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { row } from '$lib/functions/row';
-import { Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
+import { getStrings } from '$lib/language';
+import { ButtonInteraction, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
 
+const { meta, ctxMeta } = getStrings('en-US').avatar;
+
 export default ChatCommand({
-  name: 'avatar',
-  description: `Get a user's default avatar, or yours if you don't specify one.`,
+  name: 'avatar default',
+  description: meta.description,
   options: new OptionBuilder()
-    .user('user', 'The user to get the avatar of.')
+    .user('user', meta.options[0].description)
     .enum(
       'size',
-      'The size of the avatar.',
+      meta.options[1].description,
       [
         ['Small', 128],
         ['Medium', 512],
@@ -22,7 +25,7 @@ export default ChatCommand({
     )
     .enum(
       'format',
-      'The format of the avatar.',
+      meta.options[2].description,
       ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
     ),
   async handle({ user, size, format }) {
@@ -32,9 +35,12 @@ export default ChatCommand({
 });
 
 export const ctxCommand = UserContextCommand({
-  name: 'Get Avatar',
+  ...ctxMeta,
   async handle(user) {
-    await this.reply(await renderPfp(user, this));
+    await this.reply({
+      ...(await renderPfp(user, this)),
+      ephemeral: true,
+    });
   },
 });
 
@@ -48,23 +54,35 @@ export async function renderPfp(
     cmdUID: string;
   }
 ) {
+  const { strings } = getStrings(ctx.locale).avatar;
+
   const av = avatar(user, size, format ?? 'png', !!format);
+
+  const color =
+    ctx instanceof ButtonInteraction ? ctx.message.embeds[0].color : await getColor(user);
 
   return {
     embeds: [
       new MessageEmbed()
-        .setAuthor({ name: `${user.tag} - Avatar`, iconURL: avatar(user, 64) })
+        .setAuthor({
+          // name: user.tag,
+          name: strings.EMBED_TITLE.replace('<USER>', user.tag),
+          iconURL: avatar(user, 64),
+        })
         .setImage(av)
-        .setColor(await getColor(user)),
+        .setColor(color),
     ],
     components: components(
-      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, 'pfp'),
+      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, ctx.locale, 'avatar'),
       row(
         new MessageButton()
           .setLabel(
             !av.includes('embed/avatars')
-              ? `Download (2048px - ${av.includes('.gif') ? 'GIF' : 'PNG'})`
-              : 'Download (256px - PNG)'
+              ? strings.DOWNLOAD.replace('<SIZE>', `${size}`).replace(
+                  '<FORMAT>',
+                  av.includes('.gif') ? 'GIF' : 'PNG'
+                )
+              : strings.DOWNLOAD.replace('<SIZE>', `256`).replace('<FORMAT>', 'PNG')
           )
           .setStyle('LINK')
           .setURL(av)

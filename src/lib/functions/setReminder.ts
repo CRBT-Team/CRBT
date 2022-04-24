@@ -1,5 +1,5 @@
-import { db, emojis } from '$lib/db';
-import { Reminder } from '$lib/types/CRBT/Reminder';
+import { db, emojis, icons } from '$lib/db';
+import { reminders } from '@prisma/client';
 import dayjs from 'dayjs';
 import { GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
@@ -7,37 +7,40 @@ import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
 
-export const setReminder = async (reminder: Reminder) => {
-  const id = reminder.id
-    ? reminder.id
-    : (
-        await db.reminders.create({
-          data: reminder,
-        })
-      ).id;
+export const setReminder = async (reminder: reminders) => {
+  reminder.locale = reminder.locale || 'en-US';
+  if (!reminder) {
+    await db.reminders.create({
+      data: reminder,
+    });
+  }
+
+  const client = getDiscordClient();
 
   setLongerTimeout(async () => {
-    const user = await getDiscordClient().users.fetch(reminder.user_id);
+    const user = await client.users.fetch(reminder.user_id);
+
     const dest =
       reminder.destination === 'dm'
         ? user
-        : ((await getDiscordClient().channels.fetch(
-            reminder.destination
-          )) as GuildTextBasedChannel);
+        : ((await client.channels.fetch(reminder.url.split('/')[1])) as GuildTextBasedChannel);
 
     dest
       .send({
         content: reminder.destination !== 'dm' ? user.toString() : null,
         embeds: [
           new MessageEmbed()
-            .setTitle(`${emojis.misc.reminder} Reminder`)
+            .setAuthor({
+              name: 'Reminder',
+              iconURL: icons.reminder,
+            })
             .setDescription(
               `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
                 reminder.expiration
               ).unix()}:R>).`
             )
-            .addField('Reminder', reminder.reminder)
-            .setColor(await getColor(await getDiscordClient().users.fetch(reminder.user_id))),
+            .addField('Subject', reminder.reminder)
+            .setColor(await getColor(user)),
         ],
         components: components(
           row(
@@ -49,21 +52,25 @@ export const setReminder = async (reminder: Reminder) => {
         ),
       })
       .catch(async (err) => {
-        const dest = (await getDiscordClient().channels.fetch(
+        const dest = (await client.channels.fetch(
           reminder.url.split('/')[1]
         )) as GuildTextBasedChannel;
+
         await dest.send({
           content: user.toString(),
           embeds: [
             new MessageEmbed()
-              .setTitle(`${emojis.misc.reminder} Reminder`)
+              .setAuthor({
+                name: 'Reminder',
+                iconURL: icons.reminder,
+              })
               .setDescription(
                 `Set on <t:${dayjs(reminder.expiration).unix()}> (<t:${dayjs(
                   reminder.expiration
                 ).unix()}:R>).`
               )
-              .addField('Reminder', reminder.reminder)
-              .setColor(await getColor(await getDiscordClient().users.fetch(reminder.user_id))),
+              .addField('Subject', reminder.reminder)
+              .setColor(await getColor(user)),
           ],
           components: components(
             row(
@@ -71,9 +78,9 @@ export const setReminder = async (reminder: Reminder) => {
                 .setStyle('LINK')
                 .setLabel('Jump to message')
                 .setURL(`https://discord.com/channels/${reminder.url}`),
-              new SnoozeButton()
+              new SnoozeButton(reminder.locale)
                 .setStyle('SECONDARY')
-                .setEmoji(emojis.misc.reminder)
+                .setEmoji(emojis.reminder)
                 .setLabel('Snooze')
             )
           ),
@@ -81,9 +88,7 @@ export const setReminder = async (reminder: Reminder) => {
       });
 
     await db.reminders.delete({
-      where: {
-        id,
-      },
+      where: reminder,
     });
   }, dayjs(reminder.expiration).diff(new Date()));
 };

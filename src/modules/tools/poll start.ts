@@ -1,4 +1,4 @@
-import { colors, db, emojis, illustrations } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
@@ -102,7 +102,7 @@ export default ChatCommand({
                     pollChoices.map((choices, index) => {
                       return {
                         label: choices,
-                        description: `Vote for "${choices}".`,
+                        // description: `Vote for "${choices}".`,
                         value: index.toString(),
                       };
                     })
@@ -129,7 +129,7 @@ export default ChatCommand({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            iconURL: illustrations.success,
+            iconURL: icons.success,
             name: 'Poll created!',
           })
           .setDescription(
@@ -251,10 +251,6 @@ const renderPoll = async (
   const newChoiceId = Number(choiceId);
   const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
 
-  console.log('choiceId', choiceId);
-  console.log('previousChoiceId', previousChoiceId);
-  console.log('choices', choices);
-
   if (previousChoiceId !== -1) {
     choices[previousChoiceId]?.splice(
       choices[previousChoiceId].findIndex((voter) => voter === userId),
@@ -264,8 +260,6 @@ const renderPoll = async (
   if (previousChoiceId !== newChoiceId) {
     choices[newChoiceId]?.push(userId);
   }
-
-  console.log('choices', choices);
 
   await db.polls.update({
     where: { id: pollData.id },
@@ -279,8 +273,6 @@ const renderPoll = async (
     let percentage = Math.round((votes / totalVotes) * 100);
     if (isNaN(percentage)) percentage = 0;
     if (percentage === Infinity) percentage = 100;
-
-    console.log('votes for ' + id, votes, `${percentage}%`);
 
     choice.value = `${
       emojis.progress.fill.repeat(Math.round(percentage / 10)) +

@@ -1,7 +1,6 @@
 import { emojis } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { Urban } from '$lib/types/apis/urbandictionary';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -15,7 +14,7 @@ export default ChatCommand({
     try {
       const req = await fetch(`https://api.urbandictionary.com/v0/define?term=${word}`);
 
-      const post = ((await req.json()) as Urban).list[0];
+      const post = ((await req.json()) as any).list[0];
 
       if (!post) {
         return this.reply(
@@ -57,7 +56,7 @@ export default ChatCommand({
         )
         .addField(
           'Votes',
-          `${emojis.misc.thumbsup} **${post.thumbs_up}** | ${emojis.misc.thumbsdown} **${post.thumbs_down}**`,
+          `${emojis.thumbsup} **${post.thumbs_up}** | ${emojis.thumbsdown} **${post.thumbs_down}**`,
           true
         )
         .setColor(await getColor(this.user))

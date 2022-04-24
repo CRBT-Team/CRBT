@@ -1,8 +1,7 @@
-import { CommandInteraction, TextChannel, Webhook } from 'discord.js';
-import { avatar } from './avatar';
+import { CommandInteraction, Message, TextChannel, Webhook } from 'discord.js';
 
 export const webhookSend = async (
-  i: CommandInteraction,
+  i: CommandInteraction | Message,
   content: string,
   username?: string,
   avatarURL?: string
@@ -15,8 +14,8 @@ export const webhookSend = async (
       (await (i.channel as TextChannel).createWebhook('CRBT Webhook').then((hook) => hook));
 
     return await hook.send({
-      avatarURL: avatarURL ?? avatar(i.user),
-      username: username ?? i.user.username,
+      avatarURL,
+      username,
       content,
     });
   } catch (e) {

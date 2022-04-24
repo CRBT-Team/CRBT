@@ -1,19 +1,12 @@
 import { cache } from '$lib/cache';
-import { colors, db, illustrations, links, misc } from '$lib/db';
+import { CRBTUser } from '$lib/classes/CRBTUser';
+import { colors, db, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { row } from '$lib/functions/row';
 import { trimSpecialChars } from '$lib/functions/trimSpecialChars';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
 import dayjs from 'dayjs';
-import {
-  Message,
-  MessageButton,
-  MessageEmbed,
-  ModalSubmitInteraction,
-  TextChannel,
-} from 'discord.js';
-import { components, OnEvent } from 'purplet';
+import { Message, MessageEmbed, ModalSubmitInteraction, TextChannel } from 'discord.js';
+import { OnEvent } from 'purplet';
 import { issueReply } from '../dev/fix';
 import { renderProfile } from '../economy/profile';
 
@@ -35,7 +28,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Issue sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `Your issue has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
@@ -99,7 +92,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Suggestion sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `A discussion thread has been sent in the **[CRBT Community](${
@@ -131,7 +124,7 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
         new MessageEmbed()
           .setAuthor({
             name: 'Reply sent successfully.',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`
@@ -147,19 +140,17 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
       name: trimSpecialChars(modal.fields.getTextInputValue('profile_name')).trim(),
       bio: modal.fields.getTextInputValue('profile_bio').trim(),
       birthday: bday.isValid() && bday.isBefore(new Date()) ? bday.toDate() : null,
-      location: modal.fields.getTextInputValue('profile_location').trim(),
+      pronouns: modal.fields.getTextInputValue('profile_pronouns').trim(),
       url: url.match(urlRegex)
         ? url.startsWith('http://') || url.startsWith('https://')
           ? url
           : 'https://' + url
         : null,
-    } as APIProfile;
+    };
 
-    const msg = await modal.channel.messages.fetch(modal.customId.split('_')[0]).catch(() => null);
-
-    const oldProfile = (await db.profiles.findFirst({
+    const oldProfile = await db.profiles.findFirst({
       where: { id: modal.user.id },
-    })) as APIProfile;
+    });
 
     if (
       newProfile.name !== oldProfile?.name &&
@@ -172,10 +163,10 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
     }
 
     try {
-      const profile =
+      const profileData =
         newProfile === oldProfile
           ? oldProfile
-          : ((await db.profiles.upsert({
+          : await db.profiles.upsert({
               update: {
                 ...newProfile,
               },
@@ -184,39 +175,50 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
                 ...newProfile,
               },
               where: { id: modal.user.id },
-            })) as APIProfile);
+            });
       if (newProfile !== oldProfile) {
         cache.set<string[]>('profiles', [
           newProfile.name,
           ...cache.get<string[]>('profiles').filter((name) => name !== oldProfile.name),
         ]);
       }
+      const profile = new CRBTUser(modal.user, profileData);
 
-      if (msg) {
-        await msg.edit(await renderProfile(profile, modal.user, modal.guild, modal));
-      }
+      // if (msg.type !== 'CONTEXT_MENU_COMMAND') {
+      //   await msg.edit(await renderProfile(profile, modal));
+      // }
 
-      modal.reply({
+      //@ts-ignore
+      await modal.update(await renderProfile(profile, modal));
+
+      modal.followUp({
         embeds: [
           new MessageEmbed()
             .setAuthor({
               name: 'Profile updated!',
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setDescription(
-              'Note: Some characters in your name may have been removed if they are not allowed.'
+              (newProfile.name !== modal.fields.getTextInputValue('profile_name')
+                ? '⚠️ Some characters in your name may have been removed if they are not allowed.'
+                : '') +
+                (!bday.isValid()
+                  ? `\n⚠️ The date you set as your birthday is invalid, so it has been removed.`
+                  : '') +
+                (url.match(urlRegex)
+                  ? ''
+                  : `\n⚠️ The URL you set is invalid, so it has been removed.`)
             )
             .setColor(`#${colors.success}`),
         ],
-        components: msg
-          ? components(
-              row(new MessageButton().setLabel('Jump to Profile').setURL(msg.url).setStyle('LINK'))
-            )
-          : null,
         ephemeral: true,
       });
     } catch (error) {
-      modal.reply(UnknownError(modal, String(error)));
+      if (!modal.replied) {
+        modal.reply(UnknownError(modal, error));
+      } else {
+        modal.followUp(UnknownError(modal, error));
+      }
     }
   }
 });

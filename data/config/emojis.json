@@ -16,21 +16,11 @@
   "verified": "<:verified:939650378243407873>",
   "partner": "<:partner:866113174314287125>",
 
-  "music": {
-    "mute": "<:mute:866336306971934761>",
-    "volume": "<:volume_high:866336351677710376>",
-    "volume_low": "<:volume_low:866336390038814769>",
-    "stop": "<:stop:866336251178647591>",
-    "pause": "<:pause:866337168444227604>",
-    "play": "<:resume:866337139162349568>",
-    "skip": "<:skip:866336024643895318>"
-  },
   "channels": {
     "text": "<:text:861643749242306610>",
     "voice": "<:voice:861643709111468043>",
     "news": "<:news:861643588668227635>",
     "rules": "<:rules:861643629563346964>",
-    "store": "<:store:861643679306743809>",
     "nsfw": "<:text_nsfw:861646458544193567>",
     "category": "<:category:861645653326692362>",
     "stage": "<:stage:919655246236614676>"
@@ -45,17 +35,16 @@
       "invisible": "<:Invisible:782585661185589270>"
     }
   },
-  "misc": {
-    "eightball": "<:8ball:836285755512586291>",
-    "sticker": "<:sticker:919672520691580949>",
-    "emoji": {
-      "static": "<:emoji:658538492321595393>",
-      "animated": "<:emoji:658538492321595393>"
-    },
-    "thumbsup": "<:thumbsup:868200292024467486>",
-    "thumbsdown": "<:thumbsdown:868200320868708393>",
-    "reminder": "<:bell:868193178149347338>"
+  "eightball": "<:8ball:836285755512586291>",
+  "sticker": "<:sticker:919672520691580949>",
+  "emoji": {
+    "static": "<:emoji:658538492321595393>",
+    "animated": "<:emoji:658538492321595393>"
   },
+  "thumbsup": "<:thumbsup:868200292024467486>",
+  "thumbsdown": "<:thumbsdown:868200320868708393>",
+  "reminder": "<:bell:868193178149347338>",
+
   "badges": {
     "houses": {
       "balance": "<:balance:585763004574859273>",

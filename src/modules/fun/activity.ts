@@ -1,90 +1,70 @@
-import { colors, illustrations } from '$lib/db';
+import { colors, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getStrings } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
 const activities = [
-  { name: 'Watch Together - Unlimited participants', id: '880218394199220334' },
-  { name: 'Sketch Heads - Up to 16 players', id: '902271654783242291' },
-  { name: 'Word Snacks - Up to 8 players', id: '879863976006127627' },
-  { name: 'Poker Night - 💎 Requires Boosting', id: '755827207812677713' },
-  { name: 'Chess In The Park - 💎 Requires Boosting', id: '832012774040141894' },
-  { name: 'Checkers In The Park - 💎 Requires Boosting', id: '832013003968348200' },
-  { name: 'Blazing 8s - 💎 Requires Boosting', id: '832025144389533716' },
-  { name: 'Letter League - 💎 Requires Boosting', id: '879863686565621790' },
-  { name: 'SpellCast - 💎 Requires Boosting', id: '852509694341283871' },
-  // { name: 'Betrayal.io', id: '773336526917861400' },
-  // { name: 'Fishington.io', id: '814288819477020702' },
-  // { name: 'Awkword', id: '879863881349087252' },
-  // { name: 'Putt Party', id: '763133495793942528' },
+  ['Watch Together', '880218394199220334'],
+  ['Sketch Heads', '902271654783242291'],
+  ['Word Snacks', '879863976006127627'],
+  ['Poker Night', '755827207812677713'],
+  ['Chess In The Park', '832012774040141894'],
+  ['Checkers In The Park', '832013003968348200'],
+  ['Blazing 8s', '832025144389533716'],
+  ['Letter League', '879863686565621790'],
+  ['SpellCast', '852509694341283871'],
 ];
 
-const choices = activities.map(({ name }) => {
-  return { name, value: name.toLowerCase().replaceAll(' ', '-').replaceAll('.', '') };
-});
+const choices = activities.map(([name, id]) => ({ name, value: id }));
 
 export default ChatCommand({
   name: 'activity',
-  description: 'Start an activity in a voice channel.',
-  options: new OptionBuilder()
-    .enum('activity', 'The activity you want to start.', choices, true)
-    .channel('channel', 'The channel you want to start the activity in.'),
-  async handle({ activity, channel }) {
+  description: 'Start an activity in the current voice channel',
+  options: new OptionBuilder().enum('activity', 'The activity to start', choices, true),
+  async handle({ activity }) {
+    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
+
     if (this.channel.type === 'DM') {
-      return this.reply(CRBTError('This command cannot be used in DMs'));
+      return this.reply(CRBTError(GUILD_ONLY));
     }
-    const vc = channel ?? (await this.guild.members.fetch(this.user)).voice?.channel;
+    const vc = (await this.guild.members.fetch(this.user)).voice?.channel;
 
-    if (!vc)
-      await this.reply(
-        CRBTError(
-          'You need to be in a voice channel, or to choose a voice channel using the `channel` option.'
-        )
-      );
-    else if (vc.type !== 'GUILD_VOICE')
-      await this.reply(
-        CRBTError('You need to choose a voice channel in order to start an activity!')
-      );
-    else {
-      const code = await getRestClient()
-        .post(`/channels/${vc.id}/invites`, {
-          body: {
-            max_age: 86400,
-            max_uses: 0,
-            target_application_id: activities.find(
-              ({ name }) => name === choices.find(({ value }) => value === activity).name
-            ).id,
-            target_type: 2,
-            temporary: false,
-            validate: null,
-          },
-          headers: {
-            Authorization: `Bot ${this.client.token}`,
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((invite: any) => {
-          return `https://discord.com/invite/${invite.code}`;
-        });
-
-      await this.reply({
-        embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: 'All set!',
-              iconURL: illustrations.success,
-            })
-            .setDescription(
-              `Click the button below to join **${
-                choices.find((item) => item.value === activity).name.split(' | ')[0]
-              }** in ${vc}.\nNote: Activities do not work on mobile and are in early development. Some features may be unavailable`
-            )
-            .setColor(`#${colors.success}`),
-        ],
-        components: components(
-          row(new MessageButton().setStyle('LINK').setLabel(`Join Activity`).setURL(code))
-        ),
-      });
+    if (!vc) {
+      return this.reply(CRBTError('You need to be in a voice channel!'));
     }
+    const { invite } = (await getRestClient().post(`/channels/${vc.id}/invites`, {
+      body: {
+        max_age: 86400,
+        max_uses: 0,
+        target_application_id: activity,
+        target_type: 2,
+        temporary: false,
+        validate: null,
+      },
+      headers: {
+        Authorization: `Bot ${this.client.token}`,
+        'Content-Type': 'application/json',
+      },
+    })) as any;
+
+    await this.reply({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: 'All set!',
+            iconURL: icons.success,
+          })
+          .setDescription(
+            `Click the button below to join ${choices.find(
+              (item) => item.value === activity
+            )} in ${vc}.\nNote: Activities do not work on mobile and are still being experimented with. Expect bugs and missing features.`
+          )
+          .setColor(`#${colors.success}`),
+      ],
+      components: components(
+        row(new MessageButton().setStyle('LINK').setLabel('Join Activity').setURL(invite.code))
+      ),
+    });
   },
 });

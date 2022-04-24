@@ -28,7 +28,10 @@ export default OnEvent('interactionCreate', async (i) => {
   if (i.isCommand()) {
     (i.client.channels.cache.get(misc.channels.telemetry) as TextChannel).send({
       embeds: [
-        new MessageEmbed().setDescription(`\`\`\`\n${i}\`\`\``).addField('User ID', i.user.id),
+        new MessageEmbed()
+          .setDescription(`\`\`\`\n${i}\`\`\``)
+          .addField('User ID', i.user.id)
+          .addField('Platform', i.channel.type),
       ],
     });
   } else if (i.isContextMenu()) {

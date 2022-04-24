@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
-  name: 'mc skin',
+  name: 'skin',
   description: 'Get a Minecraft skin from a username.',
   options: new OptionBuilder().string(
     'player_name',

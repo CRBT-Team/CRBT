@@ -7,3 +7,6 @@ json.sqlite
 .supabase
 a.json
 i.js
+# Supabase
+**/supabase/.branches
+**/supabase/.temp

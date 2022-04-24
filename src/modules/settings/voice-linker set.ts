@@ -1,4 +1,4 @@
-import { colors, db, illustrations } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { Prisma } from '@prisma/client';
 import { MessageEmbed, Permissions, TextChannel } from 'discord.js';
@@ -67,7 +67,7 @@ export default ChatCommand({
         new MessageEmbed()
           .setAuthor({
             name: 'Voice-Text Linker set!',
-            iconURL: illustrations.success,
+            iconURL: icons.success,
           })
           .setDescription(
             `Whenever someone joins ${voice}, they will now get access to ${text}.` +

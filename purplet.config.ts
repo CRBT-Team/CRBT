@@ -7,6 +7,12 @@ import {
 } from 'purplet';
 
 export default defineConfig({
+  compiler: {
+    esbuildOptions: {
+      minify: true,
+      minifyWhitespace: true,
+    },
+  },
   discord: {
     commandGuilds: process.argv.includes('--dev')
       ? [
@@ -17,7 +23,6 @@ export default defineConfig({
       : [],
     clientOptions: {
       allowedMentions: {
-        parse: ['users'],
         repliedUser: false,
       },
       intents: process.argv.includes('--dev')

@@ -6,7 +6,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'define',
-  description: 'Look up the definition of a given word on a dictionary.',
+  description: 'Look up the definition of a given word on an English dictionary.',
   options: new OptionBuilder().string('word', 'The word to define.', true),
   async handle({ word }) {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);

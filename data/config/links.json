@@ -1,16 +1,13 @@
 {
-  "baseURL": "https://crbt.ga",
-  "privacypolicy": "https://crbt.ga/policy",
-  "banners": "https://crbt.ga/banners/",
-  "discord": "https://discord.com/invite/AvwhNtsgAC",
-  "github": "https://github.com/CRBT-Team",
-  "api": "https://api.clembs.xyz",
+  "api": "https://crbt.ga/api",
+  "policy": "https://crbt.ga/policy",
+  "discord": "https://crbt.ga/discord",
   "invite": "https://discord.com/oauth2/authorize?client_id=595731552709771264&permissions=8&scope=bot%20applications.commands",
   "external": {
     "topgg": "https://crbt.ga/vote",
     "discordbots": "https://discord.bots.gg/bots/595731552709771264"
   },
-  "info": {
-    "messages": "https://crbt.ga/blog/about-crbt-messages"
+  "blog": {
+    "about-crbt-messages": "https://crbt.ga/blog/about-crbt-messages"
   }
 }

@@ -1,4 +1,4 @@
-import { colors, db, illustrations } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { GuildMember, MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -94,7 +94,7 @@ export default ChatCommand({
           new MessageEmbed()
             .setAuthor({
               name: 'Successfully ended the poll.',
-              iconURL: illustrations.success,
+              iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),
         ],

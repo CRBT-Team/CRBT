@@ -1,14 +1,19 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
+const { meta } = getStrings('en-US').ping;
+
 export default ChatCommand({
   name: 'ping',
-  description: 'Ping CRBT. Returns latency and connection info.',
+  description: meta.description,
   async handle() {
     await this.deferReply();
+
+    const { strings } = getStrings(this.locale).ping;
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();
@@ -16,22 +21,22 @@ export default ChatCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: `${this.client.user.username} - Ping`,
+              name: strings.EMBED_TITLE.replace('<CRBT>', this.client.user.username),
               iconURL: avatar(this.client.user, 64),
             })
             .addFields([
               {
-                name: 'WebSocket',
+                name: strings.WEBSOCKET,
                 value: `${this.client.ws.ping}ms`,
                 inline: true,
               },
               {
-                name: 'Interaction',
+                name: strings.INTERACTION,
                 value: `${Date.now() - this.createdTimestamp}ms`,
                 inline: true,
               },
               {
-                name: 'Online since',
+                name: strings.UPTIME,
                 value: `<t:${uptime}> (<t:${uptime}:R>)`,
               },
             ])

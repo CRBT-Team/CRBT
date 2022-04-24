@@ -1,9 +1,19 @@
-import { illustrations } from '$lib/db';
+import { icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
-import D, { MessageEmbed, ThreadAutoArchiveDuration } from 'discord.js';
+import {
+  CategoryChannel,
+  GuildChannel,
+  MessageEmbed,
+  NewsChannel,
+  StageChannel,
+  TextChannel,
+  ThreadAutoArchiveDuration,
+  ThreadChannel,
+  VoiceChannel,
+} from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 dayjs.extend(duration);
@@ -20,8 +30,8 @@ export default ChatCommand({
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
 
-    const c: D.GuildChannel = (channel ?? (await this.channel.fetch())) as D.GuildChannel;
-    const i = illustrations.channels;
+    const c = (channel ?? (await this.channel.fetch())) as GuildChannel;
+    const i = icons.channels;
     const categories = (await this.guild.fetch()).channels.cache.filter(
       (c) => c.type === 'GUILD_CATEGORY'
     ).size;
@@ -29,7 +39,7 @@ export default ChatCommand({
     const e = new MessageEmbed().addField('ID', c.id).setColor(await getColor(this.user));
 
     if (c.type === 'GUILD_TEXT') {
-      const info: D.TextChannel = c as D.TextChannel;
+      const info = c as TextChannel;
       e.setAuthor({
         name: `${info.name} - Channel info`,
         iconURL: c.equals(this.guild.rulesChannel) ? i.rules : i.text,
@@ -48,14 +58,14 @@ export default ChatCommand({
         info.rateLimitPerUser ? `${info.rateLimitPerUser} seconds` : 'Off'
       );
     } else if (c.type === 'GUILD_VOICE') {
-      const info: D.VoiceChannel = c as D.VoiceChannel;
+      const info = c as VoiceChannel;
       e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.voice })
         .addField('Region', info.rtcRegion ? info.rtcRegion : 'Automatic', true)
         .addField('User limit', info.userLimit ? `${info.userLimit}` : 'Unlimited', true)
         .addField('Bitrate', `${info.bitrate / 1000}kbps`, true)
         .addField('Parent category', info.parent.name);
     } else if (c.type === 'GUILD_CATEGORY') {
-      const info: D.CategoryChannel = c as D.CategoryChannel;
+      const info = c as CategoryChannel;
       e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.category }).addField(
         'Position',
         `${info.position} of ${categories} categories`
@@ -64,17 +74,17 @@ export default ChatCommand({
       (c.type === 'GUILD_PUBLIC_THREAD' ?? c.type === 'GUILD_PRIVATE_THREAD',
       'GUILD_NEWS_THREAD' ?? c.type === 'GUILD_NEWS_THREAD')
     ) {
-      const info: D.ThreadChannel = c as unknown as D.ThreadChannel;
+      const info = c as unknown as ThreadChannel;
       const lm = await info.lastMessage.fetch();
       console.log(lm);
       e.setAuthor({ name: `${c.name} - Thread info` })
         .addField('Archiving', `<t:// calculate the time left, from the createdTimestamp:R>`)
         .addField('Parent channel', info.parent.name);
     } else if (c.type === 'GUILD_NEWS') {
-      const info: D.NewsChannel = c as D.NewsChannel;
+      const info = c as NewsChannel;
       e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.news });
     } else if (c.type === 'GUILD_STAGE_VOICE') {
-      const info: D.StageChannel = c as D.StageChannel;
+      const info = c as StageChannel;
       e.setAuthor({ name: `${info.name} - Channel info` });
     }
 

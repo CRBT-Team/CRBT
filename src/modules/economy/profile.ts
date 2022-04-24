@@ -1,174 +1,164 @@
 import { cache } from '$lib/cache';
-import { db, emojis, items } from '$lib/db';
+import { CRBTUser } from '$lib/classes/CRBTUser';
+import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { CRBTscriptParser } from '$lib/functions/CRBTscriptParser';
 import { getColor } from '$lib/functions/getColor';
-import { row } from '$lib/functions/row';
 import { trimURL } from '$lib/functions/trimURL';
-import { APIProfile } from '$lib/types/CRBT/APIProfile';
+import { getStrings } from '$lib/language';
 import dayjs from 'dayjs';
-import { Guild, Interaction, InteractionReplyOptions, MessageEmbed, User } from 'discord.js';
-import fetch from 'node-fetch';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import { Interaction, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
-import { EditProfileBtn } from './editProfile';
+
+dayjs.extend(relativeTime);
+
+const { meta, ctxMeta } = getStrings('en-US').profile;
+const { DEPRECATION_DESCRIPTION } = getStrings('en-US').globalErrors;
 
 export default ChatCommand({
   name: 'profile',
-  description: "Get a user's CRBT profile, or yours.",
+  description: `${DEPRECATION_DESCRIPTION} ${meta.description}`,
   options: new OptionBuilder()
-    .string('lookup_name', 'Search a profile by their CRBT profile name.', false)
+    .string('lookup_name', meta.options[0].description, false)
     .autocomplete('lookup_name', async ({ lookup_name }) => {
       return cache
         .get<string[]>('profiles')
         .filter((name) => name.toLowerCase().includes(lookup_name.replace('@', '')))
         .map((name) => ({ name: `@${name}`, value: name }));
     })
-    .user('lookup_user', 'Search a profile by their Discord user ID or name.', false),
-  async handle({ lookup_user, lookup_name }) {
-    let u: User;
-    let profile: APIProfile;
+    .user('lookup_discord', meta.options[1].description, false),
+  async handle({ lookup_discord, lookup_name }) {
+    const { errors } = getStrings(this.locale).profile;
+
+    let profile: CRBTUser;
 
     try {
-      if (lookup_user) {
-        u = lookup_user;
-        profile = (await db.profiles.findFirst({
-          where: { id: u.id },
-        })) as APIProfile;
+      if (lookup_discord) {
+        const profileData = await db.profiles.findFirst({
+          where: { id: lookup_discord.id },
+        });
+        profile = new CRBTUser(lookup_discord, profileData);
       } else if (lookup_name) {
-        profile = (await db.profiles.findFirst({
+        const profileData = await db.profiles.findFirst({
           where: {
             name: {
               equals: lookup_name,
               mode: 'insensitive',
             },
           },
-        })) as APIProfile;
-        u = this.client.users.cache.get(profile.id) ?? (await this.client.users.fetch(profile.id));
+        });
+
+        const user =
+          this.client.users.cache.get(profileData.id) ??
+          (await this.client.users.fetch(profileData.id));
+        profile = new CRBTUser(user, profileData);
       } else {
-        u = this.user;
-        profile = (await db.profiles.findFirst({
-          where: { id: u.id },
-        })) as APIProfile;
+        const profileData = await db.profiles.findFirst({
+          where: { id: this.user.id },
+        });
+        profile = new CRBTUser(this.user, profileData);
       }
     } catch (error) {
       console.error(error);
-      return this.reply(
-        CRBTError(
-          "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!"
-        )
-      );
+      return this.reply(CRBTError(errors.NOT_FOUND));
     }
 
-    await this.reply(await renderProfile(profile, u, this.guild, this));
+    await this.reply(await renderProfile(profile, this));
   },
 });
 
 export const ctxProfile = UserContextCommand({
-  name: 'View CRBT Profile',
+  ...ctxMeta,
   async handle(u) {
-    const profile = (await db.profiles.findFirst({
-      where: { id: u.id },
-    })) as APIProfile;
+    const profile = new CRBTUser(
+      u,
+      await db.profiles.findFirst({
+        where: { id: u.id },
+      })
+    );
 
     await this.reply({
-      ...(await renderProfile(profile, u, this.guild, this)),
-      ephemeral: !u.equals(this.user),
+      ...(await renderProfile(profile, this)),
+      ephemeral: true,
+      // ephemeral: !u.equals(this.user),
     });
   },
 });
 
 export const renderProfile = async (
-  profile: APIProfile,
-  user: User,
-  guild: Guild,
+  profile: CRBTUser,
   ctx: Interaction,
   navCtx?: { userId: string; cmdUID: string }
-): Promise<InteractionReplyOptions> => {
-  const pronouns = (
-    (await fetch(`https://pronoundb.org/api/v1/lookup?platform=discord&id=${user.id}`).then((r) =>
-      r.json()
-    )) as { pronouns: string }
-  ).pronouns;
+) => {
+  const { strings } = getStrings(ctx.locale).profile;
+  const { DEPRECATION_TITLE, DEPRECATION_NOTICE } = getStrings(ctx.locale).globalErrors;
+  await import(`dayjs/locale/${ctx.locale.split('-')[0]}.js`);
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${user.tag} - Profile`,
-      iconURL: avatar(user, 64),
+      // name: profile.user.tag,
+      name: strings.EMBED_TITLE.replace('<USER>', profile.user.tag),
+      iconURL: avatar(profile.user, 64),
     })
     .setTitle(
       profile?.name
         ? `@${profile.name}${profile?.verified ? ` ${emojis.verified}` : ''}`
-        : user.username
+        : profile.user.username
     )
-    .setDescription(profile?.bio ? await CRBTscriptParser(profile.bio, user, profile, guild) : '')
-    .setThumbnail(avatar(user, 256))
-    .setImage(
-      profile && profile.crbt_banner
-        ? `https://crbt.ga/banners/${items.banners[profile.crbt_banner].season}/${
-            profile.crbt_banner
-          }.png`
-        : null
-    )
+    .setDescription(profile?.bio ?? '')
+    .setThumbnail(avatar(profile.user, 256))
+    .setImage(profile && profile.banner ? profile.banner.url : null)
     .setFooter({
-      text: `${user.id} • ${profile.purplets} Purplets`,
+      text: strings.EMBED_FOOTER.replace('<PURPLETS>', `${profile.purplets ?? 0}`),
     })
-    .setColor(await getColor(user));
-
-  if (profile?.crbt_badges && profile?.crbt_badges.length > 0) {
-    e.addField(
-      `Badges (${profile.crbt_badges.length})`,
-      profile.crbt_badges.map((badge) => items.badges[badge].contents).join('‎ '),
-      profile.crbt_badges.length < 6
-    );
-  }
-  e.addField('Pronouns', Pronouns[pronouns].replace('username', user.username), true);
+    .setColor(await getColor(profile.user));
 
   if (profile?.birthday) {
     const bday = dayjs(profile.birthday);
-    e.addField('Birthday', `<t:${bday.unix()}:D> • ${bday.year(dayjs().year()).fromNow()}`, false);
+    e.addField(
+      strings.BIRTHDAY,
+      `<t:${bday.unix()}:D> • ${bday
+        .year(dayjs().year())
+        .locale(ctx.locale.split('-')[0])
+        .fromNow()}`
+    );
   }
+
+  if (profile?.badges && profile?.badges.length > 0) {
+    e.addField(
+      strings.BADGES.replace('<NUMBER>', `${profile.badges.length}`),
+      profile.badges.join('‎ ')
+    );
+  }
+
+  if (profile?.pronouns) {
+    e.addField(strings.PRONOUNS, profile.pronouns, true);
+  }
+
   if (profile?.url) {
-    e.addField('Website', `**[${trimURL(profile.url)}](${profile.url})**`, true);
+    e.addField(strings.WEBSITE, `**[${trimURL(profile.url)}](${profile.url})**`, true);
   }
-  if (profile?.location) {
-    e.addField('Location', profile.location, true);
-  }
+
+  e.addField(DEPRECATION_TITLE, DEPRECATION_NOTICE);
 
   return {
     embeds: [e],
-    components: user.equals(ctx.user) // || profile?.url
-      ? components(
-          navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, 'profile'),
-          row(
-            new EditProfileBtn(user.id).setStyle('PRIMARY').setEmoji('✏️').setLabel('Edit Profile')
-          )
-        )
-      : null,
+    components:
+      // profile.user.equals(ctx.user)
+      // ? components(
+      //     navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile'),
+      //     row(
+      //       new EditProfileBtn(profile.id)
+      //         .setStyle('PRIMARY')
+      //         .setEmoji('✏️')
+      //         .setLabel(strings.BUTTON_EDIT_PROFILE)
+      //     )
+      //   )
+      // :
+      components(
+        navBar(navCtx ?? { userId: profile.id, cmdUID: ctx.user.id }, ctx.locale, 'profile')
+      ),
   };
-};
-
-const Pronouns = {
-  unspecified: 'Unspecified',
-  hh: 'He/Him',
-  hi: 'He/it',
-  hs: 'He/She',
-  ht: 'He/They',
-  ih: 'It/Him',
-  ii: 'It/Its',
-  is: 'It/She',
-  it: 'It/They',
-  shh: 'She/He',
-  sh: 'She/Her',
-  si: 'She/It',
-  st: 'She/They',
-  th: 'They/He',
-  ti: 'They/It',
-  ts: 'They/She',
-  tt: 'They/Them',
-  any: 'Any',
-  other: 'Other',
-  ask: 'Ask me',
-  avoid: 'username',
 };
