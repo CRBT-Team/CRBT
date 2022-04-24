@@ -1,4 +1,5 @@
 import { colors, icons, links, misc } from '$lib/db';
+import { getStrings } from '$lib/language';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 

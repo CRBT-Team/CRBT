@@ -145,9 +145,11 @@ export const usePreset = ChatCommand({
             .setAuthor({ name: strings.EMBED_TITLE })
             .setTitle(presetStrings.message ?? strings.GENERIC_SELECTOR_TITLE)
             .setDescription(
-              `${rolesList
-                .map((role) => `${role.emoji ?? ''} <@&${role.id}>`.trim())
-                .join(rolesList.length > 3 ? '\n' : ', ')}`
+              rolesList.length <= 5 && limit === 1
+                ? ''
+                : `${rolesList
+                    .map((role) => `${role.emoji ?? ''} <@&${role.id}>`.trim())
+                    .join('\n')}`
             )
             .setColor(`#${colors.default}`),
         ],
@@ -256,9 +258,9 @@ export const useManual = ChatCommand({
           .setAuthor({ name: strings.EMBED_TITLE })
           .setTitle(description)
           .setDescription(
-            `${rolesList
-              .map((role) => `<@&${role.id}>`.trim())
-              .join(rolesList.length > 3 ? '\n' : ', ')}`
+            rolesList.length <= 5 && limit === 1
+              ? ''
+              : `${rolesList.map((role) => `<@&${role.id}>`.trim()).join('\n')}`
           )
           .setFooter({
             text: strings.EMBED_FOOTER,
@@ -318,8 +320,8 @@ export const RoleButton = ButtonComponent({
 
     const { strings, errors } = getStrings(this.locale)['role-selectors'];
 
-    console.log(this.guild.roles.cache.get(role.id));
-    console.log(role);
+    // console.log(this.guild.roles.cache.get(role.id));
+    // console.log(role);
 
     if (!this.guild.roles.cache.has(role.id)) {
       return this.reply(CRBTError(errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name)));
@@ -405,8 +407,8 @@ export const RoleSelector = SelectMenuComponent({
       }
     });
 
-    console.log(added, removed, nope);
-    console.log(chosen);
+    // console.log(added, removed, nope);
+    // console.log(chosen);
     if (nope.length > 0) {
       return this.reply(CRBTError(errors.ROLES_DO_NOT_EXIST));
     }
@@ -430,7 +432,7 @@ export const RoleSelector = SelectMenuComponent({
     } else {
       const role = chosen[0];
 
-      if (!member.roles.cache.has(role.id)) {
+      if (role && !member.roles.cache.has(role.id)) {
         this.reply({
           embeds: [
             new MessageEmbed()
@@ -449,9 +451,7 @@ export const RoleSelector = SelectMenuComponent({
           embeds: [
             new MessageEmbed()
               .setAuthor({
-                name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
-                  role.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
-                }`,
+                name: strings.SELECT_MENU_ROLES_SUCCESS,
                 iconURL: icons.success,
               })
               .setColor(`#${colors.success}`),
