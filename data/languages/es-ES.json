@@ -1,9 +1,9 @@
 {
   "globalErrors": {
     "GUILD_ONLY": "Este comando no se puede utilizar en MD.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "DEPRECATION_DESCRIPTION": "Obsoleto. ",
+    "DEPRECATION_TITLE": "⚠️ Aviso de obsolescencia",
+    "DEPRECATION_NOTICE": "Los perfiles de CRBT y el sistema de economía de Purplets se dejarán de utilizar a favor del sistema propio de Discord de perfiles y un sistema más potente de economía por servidor.\nTodavía podrá ver perfiles y saldos de usuarios hasta mayo de 2022.\nPara más información, consulte **[este artículo](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
   },
   "genericButtons": {
     "BACK": "Volver",
@@ -16,7 +16,7 @@
     "NEXT": "Siguiente",
     "SAVE": "Guardar",
     "ADD_REMINDER": "Establecer recordatorio",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Abrir MD"
   },
   "UnknownError": {
     "strings": {
@@ -26,7 +26,7 @@
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
+      "TITLE": "¡Un momento!",
       "DESCRIPTION": "Podrás usar este <TYPE> en <TIME>...",
       "COMMAND": "comando",
       "COMPONENT": "componente"
@@ -34,20 +34,20 @@
   },
   "balance": {
     "meta": {
-      "description": "View a user's Purplet balance, or yours.",
+      "description": "Ver el saldo de Purplets de un usuario específico o el suyo.",
       "options": [
         {
           "name": "usuario",
-          "description": "The user to view the balance of"
+          "description": "El usuario del que ver el saldo"
         }
       ]
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Balance",
+      "EMBED_TITLE": "<USER> - Saldo",
       "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
+      "LEADERBOARD_TITLE": "Clasificación global",
+      "LEADERBOARD_NOTPRESENT": "No está en la clasificación global",
+      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> personas en la clasificación global"
     }
   },
   "color set": {
@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "color",
-          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
+          "description": "Color al que cambiar su color de contraste. Utilice una de las sugerencias o un color hexadecimal."
         }
       ]
     },
@@ -86,29 +86,29 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name or use an HEX color code. Use the autocomplete for a list of color names."
+      "INVALID_COLOR_NAME": "Debe introducir un código hexadecimal válido o un nombre de color. Utilice /color list para más información."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on commands that show info about you."
+      "EMBED_SYNC_INFO": "Su color de perfil de Discord se sincronizará con su color de contraste CRBT.",
+      "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en su perfil y su tarjeta de información cuando otra persona los visite."
     }
   },
   "remind me": {
     "meta": {
-      "description": "Set a reminder.",
+      "description": "Establecer un recordatorio.",
       "options": [
         {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "name": "cuándo",
+          "description": "Cuándo recordarle (ej. 2 horas, 3w2d, 20:30)."
         },
         {
-          "name": "subject",
-          "description": "What to remind you of."
+          "name": "asunto",
+          "description": "De qué recordarle."
         },
         {
-          "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "name": "destino",
+          "description": "A dónde enviar el recordatorio (dejar en blanco para recibirlo por MD)."
         }
       ]
     },
@@ -127,20 +127,20 @@
       "SUCCESS_CHANNEL": "CRBT se lo recordará en <CHANNEL>",
       "SUCCESS_DM": "CRBT se lo recordará por MD",
       "SUBJECT": "Asunto",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
+      "TOMORROW_AT": "Mañana a las <TIME>",
+      "TODAY_AT": "Hoy a las <TIME>",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "GCALENDAR_EVENT": "Establecido por un Recordatorio CRBT.",
+      "GCALENDAR_EVENT_DM": "También se le será recordado por MD.",
+      "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en <CHANNEL>, en <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "y",
+      "AT": "a las",
+      "ON": "el",
+      "IN": "en",
+      "TOMORROW": "mañana",
+      "TODAY": "hoy"
     }
   },
   "ping": {
@@ -178,27 +178,27 @@
       "NOT_CMD_USER": "Sólo la persona que ha ejecutado este comando puede usar este botón."
     },
     "strings": {
-      "PROFILE": "Profile",
+      "PROFILE": "Perfil",
       "AVATAR": "Avatar",
       "INFO": "Información de usuario"
     }
   },
   "profile": {
     "meta": {
-      "description": "Get a user's CRBT profile, or yours.",
+      "description": "Obtener el perfil CRBT de un usuario específico o el suyo.",
       "options": [
         {
-          "name": "lookup_name",
-          "description": "Search via CRBT profile name."
+          "name": "buscar_por_nombre",
+          "description": "Buscar mediante el nombre de perfil CRBT."
         },
         {
-          "name": "lookup_discord",
-          "description": "Search via Discord user ID or username."
+          "name": "buscar_por_discord",
+          "description": "Buscar mediante el ID de usuario de Discord o el nombre de usuario."
         }
       ]
     },
     "ctxMeta": {
-      "name": "View CRBT Profile"
+      "name": "Ver perfil CRBT"
     },
     "pronouns": {
       "hh": "Él/él",
@@ -208,17 +208,17 @@
       "ask": "Pregúntame"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
+      "NOT_FOUND": "No se pudo encontrar un perfil con ese nombre de usuario. ¡Asegúrese de utilizar el autocompletado para encontrar perfiles!",
+      "CAN_ONLY_EDIT_OWN_PROFILE": "Sólo puede editar su propio perfil."
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "NAME": "Name",
-      "BIO": "Bio",
+      "EMBED_TITLE": "<USER> - Perfil",
+      "NAME": "Nombre",
+      "BIO": "Biografía",
       "PRONOUNS": "Pronombres",
-      "BIRTHDAY": "Birthday",
+      "BIRTHDAY": "Cumpleaños",
       "WEBSITE": "Página web",
-      "BADGES": "Badges (<NUMBER>)",
+      "BADGES": "Sellos (<NUMBER>)",
       "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
@@ -241,7 +241,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Obtener avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -256,14 +256,14 @@
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Marcar mensaje como favorito"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Debe habilitar sus MD o desbloquear CRBT para poder marcar mensajes como favoritos."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (Mensaje marcado)",
+      "SUCCESS_MESSAGE": "¡Se le ha enviado este mensaje por MD!"
     }
   },
   "calc": {
@@ -279,84 +279,87 @@
   },
   "hourly": {
     "meta": {
-      "description": "Get a few Purplets every hour."
+      "description": "Obtener unos cuantos Purplets cada hora."
     }
   },
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+        "description": "Crear manualmente un nuevo Selector de Roles, un menú para que los miembros escojan roles para ellos mismos.",
         "options": [
           {
-            "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
+            "name": "descripción",
+            "description": "Describa a los miembros de su servidor para qué es su Selector de Roles."
           },
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
-            "choices": ["Toggle giving/removing role(s)", "Only give the role(s) once"]
+            "name": "comportamiento",
+            "description": "Cómo debería comportarse el Selector de Roles.",
+            "choices": [
+              "Alternar entre dar y quitar rol(es)",
+              "Sólo dar el/los rol(es) una vez"
+            ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "límite",
+            "description": "Cuántos roles se pueden seleccionar. Introduzca 0 para poder seleccionar ilimitados."
           },
           {
-            "name": "role",
-            "description": "A role to assign to the member when selected."
+            "name": "rol",
+            "description": "Un rol que asignar al miembro que seleccione la opción correspondiente."
           }
         ]
       }
     },
     "preset": {
       "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
+        "description": "Crear un nuevo Selector de Roles utilizando una de las siguientes plantillas.",
         "options": [
           {
-            "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "name": "plantilla",
+            "description": "Una plantilla que escoger. CRBT automáticamente creará los roles y enviará una bonita inserción."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose one of the options below to change your displayed name color in the server!"
+          "name": "Colores",
+          "message": "Elija un color para su nombre de pantalla."
         },
         "pronouns": {
           "name": "Pronombres",
-          "message": "Use the options below to select what pronouns you'd like to display on the server!"
+          "message": "¿Cuáles son sus pronombres?"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "Choose one of the options below to select your zodiac sign!"
+          "name": "Signos del Zodiaco",
+          "message": "¿Cuál es su signo del zodiaco?"
         },
         "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button below to verify your account."
+          "name": "Verificación humana",
+          "message": "Haga clic en el botón para verificar su cuenta."
         }
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "USER_MISSING_PERMS": "Sólo los administradores del servidor pueden crear Selectores de Roles.",
+      "BOT_MISSING_PERMS": "Necesito el permiso \"Gestionar roles\" para poder crear un Selector de Roles.",
+      "ROLE_DOES_NOT_EXIST": "El rol <ROLE> no existe o ha sido eliminado. Contacte a un administrador para solucionar el problema.",
+      "ROLES_DO_NOT_EXIST": "Uno o más de los roles que ha especificado no existen o han sido eliminados. Contacte a un administrador para solucionar el problema.",
+      "BUTTON_ROLES_ONCE": "Sólo puede seleccionar este rol una vez, y no puede quitárselo."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
-      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "EMBED_TITLE": "Selector de Roles - Roles autoasignables",
+      "CHOOSE_ROLE": "Escoja un rol",
+      "CHOOSE_ROLES": "Escoja roles",
+      "EMBED_FOOTER": "Nota: CRBT no está afiliado con ninguno de los nombres de los roles o con el servidor.",
+      "OPTION_LABEL_GET_ROLE": "Obtener el rol <ROLE>.",
+      "GENERIC_SELECTOR_TITLE": "Seleccione uno o varios roles escogiéndolos a continuación.",
+      "SELECT_MENU_ROLES_SUCCESS": "Se actualizaron correctamente sus roles.",
+      "BUTTON_ROLES_ADD": "Se ha añadido <ROLE> a tus roles.",
+      "BUTTON_ROLES_ADD_AGAIN": "Selecciónelo de nuevo para eliminarlo.",
+      "BUTTON_ROLES_REMOVE": "Se ha eliminado <ROLE> de tus roles.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Selecciónelo de nuevo para añadirlo.",
+      "SUCCESS_TITLE": "¡Selector de Roles creado!",
+      "SUCCESS_DESCRIPTION": "Los miembros del servidor ahora podrán seleccionar roles de este menú. Para deshabilitarlo, simplemente elimine el mensaje del Selector de Roles."
     }
   }
 }
