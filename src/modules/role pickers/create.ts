@@ -225,13 +225,13 @@ export const useManual = ChatCommand({
       true
     )
     .integer('role_limit', manual.meta.options[2].description, true)
-    .string('color', "What color to use for the embed's background", true)
-    .autocomplete('color', ({ color }) => {
+    .string('embed_color', "What color to use for the embed's background", true)
+    .autocomplete('embed_color', ({ embed_color }) => {
       return colorsMap
         .filter(
           (colorObj) =>
             !colorObj.private &&
-            colorObj.fullName.toLowerCase().includes(color.toLowerCase()) &&
+            colorObj.fullName.toLowerCase().includes(embed_color.toLowerCase()) &&
             colorObj.value !== 'profile'
         )
         .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
@@ -249,7 +249,7 @@ export const useManual = ChatCommand({
     .role(`role11`, manual.meta.options[3].description)
     .role(`role12`, manual.meta.options[3].description)
     .role(`role13`, manual.meta.options[3].description),
-  async handle({ description, behavior, role_limit, color, ...roles }) {
+  async handle({ description, behavior, role_limit, embed_color, ...roles }) {
     const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
     const { errors: colorErrors } = getStrings(this.guildLocale)['color set'];
 
@@ -268,7 +268,7 @@ export const useManual = ChatCommand({
     const rolesList: Role[] = Object.values(roles);
     const limit = role_limit || rolesList.length;
 
-    const text = color.toLowerCase().replaceAll(/ |#/g, '');
+    const text = embed_color.toLowerCase().replaceAll(/ |#/g, '');
     const finalColor = colors[text] ? colors[text] : text;
 
     console.log(finalColor);
@@ -290,7 +290,7 @@ export const useManual = ChatCommand({
           .setFooter({
             text: strings.EMBED_FOOTER,
           })
-          .setColor(finalColor),
+          .setColor(`#${finalColor}`),
       ],
       components: components(
         rolesList.length <= 5 && limit === 1
