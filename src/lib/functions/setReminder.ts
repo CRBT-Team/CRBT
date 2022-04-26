@@ -9,8 +9,8 @@ import { setLongerTimeout } from './setLongerTimeout';
 
 export const setReminder = async (reminder: reminders) => {
   reminder.locale = reminder.locale || 'en-US';
-  if (!reminder) {
-    await db.reminders.create({
+  if (!reminder.id) {
+    reminder = await db.reminders.create({
       data: reminder,
     });
   }
@@ -88,7 +88,9 @@ export const setReminder = async (reminder: reminders) => {
       });
 
     await db.reminders.delete({
-      where: reminder,
+      where: {
+        id: reminder.id,
+      },
     });
   }, dayjs(reminder.expiration).diff(new Date()));
 };

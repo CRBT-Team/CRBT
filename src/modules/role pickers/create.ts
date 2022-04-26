@@ -10,6 +10,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
+import { colorsMap } from '../settings/color set';
 
 const { colorNames } = getStrings('en-US')['color set'];
 const { pronouns } = getStrings('en-US').profile;
@@ -224,6 +225,17 @@ export const useManual = ChatCommand({
       true
     )
     .integer('role_limit', manual.meta.options[2].description, true)
+    .string('color', "What color to use for the embed's background", true)
+    .autocomplete('color', ({ color }) => {
+      return colorsMap
+        .filter(
+          (colorObj) =>
+            !colorObj.private &&
+            colorObj.fullName.toLowerCase().includes(color.toLowerCase()) &&
+            colorObj.value !== 'profile'
+        )
+        .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
+    })
     .role(`role1`, manual.meta.options[3].description, true)
     .role(`role2`, manual.meta.options[3].description)
     .role(`role3`, manual.meta.options[3].description)
@@ -233,9 +245,13 @@ export const useManual = ChatCommand({
     .role(`role7`, manual.meta.options[3].description)
     .role(`role8`, manual.meta.options[3].description)
     .role(`role9`, manual.meta.options[3].description)
-    .role(`role10`, manual.meta.options[3].description),
-  async handle({ description, behavior, role_limit, ...roles }) {
+    .role(`role10`, manual.meta.options[3].description)
+    .role(`role11`, manual.meta.options[3].description)
+    .role(`role12`, manual.meta.options[3].description)
+    .role(`role13`, manual.meta.options[3].description),
+  async handle({ description, behavior, role_limit, color, ...roles }) {
     const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
+    const { errors: colorErrors } = getStrings(this.guildLocale)['color set'];
 
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
@@ -252,7 +268,16 @@ export const useManual = ChatCommand({
     const rolesList: Role[] = Object.values(roles);
     const limit = role_limit || rolesList.length;
 
-    await this.channel.send({
+    const text = color.toLowerCase().replaceAll(/ |#/g, '');
+    const finalColor = colors[text] ? colors[text] : text;
+
+    console.log(finalColor);
+
+    if (!finalColor || !finalColor.match(/^[0-9a-f]{6}$/)) {
+      return await this.editReply(CRBTError(colorErrors.INVALID_COLOR_NAME));
+    }
+
+    this.channel.send({
       embeds: [
         new MessageEmbed()
           .setAuthor({ name: strings.EMBED_TITLE })
@@ -265,7 +290,7 @@ export const useManual = ChatCommand({
           .setFooter({
             text: strings.EMBED_FOOTER,
           })
-          .setColor(`#${colors.default}`),
+          .setColor(finalColor),
       ],
       components: components(
         rolesList.length <= 5 && limit === 1

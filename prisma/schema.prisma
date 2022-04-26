@@ -17,7 +17,6 @@ model profiles {
   name              String?   @unique
   crbt_badges       String[]
   url               String?
-  pronouns          String?
   birthday          DateTime? @db.Timestamptz(6)
 }
 

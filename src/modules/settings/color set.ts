@@ -7,7 +7,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta, colorNames } = getStrings('en-US')['color set'];
 
-const colorsMap = Object.entries(colors).map(([key, hex]) => ({
+export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
   fullName: colorNames[key],
   value: hex,
