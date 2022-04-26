@@ -133,10 +133,6 @@ export const renderProfile = async (
     );
   }
 
-  if (profile?.pronouns) {
-    e.addField(strings.PRONOUNS, profile.pronouns, true);
-  }
-
   if (profile?.url) {
     e.addField(strings.WEBSITE, `**[${trimURL(profile.url)}](${profile.url})**`, true);
   }

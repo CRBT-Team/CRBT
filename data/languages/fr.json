@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP.",
     "DEPRECATION_DESCRIPTION": "Obsolète. ",
     "DEPRECATION_TITLE": "⚠️ Annonce d'obsolescence",
-    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie Purplet sont bientôt supprimés en faveur du système de profil de Discord et d'un système d'économie pour chaque serveur bien plus puissant.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie Purplet sont bientôt supprimés en faveur du système de profil de Discord et d'un système d'économie pour chaque serveur bien plus puissant.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Retour",
@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "couleur",
-          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
@@ -86,12 +86,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "Vous n'avez pas de couleur de profil Discord à synchroniser ! Pour en définir une, modifiez votre profil d'utilisateur et modifiez votre couleur de profil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name or use an HEX color code. Use the autocomplete for a list of color names."
+      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
       "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on commands that show info about you."
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -189,11 +189,11 @@
       "options": [
         {
           "name": "lookup_name",
-          "description": "Search via CRBT profile name."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "lookup_discord",
-          "description": "Search via Discord user ID or username."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -208,7 +208,7 @@
       "ask": "Demandez-moi"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
       "CAN_ONLY_EDIT_OWN_PROFILE": "Vous ne pouvez modifier que votre propre profil."
     },
     "strings": {
@@ -323,19 +323,19 @@
       "presets": {
         "colors": {
           "name": "Couleurs",
-          "message": "Choisissez l'une des options ci-dessous pour changer la couleur de votre nom affiché sur le serveur !"
+          "message": "Choose a color for your display name."
         },
         "pronouns": {
           "name": "Pronoms",
-          "message": "Utilisez les options ci-dessous pour sélectionner les pronoms que vous souhaitez afficher sur le serveur !"
+          "message": "What are your pronouns?"
         },
         "zodiacSigns": {
           "name": "Signes du zodiaque",
-          "message": "Choisissez l'une des options ci-dessous pour sélectionner votre signe zodiaque !"
+          "message": "What's your zodiac sign?"
         },
         "verification": {
           "name": "Vérification humaine",
-          "message": "Cliquez sur le bouton ci-dessous pour vérifier votre compte."
+          "message": "Click on the button to verify your account."
         }
       }
     },

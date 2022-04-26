@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Không thể sử dụng lệnh này trong tin nhắn trực tiếp.",
     "DEPRECATION_DESCRIPTION": "Deprecated. ",
     "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Quay lại",
@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "color",
-          "description": "The color to use for your accent color. Use one of the suggestions or a HEX color code."
+          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
@@ -86,12 +86,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name or use an HEX color code. Use the autocomplete for a list of color names."
+      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color will be synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on commands that show info about you."
+      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -189,11 +189,11 @@
       "options": [
         {
           "name": "lookup_name",
-          "description": "Search via CRBT profile name."
+          "description": "Search via CRBT profile names."
         },
         {
           "name": "lookup_discord",
-          "description": "Search via Discord user ID or username."
+          "description": "Search via Discord user IDs or names."
         }
       ]
     },
@@ -208,7 +208,7 @@
       "ask": "Ask me"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that name. Make sure to use the autocomplete to find a profile!",
+      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
       "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
     },
     "strings": {
@@ -294,10 +294,7 @@
           {
             "name": "behavior",
             "description": "How the Role Picker should behave.",
-            "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
-            ]
+            "choices": ["Toggle giving/removing role(s)", "Only give the role(s) once"]
           },
           {
             "name": "limit",
@@ -323,19 +320,19 @@
       "presets": {
         "colors": {
           "name": "Colors",
-          "message": "Choose one of the options below to change your displayed name color in the server!"
+          "message": "Choose a color for your display name."
         },
         "pronouns": {
           "name": "Pronouns",
-          "message": "Use the options below to select what pronouns you'd like to display on the server!"
+          "message": "What are your pronouns?"
         },
         "zodiacSigns": {
           "name": "Zodiac Signs",
-          "message": "Choose one of the options below to select your zodiac sign!"
+          "message": "What's your zodiac sign?"
         },
         "verification": {
           "name": "Human Verification",
-          "message": "Click on the button below to verify your account."
+          "message": "Click on the button to verify your account."
         }
       }
     },

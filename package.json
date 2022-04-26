@@ -3,9 +3,9 @@
   "version": "11.5.05",
   "scripts": {
     "start": "npm run generate && npm run build && node dist/bot.mjs",
-    "dev": "yarn purplet build && node dist/bot.mjs --dev",
+    "dev": "yarn build && node dist/bot.mjs --dev",
     "db": "supabase start",
-    "build": "npx purplet build",
+    "build": "node patchDJS && npx purplet build",
     "generate": "npx prisma generate"
   },
   "engines": {
