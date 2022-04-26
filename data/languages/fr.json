@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP.",
     "DEPRECATION_DESCRIPTION": "Obsolète. ",
     "DEPRECATION_TITLE": "⚠️ Annonce d'obsolescence",
-    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie Purplet sont bientôt supprimés en faveur du système de profil de Discord et d'un système d'économie pour chaque serveur bien plus puissant.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie Purplet sont bientôt supprimés en faveur du système de profil de Discord et d'un système d'économie pour chaque serveur bien plus puissant.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Retour",

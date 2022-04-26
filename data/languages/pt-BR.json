@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Esse comando não pode ser usado por mensagens diretas.",
     "DEPRECATION_DESCRIPTION": "Descontinuado. ",
     "DEPRECATION_TITLE": "⚠️ Aviso de descontinuação",
-    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor..\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor..\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Voltar",
@@ -294,10 +294,7 @@
           {
             "name": "comportamento",
             "description": "Como o Seletor de Cargos deve se comportar.",
-            "choices": [
-              "Alternar dar/remover cargo(s)",
-              "Dar o(s) cargo(s) apenas uma vez"
-            ]
+            "choices": ["Alternar dar/remover cargo(s)", "Dar o(s) cargo(s) apenas uma vez"]
           },
           {
             "name": "limite",

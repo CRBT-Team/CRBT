@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Este comando no se puede utilizar en MD.",
     "DEPRECATION_DESCRIPTION": "Obsoleto. ",
     "DEPRECATION_TITLE": "⚠️ Aviso de obsolescencia",
-    "DEPRECATION_NOTICE": "Los perfiles de CRBT y el sistema de economía de Purplets se dejarán de utilizar a favor del sistema propio de Discord de perfiles y un sistema más potente de economía por servidor.\nTodavía podrá ver perfiles y saldos de usuarios hasta mayo de 2022.\nPara más información, consulte **[este artículo](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "Los perfiles de CRBT y el sistema de economía de Purplets se dejarán de utilizar a favor del sistema propio de Discord de perfiles y un sistema más potente de economía por servidor.\nTodavía podrá ver perfiles y saldos de usuarios hasta mayo de 2022.\nPara más información, consulte **[este artículo](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Volver",
@@ -294,10 +294,7 @@
           {
             "name": "comportamiento",
             "description": "Cómo debería comportarse el Selector de Roles.",
-            "choices": [
-              "Alternar entre dar y quitar rol(es)",
-              "Sólo dar el/los rol(es) una vez"
-            ]
+            "choices": ["Alternar entre dar y quitar rol(es)", "Sólo dar el/los rol(es) una vez"]
           },
           {
             "name": "límite",

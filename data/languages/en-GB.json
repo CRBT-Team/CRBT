@@ -3,7 +3,7 @@
     "GUILD_ONLY": "This command cannot be used in DMs.",
     "DEPRECATION_DESCRIPTION": "Deprecated. ",
     "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-and-economy)**."
+    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Back",
@@ -294,10 +294,7 @@
           {
             "name": "behavior",
             "description": "How the Role Picker should behave.",
-            "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
-            ]
+            "choices": ["Toggle giving/removing role(s)", "Only give the role(s) once"]
           },
           {
             "name": "limit",
