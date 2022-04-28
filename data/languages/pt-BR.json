@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Esse comando não pode ser usado por mensagens diretas.",
     "DEPRECATION_DESCRIPTION": "Descontinuado. ",
     "DEPRECATION_TITLE": "⚠️ Aviso de descontinuação",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor.\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Voltar",
@@ -86,12 +86,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "Você não tem uma cor de perfil do Discord para sincronizar! Para definir uma, edite o seu perfil de usuário do Discord e altere sua cor de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Você precisa inserir um nome válido ou um nome de cor. Use o comando /color list para mais informações."
     },
     "strings": {
       "EMBED_TITLE": "Cor de destaque atualizada.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Sua cor do perfil do Discord será sincronizada com sua cor de destaque CRBT.",
+      "EMBED_DESCRIPTION": "Esta cor será usada na maioria das respostas de CRBT's para você, assim como nos seus cartões de perfil e informações, quando alguém os visita."
     }
   },
   "remind me": {
@@ -189,11 +189,11 @@
       "options": [
         {
           "name": "pesquisar_nome",
-          "description": "Search via CRBT profile names."
+          "description": "Pesquisar através do nome do perfil CRBT."
         },
         {
           "name": "buscar_discord",
-          "description": "Search via Discord user IDs or names."
+          "description": "Pesquisar via ID de usuário do Discord ou nome de usuário."
         }
       ]
     },
@@ -208,7 +208,7 @@
       "ask": "Perguntar-me"
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
+      "NOT_FOUND": "Não foi possível encontrar um perfil com esse nome. Certifique-se de usar a ferramenta de auto-completar para encontrar um perfil!",
       "CAN_ONLY_EDIT_OWN_PROFILE": "Você só pode editar o seu próprio perfil."
     },
     "strings": {
@@ -323,11 +323,11 @@
       "presets": {
         "colors": {
           "name": "Cores",
-          "message": "Choose a color for your display name."
+          "message": "Escolha uma cor para seu nome de exibição."
         },
         "pronouns": {
           "name": "Pronomes",
-          "message": "What are your pronouns?"
+          "message": "Quais são os seus pronomes?"
         },
         "zodiacSigns": {
           "name": "Signos do Zodíaco",
