@@ -56,7 +56,7 @@
       "options": [
         {
           "name": "cor",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "A cor que será usada como sua cor de destaque. Use uma das sugestões ou um código de cor HEX."
         }
       ]
     },
@@ -331,11 +331,11 @@
         },
         "zodiacSigns": {
           "name": "Signos do Zodíaco",
-          "message": "What's your zodiac sign?"
+          "message": "Qual é o seu signo do zodíaco?"
         },
         "verification": {
           "name": "Verificação Humana",
-          "message": "Click on the button to verify your account."
+          "message": "Clique no botão abaixo para verificar sua conta."
         }
       }
     },
