@@ -32,24 +32,6 @@
       "COMPONENT": "ce bouton"
     }
   },
-  "balance": {
-    "meta": {
-      "description": "View a user's Purplet balance, or yours.",
-      "options": [
-        {
-          "name": "utilisateur",
-          "description": "The user to view the balance of"
-        }
-      ]
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Balance",
-      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
-    }
-  },
   "color set": {
     "meta": {
       "description": "Changez votre couleur d'accentuation CRBT.",
@@ -184,42 +166,12 @@
     }
   },
   "profile": {
-    "meta": {
-      "description": "Obtenez le profil CRBT d'un utilisateur, ou le vôtre.",
-      "options": [
-        {
-          "name": "lookup_name",
-          "description": "Search via CRBT profile names."
-        },
-        {
-          "name": "lookup_discord",
-          "description": "Search via Discord user IDs or names."
-        }
-      ]
-    },
-    "ctxMeta": {
-      "name": "Voir le profil CRBT"
-    },
     "pronouns": {
       "hh": "Il",
       "sh": "Elle",
       "tt": "Iel",
       "other": "Autre",
       "ask": "Demandez-moi"
-    },
-    "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "Vous ne pouvez modifier que votre propre profil."
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Profil",
-      "NAME": "Nom",
-      "BIO": "Bio",
-      "PRONOUNS": "Pronoms",
-      "BIRTHDAY": "Date de naissance",
-      "WEBSITE": "Site web",
-      "BADGES": "Badges (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
@@ -275,11 +227,6 @@
           "description": "L'expression à calculer."
         }
       ]
-    }
-  },
-  "hourly": {
-    "meta": {
-      "description": "Obtenez quelques Purplets chaque heure."
     }
   },
   "role-selectors": {
