@@ -32,24 +32,6 @@
       "COMPONENT": "Komponente"
     }
   },
-  "balance": {
-    "meta": {
-      "description": "View a user's Purplet balance, or yours.",
-      "options": [
-        {
-          "name": "benutzer",
-          "description": "The user to view the balance of"
-        }
-      ]
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Balance",
-      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Leaderboard rank",
-      "LEADERBOARD_NOTPRESENT": "Not on the global leaderboard",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> out of <TOTAL> people on the global leaderboard"
-    }
-  },
   "color set": {
     "meta": {
       "description": "Ändern Sie Ihre CRBT-Akzentfarbe.",
@@ -184,42 +166,12 @@
     }
   },
   "profile": {
-    "meta": {
-      "description": "Get a user's CRBT profile, or yours.",
-      "options": [
-        {
-          "name": "lookup_name",
-          "description": "Search via CRBT profile names."
-        },
-        {
-          "name": "lookup_discord",
-          "description": "Search via Discord user IDs or names."
-        }
-      ]
-    },
-    "ctxMeta": {
-      "name": "View CRBT Profile"
-    },
     "pronouns": {
       "hh": "Er/Ihn",
       "sh": "Sie/Ihr",
       "tt": "Sie/Sie",
       "other": "Andere",
       "ask": "Frag mich"
-    },
-    "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "You can only edit your own profile."
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Profile",
-      "NAME": "Name",
-      "BIO": "Bio",
-      "PRONOUNS": "Pronomen",
-      "BIRTHDAY": "Birthday",
-      "WEBSITE": "Webseite",
-      "BADGES": "Badges (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
@@ -275,11 +227,6 @@
           "description": "Der Ausdruck, der berechnet werden soll."
         }
       ]
-    }
-  },
-  "hourly": {
-    "meta": {
-      "description": "Get a few Purplets every hour."
     }
   },
   "role-selectors": {
