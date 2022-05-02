@@ -32,24 +32,6 @@
       "COMPONENT": "componente"
     }
   },
-  "balance": {
-    "meta": {
-      "description": "Veja o saldo de Purplets de um usuário, ou o seu próprio saldo.",
-      "options": [
-        {
-          "name": "usuário",
-          "description": "O usuário cujo será verificado o saldo"
-        }
-      ]
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Saldo",
-      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Ranking",
-      "LEADERBOARD_NOTPRESENT": "Não está no ranking global",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> pessoas no ranking global"
-    }
-  },
   "color set": {
     "meta": {
       "description": "Altere sua cor de destaque no CRBT.",
@@ -184,42 +166,12 @@
     }
   },
   "profile": {
-    "meta": {
-      "description": "Obtenha o perfil CRBT de um usuário, ou seu perfil.",
-      "options": [
-        {
-          "name": "pesquisar_nome",
-          "description": "Pesquisar através do nome do perfil CRBT."
-        },
-        {
-          "name": "buscar_discord",
-          "description": "Pesquisar via ID de usuário do Discord ou nome de usuário."
-        }
-      ]
-    },
-    "ctxMeta": {
-      "name": "Visualizar perfil CRBT"
-    },
     "pronouns": {
       "hh": "Ele/Dele",
       "sh": "Ela/Dela",
       "tt": "El@/Del@",
       "other": "Outros",
       "ask": "Perguntar-me"
-    },
-    "errors": {
-      "NOT_FOUND": "Não foi possível encontrar um perfil com esse nome. Certifique-se de usar a ferramenta de auto-completar para encontrar um perfil!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "Você só pode editar o seu próprio perfil."
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Perfil",
-      "NAME": "Nome",
-      "BIO": "Biografia",
-      "PRONOUNS": "Pronomes",
-      "BIRTHDAY": "Aniversário",
-      "WEBSITE": "Site",
-      "BADGES": "Emblemas (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets"
     }
   },
   "avatar": {
@@ -275,11 +227,6 @@
           "description": "A expressão a calcular."
         }
       ]
-    }
-  },
-  "hourly": {
-    "meta": {
-      "description": "Receba alguns Purplets a cada hora."
     }
   },
   "role-selectors": {
