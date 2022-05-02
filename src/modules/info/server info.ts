@@ -1,10 +1,11 @@
-import { colors, emojis, links } from '$lib/db';
+import { colors, emojis } from '$lib/db';
+import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { trimArray } from '$lib/functions/trimArray';
 import canvas from 'canvas';
 import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
-import { AllowedImageSize, MessageAttachment, MessageEmbed } from 'discord.js';
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -20,149 +21,155 @@ export default ChatCommand({
     if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
-          `The server ID that you used is either invalid, or I'm not part of that server! If you want to invite me over there, click **[here](${links.invite})**.`
+          `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`
         )
       );
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
+    const channels = guild.channels.cache;
+    const stickers = guild.stickers.cache;
+    const emoji = guild.emojis.cache;
+    const roles = guild.roles.cache
+      .sort((a, b) => a.position - b.position)
+      .filter((r) => r.id !== r.guild.id)
+      .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
+    const events = guild.scheduledEvents.cache;
+    const bots = guild.me.permissions.has('MANAGE_GUILD')
+      ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord').map((i) => i.name)
+      : null;
+
+    function cFilter(c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>): number {
+      return channels.filter((channel) => channel.type === c).size;
+    }
+
     const e = new MessageEmbed()
       .setAuthor({ name: `${guild.name} - Server info`, iconURL: guild.iconURL({ dynamic: true }) })
       .setDescription(
         (guild.partnered ?? guild.verified ? emojis.badges.partner + ' ' : '') +
-          (guild.description ? guild.description + '\n' : '') +
-          (guild.icon
-            ? `Icon: ${[2048, 512, 256]
-                .map(
-                  (size) =>
-                    `**[${size}px](${guild.iconURL({
-                      size: size as AllowedImageSize,
-                      dynamic: true,
-                    })})**`
-                )
-                .join(' | ')} | \`/server icon${id ? ` id:${id}` : ''}\``
-            : '')
+          (guild.description ? guild.description + '\n' : '')
       )
+      .setImage(guild.bannerURL())
+      .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
+      .setColor(`#${colors.default}`)
       .addField('ID', guild.id, true)
-      .addField('Owner', `<@!${guild.ownerId}>`, true)
+      .addField(`${emojis.badges.server_owner} Owned by`, `<@${guild.ownerId}>`, true)
       .addField(
-        'Creation date',
+        'Created at',
         `<t:${dayjs(guild.createdAt).unix()}> (<t:${dayjs(guild.createdAt).unix()}:R>)`
       )
-      .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
-      .setColor(`#${colors.default}`);
-
-    const channels = guild.channels.cache;
-    function cFilter(c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>): number {
-      return channels.filter((channel) => channel.type === c).size as number;
-    }
-    e.addField(
-      `Channels (${channels.size})`,
-      `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text` +
-        '\n' +
-        `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice` +
-        '\n' +
+      .addField(
+        `${emojis.channels.home} Channels (${channels.size})`,
         `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${
           cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
-        }` +
-        '\n' +
-        `${emojis.channels.news} ${cFilter('GUILD_NEWS')} announcement` +
-        '\n' +
-        `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage
-        `,
-      true
-    );
-
-    const stickers = guild.stickers.cache;
-    const emoji = guild.emojis.cache;
-    if (emoji.size > 0 && stickers.size === 0)
-      e.addField(
-        `${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})`,
-        `${emojis.emoji.static} ${emoji.filter((r) => !r.animated).size} static` +
-          '\n' +
-          `${emojis.emoji.animated} ${emoji.filter((r) => r.animated).size} animated`,
-        true
-      );
-    else if (stickers.size > 0)
-      e.addField(
-        `Emojis & Stickers`,
-        `${emojis.emoji.static} **${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})**` +
-          '\n' +
-          `${emoji.filter((r) => !r.animated).size} static` +
-          '\n' +
-          `${emoji.filter((r) => r.animated).size} animated` +
-          '\n' +
-          `${emojis.sticker} **Stickers (${stickers.size})**`,
+        }\n` +
+          `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text channels\n` +
+          `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice channels\n` +
+          (cFilter('GUILD_NEWS') !== 0
+            ? `${emojis.channels.news} ${cFilter('GUILD_NEWS')} annnouncements\n`
+            : '') +
+          (cFilter('GUILD_STAGE_VOICE') !== 0
+            ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage`
+            : ''),
         true
       );
 
-    // const members = guild.members.cache;
-    // const mStatus = (presence: PresenceStatus) =>
+    if (emoji.size > 0) {
+      const allEmojis = chunks(
+        trimArray(
+          emoji /*.random(emoji.size)*/
+            .map((e) => e.toString())
+        ),
+        5
+      )
+        .map((e) => e.join('  '))
+        .join('\n');
+
+      e.addField(
+        `${emojis.emoji} ${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})`,
+        `${emoji.filter((r) => !r.animated).size} static • ${
+          emoji.filter((r) => r.animated).size
+        } animated\n${allEmojis}`,
+        true
+      );
+    }
+    if (stickers.size > 0) e.addField(`${emojis.sticker} Stickers`, `${stickers.size}`, true);
+
+    const members = guild.members.cache.size || guild.memberCount || guild.approximateMemberCount;
     //   members.filter((m) => m.presence && m.presence.status === presence).size;
+    // const mStatus = (presence: PresenceStatus) =>
 
-    e.addField(
-      `Members`,
-      `${emojis.users.humans} ${guild.members.cache.size ?? guild.approximateMemberCount}`,
-      // `${emojis.users.status.online} ${mStatus('online')} ` +
-      //   `${emojis.users.status.idle} ${mStatus('idle')}` +
-      //   '\n' +
-      //   `${emojis.users.status.dnd} ${mStatus('dnd')} ` +
-      //   `${emojis.users.status.invisible} ${
-      //     guild.memberCount - (mStatus('online') + mStatus('idle') + mStatus('dnd'))
-      //   }` +
-      //   '\n' +
-      //   `${emojis.users.humans} ${
-      //     guild.memberCount - guild.members.cache.filter((m) => m.user.bot).size
-      //   } humans` +
-      //   '\n' +
-      //   `${emojis.users.bots} ${guild.members.cache.filter((m) => m.user.bot).size} bots`,
-      true
-    );
+    if (!bots) {
+      e.addField(`${emojis.members} Members`, `${members} (including Bots and Apps)`, true);
+    } else {
+      e.addField(
+        `${emojis.members} Members (${members})`,
+        `${emojis.members} ${members - bots.length} Humans\n${emojis.bot} ${bots.length} Bots`,
+        true
+      );
+    }
+    // `${emojis.users.status.online} ${mStatus('online')} ` +
+    //   `${emojis.users.status.idle} ${mStatus('idle')}` +
+    //   '\n' +
+    //   `${emojis.users.status.dnd} ${mStatus('dnd')} ` +
+    //   `${emojis.users.status.invisible} ${
+    //     guild.memberCount - (mStatus('online') + mStatus('idle') + mStatus('dnd'))
+    //   }` +
+    //   '\n' +
+    //   `${emojis.users.humans} ${
+    //     guild.memberCount - guild.members.cache.filter((m) => m.user.bot).size
+    //   } humans` +
+    //   '\n' +
+    //   `${emojis.users.bots} ${guild.members.cache.filter((m) => m.user.bot).size} bots`,
 
-    const roles = guild.roles.cache
-      .sort((a, b) => a.position - b.position)
-      .filter((r) => r.id !== r.guild.id)
-      .map((r) => (r.guild.id === this.guild.id ? r.toString() : r.name));
     if (roles.length > 0)
       e.addField(
-        `${roles.length === 1 ? 'Role' : 'Roles'} (${roles.length})`,
-        roles.length < 10 ? roles.join(', ') : trimArray(roles).join(', ')
+        `${emojis.role} ${roles.length === 1 ? 'Role' : 'Roles'} (${roles.length})`,
+        roles.length < 5 ? roles.join('  ') : trimArray(roles).join('  ')
       );
 
-    const boostingPlans = {
-      NONE: 'Free',
-      TIER_1: 'Friends',
-      TIER_2: 'Groups',
-      TIER_3: 'Communities',
-    };
     e.addField(
-      'Boosting',
-      `Has ${guild.premiumSubscriptionCount} boosts\nCurrent plan: ${
-        boostingPlans[guild.premiumTier]
-      }`,
+      `${emojis.badges.boost} Server Boosting`,
+      `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
+        (guild.premiumTier !== 'NONE'
+          ? ` • ${
+              emojis.boosting[guild.premiumTier.replace('TIER_', '')]
+            } Level ${guild.premiumTier.replace('TIER_', '')}`
+          : ''),
       true
     );
 
     e.addField(
-      'Security',
-      `Verification level: ${capitalCase(
+      'Moderation',
+      `Verification level:\n${capitalCase(
         guild.verificationLevel.replace('_', ' ')
-      )}\nContent filter: ${capitalCase(
+      )}\nExplicit media content filter:\n${capitalCase(
         guild.explicitContentFilter.replace('_', ' ')
-      )}\n2FA for Moderation: ${guild.mfaLevel === 'NONE' ? 'No' : 'Yes'}`,
+      )}\n2FA for Moderation: ${guild.mfaLevel === 'NONE' ? 'Disabled' : 'Enabled'}`,
       true
     );
 
-    canvas.registerFont('data/misc/whitney.otf', { family: 'Whitney' });
+    if (events.size > 0) {
+      const active = events.filter((e) => e.isActive()).size;
+      e.addField(
+        `${emojis.event} Events (${events.size})`,
+        `${active} Active • ${events.size - active} Planned`,
+        true
+      );
+    }
+
     const img = canvas.createCanvas(512, 512);
     const ctx = img.getContext('2d');
-    ctx.fillStyle = `#${colors.blurple}`;
-    ctx.fillRect(0, 0, img.width, img.height);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'normal 152px Whitney';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(guild.nameAcronym, 256, 256);
+    if (!guild.icon) {
+      canvas.registerFont('data/misc/whitney.otf', { family: 'Whitney' });
+      ctx.fillStyle = `#${colors.blurple}`;
+      ctx.fillRect(0, 0, img.width, img.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'normal 152px Whitney';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(guild.nameAcronym, 256, 256);
+    }
 
     await this.reply({
       embeds: [e],

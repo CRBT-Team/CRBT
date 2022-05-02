@@ -17,7 +17,7 @@ import { ChatCommand, components, OptionBuilder } from 'purplet';
 const { meta } = getStrings('en-US')['remind me'];
 
 export default ChatCommand({
-  name: 'remind new',
+  name: 'reminder new',
   description: meta.description,
   options: new OptionBuilder()
     .string('when', meta.options[0].description, true)
@@ -101,7 +101,7 @@ export default ChatCommand({
       }
     }
     const userReminders = await db.reminders.findMany({
-      where: { user_id: this.user.id },
+      where: { userId: this.user.id },
     });
 
     if (userReminders.length >= 5) {
@@ -115,7 +115,7 @@ export default ChatCommand({
       expiration: expiration.toDate(),
       reminder: subject,
       locale: this.locale,
-      user_id: this.user.id,
+      userId: this.user.id,
       url: ((await this.fetchReply()) as Message).url.replace('https://discord.com/channels/', ''),
     };
 

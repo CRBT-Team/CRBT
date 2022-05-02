@@ -18,7 +18,7 @@ export const setReminder = async (reminder: reminders) => {
   const client = getDiscordClient();
 
   setLongerTimeout(async () => {
-    const user = await client.users.fetch(reminder.user_id);
+    const user = await client.users.fetch(reminder.userId);
 
     const dest =
       reminder.destination === 'dm'

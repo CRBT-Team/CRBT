@@ -26,7 +26,7 @@ export const RemindButton = ButtonComponent({
 
     const reminder = await db.reminders.findFirst({
       where: {
-        user_id: userId,
+        userId: userId,
         destination: 'dm',
         reminder: 'Command reminder from CRBT.',
       },
@@ -38,7 +38,7 @@ export const RemindButton = ButtonComponent({
         reminder: 'Command reminder from CRBT.',
         locale,
         expiration: dayjs(relativetime).toDate(),
-        user_id: this.user.id,
+        userId: this.user.id,
         destination: 'dm',
         url:
           this.message instanceof Message
@@ -74,7 +74,7 @@ export const SnoozeButton = ButtonComponent({
     //@ts-ignore
     await setReminder({
       reminder: this.message.embeds[0].fields[0].value,
-      user_id: this.user.id,
+      userId: this.user.id,
       locale,
       expiration: dayjs().add(15, 'minutes').toDate(),
       destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],

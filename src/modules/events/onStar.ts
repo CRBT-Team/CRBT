@@ -1,94 +1,98 @@
-// import { colors } from '$lib/db';
-// import { avatar } from '$lib/functions/avatar';
-// import { row } from '$lib/functions/row';
-// import {
-//   MessageButton,
-//   MessageEmbed,
-//   MessageReaction,
-//   PartialMessageReaction,
-//   TextBasedChannel,
-// } from 'discord.js';
-// import { components, OnEvent } from 'purplet';
+import { colors } from '$lib/db';
+import { avatar } from '$lib/functions/avatar';
+import { row } from '$lib/functions/row';
+import {
+  MessageButton,
+  MessageEmbed,
+  MessageReaction,
+  PartialMessageReaction,
+  TextBasedChannel,
+} from 'discord.js';
+import { components, OnEvent } from 'purplet';
 
-// export const add = OnEvent('messageReactionAdd', async (reaction, user) => {
-//   const { message, emoji } = reaction;
+console.log('ok');
 
-//   if (emoji.name !== '⭐') return;
-//   if (message.author.id === user.id) return;
-//   if (message.author.bot) return;
+export const add = OnEvent('messageReactionAdd', async (reaction, user) => {
+  console.log('ok');
+  const { message, emoji } = reaction;
 
-//   const starChannel = message.guild.channels.cache.find(
-//     (c) => c.name === 'starboard' && c.isText()
-//   ) as TextBasedChannel;
+  if (emoji.name !== '⭐') return;
+  if (message.author.id === user.id) return;
+  if (message.author.bot) return;
 
-//   if (!starChannel) return;
+  const starChannel = message.guild.channels.cache.find(
+    (c) => c.name === 'starboard' && c.isText()
+  ) as TextBasedChannel;
 
-//   const content = renderStarboardMsg(reaction);
+  if (!starChannel) return;
 
-//   if (reaction.count === 1) {
-//     await starChannel.send(content);
-//   } else {
-//     const starMessages = await starChannel.messages.fetch({
-//       after: reaction.message.id,
-//       limit: 100,
-//     });
-//     const starMsg = starMessages.find((m) => m.embeds[0].footer.text.endsWith(message.id));
+  const content = renderStarboardMsg(reaction);
 
-//     await starMsg.edit(content);
-//   }
-// });
+  if (reaction.count === 1) {
+    await starChannel.send(content);
+  } else {
+    const starMessages = await starChannel.messages.fetch({
+      after: reaction.message.id,
+      limit: 100,
+    });
+    const starMsg = starMessages.find((m) => m.embeds[0].footer.text.endsWith(message.id));
 
-// export const remove = OnEvent('messageReactionRemove', async (reaction, user) => {
-//   const { message, emoji } = reaction;
+    await starMsg.edit(content);
+  }
+});
 
-//   if (emoji.name !== '⭐') return;
-//   if (message.author.id === user.id) return;
-//   if (message.author.bot) return;
+export const remove = OnEvent('messageReactionRemove', async (reaction, user) => {
+  console.log('ok');
+  const { message, emoji } = reaction;
 
-//   const starChannel = message.guild.channels.cache.find(
-//     (c) => c.name === 'starboard' && c.isText()
-//   ) as TextBasedChannel;
+  if (emoji.name !== '⭐') return;
+  if (message.author.id === user.id) return;
+  if (message.author.bot) return;
 
-//   if (!starChannel) return;
+  const starChannel = message.guild.channels.cache.find(
+    (c) => c.name === 'starboard' && c.isText()
+  ) as TextBasedChannel;
 
-//   const content = renderStarboardMsg(reaction);
+  if (!starChannel) return;
 
-//   if (reaction.count !== 0) {
-//     await starChannel.send(content);
-//   } else {
-//     const starMessages = await starChannel.messages.fetch({
-//       after: reaction.message.id,
-//       limit: 100,
-//     });
-//     const starMsg = starMessages.find((m) => m.embeds[0].footer.text.endsWith(message.id));
+  const content = renderStarboardMsg(reaction);
 
-//     await starMsg.delete();
-//   }
-//   reaction.message.channel.send(`${user.username} removed a star!`);
-// });
+  if (reaction.count !== 0) {
+    await starChannel.send(content);
+  } else {
+    const starMessages = await starChannel.messages.fetch({
+      after: reaction.message.id,
+      limit: 100,
+    });
+    const starMsg = starMessages.find((m) => m.embeds[0].footer.text.endsWith(message.id));
 
-// function renderStarboardMsg(reaction: MessageReaction | PartialMessageReaction) {
-//   return {
-//     embeds: [
-//       new MessageEmbed()
-//         .setAuthor({
-//           name: reaction.message.author.tag,
-//           iconURL: avatar(reaction.message.author, 64),
-//         })
-//         .setDescription(reaction.message.content)
-//         .setFooter({
-//           text: `⭐ ${reaction.count} • ${reaction.message.id}`,
-//         })
-//         .setTimestamp(reaction.message.createdAt)
-//         .setColor(`#${colors.yellow}`),
-//     ],
-//     components: components(
-//       row(
-//         new MessageButton()
-//           .setURL(reaction.message.url)
-//           .setLabel('Jump to message')
-//           .setStyle('LINK')
-//       )
-//     ),
-//   };
-// }
+    await starMsg.delete();
+  }
+  reaction.message.channel.send(`${user.username} removed a star!`);
+});
+
+function renderStarboardMsg(reaction: MessageReaction | PartialMessageReaction) {
+  return {
+    embeds: [
+      new MessageEmbed()
+        .setAuthor({
+          name: reaction.message.author.tag,
+          iconURL: avatar(reaction.message.author, 64),
+        })
+        .setDescription(reaction.message.content)
+        .setFooter({
+          text: `⭐ ${reaction.count} • ${reaction.message.id}`,
+        })
+        .setTimestamp(reaction.message.createdAt)
+        .setColor(`#${colors.yellow}`),
+    ],
+    components: components(
+      row(
+        new MessageButton()
+          .setURL(reaction.message.url)
+          .setLabel('Jump to message')
+          .setStyle('LINK')
+      )
+    ),
+  };
+}

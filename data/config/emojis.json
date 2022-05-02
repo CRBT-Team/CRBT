@@ -1,50 +1,52 @@
 {
   "error": "<:error:866037872519938069> ",
   "success": "<:success:866037503567069185> ",
-
   "purplet": "<:purplet:866116902215745576>",
-
+  "information": "<:information:866336136951758848>",
+  "verified": "<:verified:939650378243407873>",
+  "sticker": "<:sticker:970753754704007218>",
+  "emoji": "<:emoji:970653903664349214>",
+  "event": "<:event:970653903760814160>",
+  "role": "<:role:970752908536709271>",
+  "activity": "<:activity:970653903509139497>",
+  "slash_command": "<:slash_command:970752908255698998>",
+  "thumbsup": "<:thumbsup:868200292024467486>",
+  "thumbsdown": "<:thumbsdown:868200320868708393>",
+  "reminder": "<:bell:868193178149347338>",
+  "trash_bin": "<:trash_bin:970752908511555684>",
+  "pencil": "<:pencil:970752908570284083>",
   "toggle": {
     "on": "<:toggleon:866036010663542816>",
     "off": "<:toggleoff:866036062471192627>",
     "fon": "<:forcedon:866042868766736394>",
     "foff": "<:forcedoff:866042899501940757>"
   },
-
-  "information": "<:information:866336136951758848>",
-  "warning": "<:warning:836285755948662814>",
-  "verified": "<:verified:939650378243407873>",
-  "partner": "<:partner:866113174314287125>",
-
   "channels": {
-    "text": "<:text:861643749242306610>",
-    "voice": "<:voice:861643709111468043>",
-    "news": "<:news:861643588668227635>",
-    "rules": "<:rules:861643629563346964>",
-    "nsfw": "<:text_nsfw:861646458544193567>",
-    "category": "<:category:861645653326692362>",
-    "stage": "<:stage:919655246236614676>"
+    "text": "<:text_channel:970653903681114182>",
+    "voice": "<:voice_channel:970653903869861888>",
+    "news": "<:news_channel:970653903819513905>",
+    "forum": "<:forum_channel:970653903613997106>970653903613997106>",
+    "rules": "<:rules_channel:970653903622373417>",
+    "nsfw": "<:nsfw_channel:970653903395913779>",
+    "category": "<:category:970653903039381595>",
+    "stage": "<:stage_channel:970653903500754945>",
+    "chat": "<:chat:970653903769182238>",
+    "thread_text": "<:text_thread:970653903811145768>",
+    "home": "<:home:970653904050204703>"
   },
-  "users": {
-    "humans": "<:members:658538493470965787>",
-    "bots": "<:members:658538493470965787>",
-    "status": {
-      "dnd": "<:DND:782585535008735233>",
-      "idle": "<:Idle:782585660682928149>",
-      "online": "<:Online:782585660334669854>",
-      "invisible": "<:Invisible:782585661185589270>"
-    }
+  "members": "<:members:970653903605616700>",
+  "bot": "<:bot:970653903043588177>",
+  "boosting": {
+    "1": "<:boosting_lvl1:970653903521726524>",
+    "2": "<:boosting_lvl2:970653903442042930>",
+    "3": "<:boosting_lvl3:970653903559483452>"
   },
-  "eightball": "<:8ball:836285755512586291>",
-  "sticker": "<:sticker:919672520691580949>",
-  "emoji": {
-    "static": "<:emoji:658538492321595393>",
-    "animated": "<:emoji:658538492321595393>"
+  "status": {
+    "dnd": "<:DND:782585535008735233>",
+    "idle": "<:Idle:782585660682928149>",
+    "online": "<:Online:782585660334669854>",
+    "invisible": "<:Invisible:782585661185589270>"
   },
-  "thumbsup": "<:thumbsup:868200292024467486>",
-  "thumbsdown": "<:thumbsdown:868200320868708393>",
-  "reminder": "<:bell:868193178149347338>",
-
   "badges": {
     "houses": {
       "balance": "<:balance:585763004574859273>",
@@ -57,11 +59,12 @@
     "earlySupporter": "<:supporter:585763690868113455>",
     "verifiedBot": "",
     "cerifiedMod": "<:certifiedmod:853274382339670046>",
-    "boost": "<:Boosting:782585506646982668>",
+    "boost": "<:boosting:970653903400103977>",
     "discordStaff": "<:DiscordStaff:843179936771604503>",
     "bugHunter1": "<:bughunter:585765206769139723>",
     "bugHunter2": "<:goldbughunter:853274684337946648>",
-    "hypesquad": "<:hypesquad_events:585765895939424258>"
+    "hypesquad": "<:hypesquad_events:585765895939424258>",
+    "server_owner": "<:server_owner:970653903676899398>"
   },
   "colors": {
     "black": "<:black:855497337333088266>",
@@ -86,18 +89,13 @@
     "darkpurple": "<:darkpurple:855496838173818930>",
     "pink": "<:pink:855497471727763486>"
   },
-  "store": {
-    "badges": "<:badges:857341071309930568>",
-    "banners": "<:banners:857340872944517120>"
-  },
-  "other": {
+  "emotiguy": {
     "sad": "<:sad:717683548487811111>",
     "angry_hands": "<:angry_messed_up_hands:729408548118855762>",
     "angry_pink": "<:angry_pink:753969564408086600>",
     "sad3": "<:sad3:729374854104612934>",
     "coolwoah": "<:coolwoah:717684437508161546>",
-    "goodmeal": "<:good_meal:750034917743919256>",
-    "heart": "<:heart:858010663226310676>"
+    "goodmeal": "<:good_meal:750034917743919256>"
   },
   "progress": {
     "fill": "<:progressfill:949292806646689862>",

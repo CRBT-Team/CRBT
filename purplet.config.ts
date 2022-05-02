@@ -6,6 +6,23 @@ import {
   TextCommandHandler,
 } from 'purplet';
 
+const intents = new Intents([
+  Intents.FLAGS.GUILDS,
+  Intents.FLAGS.GUILD_VOICE_STATES,
+  Intents.FLAGS.GUILD_WEBHOOKS,
+  Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+]);
+
+if (process.argv.includes('--dev')) {
+  intents.add([
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_PRESENCES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  ]);
+}
+// console.log(intents.toArray());
+
 export default defineConfig({
   compiler: {
     esbuildOptions: {
@@ -21,21 +38,12 @@ export default defineConfig({
           // '832924281519341638', // CRBT Demo
         ]
       : [],
+    //@ts-ignore
     clientOptions: {
       allowedMentions: {
         repliedUser: false,
       },
-      //@ts-ignore
-      intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_VOICE_STATES,
-        // Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        // Intents.FLAGS.GUILD_MEMBERS,
-        // Intents.FLAGS.GUILD_PRESENCES,
-        Intents.FLAGS.GUILD_WEBHOOKS,
-        Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-      ],
+      intents,
     },
   },
   handlers: [

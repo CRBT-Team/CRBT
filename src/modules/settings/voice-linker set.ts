@@ -41,20 +41,20 @@ export default ChatCommand({
         id: this.guild.id,
       },
       select: {
-        voice_linker: true,
+        voiceLinker: true,
       },
     })) as Prisma.JsonObject;
 
     if (current) {
       await db.servers.update({
         where: { id: this.guild.id },
-        data: { voice_linker: { voice: text.id, text: voice.id } },
+        data: { voiceLinker: { voice: text.id, text: voice.id } },
       });
     } else {
       await db.servers.create({
         data: {
           id: this.guild.id,
-          voice_linker: {
+          voiceLinker: {
             voice: voice.id,
             text: text.id,
           },

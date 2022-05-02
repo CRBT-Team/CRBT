@@ -47,10 +47,9 @@ export default ChatCommand({
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
       const emojiData = emojiJSON.find((e) => e.char === emoji);
-      const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes.replace(
-        / /g,
-        '-'
-      )}`;
+      const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
+        .toLowerCase()
+        .replace(/ /g, '-')}`;
       // eye_1f441-fe0f.png
       const emojiImg = {
         google: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/313/${emojipediaCode}.png`,
