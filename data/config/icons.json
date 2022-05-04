@@ -1,6 +1,6 @@
 {
   "welcome": "https://cdn.discordapp.com/attachments/843148633687588945/929830030824071169/unknown.png",
-  "settings": "https://cdn.discordapp.com/attachments/782584672772423684/866329988662951956/unknown.png",
+  "settings": "https://cdn.discordapp.com/attachments/945417344656752712/971007058046492742/unknown.png",
   "eightball": "https://cdn.discordapp.com/attachments/843148633687588945/866338223340257301/unknown.png",
   "channels": {
     "category": "https://cdn.discordapp.com/attachments/782584672772423684/866328659064520724/unknown.png",
@@ -12,36 +12,12 @@
     "rules": "https://cdn.discordapp.com/attachments/782584672772423684/866329407076827136/unknown.png"
   },
   "placeholder": "https://clembs.xyz/media/placeholder-image.png",
-  "information": "https://cdn.discordapp.com/attachments/782584672772423684/866330436626939935/unknown.png",
-  "volumelow": "https://cdn.discordapp.com/attachments/782584672772423684/866334343370506251/unknown.png",
-  "volumehigh": "https://cdn.discordapp.com/attachments/782584672772423684/866334350844100638/unknown.png",
-  "volumemuted": "https://cdn.discordapp.com/attachments/782584672772423684/866334312528609290/unknown.png",
+  "information": "https://cdn.discordapp.com/attachments/945417344656752712/971006786977005578/unknown.png",
 
   "invite": "https://crbt.ga/assets/logos/crbt.png",
   "badges": "https://cdn.discordapp.com/attachments/843148633687588945/857341037931790376/unknown.png",
   "banners": "https://cdn.discordapp.com/attachments/843148633687588945/857340840888500254/unknown.png",
   "error": "https://cdn.discordapp.com/emojis/866037872519938069.png",
   "success": "https://cdn.discordapp.com/emojis/951046132820222032.png",
-  "reminder": "https://cdn.discordapp.com/attachments/945417344656752712/964943790181875732/unknown.png",
-
-  "music": {
-    "queueadded": "https://cdn.discordapp.com/attachments/782584672772423684/866330146961096704/unknown.png",
-    "queue": "https://cdn.discordapp.com/attachments/782584672772423684/866330448309387305/unknown.png",
-    "information": "https://cdn.discordapp.com/attachments/782584672772423684/866330436626939935/unknown.png",
-    "skip": "https://cdn.discordapp.com/attachments/782584672772423684/866330412887048202/unknown.png",
-    "previous": "https://cdn.discordapp.com/attachments/863450520152047618/866704523304108072/unknown.png",
-    "resume": "https://cdn.discordapp.com/attachments/782584672772423684/866330372936695814/unknown.png",
-    "pause": "https://cdn.discordapp.com/attachments/782584672772423684/866330366611947560/unknown.png",
-    "stop": "https://cdn.discordapp.com/attachments/782584672772423684/866330296345559070/unknown.png",
-    "volumelow": "https://cdn.discordapp.com/attachments/782584672772423684/866334343370506251/unknown.png",
-    "volumehigh": "https://cdn.discordapp.com/attachments/782584672772423684/866334350844100638/unknown.png",
-    "volumemuted": "https://cdn.discordapp.com/attachments/782584672772423684/866334312528609290/unknown.png",
-    "loop_true": "https://cdn.discordapp.com/attachments/863450520152047618/866704453960859658/unknown.png",
-    "loop_false": "https://cdn.discordapp.com/attachments/863450520152047618/866704464839704576/unknown.png",
-    "loop": "https://cdn.discordapp.com/attachments/863450520152047618/866704431138471976/unknown.png",
-    "rewind": "https://cdn.discordapp.com/attachments/863450520152047618/866704555663163433/unknown.png",
-    "seek_left": "https://cdn.discordapp.com/attachments/863450520152047618/866704568585551892/unknown.png",
-    "seek_right": "https://cdn.discordapp.com/attachments/863450520152047618/866706263025647616/unknown.png",
-    "shuffle": "https://cdn.discordapp.com/attachments/863450520152047618/866708163420356648/unknown.png"
-  }
+  "reminder": "https://cdn.discordapp.com/attachments/945417344656752712/971007021010780180/unknown.png"
 }

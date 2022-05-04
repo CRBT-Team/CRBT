@@ -127,13 +127,16 @@ export const issueReply = async (
       ],
       components: components(
         row(
+          type === 'reply'
+            ? new ReplyButton({ state: type })
+                .setLabel('Reply')
+                .setEmoji(emojis.buttons.reply)
+                .setStyle('PRIMARY')
+            : null,
           new MessageButton()
             .setStyle('LINK')
             .setLabel(`Jump to ${isSuggestion ? 'suggestion' : 'issue'}`)
-            .setURL(msg.url),
-          type === 'reply'
-            ? new ReplyButton({ state: type }).setLabel('Reply').setStyle('SECONDARY')
-            : null
+            .setURL(msg.url)
         )
       ),
     })
@@ -146,7 +149,9 @@ export const ReplyButton = ButtonComponent({
       return this.reply(CRBTError("You can't reply to an issue that has been closed."));
     }
 
-    const issueId = (this.message.components[0].components[0] as MessageButton).url.split('/')[6];
+    const issueId = (this.message.components[0].components as MessageButton[])
+      .find((c) => c.label !== 'Reply')
+      .url.split('/')[6];
 
     const modal = new Modal()
       .setTitle('Reply to issue')

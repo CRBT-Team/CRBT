@@ -81,7 +81,7 @@ export default ChatCommand({
             .setStyle('LINK')
             .setLabel('Join Activity')
             .setURL(`https://discord.gg/${invite.code}`)
-            .setEmoji(emojis.activity)
+            .setEmoji(emojis.buttons.activity)
         )
       ),
     });

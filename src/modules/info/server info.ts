@@ -53,13 +53,13 @@ export default ChatCommand({
       .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
       .setColor(`#${colors.default}`)
       .addField('ID', guild.id, true)
-      .addField(`${emojis.badges.server_owner} Owned by`, `<@${guild.ownerId}>`, true)
+      .addField(`Owned by`, `<@${guild.ownerId}>`, true)
       .addField(
         'Created at',
         `<t:${dayjs(guild.createdAt).unix()}> (<t:${dayjs(guild.createdAt).unix()}:R>)`
       )
       .addField(
-        `${emojis.channels.home} Channels (${channels.size})`,
+        `Channels (${channels.size})`,
         `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${
           cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
         }\n` +
@@ -86,24 +86,24 @@ export default ChatCommand({
         .join('\n');
 
       e.addField(
-        `${emojis.emoji} ${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})`,
+        `${emoji.size === 1 ? 'Emoji' : 'Emojis'} (${emoji.size})`,
         `${emoji.filter((r) => !r.animated).size} static • ${
           emoji.filter((r) => r.animated).size
-        } animated\n${allEmojis}`,
+        } animated\n\n${allEmojis}`,
         true
       );
     }
-    if (stickers.size > 0) e.addField(`${emojis.sticker} Stickers`, `${stickers.size}`, true);
+    if (stickers.size > 0) e.addField(`Stickers`, `${emojis.sticker} ${stickers.size}`, true);
 
     const members = guild.members.cache.size || guild.memberCount || guild.approximateMemberCount;
     //   members.filter((m) => m.presence && m.presence.status === presence).size;
     // const mStatus = (presence: PresenceStatus) =>
 
     if (!bots) {
-      e.addField(`${emojis.members} Members`, `${members} (including Bots and Apps)`, true);
+      e.addField(`Members`, `${emojis.members} ${members} (including Bots and Apps)`, true);
     } else {
       e.addField(
-        `${emojis.members} Members (${members})`,
+        `Members (${members})`,
         `${emojis.members} ${members - bots.length} Humans\n${emojis.bot} ${bots.length} Bots`,
         true
       );
@@ -124,12 +124,12 @@ export default ChatCommand({
 
     if (roles.length > 0)
       e.addField(
-        `${emojis.role} ${roles.length === 1 ? 'Role' : 'Roles'} (${roles.length})`,
+        `${roles.length === 1 ? 'Role' : 'Roles'} (${roles.length})`,
         roles.length < 5 ? roles.join('  ') : trimArray(roles).join('  ')
       );
 
     e.addField(
-      `${emojis.badges.boost} Server Boosting`,
+      `Server Boosting`,
       `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
         (guild.premiumTier !== 'NONE'
           ? ` • ${
@@ -143,17 +143,17 @@ export default ChatCommand({
       'Moderation',
       `Verification level:\n${capitalCase(
         guild.verificationLevel.replace('_', ' ')
-      )}\nExplicit media content filter:\n${capitalCase(
+      )}\nExplicit media filter:\n${capitalCase(
         guild.explicitContentFilter.replace('_', ' ')
-      )}\n2FA for Moderation: ${guild.mfaLevel === 'NONE' ? 'Disabled' : 'Enabled'}`,
+      )}\n2FA for Moderation: ${guild.mfaLevel === 'NONE' ? 'Disabled' : 'Required'}`,
       true
     );
 
     if (events.size > 0) {
       const active = events.filter((e) => e.isActive()).size;
       e.addField(
-        `${emojis.event} Events (${events.size})`,
-        `${active} Active • ${events.size - active} Planned`,
+        `Events (${events.size})`,
+        `${emojis.event} ${active} Active\n${emojis.event} ${events.size - active} Planned`,
         true
       );
     }

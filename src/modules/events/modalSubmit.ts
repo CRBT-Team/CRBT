@@ -1,7 +1,14 @@
 import { colors, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
-import { Message, MessageEmbed, ModalSubmitInteraction, TextChannel } from 'discord.js';
-import { OnEvent } from 'purplet';
+import { row } from '$lib/functions/row';
+import {
+  Message,
+  MessageEmbed,
+  MessageSelectMenu,
+  ModalSubmitInteraction,
+  TextChannel,
+} from 'discord.js';
+import { components, OnEvent } from 'purplet';
 import { issueReply } from '../dev/fix';
 
 const urlRegex =
@@ -126,6 +133,60 @@ export default OnEvent('modalSubmit', async (modal: ModalSubmitInteraction) => {
           .setColor(`#${colors.success}`),
       ],
     });
+  } else if (modal.customId.startsWith('poll_')) {
+    const pollTitle = modal.fields.getTextInputValue('poll_title');
+    const choices = modal.components.slice(1).map((_, i) => {
+      return modal.fields.getTextInputValue(`poll_option_${i}`);
+    });
+
+    const msg = await modal.channel.messages.fetch(modal.customId.replace('poll_', ''));
+
+    const isSelectMenu = msg.components.length > 1;
+
+    if (isSelectMenu) {
+      (msg.components[0].components[0] as MessageSelectMenu).options = (
+        msg.components[0].components[0] as MessageSelectMenu
+      ).options.map((option, i) => ({
+        ...option,
+        label: choices[i],
+      }));
+    }
+
+    const Components = isSelectMenu
+      ? components(row(msg.components[0].components[0]), msg.components[1])
+      : components(
+          row().addComponents(
+            //@ts-ignore
+            msg.components[0].components.slice(0, -1).map((component, i) => ({
+              ...component,
+              label: choices[i],
+            })),
+            msg.components[0].components.at(-1)
+          )
+        );
+
+    await msg.edit({
+      embeds: [
+        new MessageEmbed({
+          ...msg.embeds[0],
+          footer: {
+            text: `${msg.embeds[0].footer.text} • edited on `,
+          },
+        })
+          .setTimestamp()
+          .setTitle(pollTitle)
+          .setFields(
+            choices.map((choice, i) => ({
+              name: choice,
+              value: msg.embeds[0].fields[i].value,
+            }))
+          ),
+      ],
+      components: Components,
+    });
+
+    //@ts-ignore
+    await modal.update({});
   }
   // else {
   //   const bday = dayjs(modal.fields.getTextInputValue('profile_birthday').trim() + 'T12:00:00');

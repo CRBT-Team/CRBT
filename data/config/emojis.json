@@ -1,8 +1,9 @@
 {
   "error": "<:error:866037872519938069> ",
-  "success": "<:success:866037503567069185> ",
+  "success": "<:success:951046132820222032>",
   "purplet": "<:purplet:866116902215745576>",
-  "information": "<:information:866336136951758848>",
+  "information": "<:information:971008155372912640>",
+  "settings": "<:settings:971008155536470066>",
   "verified": "<:verified:939650378243407873>",
   "sticker": "<:sticker:970753754704007218>",
   "emoji": "<:emoji:970653903664349214>",
@@ -10,16 +11,27 @@
   "role": "<:role:970752908536709271>",
   "activity": "<:activity:970653903509139497>",
   "slash_command": "<:slash_command:970752908255698998>",
-  "thumbsup": "<:thumbsup:868200292024467486>",
-  "thumbsdown": "<:thumbsdown:868200320868708393>",
-  "reminder": "<:bell:868193178149347338>",
-  "trash_bin": "<:trash_bin:970752908511555684>",
-  "pencil": "<:pencil:970752908570284083>",
+  "thumbsup": "<:thumbsup:971008155213529089>",
+  "thumbsdown": "<:thumbsdown:971008155515510864>",
+  "reminder": "<:reminder:971008155385470996>",
+  "trash_bin": "<:trash_bin:970980243030540308>",
+  "pencil": "<:pencil:970980242560794686>",
+  "menu": "<:menu:970980242925711402>",
+  "id": "<:id:970983898613948456>",
   "toggle": {
     "on": "<:toggleon:866036010663542816>",
     "off": "<:toggleoff:866036062471192627>",
     "fon": "<:forcedon:866042868766736394>",
     "foff": "<:forcedoff:866042899501940757>"
+  },
+  "buttons": {
+    "activity": "<:activity_white:970980242657267754>",
+    "pencil": "<:pencil_white:970980243013779536>",
+    "trash_bin": "<:trash_bin_white:970980243097677874>",
+    "menu": "<:menu_white:970980243047350302>",
+    "reply": "<:reply_white:971352169418747944>",
+    "cross": "<:cross_white:971363011308707840>",
+    "link": "<:link_white:971363011275157524>"
   },
   "channels": {
     "text": "<:text_channel:970653903681114182>",
@@ -58,7 +70,7 @@
     "partner": "<:DiscordPartner:843189287552942142>",
     "earlySupporter": "<:supporter:585763690868113455>",
     "verifiedBot": "",
-    "cerifiedMod": "<:certifiedmod:853274382339670046>",
+    "cerifiedMod": "<:certified_mod:970980243131224075>",
     "boost": "<:boosting:970653903400103977>",
     "discordStaff": "<:DiscordStaff:843179936771604503>",
     "bugHunter1": "<:bughunter:585765206769139723>",
@@ -98,7 +110,13 @@
     "goodmeal": "<:good_meal:750034917743919256>"
   },
   "progress": {
-    "fill": "<:progressfill:949292806646689862>",
-    "empty": "<:progressempty:949292806516641802>"
+    "fill": "<:progressfill:971334221450862642>",
+    "empty": "<:progressempty:949292806516641802>",
+    "emptystart": "<:progressemptystart:971334221538951218>",
+    "emptyend": "<:progressemptyend:971334221425700894>",
+    "fillstart": "<:progressfillstart:971334221782196234>",
+    "fillend": "<:progressfillend:971334221006258187>",
+    "fillcut": "<:progressfillcut:971334221455036456>",
+    "fillstartcut": "<:progressfillstartcut:971347568409841664>"
   }
 }

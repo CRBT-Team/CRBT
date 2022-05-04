@@ -173,7 +173,6 @@ export const usePreset = ChatCommand({
                     rolesList.map((role) => {
                       return {
                         label: role.label ?? role.name,
-                        // description: strings.OPTION_LABEL_GET_ROLE.replace('<ROLE>', role.name),
                         value: JSON.stringify({
                           name: role.name,
                           id: role.id,
