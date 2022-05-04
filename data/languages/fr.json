@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP.",
     "DEPRECATION_DESCRIPTION": "Obsolète. ",
     "DEPRECATION_TITLE": "⚠️ Annonce d'obsolescence",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "DEPRECATION_NOTICE": "Les profils CRBT et le système d'économie de Purplets seront bientôt supprimés en faveur du système de profil natif de Discord et d'un système d'économie bien plus puissant et personnalisable pour chaque serveur.\nVous ne pourrez voir que les profils et le solde des utilisateurs jusqu'en mai 2022.\nPour plus d'informations, veuillez vous référer à **[cet article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Retour",
@@ -38,7 +38,7 @@
       "options": [
         {
           "name": "couleur",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Votre nouvelle couleur d'accentuation. Utilisez une des suggestions ou un code HEX."
         }
       ]
     },
@@ -68,12 +68,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "Vous n'avez pas de couleur de profil Discord à synchroniser ! Pour en définir une, modifiez votre profil d'utilisateur et modifiez votre couleur de profil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Vous devez utiliser une couleur valide par son nom ou avec un code HEX. Utilisez la saisie automatique pour une liste des noms de couleurs disponibles."
     },
     "strings": {
       "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Votre couleur d'accentuation CRBT sera synchronisée avec votre couleur de profil Discord.",
+      "EMBED_DESCRIPTION": "Cette couleur sera utilisée pour la plupart des réponses de CRBT, ainsi que sur les commandes affichant des infos vous concernant."
     }
   },
   "remind me": {
@@ -117,10 +117,10 @@
       "GCALENDAR_EVENT_CHANNEL": "Vous en serez également rappelé dans <CHANNEL>, dans <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
+      "AND": "et",
+      "AT": "à",
+      "ON": "le",
+      "IN": "dans",
       "TOMORROW": "tomorrow",
       "TODAY": "today"
     }
