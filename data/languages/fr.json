@@ -160,7 +160,6 @@
       "NOT_CMD_USER": "Seule la personne qui a utilisé cette commande peut utiliser ce bouton."
     },
     "strings": {
-      "PROFILE": "Profil",
       "AVATAR": "Avatar",
       "INFO": "Infos utilisateur"
     }
@@ -172,6 +171,61 @@
       "tt": "Iel",
       "other": "Autre",
       "ask": "Demandez-moi"
+    }
+  },
+  "poll": {
+    "meta": {
+      "description": "Create a poll with the given choices.",
+      "options": [
+        {
+          "description": "Some choice a user can choose. Make it short, preferably."
+        },
+        {
+          "description": "An other choice a user can choose."
+        },
+        {
+          "description": "Same as choice 1 and 2, but not required."
+        },
+        {
+          "description": "And that's how far choices can go."
+        }
+      ]
+    },
+    "errors": {
+      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
+      "CHOICE_TOO_LONG": "A choice cannot be longer than 20 characters (excluding emojis).",
+      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
+      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+    },
+    "strings": {
+      "CHOICE": "Choice",
+      "POLL_HEADER": "CRBT Poll",
+      "POLL_HEADER_VOTE": "Vote for an option below",
+      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
+      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
+      "POLL_SELECT_MENU_VOTE": "Vote",
+      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
+      "KEYWORD_NO__KEEP_LOWERCASE": "no",
+      "SUCCESS_TITLE": "Poll created!",
+      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
+      "POLL_DATA_NOVOTES": "No votes yet",
+      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
+      "BUTTON_EDIT_POLL": "Edit Poll",
+      "BUTTON_CANCEL_POLL": "Delete Poll",
+      "BUTTON_END_POLL": "End Poll",
+      "TITLE": "Title",
+      "SUCCESS_POLL_DELETED": "Poll deleted.",
+      "SUCCESS_POLL_ENDED": "Poll ended.",
+      "POLL_HEADER_ENDED": "Ended",
+      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
+      "POLL_RESULTS_TITLE": "The results are in!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
+      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
     }
   },
   "avatar": {
