@@ -175,13 +175,13 @@
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Crie uma enquete com as opções dadas.",
       "options": [
         {
           "description": "Some choice a user can choose. Make it short, preferably."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "Uma opção que um usuário pode escolher."
         },
         {
           "description": "Same as choice 1 and 2, but not required."
