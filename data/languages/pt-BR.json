@@ -181,19 +181,19 @@
           "description": "Some choice a user can choose. Make it short, preferably."
         },
         {
-          "description": "Uma opção que um usuário pode escolher."
+          "description": "Uma alternativa que um usuário pode escolher."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "O mesmo que as alternativas 1 e 2, mas não necessária."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "E isso é o quão longe as alternativas podem ir."
         }
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 20 characters (excluding emojis).",
+      "TITLE_TOO_LONG": "O título de sua enquete deve ser de 100 caracteres ou menos.",
+      "CHOICE_TOO_LONG": "Uma alternativa não deve ser mais longa que 20 caracteres (excluindo emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
