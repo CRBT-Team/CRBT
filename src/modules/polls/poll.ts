@@ -1,5 +1,5 @@
 import { colors, db, emojis, icons } from '$lib/db';
-import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
+import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
 import { ms } from '$lib/functions/ms';
@@ -189,7 +189,7 @@ export default ChatCommand({
     });
 
     setLongerTimeout(async () => {
-      const fetchMsg = await this.channel.messages.fetch(msg.id);
+      const fetchMsg = await this.channel.messages.fetch(msg.id).catch(() => null);
 
       if (!fetchMsg) return;
 
@@ -351,10 +351,6 @@ export const CancelPollButton = ButtonComponent({
   async handle(msgId: string) {
     const { strings } = getStrings(this.locale).poll;
 
-    await db.polls.delete({
-      where: { id: `${this.channel.id}/${msgId}` },
-    });
-
     await this.update({
       embeds: [
         new MessageEmbed()
@@ -366,8 +362,17 @@ export const CancelPollButton = ButtonComponent({
       ],
       components: [],
     });
-    const msg = await this.channel.messages.fetch(msgId);
-    await msg.delete();
+
+    try {
+      await db.polls.delete({
+        where: { id: `${this.channel.id}/${msgId}` },
+      });
+
+      const msg = await this.channel.messages.fetch(msgId);
+      await msg.delete();
+    } catch (err) {
+      UnknownError(this, err);
+    }
   },
 });
 
@@ -381,9 +386,10 @@ export const EndPollButton = ButtonComponent({
         where: { id: `${this.channel.id}/${msgId}` },
       }));
 
-    const msg = await this.channel.messages.fetch(msgId);
-
-    await endPoll(pollData, msg, this.guildLocale);
+    if (pollData) {
+      const msg = await this.channel.messages.fetch(msgId);
+      await endPoll(pollData, msg, this.guildLocale);
+    }
 
     await this.update({
       embeds: [
@@ -402,9 +408,11 @@ export const EndPollButton = ButtonComponent({
 const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
   const { strings } = getStrings(locale).poll;
 
-  await db.polls.delete({
-    where: { id: `${pollMsg.channel.id}/${pollMsg.id}` },
-  });
+  await db.polls
+    .delete({
+      where: { id: `${pollMsg.channel.id}/${pollMsg.id}` },
+    })
+    .catch(() => {});
 
   await pollMsg.edit({
     embeds: [
