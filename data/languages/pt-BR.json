@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Esse comando não pode ser usado por mensagens diretas.",
     "DEPRECATION_DESCRIPTION": "Descontinuado. ",
     "DEPRECATION_TITLE": "⚠️ Aviso de descontinuação",
-    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor..\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "DEPRECATION_NOTICE": "Perfis CRBT e o sistema de economia de Purplets estão sendo descontinuados a favor do próprio sistema de perfil do Discord e de um sistema mais poderoso de economia exclusiva a cada servidor.\nVocê ainda será capaz de ver apenas os saldos de perfis e usuários até Maio de 2022.\nPara mais informações, consulte **[este artigo](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Voltar",
@@ -32,31 +32,13 @@
       "COMPONENT": "componente"
     }
   },
-  "balance": {
-    "meta": {
-      "description": "Veja o saldo de Purplets de um usuário, ou o seu próprio saldo.",
-      "options": [
-        {
-          "name": "usuário",
-          "description": "O usuário cujo será verificado o saldo"
-        }
-      ]
-    },
-    "strings": {
-      "EMBED_TITLE": "<USER> - Saldo",
-      "EMBED_DESCRIPTION": "<PURPLETS> Purplets",
-      "LEADERBOARD_TITLE": "Ranking",
-      "LEADERBOARD_NOTPRESENT": "Não está no ranking global",
-      "LEADERBOARD_DESCRIPTION": "<PLACE> de <TOTAL> pessoas no ranking global"
-    }
-  },
   "color set": {
     "meta": {
       "description": "Altere sua cor de destaque no CRBT.",
       "options": [
         {
           "name": "cor",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "A cor que será usada como sua cor de destaque. Use uma das sugestões ou um código de cor HEX."
         }
       ]
     },
@@ -86,12 +68,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "Você não tem uma cor de perfil do Discord para sincronizar! Para definir uma, edite o seu perfil de usuário do Discord e altere sua cor de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Você precisa inserir um nome válido ou um nome de cor. Use o comando /color list para mais informações."
     },
     "strings": {
       "EMBED_TITLE": "Cor de destaque atualizada.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Sua cor do perfil do Discord será sincronizada com sua cor de destaque CRBT.",
+      "EMBED_DESCRIPTION": "Esta cor será usada na maioria das respostas de CRBT's para você, assim como nos seus cartões de perfil e informações, quando alguém os visita."
     }
   },
   "remind me": {
@@ -178,48 +160,72 @@
       "NOT_CMD_USER": "Apenas a pessoa que usou esse comando pode usar esse botão."
     },
     "strings": {
-      "PROFILE": "Perfil",
       "AVATAR": "Foto de perfil",
       "INFO": "Informações do usuário"
     }
   },
   "profile": {
-    "meta": {
-      "description": "Obtenha o perfil CRBT de um usuário, ou seu perfil.",
-      "options": [
-        {
-          "name": "pesquisar_nome",
-          "description": "Search via CRBT profile names."
-        },
-        {
-          "name": "buscar_discord",
-          "description": "Search via Discord user IDs or names."
-        }
-      ]
-    },
-    "ctxMeta": {
-      "name": "Visualizar perfil CRBT"
-    },
     "pronouns": {
       "hh": "Ele/Dele",
       "sh": "Ela/Dela",
       "tt": "El@/Del@",
       "other": "Outros",
       "ask": "Perguntar-me"
+    }
+  },
+  "poll": {
+    "meta": {
+      "description": "Crie uma enquete com as opções dadas.",
+      "options": [
+        {
+          "description": "Some choice a user can choose. Make it short, preferably."
+        },
+        {
+          "description": "Uma alternativa que um usuário pode escolher."
+        },
+        {
+          "description": "O mesmo que as alternativas 1 e 2, mas não necessária."
+        },
+        {
+          "description": "E isso é o quão longe as alternativas podem ir."
+        }
+      ]
     },
     "errors": {
-      "NOT_FOUND": "Couldn't find a profile with that username. Make sure to use the autocomplete to find profiles!",
-      "CAN_ONLY_EDIT_OWN_PROFILE": "Você só pode editar o seu próprio perfil."
+      "TITLE_TOO_LONG": "O título de sua enquete deve ser de 100 caracteres ou menos.",
+      "CHOICE_TOO_LONG": "Uma alternativa não deve ser mais longa que 20 caracteres (excluindo emojis).",
+      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
+      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Perfil",
-      "NAME": "Nome",
-      "BIO": "Biografia",
-      "PRONOUNS": "Pronomes",
-      "BIRTHDAY": "Aniversário",
-      "WEBSITE": "Site",
-      "BADGES": "Emblemas (<NUMBER>)",
-      "EMBED_FOOTER": "<PURPLETS> Purplets"
+      "CHOICE": "Choice",
+      "POLL_HEADER": "CRBT Poll",
+      "POLL_HEADER_VOTE": "Vote for an option below",
+      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
+      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
+      "POLL_SELECT_MENU_VOTE": "Vote",
+      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
+      "KEYWORD_NO__KEEP_LOWERCASE": "no",
+      "SUCCESS_TITLE": "Poll created!",
+      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
+      "POLL_DATA_NOVOTES": "No votes yet",
+      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
+      "BUTTON_EDIT_POLL": "Edit Poll",
+      "BUTTON_CANCEL_POLL": "Delete Poll",
+      "BUTTON_END_POLL": "End Poll",
+      "TITLE": "Title",
+      "SUCCESS_POLL_DELETED": "Poll deleted.",
+      "SUCCESS_POLL_ENDED": "Poll ended.",
+      "POLL_HEADER_ENDED": "Ended",
+      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
+      "POLL_RESULTS_TITLE": "The results are in!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
+      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
     }
   },
   "avatar": {
@@ -277,11 +283,6 @@
       ]
     }
   },
-  "hourly": {
-    "meta": {
-      "description": "Receba alguns Purplets a cada hora."
-    }
-  },
   "role-selectors": {
     "manual": {
       "meta": {
@@ -294,7 +295,10 @@
           {
             "name": "comportamento",
             "description": "Como o Seletor de Cargos deve se comportar.",
-            "choices": ["Alternar dar/remover cargo(s)", "Dar o(s) cargo(s) apenas uma vez"]
+            "choices": [
+              "Alternar dar/remover cargo(s)",
+              "Dar o(s) cargo(s) apenas uma vez"
+            ]
           },
           {
             "name": "limite",
@@ -320,19 +324,19 @@
       "presets": {
         "colors": {
           "name": "Cores",
-          "message": "Choose a color for your display name."
+          "message": "Escolha uma cor para seu nome de exibição."
         },
         "pronouns": {
           "name": "Pronomes",
-          "message": "What are your pronouns?"
+          "message": "Quais são os seus pronomes?"
         },
         "zodiacSigns": {
           "name": "Signos do Zodíaco",
-          "message": "What's your zodiac sign?"
+          "message": "Qual é o seu signo do zodíaco?"
         },
         "verification": {
           "name": "Verificação Humana",
-          "message": "Click on the button to verify your account."
+          "message": "Clique no botão abaixo para verificar sua conta."
         }
       }
     },

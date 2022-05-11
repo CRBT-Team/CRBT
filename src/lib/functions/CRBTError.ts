@@ -87,7 +87,7 @@ export async function CooldownError(
 
   const reminder = await db.reminders.findFirst({
     where: {
-      user_id: context.user.id,
+      userId: context.user.id,
       destination: 'dm',
       reminder: 'Command reminder from CRBT.',
     },

@@ -1,1 +1,1 @@
-export const EmojiRegex = /^<a?:([a-zA-Z0-9_])+:([0-9]+)>$/;
+export const EmojiRegex = /<a?:(\w+):(\d{18}>)/g;

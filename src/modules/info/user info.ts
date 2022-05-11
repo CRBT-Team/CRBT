@@ -132,7 +132,6 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
-      // name: u.tag,
       name: `${u.tag} - User info`,
       iconURL: avatar(m ?? u, 64),
     })

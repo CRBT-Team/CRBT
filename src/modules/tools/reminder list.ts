@@ -8,7 +8,7 @@ export default ChatCommand({
   name: 'reminder list',
   description: 'Get a list of all of your reminders.',
   async handle() {
-    const userReminders = await db.reminders.findMany({ where: { user_id: this.user.id } });
+    const userReminders = await db.reminders.findMany({ where: { userId: this.user.id } });
 
     await this.reply({
       embeds: [
