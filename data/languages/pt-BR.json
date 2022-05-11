@@ -348,7 +348,7 @@
       "BUTTON_ROLES_ONCE": "Você só pode selecionar este cargo uma vez, e você não pode removê-lo."
     },
     "strings": {
-      "EMBED_TITLE": "Seletor de Cargo - Cargos auto-atribuíveis",
+      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Escolha um cargo",
       "CHOOSE_ROLES": "Escolher cargos",
       "EMBED_FOOTER": "Nota: CRBT não é afiliado com nenhum dos nomes dos cargos ou com o servidor.",
