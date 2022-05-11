@@ -414,19 +414,6 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
     })
     .catch(() => {});
 
-  await pollMsg.edit({
-    embeds: [
-      new MessageEmbed({
-        ...pollMsg.embeds[0],
-        author: {
-          name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_ENDED}`,
-        },
-        description: strings.POLL_DESCRIPTION_ENDED,
-      }).setColor(`#${colors.gray}`),
-    ],
-    components: [],
-  });
-
   const choices: string[][] = JSON.parse(pollData.choices);
   const totalVotes = choices.flat().length;
   const ranking = choices
@@ -435,6 +422,30 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
       return { name: pollMsg.embeds[0].fields[index].name, votes };
     })
     .sort((a, b) => b.votes - a.votes);
+
+  await pollMsg.edit({
+    embeds: [
+      new MessageEmbed({
+        ...pollMsg.embeds[0],
+        author: {
+          name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_ENDED}`,
+        },
+      })
+        .setFields(
+          pollMsg.embeds[0].fields.map((field) => {
+            if (field.name === ranking[0].name) {
+              return {
+                name: `🏆 ${field.name}`,
+                value: field.value,
+              };
+            }
+            return field;
+          })
+        )
+        .setColor(`#${colors.gray}`),
+    ],
+    components: [],
+  });
 
   await pollMsg.reply({
     embeds: [

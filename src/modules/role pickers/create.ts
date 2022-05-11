@@ -108,39 +108,37 @@ export const usePreset = ChatCommand({
       ];
 
       const rolesList = [];
-      preset.roles.forEach(async (role) => {
-        const find = this.guild.roles.cache.find((r) => r.name === role.name);
-        if (find) {
-          return rolesList.push({
-            label: role.label,
-            name: find.name,
-            id: find.id,
-            emoji: role.emoji,
-          });
-        } else {
-          this.guild.roles
-            .create({
+
+      await Promise.all(
+        preset.roles.map(async (role) => {
+          const find = this.guild.roles.cache.find((r) => r.name === role.name);
+          if (find) {
+            return rolesList.push({
+              label: role.label,
+              name: find.name,
+              id: find.id,
+              emoji: role.emoji,
+            });
+          } else {
+            const newRole = await this.guild.roles.create({
               color: role.color,
               name: role.name,
-              reason: `New Role Picker`,
+              reason: 'Role Picker Preset',
               permissions: 0n,
-            })
-            .then((r) => {
-              return rolesList.push({
-                label: role.label,
-                name: r.name,
-                id: r.id,
-                emoji: role.emoji,
-              });
             });
-        }
-      });
-      const limit = preset.limit || rolesList.length;
 
-      // while (rolesList.length < preset.roles.length) {
-      //   await new Promise((resolve) => setTimeout(resolve, 100));
-      // }
-      this.channel.send({
+            return rolesList.push({
+              label: role.label,
+              name: newRole.name,
+              id: newRole.id,
+              emoji: role.emoji,
+            });
+          }
+        })
+      );
+
+      const limit = preset.limit || rolesList.length;
+      await this.channel.send({
         embeds: [
           new MessageEmbed()
             .setAuthor({ name: strings.EMBED_TITLE })
@@ -186,7 +184,7 @@ export const usePreset = ChatCommand({
         ),
       });
 
-      this.editReply({
+      await this.editReply({
         embeds: [
           new MessageEmbed()
             .setAuthor({
@@ -445,9 +443,11 @@ export const RoleSelector = SelectMenuComponent({
               iconURL: icons.success,
             })
             .setDescription(
-              `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${
-                removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
-              }\n\`\`\``
+              added.length > 0 || removed.length > 0
+                ? `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${
+                    removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
+                  }\n\`\`\``
+                : ''
             )
             .setColor(`#${colors.success}`),
         ],
