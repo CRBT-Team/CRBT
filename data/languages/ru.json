@@ -3,7 +3,7 @@
     "GUILD_ONLY": "Эта команда не может быть использована в ЛС.",
     "DEPRECATION_DESCRIPTION": "Устарело. ",
     "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "DEPRECATION_NOTICE": "Профили CRBT и система экономики на основе Фиолеток заменяются системой профилей Discord и улучшенной экономической системе внутри сервера.\nВы все еще сможете просматривать профили и баланс пользователей до мая 2022 года. \nДополнительную информацию см. в **[этой статье](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
   },
   "genericButtons": {
     "BACK": "Назад",
@@ -16,7 +16,7 @@
     "NEXT": "Следующий",
     "SAVE": "Сохранить",
     "ADD_REMINDER": "Добавить напоминание",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Открыть ЛС"
   },
   "UnknownError": {
     "strings": {
@@ -38,7 +38,7 @@
       "options": [
         {
           "name": "цвет",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Цвет для изменения акцента. Используйте одно из предложений или цвет HEX."
         }
       ]
     },
@@ -68,12 +68,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "У вас нет цвета профиля Discord для синхронизации. Чтобы поставить его, измените пользовательский профиль Discord'а и смените его цвет.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Вы должны ввести корректное имя или название цвета. Используйте /color list для получения дополнительной информации."
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с вашим цветом акцента CRBT.",
+      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также в вашем профиле и картах информации, когда кто-то еще их посещает."
     }
   },
   "remind me": {
@@ -90,7 +90,7 @@
         },
         {
           "name": "адресат",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
         }
       ]
     },
@@ -166,58 +166,58 @@
   },
   "profile": {
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "hh": "Он/Его",
+      "sh": "Она/Ее",
+      "tt": "Они/Их",
+      "other": "Другое",
+      "ask": "Спрашивать"
     }
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Создать опрос с выбранными вариантами.",
       "options": [
         {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Выбор, который может быть выбран пользователем. Желательно сделайте его коротким."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "Другой выбор, который пользователь может выбрать."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "То же что и выбор 1 и 2, но не требуется."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "И вот сколько выборов есть."
         }
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 20 characters (excluding emojis).",
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "TITLE_TOO_LONG": "Заголовок вашего опроса должен быть не более 100 символов.",
+      "CHOICE_TOO_LONG": "Выбор не может быть длиннее 20 символов (без учета эмодзи).",
+      "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
+      "POLL_DATA_NOT_ALLOWED": "Только модераторы чата (разрешение \"Управлять сообщениями\") и оригинальный автор опроса могут просматривать свои данные и параметры."
     },
     "strings": {
-      "CHOICE": "Choice",
-      "POLL_HEADER": "CRBT Poll",
-      "POLL_HEADER_VOTE": "Vote for an option below",
-      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
-      "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
-      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "No votes yet",
-      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
-      "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
+      "CHOICE": "Выбор",
+      "POLL_HEADER": "Опрос CRBT",
+      "POLL_HEADER_VOTE": "Голосуйте за вариант ниже",
+      "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать варианты и другие данные, нажав кнопку <ICON> ниже.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> голос(ов)",
+      "POLL_FOOTER_VOTES": "Всего голосов: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Опрос начат <USER>",
+      "POLL_SELECT_MENU_VOTE": "Проголосовать",
+      "KEYWORD_YES__KEEP_LOWERCASE": "да",
+      "KEYWORD_NO__KEEP_LOWERCASE": "нет",
+      "SUCCESS_TITLE": "Опрос создан!",
+      "SUCCESS_DESCRIPTION": "Опрос закончится через <TIME>, но вы можете преждевременно завершить его с помощью меню <ICON>. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
+      "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
+      "POLL_DATA_NOVOTES": "Пока нет голосов",
+      "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться. Используйте кнопку снова, чтобы обновить данные.",
+      "BUTTON_EDIT_POLL": "Редактировать опрос",
+      "BUTTON_CANCEL_POLL": "Удалить опрос",
+      "BUTTON_END_POLL": "Завершить опрос",
+      "TITLE": "Заголовок",
+      "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_HEADER_ENDED": "Ended",
       "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
