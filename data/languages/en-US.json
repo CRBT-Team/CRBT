@@ -345,7 +345,7 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
+      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
       "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
