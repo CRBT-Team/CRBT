@@ -39,6 +39,14 @@ model servers {
   leaveMessage Json?   @map("leave_message")
 }
 
+model moderationStrikes {
+  id          String   @id
+  userId      String   @map("user_id")
+  moderatorId String   @map("moderator_id")
+  reason      String?
+  createdAt   DateTime @db.Timestamptz(6)
+}
+
 model users {
   id          String  @id(map: "misc_pkey")
   hstreak     Int     @default(0) @db.SmallInt

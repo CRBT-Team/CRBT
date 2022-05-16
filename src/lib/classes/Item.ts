@@ -29,7 +29,7 @@ export class Banner extends Item {
     this.fullName = banner.name;
     this.value = banner.value;
     this.available = banner.season !== 'special' && banner.season === 3;
-    this.url = `https://crbt.ga/banners/${banner.season}/${name}.png`;
+    this.url = `https://crbt.app/banners/${banner.season}/${name}.png`;
     this.toString = () => this.url;
   }
 }

@@ -190,8 +190,17 @@ export default ChatCommand({
 
     setLongerTimeout(async () => {
       const fetchMsg = await this.channel.messages.fetch(msg.id).catch(() => null);
+      const pollData = await db.polls.findFirst({
+        where: { id: `${this.channel.id}/${msg.id}` },
+      });
 
-      if (!fetchMsg) return;
+      if (!fetchMsg) {
+        if (pollData)
+          await db.polls.delete({
+            where: { id: pollData.id },
+          });
+        return;
+      }
 
       endPoll(pollData, fetchMsg, this.guildLocale);
     }, ms(end_date));
@@ -423,6 +432,34 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
     })
     .sort((a, b) => b.votes - a.votes);
 
+  await pollMsg.reply({
+    embeds: [
+      new MessageEmbed()
+        .setTitle(`🎉 ${strings.POLL_RESULTS_TITLE}`)
+        .setDescription(
+          (ranking[0].votes === ranking[1].votes
+            ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
+                .replace('<OPTION2>', ranking[1].name)
+                .replace('<VOTES>', ranking[0].votes.toString())
+            : strings.POLL_RESULTS_DESCRIPTION_WIN.replace('<OPTION>', `${totalVotes}`).replace(
+                '<VOTES>',
+                ranking[0].votes.toString()
+              )) +
+            ' ' +
+            strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
+        )
+        .setColor(`#${colors.success}`),
+    ],
+    components: components(
+      row(
+        new MessageButton()
+          .setLabel(strings.BUTTON_JUMP_TO_POLL)
+          .setStyle('LINK')
+          .setURL(pollMsg.url)
+      )
+    ),
+  });
+
   await pollMsg.edit({
     embeds: [
       new MessageEmbed({
@@ -430,6 +467,7 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
         author: {
           name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_ENDED}`,
         },
+        description: '',
       })
         .setFields(
           pollMsg.embeds[0].fields.map((field) => {
@@ -445,34 +483,6 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
         .setColor(`#${colors.gray}`),
     ],
     components: [],
-  });
-
-  await pollMsg.reply({
-    embeds: [
-      new MessageEmbed()
-        .setTitle(`🎉 ${strings.POLL_RESULTS_TITLE}`)
-        .setDescription(
-          (ranking[0].votes === ranking[1].votes
-            ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
-                .replace('<OPTION2>', ranking[1].name)
-                .replace('<VOTES>', ranking[0].votes.toString())
-            : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
-                '<OPTION>',
-                totalVotes.toString()
-              ).replace('<VOTES>', ranking[0].votes.toString())) +
-            ' ' +
-            strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
-        )
-        .setColor(`#${colors.success}`),
-    ],
-    components: components(
-      row(
-        new MessageButton()
-          .setLabel(strings.BUTTON_JUMP_TO_POLL)
-          .setStyle('LINK')
-          .setURL(pollMsg.url)
-      )
-    ),
   });
 };
 

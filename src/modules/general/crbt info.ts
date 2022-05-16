@@ -26,12 +26,12 @@ export default ChatCommand({
           .setAuthor({
             name: strings.EMBED_TITLE.replace('<CRBT>', this.client.user.username),
             iconURL: avatar(this.client.user),
-            url: 'https://crbt.ga',
+            url: 'https://crbt.app',
           })
           .setDescription(
             strings.VERSION.replace('<VERSION>', pjson.version).replace(
               '<PURPLET>',
-              `**[Purplet ${pjson.dependencies['purplet'].slice(1)}](https://crbt.ga/purplet)**`
+              `**[Purplet ${pjson.dependencies['purplet'].slice(1)}](https://crbt.app/purplet)**`
             )
           )
           .addField(
@@ -56,7 +56,7 @@ export default ChatCommand({
           new MessageButton()
             .setStyle('LINK')
             .setLabel(strings.BUTTON_WEBSITE)
-            .setURL('https://crbt.ga'),
+            .setURL('https://crbt.app'),
           new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_INVITE).setURL(links.invite),
           new MessageButton()
             .setStyle('LINK')

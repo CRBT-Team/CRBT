@@ -18,7 +18,7 @@ export default ChatCommand({
           'There are also some commands you can quickly access by right clicking on a message or a user! (Desktop only)\n' +
           'You can do some much with CRBT, like:\n' +
           'Setting reminders, linking a text channel to a voice channel, getting info on a user/server/emoji/role... \n\n' +
-          `...with many more to come! Stay up to date on CRBT news by visiting **[our website](https://crbt.ga)**!`
+          `...with many more to come! Stay up to date on CRBT news by visiting **[our website](https://crbt.app)**!`
       )
       .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
       .setColor(await getColor(this.user));

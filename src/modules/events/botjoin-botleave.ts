@@ -8,7 +8,7 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
     embeds: [{ title: `Left ${guild.name} - ${guild.id}`, color: `#${colors.error}` }],
   });
   guild.client.user.setActivity({
-    name: `${guild.client.guilds.cache.size} servers • crbt.ga`,
+    name: `${guild.client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
   });
 });
@@ -19,7 +19,7 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
   });
 
   guild.client.user.setActivity({
-    name: `${guild.client.guilds.cache.size} servers • crbt.ga`,
+    name: `${guild.client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
   });
 

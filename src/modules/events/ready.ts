@@ -6,7 +6,7 @@ import { OnEvent } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({
-    name: `${client.guilds.cache.size} servers • crbt.ga`,
+    name: `${client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
   });
 

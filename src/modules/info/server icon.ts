@@ -27,7 +27,7 @@ export default ChatCommand({
     if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
-          `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.ga/invite.`
+          `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`
         )
       );
 

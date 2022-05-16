@@ -1,3 +1,4 @@
+import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getStrings } from '$lib/language';
@@ -26,7 +27,7 @@ export default MessageContextCommand({
             .setFooter({
               text: `${this.guild.name} • #${(message.channel as GuildChannel).name}`,
             })
-            .setColor(message.member.displayColor)
+            .setColor(message.member.displayColor ?? `#${colors.blurple}`)
             .setURL(message.url),
           ...message.embeds,
         ],
