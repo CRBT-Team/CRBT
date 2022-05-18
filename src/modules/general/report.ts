@@ -1,21 +1,25 @@
-import { showModal } from '$lib/functions/showModal';
-import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { colors, icons, links, misc } from '$lib/db';
+import { avatar } from '$lib/functions/avatar';
+import { CRBTError } from '$lib/functions/CRBTError';
+import { Message, MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
+import { ChatCommand, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
   description: 'File a new issue on the Discord server.',
-  options: new OptionBuilder().string(
-    'image_url',
+  options: new OptionBuilder().attachment(
+    'image',
     'An image URL (PNG, JPG, WEBP or GIF) to attach to the report.'
   ),
-  async handle({ image_url }) {
-    const modal = new Modal()
+  async handle({ image }) {
+    if (image && !image.contentType.startsWith('image/')) {
+      this.reply(CRBTError('You can only upload images'));
+    }
+
+    const modal = new Modal(image.url)
       .setTitle('New issue')
-      .setCustomId(`issue_${image_url}`)
       .setComponents(
-        //@ts-ignore
-        new MessageActionRow().setComponents(
+        row(
           new TextInputComponent()
             .setCustomId('issue_title')
             .setLabel('Title')
@@ -25,7 +29,7 @@ export default ChatCommand({
             .setMaxLength(50)
             .setRequired(true)
         ),
-        new MessageActionRow().setComponents(
+        row(
           new TextInputComponent()
             .setCustomId('issue_description')
             .setLabel('Description')
@@ -36,6 +40,49 @@ export default ChatCommand({
         )
       );
 
-    await showModal(modal, this);
+    await this.showModal(modal);
+  },
+});
+
+export const Modal = ModalComponent({
+  async handle(image_url: string) {
+    const reportChannel = this.client.channels.cache.get(
+      misc.channels[this.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
+    ) as TextChannel;
+    const title = this.fields.getTextInputValue('issue_title');
+    const desc = this.fields.getTextInputValue('issue_description');
+
+    await this.reply({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: 'Issue sent successfully.',
+            iconURL: icons.success,
+          })
+          .setDescription(
+            `Your issue has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
+          )
+          .setColor(`#${colors.success}`),
+      ],
+    });
+
+    reportChannel.send({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: `${this.user.tag} filed an issue`,
+            iconURL: avatar(this.user, 64),
+            url: this.channel.type !== 'DM' ? ((await this.fetchReply()) as Message).url : null,
+          })
+          .setTitle(title)
+          .setURL(this.channel.type !== 'DM' ? ((await this.fetchReply()) as Message).url : null)
+          .setDescription(desc)
+          .addField('Status', '<:pending:954734893072519198> Pending', true)
+          .setImage(image_url)
+          .setFooter({ text: `User ID: ${this.user.id} • Last update` })
+          .setTimestamp()
+          .setColor(`#${colors.yellow}`),
+      ],
+    });
   },
 });

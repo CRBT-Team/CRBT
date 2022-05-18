@@ -8,21 +8,23 @@ export default ChatCommand({
   description: `Get a chosen server's icon or the current server's icon.`,
   options: new OptionBuilder()
     .string('id', 'The ID of the server to get the icon of.')
-    .enum(
-      'size',
-      'The size of the icon.',
-      [
-        ['Small', 128],
-        ['Medium', 512],
-        ['Default', 2048],
-        ['Large', 4096],
-      ].map(([name, size]) => ({ name: `${name} (${size}x${size}px)`, value: `${size}` }))
-    )
-    .enum(
-      'format',
-      'The format of the icon.',
-      ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
-    ),
+
+    .string('size', 'The size of the icon to get.', {
+      choices: {
+        [128]: 'Small (128px)',
+        [512]: 'Medium (512px)',
+        [4096]: 'Largest (4096px)',
+      },
+      required: false,
+    })
+    .string('format', 'The format of the icon to get.', {
+      choices: {
+        png: 'PNG',
+        jpg: 'JPG',
+        webp: 'WEBP',
+        gif: 'GIF',
+      },
+    }),
   async handle({ id, size, format }) {
     if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(

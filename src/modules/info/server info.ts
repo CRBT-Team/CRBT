@@ -52,8 +52,8 @@ export default ChatCommand({
       .setImage(guild.bannerURL())
       .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
       .setColor(`#${colors.default}`)
-      .addField('ID', guild.id, true)
-      .addField(`Owned by`, `<@${guild.ownerId}>`, true)
+      .addField('ID', guild.id, { required: true })
+      .addField(`Owned by`, `<@${guild.ownerId}>`, { required: true })
       .addField(
         'Created at',
         `<t:${dayjs(guild.createdAt).unix()}> (<t:${dayjs(guild.createdAt).unix()}:R>)`

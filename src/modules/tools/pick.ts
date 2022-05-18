@@ -6,7 +6,7 @@ export default ChatCommand({
   name: 'pick',
   description: 'Pick an item at random from a given list.',
   options: new OptionBuilder()
-    .string('values', 'The values to pick from, seperated by commas.', true)
+    .string('values', 'The values to pick from, seperated by commas.', { required: true })
     .string('comment', 'The comment to display when picking.'),
   async handle({ values, comment }) {
     const valuesArray = values.split(',');

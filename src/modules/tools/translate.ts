@@ -2,23 +2,24 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import translate from '@vitalets/google-translate-api';
 import { MessageEmbed } from 'discord.js';
-import { ChatCommand, Choice, MessageContextCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, MessageContextCommand, OptionBuilder } from 'purplet';
 import langJSON from '../../../data/misc/langCodes.json';
 
-const langs: Choice[] = Object.entries(langJSON).map((lang) => {
-  return {
-    name: lang[1],
-    value: lang[0],
-  };
-});
+const langs = Object.entries(langJSON).reduce(
+  (cur, [name, code]) => ({
+    ...cur,
+    [code]: name,
+  }),
+  {}
+);
 
 export default ChatCommand({
   name: 'translate',
   description: 'Translate text to another language.',
   options: new OptionBuilder()
-    .string('text', 'The text to translate.', true)
-    .enum('target', 'The language to translate to. Defaults to your Discord locale.', langs)
-    .enum('source', 'The source language to translate from.', langs),
+    .string('text', 'The text to translate.', { required: true })
+    .string('target', 'The language to translate to. Defaults to your Discord locale.', langs)
+    .string('source', 'The source language to translate from.', langs),
   async handle({ text, target, source }) {
     try {
       const from = source ?? 'auto';

@@ -2,9 +2,8 @@ import { cache } from '$lib/cache';
 import { db, emojis, icons, links } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { row } from '$lib/functions/row';
 import { MessageEmbed } from 'discord.js';
-import { ButtonComponent, ChatCommand, components } from 'purplet';
+import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 
 export default ChatCommand({
   name: 'privacy',

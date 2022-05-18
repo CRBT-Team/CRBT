@@ -10,16 +10,20 @@ export default ChatCommand({
   name: 'timeout',
   description: 'Timeout a chosen user from this server.',
   options: new OptionBuilder()
-    .user('user', 'The user to timeout.', true)
-    .string('reason', 'The reason for the timeout.', true)
-    .enum('duration', 'Temporarily timeout the user for a specified time.', [
-      { name: '1 hour', value: '1h' },
-      { name: '1 day', value: '1d' },
-      { name: '1 week', value: '1w' },
-      { name: 'Max (28 days)', value: '28d' },
-    ]),
+    .user('user', 'The user to timeout.', { required: true })
+    .string('reason', 'The reason for the timeout.', { required: true })
+    .string('duration', 'Temporarily timeout the user for a specified time.', {
+      choices: {
+        '1h': '1 hour',
+        '1d': '1 day',
+        '1w': '1 week',
+        '1m': '1 month',
+        '28d': 'Max (28 days)',
+      },
+      required: true,
+    }),
   async handle({ user, reason, duration }) {
-    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
 
     if (this.channel.type !== 'DM') {
       return this.reply(CRBTError(GUILD_ONLY));

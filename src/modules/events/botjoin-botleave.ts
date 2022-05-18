@@ -23,7 +23,7 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
     type: 'WATCHING',
   });
 
-  const { strings } = getStrings(guild.preferredLocale).crbt_introduction;
+  const { strings } = getStrings(guild.preferredLocale, 'crbt_introduction');
 
   if (guild.systemChannel.permissionsFor(guild.client.user).has('SEND_MESSAGES')) {
     guild.systemChannel.send({

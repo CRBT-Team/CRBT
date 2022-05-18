@@ -8,7 +8,7 @@ export default ChatCommand({
   name: 'kick',
   description: 'Kick a chosen user from this server.',
   options: new OptionBuilder()
-    .user('user', 'The user to kick.', true)
+    .user('user', 'The user to kick.', { required: true })
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
     if (!this.memberPermissions.has('KICK_MEMBERS')) {

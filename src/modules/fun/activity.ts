@@ -19,20 +19,30 @@ const activities = [
   ['Putt Party - 💎 Level 1 Boosting Required', '945737671223947305'],
 ];
 
-const choices = activities.map(([name, id]) => ({ name, value: id }));
+const choices = activities.reduce(
+  // id: name
+  (acc, [name, id]) => ({
+    ...acc,
+    [id]: name,
+  }),
+  {}
+);
 
 export default ChatCommand({
   name: 'activity',
   description: 'Start an activity in the current voice channel',
-  options: new OptionBuilder().enum('activity', 'The activity to start', choices, true),
+  options: new OptionBuilder().string('activity', 'The activity to start', {
+    choices,
+    required: true,
+  }),
   async handle({ activity }) {
-    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
 
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    const selected = activities.find(([name, id]) => id === activity);
+    const selected = activities.find(([_, id]) => id === activity);
 
     if (selected[0].includes('💎 Level 1 Boosting Required') && this.guild.premiumTier === 'NONE') {
       return this.reply(

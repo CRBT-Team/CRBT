@@ -14,29 +14,33 @@ export default ChatCommand({
   name: 'banner',
   description: `Get the Discord profile banner of a chosen user, or yours by default.`,
   options: new OptionBuilder()
-    .user('user', 'The user to get the Discord banner of.')
-    .enum(
-      'size',
-      'The size of the Discord banner to get.',
-      [
-        ['Small', 128],
-        ['Medium', 512],
-        ['Default', 2048],
-        ['Large', 4096],
-      ].map(([name, size]) => ({ name: `${name} (${size}x${size}px)`, value: `${size}` }))
-    )
-    .enum(
-      'format',
-      'The format of the Discord profile banner to get.',
-      ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
-    ),
+
+    .user('user', 'The user to get the profile banner of.')
+    .string('size', 'The size of the profile banner to get.', {
+      choices: {
+        [128]: 'Small (128px)',
+        [512]: 'Medium (512px)',
+        [4096]: 'Largest (4096px)',
+      },
+      required: false,
+    })
+    .string('format', 'The format of the profile banner to get.', {
+      choices: {
+        png: 'PNG',
+        jpg: 'JPG',
+        webp: 'WEBP',
+        gif: 'GIF',
+      },
+    }),
   async handle({ user, size, format }) {
     const u = user ?? this.user;
     const banner = await getBanner(u, size ?? 2048, format ?? 'png', !!format);
 
     if (!banner)
       return this.reply(
-        CRBTError(`${u === this.user ? "You don't" : "This user doesn't"} have any profile banner!`)
+        CRBTError(
+          `${u.id === this.user.id ? "You don't" : "This user doesn't"} have any profile banner!`
+        )
       );
 
     await this.reply({

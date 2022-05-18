@@ -6,7 +6,9 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'clear',
   description: 'Clear a number of messages from this channel.',
-  options: new OptionBuilder().integer('amount', 'The number of messages to delete.', true),
+  options: new OptionBuilder().integer('amount', 'The number of messages to delete.', {
+    required: true,
+  }),
   async handle({ amount }) {
     if (!this.memberPermissions.has('MANAGE_MESSAGES')) {
       return this.reply(CRBTError('You do not have permission to manage messages.'));

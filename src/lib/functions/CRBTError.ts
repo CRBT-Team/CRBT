@@ -50,7 +50,7 @@ export function CRBTError(
 }
 
 export function UnknownError(context: Interaction, desc: any): InteractionReplyOptions {
-  const { strings } = getStrings(context.locale).UnknownError;
+  const { strings } = getStrings(context.locale, 'UnknownError');
   console.error(desc);
   return {
     embeds: [
@@ -82,8 +82,8 @@ export async function CooldownError(
   relativetime: number,
   showButton = true
 ): Promise<InteractionReplyOptions> {
-  const { strings } = getStrings(context.locale).CooldownError;
-  const { ADD_REMINDER } = getStrings(context.locale).genericButtons;
+  const { strings } = getStrings(context.locale, 'CooldownError');
+  const { ADD_REMINDER } = getStrings(context.locale, 'genericButtons');
 
   const reminder = await db.reminders.findFirst({
     where: {

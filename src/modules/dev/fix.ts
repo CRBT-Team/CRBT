@@ -1,10 +1,15 @@
-import { colors, emojis, icons, misc } from '$lib/db';
+import { colors, emojis, icons, links, misc } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { row } from '$lib/functions/row';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { showModal } from '$lib/functions/showModal';
-import { Message, MessageButton, MessageEmbed, Modal, TextInputComponent, User } from 'discord.js';
-import { ButtonComponent, components, TextCommand } from 'purplet';
+import {
+  Message,
+  MessageButton,
+  MessageEmbed,
+  TextChannel,
+  TextInputComponent,
+  User,
+} from 'discord.js';
+import { ButtonComponent, components, ModalComponent, row, TextCommand } from 'purplet';
 
 export default TextCommand({
   name: 'fix',
@@ -153,11 +158,9 @@ export const ReplyButton = ButtonComponent({
       .find((c) => c.label !== 'Reply')
       .url.split('/')[6];
 
-    const modal = new Modal()
+    const modal = new Modal(issueId)
       .setTitle('Reply to issue')
-      .setCustomId(`replytoissue_${issueId}`)
       .setComponents(
-        //@ts-ignore
         row(
           new TextInputComponent()
             .setCustomId('replymessage')
@@ -170,6 +173,31 @@ export const ReplyButton = ButtonComponent({
         )
       );
 
-    await showModal(modal, this);
+    await this.showModal(modal);
+  },
+});
+
+export const Modal = ModalComponent({
+  async handle(issueId: string) {
+    const issueChannel = this.client.channels.cache.get(misc.channels.reportDev) as TextChannel;
+    const issueMsg = await issueChannel.messages.fetch(issueId);
+
+    const reply = this.fields.getTextInputValue('replymessage');
+
+    await issueReply('reply', issueMsg, this.user, reply);
+
+    await this.reply({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: 'Reply sent successfully.',
+            iconURL: icons.success,
+          })
+          .setDescription(
+            `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`
+          )
+          .setColor(`#${colors.success}`),
+      ],
+    });
   },
 });

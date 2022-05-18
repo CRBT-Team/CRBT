@@ -9,7 +9,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'urban',
   description: 'Get the definition of a word from Urban Dictionary.',
-  options: new OptionBuilder().string('word', 'The word to define.', true),
+  options: new OptionBuilder().string('word', 'The word to define.', { required: true }),
   async handle({ word }) {
     try {
       const req = await fetch(`https://api.urbandictionary.com/v0/define?term=${word}`);

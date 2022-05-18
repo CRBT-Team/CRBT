@@ -5,13 +5,13 @@ import { getStrings } from '$lib/language';
 import { GuildChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, MessageContextCommand, row } from 'purplet';
 
-const { ctxMeta } = getStrings('en-US').bookmark;
+const { ctxMeta } = getStrings('en-US', 'bookmark');
 
 export default MessageContextCommand({
   ...ctxMeta,
   async handle(message) {
-    const { strings, errors } = getStrings(this.locale).bookmark;
-    const { JUMP_TO_MSG, OPEN_DMS } = getStrings(this.locale).genericButtons;
+    const { strings, errors } = getStrings(this.locale, 'bookmark');
+    const { JUMP_TO_MSG, OPEN_DMS } = getStrings(this.locale, 'genericButtons');
 
     await this.user
       .send({

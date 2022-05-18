@@ -5,7 +5,7 @@
     "start": "npm run generate && npm run build && node dist/bot.mjs",
     "dev": "yarn build && node dist/bot.mjs --dev",
     "db": "supabase start",
-    "build": "node patchDJS && npx purplet build",
+    "build": "npx purplet build",
     "generate": "npx prisma generate"
   },
   "engines": {
@@ -18,16 +18,17 @@
     "change-case": "^4.1.2",
     "convert-units": "^2.3.4",
     "dayjs": "^1.10.7",
-    "discord.js": "github:monbrey/discord.js#modals",
+    "discord.js": "^13.7.0",
     "dotenv": "^10.0.0",
     "expr-eval": "^2.0.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.1.0",
-    "purplet": "^1.2.7"
+    "purplet": "^1.3.0"
   },
   "devDependencies": {
+    "@discordjs/rest": "^0.4.1",
     "@types/convert-units": "^2.3.5",
-    "discord-api-types": "^0.30.0",
+    "discord-api-types": "^0.33.0",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",

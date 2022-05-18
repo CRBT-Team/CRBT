@@ -7,7 +7,7 @@ import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
-const { meta } = getStrings('en-US')['crbt info'];
+const { meta } = getStrings('en-US', 'crbt info');
 
 export default ChatCommand({
   name: 'crbt info',
@@ -15,7 +15,7 @@ export default ChatCommand({
   async handle() {
     await this.deferReply();
 
-    const { strings } = getStrings(this.locale)['crbt info'];
+    const { strings } = getStrings(this.locale, 'crbt info');
 
     const uptime = dayjs().subtract(this.client.uptime).unix();
     const created = dayjs(this.client.user.createdAt).unix();

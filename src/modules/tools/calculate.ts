@@ -5,13 +5,15 @@ import { MessageEmbed } from 'discord.js';
 import { Parser } from 'expr-eval';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta } = getStrings('en-US').calc;
+const { meta } = getStrings('en-US', 'calc');
 const math = new Parser();
 
 export default ChatCommand({
   name: 'calculate',
   description: meta.description,
-  options: new OptionBuilder().string('expression', meta.options[0].description, true),
+  options: new OptionBuilder().string('expression', meta.options[0].description, {
+    required: true,
+  }),
   async handle({ expression }) {
     try {
       const result = math.evaluate(expression);

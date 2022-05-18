@@ -7,7 +7,9 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'invite info',
   description: 'Get information on a given Discord invite URL or code.',
-  options: new OptionBuilder().string('invite', 'A discord.gg invite URL, or just its code.', true),
+  options: new OptionBuilder().string('invite', 'A discord.gg invite URL, or just its code.', {
+    required: true,
+  }),
   async handle({ invite }) {
     const inviteCode =
       invite.match(/discord\.gg\/(.*)/)?.[1] ??

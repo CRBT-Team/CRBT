@@ -4,7 +4,6 @@ import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
 import { ms } from '$lib/functions/ms';
 import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
-import { showModal } from '$lib/functions/showModal';
 import { trimArray } from '$lib/functions/trimArray';
 import { getStrings } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
@@ -16,13 +15,14 @@ import {
   MessageActionRow,
   MessageButton,
   MessageEmbed,
-  Modal,
+  MessageSelectMenu,
   TextInputComponent,
 } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
   components,
+  ModalComponent,
   OptionBuilder,
   row,
   SelectMenuComponent,
@@ -35,27 +35,26 @@ export default ChatCommand({
   name: 'poll',
   description: 'Create a poll with the given choices.',
   options: new OptionBuilder()
-    .string('title', "What's your poll about?", true)
-    .enum(
-      'end_date',
-      'When the poll should end.',
-      [
-        { name: 'In 20 minutes', value: '20m' },
-        { name: 'In 1 hour', value: '1h' },
-        { name: 'In 24 hours', value: '24h' },
-        { name: 'In 1 week', value: '1w' },
-      ],
-      true
-    )
-    .string('choice1', 'The first choice a user can chose. Make it short preferably.', true)
-    .string('choice2', 'An other choice a user can choose.', true)
+    .string('title', "What's your poll about?", { required: true })
+    .string('end_date', 'When the poll should end.', {
+      choices: {
+        '20m': 'In 20 minutes',
+        '1h': 'In an hour',
+        '24h': 'In 24 hours',
+        '1w': 'In a week',
+      },
+    })
+    .string('choice1', 'The first choice a user can chose. Make it short preferably.', {
+      required: true,
+    })
+    .string('choice2', 'An other choice a user can choose.', { required: true })
     .string('choice3', 'Same as choice 1 and 2, not required.')
     .string('choice4', "And that's how far choices can go."),
   async handle({ title, end_date, ...choices }) {
-    const { GUILD_ONLY } = getStrings(this.locale).globalErrors;
-    const { errors } = getStrings(this.locale).poll;
-    const { strings } = getStrings(this.guildLocale).poll;
-    const { strings: userStrings } = getStrings(this.locale).poll;
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { errors } = getStrings(this.locale, 'poll');
+    const { strings } = getStrings(this.guildLocale, 'poll');
+    const { strings: userStrings } = getStrings(this.locale, 'poll');
 
     if (this.channel.type === 'DM') {
       return this.reply(CRBTError(GUILD_ONLY));
@@ -136,7 +135,7 @@ export default ChatCommand({
             )
           : components(
               row(
-                new PollSelector()
+                new PollSelector(null)
                   .setPlaceholder(strings.POLL_SELECT_MENU_VOTE)
                   .addOptions(
                     pollChoices.map((choice, index) => {
@@ -252,7 +251,7 @@ export const PollSelector = SelectMenuComponent({
 
 export const PollOptionsButton = ButtonComponent({
   async handle(creatorId: string) {
-    const { strings, errors } = getStrings(this.locale).poll;
+    const { strings, errors } = getStrings(this.locale, 'poll');
 
     if (
       this.user.id !== creatorId &&
@@ -316,37 +315,34 @@ export const PollOptionsButton = ButtonComponent({
 
 export const EditPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale).poll;
+    const { strings } = getStrings(this.locale, 'poll');
     const msg = (await this.channel.messages.fetch(msgId)).embeds[0];
 
-    const modal = new Modal()
-      .setTitle(strings.BUTTON_EDIT_POLL)
-      .setCustomId(`poll_${msgId}`)
-      .setComponents(
-        //@ts-ignore
+    const modal = new EditPollModal(msgId).setTitle(strings.BUTTON_EDIT_POLL).setComponents(
+      //@ts-ignore
+      new MessageActionRow().setComponents(
+        new TextInputComponent()
+          .setCustomId('poll_title')
+          .setLabel(strings.TITLE)
+          .setMaxLength(100)
+          .setValue(msg.title)
+          .setRequired(true)
+          .setStyle('PARAGRAPH')
+      ),
+      ...msg.fields.map((field, index) =>
         new MessageActionRow().setComponents(
           new TextInputComponent()
-            .setCustomId('poll_title')
-            .setLabel(strings.TITLE)
-            .setMaxLength(100)
-            .setValue(msg.title)
+            .setCustomId(`poll_option_${index}`)
+            .setLabel(`${strings.CHOICE} ${index + 1}`)
+            .setValue(field.name)
             .setRequired(true)
-            .setStyle('PARAGRAPH')
-        ),
-        ...msg.fields.map((field, index) =>
-          new MessageActionRow().setComponents(
-            new TextInputComponent()
-              .setCustomId(`poll_option_${index}`)
-              .setLabel(`${strings.CHOICE} ${index + 1}`)
-              .setValue(field.name)
-              .setRequired(true)
-              .setMaxLength(20)
-              .setStyle('SHORT')
-          )
+            .setMaxLength(20)
+            .setStyle('SHORT')
         )
-      );
+      )
+    );
 
-    await showModal(modal, this);
+    await this.showModal(modal);
     // const msg = await this.channel.messages.fetch(msgId);
     // const polLData = await db.polls.findFirst({
     //   where: { id: `${this.channel.id}/${msgId}` },
@@ -356,9 +352,67 @@ export const EditPollButton = ButtonComponent({
   },
 });
 
+export const EditPollModal = ModalComponent({
+  async handle(msgId: string) {
+    const pollTitle = this.fields.getTextInputValue('poll_title');
+    const choices = this.components.slice(1).map((_, i) => {
+      return this.fields.getTextInputValue(`poll_option_${i}`);
+    });
+
+    const msg = await this.channel.messages.fetch(msgId);
+
+    const isSelectMenu = msg.components.length > 1;
+
+    if (isSelectMenu) {
+      (msg.components[0].components[0] as MessageSelectMenu).options = (
+        msg.components[0].components[0] as MessageSelectMenu
+      ).options.map((option, i) => ({
+        ...option,
+        label: choices[i],
+      }));
+    }
+
+    const Components = isSelectMenu
+      ? components(row(msg.components[0].components[0]), msg.components[1])
+      : components(
+          row(
+            //@ts-ignore
+            msg.components[0].components.slice(0, -1).map((component, i) => ({
+              ...component,
+              label: choices[i],
+            })),
+            msg.components[0].components.at(-1)
+          )
+        );
+
+    await msg.edit({
+      embeds: [
+        new MessageEmbed({
+          ...msg.embeds[0],
+          footer: {
+            text: `${msg.embeds[0].footer.text} • edited on `,
+          },
+        })
+          .setTimestamp()
+          .setTitle(pollTitle)
+          .setFields(
+            choices.map((choice, i) => ({
+              name: choice,
+              value: msg.embeds[0].fields[i].value,
+            }))
+          ),
+      ],
+      components: Components,
+    });
+
+    //@ts-ignore
+    await this.update({});
+  },
+});
+
 export const CancelPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale).poll;
+    const { strings } = getStrings(this.locale, 'poll');
 
     await this.update({
       embeds: [
@@ -387,7 +441,7 @@ export const CancelPollButton = ButtonComponent({
 
 export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale).poll;
+    const { strings } = getStrings(this.locale, 'poll');
 
     const pollData =
       activePolls.get(`${this.channel.id}/${msgId}`) ??
@@ -415,7 +469,7 @@ export const EndPollButton = ButtonComponent({
 });
 
 const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
-  const { strings } = getStrings(locale).poll;
+  const { strings } = getStrings(locale, 'poll');
 
   await db.polls
     .delete({
@@ -493,7 +547,7 @@ const renderPoll = async (
   pollEmbed: MessageEmbed,
   locale: string
 ) => {
-  const { strings } = getStrings(locale).poll;
+  const { strings } = getStrings(locale, 'poll');
 
   const choices: string[][] = JSON.parse(pollData.choices);
   const newChoiceId = Number(choiceId);

@@ -7,7 +7,7 @@ import { renderUser } from '../info/user info';
 
 export const UserInfoBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = getStrings(this.locale).user_navbar;
+    const { errors } = getStrings(this.locale, 'user_navbar');
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -19,7 +19,7 @@ export const UserInfoBtn = ButtonComponent({
 
 export const PfpBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = getStrings(this.locale).user_navbar;
+    const { errors } = getStrings(this.locale, 'user_navbar');
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -32,7 +32,7 @@ export const PfpBtn = ButtonComponent({
 
 // export const ProfileBtn = ButtonComponent({
 //   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-//     const { errors } = getStrings(this.locale).user_navbar;
+//     const { errors } = getStrings(this.locale, 'user_navbar');
 
 //     if (this.user.id !== cmdUID) {
 //       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -54,7 +54,7 @@ export function navBar(
   locale: string,
   tab: 'profile' | 'avatar' | 'userinfo'
 ) {
-  const { strings } = getStrings(locale).user_navbar;
+  const { strings } = getStrings(locale, 'user_navbar');
 
   return row(
     new UserInfoBtn(ctx)

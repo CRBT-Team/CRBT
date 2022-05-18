@@ -8,16 +8,24 @@ export default ChatCommand({
   name: 'ban',
   description: 'Ban a chosen user from this server.',
   options: new OptionBuilder()
-    .user('user', 'The user to ban.', true)
+    .user('user', 'The user to ban.', { required: true })
     .string('reason', 'The reason for the ban.')
     .integer('delete_messages', 'The number of messages to delete.')
-    .enum('duration', 'Temporarily ban the user for a specified time.', [
-      { name: '1 hour', value: '1h' },
-      { name: '1 day', value: '1d' },
-      { name: '1 week', value: '1w' },
-      { name: '1 month', value: '1m' },
-    ]),
+    .string('duration', 'Temporarily ban the user for a specified time.', {
+      choices: {
+        '1h': '1 hour',
+        '1d': '1 day',
+        '1w': '1 week',
+        '1m': '1 month',
+      },
+    }),
   async handle({ user, reason, delete_messages, duration }) {
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+
+    if (this.channel.type !== 'DM') {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
     if (!this.memberPermissions.has('BAN_MEMBERS')) {
       return this.reply(CRBTError('You do not have permission to ban members.'));
     }

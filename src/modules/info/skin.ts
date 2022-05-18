@@ -10,7 +10,7 @@ export default ChatCommand({
   options: new OptionBuilder().string(
     'player_name',
     'The username of the player. (Java Edition only)',
-    true
+    { required: true }
   ),
   async handle({ player_name }) {
     try {

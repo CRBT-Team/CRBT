@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
-const { meta } = getStrings('en-US').ping;
+const { meta } = getStrings('en-US', 'ping');
 
 export default ChatCommand({
   name: 'ping',
@@ -13,7 +13,7 @@ export default ChatCommand({
   async handle() {
     await this.deferReply();
 
-    const { strings } = getStrings(this.locale).ping;
+    const { strings } = getStrings(this.locale, 'ping');
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();

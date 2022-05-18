@@ -1,15 +1,16 @@
 import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { row } from '$lib/functions/row';
 import { getStrings } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
-import { ChatCommand, components, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'quote',
   description: 'Quote a message using a link.',
-  options: new OptionBuilder().string('message_link', 'A link to the message to quote.', true),
+  options: new OptionBuilder().string('message_link', 'A link to the message to quote.', {
+    required: true,
+  }),
   async handle({ message_link }) {
     const msgUrlRegex = /https:\/\/((canary|ptb)\.)?discord.com\/channels(\/\d{18}){3}/;
 
@@ -44,7 +45,7 @@ export default ChatCommand({
       return this.reply(CRBTError('The message ID that you provided is invalid.'));
     }
 
-    const { JUMP_TO_MSG } = getStrings(this.locale).genericButtons;
+    const { JUMP_TO_MSG } = getStrings(this.locale, 'genericButtons');
 
     const firstEmbeds = [
       new MessageEmbed()

@@ -1,7 +1,6 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
-import { row } from '$lib/functions/row';
 import { setReminder } from '$lib/functions/setReminder';
 import { getStrings } from '$lib/language';
 import dayjs, { Dayjs } from 'dayjs';
@@ -12,23 +11,23 @@ import {
   MessageEmbed,
   TextChannel,
 } from 'discord.js';
-import { ChatCommand, components, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
-const { meta } = getStrings('en-US')['remind me'];
+const { meta } = getStrings('en-US', 'remind me');
 
 export default ChatCommand({
   name: 'reminder new',
   description: meta.description,
   options: new OptionBuilder()
-    .string('when', meta.options[0].description, true)
-    .string('subject', meta.options[1].description, true)
+    .string('when', meta.options[0].description, { required: true })
+    .string('subject', meta.options[1].description, { required: true })
     .channel('destination', meta.options[2].description),
   async handle({ when, subject, destination }) {
     const {
       strings,
       errors,
       keywordsDetection__KEEPLOWERCASE: keywords,
-    } = getStrings(this.locale)['remind me'];
+    } = getStrings(this.locale, 'remind me');
 
     dayjs.locale(this.locale);
 

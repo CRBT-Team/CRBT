@@ -1,6 +1,7 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { Prisma } from '@prisma/client';
+import { ChannelType } from 'discord-api-types/v10';
 import { MessageEmbed, Permissions, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -8,8 +9,14 @@ export default ChatCommand({
   name: 'voice-linker set',
   description: 'Link access to a text channel to users in a voice channel.',
   options: new OptionBuilder()
-    .channel('voice', 'The voice channel to link to.', true)
-    .channel('text', 'The text channel to link to.', true),
+    .channel('voice', 'The voice channel to link to.', {
+      channelTypes: [ChannelType.GuildVoice],
+      required: true,
+    })
+    .channel('text', 'The text channel to link to.', {
+      channelTypes: [ChannelType.GuildText],
+      required: true,
+    }),
   async handle({ voice, text }) {
     const m = this.guild.members.cache.get(this.user.id);
     if (!m.permissions.has(Permissions.FLAGS.ADMINISTRATOR, true)) {

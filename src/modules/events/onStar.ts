@@ -1,6 +1,5 @@
 import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
-import { row } from '$lib/functions/row';
 import {
   MessageButton,
   MessageEmbed,
@@ -8,7 +7,7 @@ import {
   PartialMessageReaction,
   TextBasedChannel,
 } from 'discord.js';
-import { components, OnEvent } from 'purplet';
+import { components, OnEvent, row } from 'purplet';
 
 console.log('ok');
 

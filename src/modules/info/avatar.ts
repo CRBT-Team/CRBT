@@ -1,33 +1,33 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { row } from '$lib/functions/row';
 import { getStrings } from '$lib/language';
 import { ButtonInteraction, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
 
-const { meta, ctxMeta } = getStrings('en-US').avatar;
+const { meta, ctxMeta } = getStrings('en-US', 'avatar');
 
 export default ChatCommand({
   name: 'avatar default',
   description: meta.description,
   options: new OptionBuilder()
     .user('user', meta.options[0].description)
-    .enum(
-      'size',
-      meta.options[1].description,
-      [
-        ['Small', 128],
-        ['Medium', 512],
-        ['Default', 2048],
-        ['Large', 4096],
-      ].map(([name, size]) => ({ name: `${name} (${size}x${size}px)`, value: `${size}` }))
-    )
-    .enum(
-      'format',
-      meta.options[2].description,
-      ['png', 'jpg', 'webp', 'gif'].map((value) => ({ name: value.toUpperCase(), value }))
-    ),
+    .string('size', meta.options[1].description, {
+      choices: {
+        [128]: 'Small (128px)',
+        [512]: 'Medium (512px)',
+        [4096]: 'Largest (4096px)',
+      },
+      required: false,
+    })
+    .string('format', meta.options[2].description, {
+      choices: {
+        png: 'PNG',
+        jpg: 'JPG',
+        webp: 'WEBP',
+        gif: 'GIF',
+      },
+    }),
   async handle({ user, size, format }) {
     const u = user ?? this.user;
     await this.reply(await renderPfp(u, this, size, format));
@@ -54,7 +54,7 @@ export async function renderPfp(
     cmdUID: string;
   }
 ) {
-  const { strings } = getStrings(ctx.locale).avatar;
+  const { strings } = getStrings(ctx.locale, 'avatar');
 
   const av = avatar(user, size, format ?? 'png', !!format);
 

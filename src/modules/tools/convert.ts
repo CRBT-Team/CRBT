@@ -47,14 +47,18 @@ export default ChatCommand({
   name: 'convert',
   description: 'Convert a specified amount from any unit to another.',
   options: new OptionBuilder()
-    .number('amount', 'The amount to convert.', true)
-    .string('from', 'The unit to convert from.', true)
-    .autocomplete('from', ({ from }) => {
-      return allUnits.filter((unit) => unit.name.toLowerCase().includes(from.toLowerCase()));
+    .number('amount', 'The amount to convert.', { required: true })
+    .string('from', 'The unit to convert from.', {
+      autocomplete({ from }) {
+        return allUnits.filter((unit) => unit.name.toLowerCase().includes(from.toLowerCase()));
+      },
+      required: true,
     })
-    .string('to', 'The unit to convert to.', true)
-    .autocomplete('to', ({ to }) => {
-      return allUnits.filter((unit) => unit.name.toLowerCase().includes(to.toLowerCase()));
+    .string('to', 'The unit to convert to.', {
+      autocomplete({ to }) {
+        return allUnits.filter((unit) => unit.name.toLowerCase().includes(to.toLowerCase()));
+      },
+      required: true,
     }),
   async handle({ amount, from, to }) {
     if (allUnits.find(({ value }) => value === from) === undefined) {

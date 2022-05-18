@@ -1,11 +1,12 @@
 import { cache } from '$lib/cache';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { getAllLanguageStrings, getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta, colorNames } = getStrings('en-US')['color set'];
+const { meta, colorNames } = getStrings('en-US', 'color set');
+const { colorNames: localizedColorNames } = getAllLanguageStrings('color set');
 
 export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
@@ -18,16 +19,22 @@ export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
 export const colorset = ChatCommand({
   name: 'color set',
   description: meta.description,
-  options: new OptionBuilder()
-    .string('color', meta.options[0].description, true)
-    .autocomplete('color', ({ color }) => {
+  options: new OptionBuilder().string('color', meta.options[0].description, {
+    autocomplete({ color }) {
       return colorsMap
         .filter((colorObj) => !colorObj.private)
-        .filter((colorObj) => colorObj.fullName.includes(color.toLowerCase()))
-        .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
-    }),
+        .filter((colorObj) =>
+          localizedColorNames[this.locale].colorNames[colorObj.key].includes(color.toLowerCase())
+        )
+        .map((colorObj) => ({
+          name: localizedColorNames[this.locale].colorNames[colorObj.key],
+          value: colorObj.value,
+        }));
+    },
+    required: true,
+  }),
   async handle({ color }) {
-    const { strings, errors } = getStrings(this.locale)['color set'];
+    const { strings, errors } = getStrings(this.locale, 'color set');
 
     const user = await this.client.users.fetch(this.user, { force: true });
     const text = color.toLowerCase().replaceAll(/ |#/g, '');
@@ -91,7 +98,7 @@ export const colorset = ChatCommand({
 //   name: 'color list',
 //   description: 'Returns a list of CRBT accent color names and info.',
 //   async handle() {
-//     const { colorNames } = getStrings(this.locale)['color set'];
+//     const { colorNames } = getStrings(this.locale, 'color set');
 
 //     const userColor = await getColor(this.user);
 //     const colorRows = [[], [], []];

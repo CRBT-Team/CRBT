@@ -1,4 +1,4 @@
-export function deepMerge(...objects: Object[]) {
+export function deepMerge<T>(...objects: T[]): T {
   const isObject = (obj: any) => obj && typeof obj === 'object';
 
   return objects.reduce((prev, obj) => {
@@ -16,5 +16,5 @@ export function deepMerge(...objects: Object[]) {
     });
 
     return prev;
-  }, {});
+  }, {}) as T;
 }

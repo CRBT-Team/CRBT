@@ -1,7 +1,7 @@
 import { getColor } from '$lib/functions/getColor';
 import { Interaction, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ButtonComponent, ChatCommand, Choice, components, OptionBuilder, row } from 'purplet';
+import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 const animals = <const>[
   {
@@ -30,14 +30,19 @@ const animals = <const>[
   },
 ];
 
-const choices: Choice[] = animals.map(({ name }) => {
-  return { name, value: name.toLowerCase() };
-});
-
 export default ChatCommand({
   name: 'animal',
   description: 'Get a random animal image and fact.',
-  options: new OptionBuilder().enum('type', 'The animal to display.', choices, true),
+  options: new OptionBuilder().string('type', 'The animal to display.', {
+    choices: animals.reduce(
+      (cur, { name }) => ({
+        ...cur,
+        [name.toLowerCase()]: name,
+      }),
+      {}
+    ),
+    required: true,
+  }),
   async handle({ type }) {
     await this.reply(await loadAnimal(type, this));
   },

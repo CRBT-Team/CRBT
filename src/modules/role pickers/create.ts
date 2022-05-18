@@ -12,9 +12,9 @@ import {
 } from 'purplet';
 import { colorsMap } from '../settings/color set';
 
-const { colorNames } = getStrings('en-US')['color set'];
-const { pronouns } = getStrings('en-US').profile;
-const { preset, manual } = getStrings('en-US')['role-selectors'];
+const { colorNames } = getStrings('en-US', 'color set');
+const { pronouns } = getStrings('en-US', 'profile');
+const { preset, manual } = getStrings('en-US', 'role-selectors');
 
 const usersOnCooldown = new Map();
 
@@ -80,14 +80,18 @@ const presets: {
 export const usePreset = ChatCommand({
   name: 'role-picker preset',
   description: preset.meta.description,
-  options: new OptionBuilder().enum(
-    'preset',
-    preset.meta.options[0].description,
-    Object.keys(presets).map((key) => ({ name: preset.presets[key].name, value: key })),
-    true
-  ),
+  options: new OptionBuilder().string('preset', preset.meta.options[0].description, {
+    choices: Object.keys(presets).reduce(
+      (acc, key) => ({
+        ...acc,
+        key: preset.presets[key].name,
+      }),
+      {}
+    ),
+    required: true,
+  }),
   async handle(opts) {
-    const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
+    const { strings, errors } = getStrings(this.guildLocale, 'role-selectors');
 
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
@@ -103,7 +107,7 @@ export const usePreset = ChatCommand({
 
     try {
       const preset = presets[opts.preset];
-      const presetStrings = getStrings(this.guildLocale)['role-selectors'].preset.presets[
+      const presetStrings = getStrings(this.guildLocale, 'role-selectors').preset.presets[
         opts.preset
       ];
 
@@ -205,35 +209,33 @@ export const useManual = ChatCommand({
   name: 'role-picker create',
   description: manual.meta.description,
   options: new OptionBuilder()
-    .string('description', manual.meta.options[0].description, true)
-    .enum(
-      'behavior',
-      manual.meta.options[1].description,
-      [
-        {
-          name: manual.meta.options[1].choices[0],
-          value: 'toggle',
-        },
-        {
-          name: manual.meta.options[1].choices[1],
-          value: 'once',
-        },
-      ],
-      true
-    )
-    .integer('role_limit', manual.meta.options[2].description, true)
-    .string('embed_color', "What color to use for the embed's background", true)
-    .autocomplete('embed_color', ({ embed_color }) => {
-      return colorsMap
-        .filter(
-          (colorObj) =>
-            !colorObj.private &&
-            colorObj.fullName.toLowerCase().includes(embed_color.toLowerCase()) &&
-            colorObj.value !== 'profile'
-        )
-        .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
+    .string('description', manual.meta.options[0].description, { required: true })
+    .string('behavior', manual.meta.options[1].description, {
+      choices: {
+        toggle: manual.meta.options[1].choices[0],
+        once: manual.meta.options[1].choices[1],
+      },
+      required: true,
     })
-    .role(`role1`, manual.meta.options[3].description, true)
+    .integer('role_limit', manual.meta.options[2].description, {
+      minValue: 0,
+      maxValue: 13,
+      required: true,
+    })
+    .string('embed_color', "What color to use for the embed's background", {
+      async autocomplete({ embed_color }) {
+        return colorsMap
+          .filter(
+            (colorObj) =>
+              !colorObj.private &&
+              colorObj.fullName.toLowerCase().includes(embed_color.toLowerCase()) &&
+              colorObj.value !== 'profile'
+          )
+          .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
+      },
+      required: true,
+    })
+    .role(`role1`, manual.meta.options[3].description, { required: true })
     .role(`role2`, manual.meta.options[3].description)
     .role(`role3`, manual.meta.options[3].description)
     .role(`role4`, manual.meta.options[3].description)
@@ -247,8 +249,8 @@ export const useManual = ChatCommand({
     .role(`role12`, manual.meta.options[3].description)
     .role(`role13`, manual.meta.options[3].description),
   async handle({ description, behavior, role_limit, embed_color, ...roles }) {
-    const { strings, errors } = getStrings(this.guildLocale)['role-selectors'];
-    const { errors: colorErrors } = getStrings(this.guildLocale)['color set'];
+    const { strings, errors } = getStrings(this.guildLocale, 'role-selectors');
+    const { errors: colorErrors } = getStrings(this.guildLocale, 'color set');
 
     if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
@@ -340,7 +342,7 @@ export const RoleButton = ButtonComponent({
     }
     usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
-    const { strings, errors } = getStrings(this.locale)['role-selectors'];
+    const { strings, errors } = getStrings(this.locale, 'role-selectors');
 
     // console.log(this.guild.roles.cache.get(role.id));
     // console.log(role);
@@ -405,7 +407,7 @@ export const RoleSelector = SelectMenuComponent({
     }
     usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
-    const { strings, errors } = getStrings(this.locale)['role-selectors'];
+    const { strings, errors } = getStrings(this.locale, 'role-selectors');
     const roleArray = (this.message.components[0].components[0] as MessageSelectMenu).options.map(
       (role) => JSON.parse(role.value)
     );
