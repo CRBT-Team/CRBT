@@ -1,18 +1,25 @@
 import { cache } from '$lib/cache';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getAllLanguageStrings, getStrings } from '$lib/language';
+import { getStrings, languages } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta, colorNames } = getStrings('en-US', 'color set');
-const { colorNames: localizedColorNames } = getAllLanguageStrings('color set');
+
+const localizedColorNames = Object.keys(languages).reduce((acc, lang) => {
+  const strings = getStrings(lang, 'color set');
+  return {
+    ...acc,
+    [lang]: strings.colorNames,
+  };
+}, {});
 
 export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
   fullName: colorNames[key],
   value: hex,
-  private: !(emojis.colors[key] || hex === 'profile'),
+  private: !(colorNames[key] || hex === 'profile'),
   emoji: emojis.colors[key] || null,
 }));
 
@@ -24,10 +31,10 @@ export const colorset = ChatCommand({
       return colorsMap
         .filter((colorObj) => !colorObj.private)
         .filter((colorObj) =>
-          localizedColorNames[this.locale].colorNames[colorObj.key].includes(color.toLowerCase())
+          localizedColorNames[this.locale][colorObj.key].includes(color.toLowerCase())
         )
         .map((colorObj) => ({
-          name: localizedColorNames[this.locale].colorNames[colorObj.key],
+          name: localizedColorNames[this.locale][colorObj.key],
           value: colorObj.value,
         }));
     },

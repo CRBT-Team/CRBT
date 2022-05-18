@@ -1,6 +1,7 @@
 import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
+import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 

@@ -1,6 +1,7 @@
 import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
+import { getStrings } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -11,6 +12,12 @@ export default ChatCommand({
     .user('user', 'The user to kick.', { required: true })
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+
+    if (this.channel.type !== 'DM') {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
     if (!this.memberPermissions.has('KICK_MEMBERS')) {
       return this.reply(CRBTError('You do not have permission to kick members.'));
     }

@@ -11,11 +11,10 @@ export default ChatCommand({
 
     .string('size', 'The size of the icon to get.', {
       choices: {
-        [128]: 'Small (128px)',
-        [512]: 'Medium (512px)',
-        [4096]: 'Largest (4096px)',
+        '128': 'Small (128px)',
+        '512': 'Medium (512px)',
+        '4096': 'Largest (4096px)',
       },
-      required: false,
     })
     .string('format', 'The format of the icon to get.', {
       choices: {

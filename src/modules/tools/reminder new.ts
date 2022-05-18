@@ -4,6 +4,7 @@ import { ms } from '$lib/functions/ms';
 import { setReminder } from '$lib/functions/setReminder';
 import { getStrings } from '$lib/language';
 import dayjs, { Dayjs } from 'dayjs';
+import { ChannelType } from 'discord-api-types/v10';
 import {
   GuildTextBasedChannel,
   Message,
@@ -21,7 +22,9 @@ export default ChatCommand({
   options: new OptionBuilder()
     .string('when', meta.options[0].description, { required: true })
     .string('subject', meta.options[1].description, { required: true })
-    .channel('destination', meta.options[2].description),
+    .channel('destination', meta.options[2].description, {
+      channelTypes: [ChannelType.GuildText, ChannelType.GuildNews],
+    }),
   async handle({ when, subject, destination }) {
     const {
       strings,

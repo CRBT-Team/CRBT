@@ -75,44 +75,4 @@ export function getStrings<K extends keyof StringsStructure>(
     return dataDefault[topLevel];
   }
   return deepMerge<StringsStructure[K]>(dataDefault[topLevel], data[topLevel]);
-  // return deepMerge<StringsStructure>(dataDefault, data);
 }
-
-export function getAllLanguageStrings<K extends keyof StringsStructure>(
-  h: K
-): {
-  [Key: string]: {
-    [Lang: string]: StringsStructure[K];
-  };
-} {
-  // h = 'color set'
-  // StringsStructure = ['color set']: any
-  const langStringMap = new Map(
-    Object.keys(languages).map((lang) => [lang, getStrings(lang, h) as StringsStructure[K]])
-  );
-
-  const newMap = Object.keys(h).reduce(
-    (cur, obj) => ({
-      ...cur,
-      [obj]: Object.keys(languages).reduce(
-        (cur, lang) => ({
-          ...cur,
-          lang: langStringMap.get(lang)[obj] as K,
-        }),
-        {}
-      ),
-    }),
-    {}
-  );
-  return newMap;
-}
-
-getAllLanguageStrings('color set');
-
-/**
- * GetAllLanguageStrings()
- *
- * {de: { colorName: string }
- *
- * ColorName: { de: string }
- */

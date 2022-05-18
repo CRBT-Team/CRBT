@@ -18,7 +18,6 @@ export default ChatCommand({
         [512]: 'Medium (512px)',
         [4096]: 'Largest (4096px)',
       },
-      required: false,
     })
     .string('format', meta.options[2].description, {
       choices: {

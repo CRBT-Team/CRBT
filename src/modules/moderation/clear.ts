@@ -1,6 +1,7 @@
 import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { MessageEmbed } from 'discord.js';
+import { getStrings } from '$lib/language';
+import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -10,6 +11,12 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ amount }) {
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+
+    if (this.channel.type !== 'DM') {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
     if (!this.memberPermissions.has('MANAGE_MESSAGES')) {
       return this.reply(CRBTError('You do not have permission to manage messages.'));
     }
@@ -21,7 +28,9 @@ export default ChatCommand({
     }
 
     try {
-      const { size: messagesDeleted } = await this.channel.bulkDelete(amount);
+      const { size: messagesDeleted } = await (this.channel as GuildTextBasedChannel).bulkDelete(
+        amount
+      );
 
       await this.reply({
         embeds: [

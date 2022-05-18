@@ -13,7 +13,7 @@ export default ChatCommand({
   options: new OptionBuilder().string(
     'emoji',
     'The emoji whose info to get. Works with custom emojis and standard Unicode emoji.',
-    true
+    { required: true }
   ),
   async handle({ emoji }) {
     if (emoji.match(EmojiRegex)) {

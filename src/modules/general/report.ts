@@ -1,22 +1,25 @@
 import { colors, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { Message, MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
+import {
+  Message,
+  MessageAttachment,
+  MessageEmbed,
+  TextChannel,
+  TextInputComponent,
+} from 'discord.js';
 import { ChatCommand, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
   description: 'File a new issue on the Discord server.',
-  options: new OptionBuilder().attachment(
-    'image',
-    'An image URL (PNG, JPG, WEBP or GIF) to attach to the report.'
-  ),
+  options: new OptionBuilder().attachment('image', 'An image to attach to the report.'),
   async handle({ image }) {
     if (image && !image.contentType.startsWith('image/')) {
       this.reply(CRBTError('You can only upload images'));
     }
 
-    const modal = new Modal(image.url)
+    const modal = new Modal(`${this.commandId}/${image.id}/${image.name}`)
       .setTitle('New issue')
       .setComponents(
         row(
@@ -66,23 +69,30 @@ export const Modal = ModalComponent({
       ],
     });
 
+    // load image_url as an attachment
+
+    const image = new MessageAttachment(
+      `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`
+    ).setName('image.png');
+
     reportChannel.send({
       embeds: [
         new MessageEmbed()
           .setAuthor({
             name: `${this.user.tag} filed an issue`,
             iconURL: avatar(this.user, 64),
-            url: this.channel.type !== 'DM' ? ((await this.fetchReply()) as Message).url : null,
           })
           .setTitle(title)
+          //@ts-ignore
           .setURL(this.channel.type !== 'DM' ? ((await this.fetchReply()) as Message).url : null)
           .setDescription(desc)
           .addField('Status', '<:pending:954734893072519198> Pending', true)
-          .setImage(image_url)
+          .setImage('attachment://image.png')
           .setFooter({ text: `User ID: ${this.user.id} • Last update` })
           .setTimestamp()
           .setColor(`#${colors.yellow}`),
       ],
+      files: [image],
     });
   },
 });

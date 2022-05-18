@@ -12,7 +12,6 @@ import dayjs from 'dayjs';
 import {
   GuildMember,
   Message,
-  MessageActionRow,
   MessageButton,
   MessageEmbed,
   MessageSelectMenu,
@@ -43,6 +42,7 @@ export default ChatCommand({
         '24h': 'In 24 hours',
         '1w': 'In a week',
       },
+      required: true,
     })
     .string('choice1', 'The first choice a user can chose. Make it short preferably.', {
       required: true,
@@ -135,7 +135,7 @@ export default ChatCommand({
             )
           : components(
               row(
-                new PollSelector(null)
+                new PollSelector()
                   .setPlaceholder(strings.POLL_SELECT_MENU_VOTE)
                   .addOptions(
                     pollChoices.map((choice, index) => {
@@ -319,8 +319,7 @@ export const EditPollButton = ButtonComponent({
     const msg = (await this.channel.messages.fetch(msgId)).embeds[0];
 
     const modal = new EditPollModal(msgId).setTitle(strings.BUTTON_EDIT_POLL).setComponents(
-      //@ts-ignore
-      new MessageActionRow().setComponents(
+      row(
         new TextInputComponent()
           .setCustomId('poll_title')
           .setLabel(strings.TITLE)
@@ -330,7 +329,7 @@ export const EditPollButton = ButtonComponent({
           .setStyle('PARAGRAPH')
       ),
       ...msg.fields.map((field, index) =>
-        new MessageActionRow().setComponents(
+        row(
           new TextInputComponent()
             .setCustomId(`poll_option_${index}`)
             .setLabel(`${strings.CHOICE} ${index + 1}`)
@@ -343,12 +342,6 @@ export const EditPollButton = ButtonComponent({
     );
 
     await this.showModal(modal);
-    // const msg = await this.channel.messages.fetch(msgId);
-    // const polLData = await db.polls.findFirst({
-    //   where: { id: `${this.channel.id}/${msgId}` },
-    // });
-    // msg.edit({
-    // })
   },
 });
 
