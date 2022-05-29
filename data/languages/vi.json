@@ -157,16 +157,16 @@
       "NOT_CMD_USER": "Only the person who used this command can use this button."
     },
     "strings": {
-      "AVATAR": "Avatar",
+      "AVATAR": "Ảnh đại diện",
       "INFO": "User info"
     }
   },
   "profile": {
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
+      "hh": "Anh",
+      "sh": "Chị",
+      "tt": "Họ",
+      "other": "Khác",
       "ask": "Ask me"
     }
   },
