@@ -114,7 +114,7 @@
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
+      "AND": "và",
       "AT": "at",
       "ON": "mở",
       "IN": "trong",
@@ -130,7 +130,7 @@
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "UPTIME": "Trực tuyến kể từ",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
@@ -146,7 +146,7 @@
       "PING": "Độ trễ",
       "PING_RESULT": "≈<PING> milliseconds",
       "CREATED": "Created on",
-      "UPTIME": "Online since",
+      "UPTIME": "Trực tuyến kể từ",
       "BUTTON_WEBSITE": "Trang web",
       "BUTTON_INVITE": "Thêm vào Máy chủ",
       "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi"
@@ -195,7 +195,7 @@
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
-      "CHOICE": "Choice",
+      "CHOICE": "Lựa chọn",
       "POLL_HEADER": "Thăm dò ý kiến CRBT",
       "POLL_HEADER_VOTE": "Vote for an option below",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
