@@ -1,8 +1,9 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getStrings } from '$lib/language';
 import { Prisma } from '@prisma/client';
-import { ChannelType } from 'discord-api-types/v10';
-import { MessageEmbed, Permissions, TextChannel } from 'discord.js';
+import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -18,20 +19,19 @@ export default ChatCommand({
       required: true,
     }),
   async handle({ voice, text }) {
-    const m = this.guild.members.cache.get(this.user.id);
-    if (!m.permissions.has(Permissions.FLAGS.ADMINISTRATOR, true)) {
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+
+    if (this.channel.type === 'DM') {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
+    if (!this.memberPermissions.has(PermissionFlagsBits.Administrator, true)) {
       return this.reply(CRBTError('You must be an administrator to use this command.'));
-    }
-    if (text.type !== 'GUILD_TEXT') {
-      return this.reply(CRBTError('The text channel must be a text channel.'));
-    }
-    if (!voice.isVoice()) {
-      return this.reply(CRBTError('The voice channel must be a voice channel.'));
     }
     if (
       !(text as TextChannel)
         .permissionsFor(this.guild.me)
-        .has([Permissions.FLAGS.MANAGE_CHANNELS, Permissions.FLAGS.VIEW_CHANNEL])
+        .has([PermissionFlagsBits.ManageChannels, PermissionFlagsBits.ViewChannel])
     ) {
       return this.reply(CRBTError('I do not have permission to manage the text channel.'));
     }
@@ -41,7 +41,7 @@ export default ChatCommand({
     } catch (e) {
       return this.reply(CRBTError('I do not have permission to manage the text channel.'));
     }
-    await this.deferReply();
+    await this.deferReply({ ephemeral: true });
 
     const current = (await db.servers.findFirst({
       where: {
@@ -77,10 +77,10 @@ export default ChatCommand({
             iconURL: icons.success,
           })
           .setDescription(
-            `Whenever someone joins ${voice}, they will now get access to ${text}.` +
+            `Whenever someone joins ${voice}, they will now get access to ${text}.\n` +
               (current
-                ? `\nThe previous linker between <#${current.text}> and <#${current.voice}> was removed\n`
-                : '\n') +
+                ? `The previous linker between <#${current.text}> and <#${current.voice}> was removed.\n`
+                : '') +
               `Note: This will not affect any other channels. When ${this.client.user.username} is offline, the feature will not work and a manual permission overwrite may be needed. `
           )
           .setColor(`#${colors.success}`),

@@ -7,7 +7,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta, colorNames } = getStrings('en-US', 'color set');
 
-const localizedColorNames = Object.keys(languages).reduce((acc, lang) => {
+export const localizedColorNames = Object.keys(languages).reduce((acc, lang) => {
   const strings = getStrings(lang, 'color set');
   return {
     ...acc,

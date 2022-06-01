@@ -1,15 +1,29 @@
+import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { TextChannel, Webhook } from 'discord.js';
+import { getStrings } from '$lib/language';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
+import { TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import avatar from '../info/avatar';
 
 export default ChatCommand({
   name: 'lenny',
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
   options: new OptionBuilder().string('message', 'Your message.'),
   async handle({ message }) {
-    if (this.channel.type !== 'GUILD_TEXT') {
-      return this.reply(CRBTError('This command cannot be used in DMs'));
+    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+
+    if (!this.channel.isText()) {
+      return this.reply(CRBTError(GUILD_ONLY));
+    }
+
+    if (!this.guild.me.permissionsIn(this.channel).has(PermissionFlagsBits.ManageWebhooks)) {
+      return this.reply(CRBTError('I do not have the "Manage Webhooks" permission.'));
+    }
+
+    if (message && message.length > 4096) {
+      return this.reply(
+        CRBTError(`（＞人＜；） Your message is too long. Make it under 4096 characters.`)
+      );
     }
 
     const content = message ? `${message} ( ͡° ͜ʖ ͡°)` : '( ͡° ͜ʖ ͡°)';
@@ -17,16 +31,21 @@ export default ChatCommand({
     await this.deferReply();
 
     try {
-      const webhooks = await (this.channel as TextChannel).fetchWebhooks();
+      const channel = this.channel as TextChannel;
+      const hooks = await channel.fetchWebhooks();
 
-      const hook: Webhook =
-        webhooks.find(
-          (hook) => hook.name === 'CRBT Webhook' && hook.owner.id === this.client.user.id
-        ) ??
-        (await (this.channel as TextChannel).createWebhook('CRBT Webhook').then((hook) => hook));
+      let hook = hooks.find(
+        ({ name, owner }) => name === 'CRBT Webhook' && owner.id === this.client.user.id
+      );
+
+      if (!hook) {
+        hook = await channel.createWebhook('CRBT Webhook');
+      }
+
+      const avatarURL = avatar(this.user, 64);
 
       await hook.send({
-        avatarURL: avatar(this.user),
+        avatarURL,
         username: this.user.username,
         content,
       });

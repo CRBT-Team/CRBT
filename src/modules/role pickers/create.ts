@@ -10,7 +10,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { colorsMap } from '../settings/color set';
+import { colorsMap, localizedColorNames } from '../settings/color set';
 
 const { colorNames } = getStrings('en-US', 'color set');
 const { pronouns } = getStrings('en-US', 'profile');
@@ -228,10 +228,13 @@ export const useManual = ChatCommand({
           .filter(
             (colorObj) =>
               !colorObj.private &&
-              colorObj.fullName.toLowerCase().includes(embed_color.toLowerCase()) &&
+              localizedColorNames[this.locale][colorObj.key].includes(embed_color.toLowerCase()) &&
               colorObj.value !== 'profile'
           )
-          .map((colorObj) => ({ name: colorObj.fullName, value: colorObj.value }));
+          .map((colorObj) => ({
+            name: localizedColorNames[this.locale][colorObj.key],
+            value: colorObj.value,
+          }));
       },
       required: true,
     })
