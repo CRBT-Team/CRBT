@@ -9,8 +9,6 @@ import {
 } from 'discord.js';
 import { components, OnEvent, row } from 'purplet';
 
-console.log('ok');
-
 export const add = OnEvent('messageReactionAdd', async (reaction, user) => {
   console.log('ok');
   const { message, emoji } = reaction;

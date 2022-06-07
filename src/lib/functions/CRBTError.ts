@@ -85,11 +85,10 @@ export async function CooldownError(
   const { strings } = getStrings(context.locale, 'CooldownError');
   const { ADD_REMINDER } = getStrings(context.locale, 'genericButtons');
 
-  const reminder = await db.reminders.findFirst({
+  const reminder = await db.timeouts.findFirst({
     where: {
-      userId: context.user.id,
-      destination: 'dm',
-      reminder: 'Command reminder from CRBT.',
+      type: 'REMINDER',
+      id: { startsWith: `${context.user.id}-COMMAND-` },
     },
     orderBy: {
       expiration: 'desc',

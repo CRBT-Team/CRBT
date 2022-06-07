@@ -1,6 +1,5 @@
 import { db } from '$lib/db';
-import { setReminder } from '$lib/functions/setReminder';
-import { reminders } from '@prisma/client';
+import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { OnEvent } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
@@ -9,7 +8,7 @@ export default OnEvent('ready', async (client) => {
     type: 'WATCHING',
   });
 
-  (await db.reminders.findMany()).forEach(async (reminder: reminders) => {
-    await setReminder(reminder);
+  (await db.timeouts.findMany()).forEach(async (timeout) => {
+    await setDbTimeout(timeout, true);
   });
 });

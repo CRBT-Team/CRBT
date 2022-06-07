@@ -9,7 +9,7 @@ export default ChatCommand({
   name: 'privacy',
   description: 'Review your CRBT privacy settings and edit them.',
   async handle() {
-    let enabled;
+    let enabled: boolean;
     try {
       const fromCache = cache.get(this.user.id);
       if (fromCache === undefined) {

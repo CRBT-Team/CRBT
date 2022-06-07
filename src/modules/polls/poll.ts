@@ -3,11 +3,10 @@ import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
 import { ms } from '$lib/functions/ms';
-import { setLongerTimeout } from '$lib/functions/setLongerTimeout';
+import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { trimArray } from '$lib/functions/trimArray';
 import { getStrings } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
-import { polls } from '@prisma/client';
 import dayjs from 'dayjs';
 import {
   GuildMember,
@@ -27,7 +26,7 @@ import {
   SelectMenuComponent,
 } from 'purplet';
 
-const activePolls = new Map<string, polls>();
+const activePolls = new Map<string, FullDBTimeout<'POLL'>>();
 const usersOnCooldown = new Map();
 
 export default ChatCommand({
@@ -159,15 +158,17 @@ export default ChatCommand({
             ),
     });
 
-    const pollData = await db.polls.create({
+    const pollData = await setDbTimeout({
+      type: 'POLL',
+      expiration: new Date(Date.now() + ms(end_date)),
+      locale: this.guildLocale,
       data: {
-        id: `${this.channel.id}/${msg.id}`,
         creatorId: this.user.id,
-        choices: JSON.stringify(pollChoices.map((_) => [])),
+        choices: pollChoices.map((_) => []),
       },
     });
 
-    activePolls.set(pollData.id, pollData);
+    activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 
     this.reply({
       embeds: [
@@ -186,25 +187,17 @@ export default ChatCommand({
       ],
       ephemeral: true,
     });
-
-    setLongerTimeout(async () => {
-      const fetchMsg = await this.channel.messages.fetch(msg.id).catch(() => null);
-      const pollData = await db.polls.findFirst({
-        where: { id: `${this.channel.id}/${msg.id}` },
-      });
-
-      if (!fetchMsg) {
-        if (pollData)
-          await db.polls.delete({
-            where: { id: pollData.id },
-          });
-        return;
-      }
-
-      endPoll(pollData, fetchMsg, this.guildLocale);
-    }, ms(end_date));
   },
 });
+
+async function getPollData(id: string) {
+  return (
+    activePolls.get(id) ??
+    ((await db.timeouts.findFirst({
+      where: { id },
+    })) as FullDBTimeout<'POLL'>)
+  );
+}
 
 export const PollButton = ButtonComponent({
   async handle({ choiceId }) {
@@ -212,15 +205,11 @@ export const PollButton = ButtonComponent({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
     }
 
-    const pollData =
-      activePolls.get(`${this.channel.id}/${this.message.id}`) ??
-      (await db.polls.findFirst({
-        where: { id: `${this.channel.id}/${this.message.id}` },
-      }));
+    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
+    console.log(pollData);
     const poll = this.message.embeds[0] as MessageEmbed;
 
     const e = await renderPoll(choiceId, this.user.id, pollData, poll, this.guildLocale);
-
     this.update({
       embeds: [e],
     });
@@ -234,11 +223,7 @@ export const PollSelector = SelectMenuComponent({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
     }
 
-    const pollData =
-      activePolls.get(`${this.channel.id}/${this.message.id}`) ??
-      (await db.polls.findFirst({
-        where: { id: `${this.channel.id}/${this.message.id}` },
-      }));
+    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
     const poll = this.message.embeds[0] as MessageEmbed;
 
     this.update({
@@ -260,14 +245,9 @@ export const PollOptionsButton = ButtonComponent({
       return this.reply(CRBTError(errors.POLL_DATA_NOT_ALLOWED));
     }
 
-    const pollData =
-      activePolls.get(`${this.channel.id}/${this.message.id}`) ??
-      (await db.polls.findFirst({
-        where: { id: `${this.channel.id}/${this.message.id}` },
-      }));
-
+    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
     const choicesNames = this.message.embeds[0].fields.map(({ name }) => name);
-    const choices: string[][] = JSON.parse(pollData.choices);
+    const choices = pollData.data.choices;
 
     this.reply({
       embeds: [
@@ -420,7 +400,7 @@ export const CancelPollButton = ButtonComponent({
     });
 
     try {
-      await db.polls.delete({
+      await db.timeouts.delete({
         where: { id: `${this.channel.id}/${msgId}` },
       });
 
@@ -436,15 +416,11 @@ export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
     const { strings } = getStrings(this.locale, 'poll');
 
-    const pollData =
-      activePolls.get(`${this.channel.id}/${msgId}`) ??
-      (await db.polls.findFirst({
-        where: { id: `${this.channel.id}/${msgId}` },
-      }));
+    const pollData = await getPollData(`${this.channel.id}/${msgId}`);
 
     if (pollData) {
       const msg = await this.channel.messages.fetch(msgId);
-      await endPoll(pollData, msg, this.guildLocale);
+      await endPoll(pollData.data, msg, this.guildLocale);
     }
 
     await this.update({
@@ -461,16 +437,10 @@ export const EndPollButton = ButtonComponent({
   },
 });
 
-const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
+export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, locale: string) => {
   const { strings } = getStrings(locale, 'poll');
 
-  await db.polls
-    .delete({
-      where: { id: `${pollMsg.channel.id}/${pollMsg.id}` },
-    })
-    .catch(() => {});
-
-  const choices: string[][] = JSON.parse(pollData.choices);
+  const choices = pollData.choices;
   const totalVotes = choices.flat().length;
   const ranking = choices
     .map((choice, index) => {
@@ -488,10 +458,10 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
                 .replace('<OPTION2>', ranking[1].name)
                 .replace('<VOTES>', ranking[0].votes.toString())
-            : strings.POLL_RESULTS_DESCRIPTION_WIN.replace('<OPTION>', `${totalVotes}`).replace(
-                '<VOTES>',
-                ranking[0].votes.toString()
-              )) +
+            : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
+                '<OPTION>',
+                `${ranking[0].name}`
+              ).replace('<VOTES>', ranking[0].votes.toString())) +
             ' ' +
             strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
         )
@@ -536,13 +506,13 @@ const endPoll = async (pollData: polls, pollMsg: Message, locale: string) => {
 const renderPoll = async (
   choiceId: string,
   userId: string,
-  pollData: polls,
+  pollData: FullDBTimeout<'POLL'>,
   pollEmbed: MessageEmbed,
   locale: string
 ) => {
   const { strings } = getStrings(locale, 'poll');
 
-  const choices: string[][] = JSON.parse(pollData.choices);
+  const choices = pollData.data.choices;
   const newChoiceId = Number(choiceId);
   const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
 
@@ -556,10 +526,10 @@ const renderPoll = async (
     choices[newChoiceId]?.push(userId);
   }
 
-  const newData = await db.polls.update({
+  const newData = (await db.timeouts.update({
     where: { id: pollData.id },
-    data: { choices: JSON.stringify(choices) },
-  });
+    data: { data: { ...pollData.data, choices } },
+  })) as FullDBTimeout<'POLL'>;
 
   activePolls.set(pollData.id, newData);
 

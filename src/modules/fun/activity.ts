@@ -17,6 +17,7 @@ const activities = [
   ['Blazing 8s - 💎 Level 1 Boosting Required', '832025144389533716'],
   ['Land-io - 💎 Level 1 Boosting Required', '903769130790969345'],
   ['Putt Party - 💎 Level 1 Boosting Required', '945737671223947305'],
+  ['Bobble League - 💎 Level 1 Boosting Required', '947957217959759964'],
 ];
 
 const choices = activities.reduce(

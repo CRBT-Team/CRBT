@@ -1,7 +1,7 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
-import { setReminder } from '$lib/functions/setReminder';
+import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { getStrings } from '$lib/language';
 import dayjs, { Dayjs } from 'dayjs';
 import { ChannelType } from 'discord-api-types/v10';
@@ -102,9 +102,11 @@ export default ChatCommand({
         return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
       }
     }
-    const userReminders = await db.reminders.findMany({
-      where: { userId: this.user.id },
-    });
+    const userReminders = (
+      await db.timeouts.findMany({
+        where: { type: 'REMINDER' },
+      })
+    ).filter((r) => (r.data as any).userId === this.user.id);
 
     if (userReminders.length >= 5) {
       return this.reply(CRBTError(errors.REMINDERS_MAX_LIMIT));
@@ -112,20 +114,23 @@ export default ChatCommand({
 
     await this.deferReply();
 
-    const reminder = {
-      destination: destination ? destination.id : 'dm',
-      expiration: expiration.toDate(),
-      reminder: subject,
-      locale: this.locale,
-      userId: this.user.id,
-      url: ((await this.fetchReply()) as Message).url.replace('https://discord.com/channels/', ''),
-    };
-
     const expUnix = expiration.unix();
 
     try {
-      //@ts-ignore
-      await setReminder(reminder);
+      await setDbTimeout({
+        type: 'REMINDER',
+        expiration: expiration.toDate(),
+        data: {
+          destination: destination ? destination.id : 'dm',
+          userId: this.user.id,
+          subject,
+          url: ((await this.fetchReply()) as Message).url.replace(
+            'https://discord.com/channels/',
+            ''
+          ),
+        },
+        locale: this.locale,
+      });
 
       await this.editReply({
         embeds: [

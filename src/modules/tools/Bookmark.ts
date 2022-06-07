@@ -27,7 +27,7 @@ export default MessageContextCommand({
             .setFooter({
               text: `${this.guild.name} • #${(message.channel as GuildChannel).name}`,
             })
-            .setColor(message.member.displayColor ?? `#${colors.blurple}`)
+            .setColor(message.member?.displayColor ?? `#${colors.blurple}`)
             .setURL(message.url),
           ...message.embeds,
         ],

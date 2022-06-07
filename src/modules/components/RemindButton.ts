@@ -1,6 +1,6 @@
-import { db, emojis } from '$lib/db';
+import { emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { setReminder } from '$lib/functions/setReminder';
+import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import dayjs from 'dayjs';
 import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
@@ -24,29 +24,31 @@ export const RemindButton = ButtonComponent({
       );
     }
 
-    const reminder = await db.reminders.findFirst({
-      where: {
-        userId: userId,
-        destination: 'dm',
-        reminder: 'Command reminder from CRBT.',
-      },
-      orderBy: { expiration: 'desc' },
-    });
+    // TODO: redo with the timeouts system
 
-    if (!reminder || Math.abs(reminder.expiration.getTime() - relativetime) > 60000) {
-      await setReminder({
-        reminder: 'Command reminder from CRBT.',
-        locale,
-        expiration: dayjs(relativetime).toDate(),
-        userId: this.user.id,
-        destination: 'dm',
-        url:
-          this.message instanceof Message
-            ? this.message.url.replace('https://discord.com/channels/', '')
-            : `@me/${this.user.dmChannel}/${this.message.id}`,
-        id: 0n,
-      });
-    }
+    // const reminder = await db.reminders.findFirst({
+    //   where: {
+    //     userId: userId,
+    //     destination: 'dm',
+    //     reminder: 'Command reminder from CRBT.',
+    //   },
+    //   orderBy: { expiration: 'desc' },
+    // });
+
+    // if (!reminder || Math.abs(reminder.expiration.getTime() - relativetime) > 60000) {
+    //   await setReminder({
+    //     reminder: 'Command reminder from CRBT.',
+    //     locale,
+    //     expiration: dayjs(relativetime).toDate(),
+    //     userId: this.user.id,
+    //     destination: 'dm',
+    //     url:
+    //       this.message instanceof Message
+    //         ? this.message.url.replace('https://discord.com/channels/', '')
+    //         : `@me/${this.user.dmChannel}/${this.message.id}`,
+    //     id: 0n,
+    //   });
+    // }
     await this.update({
       components: components(
         row(
@@ -63,7 +65,7 @@ export const RemindButton = ButtonComponent({
 });
 
 export const SnoozeButton = ButtonComponent({
-  async handle(locale: string) {
+  async handle() {
     if (this.channel.type !== 'DM' && (this.message.mentions as MessageMentions).has(this.user)) {
       return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
     }
@@ -71,14 +73,19 @@ export const SnoozeButton = ButtonComponent({
       'https://discord.com/channels/',
       ''
     );
-    //@ts-ignore
-    await setReminder({
-      reminder: this.message.embeds[0].fields[0].value,
-      userId: this.user.id,
-      locale,
+    await setDbTimeout({
+      type: 'REMINDER',
       expiration: dayjs().add(15, 'minutes').toDate(),
-      destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
-      url,
+      data: {
+        destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
+        userId: this.user.id,
+        subject: this.message.embeds[0].fields[0].value,
+        url: ((await this.fetchReply()) as Message).url.replace(
+          'https://discord.com/channels/',
+          ''
+        ),
+      },
+      locale: this.locale,
     });
 
     this.update({

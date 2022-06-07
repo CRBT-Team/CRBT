@@ -7,32 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model profiles {
-  id                String    @id
-  verified          Boolean?  @default(false)
-  crbt_banner       String?
-  crbt_accent_color String?
-  bio               String?
-  purplets          Float     @default(0) @db.Real
-  name              String?   @unique
-  crbt_badges       String[]
-  url               String?
-  birthday          DateTime? @db.Timestamptz(6)
+model timeouts {
+  id         String       @id @default(uuid())
+  expiration DateTime     @db.Timestamptz(6)
+  locale     String?
+  type       TimeoutTypes
+  data       Json?        @db.Json()
 }
 
-model reminders {
-  id          BigInt   @id @default(autoincrement())
-  expiration  DateTime @db.Timestamptz(6)
-  userId      String   @map("user_id")
-  destination String
-  reminder    String?
-  url         String
-  locale      String?
+enum TimeoutTypes {
+  REMINDER
+  POLL
+  TEMPBAN
 }
 
 model servers {
   id           String  @id
-  voiceLinker  Json?   @map("voice_linker") @db.Json
   joinChannel  String? @map("join_channel")
   joinMessage  Json?   @map("join_message")
   leaveChannel String? @map("leave_channel")
@@ -40,7 +30,7 @@ model servers {
 }
 
 model moderationStrikes {
-  id          String   @id
+  serverId    String   @id @map("server_id")
   userId      String   @map("user_id")
   moderatorId String   @map("moderator_id")
   reason      String?
@@ -48,51 +38,61 @@ model moderationStrikes {
 }
 
 model users {
-  id          String  @id(map: "misc_pkey")
-  hstreak     Int     @default(0) @db.SmallInt
-  telemetry   Boolean @default(true)
-  accentColor String? @map("accent_color")
-  // job_type  Jobs?
-  // job_exp   Int     @default(0)
+  id          String    @id(map: "misc_pkey")
+  telemetry   Boolean   @default(true)
+  accentColor String?   @map("accent_color")
+  birthday    DateTime? @db.Timestamptz(6)
 }
 
 model inventories {
-  serverId    String   @id @map("server_id")
-  userId      String   @map("user_id")
-  items       BigInt[]
-  activeItems BigInt[] @map("active_items")
+  serverId    String         @id @map("server_id")
+  userId      String         @map("user_id")
+  items       economyItems[] @relation("Inventory")
+  activeItems economyItems[] @relation("ActiveInventory")
+  dailyStreak Int            @default(0) @map("daily_streak") @db.SmallInt
 }
 
 model economy {
-  id                  String            @id
-  currencyName        String            @map("currency_name")
-  currencySymbol      String            @map("currency_symbol")
-  enabledCommands     EconomyCommands[] @map("enabled_commands")
-  // hourly streaks & cooldowns for crime & work
-  commandsConstraints Json              @map("commands_cooldown")
+  serverId             String  @id
+  currencyNameSingular String  @map("currency_name_singular")
+  currencyNamePlural   String  @map("currency_name_plural")
+  currencySymbol       String  @map("currency_symbol")
+  // these three are temporary flags, will be removed when economy is fully implemented
+  hasEconomy           Boolean @map("economy_enabled")
+  hasLeveling          Boolean @map("leveling_enabled")
+  hasShop              Boolean @map("shop_enabled")
+  hasChatMoney         Boolean @map("chat_money_enabled")
 }
 
-model economy_strings {
+model economyCommands {
   serverId String          @id @map("server_id")
   type     EconomyCommands
-  gain     Int
-  text     String          @unique
+  // rates    Int
+  enabled  Boolean         @default(true)
+  strings  String[]
+  cooldown Int             @default(20000)
+  minGain  Int             @default(50) @map("min_gain")
+  maxGain  Int             @default(100) @map("max_gain")
 }
 
-model economy_items {
-  id             BigInt    @id @default(autoincrement())
-  serverId       String    @map("server_id")
-  name           String
-  icon           String?
-  description    String?
-  price          Int
-  category       String
-  type           ItemTypes
-  stock          Int
+model economyItems {
+  id                        BigInt       @id @default(autoincrement())
+  serverId                  String       @map("server_id")
+  name                      String
+  icon                      String?
+  description               String?
+  price                     Int
+  category                  String
+  type                      ItemTypes
+  stock                     Int
   // for items limited in time
-  availableUntil DateTime? @map("available_until") @db.Timestamptz(6)
+  availableUntil            DateTime?    @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
-  value          String?
+  value                     String?
+  inventories               inventories? @relation("Inventory", fields: [inventoriesServerId], references: [serverId])
+  activeInventories         inventories? @relation("ActiveInventory", fields: [activeInventoriesServerId], references: [serverId])
+  inventoriesServerId       String?
+  activeInventoriesServerId String?
 }
 
 enum EconomyCommands {
@@ -107,12 +107,6 @@ enum ItemTypes {
   INCOME_MULTIPLIER
   COSMETIC
   OTHER
-}
-
-model polls {
-  id        String @id
-  creatorId String @map("creator_id")
-  choices   String
 }
 
 // enum Jobs {

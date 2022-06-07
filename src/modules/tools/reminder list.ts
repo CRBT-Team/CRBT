@@ -1,5 +1,6 @@
 import { db } from '$lib/db';
 import { getColor } from '$lib/functions/getColor';
+import { FullDBTimeout } from '$lib/functions/setDbTimeout';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
@@ -8,7 +9,9 @@ export default ChatCommand({
   name: 'reminder list',
   description: 'Get a list of all of your reminders.',
   async handle() {
-    const userReminders = await db.reminders.findMany({ where: { userId: this.user.id } });
+    const userReminders = (
+      (await db.timeouts.findMany({ where: { type: 'REMINDER' } })) as FullDBTimeout<'REMINDER'>[]
+    ).filter((reminder) => reminder.data.userId === this.user.id);
 
     await this.reply({
       embeds: [
@@ -22,13 +25,13 @@ export default ChatCommand({
           .setFields(
             userReminders
               .sort((a, b) => (dayjs(a.expiration).isBefore(b.expiration) ? -1 : 1))
-              .map((reminder) => ({
-                name: reminder.reminder,
+              .map(({ data, expiration }) => ({
+                name: data.subject,
                 value:
-                  `<t:${dayjs(reminder.expiration).unix()}:R>` +
+                  `<t:${dayjs(expiration).unix()}:R>` +
                   '\n' +
                   `Destination: ${
-                    reminder.destination === 'dm' ? 'In your DMs' : `<#${reminder.destination}>`
+                    data.destination === 'dm' ? 'In your DMs' : `<#${data.destination}>`
                   }`,
               }))
           )
