@@ -3,6 +3,7 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { getStrings } from '$lib/language';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -11,8 +12,7 @@ export default ChatCommand({
   description: 'Timeout a chosen user from this server.',
   options: new OptionBuilder()
     .user('user', 'The user to timeout.', { required: true })
-    .string('reason', 'The reason for the timeout.', { required: true })
-    .string('duration', 'Temporarily timeout the user for a specified time.', {
+    .string('duration', 'How long they should be timed out for.', {
       choices: {
         '1h': '1 hour',
         '1d': '1 day',
@@ -21,7 +21,8 @@ export default ChatCommand({
         '28d': 'Max (28 days)',
       },
       required: true,
-    }),
+    })
+    .string('reason', 'The reason for timing them out.'),
   async handle({ user, reason, duration }) {
     const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
 
@@ -29,10 +30,10 @@ export default ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.memberPermissions.has('MODERATE_MEMBERS')) {
+    if (!this.memberPermissions.has(PermissionFlagsBits.ModerateMembers)) {
       return this.reply(CRBTError('You do not have permission to timeout members.'));
     }
-    if (!this.guild.me.permissions.has('MODERATE_MEMBERS')) {
+    if (!this.guild.me.permissions.has(PermissionFlagsBits.ModerateMembers)) {
       return this.reply(CRBTError('I do not have permission to timeout members.'));
     }
     if (this.user.id === user.id) {
@@ -41,7 +42,14 @@ export default ChatCommand({
     if (!this.guild.members.cache.has(user.id)) {
       return this.reply(CRBTError('The user is not in this server.'));
     }
-    const member = this.guild.members.cache.get(user.id);
+    const member =
+      this.guild.members.cache.get(user.id) ?? (await this.guild.members.fetch(user.id));
+    if (!member.moderatable) {
+      return this.reply(CRBTError('You cannot timeout this user.'));
+    }
+    // if (member.isCommunicationDisabled()) {
+    //   return this.reply(CRBTError('This user is already timed out.'));
+    // }
     if (this.guild.ownerId === user.id) {
       return this.reply(CRBTError('You cannot timeout the owner of the server.'));
     }

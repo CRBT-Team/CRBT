@@ -228,7 +228,9 @@ export const useManual = ChatCommand({
           .filter(
             (colorObj) =>
               !colorObj.private &&
-              localizedColorNames[this.locale][colorObj.key].includes(embed_color.toLowerCase()) &&
+              localizedColorNames[this.locale][colorObj.key]
+                .toLowerCase()
+                .includes(embed_color.toLowerCase()) &&
               colorObj.value !== 'profile'
           )
           .map((colorObj) => ({
@@ -268,12 +270,10 @@ export const useManual = ChatCommand({
     });
 
     const rolesList: Role[] = Object.values(roles);
-    const limit = role_limit || rolesList.length;
+    const limit = (role_limit > rolesList.length ? 0 : role_limit) || rolesList.length;
 
     const text = embed_color.toLowerCase().replaceAll(/ |#/g, '');
     const finalColor = colors[text] ? colors[text] : text;
-
-    console.log(finalColor);
 
     if (!finalColor || !finalColor.match(/^[0-9a-f]{6}$/)) {
       return await this.editReply(CRBTError(colorErrors.INVALID_COLOR_NAME));
@@ -285,17 +285,14 @@ export const useManual = ChatCommand({
           .setAuthor({ name: strings.EMBED_TITLE })
           .setTitle(description)
           .setDescription(
-            rolesList.length <= 5 && limit === 1
+            rolesList.length === 1
               ? ''
               : `${rolesList.map((role) => `<@&${role.id}>`.trim()).join('\n')}`
           )
-          .setFooter({
-            text: strings.EMBED_FOOTER,
-          })
           .setColor(`#${finalColor}`),
       ],
       components: components(
-        rolesList.length <= 5 && limit === 1
+        rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)
           ? row().addComponents(
               rolesList.map(({ name, id }) => {
                 return new RoleButton({ name, id, behavior }).setLabel(name).setStyle('SECONDARY');
