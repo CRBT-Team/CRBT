@@ -11,12 +11,13 @@ export default OnEvent('interactionCreate', async (i) => {
 
   try {
     let value = cache.get(`tlm_${i.user.id}`);
-    const fromDB = await db.users.findFirst({
-      where: { id: i.user.id },
-      select: { telemetry: true },
-    });
 
     if (value === undefined) {
+      const fromDB = await db.users.findFirst({
+        where: { id: i.user.id },
+        select: { telemetry: true },
+      });
+
       cache.set(`tlm_${i.user.id}`, fromDB?.telemetry === undefined ? true : fromDB?.telemetry);
       value = fromDB?.telemetry === undefined ? true : fromDB?.telemetry;
     }

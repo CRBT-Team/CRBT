@@ -4,39 +4,13 @@ import convert, { Unit } from 'convert-units';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import Currencies from '../../../data/misc/currencies.json';
 
 const units = convert().list();
-const currencies = [
-  ['Euro', 'EUR'],
-  ['US Dollar', 'USD'],
-  ['Australian Dollar', 'AUD'],
-  ['Bitcoin', 'BTC'],
-  ['British Pound', 'GBP'],
-  ['Canadian Dollar', 'CAD'],
-  ['Chinese Yuan', 'CNY'],
-  ['Dogecoin', 'DOGE'],
-  ['Ethereum', 'ETH'],
-  ['Brazilian Real', 'BRL'],
-  ['Bitcoin Cash', 'BCH'],
-  ['Binance Coin', 'BNB'],
-  ['CFA Franc BCEAO', 'XOF'],
-  ['Hong Kong Dollar', 'HKD'],
-  ['Japanese Yen', 'JPY'],
-  ['Litecoin', 'LTC'],
-  ['Mexican Peso', 'MXN'],
-  ['New Zealand Dollar', 'NZD'],
-  ['Norwegian Krone', 'NOK'],
-  ['North Korean Won', 'KPW'],
-  ['Philippine Peso', 'PHP'],
-  ['Russian Ruble', 'RUB'],
-  ['Singapore Dollar', 'SGD'],
-  ['South Korean Won', 'KRW'],
-  ['Swedish Krona', 'SEK'],
-  ['Swiss Franc', 'CHF'],
-  ['Taiwan Dollar', 'TWD'],
-  ['Polish Złoty', 'PLN'],
-  ['South African Rand', 'ZAR'],
-].map(([name, value]) => ({ name, value }));
+const currencies = Object.entries(Currencies).map(([key, value]) => ({
+  name: value.name,
+  value: key,
+}));
 
 const allUnits = [
   ...currencies,

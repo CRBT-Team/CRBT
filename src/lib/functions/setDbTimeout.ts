@@ -39,7 +39,7 @@ export type RawDBTimeout = Omit<timeouts, 'id' | 'data'> & {
 export async function setDbTimeout<T extends TimeoutTypes>(
   timeout: FullDBTimeout<T> | RawDBTimeout,
   loadOnly: boolean = false
-) {
+): Promise<FullDBTimeout<T>> {
   const client = getDiscordClient();
 
   setLongerTimeout(async () => {

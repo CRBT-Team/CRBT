@@ -3,7 +3,7 @@ import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getStrings, languages } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, getPurplet, OptionBuilder } from 'purplet';
 
 const { meta, colorNames } = getStrings('en-US', 'color set');
 

@@ -66,7 +66,7 @@ export default ChatCommand({
     const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
     for (const choice of pollChoices) {
-      if (choice.replace(EmojiRegex, '').length > 20) {
+      if (choice.replace(EmojiRegex, '').length > 40) {
         return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
       } else if (choice.replace(EmojiRegex, '').length === 0) {
         return this.reply(CRBTError(errors.CHOICE_EMPTY));
@@ -315,7 +315,7 @@ export const EditPollButton = ButtonComponent({
             .setLabel(`${strings.CHOICE} ${index + 1}`)
             .setValue(field.name)
             .setRequired(true)
-            .setMaxLength(20)
+            .setMaxLength(40)
             .setStyle('SHORT')
         )
       )
@@ -448,15 +448,22 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
       return { name: pollMsg.embeds[0].fields[index].name, votes };
     })
     .sort((a, b) => b.votes - a.votes);
+  const winners = ranking.filter((place) => place.votes === ranking[0].votes);
 
   await pollMsg.reply({
     embeds: [
       new MessageEmbed()
         .setTitle(`🎉 ${strings.POLL_RESULTS_TITLE}`)
         .setDescription(
-          (ranking[0].votes === ranking[1].votes
+          (winners.length > 1
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
-                .replace('<OPTION2>', ranking[1].name)
+                .replace(
+                  '<OPTION2>',
+                  winners
+                    .slice(1)
+                    .map((winner) => winner.name)
+                    .join(', ')
+                )
                 .replace('<VOTES>', ranking[0].votes.toString())
             : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
                 '<OPTION>',
@@ -488,7 +495,7 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
       })
         .setFields(
           pollMsg.embeds[0].fields.map((field) => {
-            if (field.name === ranking[0].name) {
+            if (winners.map(({ name }) => name).includes(field.name)) {
               return {
                 name: `🏆 ${field.name}`,
                 value: field.value,
@@ -565,7 +572,8 @@ const renderPoll = async (
       })
       .join('')
       .replace(`${emojis.progress.fillstart}${emojis.progress.empty}`, emojis.progress.fillstartcut)
-      .replace(`${emojis.progress.fill}${emojis.progress.empty}`, emojis.progress.fillcut);
+      .replace(`${emojis.progress.fill}${emojis.progress.empty}`, emojis.progress.fillcut)
+      .replace(`${emojis.progress.fill}${emojis.progress.emptyend}`, emojis.progress.fillcut);
 
     choice.value = `${progressBar}\n${strings.POLL_OPTION_RESULT.replace(
       '<PERCENTAGE>',
