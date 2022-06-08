@@ -1,9 +1,6 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "Không thể sử dụng lệnh này trong tin nhắn trực tiếp.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "GUILD_ONLY": "Không thể sử dụng lệnh này trong tin nhắn trực tiếp."
   },
   "genericButtons": {
     "BACK": "Quay lại",
@@ -16,12 +13,12 @@
     "NEXT": "Tiếp theo",
     "SAVE": "Lưu",
     "ADD_REMINDER": "Thêm nhắc nhỡ",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Mở DM"
   },
   "UnknownError": {
     "strings": {
       "TITLE": "Một lỗi không xác định đã xảy ra.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "DESCRIPTION": "Chúng tôi không có manh mối nào về vấn đề này. Đây là thông báo lỗi mà chúng tôi nhận được:\n<MESSAGE>\nĐiều này đã được tự động báo cáo cho chúng tôi và chúng tôi đảm bảo sẽ khắc phục sự cố này sớm nhất có thể. Xin lỗi vì sự bất tiện."
     }
   },
   "CooldownError": {
@@ -37,28 +34,28 @@
       "description": "Thay đổi màu nhấn CRBT của bạn.",
       "options": [
         {
-          "name": "color",
+          "name": "màu sắc",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
     },
     "colorNames": {
       "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
+      "lightred": "Đỏ nhạt",
+      "red": "Đỏ",
+      "darkred": "Đỏ đậm",
+      "orange": "Cam",
+      "yellow": "Vàng",
+      "lightgreen": "Xanh lá cây nhạt",
+      "green": "Xanh lá cây",
+      "darkgreen": "Xanh lá cây đậm",
+      "cyan": "Lục lam",
+      "lightblue": "Xanh nhạt",
+      "blue": "Xanh dương",
+      "darkblue": "Xanh đậm",
+      "blurple": "Tím xanh",
+      "lightpurple": "Tím nhạt",
+      "purple": "Tím",
       "darkpurple": "Màu tím đậm",
       "pink": "Màu hồng",
       "brown": "Màu nâu",
@@ -71,25 +68,25 @@
       "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
+      "EMBED_TITLE": "Đã cập nhật màu nhấn.",
       "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
       "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
     "meta": {
-      "description": "Set a reminder.",
+      "description": "Đặt một lời nhắc nhở.",
       "options": [
         {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "name": "khi nào",
+          "description": "Khi nào cần nhắc bạn (ví dụ: 2 giờ, 3w2d (3 tuần và 2 ngày), 20:30)."
         },
         {
-          "name": "subject",
+          "name": "đối tượng",
           "description": "What to remind you of."
         },
         {
-          "name": "destination",
+          "name": "đích đến",
           "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
@@ -105,24 +102,24 @@
       "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
+      "SUCCESS_TITLE": "Đã đặt lời nhắc!",
       "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
       "SUCCESS_DM": "You will be reminded by DM",
       "SUBJECT": "Tiêu đề",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
+      "TOMORROW_AT": "Ngày mai lúc <TIME>",
+      "TODAY_AT": "Hôm nay lúc <TIME>",
       "BUTTON_GCALENDAR": "Thêm sự kiện vào Google Lịch",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "và",
+      "AT": "lúc",
+      "ON": "vào",
+      "IN": "trong",
+      "TOMORROW": "ngày mai",
+      "TODAY": "hôm nay"
     }
   },
   "ping": {
@@ -133,7 +130,7 @@
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "UPTIME": "Trực tuyến kể từ",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
@@ -144,33 +141,33 @@
     "strings": {
       "EMBED_TITLE": "<CRBT> - Information",
       "VERSION": "Version <VERSION> on <PURPLET>",
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
-      "PING": "Ping",
+      "MEMBER_COUNT": "Số lượng thành viên",
+      "SERVER_COUNT": "Số lượng máy chủ",
+      "PING": "Độ trễ",
       "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
-      "UPTIME": "Online since",
+      "CREATED": "Được tạo vào",
+      "UPTIME": "Trực tuyến kể từ",
       "BUTTON_WEBSITE": "Trang web",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_INVITE": "Thêm vào Máy chủ",
+      "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Chỉ có người đã sử dụng lệnh này mới có thể sử dụng nút này."
     },
     "strings": {
-      "AVATAR": "Avatar",
-      "INFO": "User info"
+      "AVATAR": "Ảnh đại diện",
+      "INFO": "Thông tin người dùng"
     }
   },
   "profile": {
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "hh": "Anh",
+      "sh": "Chị",
+      "tt": "Họ",
+      "other": "Khác",
+      "ask": "Hỏi tôi"
     }
   },
   "poll": {
@@ -198,51 +195,51 @@
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
-      "CHOICE": "Choice",
-      "POLL_HEADER": "CRBT Poll",
+      "CHOICE": "Lựa chọn",
+      "POLL_HEADER": "Thăm dò ý kiến CRBT",
       "POLL_HEADER_VOTE": "Vote for an option below",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
       "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
-      "SUCCESS_TITLE": "Poll created!",
+      "POLL_SELECT_MENU_VOTE": "Bình chọn",
+      "KEYWORD_YES__KEEP_LOWERCASE": "có",
+      "KEYWORD_NO__KEEP_LOWERCASE": "không",
+      "SUCCESS_TITLE": "Đã tạo cuộc thăm dò ý kiến!",
       "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
       "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "No votes yet",
+      "POLL_DATA_NOVOTES": "Chưa có phiếu bầu",
       "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
-      "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
-      "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
+      "BUTTON_EDIT_POLL": "Chỉnh sửa cuộc thăm dò ý kiến",
+      "BUTTON_CANCEL_POLL": "Xóa cuộc thăm dò ý kiến",
+      "BUTTON_END_POLL": "Kết thúc cuộc thăm dò ý kiến",
+      "TITLE": "Tiêu đề",
+      "SUCCESS_POLL_DELETED": "Đã xóa cuộc thăm dò ý kiến.",
+      "SUCCESS_POLL_ENDED": "Cuộc thăm dò ý kiến đã kết thúc.",
+      "POLL_HEADER_ENDED": "Đã kết thúc",
+      "POLL_DESCRIPTION_ENDED": "Cuộc thăm dò ý kiến đã kết thúc. Bạn không thể bỏ phiếu cho nó nữa.",
+      "POLL_RESULTS_TITLE": "Đã có kết qua!",
       "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
       "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
       "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
-      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
+      "BUTTON_JUMP_TO_POLL": "Nhảy đến cuộc thăm dò ý kiến"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Nhận hình đại diện mặc định của người dùng hoặc của bạn nếu bạn không chỉ định.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to get the avatar of."
+          "name": "người dùng",
+          "description": "Người dùng của hình đại diện để lấy."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "kích thước",
+          "description": "Kích cỡ của hình đại diện để lấy."
         },
         {
-          "name": "format",
-          "description": "The format of the avatar to get."
+          "name": "định dạng",
+          "description": "Định dạng của hình đại diện để lấy."
         }
       ]
     },
@@ -277,7 +274,7 @@
       "description": "Calculate a mathematical expression.",
       "options": [
         {
-          "name": "expression",
+          "name": "biểu thức",
           "description": "The expression to calculate."
         }
       ]
@@ -289,7 +286,7 @@
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
         "options": [
           {
-            "name": "description",
+            "name": "mô tả",
             "description": "Describe to your members what your Role Picker is for."
           },
           {
@@ -301,11 +298,11 @@
             ]
           },
           {
-            "name": "limit",
+            "name": "giới hạn",
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
+            "name": "vai trò",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -316,26 +313,26 @@
         "description": "Create a new Role Picker using one of the presets.",
         "options": [
           {
-            "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "name": "mẫu thiết lập",
+            "description": "Một cài đặt trước để lựa chọn. CRBT sẽ tự động tạo các vai trò và gửi một bản nhúng đẹp."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose a color for your display name."
+          "name": "Màu sắc",
+          "message": "Chọn màu cho tên hiển thị của bạn."
         },
         "pronouns": {
-          "name": "Pronouns",
-          "message": "What are your pronouns?"
+          "name": "Đại từ nhân xưng",
+          "message": "Đại từ nhân xưng của bạn là gì?"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "What's your zodiac sign?"
+          "name": "Các cung hoàng đạo",
+          "message": "Cung hoàng đảo của bạn là gì?"
         },
         "verification": {
-          "name": "Human Verification",
+          "name": "Xác minh nhân tính",
           "message": "Click on the button to verify your account."
         }
       }
@@ -348,9 +345,9 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
+      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
+      "CHOOSE_ROLES": "Chọn vai trò",
       "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
@@ -359,8 +356,8 @@
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "SUCCESS_TITLE": "Đã tạo Bộ chọn vại trò!",
+      "SUCCESS_DESCRIPTION": "Giờ đây, các thành viên sẽ có thể lựa chọn các vai trò từ thực đơn này. Để vô hiệu hóa nó, chỉ cần xóa thông báo Bộ chọn vai trò."
     }
   }
 }

@@ -1,9 +1,6 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "Эта команда не может быть использована в ЛС.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
   },
   "genericButtons": {
     "BACK": "Назад",
@@ -16,7 +13,7 @@
     "NEXT": "Следующий",
     "SAVE": "Сохранить",
     "ADD_REMINDER": "Добавить напоминание",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Открыть ЛС"
   },
   "UnknownError": {
     "strings": {
@@ -38,7 +35,7 @@
       "options": [
         {
           "name": "цвет",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "Цвет для изменения акцента. Используйте одно из предложений или цвет HEX."
         }
       ]
     },
@@ -68,12 +65,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "У вас нет цвета профиля Discord для синхронизации. Чтобы поставить его, измените пользовательский профиль Discord'а и смените его цвет.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "INVALID_COLOR_NAME": "Вы должны ввести корректное имя или название цвета. Используйте /color list для получения дополнительной информации."
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с вашим цветом акцента CRBT.",
+      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также в вашем профиле и картах информации, когда кто-то еще их посещает."
     }
   },
   "remind me": {
@@ -90,7 +87,7 @@
         },
         {
           "name": "адресат",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
         }
       ]
     },
@@ -166,71 +163,71 @@
   },
   "profile": {
     "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "hh": "Он/Его",
+      "sh": "Она/Ее",
+      "tt": "Они/Их",
+      "other": "Другое",
+      "ask": "Спрашивать"
     }
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Создать опрос с выбранными вариантами.",
       "options": [
         {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Выбор, который может быть выбран пользователем. Желательно сделайте его коротким."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "Другой выбор, который пользователь может выбрать."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "То же что и выбор 1 и 2, но не требуется."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "И вот сколько выборов есть."
         }
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 20 characters (excluding emojis).",
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "TITLE_TOO_LONG": "Заголовок вашего опроса должен быть не более 100 символов.",
+      "CHOICE_TOO_LONG": "Выбор не может быть длиннее 20 символов (без учета эмодзи).",
+      "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
+      "POLL_DATA_NOT_ALLOWED": "Только модераторы чата (разрешение \"Управлять сообщениями\") и оригинальный автор опроса могут просматривать свои данные и параметры."
     },
     "strings": {
-      "CHOICE": "Choice",
-      "POLL_HEADER": "CRBT Poll",
-      "POLL_HEADER_VOTE": "Vote for an option below",
-      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
-      "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
-      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "No votes yet",
-      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
-      "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
-      "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
-      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
+      "CHOICE": "Выбор",
+      "POLL_HEADER": "Опрос CRBT",
+      "POLL_HEADER_VOTE": "Голосуйте за вариант ниже",
+      "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать варианты и другие данные, нажав кнопку <ICON> ниже.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> голос(ов)",
+      "POLL_FOOTER_VOTES": "Всего голосов: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Опрос начат <USER>",
+      "POLL_SELECT_MENU_VOTE": "Проголосовать",
+      "KEYWORD_YES__KEEP_LOWERCASE": "да",
+      "KEYWORD_NO__KEEP_LOWERCASE": "нет",
+      "SUCCESS_TITLE": "Опрос создан!",
+      "SUCCESS_DESCRIPTION": "Опрос закончится через <TIME>, но вы можете преждевременно завершить его с помощью меню <ICON>. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
+      "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
+      "POLL_DATA_NOVOTES": "Пока нет голосов",
+      "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться. Используйте кнопку снова, чтобы обновить данные.",
+      "BUTTON_EDIT_POLL": "Редактировать опрос",
+      "BUTTON_CANCEL_POLL": "Удалить опрос",
+      "BUTTON_END_POLL": "Завершить опрос",
+      "TITLE": "Заголовок",
+      "SUCCESS_POLL_DELETED": "Опрос удалён.",
+      "SUCCESS_POLL_ENDED": "Опрос окончен.",
+      "POLL_HEADER_ENDED": "Завершено",
+      "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете голосовать за него.",
+      "POLL_RESULTS_TITLE": "Результаты уже в опросе!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" связали <VOTES> голос(ов)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" выиграл с <VOTES> голос(ов)",
+      "POLL_RESULTS_DESCRIPTION_REST": "из <TOTAL>!\nНажмите кнопку ниже, чтобы просмотреть полные результаты.",
+      "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Получить аватар пользователя по умолчанию, если вы его не указали.",
       "options": [
         {
           "name": "пользователь",
@@ -238,47 +235,47 @@
         },
         {
           "name": "размер",
-          "description": "The size of the avatar to get."
+          "description": "Размер аватара для получения."
         },
         {
           "name": "формат",
-          "description": "The format of the avatar to get."
+          "description": "Формат аватара для получения."
         }
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Получить аватар"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "<USER> - Аватар",
+      "DOWNLOAD": "Загрузить (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_TITLE": "Спасибо, что пригласили <CRBT> на сервер!",
+      "EMBED_DESCRIPTION": "<CRBT> теперь на <SERVERS> серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки](<DISCORD>)**."
     }
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Добавить сообщение в закладки"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (Сообщение в закладках)",
+      "SUCCESS_MESSAGE": "Это сообщение отправлено в ЛС!"
     }
   },
   "calc": {
     "meta": {
-      "description": "Calculate a mathematical expression.",
+      "description": "Рассчитать математическое выражение.",
       "options": [
         {
-          "name": "expression",
-          "description": "The expression to calculate."
+          "name": "выражение",
+          "description": "Выражение для расчёта."
         }
       ]
     }
@@ -286,81 +283,81 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+        "description": "Создать новый выборщик ролей — меню, в котором участники сами выбирают роли.",
         "options": [
           {
-            "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
+            "name": "описание",
+            "description": "Опишите участникам, для чего ваш выборщик ролей."
           },
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "поведение",
+            "description": "Как должен вести себя выбор ролей.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Вкл/выкл роль(и)",
+              "Давать роли только один раз"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "предел",
+            "description": "Сколько ролей может быть выбрано. Установите 0 для неограниченного количества."
           },
           {
-            "name": "role",
-            "description": "A role to assign to the member when selected."
+            "name": "роль",
+            "description": "Роль для назначения участнику при выборе."
           }
         ]
       }
     },
     "preset": {
       "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
+        "description": "Создать новый выборщик ролей, используя один из пресетов.",
         "options": [
           {
-            "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "name": "пресет",
+            "description": "Пресет для выбора. CRBT будет автоматически создавать роли и отправлять в красивой вставке."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose a color for your display name."
+          "name": "Цвета",
+          "message": "Выберите цвет для вашего отображаемого имени."
         },
         "pronouns": {
-          "name": "Pronouns",
-          "message": "What are your pronouns?"
+          "name": "Обращение",
+          "message": "Как к вам обращаться?"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "What's your zodiac sign?"
+          "name": "Знаки зодиака",
+          "message": "Какой у вас знак зодиака?"
         },
         "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button to verify your account."
+          "name": "Проверка на человека",
+          "message": "Нажмите на кнопку, чтобы подтвердить свой аккаунт."
         }
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "USER_MISSING_PERMS": "Только администраторы сервера могут создавать выборщики ролей.",
+      "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
+      "ROLE_DOES_NOT_EXIST": "Роль <ROLE> не существует или была удалена. Свяжитесь с администратором для решения проблемы.",
+      "ROLES_DO_NOT_EXIST": "Одна или несколько ролей, которые вы указали, не существуют или были удалены. Свяжитесь с администратором для решения проблемы.",
+      "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить ее."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
-      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "EMBED_TITLE": "Выборщик ролей - Самоназначаемые роли",
+      "CHOOSE_ROLE": "Выберите роль",
+      "CHOOSE_ROLES": "Выберите роли",
+      "EMBED_FOOTER": "Примечание: CRBT не связан ни с одним из имен ролей или с сервером.",
+      "OPTION_LABEL_GET_ROLE": "Получить роль <ROLE>.",
+      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, выбрав их ниже.",
+      "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
+      "BUTTON_ROLES_ADD": "Добавлена <ROLE> к вашим ролям.",
+      "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
+      "BUTTON_ROLES_REMOVE": "<ROLE> удалена из ваших ролей.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
+      "SUCCESS_TITLE": "Выбор роли создан!",
+      "SUCCESS_DESCRIPTION": "Участники смогут выбрать роли из этого меню. Чтобы отключить его, просто удалите сообщение выборщика ролей."
     }
   }
 }

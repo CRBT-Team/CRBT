@@ -1,9 +1,6 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "Dieser Command kann in Direktnachrichten nicht genutzt werden.",
-    "DEPRECATION_DESCRIPTION": "Deprecated. ",
-    "DEPRECATION_TITLE": "⚠️ Deprecation Notice",
-    "DEPRECATION_NOTICE": "CRBT Profiles and the Purplet economy system are being deprecated in favor of Discord's own profile system and a more powerful per-server economy system.\nYou will still able to only view profiles & users' balances until May 2022.\nFor more information, please refer to **[this article](https://crbt.ga/blog/rethinking-crbt-profiles-economy)**."
+    "GUILD_ONLY": "Dieser Command kann in Direktnachrichten nicht genutzt werden."
   },
   "genericButtons": {
     "BACK": "Zurück",
@@ -348,7 +345,7 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker - Self-assignable Roles",
+      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
       "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
