@@ -31,16 +31,16 @@
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "Change your CRBT accent colour.",
       "options": [
         {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "name": "colour",
+          "description": "Colour to change your accent colour. Use one of the suggestions or a HEX colour."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "Sync Discord Profile Colour",
       "lightred": "Light Red",
       "red": "Red",
       "darkred": "Dark Red",
@@ -60,17 +60,17 @@
       "pink": "Pink",
       "brown": "Brown",
       "black": "Black",
-      "gray": "Gray",
+      "gray": "Grey",
       "white": "White"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "You do not have a Discord profile colour to sync from! To set one, edit your Discord User Profile and change your Profile Colour.",
+      "INVALID_COLOR_NAME": "You need to enter a valid colour name or a HEX colour. Use /color list for more info."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_TITLE": "Accent colour updated.",
+      "EMBED_SYNC_INFO": "Your Discord profile colour will be synced to your CRBT accent colour.",
+      "EMBED_DESCRIPTION": "This colour will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -320,8 +320,8 @@
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose a color for your display name."
+          "name": "Colours",
+          "message": "Choose a colour for your display name."
         },
         "pronouns": {
           "name": "Pronouns",
