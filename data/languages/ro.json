@@ -357,7 +357,7 @@
       "BUTTON_ROLES_REMOVE": "<ROLE> eliminat din rolurile tale.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Selectează-l din nou pentru a-l adăuga.",
       "SUCCESS_TITLE": "Selector de roluri creat!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "SUCCESS_DESCRIPTION": "Membrii vor avea acum posibilitatea de a selecta roluri din acest meniu. Pentru a-l dezactiva, pur și simplu șterge mesajul cu selectorul de roluri."
     }
   }
 }
