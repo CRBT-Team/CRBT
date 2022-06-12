@@ -1,84 +1,84 @@
 {
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Această comandă nu poate fi utilizată în DM-uri."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs"
+    "BACK": "Înapoi",
+    "JUMP_TO_MSG": "Sari la mesaj",
+    "CANCEL": "Anulează",
+    "CONFIRM": "Confirmă",
+    "DELETE": "Șterge",
+    "EDIT": "Modifică",
+    "PREVIOUS": "În spate",
+    "NEXT": "Mai departe",
+    "SAVE": "Salvează",
+    "ADD_REMINDER": "Adaugă memento",
+    "OPEN_DMS": "Deschide DM-uri"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "A apărut o eroare necunoscută.",
+      "DESCRIPTION": "N-avem nicio idee ce problema asta-r putea fi. Aici este mesajul de eroare pe care l-am primit:\n<MESSAGE>\nAcest lucru ne-a fost raportat automat, și ne vom asigura că o vom repara cât mai curând posibil. Ne cerem mii de scuze."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "TITLE": "Stai un pic!",
+      "DESCRIPTION": "Vei putea folosi acest/această <TYPE> în <TIME>...",
+      "COMMAND": "comandă",
+      "COMPONENT": "componentă"
     }
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "Schimbă-ți culoarea de accent CRBT.",
       "options": [
         {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "name": "culoare",
+          "description": "Culoarea ce-ți va înlocui culoarea de accent. Folosește una dintre sugestii sau o culoare hexazecimală."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "sync": "Sincronizează culoarea profilului Discord",
+      "lightred": "Roșu deschis",
+      "red": "Roșu",
+      "darkred": "Roșu închis",
+      "orange": "Oranj",
+      "yellow": "Galben",
+      "lightgreen": "Verde deschis",
+      "green": "Verde",
+      "darkgreen": "Verde închis",
+      "cyan": "Turcoaz",
+      "lightblue": "Albastru deschis",
+      "blue": "Albastru",
+      "darkblue": "Albastru închis",
+      "blurple": "Albastrolet",
+      "lightpurple": "Violet deschis",
+      "purple": "Violet",
+      "darkpurple": "Violet închis",
+      "pink": "Roz",
+      "brown": "Maro",
+      "black": "Negru",
+      "gray": "Gri",
+      "white": "Alb"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
+      "NO_DISCORD_COLOR": "N-ai o culoare de profil Discord de la care să te sincronizezi! Pentru a seta una, editează profilul de utilizator Discord și schimbă-ți culoarea de profil.",
+      "INVALID_COLOR_NAME": "Trebuie să introduci un nume valid sau un nume de culori. Utilizează /color list pentru informații suplimentare."
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_TITLE": "Culoare de accent actualizată.",
+      "EMBED_SYNC_INFO": "Culoarea profilului tău Discord va fi sincronizată cu cea de accent pe CRBT.",
+      "EMBED_DESCRIPTION": "Această culoare va fi utilizată de cele mai multe ori când CRBT îți răspunde, precum și pe profilul și cardurile tale de informații, atunci când altcineva le vizitează."
     }
   },
   "remind me": {
     "meta": {
-      "description": "Set a reminder.",
+      "description": "Setează un memento.",
       "options": [
         {
-          "name": "when",
+          "name": "când",
           "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
         },
         {
@@ -164,38 +164,38 @@
   "profile": {
     "pronouns": {
       "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
+      "sh": "Ea",
+      "tt": "Dumnealor",
+      "other": "Altul",
+      "ask": "Întreabă-mă"
     }
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Creează un sondaj cu variantele date.",
       "options": [
         {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Câteva variante ce utilizatorul poate alege. Fă-le scurte, preferabil."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "O altă opțiune ce un utilizator poate alege."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "La fel ca în cazul opțiunilor 1 și 2, dar nu este necesar."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "Atât de departe pot merge opțiunile."
         }
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 20 characters (excluding emojis).",
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "TITLE_TOO_LONG": "Titlul sondajului trebuie să aibă cel mult 100 de caractere.",
+      "CHOICE_TOO_LONG": "O alegere nu poate fi mai lungă de 20 de caractere (cu excepția emoji-urilor).",
+      "CHOICE_EMPTY": "O alegere nu poate fi goală (cu excepția emoji-urilor).",
+      "POLL_DATA_NOT_ALLOWED": "Doar moderatorii chat-ului (permisiunea \"Gestionare mesaje\") și creatorul original de sondaje îi pot vizualiza datele și opțiunile."
     },
     "strings": {
-      "CHOICE": "Choice",
+      "CHOICE": "Variante",
       "POLL_HEADER": "CRBT Poll",
       "POLL_HEADER_VOTE": "Vote for an option below",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
