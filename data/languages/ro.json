@@ -79,91 +79,91 @@
       "options": [
         {
           "name": "când",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "description": "Când să-ți reamintim (spre exemplu 2 ore, 3săpt2zile, 20:30)."
         },
         {
-          "name": "subject",
-          "description": "What to remind you of."
+          "name": "subiect",
+          "description": "Ce-ți vom reaminti."
         },
         {
-          "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "name": "destinație",
+          "description": "Unde să-ți trimitem memento-ul (lasă necompletat pentru a-l trimite prin DM-uri)."
         }
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "SUBJECT_MAX_LENGTH": "Trebuie să conțină cel mult 120 de caractere.",
+      "PAST": "Dacă n-ai o mașină a timpului, nu poți seta un memento în trecut.",
+      "INVALID_FORMAT": "Timpul introdus este într-un format nevalid, sau sub 0 secunde în viitor.",
+      "TOO_LONG": "Îți apreciăm mentalitatea, dar nu poți seta un memento pentru mai mult de 2 ani de-acum.",
+      "INVALID_CHANNEL_TYPE": "Canalul specificat nu este un canal text valid.",
+      "BOT_MISSING_PERMS": "N-am permisiunea de a trimite mesaje pe acest canal.",
+      "USER_MISSING_PERMS": "N-ai permisiunea de a trimite mesaje pe acest canal.",
+      "REMINDERS_MAX_LIMIT": "Nu poți seta mai mult de 5 memento-uri deodată."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "SUCCESS_TITLE": "Memento setat!",
+      "SUCCESS_CHANNEL": "Ți se va reaminti în <CHANNEL>",
+      "SUCCESS_DM": "Ți se va reaminti în DM-uri",
+      "SUBJECT": "Subiect",
+      "TOMORROW_AT": "Mâine la <TIME>",
+      "TODAY_AT": "Azi la <TIME>",
+      "BUTTON_GCALENDAR": "Adaugă ca eveniment Google Calendar",
+      "GCALENDAR_EVENT": "Setat de CRBT Memento.",
+      "GCALENDAR_EVENT_DM": "Ți se va reaminti și-n DM-uri.",
+      "GCALENDAR_EVENT_CHANNEL": "Ți se va reaminti și-n <CHANNEL>, în <SERVER>."
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "și",
+      "AT": "la",
+      "ON": "pe",
+      "IN": "în",
+      "TOMORROW": "mâine",
+      "TODAY": "azi"
     }
   },
   "ping": {
     "meta": {
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Bipuire CRBT. Returnează latenția și informațiile de conexiune."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
+      "EMBED_TITLE": "<CRBT> - Bipuire",
       "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
-      "UPTIME": "Online since",
+      "INTERACTION": "Interacțiune",
+      "UPTIME": "Online din",
       "FORMAT_MS": "<NUMBER>ms"
     }
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT"
+      "description": "Obține informații despre CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
-      "PING": "Ping",
-      "PING_RESULT": "≈<PING> milliseconds",
-      "CREATED": "Created on",
-      "UPTIME": "Online since",
-      "BUTTON_WEBSITE": "Website",
-      "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "EMBED_TITLE": "<CRBT> - Informații",
+      "VERSION": "Versiunea <VERSION> pe <PURPLET>",
+      "MEMBER_COUNT": "Număr de membri",
+      "SERVER_COUNT": "Rang server",
+      "PING": "Bipuire",
+      "PING_RESULT": "≈<PING> milisecunde",
+      "CREATED": "Creat pe",
+      "UPTIME": "Online din",
+      "BUTTON_WEBSITE": "Site Web",
+      "BUTTON_INVITE": "Adaugă la Server",
+      "BUTTON_DISCORD": "Alătură-te comunității"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Only the person who used this command can use this button."
+      "NOT_CMD_USER": "Numai persoana ce a folosit această comandă poate utiliza acest buton."
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "Informațiile utilizatorului"
     }
   },
   "profile": {
     "pronouns": {
-      "hh": "He/Him",
+      "hh": "El",
       "sh": "Ea",
       "tt": "Dumnealor",
       "other": "Altul",
@@ -178,104 +178,104 @@
           "description": "Câteva variante ce utilizatorul poate alege. Fă-le scurte, preferabil."
         },
         {
-          "description": "O altă opțiune ce un utilizator poate alege."
+          "description": "O altă variantă ce un utilizator poate alege."
         },
         {
-          "description": "La fel ca în cazul opțiunilor 1 și 2, dar nu este necesar."
+          "description": "La fel ca în cazul variantelor 1 și 2, dar nu este necesar."
         },
         {
-          "description": "Atât de departe pot merge opțiunile."
+          "description": "Atât de departe pot merge variantele."
         }
       ]
     },
     "errors": {
       "TITLE_TOO_LONG": "Titlul sondajului trebuie să aibă cel mult 100 de caractere.",
-      "CHOICE_TOO_LONG": "O alegere nu poate fi mai lungă de 20 de caractere (cu excepția emoji-urilor).",
-      "CHOICE_EMPTY": "O alegere nu poate fi goală (cu excepția emoji-urilor).",
+      "CHOICE_TOO_LONG": "O variantă nu poate fi mai lungă de 20 de caractere (cu excepția emoji-urilor).",
+      "CHOICE_EMPTY": "O variantă nu poate fi goală (cu excepția emoji-urilor).",
       "POLL_DATA_NOT_ALLOWED": "Doar moderatorii chat-ului (permisiunea \"Gestionare mesaje\") și creatorul original de sondaje îi pot vizualiza datele și opțiunile."
     },
     "strings": {
-      "CHOICE": "Variante",
-      "POLL_HEADER": "CRBT Poll",
-      "POLL_HEADER_VOTE": "Vote for an option below",
-      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
-      "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
-      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "No votes yet",
-      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
-      "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
-      "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
-      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
+      "CHOICE": "Variantă",
+      "POLL_HEADER": "Sondaj CRBT",
+      "POLL_HEADER_VOTE": "Votează pentru una dintre opțiunile de mai jos",
+      "POLL_DESCRIPTION": "Sondajul se va termina <TIME>.\nSondajul creatorului poate vizualiza opțiuni și alte date făcând clic pe butonul <ICON> de mai jos.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vot(ări)",
+      "POLL_FOOTER_VOTES": "Voturi totale: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Sondaj început de <USER>",
+      "POLL_SELECT_MENU_VOTE": "Votează",
+      "KEYWORD_YES__KEEP_LOWERCASE": "da",
+      "KEYWORD_NO__KEEP_LOWERCASE": "nu",
+      "SUCCESS_TITLE": "Sondaj creat!",
+      "SUCCESS_DESCRIPTION": "Sondajul se va termina <TIME>, dar îl poți termina prematur folosind meniul <ICON>. Din acest meniu, poți și să editezi sondajul, să îl ștergi sau să vezi alegătorii.",
+      "POLL_DATA_OPTIONS": "Sondaj CRBT • Date și opțiuni",
+      "POLL_DATA_NOVOTES": "Nici un vot încă",
+      "POLL_DATA_FOOTER": "Un apropo: aceste date nu vor fi actualizate live. Utilizează butonul din nou pentru a actualiza datele.",
+      "BUTTON_EDIT_POLL": "Editează sondaj",
+      "BUTTON_CANCEL_POLL": "Șterge sondaj",
+      "BUTTON_END_POLL": "Sfârșește sondaj",
+      "TITLE": "Titlu",
+      "SUCCESS_POLL_DELETED": "Sondaj șters.",
+      "SUCCESS_POLL_ENDED": "Sondajul s-a încheiat.",
+      "POLL_HEADER_ENDED": "Încheiat",
+      "POLL_DESCRIPTION_ENDED": "Sondajul s-a încheiat. Nu mai poți vota asupra acestuia.",
+      "POLL_RESULTS_TITLE": "Rezultatele-au fost trimise!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "«<OPTION1>» și «<OPTION2>» au legat <VOTES> vot(uri)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "«<OPTION>» a câştigat cu <VOTES> vot(uri)",
+      "POLL_RESULTS_DESCRIPTION_REST": "din <TOTAL>!\nFă clic pe butonul de mai jos pentru a vizualiza rezultatele complete.",
+      "BUTTON_JUMP_TO_POLL": "Sari la sondaj"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Copiază un avatar implicit al utilizatorului, sau al tău dacă nu îl specifici.",
       "options": [
         {
-          "name": "user",
-          "description": "The user to get the avatar of."
+          "name": "utilizator",
+          "description": "Utilizatorul al cărui avatar vrei să-l copiezi."
         },
         {
-          "name": "size",
-          "description": "The size of the avatar to get."
+          "name": "dimensiune",
+          "description": "Dimensiunea avatarului pe care vrei să-l copiezi."
         },
         {
           "name": "format",
-          "description": "The format of the avatar to get."
+          "description": "Formatul avatarului pe care vrei să-l copiezi."
         }
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Copiază avatar"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "DOWNLOAD": "Descarcă (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_TITLE": "Ura! Îți mulțumim c-ai invitat <CRBT> la server!",
+      "EMBED_DESCRIPTION": "<CRBT> este acum în <SERVERS> servere!\nPentru a începe cu CRBT, pur și simplu tastează `/` și fă clic pe avatarul său!\nPentru mai mult ajutor și informații, vizitează **[serverul de asistență](<DISCORD>)**."
     }
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Marchează mesajul"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "Trebuie să activezi DM-urile sau să deblochezi CRBT pentru a marca mesajele."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (Mesaj marcat)",
+      "SUCCESS_MESSAGE": "Mesaj trimis prin DM-uri!"
     }
   },
   "calc": {
     "meta": {
-      "description": "Calculate a mathematical expression.",
+      "description": "Calculează o expresie matematică.",
       "options": [
         {
-          "name": "expression",
-          "description": "The expression to calculate."
+          "name": "expresie",
+          "description": "Expresia care trebuie calculată."
         }
       ]
     }
@@ -283,80 +283,80 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+        "description": "Creează manual un selector nou de roluri, un meniu pentru membri pentru a alege ei înșiși roluri.",
         "options": [
           {
-            "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
+            "name": "descriere",
+            "description": "Descrie către membrii tăi pentru ce-i acest selector de roluri."
           },
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "comportament",
+            "description": "Cum ar trebui să se comporte selectorul de roluri.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Comută dăruirea/eliminarea rolului(ilor)",
+              "Trimite rolul(ile) doar o dată"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "limitare",
+            "description": "Cât de multe roluri pot fi selectate. Setați la 0 pentru nelimitat."
           },
           {
-            "name": "role",
-            "description": "A role to assign to the member when selected."
+            "name": "rol",
+            "description": "Un rol de atribuit membrului atunci când este selectat."
           }
         ]
       }
     },
     "preset": {
       "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
+        "description": "Creați un nou selector de roluri folosind una dintre presetări.",
         "options": [
           {
             "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
+            "description": "O presetare din care să alegi. CRBT va crea rolurile și va trimite o integrare fermecător de frumoasă."
           }
         ]
       },
       "presets": {
         "colors": {
-          "name": "Colors",
-          "message": "Choose a color for your display name."
+          "name": "Culori",
+          "message": "Alege o culoare pentru pseudonimul tău."
         },
         "pronouns": {
-          "name": "Pronouns",
-          "message": "What are your pronouns?"
+          "name": "Pronume personale",
+          "message": "Care-s pronumele tale?"
         },
         "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "What's your zodiac sign?"
+          "name": "Semne de Zodiac",
+          "message": "Care-i indicatorul tău zodiac?"
         },
         "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button to verify your account."
+          "name": "Verificarea umană",
+          "message": "Apasă pe buton ca să-ți verifici contul."
         }
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "USER_MISSING_PERMS": "Doar administratorii de server pot crea selectori de roluri.",
+      "BOT_MISSING_PERMS": "Am nevoie de permisiunea de \"Gestionare roluri\" pentru a crea un selector de roluri.",
+      "ROLE_DOES_NOT_EXIST": "Rolul <ROLE> nu există sau a fost eliminat. Contactează un administrator pentru a rezolva problema.",
+      "ROLES_DO_NOT_EXIST": "Unul sau mai multe dintre rolurile specificate nu există sau au fost eliminate. Contactează un administrator pentru a rezolva problema.",
+      "BUTTON_ROLES_ONCE": "Poți selecta doar acest rol o singură dată, și nu-l poți elimina."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
-      "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
+      "EMBED_TITLE": "Selector de roluri • Roluri auto-atribuibile",
+      "CHOOSE_ROLE": "Alege un rol",
+      "CHOOSE_ROLES": "Alege roluri",
+      "EMBED_FOOTER": "Un apropo: CRBT nu este afiliat cu niciunul dintre roluri sau server.",
+      "OPTION_LABEL_GET_ROLE": "Obține rolul <ROLE>.",
+      "GENERIC_SELECTOR_TITLE": "Selectează unul sau mai multe roluri alegându-le mai jos.",
+      "SELECT_MENU_ROLES_SUCCESS": "Rolurile au fost actualizate cu succes.",
+      "BUTTON_ROLES_ADD": "<ROLE> adăugat la rolurile tale.",
+      "BUTTON_ROLES_ADD_AGAIN": "Selectează-l din nou pentru a-l elimina.",
+      "BUTTON_ROLES_REMOVE": "<ROLE> eliminat din rolurile tale.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Selectează-l din nou pentru a-l adăuga.",
+      "SUCCESS_TITLE": "Selector de roluri creat!",
       "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
     }
   }
