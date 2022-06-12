@@ -18,7 +18,7 @@
   "UnknownError": {
     "strings": {
       "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "DESCRIPTION": "We have no idea what this issue is. The error we received is:\n<MESSAGE>\nThis error was reported to us automatically, and we'll get to work on it as soon as possible. Sorry for any inconvenience caused."
     }
   },
   "CooldownError": {
@@ -79,7 +79,7 @@
       "options": [
         {
           "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "description": "When to send your reminder (e.g. 2 hours, 3w2d, 20:30)."
         },
         {
           "name": "subject",
@@ -87,7 +87,7 @@
         },
         {
           "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "description": "Where to send the reminder (for DMs, leave this blank)."
         }
       ]
     },
