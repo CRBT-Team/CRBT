@@ -83,7 +83,7 @@
         },
         {
           "name": "subject",
-          "description": "What to remind you of."
+          "description": "What's the reminder?"
         },
         {
           "name": "destination",
@@ -94,21 +94,21 @@
     "errors": {
       "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
       "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
+      "INVALID_FORMAT": "The time you entered is either in an invalid format or in the past.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
       "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
       "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "REMINDERS_MAX_LIMIT": "You cannot have more than 5 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",
       "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_DM": "You will be reminded in your DMs",
       "SUBJECT": "Subject",
       "TOMORROW_AT": "Tomorrow at <TIME>",
       "TODAY_AT": "Today at <TIME>",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event",
+      "BUTTON_GCALENDAR": "Add to Google Calendar",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
@@ -175,16 +175,16 @@
       "description": "Create a poll with the given choices.",
       "options": [
         {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "A choice on the poll. Keep it short, preferably."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "Another choice for the poll."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "Add more choices outside 1 and 2."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "After this, you can't add any more choices."
         }
       ]
     },
@@ -206,7 +206,7 @@
       "KEYWORD_YES__KEEP_LOWERCASE": "yes",
       "KEYWORD_NO__KEEP_LOWERCASE": "no",
       "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "SUCCESS_DESCRIPTION": "This poll will end <TIME>, however, if you want to finish it before then, delete or edit the poll or view the voters, use the <ICON> menu.",
       "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
       "POLL_DATA_NOVOTES": "No votes yet",
       "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
@@ -217,7 +217,7 @@
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
+      "POLL_DESCRIPTION_ENDED": "This poll has ended, so you can no longer vote.",
       "POLL_RESULTS_TITLE": "The results are in!",
       "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
       "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
@@ -231,7 +231,7 @@
       "options": [
         {
           "name": "user",
-          "description": "The user to get the avatar of."
+          "description": "The user whose avatar you want."
         },
         {
           "name": "size",
@@ -239,7 +239,7 @@
         },
         {
           "name": "format",
-          "description": "The format of the avatar to get."
+          "description": "The file type of avatar to get."
         }
       ]
     },
@@ -262,7 +262,7 @@
       "name": "Bookmark Message"
     },
     "errors": {
-      "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "To bookmark messages, you need to unblock CRBT and enable your DMs."
     },
     "strings": {
       "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
@@ -290,7 +290,7 @@
             "description": "Describe to your members what your Role Picker is for."
           },
           {
-            "name": "behavior",
+            "name": "behaviour",
             "description": "How the Role Picker should behave.",
             "choices": [
               "Toggle giving/removing role(s)",
@@ -299,7 +299,7 @@
           },
           {
             "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "description": "How many roles can be selected. For unlimited, select 0."
           },
           {
             "name": "role",
@@ -338,10 +338,10 @@
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
+      "USER_MISSING_PERMS": "Only admins can create Role Pickers.",
+      "BOT_MISSING_PERMS": "To create a Role Picker, I need the `Manage Roles` permission.",
+      "ROLE_DOES_NOT_EXIST": "The role <ROLE> cannot be found. Contact an admin to resolve this issue.",
+      "ROLES_DO_NOT_EXIST": "One or more of the roles you've specified could not be found. Contact an admin to resolve this issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
@@ -350,7 +350,7 @@
       "CHOOSE_ROLES": "Choose roles",
       "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
+      "GENERIC_SELECTOR_TITLE": "Select one or more roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
       "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
