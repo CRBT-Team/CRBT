@@ -124,10 +124,10 @@
   },
   "ping": {
     "meta": {
-      "description": "Bipuire CRBT. Returnează latenția și informațiile de conexiune."
+      "description": "Ping la CRBT. Returnează latenția și informațiile de conexiune."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Bipuire",
+      "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interacțiune",
       "UPTIME": "Online din",
