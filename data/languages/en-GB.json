@@ -64,7 +64,7 @@
       "white": "White"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile colour to sync from! To set one, edit your Discord User Profile and change your Profile Colour.",
+      "NO_DISCORD_COLOR": "You do not have a Discord Profile Colour to sync from! To set one, edit your Discord User Profile and change your Profile Colour.",
       "INVALID_COLOR_NAME": "You need to enter a valid colour name or a HEX colour. Use /color list for more info."
     },
     "strings": {
