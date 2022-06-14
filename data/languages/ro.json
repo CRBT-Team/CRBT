@@ -65,7 +65,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "N-ai o culoare de profil Discord de la care să te sincronizezi! Pentru a seta una, editează profilul de utilizator Discord și schimbă-ți culoarea de profil.",
-      "INVALID_COLOR_NAME": "Trebuie să introduci un nume valid sau un nume de culori. Utilizează /color list pentru informații suplimentare."
+      "INVALID_COLOR_NAME": "Trebuie să introduci un cod HEX valid sau un nume de culori. Utilizează /color list pentru informații suplimentare."
     },
     "strings": {
       "EMBED_TITLE": "Culoare de accent actualizată.",
