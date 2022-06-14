@@ -26,7 +26,7 @@ export default ChatCommand({
     'The channel to get info from. Leave blank to get the current one.'
   ),
   async handle({ channel }) {
-    if (this.channel.type === 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
 

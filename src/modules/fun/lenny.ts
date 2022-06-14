@@ -1,6 +1,6 @@
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -10,7 +10,7 @@ export default ChatCommand({
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
   options: new OptionBuilder().string('message', 'Your message.'),
   async handle({ message }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
     if (!this.channel.isText()) {
       return this.reply(CRBTError(GUILD_ONLY));

@@ -1,7 +1,7 @@
 import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
@@ -45,7 +45,7 @@ export default ChatCommand({
       return this.reply(CRBTError('The message ID that you provided is invalid.'));
     }
 
-    const { JUMP_TO_MSG } = getStrings(this.locale, 'genericButtons');
+    const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
     const firstEmbeds = [
       new MessageEmbed()

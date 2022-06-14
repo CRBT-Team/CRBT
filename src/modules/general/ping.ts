@@ -1,11 +1,11 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
-const { meta } = getStrings('en-US', 'ping');
+const { meta } = t('en-US', 'ping');
 
 export default ChatCommand({
   name: 'ping',
@@ -13,7 +13,7 @@ export default ChatCommand({
   async handle() {
     await this.deferReply();
 
-    const { strings } = getStrings(this.locale, 'ping');
+    const { strings } = t(this, 'ping');
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();

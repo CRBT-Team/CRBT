@@ -1,9 +1,13 @@
-import { db } from '$lib/db';
+import { db, emojis, icons } from '$lib/db';
+import { t } from '$lib/language';
 import { timeouts, TimeoutTypes } from '@prisma/client';
+import { randomUUID } from 'crypto';
 import dayjs from 'dayjs';
-import { TextChannel } from 'discord.js';
-import { getDiscordClient } from 'purplet';
+import { GuildTextBasedChannel, MessageButton, MessageEmbed, TextChannel } from 'discord.js';
+import { components, getDiscordClient, row } from 'purplet';
+import { SnoozeButton } from '../../modules/components/RemindButton';
 import { endPoll } from '../../modules/polls/poll';
+import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
 
 export interface TimeoutData {
@@ -31,7 +35,7 @@ export type FullDBTimeout<T extends TimeoutTypes> = Omit<timeouts, 'id' | 'data'
 };
 
 export type RawDBTimeout = Omit<timeouts, 'id' | 'data'> & {
-  id?: string | undefined;
+  id: string | undefined;
   // so that typescript doesnt get mad
   data: any;
 };
@@ -41,6 +45,8 @@ export async function setDbTimeout<T extends TimeoutTypes>(
   loadOnly: boolean = false
 ): Promise<FullDBTimeout<T>> {
   const client = getDiscordClient();
+
+  timeout.id = timeout.id ?? randomUUID();
 
   setLongerTimeout(async () => {
     const timeoutData = (await db.timeouts.findFirst({
@@ -53,6 +59,7 @@ export async function setDbTimeout<T extends TimeoutTypes>(
         const { data } = timeoutData as FullDBTimeout<'TEMPBAN'>;
         const guild = client.guilds.cache.get(data.userId);
         await guild.members.unban(data.userId, data.reason);
+        break;
       }
       case 'POLL': {
         const { data } = timeoutData as FullDBTimeout<'POLL'>;
@@ -62,6 +69,65 @@ export async function setDbTimeout<T extends TimeoutTypes>(
         if (!msg) return;
 
         endPoll(data, msg, timeoutData.locale);
+        break;
+      }
+      case 'REMINDER': {
+        const { JUMP_TO_MSG } = t(timeout.locale, 'genericButtons');
+        const { strings } = t(timeout.locale, 'remind me');
+        const { data } = timeoutData as FullDBTimeout<'REMINDER'>;
+        const user = await client.users.fetch(data.userId);
+        const dest =
+          data.destination === 'dm'
+            ? user
+            : ((await client.channels.fetch(data.url.split('/')[1])) as GuildTextBasedChannel);
+
+        const unix = dayjs(timeout.expiration).unix();
+        const message = {
+          embeds: [
+            new MessageEmbed()
+              .setAuthor({
+                name: strings.EMBED_TITLE,
+                iconURL: icons.reminder,
+              })
+              .setDescription(
+                strings.SET_ON.replace('<TIME>', `<t:${unix}>`).replace(
+                  '<RELATIVE_TIME>',
+                  `<t:${unix}:R>`
+                )
+              )
+              .addField(strings.SUBJECT, data.subject)
+              .setColor(await getColor(user)),
+          ],
+          components: components(
+            row(
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(JUMP_TO_MSG)
+                .setURL(`https://discord.com/channels/${data.url}`),
+              new SnoozeButton()
+                .setStyle('SECONDARY')
+                .setEmoji(emojis.reminder)
+                .setLabel(strings.BUTTON_SNOOZE)
+            )
+          ),
+        };
+
+        try {
+          await dest.send({
+            content: data.destination !== 'dm' ? user.toString() : null,
+            ...message,
+          });
+        } catch (e) {
+          const dest = (await client.channels.fetch(
+            data.url.split('/')[1]
+          )) as GuildTextBasedChannel;
+
+          await dest.send({
+            content: user.toString(),
+            ...message,
+          });
+        }
+        break;
       }
     }
 
@@ -72,6 +138,6 @@ export async function setDbTimeout<T extends TimeoutTypes>(
 
   if (loadOnly) return;
   return (await db.timeouts.create({
-    data: timeout,
+    data: timeout as timeouts,
   })) as FullDBTimeout<T>;
 }

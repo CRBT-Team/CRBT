@@ -1,8 +1,7 @@
-// import { emojis } from '$lib/db';
+// import { colors, db, emojis } from '$lib/db';
 // import { CRBTError } from '$lib/functions/CRBTError';
-// import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
-// import { getStrings } from '$lib/language';
-// import { APIEmbed, PermissionFlagsBits } from 'discord-api-types/v10';
+// import { t } from '$lib/language';
+// import { PermissionFlagsBits } from 'discord-api-types/v10';
 // import { GuildMember, GuildTextBasedChannel, MessageEmbed, TextInputComponent } from 'discord.js';
 // import {
 //   ButtonComponent,
@@ -12,38 +11,22 @@
 //   row,
 //   SelectMenuComponent,
 // } from 'purplet';
-// import { welcomeDb } from '../events/welcome';
-// import { colorsMap } from './color set';
-
-// interface WelcomeMessage {
-//   content: string;
-//   embed: Partial<APIEmbed>;
-// }
-
-// export const messages = new Map<string, WelcomeMessage>();
-
-// export const details: [string, string, number, boolean, boolean][] = [
-//   // [id, name, maxLength, markdownSupport, CRBTscriptSupport]
-//   ['content', 'Plain Text', 2048, true, true],
-//   ['author', 'Embed Author', 256, false, true],
-//   ['title', 'Embed Title', 256, true, true],
-//   ['description', 'Embed Description', 2048, true, true],
-//   // ['field_name', 'Name', 256, true],
-//   // ['field_value', 'Value', 2048, true],
-//   ['footer', 'Embed Footer', 256, false, false],
-//   ['color', 'Embed Color', 7, false, false],
-//   ['image', 'Embed Image', 256, false, false],
-//   ['thumbnail', 'Embed Thumbnail', 256, false, false],
-//   ['url', 'Embed Title URL', 256, false, false],
-// ];
+// import { colorsMap } from '../settings/color set';
+// import {
+//   editableList,
+//   getValue,
+//   JoinLeaveMessage,
+//   parseCRBTscriptInMessage,
+//   RawServerJoin,
+// } from './shared';
 
 // export default ChatCommand({
 //   name: 'welcome message',
 //   description: 'Create or edit the message to send when a user joins the server',
 //   async handle() {
-//     const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+//     const { GUILD_ONLY } = t(this, 'globalErrors');
 
-//     if (this.channel.type === 'DM') {
+//     if (!this.guild) {
 //       return this.reply(CRBTError(GUILD_ONLY));
 //     }
 
@@ -51,8 +34,13 @@
 //       return this.reply(CRBTError('You must be an administrator to use this command.'));
 //     }
 
+//     const data = (await db.servers.findFirst({
+//       where: { id: this.guildId },
+//       select: { joinMessage: true },
+//     })) as RawServerJoin;
+
 //     await this.reply(
-//       await render(welcomeDb[this.guildId].welcome_message, {
+//       await render(data?.joinMessage, {
 //         channel: this.channel,
 //         member: this.member as GuildMember,
 //       })
@@ -60,61 +48,37 @@
 //   },
 // });
 
-// function getValue(message: { content?: string; embed?: MessageEmbed }, id: string): string {
-//   switch (id) {
-//     case 'content':
-//       return message.content;
-//     case 'author':
-//       return message.embed.author?.name;
-//     case 'footer':
-//       return message.embed.footer?.text;
-//     case 'color':
-//       return message.embed.hexColor;
-//     case 'image':
-//       return message.embed.image?.url;
-//     case 'thumbnail':
-//       return message.embed.thumbnail?.url;
-//     default:
-//       return message.embed[id]?.length > 100
-//         ? `${message.embed[id].slice(0, 97)}...`
-//         : message.embed[id];
-//   }
-// }
-
 // async function render(
-//   message: {
-//     embed: Partial<APIEmbed | MessageEmbed>;
-//     content: string;
-//   },
+//   message: JoinLeaveMessage,
 //   opts: {
 //     channel: GuildTextBasedChannel;
 //     member: GuildMember;
 //   }
 // ) {
-//   console.log(message);
-//   const parsedEmbed = new MessageEmbed(
-//     Object.entries(message?.embed).reduce((acc, [key, value]) => {
-//       if (value && key !== 'fields' && key !== 'color') {
-//         acc[key] = parseCRBTscript(value.toString(), opts);
-//         return acc;
-//       }
-//     }, {} as APIEmbed)
-//   );
-
-//   const content = message?.content ?? '';
+//   message = message || {
+//     embed: {
+//       title: 'Welcome <user.name> to <server.name>!',
+//       description: 'We hope you enjoy your stay!',
+//       color: parseInt(colors.default, 16),
+//     },
+//   };
+//   const parsedMessage = parseCRBTscriptInMessage(message, opts);
 
 //   return {
 //     ephemeral: true,
-//     ...(content ? { content: parseCRBTscript(content, opts) } : {}),
-//     embeds: [parsedEmbed],
+//     ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
+//     embeds: [new MessageEmbed(parsedMessage.embed)],
 //     components: components(
 //       row(
 //         new FieldSelectMenu().setPlaceholder('Select a field to edit').setOptions(
-//           details.map(([id, name]) => {
+//           editableList.map(([id, name]) => {
 //             return {
 //               label: name,
 //               value: id,
-//               description: getValue({ content, embed: new MessageEmbed(message?.embed) }, id),
+//               description: getValue(
+//                 { content: message.content, embed: new MessageEmbed(message?.embed) },
+//                 id
+//               ),
 //             };
 //           })
 //         )
@@ -127,7 +91,7 @@
 // export const FieldSelectMenu = SelectMenuComponent({
 //   handle(ctx: null) {
 //     const fieldName = this.values[0];
-//     const [id, name, maxLength, markdownSupport] = details.find(([id]) => id === fieldName)!;
+//     const [id, name, maxLength, markdownSupport] = editableList.find(([id]) => id === fieldName)!;
 
 //     if (fieldName === 'color') {
 //       this.update({
@@ -178,7 +142,7 @@
 //       await render(
 //         {
 //           content: this.message.content,
-//           embed: this.message.embeds[0],
+//           embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
 //         },
 //         {
 //           channel: this.channel,
@@ -191,9 +155,15 @@
 
 // export const SaveButton = ButtonComponent({
 //   async handle() {
-//     messages.set(this.guildId, {
+//     const data = {
 //       content: this.message.content,
 //       embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+//     };
+
+//     await db.servers.upsert({
+//       where: { id: this.guildId },
+//       update: { joinMessage: data as any },
+//       create: { id: this.guildId, joinMessage: data as any },
 //     });
 
 //     this.update({
@@ -216,7 +186,7 @@
 
 // export const ManualColorEditButton = ButtonComponent({
 //   handle() {
-//     const [id, name, maxLength, markdownSupport] = details.find(([id]) => id === 'color')!;
+//     const [id, name, maxLength, markdownSupport] = editableList.find(([id]) => id === 'color')!;
 
 //     this.showModal(
 //       new EditModal(id).setTitle(`Edit ${name}`).setComponents(
@@ -238,7 +208,7 @@
 //     const value = this.fields.getTextInputValue('VALUE');
 
 //     const newMsg = {
-//       embed: this.message.embeds[0],
+//       embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
 //       content: this.message.content,
 //     };
 

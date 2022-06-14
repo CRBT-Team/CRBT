@@ -1,126 +1,87 @@
 {
-  "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
-  },
-  "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs"
-  },
-  "UnknownError": {
-    "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
-    }
-  },
-  "CooldownError": {
-    "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
-    }
-  },
-  "color set": {
-    "meta": {
-      "description": "Change your CRBT accent color.",
-      "options": [
-        {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
-        }
-      ]
-    },
-    "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
-    },
-    "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid or a color name. Use /color list for more info."
-    },
-    "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
-    }
-  },
-  "remind me": {
-    "meta": {
-      "description": "Set a reminder.",
-      "options": [
-        {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
-        },
-        {
-          "name": "subject",
-          "description": "What to remind you of."
-        },
-        {
-          "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
-        }
-      ]
-    },
-    "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
-    },
-    "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "TOMORROW_AT": "Tomorrow at <TIME>",
-      "TODAY_AT": "Today at <TIME>",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
-    },
-    "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
-    }
+  "ERROR_GUILD_ONLY": "This command cannot be used in DMs.",
+  "BUTTON_BACK": "Back",
+  "BUTTON_JUMP_TO_MSG": "Jump to message",
+  "BUTTON_CANCEL": "Cancel",
+  "BUTTON_CONFIRM": "Confirm",
+  "BUTTON_DELETE": "Delete",
+  "BUTTON_EDIT": "Edit",
+  "BUTTON_PREVIOUS": "Previous",
+  "BUTTON_NEXT": "Next",
+  "BUTTON_SAVE": "Save",
+  "BUTTON_ADD_REMINDER": "Add Reminder",
+  "BUTTON_OPEN_DMS": "Open DMs",
+  "UNKNOWN_ERROR_TITLE": "An unknown error has occured.",
+  "UNKNOWN_ERROR_DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience.",
+  "COOLDOWN_ERROR_TITLE": "Hold it!",
+  "COOLDOWN_ERROR_DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+  "COOLDOWN_ERROR_TYPE_COMMAND": "command",
+  "COOLDOWN_ERROR_TYPE_COMPONENT": "component",
+  "COLOR_SET_DESCRIPTION": "Change your CRBT accent color.",
+  "COLOR_SET_OPTION_COLOR_NAME": "color",
+  "COLOR_SET_OPTION_COLOR_DESCRIPTION": "Color to change your accent color to. Use one of the suggestions or a HEX color.",
+  "SYNC_DISCORD_COLOR": "Sync Discord Profile Color",
+  "COLOR_LIGHT_RED": "Light Red",
+  "COLOR_RED": "Red",
+  "COLOR_DARK_RED": "Dark Red",
+  "COLOR_ORANGE": "Orange",
+  "COLOR_YELLOW": "Yellow",
+  "COLOR_LIGHT_GREEN": "Light Green",
+  "COLOR_GREEN": "Green",
+  "COLOR_DARK_GREEN": "Dark Green",
+  "COLOR_CYAN": "Cyan",
+  "COLOR_LIGHT_BLUE": "Light Blue",
+  "COLOR_BLUE": "Blue",
+  "COLOR_DARK_BLUE": "Dark Blue",
+  "COLOR_BLURPLE": "Blurple",
+  "COLOR_LIGHT_PURPLE": "Light Purple",
+  "COLOR_PURPLE": "Purple",
+  "COLOR_DARK_PURPLE": "Dark Purple",
+  "COLOR_PINK": "Pink",
+  "COLOR_BROWN": "Brown",
+  "COLOR_BLACK": "Black",
+  "COLOR_GRAY": "Gray",
+  "COLOR_WHITE": "White",
+  "COLOR_SET_ERROR_NO_PROFILE_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
+  "COLOR_SET_ERROR_INVALID_COLOR_NAME": "You need to enter a valid color name or an HEX name. Use the autocomplete.",
+  "COLOR_SET_SUCCESS_TITLE": "Accent color updated.",
+  "COLOR_SET_SUCCESS_SYNC": "Your Discord profile color will be synced to your CRBT accent color.",
+  "COLOR_SET_SUCCESS_MANUAL": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them.",
+  "REMINDER_NEW_DESCRIPTION": "Set a reminder.",
+  "REMINDER_NEW_OPTION_WHEN_NAME": "when",
+  "REMINDER_NEW_OPTION_WHEN_DESCRIPTION": "When to remind you (e.g. 2 hours, 3w2d, 20:30).",
+  "REMINDER_NEW_OPTION_SUBJECT_NAME": "subject",
+  "REMINDER_NEW_OPTION_SUBJECT_DESCRIPTION": "What to remind you of.",
+  "REMINDER_NEW_OPTION_DESTINATION_NAME": "destination",
+  "REMINDER_NEW_OPTION_DESTINATION_DESCRIPTION": "Where to send the reminder (leave blank to send as DM).",
+  "REMINDER_NEW_ERROR_SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
+  "REMINDER_NEW_ERROR_TIME": "You cannot set a reminder in the past.",
+  "REMINDER_NEW_ERROR_INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
+  "REMINDER_NEW_ERROR_TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
+  "REMINDER_NEW_ERROR_INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
+  "REMINDER_NEW_ERROR_BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
+  "REMINDER_NEW_ERROR_USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
+  "REMINDER_NEW_ERROR_REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once.",
+  "REMINDER_NEW_SUCCESS_TITLE": "Reminder set!",
+  "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
+  "SUCCESS_DM": "You will be reminded by DM",
+  "SUBJECT": "Subject",
+  "TOMORROW_AT": "Tomorrow at <TIME>",
+  "TODAY_AT": "Today at <TIME>",
+  "BUTTON_GCALENDAR": "Add as Google Calendar event",
+  "GCALENDAR_EVENT": "Set by CRBT Reminder.",
+  "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
+  "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
+  "SET_ON": "Set on <TIME> (<RELATIVE_TIME>)",
+  "EMBED_TITLE": "Reminder",
+  "BUTTON_SNOOZE": "Snooze",
+  "REMINDER_NEW_KEYWORDS_KEEPLOWERCASE": {
+    "AND": "and",
+    "AT": "at",
+    "ON": "on",
+    "IN": "in",
+    "TOMORROW": "tomorrow",
+    "TODAY": "today"
   },
   "ping": {
     "meta": {
@@ -196,6 +157,8 @@
     },
     "strings": {
       "CHOICE": "Choice",
+      "POLL_HEADER": "CRBT Poll",
+      "POLL_HEADER_VOTE": "Vote for an option below",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
@@ -343,8 +306,10 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
+      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
+      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",

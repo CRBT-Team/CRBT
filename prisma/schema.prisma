@@ -8,11 +8,11 @@ datasource db {
 }
 
 model timeouts {
-  id         String       @id @default(uuid())
+  id         String       @id
   expiration DateTime     @db.Timestamptz(6)
-  locale     String?
+  locale     String
   type       TimeoutTypes
-  data       Json?        @db.Json()
+  data       Json         @db.Json()
 }
 
 enum TimeoutTypes {

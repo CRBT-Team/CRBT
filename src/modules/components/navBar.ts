@@ -1,5 +1,5 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { ButtonComponent, row } from 'purplet';
 // import { renderProfile } from '../../../disabled/profile';
 import { renderPfp } from '../info/avatar';
@@ -7,19 +7,21 @@ import { renderUser } from '../info/user info';
 
 export const UserInfoBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = getStrings(this.locale, 'user_navbar');
+    const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const m = this.guild.members.cache.get(userId) ?? (await this.guild.members.fetch(userId));
-    this.update(await renderUser(this, m.user, m, { userId, cmdUID }));
+    const u = await this.client.users.fetch(userId);
+    const m = this.guild ? await this.guild.members.fetch(u) : null;
+
+    this.update(await renderUser(this, u, m, { userId, cmdUID }));
   },
 });
 
 export const PfpBtn = ButtonComponent({
   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-    const { errors } = getStrings(this.locale, 'user_navbar');
+    const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== cmdUID) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -32,7 +34,7 @@ export const PfpBtn = ButtonComponent({
 
 // export const ProfileBtn = ButtonComponent({
 //   async handle({ userId, cmdUID }: { userId: string; cmdUID: string }) {
-//     const { errors } = getStrings(this.locale, 'user_navbar');
+//     const { errors } = t(this, 'user_navbar');
 
 //     if (this.user.id !== cmdUID) {
 //       return this.reply(CRBTError(errors.NOT_CMD_USER));
@@ -54,7 +56,7 @@ export function navBar(
   locale: string,
   tab: 'profile' | 'avatar' | 'userinfo'
 ) {
-  const { strings } = getStrings(locale, 'user_navbar');
+  const { strings } = t(locale, 'user_navbar');
 
   return row(
     new UserInfoBtn(ctx)

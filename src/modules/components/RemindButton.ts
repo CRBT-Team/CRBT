@@ -1,20 +1,13 @@
 import { emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
+import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { Message, MessageButton, MessageMentions } from 'discord.js';
+import { MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const RemindButton = ButtonComponent({
-  async handle({
-    relativetime,
-    userId,
-    locale,
-  }: {
-    relativetime: number;
-    userId: string;
-    locale: string;
-  }) {
+  async handle({ relativetime, userId }) {
     if (this.user.id !== userId) {
       return this.reply(CRBTError('You can only set reminders for commands you ran yourself.'));
     }
@@ -66,24 +59,23 @@ export const RemindButton = ButtonComponent({
 
 export const SnoozeButton = ButtonComponent({
   async handle() {
-    if (this.channel.type !== 'DM' && (this.message.mentions as MessageMentions).has(this.user)) {
+    if (!this.guild && this.message.mentions.toString().includes(this.user.id)) {
       return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
     }
-    const url = (this.message.components[0].components[0] as MessageButton).url.replace(
-      'https://discord.com/channels/',
-      ''
-    );
+
+    const { JUMP_TO_MSG } = t(this, 'genericButtons');
+    const button = this.message.components[0].components[0];
+    const url = (button as MessageButton).url.replace('https://discord.com/channels/', '');
+
     await setDbTimeout({
+      id: url,
       type: 'REMINDER',
       expiration: dayjs().add(15, 'minutes').toDate(),
       data: {
         destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
         userId: this.user.id,
         subject: this.message.embeds[0].fields[0].value,
-        url: ((await this.fetchReply()) as Message).url.replace(
-          'https://discord.com/channels/',
-          ''
-        ),
+        url,
       },
       locale: this.locale,
     });
@@ -93,7 +85,7 @@ export const SnoozeButton = ButtonComponent({
         row(
           new MessageButton()
             .setStyle('LINK')
-            .setLabel('Jump to message')
+            .setLabel(JUMP_TO_MSG)
             .setURL(`https://discord.com/channels/${url}`),
           new MessageButton()
             .setStyle('SECONDARY')

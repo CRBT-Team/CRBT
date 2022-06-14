@@ -23,14 +23,14 @@ export default ChatCommand({
       .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
       .setColor(await getColor(this.user));
 
-    if (this.channel.type === 'DM' || this.guild.ownerId !== this.user.id) {
+    if (!this.guild || this.guild.ownerId !== this.user.id) {
       e.addField('Like CRBT?', 'Support us by adding it to your server!');
     }
 
     await this.reply({
       embeds: [e],
       components:
-        this.channel.type === 'DM' || this.guild.ownerId !== this.user.id
+        !this.guild || this.guild.ownerId !== this.user.id
           ? components(
               row(
                 new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)

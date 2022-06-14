@@ -32,7 +32,7 @@ export default OnEvent('interactionCreate', async (i) => {
         new MessageEmbed()
           .setDescription(`\`\`\`\n${i}\`\`\``)
           .addField('User ID', i.user.id)
-          .addField('Platform', i.channel.type),
+          .addField('Platform', i.guild ? 'Guild' : 'DM'),
       ],
     });
   } else if (i.isContextMenu()) {
@@ -47,7 +47,7 @@ export default OnEvent('interactionCreate', async (i) => {
             }\`\`\``
           )
           .addField('User ID', i.user.id)
-          .addField('Platform', i.channel.type),
+          .addField('Platform', i.guild ? 'Guild' : 'DM'),
       ],
     });
   }

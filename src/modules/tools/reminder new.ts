@@ -2,7 +2,7 @@ import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import dayjs, { Dayjs } from 'dayjs';
 import { ChannelType } from 'discord-api-types/v10';
 import {
@@ -14,7 +14,7 @@ import {
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
-const { meta } = getStrings('en-US', 'remind me');
+const { meta } = t('en-US', 'remind me');
 
 export default ChatCommand({
   name: 'reminder new',
@@ -26,11 +26,7 @@ export default ChatCommand({
       channelTypes: [ChannelType.GuildText, ChannelType.GuildNews],
     }),
   async handle({ when, subject, destination }) {
-    const {
-      strings,
-      errors,
-      keywordsDetection__KEEPLOWERCASE: keywords,
-    } = getStrings(this.locale, 'remind me');
+    const { strings, errors, keywordsDetection__KEEPLOWERCASE: keywords } = t(this, 'remind me');
 
     dayjs.locale(this.locale);
 
@@ -116,18 +112,22 @@ export default ChatCommand({
 
     const expUnix = expiration.unix();
 
+    const msg = await this.fetchReply();
+    const url =
+      msg instanceof Message
+        ? `${msg.guildId ?? '@me'}/${msg.channelId}/${msg.id}`
+        : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
+
     try {
       await setDbTimeout({
+        id: url,
         type: 'REMINDER',
         expiration: expiration.toDate(),
         data: {
           destination: destination ? destination.id : 'dm',
           userId: this.user.id,
           subject,
-          url: ((await this.fetchReply()) as Message).url.replace(
-            'https://discord.com/channels/',
-            ''
-          ),
+          url,
         },
         locale: this.locale,
       });

@@ -1,17 +1,17 @@
 import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { GuildChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, MessageContextCommand, row } from 'purplet';
 
-const { ctxMeta } = getStrings('en-US', 'bookmark');
+const { ctxMeta } = t('en-US', 'bookmark');
 
 export default MessageContextCommand({
   ...ctxMeta,
   async handle(message) {
-    const { strings, errors } = getStrings(this.locale, 'bookmark');
-    const { JUMP_TO_MSG, OPEN_DMS } = getStrings(this.locale, 'genericButtons');
+    const { strings, errors } = t(this, 'bookmark');
+    const { JUMP_TO_MSG, OPEN_DMS } = t(this, 'genericButtons');
 
     await this.user
       .send({

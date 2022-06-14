@@ -10,7 +10,7 @@ export default ChatCommand({
   description: 'Get information about a specified server role.',
   options: new OptionBuilder().role('role', 'The role whose info to get.', { required: true }),
   async handle({ role }) {
-    if (this.channel.type === 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
 

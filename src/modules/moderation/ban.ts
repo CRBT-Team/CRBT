@@ -3,7 +3,7 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -23,9 +23,9 @@ export default ChatCommand({
       },
     }),
   async handle({ user, reason, delete_messages, duration }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (this.channel.type !== 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 

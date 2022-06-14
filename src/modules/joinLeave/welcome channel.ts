@@ -1,11 +1,9 @@
-// import { colors, icons } from '$lib/db';
+// import { colors, db, icons } from '$lib/db';
 // import { CRBTError } from '$lib/functions/CRBTError';
-// import { getStrings } from '$lib/language';
+// import { t } from '$lib/language';
 // import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 // import { MessageEmbed, TextChannel } from 'discord.js';
 // import { ChatCommand, OptionBuilder } from 'purplet';
-
-// export const channels = new Map<string, string>();
 
 // export default ChatCommand({
 //   name: 'welcome channel',
@@ -14,9 +12,9 @@
 //     channelTypes: [ChannelType.GuildText],
 //   }),
 //   async handle({ channel }) {
-//     const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+//     const { GUILD_ONLY } = t(this, 'globalErrors');
 
-//     if (this.channel.type === 'DM') {
+//     if (!this.guild) {
 //       return this.reply(CRBTError(GUILD_ONLY));
 //     }
 
@@ -33,7 +31,11 @@
 
 //     await this.deferReply({ ephemeral: true });
 
-//     channels.set(this.guildId, channel.id);
+//     await db.servers.upsert({
+//       where: { id: this.guildId },
+//       create: { id: this.guildId, joinChannel: channel.id },
+//       update: { joinChannel: channel.id },
+//     });
 
 //     await this.editReply({
 //       embeds: [

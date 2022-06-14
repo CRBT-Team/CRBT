@@ -5,7 +5,7 @@ import { getColor } from '$lib/functions/getColor';
 import { ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { trimArray } from '$lib/functions/trimArray';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
 import dayjs from 'dayjs';
 import {
@@ -36,6 +36,7 @@ export default ChatCommand({
     .string('title', "What's your poll about?", { required: true })
     .string('end_date', 'When the poll should end.', {
       choices: {
+        '30s': 'In 30 seconds (dev)',
         '20m': 'In 20 minutes',
         '1h': 'In an hour',
         '24h': 'In 24 hours',
@@ -50,12 +51,12 @@ export default ChatCommand({
     .string('choice3', 'Same as choice 1 and 2, not required.')
     .string('choice4', "And that's how far choices can go."),
   async handle({ title, end_date, ...choices }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
-    const { errors } = getStrings(this.locale, 'poll');
-    const { strings } = getStrings(this.guildLocale, 'poll');
-    const { strings: userStrings } = getStrings(this.locale, 'poll');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
+    const { errors } = t(this, 'poll');
+    const { strings } = t(this.guildLocale, 'poll');
+    const { strings: userStrings } = t(this, 'poll');
 
-    if (this.channel.type === 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
@@ -76,9 +77,9 @@ export default ChatCommand({
     const msg = await this.channel.send({
       embeds: [
         new MessageEmbed()
-          .setAuthor({
-            name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_VOTE}`,
-          })
+          // .setAuthor({
+          //   name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_VOTE}`,
+          // })
           .setTitle(title)
           .setDescription(
             strings.POLL_DESCRIPTION.replace(
@@ -159,6 +160,7 @@ export default ChatCommand({
     });
 
     const pollData = await setDbTimeout({
+      id: `${this.channel.id}/${msg.id}`,
       type: 'POLL',
       expiration: new Date(Date.now() + ms(end_date)),
       locale: this.guildLocale,
@@ -206,7 +208,6 @@ export const PollButton = ButtonComponent({
     }
 
     const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
-    console.log(pollData);
     const poll = this.message.embeds[0] as MessageEmbed;
 
     const e = await renderPoll(choiceId, this.user.id, pollData, poll, this.guildLocale);
@@ -236,7 +237,7 @@ export const PollSelector = SelectMenuComponent({
 
 export const PollOptionsButton = ButtonComponent({
   async handle(creatorId: string) {
-    const { strings, errors } = getStrings(this.locale, 'poll');
+    const { strings, errors } = t(this, 'poll');
 
     if (
       this.user.id !== creatorId &&
@@ -295,7 +296,7 @@ export const PollOptionsButton = ButtonComponent({
 
 export const EditPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale, 'poll');
+    const { strings } = t(this, 'poll');
     const msg = (await this.channel.messages.fetch(msgId)).embeds[0];
 
     const modal = new EditPollModal(msgId).setTitle(strings.BUTTON_EDIT_POLL).setComponents(
@@ -363,7 +364,7 @@ export const EditPollModal = ModalComponent({
         new MessageEmbed({
           ...msg.embeds[0],
           footer: {
-            text: `${msg.embeds[0].footer.text} • edited on `,
+            text: `${msg.embeds[0].footer.text.split(',')[0]}, edited `,
           },
         })
           .setTimestamp()
@@ -385,7 +386,7 @@ export const EditPollModal = ModalComponent({
 
 export const CancelPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale, 'poll');
+    const { strings } = t(this, 'poll');
 
     await this.update({
       embeds: [
@@ -414,7 +415,7 @@ export const CancelPollButton = ButtonComponent({
 
 export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = getStrings(this.locale, 'poll');
+    const { strings } = t(this, 'poll');
 
     const pollData = await getPollData(`${this.channel.id}/${msgId}`);
 
@@ -438,7 +439,7 @@ export const EndPollButton = ButtonComponent({
 });
 
 export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, locale: string) => {
-  const { strings } = getStrings(locale, 'poll');
+  const { strings } = t(locale, 'poll');
 
   const choices = pollData.choices;
   const totalVotes = choices.flat().length;
@@ -517,7 +518,7 @@ const renderPoll = async (
   pollEmbed: MessageEmbed,
   locale: string
 ) => {
-  const { strings } = getStrings(locale, 'poll');
+  const { strings } = t(locale, 'poll');
 
   const choices = pollData.data.choices;
   const newChoiceId = Number(choiceId);
@@ -583,7 +584,7 @@ const renderPoll = async (
   pollEmbed.footer.text = `${strings.POLL_FOOTER_VOTES.replace(
     '<VOTES>',
     totalVotes.toString()
-  )} • ${pollEmbed.footer.text.split(' • ').slice(1)}`;
+  )} • ${pollEmbed.footer.text.split(' • ').slice(1).join(' • ')}`;
 
   return pollEmbed;
 };

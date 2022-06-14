@@ -2,7 +2,7 @@ import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -24,9 +24,9 @@ export default ChatCommand({
     })
     .string('reason', 'The reason for timing them out.'),
   async handle({ user, reason, duration }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (this.channel.type !== 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 

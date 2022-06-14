@@ -1,11 +1,11 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { ButtonInteraction, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { navBar } from '../components/navBar';
 
-const { meta, ctxMeta } = getStrings('en-US', 'avatar');
+const { meta, ctxMeta } = t('en-US', 'avatar');
 
 export default ChatCommand({
   name: 'avatar default',
@@ -53,7 +53,7 @@ export async function renderPfp(
     cmdUID: string;
   }
 ) {
-  const { strings } = getStrings(ctx.locale, 'avatar');
+  const { strings } = t(ctx.locale, 'avatar');
 
   const av = avatar(user, size, format ?? 'png', !!format);
 

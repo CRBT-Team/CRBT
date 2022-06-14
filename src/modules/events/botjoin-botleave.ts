@@ -1,5 +1,5 @@
 import { colors, icons, links, misc } from '$lib/db';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -23,7 +23,7 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
     type: 'WATCHING',
   });
 
-  const { strings } = getStrings(guild.preferredLocale, 'crbt_introduction');
+  const { strings } = t(guild.preferredLocale, 'crbt_introduction');
 
   if (guild.systemChannel.permissionsFor(guild.client.user).has('SEND_MESSAGES')) {
     guild.systemChannel.send({

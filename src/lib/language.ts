@@ -1,3 +1,4 @@
+import { Interaction } from 'discord.js';
 import bg from '../../data/languages/bg.json';
 import cs from '../../data/languages/cs.json';
 import da from '../../data/languages/da.json';
@@ -65,12 +66,12 @@ export const languages = {
 
 type StringsStructure = typeof en_US;
 
-export function getStrings<K extends keyof StringsStructure>(
-  language: string,
+export function t<K extends keyof StringsStructure>(
+  i: Interaction | string,
   topLevel: K
 ): StringsStructure[K] {
   const dataDefault = languages['en-US'];
-  const data = languages[language];
+  const data = languages[typeof i === 'string' ? i : i.locale];
   if (!data) {
     return dataDefault[topLevel];
   }

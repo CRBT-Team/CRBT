@@ -1,14 +1,14 @@
 import { cache } from '$lib/cache';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings, languages } from '$lib/language';
+import { languages, t } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
-import { ChatCommand, getPurplet, OptionBuilder } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta, colorNames } = getStrings('en-US', 'color set');
+const { meta, colorNames } = t('en-US', 'color set');
 
 export const localizedColorNames = Object.keys(languages).reduce((acc, lang) => {
-  const strings = getStrings(lang, 'color set');
+  const strings = t(lang, 'color set');
   return {
     ...acc,
     [lang]: strings.colorNames,
@@ -31,7 +31,7 @@ export const colorset = ChatCommand({
       return colorsMap
         .filter((colorObj) => !colorObj.private)
         .filter((colorObj) =>
-          localizedColorNames[this.locale][colorObj.key].includes(color.toLowerCase())
+          localizedColorNames[this.locale][colorObj.key].toLowerCase().includes(color.toLowerCase())
         )
         .map((colorObj) => ({
           name: localizedColorNames[this.locale][colorObj.key],
@@ -41,7 +41,7 @@ export const colorset = ChatCommand({
     required: true,
   }),
   async handle({ color }) {
-    const { strings, errors } = getStrings(this.locale, 'color set');
+    const { strings, errors } = t(this, 'color set');
 
     const user = await this.client.users.fetch(this.user, { force: true });
     const text = color.toLowerCase().replaceAll(/ |#/g, '');
@@ -105,7 +105,7 @@ export const colorset = ChatCommand({
 //   name: 'color list',
 //   description: 'Returns a list of CRBT accent color names and info.',
 //   async handle() {
-//     const { colorNames } = getStrings(this.locale, 'color set');
+//     const { colorNames } = t(this, 'color set');
 
 //     const userColor = await getColor(this.user);
 //     const colorRows = [[], [], []];

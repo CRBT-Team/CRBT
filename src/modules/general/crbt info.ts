@@ -1,13 +1,13 @@
 import { links } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
-const { meta } = getStrings('en-US', 'crbt info');
+const { meta } = t('en-US', 'crbt info');
 
 export default ChatCommand({
   name: 'crbt info',
@@ -15,7 +15,7 @@ export default ChatCommand({
   async handle() {
     await this.deferReply();
 
-    const { strings } = getStrings(this.locale, 'crbt info');
+    const { strings } = t(this, 'crbt info');
 
     const uptime = dayjs().subtract(this.client.uptime).unix();
     const created = dayjs(this.client.user.createdAt).unix();

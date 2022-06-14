@@ -1,6 +1,6 @@
 import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -11,9 +11,9 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ amount }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (this.channel.type !== 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 

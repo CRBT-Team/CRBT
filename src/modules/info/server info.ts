@@ -18,7 +18,7 @@ export default ChatCommand({
     'ID of the server to get info on. Defaults to the current server.'
   ),
   async handle({ id }) {
-    if ((this.channel.type === 'DM' && !id) || (id && !this.client.guilds.cache.has(id)))
+    if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
       return await this.reply(
         CRBTError(
           `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`

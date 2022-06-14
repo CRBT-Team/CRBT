@@ -1,7 +1,7 @@
 import { colors, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -12,9 +12,9 @@ export default ChatCommand({
     .user('user', 'The user to kick.', { required: true })
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (this.channel.type !== 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 

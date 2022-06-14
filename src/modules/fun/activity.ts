@@ -1,6 +1,6 @@
 import { colors, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getStrings } from '$lib/language';
+import { t } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
@@ -37,9 +37,9 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ activity }) {
-    const { GUILD_ONLY } = getStrings(this.locale, 'globalErrors');
+    const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (this.channel.type === 'DM') {
+    if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
