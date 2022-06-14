@@ -196,8 +196,6 @@
     },
     "strings": {
       "CHOICE": "Выбор",
-      "POLL_HEADER": "Опрос CRBT",
-      "POLL_HEADER_VOTE": "Голосуйте за вариант ниже",
       "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать варианты и другие данные, нажав кнопку <ICON> ниже.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> голос(ов)",
       "POLL_FOOTER_VOTES": "Всего голосов: <VOTES>",
@@ -345,10 +343,8 @@
       "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить ее."
     },
     "strings": {
-      "EMBED_TITLE": "Выборщик ролей - Самоназначаемые роли",
       "CHOOSE_ROLE": "Выберите роль",
       "CHOOSE_ROLES": "Выберите роли",
-      "EMBED_FOOTER": "Примечание: CRBT не связан ни с одним из имен ролей или с сервером.",
       "OPTION_LABEL_GET_ROLE": "Получить роль <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, выбрав их ниже.",
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
