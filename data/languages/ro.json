@@ -196,8 +196,6 @@
     },
     "strings": {
       "CHOICE": "Variantă",
-      "POLL_HEADER": "Sondaj CRBT",
-      "POLL_HEADER_VOTE": "Votează pentru una dintre opțiunile de mai jos",
       "POLL_DESCRIPTION": "Sondajul se va termina <TIME>.\nSondajul creatorului poate vizualiza opțiuni și alte date făcând clic pe butonul <ICON> de mai jos.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vot(ări)",
       "POLL_FOOTER_VOTES": "Voturi totale: <VOTES>",
@@ -345,10 +343,8 @@
       "BUTTON_ROLES_ONCE": "Poți selecta doar acest rol o singură dată, și nu-l poți elimina."
     },
     "strings": {
-      "EMBED_TITLE": "Selector de roluri • Roluri auto-atribuibile",
       "CHOOSE_ROLE": "Alege un rol",
       "CHOOSE_ROLES": "Alege roluri",
-      "EMBED_FOOTER": "Un apropo: CRBT nu este afiliat cu niciunul dintre roluri sau server.",
       "OPTION_LABEL_GET_ROLE": "Obține rolul <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Selectează unul sau mai multe roluri alegându-le mai jos.",
       "SELECT_MENU_ROLES_SUCCESS": "Rolurile au fost actualizate cu succes.",
