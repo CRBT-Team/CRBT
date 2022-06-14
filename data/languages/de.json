@@ -196,8 +196,6 @@
     },
     "strings": {
       "CHOICE": "Choice",
-      "POLL_HEADER": "CRBT Poll",
-      "POLL_HEADER_VOTE": "Vote for an option below",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
@@ -345,10 +343,8 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "EMBED_TITLE": "Role Picker • Self-assignable Roles",
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
-      "EMBED_FOOTER": "Note: CRBT is not affiliated with any of the role names or with server.",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
