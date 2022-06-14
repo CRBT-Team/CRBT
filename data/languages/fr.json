@@ -196,8 +196,6 @@
     },
     "strings": {
       "CHOICE": "Choix",
-      "POLL_HEADER": "Sondage CRBT",
-      "POLL_HEADER_VOTE": "Votez pour une option ci-dessous",
       "POLL_DESCRIPTION": "Le sondage se terminera <TIME>.\nLe créateur de sondage peut afficher les options et autres données en cliquant sur le bouton <ICON> ci-dessous.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
       "POLL_FOOTER_VOTES": "Total des votes : <VOTES>",
@@ -345,10 +343,8 @@
       "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
     },
     "strings": {
-      "EMBED_TITLE": "Sélecteur de rôles • Rôles auto-assignables",
       "CHOOSE_ROLE": "Choisissez un rôle",
       "CHOOSE_ROLES": "Choississez des rôles",
-      "EMBED_FOOTER": "Note : CRBT n'est affilié à aucun des noms de rôles ou au serveur.",
       "OPTION_LABEL_GET_ROLE": "Obtenez le rôle <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Sélectionnez un ou plusieurs rôles en les choisissant ci-dessous.",
       "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
