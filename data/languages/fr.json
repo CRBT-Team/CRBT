@@ -1,8 +1,8 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
+  "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) <PERMISSIONS> pour utiliser cette commande.",
+  "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
+  "ERROR_INVALID_HEX": "La couleur HEX que vous avez fournie est invalide.",
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
