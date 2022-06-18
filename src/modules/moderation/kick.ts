@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
@@ -42,6 +42,17 @@ export default ChatCommand({
     }
     try {
       await member.kick(reason);
+
+      await db.moderationStrikes.create({
+        data: {
+          serverId: this.guild.id,
+          moderatorId: this.user.id,
+          targetId: user.id,
+          createdAt: new Date(),
+          reason,
+          type: 'KICK',
+        },
+      });
 
       await this.reply({
         embeds: [

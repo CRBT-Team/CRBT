@@ -63,6 +63,7 @@ export const SnoozeButton = ButtonComponent({
       return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
     }
 
+    const { strings } = t(this, 'remind me');
     const { JUMP_TO_MSG } = t(this, 'genericButtons');
     const button = this.message.components[0].components[0];
     const url = (button as MessageButton).url.replace('https://discord.com/channels/', '');
@@ -91,7 +92,7 @@ export const SnoozeButton = ButtonComponent({
             .setStyle('SECONDARY')
             .setEmoji(emojis.success)
             .setCustomId('none')
-            .setLabel('Snoozed for 15 minutes')
+            .setLabel(strings.BUTTON_SNOOZE_SUCCESS)
             .setDisabled(true)
         )
       ),

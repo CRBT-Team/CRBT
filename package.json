@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.6.6",
+  "version": "11.6.7",
   "scripts": {
     "start": "npm run generate && npm run build && node dist/bot.mjs",
     "dev": "yarn build && node dist/bot.mjs --dev",

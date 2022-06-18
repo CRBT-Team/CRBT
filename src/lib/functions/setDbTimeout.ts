@@ -81,16 +81,16 @@ export async function setDbTimeout<T extends TimeoutTypes>(
             ? user
             : ((await client.channels.fetch(data.url.split('/')[1])) as GuildTextBasedChannel);
 
-        const unix = dayjs(timeout.expiration).unix();
+        const unix = Math.floor(timeout.expiration.getTime() / 1000);
         const message = {
           embeds: [
             new MessageEmbed()
               .setAuthor({
-                name: strings.EMBED_TITLE,
+                name: strings.REMINDER_TITLE,
                 iconURL: icons.reminder,
               })
               .setDescription(
-                strings.SET_ON.replace('<TIME>', `<t:${unix}>`).replace(
+                strings.REMINDER_DESCRIPTION.replace('<TIME>', `<t:${unix}>`).replace(
                   '<RELATIVE_TIME>',
                   `<t:${unix}:R>`
                 )

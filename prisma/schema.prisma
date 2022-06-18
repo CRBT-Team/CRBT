@@ -22,19 +22,38 @@ enum TimeoutTypes {
 }
 
 model servers {
-  id           String  @id
-  joinChannel  String? @map("join_channel")
-  joinMessage  Json?   @map("join_message")
-  leaveChannel String? @map("leave_channel")
-  leaveMessage Json?   @map("leave_message")
+  id           String    @id
+  joinChannel  String?   @map("join_channel")
+  joinMessage  Json?     @map("join_message")
+  leaveChannel String?   @map("leave_channel")
+  leaveMessage Json?     @map("leave_message")
+  modules      Modules[] @map("enabled_modules")
+  accentColor  String?   @map("accent_color")
+}
+
+enum Modules {
+  JOIN_MESSAGE
+  LEAVE_MESSAGE
 }
 
 model moderationStrikes {
-  serverId    String   @id @map("server_id")
-  userId      String   @map("user_id")
-  moderatorId String   @map("moderator_id")
+  id          String                @id @default(uuid()) @db.Uuid
+  serverId    String                @map("server_id")
+  targetId    String                @map("target_id")
+  moderatorId String                @map("moderator_id")
   reason      String?
-  createdAt   DateTime @db.Timestamptz(6)
+  createdAt   DateTime              @map("created_at") @db.Timestamptz(6)
+  expiresAt   DateTime?             @map("expires_at") @db.Timestamptz(6)
+  type        ModerationStrikeTypes
+}
+
+enum ModerationStrikeTypes {
+  BAN
+  TEMPBAN
+  CLEAR
+  KICK
+  TIMEOUT
+  WARN
 }
 
 model users {

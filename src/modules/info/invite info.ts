@@ -39,7 +39,9 @@ export default ChatCommand({
       .addField('Landing channel', `#${channel.name} (${channel.id})`, true)
       .addField(
         'Inviter',
-        inviter ? `${inviter.username}#${inviter.discriminator} (${inviter.id})` : `Vanity URL`,
+        inviter
+          ? `${inviter.username}#${inviter.discriminator} (${inviter.id})`
+          : `Custom Invite Link`,
         true
       )
       .addField('Content Warning', GuildNSFWLevel[guild.nsfw_level], true)

@@ -36,7 +36,6 @@ export default ChatCommand({
     .string('title', "What's your poll about?", { required: true })
     .string('end_date', 'When the poll should end.', {
       choices: {
-        '30s': 'In 30 seconds (dev)',
         '20m': 'In 20 minutes',
         '1h': 'In an hour',
         '24h': 'In 24 hours',

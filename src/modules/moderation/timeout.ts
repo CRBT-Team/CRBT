@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
@@ -14,6 +14,9 @@ export default ChatCommand({
     .user('user', 'The user to timeout.', { required: true })
     .string('duration', 'How long they should be timed out for.', {
       choices: {
+        '60s': '60 seconds',
+        '5m': '5 minutes',
+        '10m': '10 minutes',
         '1h': '1 hour',
         '1d': '1 day',
         '1w': '1 week',
@@ -62,6 +65,18 @@ export default ChatCommand({
 
     try {
       await member.timeout(ms(duration), reason);
+
+      await db.moderationStrikes.create({
+        data: {
+          serverId: this.guild.id,
+          moderatorId: this.user.id,
+          targetId: user.id,
+          createdAt: new Date(),
+          reason,
+          expiresAt: new Date(Date.now() + ms(duration)),
+          type: 'TIMEOUT',
+        },
+      });
 
       await this.reply({
         embeds: [

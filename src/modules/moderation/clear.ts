@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
@@ -31,6 +31,16 @@ export default ChatCommand({
       const { size: messagesDeleted } = await (this.channel as GuildTextBasedChannel).bulkDelete(
         amount
       );
+
+      await db.moderationStrikes.create({
+        data: {
+          createdAt: new Date(),
+          moderatorId: this.user.id,
+          serverId: this.guild.id,
+          targetId: this.channel.id,
+          type: 'CLEAR',
+        },
+      });
 
       await this.reply({
         embeds: [

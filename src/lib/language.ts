@@ -75,5 +75,7 @@ export function t<K extends keyof StringsStructure>(
   if (!data) {
     return dataDefault[topLevel];
   }
-  return deepMerge<StringsStructure[K]>(dataDefault[topLevel], data[topLevel]);
+  return typeof dataDefault[topLevel] === 'string'
+    ? data[topLevel] || dataDefault[topLevel]
+    : deepMerge<StringsStructure[K]>(dataDefault[topLevel], data[topLevel]);
 }
