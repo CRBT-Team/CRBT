@@ -1,6 +1,6 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
+  "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
+  "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права <PERMISSIONS>.",
   "ERROR_INVALID_URL": "The URL you provided is invalid.",
   "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
   "globalErrors": {
