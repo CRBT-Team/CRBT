@@ -3,13 +3,10 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
+import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { t } from '$lib/language';
-import dayjs from 'dayjs';
-import relative from 'dayjs/plugin/relativeTime.js';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-
-dayjs.extend(relative);
 
 export default ChatCommand({
   name: 'ban',
@@ -19,23 +16,8 @@ export default ChatCommand({
     .string('reason', 'The reason for the ban.')
     .integer('delete_messages', 'The number of messages to delete.')
     .string('duration', 'Temporarily ban the user for a specified time.', {
-      async autocomplete({ duration }) {
-        if (!isValidTime(duration)) {
-          return [
-            {
-              name: 'Invalid duration',
-              value: '',
-            },
-          ];
-        } else {
-          const relative = dayjs().add(ms(duration)).fromNow();
-          return [
-            {
-              name: `${relative}`,
-              value: duration,
-            },
-          ];
-        }
+      autocomplete({ duration }) {
+        return timeAutocomplete(duration, this, '5y', '1m');
       },
     }),
   async handle({ user, reason, delete_messages, duration }) {
@@ -43,6 +25,10 @@ export default ChatCommand({
 
     if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
+    }
+
+    if (!isValidTime(duration) && ms(duration) > ms('3y')) {
+      return this.reply(CRBTError('Invalid duration or exceeds 3 years'));
     }
 
     if (!this.memberPermissions.has('BAN_MEMBERS')) {
@@ -57,13 +43,13 @@ export default ChatCommand({
     if (!this.guild.members.cache.has(user.id)) {
       return this.reply(CRBTError('The user is not in this server.'));
     }
-    const member = this.guild.members.cache.get(user.id);
-    if (!member.bannable) {
-      return this.reply(CRBTError('You cannot ban this user.'));
-    }
+
     if (this.guild.ownerId === user.id) {
       return this.reply(CRBTError('You cannot ban the owner of the server.'));
     }
+
+    const member = this.guild.members.cache.get(user.id);
+
     if (
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0

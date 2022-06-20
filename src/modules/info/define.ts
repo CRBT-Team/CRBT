@@ -1,16 +1,31 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
+import { readFileSync } from 'fs';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+
+const words = readFileSync('./src/lib/util/words-en-US.txt', 'utf8').split('\n');
 
 export default ChatCommand({
   name: 'define',
   description: 'Look up the definition of a given word on an English dictionary.',
-  options: new OptionBuilder().string('word', 'The word to define.', { required: true }),
+  options: new OptionBuilder().string('word', 'The word to define.', {
+    autocomplete({ word }) {
+      return words
+        .filter((w) => w.toLowerCase() === word || w.toLowerCase().startsWith(word))
+        .map((word) => ({
+          name: word,
+          value: word,
+        }));
+    },
+    required: true,
+  }),
   async handle({ word }) {
     try {
-      const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`);
+      const res = await fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(word)}`
+      );
 
       if (!res.ok) {
         return await this.reply(

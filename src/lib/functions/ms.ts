@@ -40,10 +40,11 @@ export const ms = (time: string) => {
 };
 
 export const isValidTime = (time: string) => {
-  Object.keys(longForms).forEach((key) => {
-    const regex = new RegExp(`${key}s?`, 'g');
-    time = time.replace(regex, longForms[key]);
-  });
+  return !!ms(time);
+  // Object.keys(longForms).forEach((key) => {
+  //   const regex = new RegExp(`${key}s?`, 'g');
+  //   time = time.replace(regex, longForms[key]);
+  // });
 
-  return /^\d+\s?[smhdwMy]$/.test(time);
+  // return /^\d+\s?[smhdwMy]$/.test(time);
 };

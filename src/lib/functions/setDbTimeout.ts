@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { GuildTextBasedChannel, MessageButton, MessageEmbed, TextChannel } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
+import { endGiveaway } from '../../modules/giveaways/giveaway';
 import { endPoll } from '../../modules/polls/poll';
 import { getColor } from './getColor';
 import { setLongerTimeout } from './setLongerTimeout';
@@ -25,6 +26,10 @@ export interface TimeoutData {
   POLL: {
     creatorId: string;
     choices: string[][];
+  };
+  GIVEAWAY: {
+    creatorId: string;
+    participants: string[];
   };
 }
 
@@ -57,8 +62,18 @@ export async function setDbTimeout<T extends TimeoutTypes>(
     switch (timeout.type) {
       case 'TEMPBAN': {
         const { data } = timeoutData as FullDBTimeout<'TEMPBAN'>;
-        const guild = client.guilds.cache.get(data.userId);
-        await guild.members.unban(data.userId, data.reason);
+        const guild = client.guilds.cache.get(data.guildId);
+        await guild.members.unban(data.userId);
+        break;
+      }
+      case 'GIVEAWAY': {
+        const { data } = timeoutData as FullDBTimeout<'GIVEAWAY'>;
+        const [channelId, messageId] = timeoutData.id.split('/');
+        const channel = client.channels.cache.get(channelId) as TextChannel;
+        const msg = channel ? await channel.messages.fetch(messageId).catch(() => null) : undefined;
+        if (!msg) return;
+
+        endGiveaway(data, msg, timeoutData.locale);
         break;
       }
       case 'POLL': {
@@ -114,6 +129,9 @@ export async function setDbTimeout<T extends TimeoutTypes>(
 
         try {
           await dest.send({
+            allowedMentions: {
+              users: [user.id],
+            },
             content: data.destination !== 'dm' ? user.toString() : null,
             ...message,
           });
@@ -123,6 +141,9 @@ export async function setDbTimeout<T extends TimeoutTypes>(
           )) as GuildTextBasedChannel;
 
           await dest.send({
+            allowedMentions: {
+              users: [user.id],
+            },
             content: user.toString(),
             ...message,
           });
@@ -131,9 +152,11 @@ export async function setDbTimeout<T extends TimeoutTypes>(
       }
     }
 
-    await db.timeouts.delete({
-      where: { id: timeout.id },
-    });
+    await db.timeouts
+      .delete({
+        where: { id: timeout.id },
+      })
+      .catch(() => {});
   }, dayjs(timeout.expiration).diff(new Date()));
 
   if (loadOnly) return;

@@ -19,6 +19,7 @@ enum TimeoutTypes {
   REMINDER
   POLL
   TEMPBAN
+  GIVEAWAY
 }
 
 model servers {

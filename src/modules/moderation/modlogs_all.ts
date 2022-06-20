@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { db, emojis } from '$lib/db';
 import { t } from '$lib/language';
 import { moderationStrikes } from '@prisma/client';
 import { Interaction, MessageButton, MessageEmbed } from 'discord.js';
@@ -66,6 +66,7 @@ async function renderModlogs(index: number, ctx: Interaction) {
       row(
         new PreviousButton(index - 1)
           .setLabel(PREVIOUS)
+          .setEmoji(emojis.buttons.left_arrow)
           .setStyle('PRIMARY')
           .setDisabled(index === 0),
         new MessageButton()
@@ -75,6 +76,7 @@ async function renderModlogs(index: number, ctx: Interaction) {
           .setDisabled(true),
         new NextButton(index + 1)
           .setLabel(NEXT)
+          .setEmoji(emojis.buttons.right_arrow)
           .setStyle('PRIMARY')
           .setDisabled(index === pages - 1)
       )

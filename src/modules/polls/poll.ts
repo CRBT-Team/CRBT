@@ -1,15 +1,15 @@
 import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
-import { getColor } from '$lib/functions/getColor';
-import { ms } from '$lib/functions/ms';
+import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
+import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
 import dayjs from 'dayjs';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
-  GuildMember,
   Message,
   MessageButton,
   MessageEmbed,
@@ -35,11 +35,8 @@ export default ChatCommand({
   options: new OptionBuilder()
     .string('title', "What's your poll about?", { required: true })
     .string('end_date', 'When the poll should end.', {
-      choices: {
-        '20m': 'In 20 minutes',
-        '1h': 'In an hour',
-        '24h': 'In 24 hours',
-        '1w': 'In a week',
+      autocomplete({ end_date }) {
+        return timeAutocomplete(end_date, this, '3w', '20m');
       },
       required: true,
     })
@@ -57,6 +54,10 @@ export default ChatCommand({
 
     if (!this.guild) {
       return this.reply(CRBTError(GUILD_ONLY));
+    }
+
+    if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
+      return this.reply(CRBTError('Invalid duration or exceeds 3 weeks.'));
     }
 
     if (title.length > 100) {
@@ -240,7 +241,7 @@ export const PollOptionsButton = ButtonComponent({
 
     if (
       this.user.id !== creatorId &&
-      !(this.member as GuildMember).permissions.has('MANAGE_MESSAGES')
+      !this.memberPermissions.has(PermissionFlagsBits.ManageMessages)
     ) {
       return this.reply(CRBTError(errors.POLL_DATA_NOT_ALLOWED));
     }
@@ -270,7 +271,7 @@ export const PollOptionsButton = ButtonComponent({
           .setFooter({
             text: strings.POLL_DATA_FOOTER,
           })
-          .setColor(await getColor(this.user)),
+          .setColor(`#${colors.default}`),
       ],
       components: components(
         row(
@@ -489,7 +490,7 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
       new MessageEmbed({
         ...pollMsg.embeds[0],
         author: {
-          name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_ENDED}`,
+          name: `${strings.POLL_HEADER_ENDED}`,
         },
         description: '',
       })

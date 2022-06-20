@@ -1,9 +1,11 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
+import { resolveToDate } from '$lib/functions/resolveToDate';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
+import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { t } from '$lib/language';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { ChannelType } from 'discord-api-types/v10';
 import {
   GuildTextBasedChannel,
@@ -20,13 +22,18 @@ export default ChatCommand({
   name: 'reminder new',
   description: meta.description,
   options: new OptionBuilder()
-    .string('when', meta.options[0].description, { required: true })
+    .string('when', meta.options[0].description, {
+      autocomplete({ when }) {
+        return timeAutocomplete(when, this, '2y');
+      },
+      required: true,
+    })
     .string('subject', meta.options[1].description, { required: true })
     .channel('destination', meta.options[2].description, {
       channelTypes: [ChannelType.GuildText, ChannelType.GuildNews],
     }),
   async handle({ when, subject, destination }) {
-    const { strings, errors, keywordsDetection__KEEPLOWERCASE: keywords } = t(this, 'remind me');
+    const { strings, errors } = t(this, 'remind me');
 
     dayjs.locale(this.locale);
 
@@ -35,56 +42,61 @@ export default ChatCommand({
     }
 
     const now = dayjs();
-    const w = when
-      .trim()
-      .replaceAll(keywords.AND, '')
-      .replace(keywords.AT, '')
-      .replace(keywords.ON, '')
-      .replace(keywords.IN, '')
-      .trim()
-      .replaceAll('  ', ' ');
+    // const w = when
+    //   .trim()
+    //   .replaceAll(keywords.AND, '')
+    //   .replace(keywords.AT, '')
+    //   .replace(keywords.ON, '')
+    //   .replace(keywords.IN, '')
+    //   .trim()
+    //   .replaceAll('  ', ' ');
 
-    // console.log(w);
-    let expiration: Dayjs;
-    let timeMS: number;
+    // // console.log(w);
+    // let expiration: Dayjs;
+    // let timeMS: number;
 
-    if (
-      w.trim().toLowerCase().startsWith(keywords.TODAY) ||
-      when.trim().toLowerCase().startsWith('at')
-    ) {
-      const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
-      expiration = time
-        ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
-        : now.add(30, 'm');
-      timeMS = expiration.diff(now);
-    }
-    if (w.trim().toLowerCase().startsWith(keywords.TOMORROW)) {
-      const tomorrow = now.add(1, 'day');
-      const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
-      // console.log(time);
-      expiration = !!time
-        ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
-        : tomorrow;
-      // console.log(expiration);
-      timeMS = tomorrow.diff(now);
-    }
+    // if (
+    //   w.trim().toLowerCase().startsWith(keywords.TODAY) ||
+    //   when.trim().toLowerCase().startsWith(keywords.AT)
+    // ) {
+    //   const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
+    //   expiration = time
+    //     ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
+    //     : now.add(30, 'm');
+    //   timeMS = expiration.diff(now);
+    // }
+    // if (w.trim().toLowerCase().startsWith(keywords.TOMORROW)) {
+    //   const tomorrow = now.add(1, 'day');
+    //   const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
+    //   // console.log(time);
+    //   expiration = !!time
+    //     ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
+    //     : tomorrow;
+    //   // console.log(expiration);
+    //   timeMS = tomorrow.diff(now);
+    // }
 
-    if (!ms(w) && dayjs(w).isValid()) {
-      if (dayjs(w).isAfter(now)) {
-        expiration = dayjs(w);
-        timeMS = expiration.diff(now);
-      } else {
-        return this.reply(CRBTError(errors.PAST));
-      }
-    } else if (!!ms(w) && !dayjs(w).isValid()) {
-      timeMS = ms(w);
-      expiration = now.add(timeMS, 'ms');
-    }
+    // if (!ms(w) && dayjs(w).isValid()) {
+    //   if (dayjs(w).isAfter(now)) {
+    //     expiration = dayjs(w);
+    //     timeMS = expiration.diff(now);
+    //   } else {
+    //     return this.reply(CRBTError(errors.PAST));
+    //   }
+    // } else if (!!ms(w) && !dayjs(w).isValid()) {
+    //   timeMS = ms(w);
+    //   expiration = now.add(timeMS, 'ms');
+    // }
 
-    if (!expiration || !timeMS || timeMS < 0) {
+    let expiration: dayjs.Dayjs;
+
+    try {
+      expiration = await resolveToDate(when, this.locale);
+    } catch (e) {
       return this.reply(CRBTError(errors.INVALID_FORMAT));
     }
-    if (timeMS > ms('2y')) {
+
+    if (expiration.isAfter(now.add(ms('2y')))) {
       return this.reply(CRBTError(errors.TOO_LONG));
     }
 
@@ -184,19 +196,3 @@ export default ChatCommand({
     }
   },
 });
-
-const convertTime12to24 = (time12h: string) => {
-  const [time, modifier] = time12h.toLowerCase().split(/ |p|a/);
-
-  let [hours, minutes]: (string | number)[] = time.split(':');
-
-  if (hours === '12') {
-    hours = '00';
-  }
-
-  if (time12h.toLowerCase().endsWith('pm')) {
-    hours = parseInt(hours, 10) + 12;
-  }
-
-  return minutes ? `${hours}:${minutes}` : `${hours}:00`;
-};
