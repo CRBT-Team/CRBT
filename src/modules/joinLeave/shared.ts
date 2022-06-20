@@ -48,9 +48,10 @@ export function getValue(message: { content?: string; embed?: MessageEmbed }, id
     case 'thumbnail':
       return message.embed.thumbnail?.url;
     default:
-      return message.embed[id]?.length > 100
-        ? `${message.embed[id].slice(0, 97)}...`
-        : message.embed[id];
+      return message.embed[id];
+    // ?.length > 100
+    //   ? `${message.embed[id].slice(0, 97)}...`
+    //   : message.embed[id];
   }
 }
 

@@ -183,15 +183,27 @@ export const BackButton = ButtonComponent({
 
 export const SaveButton = ButtonComponent({
   async handle() {
+    const embed = this.message.embeds[0];
+
     const data = {
       content: this.message.content,
-      embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+      embed: {
+        title: embed.title,
+        description: embed.description,
+        color: embed.color,
+        fields: embed.fields,
+        thumbnail: { url: embed.thumbnail?.url },
+        image: { url: embed.image?.url },
+        url: embed.url,
+        author: { name: embed.author?.name },
+        footer: { text: embed.footer?.text },
+      },
     };
 
     await db.servers.upsert({
       where: { id: this.guildId },
-      update: { joinMessage: data as any, modules: { push: ['JOIN_MESSAGE'] } },
-      create: { id: this.guildId, joinMessage: data as any, modules: { set: ['JOIN_MESSAGE'] } },
+      update: { joinMessage: data as any, modules: { push: 'JOIN_MESSAGE' } },
+      create: { id: this.guildId, joinMessage: data as any, modules: { set: 'JOIN_MESSAGE' } },
     });
 
     await this.update({

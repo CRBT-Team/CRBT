@@ -1,7 +1,7 @@
 import { colors, db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
+import { GuildMember, MessageButton, MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import { parseCRBTscriptInMessage, RawServerJoin } from './shared';
 
@@ -39,7 +39,7 @@ export default ChatCommand({
     }
 
     try {
-      const channel = this.guild.channels.resolve(channelId) as GuildTextBasedChannel;
+      const channel = this.guild.channels.resolve(channelId) as TextChannel;
 
       const parsedMessage = parseCRBTscriptInMessage(message, {
         channel,
@@ -48,7 +48,15 @@ export default ChatCommand({
 
       const { url } = await channel.send({
         ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
-        embeds: [new MessageEmbed(parsedMessage.embed)],
+        embeds: [
+          new MessageEmbed().setAuthor({
+            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
+              '<TYPE>',
+              t(this, 'LEAVE_MESSAGE')
+            ),
+          }),
+          new MessageEmbed(parsedMessage.embed),
+        ],
       });
 
       await this.reply({

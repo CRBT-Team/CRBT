@@ -44,8 +44,8 @@ export default ChatCommand({
 
     await db.servers.upsert({
       where: { id: this.guildId },
-      create: { id: this.guildId, leaveChannel: channel.id, modules: { set: ['LEAVE_MESSAGE'] } },
-      update: { leaveChannel: channel.id, modules: { push: ['LEAVE_MESSAGE'] } },
+      create: { id: this.guildId, leaveChannel: channel.id, modules: { set: 'LEAVE_MESSAGE' } },
+      update: { leaveChannel: channel.id, modules: { push: 'LEAVE_MESSAGE' } },
     });
 
     await this.editReply({

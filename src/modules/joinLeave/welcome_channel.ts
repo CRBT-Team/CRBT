@@ -44,8 +44,8 @@ export default ChatCommand({
 
     await db.servers.upsert({
       where: { id: this.guildId },
-      create: { id: this.guildId, joinChannel: channel.id, modules: { set: ['JOIN_MESSAGE'] } },
-      update: { joinChannel: channel.id, modules: { push: ['JOIN_MESSAGE'] } },
+      create: { id: this.guildId, joinChannel: channel.id, modules: { set: 'JOIN_MESSAGE' } },
+      update: { joinChannel: channel.id, modules: { push: 'JOIN_MESSAGE' } },
     });
 
     await this.editReply({

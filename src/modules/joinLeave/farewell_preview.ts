@@ -48,7 +48,15 @@ export default ChatCommand({
 
       const { url } = await channel.send({
         ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
-        embeds: [new MessageEmbed(parsedMessage.embed)],
+        embeds: [
+          new MessageEmbed().setAuthor({
+            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
+              '<TYPE>',
+              t(this, 'LEAVE_MESSAGE')
+            ),
+          }),
+          new MessageEmbed(parsedMessage.embed),
+        ],
       });
 
       await this.reply({
