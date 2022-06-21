@@ -56,7 +56,7 @@ export function parseCRBTscript(
     ['<server.created>', () => guild.createdAt.toISOString()],
     ['<server.roles>', () => guild.roles.cache.map((r) => r.toString()).join(', ')],
     ['<server.description>', guild.description],
-    ['<server.members.approximate>', () => guild.approximateMemberCount.toString()],
+    ['<server.members>', () => guild.memberCount.toString()],
 
     ['<channel.name>', channel.name],
     ['<channel.id>', channel.id],

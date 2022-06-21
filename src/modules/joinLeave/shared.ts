@@ -1,12 +1,21 @@
+import { colors, db, emojis, icons, links } from '$lib/db';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
+import { t } from '$lib/language';
 import { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
 import {
   GuildMember,
+  MessageButton,
   MessageEmbed,
   NewsChannel,
   PartialGuildMember,
   TextChannel,
+  TextInputComponent,
 } from 'discord.js';
+import { ButtonComponent, components, ModalComponent, row, SelectMenuComponent } from 'purplet';
+import { colorsMap } from '../settings/color set';
+
+export type MessageTypes = 'JOIN_MESSAGE' | 'LEAVE_MESSAGE';
 
 export type JoinLeaveMessage = { script?: string; embed?: Partial<APIEmbed>; content?: string };
 
@@ -67,19 +76,300 @@ export function parseCRBTscriptInMessage(
   }
 
   if (message.embed) {
+    const { embed } = message;
     const newEmbed: Partial<APIEmbed> = {
-      author: message.embed.author,
-      title: parseCRBTscript(message.embed.title, opts),
-      description: parseCRBTscript(message.embed.description, opts),
-      fields: message.embed.fields?.map((field: APIEmbedField) => ({
+      author: embed.author,
+      title: parseCRBTscript(embed.title, opts),
+      description: parseCRBTscript(embed.description, opts),
+      fields: embed.fields?.map((field: APIEmbedField) => ({
         name: parseCRBTscript(field.name, opts),
         value: parseCRBTscript(field.value, opts),
       })),
-      footer: message.embed.footer,
-      color: message.embed.color,
-      image: message.embed.image,
+      thumbnail: embed.thumbnail ? { url: parseCRBTscript(embed.thumbnail?.url, opts) } : null,
+      footer: embed.footer,
+      color: embed.color,
+      image: embed.image,
     };
     message.embed = newEmbed;
   }
   return message;
 }
+
+export async function renderJoinLeave(
+  type: MessageTypes,
+  message: JoinLeaveMessage,
+  locale: string
+) {
+  message = message || {
+    embed: {
+      title: t(locale, `${type}_DEFAULT_TITLE`),
+      description: t(locale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION').replace(
+        '<TYPE>',
+        t(locale, type)
+      ),
+      color: parseInt(colors.default, 16),
+    },
+  };
+
+  const { DONE, PREVIEW } = t(locale, 'genericButtons');
+
+  return {
+    ephemeral: true,
+    ...(message.content ? { content: message.content } : {}),
+    embeds: [new MessageEmbed(message.embed)],
+    components: components(
+      row(
+        new FieldSelectMenu(type).setPlaceholder(t(locale, 'FIELD_SELECT_MENU')).setOptions(
+          editableList.map(([id]) => {
+            const description = getValue(
+              { content: message.content, embed: new MessageEmbed(message?.embed) },
+              id
+            );
+            return {
+              label: t(locale, `FIELDS_${id.toUpperCase()}` as any),
+              value: id,
+              description:
+                description?.length > 100 ? `${description.slice(0, 97)}...` : description,
+            };
+          })
+        )
+      ),
+      row(
+        new SaveButton(type as never).setLabel(DONE).setStyle('SUCCESS'),
+        new TestButton().setLabel(PREVIEW).setStyle('PRIMARY').setEmoji(emojis.buttons.preview),
+        new MessageButton()
+          .setURL(links.CRBTscript)
+          .setStyle('LINK')
+          .setLabel(t(locale, 'JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE'))
+      )
+    ),
+  };
+}
+
+export const FieldSelectMenu = SelectMenuComponent({
+  handle(type: string) {
+    const fieldName = this.values[0];
+    const [id, maxLength, markdownSupport] = editableList.find(([id]) => id === fieldName)!;
+    const { BACK } = t(this.locale, 'genericButtons');
+
+    if (fieldName === 'color') {
+      this.update({
+        components: components(
+          row(
+            new ColorPresetSelectMenu()
+              .setPlaceholder(t(this.locale, 'COLOR_PRESET_SELECT_MENU'))
+              .setOptions(
+                colorsMap
+                  .filter((color) => !color.private && color.value !== 'profile')
+                  .map((colorObj) => ({
+                    label: colorObj.fullName,
+                    value: colorObj.value,
+                    emoji: colorObj.emoji,
+                  }))
+              )
+          ),
+          row(new BackButton(type as never).setStyle('SECONDARY').setLabel(BACK)),
+          new ManualColorEditButton(type as never)
+            .setStyle('PRIMARY')
+            .setLabel(t(this.locale, 'MANUAL_COLOR_EDIT_BUTTON'))
+        ),
+      });
+    } else {
+      const value = getValue(
+        { embed: new MessageEmbed(this.message.embeds[0]), content: this.message.content },
+        fieldName
+      );
+      const name = t(this.locale, `FIELDS_${fieldName.toUpperCase()}` as any);
+      const modal = new EditModal({ fieldName, type }).setTitle(`Edit ${name}`).setComponents(
+        row(
+          new TextInputComponent()
+            .setLabel('Value')
+            .setValue(value ?? '')
+            .setCustomId('VALUE')
+            .setStyle(maxLength <= 256 ? 'SHORT' : 'PARAGRAPH')
+            .setMaxLength(maxLength)
+            .setPlaceholder(markdownSupport ? t(this.locale, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : '')
+        )
+      );
+
+      this.showModal(modal);
+    }
+  },
+});
+
+export const TestButton = ButtonComponent({
+  async handle() {
+    const parsed = parseCRBTscriptInMessage(
+      {
+        content: this.message.content,
+        embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+      },
+      {
+        channel: this.channel as TextChannel | NewsChannel,
+        member: this.member as GuildMember,
+      }
+    );
+
+    await this.reply({
+      content: parsed.content || '‎',
+      embeds: [new MessageEmbed(parsed.embed)],
+      ephemeral: true,
+    });
+  },
+});
+
+export const BackButton = ButtonComponent({
+  async handle(type: MessageTypes) {
+    this.update(
+      await renderJoinLeave(
+        type,
+        {
+          content: this.message.content,
+          embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+        },
+        this.locale
+      )
+    );
+  },
+});
+
+export const SaveButton = ButtonComponent({
+  async handle(type: MessageTypes) {
+    const embed = this.message.embeds[0];
+
+    const data = {
+      content: this.message.content,
+      embed: {
+        title: embed.title,
+        description: embed.description,
+        color: embed.color,
+        fields: embed.fields,
+        thumbnail: { url: embed.thumbnail?.url },
+        image: { url: embed.image?.url },
+        url: embed.url,
+        author: { name: embed.author?.name },
+        footer: { text: embed.footer?.text },
+      },
+    };
+
+    await db.servers.upsert({
+      where: { id: this.guildId },
+      update: {
+        joinMessage: data as any,
+        modules: { push: type },
+      },
+      create: {
+        id: this.guildId,
+        joinMessage: data as any,
+        modules: { set: type },
+      },
+    });
+
+    await this.update({
+      content: '‎',
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: t(this.locale, 'JOINLEAVE_MESSAGE_SAVE_TITLE').replace(
+              '<TYPE>',
+              t(this.locale, type)
+            ),
+            iconURL: icons.success,
+          })
+          .setDescription(t(this.locale, `${type}_SAVE_DESCRIPTION`))
+          .setColor(`#${colors.success}`),
+      ],
+      components: [],
+    });
+  },
+});
+
+export const ColorPresetSelectMenu = SelectMenuComponent({
+  async handle(ctx: null) {
+    const value = this.values[0];
+
+    this.update({
+      embeds: [new MessageEmbed(this.message.embeds[0]).setColor(`#${value}`)],
+    });
+  },
+});
+
+export const ManualColorEditButton = ButtonComponent({
+  handle(type: MessageTypes) {
+    const [id, maxLength] = editableList.find(([id]) => id === 'color')!;
+
+    this.showModal(
+      new EditModal({ fieldName: id, type })
+        .setTitle(`Edit ${t(this, `FIELDS_${id.toUpperCase()}` as any)}`)
+        .setComponents(
+          row(
+            new TextInputComponent()
+              .setLabel('Value')
+              .setCustomId('VALUE')
+              .setStyle(maxLength > 256 ? 'SHORT' : 'PARAGRAPH')
+              .setMaxLength(maxLength)
+          )
+        )
+    );
+  },
+});
+
+export const EditModal = ModalComponent({
+  async handle({ fieldName, type }) {
+    const value = this.fields.getTextInputValue('VALUE');
+
+    const newMsg = {
+      embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+      content: this.message.content,
+    };
+
+    const invalidURL = t(this, 'ERROR_INVALID_URL');
+    const urlRegex = /^https?:(?:\/\/)\S+$/;
+
+    const parsed = parseCRBTscript(value, {
+      channel: this.channel as TextChannel,
+      member: this.member as GuildMember,
+    });
+
+    switch (fieldName) {
+      case 'content':
+        newMsg.content = value ?? '‎';
+        break;
+      case 'author':
+        newMsg.embed.author = { name: value };
+        break;
+      case 'footer':
+        newMsg.embed.footer = { text: value };
+        break;
+      case 'image':
+        if (value && !urlRegex.test(parsed)) {
+          return this.reply(CRBTError(invalidURL));
+        }
+        newMsg.embed.image = { url: parsed };
+        break;
+      case 'thumbnail':
+        if (value && !urlRegex.test(parsed)) {
+          return this.reply(CRBTError(invalidURL));
+        }
+        newMsg.embed.thumbnail = { url: parsed };
+        break;
+      case 'url':
+        if (!urlRegex.test(value)) {
+          return this.reply(CRBTError(invalidURL));
+        }
+
+        newMsg.embed.url = value ?? '';
+        break;
+      case 'color':
+        if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
+          return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
+        }
+        newMsg.embed.color = parseInt(value.replace('#', ''), 16);
+        break;
+      default:
+        newMsg.embed[fieldName] = value;
+    }
+
+    this.update(await renderJoinLeave(type, newMsg, this.locale));
+  },
+});

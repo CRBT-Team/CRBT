@@ -36,7 +36,7 @@ export default ChatCommand({
       .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
     const events = guild.scheduledEvents.cache;
     const bots = guild.me.permissions.has('MANAGE_GUILD')
-      ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord').map((i) => i.name)
+      ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
       : null;
 
     function cFilter(c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>): number {
@@ -69,7 +69,7 @@ export default ChatCommand({
             ? `${emojis.channels.news} ${cFilter('GUILD_NEWS')} annnouncements\n`
             : '') +
           (cFilter('GUILD_STAGE_VOICE') !== 0
-            ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage`
+            ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage channels`
             : ''),
         true
       );
@@ -95,19 +95,20 @@ export default ChatCommand({
     }
     if (stickers.size > 0) e.addField(`Stickers`, `${emojis.sticker} ${stickers.size}`, true);
 
-    const members = guild.members.cache.size || guild.memberCount || guild.approximateMemberCount;
-    //   members.filter((m) => m.presence && m.presence.status === presence).size;
+    const members = guild.memberCount; //.size || guild.memberCount || guild.approximateMemberCount;
     // const mStatus = (presence: PresenceStatus) =>
+    // members.filter((m) => m.presence && m.presence.status === presence).size;
 
-    if (!bots) {
-      e.addField(`Members`, `${emojis.members} ${members} (including Bots and Apps)`, true);
-    } else {
-      e.addField(
-        `Members (${members})`,
-        `${emojis.members} ${members - bots.length} Humans\n${emojis.bot} ${bots.length} Bots`,
-        true
-      );
-    }
+    // if (!bots) {
+    //   e.addField(`Members`, `${emojis.members} ${members} (including Bots and Apps)`, true);
+    // } else {
+    e.addField(
+      `Members (${members})`,
+      `${emojis.members} ${members - bots.size} Humans\n${emojis.bot} ${bots.size} Bots`,
+      true
+    );
+
+    // }
     // `${emojis.users.status.online} ${mStatus('online')} ` +
     //   `${emojis.users.status.idle} ${mStatus('idle')}` +
     //   '\n' +

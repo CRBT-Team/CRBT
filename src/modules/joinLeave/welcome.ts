@@ -5,39 +5,42 @@ import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage, RawServerJoin } from './shared';
 
-export default OnEvent('guildMemberAdd', async (member) => {
-  const { guild } = member;
+export default OnEvent('guildMemberUpdate', async (oldMember, member) => {
+  if (oldMember.pending && !member.pending) {
+    const { guild } = member;
+    console.log(member);
 
-  const {
-    joinChannel: channelId,
-    joinMessage: message,
-    modules,
-  } = (await db.servers.findFirst({
-    where: { id: guild.id },
-    select: { joinChannel: true, joinMessage: true, modules: true },
-  })) as RawServerJoin & { modules: Modules[] };
+    const {
+      joinChannel: channelId,
+      joinMessage: message,
+      modules,
+    } = (await db.servers.findFirst({
+      where: { id: guild.id },
+      select: { joinChannel: true, joinMessage: true, modules: true },
+    })) as RawServerJoin & { modules: Modules[] };
 
-  if (!modules.includes('JOIN_MESSAGE')) return;
-  if (!channelId || !message) return;
+    if (!modules.includes('JOIN_MESSAGE')) return;
+    if (!channelId || !message) return;
 
-  const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
+    const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
 
-  if (message.script) {
-    parseCRBTscript(message.script, {
-      member,
+    if (message.script) {
+      parseCRBTscript(message.script, {
+        member,
+        channel,
+      });
+    }
+
+    const parsedMessage = parseCRBTscriptInMessage(message, {
       channel,
+      member,
+    });
+
+    channel.send({
+      ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
+      embeds: [new MessageEmbed(parsedMessage.embed)],
     });
   }
-
-  const parsedMessage = parseCRBTscriptInMessage(message, {
-    channel,
-    member,
-  });
-
-  channel.send({
-    ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
-    embeds: [new MessageEmbed(parsedMessage.embed)],
-  });
 });
 
 // export function getDefaultChannel(guild: Guild) {
