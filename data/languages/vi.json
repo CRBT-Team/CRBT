@@ -4,7 +4,7 @@
   "ERROR_INVALID_URL": "The URL you provided is invalid.",
   "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
   "globalErrors": {
-    "GUILD_ONLY": "Không thể sử dụng lệnh này trong tin nhắn trực tiếp."
+    "GUILD_ONLY": "Câu lệnh này không thể sử dụng được trong tin nhắn trực tiếp."
   },
   "genericButtons": {
     "BACK": "Quay lại",
@@ -15,11 +15,11 @@
     "EDIT": "Chỉnh sửa",
     "PREVIOUS": "Trước",
     "NEXT": "Tiếp theo",
-    "SAVE": "Save Changes",
+    "SAVE": "Lưu thay đổi",
     "DONE": "Done",
     "ADD_REMINDER": "Thêm nhắc nhỡ",
     "OPEN_DMS": "Mở DM",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Xem trước"
   },
   "UnknownError": {
     "strings": {
@@ -118,10 +118,10 @@
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
-      "REMINDER_TITLE": "Reminder",
+      "REMINDER_TITLE": "Nhắc nhở",
       "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Snooze",
-      "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
+      "BUTTON_SNOOZE": "Giấc ngũ ngắn",
+      "BUTTON_SNOOZE_SUCCESS": "Báo thức lại trong vòng 15 phút"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "và",
@@ -139,9 +139,9 @@
     "strings": {
       "EMBED_TITLE": "<CRBT> - Ping",
       "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
+      "INTERACTION": "Sự tương tác",
       "UPTIME": "Trực tuyến kể từ",
-      "FORMAT_MS": "<NUMBER>ms"
+      "FORMAT_MS": "<NUMBER>ms (Mili giây)"
     }
   },
   "crbt info": {
@@ -298,7 +298,7 @@
             "description": "Describe to your members what your Role Picker is for."
           },
           {
-            "name": "behavior",
+            "name": "hành vi",
             "description": "How the Role Picker should behave.",
             "choices": [
               "Toggle giving/removing role(s)",
@@ -353,7 +353,7 @@
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "CHOOSE_ROLE": "Choose a role",
+      "CHOOSE_ROLE": "Chọn một vai trò",
       "CHOOSE_ROLES": "Chọn vai trò",
       "OPTION_LABEL_GET_ROLE": "Get the <ROLE> role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
@@ -366,18 +366,18 @@
       "SUCCESS_DESCRIPTION": "Giờ đây, các thành viên sẽ có thể lựa chọn các vai trò từ thực đơn này. Để vô hiệu hóa nó, chỉ cần xóa thông báo Bộ chọn vai trò."
     }
   },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
+  "MODERATION_LOGS_ACTION_WARN": "Cảnh báo",
+  "MODERATION_LOGS_ACTION_KICK": "Đuổi",
+  "MODERATION_LOGS_ACTION_BAN": "Cấm",
+  "MODERATION_LOGS_ACTION_UNBAN": "Bỏ cấm",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
+  "JOIN_MESSAGE": "Lời chào mừng",
+  "LEAVE_MESSAGE": "Lời tạm biệt",
+  "JOIN_CHANNEL": "Kênh chào mời",
+  "LEAVE_CHANNEL": "Kênh tạm biệt",
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
@@ -402,9 +402,9 @@
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
-  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Plain Text",
+  "MANUAL_COLOR_EDIT_BUTTON": "Sử dụng mã màu HEX",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown (ngôn ngữ đánh dấu) và CRBTscript được hỗ trợ.",
+  "FIELDS_CONTENT": "Văn bản thô",
   "FIELDS_AUTHOR": "Embed Author",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
