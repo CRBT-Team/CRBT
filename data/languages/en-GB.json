@@ -1,4 +1,8 @@
 {
+  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
+  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
+  "ERROR_INVALID_URL": "The URL you provided is invalid.",
+  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
   "globalErrors": {
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
@@ -11,9 +15,11 @@
     "EDIT": "Edit",
     "PREVIOUS": "Previous",
     "NEXT": "Next",
-    "SAVE": "Save",
+    "SAVE": "Save Changes",
+    "DONE": "Done",
     "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs"
+    "OPEN_DMS": "Open DMs",
+    "PREVIEW": "Preview"
   },
   "UnknownError": {
     "strings": {
@@ -65,7 +71,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord Profile Colour to sync from! To set one, edit your Discord User Profile and change your Profile Colour.",
-      "INVALID_COLOR_NAME": "You need to enter a valid colour name or a HEX colour. Use /color list for more info."
+      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
     },
     "strings": {
       "EMBED_TITLE": "Accent colour updated.",
@@ -111,7 +117,11 @@
       "BUTTON_GCALENDAR": "Add to Google Calendar",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>."
+      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
+      "REMINDER_TITLE": "Reminder",
+      "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
+      "BUTTON_SNOOZE": "Snooze",
+      "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "and",
@@ -355,5 +365,52 @@
       "SUCCESS_TITLE": "Role Picker created!",
       "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
     }
-  }
+  },
+  "MODERATION_LOGS_ACTION_WARN": "Warn",
+  "MODERATION_LOGS_ACTION_KICK": "Kick",
+  "MODERATION_LOGS_ACTION_BAN": "Ban",
+  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
+  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
+  "MODERATION_LOGS_CLEAR": "Channel message clear",
+  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
+  "JOIN_MESSAGE": "Welcome message",
+  "LEAVE_MESSAGE": "Farewell message",
+  "JOIN_CHANNEL": "Welcome channel",
+  "LEAVE_CHANNEL": "Farewell channel",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the <TYPE> will look like when sent to <CHANNEL>.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the <TYPE>. The channel may no longer exist or I don't have the permission to send messages there.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the `/welcome message` command.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the `/welcome channel` command.",
+  "JOIN_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user joins the server.",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
+  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /welcome message to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /welcome channel to set one.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the `/farewell message` command.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the `/farewell channel` command.",
+  "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
+  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /farewell message to set one.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
+  "FIELD_SELECT_MENU": "Select a field to edit",
+  "COLOR_PRESET_SELECT_MENU": "Select a color preset",
+  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
+  "FIELDS_CONTENT": "Plain Text",
+  "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_TITLE": "Embed Title",
+  "FIELDS_DESCRIPTION": "Embed Description",
+  "FIELDS_FOOTER": "Embed Footer",
+  "FIELDS_COLOR": "Embed Color",
+  "FIELDS_IMAGE": "Embed Image",
+  "FIELDS_THUMBNAIL": "Embed Thumbnail",
+  "FIELDS_URL": "Embed Title URL"
 }

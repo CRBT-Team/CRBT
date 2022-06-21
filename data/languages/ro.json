@@ -1,4 +1,8 @@
 {
+  "ERROR_ADMIN_ONLY": "Trebuie să fii un administrator ca să folosești această comandă.",
+  "ERROR_MISSING_PERMISSIONS": "Ai nevoie de permisiunea(ile) <PERMISSIONS> pentru a folosi această comandă.",
+  "ERROR_INVALID_URL": "URL-ul furnizat este invalid.",
+  "ERROR_INVALID_HEX": "Culoarea HEX furnizată este invalidă.",
   "globalErrors": {
     "GUILD_ONLY": "Această comandă nu poate fi utilizată în DM-uri."
   },
@@ -11,14 +15,16 @@
     "EDIT": "Modifică",
     "PREVIOUS": "În spate",
     "NEXT": "Mai departe",
-    "SAVE": "Salvează",
+    "SAVE": "Salvează modificările",
+    "DONE": "Efectuat",
     "ADD_REMINDER": "Adaugă memento",
-    "OPEN_DMS": "Deschide DM-uri"
+    "OPEN_DMS": "Deschide DM-uri",
+    "PREVIEW": "Previzualizare"
   },
   "UnknownError": {
     "strings": {
       "TITLE": "A apărut o eroare necunoscută.",
-      "DESCRIPTION": "N-avem nicio idee ce problema asta-r putea fi. Aici este mesajul de eroare pe care l-am primit:\n<MESSAGE>\nAcest lucru ne-a fost raportat automat, și ne vom asigura că o vom repara cât mai curând posibil. Ne cerem mii de scuze."
+      "DESCRIPTION": "N-avem nicio idee ce problemă asta-r putea fi. Aici este mesajul de eroare pe care l-am primit:\n<MESSAGE>\nAcest lucru ne-a fost raportat automat, și ne vom asigura că o vom repara cât mai curând posibil. Ne cerem mii de scuze."
     }
   },
   "CooldownError": {
@@ -65,7 +71,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "N-ai o culoare de profil Discord de la care să te sincronizezi! Pentru a seta una, editează profilul de utilizator Discord și schimbă-ți culoarea de profil.",
-      "INVALID_COLOR_NAME": "Trebuie să introduci un nume valid sau un nume de culori. Utilizează /color list pentru informații suplimentare."
+      "INVALID_COLOR_NAME": "Trebuie să introduci un nume de culoare valid folosind textul predictiv sau o culoare HEX."
     },
     "strings": {
       "EMBED_TITLE": "Culoare de accent actualizată.",
@@ -111,7 +117,11 @@
       "BUTTON_GCALENDAR": "Adaugă ca eveniment Google Calendar",
       "GCALENDAR_EVENT": "Setat de CRBT Memento.",
       "GCALENDAR_EVENT_DM": "Ți se va reaminti și-n DM-uri.",
-      "GCALENDAR_EVENT_CHANNEL": "Ți se va reaminti și-n <CHANNEL>, în <SERVER>."
+      "GCALENDAR_EVENT_CHANNEL": "Ți se va reaminti și-n <CHANNEL>, în <SERVER>.",
+      "REMINDER_TITLE": "Memento",
+      "REMINDER_DESCRIPTION": "Setat pe <TIME> (<RELATIVE_TIME>)",
+      "BUTTON_SNOOZE": "Amână",
+      "BUTTON_SNOOZE_SUCCESS": "Amânat pentru 15 minute"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "și",
@@ -355,5 +365,52 @@
       "SUCCESS_TITLE": "Selector de roluri creat!",
       "SUCCESS_DESCRIPTION": "Membrii vor avea acum posibilitatea de a selecta roluri din acest meniu. Pentru a-l dezactiva, pur și simplu șterge mesajul cu selectorul de roluri."
     }
-  }
+  },
+  "MODERATION_LOGS_ACTION_WARN": "Mustrează-i",
+  "MODERATION_LOGS_ACTION_KICK": "Dă-i afară",
+  "MODERATION_LOGS_ACTION_BAN": "Interzice-le accesul",
+  "MODERATION_LOGS_ACTION_UNBAN": "Redă accesul",
+  "MODERATION_LOGS_ACTION_TIMEOUT": "Pauză de scris",
+  "MODERATION_LOGS_CLEAR": "Curăță mesajele canalului",
+  "MODERATION_LOGS_VIEW_TITLE": "Istoricul moderării în <SERVER>",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderat de <MODERATOR>",
+  "JOIN_MESSAGE": "Mesaj de întâmpinare",
+  "LEAVE_MESSAGE": "Mesaj de la revedere",
+  "JOIN_CHANNEL": "Canal de întâmpinare",
+  "LEAVE_CHANNEL": "Canal de la revedere",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Setează un canal unde <TYPE> se va trimite.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Unde <TYPE> se va trimite.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> setat!",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Deschide Ghidul De Script-uri CRBT",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Editează acest mesaj pentru a personaliza <TYPE> folosind meniul selectat de mai jos.",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> salvat.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Previzualizează <TYPE>ul(a).",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Previzualizare",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Așa va arăta <TYPE> când va fi trimis la <CHANNEL>.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Am întâmpinat o eroare în timp ce se previzualiza <TYPE>. Este posibil canalul să nu mai existe sau nu am permisiunea de a trimite mesaje acolo.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Noii membri vor fi întâmpinați în <CHANNEL>. Pentru a schimba mesajul care este trimis, poți utiliza comanda \"/welcome'.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Acum, membrii noi vor vedea acest mesaj când se vor alătura serverului. Pentru a schimba canalul în care acesta este trimis, poți utiliza comanda `/welcome`.",
+  "JOIN_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator se alătură serverului.",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Bun venit <user.name> la <server.name>!",
+  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /welcome message pentru a seta unul.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Trebuie să setezi un canal pentru a trimite <TYPE> primul. Folosește /welcome channel pentru a seta unul.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Un mesaj de la revedere va fi trimis când membrii ies în <CHANNEL>. Ca să schimbi mesajul trimis, folosește comanda /farewell message.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Acest mesaj va fi trimis atunci când membrii decid să iasă din server. Pentru a schimba canalul în care e trimis, poți utiliza comanda `/farewell channel`.",
+  "LEAVE_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator părăsește serverul.",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a părăsit serverul.",
+  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /farewell message pentru a seta unul.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Prima oară, trebuie să setezi un canal în care <TYPE> se trimite. Folosește /farewell channel pentru a seta unul.",
+  "FIELD_SELECT_MENU": "Selectează un câmp pentru a edita",
+  "COLOR_PRESET_SELECT_MENU": "Selectează o presetare de culoare",
+  "MANUAL_COLOR_EDIT_BUTTON": "Folosește o culoare HEX",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown și CRBTscript sunt acceptate.",
+  "FIELDS_CONTENT": "Text simplu",
+  "FIELDS_AUTHOR": "Încorporează autorul",
+  "FIELDS_TITLE": "Încorporează titlul",
+  "FIELDS_DESCRIPTION": "Încorporează descrierea",
+  "FIELDS_FOOTER": "Încorporează Footer-ul",
+  "FIELDS_COLOR": "Încorporează culoare",
+  "FIELDS_IMAGE": "Încorporează imagine",
+  "FIELDS_THUMBNAIL": "Încorporează miniatură",
+  "FIELDS_URL": "Încorporează titlu URL"
 }
