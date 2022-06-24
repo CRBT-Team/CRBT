@@ -64,131 +64,135 @@ export default ChatCommand({
       return this.reply(CRBTError(errors.TITLE_TOO_LONG));
     }
 
-    const pollChoices: string[] = Object.values(choices).filter(Boolean);
+    try {
+      const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
-    for (const choice of pollChoices) {
-      if (choice.replace(EmojiRegex, '').length > 40) {
-        return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
-      } else if (choice.replace(EmojiRegex, '').length === 0) {
-        return this.reply(CRBTError(errors.CHOICE_EMPTY));
+      for (const choice of pollChoices) {
+        if (choice.replace(EmojiRegex, '').length > 40) {
+          return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
+        } else if (choice.replace(EmojiRegex, '').length === 0) {
+          return this.reply(CRBTError(errors.CHOICE_EMPTY));
+        }
       }
-    }
 
-    const msg = await this.channel.send({
-      embeds: [
-        new MessageEmbed()
-          // .setAuthor({
-          //   name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_VOTE}`,
-          // })
-          .setTitle(title)
-          .setDescription(
-            strings.POLL_DESCRIPTION.replace(
-              '<TIME>',
-              `<t:${dayjs().add(ms(end_date)).unix()}:R>`
-            ).replace('<ICON>', emojis.menu)
-          )
-          .addFields(
-            pollChoices.map((choice) => ({
-              name: choice,
-              value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
-                emojis.progress.emptyend
-              }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
+      const msg = await this.channel.send({
+        embeds: [
+          new MessageEmbed()
+            // .setAuthor({
+            //   name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_VOTE}`,
+            // })
+            .setTitle(title)
+            .setDescription(
+              strings.POLL_DESCRIPTION.replace(
+                '<TIME>',
+                `<t:${dayjs().add(ms(end_date)).unix()}:R>`
+              ).replace('<ICON>', emojis.menu)
+            )
+            .addFields(
+              pollChoices.map((choice) => ({
+                name: choice,
+                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
+                  emojis.progress.emptyend
+                }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
+                  '<VOTES>',
+                  '0'
+                )}`,
+              }))
+            )
+            .setFooter({
+              text: `${strings.POLL_FOOTER_VOTES.replace(
                 '<VOTES>',
                 '0'
-              )}`,
-            }))
-          )
-          .setFooter({
-            text: `${strings.POLL_FOOTER_VOTES.replace(
-              '<VOTES>',
-              '0'
-            )} • ${strings.POLL_FOOTER_CREATOR.replace('<USER>', this.user.tag)}`,
-          })
-          .setColor(`#${colors.default}`),
-      ],
-      components:
-        pollChoices.length <= 3
-          ? components(
-              row()
-                .addComponents(
-                  pollChoices.map((choice, index) => {
-                    const choiceEmoji = findEmojis(choice)[0] || null;
-                    const choiceText = choice.replace(EmojiRegex, '');
+              )} • ${strings.POLL_FOOTER_CREATOR.replace('<USER>', this.user.tag)}`,
+            })
+            .setColor(`#${colors.default}`),
+        ],
+        components:
+          pollChoices.length <= 3
+            ? components(
+                row()
+                  .addComponents(
+                    pollChoices.map((choice, index) => {
+                      const choiceEmoji = findEmojis(choice)[0] || null;
+                      const choiceText = choice.replace(EmojiRegex, '');
 
-                    return new PollButton({ choiceId: index.toString() })
-                      .setLabel(choiceText)
-                      .setStyle(
-                        choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
-                          ? 'SUCCESS'
-                          : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
-                          ? 'DANGER'
-                          : 'PRIMARY'
-                      )
-                      .setEmoji(choiceEmoji);
-                  })
-                )
-                .addComponents(
+                      return new PollButton({ choiceId: index.toString() })
+                        .setLabel(choiceText)
+                        .setStyle(
+                          choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
+                            ? 'SUCCESS'
+                            : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
+                            ? 'DANGER'
+                            : 'PRIMARY'
+                        )
+                        .setEmoji(choiceEmoji);
+                    })
+                  )
+                  .addComponents(
+                    new PollOptionsButton(this.user.id)
+                      .setEmoji(emojis.buttons.menu)
+                      .setStyle('SECONDARY')
+                  )
+              )
+            : components(
+                row(
+                  new PollSelector()
+                    .setPlaceholder(strings.POLL_SELECT_MENU_VOTE)
+                    .addOptions(
+                      pollChoices.map((choice, index) => {
+                        const choiceEmoji = findEmojis(choice)[0] || null;
+                        const choiceText = choice.replace(EmojiRegex, '');
+                        return {
+                          label: choiceText,
+                          value: index.toString(),
+                          emoji: choiceEmoji,
+                        };
+                      })
+                    )
+                    .setMinValues(0)
+                    .setMaxValues(1)
+                ),
+                row(
                   new PollOptionsButton(this.user.id)
                     .setEmoji(emojis.buttons.menu)
                     .setStyle('SECONDARY')
                 )
-            )
-          : components(
-              row(
-                new PollSelector()
-                  .setPlaceholder(strings.POLL_SELECT_MENU_VOTE)
-                  .addOptions(
-                    pollChoices.map((choice, index) => {
-                      const choiceEmoji = findEmojis(choice)[0] || null;
-                      const choiceText = choice.replace(EmojiRegex, '');
-                      return {
-                        label: choiceText,
-                        value: index.toString(),
-                        emoji: choiceEmoji,
-                      };
-                    })
-                  )
-                  .setMinValues(0)
-                  .setMaxValues(1)
               ),
-              row(
-                new PollOptionsButton(this.user.id)
-                  .setEmoji(emojis.buttons.menu)
-                  .setStyle('SECONDARY')
-              )
-            ),
-    });
+      });
 
-    const pollData = await setDbTimeout({
-      id: `${this.channel.id}/${msg.id}`,
-      type: 'POLL',
-      expiration: new Date(Date.now() + ms(end_date)),
-      locale: this.guildLocale,
-      data: {
-        creatorId: this.user.id,
-        choices: pollChoices.map((_) => []),
-      },
-    });
+      const pollData = await setDbTimeout({
+        id: `${this.channel.id}/${msg.id}`,
+        type: 'POLL',
+        expiration: new Date(Date.now() + ms(end_date)),
+        locale: this.guildLocale,
+        data: {
+          creatorId: this.user.id,
+          choices: pollChoices.map((_) => []),
+        },
+      });
 
-    activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
+      activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 
-    this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            iconURL: icons.success,
-            name: userStrings.SUCCESS_TITLE,
-          })
-          .setDescription(
-            userStrings.SUCCESS_DESCRIPTION.replace(
-              '<TIME>',
-              `<t:${dayjs().add(ms(end_date)).unix()}:R>`
-            ).replace('<ICON>', emojis.menu)
-          )
-          .setColor(`#${colors.success}`),
-      ],
-      ephemeral: true,
-    });
+      await this.reply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              iconURL: icons.success,
+              name: userStrings.SUCCESS_TITLE,
+            })
+            .setDescription(
+              userStrings.SUCCESS_DESCRIPTION.replace(
+                '<TIME>',
+                `<t:${dayjs().add(ms(end_date)).unix()}:R>`
+              ).replace('<ICON>', emojis.menu)
+            )
+            .setColor(`#${colors.success}`),
+        ],
+        ephemeral: true,
+      });
+    } catch (error) {
+      this.reply(UnknownError(this, String(error)));
+    }
   },
 });
 
@@ -388,18 +392,6 @@ export const CancelPollButton = ButtonComponent({
   async handle(msgId: string) {
     const { strings } = t(this, 'poll');
 
-    await this.update({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            iconURL: icons.success,
-            name: strings.SUCCESS_POLL_DELETED,
-          })
-          .setColor(`#${colors.success}`),
-      ],
-      components: [],
-    });
-
     try {
       await db.timeouts.delete({
         where: { id: `${this.channel.id}/${msgId}` },
@@ -407,6 +399,18 @@ export const CancelPollButton = ButtonComponent({
 
       const msg = await this.channel.messages.fetch(msgId);
       await msg.delete();
+
+      await this.update({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              iconURL: icons.success,
+              name: strings.SUCCESS_POLL_DELETED,
+            })
+            .setColor(`#${colors.success}`),
+        ],
+        components: [],
+      });
     } catch (err) {
       UnknownError(this, err);
     }

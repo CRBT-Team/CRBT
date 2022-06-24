@@ -1,7 +1,7 @@
 import { colors, icons, misc } from '$lib/db';
+import { avatar } from '$lib/functions/avatar';
 import { MessageActionRow, MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent } from 'purplet';
-import avatar from '../info/avatar';
 
 export default ChatCommand({
   name: 'suggest',

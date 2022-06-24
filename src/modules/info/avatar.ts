@@ -1,61 +1,101 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import { ButtonInteraction, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
+import {
+  ButtonInteraction,
+  GuildMember,
+  Interaction,
+  MessageButton,
+  MessageEmbed,
+  User,
+} from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { navBar } from '../components/navBar';
+import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from '../components/navBar';
 
 const { meta, ctxMeta } = t('en-US', 'avatar');
 
-export default ChatCommand({
-  name: 'avatar default',
+const options = new OptionBuilder()
+  .user('user', meta.options[0].description)
+  .string('size', meta.options[1].description, {
+    choices: {
+      '1': 'Small (128px)',
+      '2': 'Medium (512px)',
+      '3': 'Large (2048px)',
+      '4': 'Largest (4096px)',
+    },
+  })
+  .string('format', meta.options[2].description, {
+    choices: {
+      '1': 'PNG',
+      '2': 'JPG',
+      '3': 'WEBP',
+      '4': 'GIF',
+    },
+  });
+
+export const defaultPfp = ChatCommand({
+  name: 'avatar',
   description: meta.description,
-  options: new OptionBuilder()
-    .user('user', meta.options[0].description)
-    .string('size', meta.options[1].description, {
-      choices: {
-        [128]: 'Small (128px)',
-        [512]: 'Medium (512px)',
-        [4096]: 'Largest (4096px)',
-      },
-    })
-    .string('format', meta.options[2].description, {
-      choices: {
-        png: 'PNG',
-        jpg: 'JPG',
-        webp: 'WEBP',
-        gif: 'GIF',
-      },
-    }),
+  options,
   async handle({ user, size, format }) {
+    const m = user
+      ? (this.options.getMember('user') as GuildMember) ?? null
+      : (this.member as GuildMember);
     const u = user ?? this.user;
-    await this.reply(await renderPfp(u, this, size, format));
+
+    await this.reply(
+      await renderPfp(
+        'default',
+        u,
+        this,
+        {
+          cmdUID: this.user.id,
+          userId: u.id,
+          format: format as any,
+          size: (size ?? '3') as any,
+        },
+        m
+      )
+    );
   },
 });
 
-export const ctxCommand = UserContextCommand({
+export const ctxDefaultPfp = UserContextCommand({
   ...ctxMeta,
   async handle(user) {
+    const m = this.options.getMember('user') as GuildMember;
     await this.reply({
-      ...(await renderPfp(user, this)),
+      ...(await renderPfp(
+        'default',
+        user,
+        this,
+        {
+          cmdUID: this.user.id,
+          userId: user.id,
+          size: '3',
+        },
+        m
+      )),
       ephemeral: true,
     });
   },
 });
 
 export async function renderPfp(
+  type: 'default' | 'user',
   user: User,
   ctx: Interaction,
-  size = '2048',
-  format?: string,
-  navCtx?: {
-    userId: string;
-    cmdUID: string;
-  }
+  navCtx: NavBarContext,
+  member?: GuildMember
 ) {
+  const size = AvatarSizes[navCtx.size];
+  const format = AvatarFormats[navCtx.format];
+
   const { strings } = t(ctx.locale, 'avatar');
 
-  const av = avatar(user, size, format ?? 'png', !!format);
+  const av = avatar(type === 'user' ? user : member ?? user, size, format, !format);
+
+  console.log(navCtx, av, size, format);
 
   const color =
     ctx instanceof ButtonInteraction ? ctx.message.embeds[0].color : await getColor(user);
@@ -64,22 +104,26 @@ export async function renderPfp(
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          // name: user.tag,
           name: strings.EMBED_TITLE.replace('<USER>', user.tag),
-          iconURL: avatar(user, 64),
+          iconURL: av,
         })
         .setImage(av)
         .setColor(color),
     ],
     components: components(
-      navBar(navCtx ?? { userId: user.id, cmdUID: ctx.user.id }, ctx.locale, 'avatar'),
+      navBar(
+        navCtx,
+        ctx.locale,
+        type === 'default' ? 'avatar' : 'user_avatar',
+        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user, member)
+      ),
       row(
         new MessageButton()
           .setLabel(
             !av.includes('embed/avatars')
-              ? strings.DOWNLOAD.replace('<SIZE>', `${size}`).replace(
+              ? strings.DOWNLOAD.replace('<SIZE>', `${size ?? 2048}`).replace(
                   '<FORMAT>',
-                  av.includes('.gif') ? 'GIF' : 'PNG'
+                  av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG'
                 )
               : strings.DOWNLOAD.replace('<SIZE>', `256`).replace('<FORMAT>', 'PNG')
           )

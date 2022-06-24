@@ -1,5 +1,5 @@
 import { colors, db, emojis, icons } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
@@ -50,39 +50,60 @@ export default ChatCommand({
     }
     winners = winners || 1;
 
-    const end = dayjs().add(ms(end_date));
+    try {
+      const end = dayjs().add(ms(end_date));
 
-    const msg = await this.channel.send({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Giveaway',
-            iconURL: icons.giveaway,
-          })
-          .setTitle(prize)
-          .setDescription(`Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`)
-          .addField('Entrants', `0`, true)
-          .addField('Winners', `${winners}`, true)
-          .setColor(`#${colors.default}`),
-      ],
-      components: components(
-        row(
-          new EnterGwayButton().setStyle('PRIMARY').setEmoji(emojis.tada).setLabel('Enter'),
-          new GwayOptionsButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY')
-        )
-      ),
-    });
+      const msg = await this.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              name: 'Giveaway',
+              iconURL: icons.giveaway,
+            })
+            .setTitle(prize)
+            .setDescription(`Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`)
+            .addField('Entrants', `0`, true)
+            .addField('Winners', `${winners}`, true)
+            .setColor(`#${colors.default}`),
+        ],
+        components: components(
+          row(
+            new EnterGwayButton().setStyle('PRIMARY').setEmoji(emojis.tada).setLabel('Enter'),
+            new GwayOptionsButton().setEmoji(emojis.buttons.menu).setStyle('SECONDARY')
+          )
+        ),
+      });
 
-    setDbTimeout({
-      id: `${this.channel.id}/${msg.id}`,
-      type: 'GIVEAWAY',
-      expiration: end.toDate(),
-      locale: this.guildLocale,
-      data: {
-        creatorId: this.user.id,
-        participants: [],
-      },
-    });
+      const data = await setDbTimeout({
+        id: `${this.channel.id}/${msg.id}`,
+        type: 'GIVEAWAY',
+        expiration: end.toDate(),
+        locale: this.guildLocale,
+        data: {
+          creatorId: this.user.id,
+          participants: [],
+        },
+      });
+
+      activeGiveaways.set(`${this.channel.id}/${msg.id}`, data);
+
+      await this.reply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              name: 'Giveaway started!',
+              iconURL: icons.success,
+            })
+            .setDescription(
+              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
+                emojis.buttons.menu
+              } menu. From this menu, you can also cancel it or view the entrants.`
+            ),
+        ],
+      });
+    } catch (error) {
+      this.reply(UnknownError(this, String(error)));
+    }
   },
 });
 
@@ -96,13 +117,10 @@ async function getGiveawayData(id: string) {
 }
 
 export const GwayOptionsButton = ButtonComponent({
-  async handle(creatorId: string) {
+  async handle() {
     const { strings } = t(this, 'poll');
 
-    if (
-      this.user.id === creatorId &&
-      !this.memberPermissions.has(PermissionFlagsBits.ManageGuild)
-    ) {
+    if (!this.memberPermissions.has(PermissionFlagsBits.ManageGuild)) {
       return this.reply(
         CRBTError('Only managers ("Manage Server" permission) can manage this giveaway.')
       );
@@ -135,6 +153,33 @@ export const GwayOptionsButton = ButtonComponent({
       ),
       ephemeral: true,
     });
+  },
+});
+
+export const CancelGwayButton = ButtonComponent({
+  async handle(msgId: string) {
+    try {
+      await db.timeouts.delete({
+        where: { id: `${this.channel.id}/${msgId}` },
+      });
+
+      const msg = await this.channel.messages.fetch(msgId);
+      await msg.delete();
+
+      await this.update({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({
+              iconURL: icons.success,
+              name: 'Giveaway deleted.',
+            })
+            .setColor(`#${colors.success}`),
+        ],
+        components: [],
+      });
+    } catch (err) {
+      UnknownError(this, err);
+    }
   },
 });
 

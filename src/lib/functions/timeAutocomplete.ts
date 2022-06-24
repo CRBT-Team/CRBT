@@ -36,7 +36,7 @@ export async function timeAutocomplete(
 
   try {
     const relative = await resolveToDate(duration, locale);
-    console.log(relative);
+    // console.log(relative);
 
     if (relative.isAfter(now.add(ms(max))))
       throw new Error(`Duration cannot be longer than ${max} in the future`);

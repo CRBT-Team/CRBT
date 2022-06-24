@@ -12,7 +12,7 @@ import {
   UserContextMenuInteraction,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
-import { navBar } from '../components/navBar';
+import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from '../components/navBar';
 
 export default ChatCommand({
   name: 'user info',
@@ -38,7 +38,17 @@ export default ChatCommand({
 
     // if (m.presence && m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
     //   e.addField('Custom status', `${customStatus(m)}`, true);
-    await this.reply(await renderUser(this, u, m));
+    await this.reply(
+      await renderUser(
+        this,
+        u,
+        {
+          cmdUID: this.user.id,
+          userId: u.id,
+        },
+        m
+      )
+    );
   },
 });
 
@@ -48,7 +58,15 @@ export const ctxCommand = UserContextCommand({
     const member = (this as UserContextMenuInteraction).targetMember as GuildMember;
 
     await this.reply({
-      ...(await renderUser(this, user, member)),
+      ...(await renderUser(
+        this,
+        user,
+        {
+          cmdUID: this.user.id,
+          userId: user.id,
+        },
+        member
+      )),
       ephemeral: true,
     });
   },
@@ -95,12 +113,12 @@ export const ctxCommand = UserContextCommand({
 
 export async function renderUser(
   ctx: Interaction,
-  u: User,
-  m?: GuildMember,
-  navCtx?: { userId: string; cmdUID: string }
+  user: User,
+  navCtx: NavBarContext,
+  member?: GuildMember
 ) {
   const { badges } = emojis;
-  const flags = (await u.fetchFlags()).toArray();
+  const flags = (await user.fetchFlags()).toArray();
   const userBadges = flags.map((flag) => {
     switch (flag) {
       case 'VERIFIED_BOT':
@@ -129,25 +147,27 @@ export async function renderUser(
         return badges.developer;
     }
   });
+  const size = AvatarSizes[navCtx.size];
+  const format = AvatarFormats[navCtx.format];
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${u.tag} - User info`,
-      iconURL: avatar(m ?? u, 64),
+      name: `${user.tag} - User info`,
+      iconURL: avatar(member ?? user, 64),
     })
     .setDescription(userBadges.join('‎ '))
-    .addField('ID', u.id)
-    .setImage(banner(u, 2048))
-    .setThumbnail(avatar(u, 256))
-    .setColor(await getColor(u));
+    .addField('ID', user.id)
+    .setImage(banner(user, size ?? 2048, format))
+    .setThumbnail(avatar(member ?? user, size ?? 256, format))
+    .setColor(await getColor(user));
 
-  const joinedDiscord = dayjs(u.createdAt).unix();
+  const joinedDiscord = dayjs(user.createdAt).unix();
 
-  if (m) {
-    const roles = m.roles.cache.filter((r) => r.id !== ctx.guild.id);
-    const joinedServer = dayjs(m.joinedAt).unix();
+  if (member) {
+    const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
+    const joinedServer = dayjs(member.joinedAt).unix();
 
-    if (m.nickname) e.addField('Server nickname', m.nickname);
+    if (member.nickname) e.addField('Server nickname', member.nickname);
 
     e.addField(
       `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
@@ -157,20 +177,19 @@ export async function renderUser(
     )
       .addField(
         `Global major permissions`,
-        m.permissions.has('ADMINISTRATOR', true) || m.permissions.toArray().length === 0
+        member.permissions.has('ADMINISTRATOR', true) || member.permissions.toArray().length === 0
           ? 'Administrator (all permissions)'
-          : keyPerms(m.permissions).join(', ')
+          : keyPerms(member.permissions).join(', ')
       )
       .addField('Joined Discord', `<t:${joinedDiscord}>\n<t:${joinedDiscord}:R>`, true)
       .addField('Joined server', `<t:${joinedServer}>\n<t:${joinedServer}:R>`, true);
   } else {
     e.addField('Joined Discord', `<t:${joinedDiscord}> (<t:${joinedDiscord}:R>)`);
   }
-
   return {
     embeds: [e],
     components: components(
-      navBar(navCtx ?? { userId: u.id, cmdUID: ctx.user.id }, ctx.locale, 'userinfo')
+      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
     ),
   };
 }

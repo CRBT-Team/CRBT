@@ -35,8 +35,13 @@ export default ChatCommand({
             )
           )
           .addField(
+            strings.MEMBER_COUNT,
+            this.client.users.cache.size.toLocaleString(this.locale),
+            true
+          )
+          .addField(
             strings.SERVER_COUNT,
-            `${this.client.guilds.cache.size.toLocaleString(this.locale)}`,
+            this.client.guilds.cache.size.toLocaleString(this.locale),
             true
           )
           .addField(
@@ -53,6 +58,11 @@ export default ChatCommand({
       ],
       components: components(
         row(
+          new MessageButton()
+            .setStyle('LINK')
+            .setEmoji('❤️')
+            .setLabel(strings.BUTTON_DONATE)
+            .setURL(links.donate),
           new MessageButton()
             .setStyle('LINK')
             .setLabel(strings.BUTTON_WEBSITE)

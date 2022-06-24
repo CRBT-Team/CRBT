@@ -49,7 +49,7 @@ export async function resolveToDate(
     .replaceAll('  ', ' ')
     .trim();
 
-  console.log(when);
+  // console.log(when);
 
   if (isValidTime(when)) {
     return now.add(ms(when));
@@ -58,7 +58,7 @@ export async function resolveToDate(
   if (when.startsWith(keywords.TODAY) || raw.startsWith(keywords.AT)) {
     const time = when.split(' ').length === 1 ? null : when.split(' ').slice(1).join('');
 
-    console.log(time);
+    // console.log(time);
 
     return time
       ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)

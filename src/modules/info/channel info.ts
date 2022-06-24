@@ -1,14 +1,13 @@
-import { icons } from '$lib/db';
+import { emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
 import {
   CategoryChannel,
   GuildChannel,
   MessageEmbed,
-  NewsChannel,
-  StageChannel,
   TextChannel,
   ThreadAutoArchiveDuration,
   ThreadChannel,
@@ -25,67 +24,90 @@ export default ChatCommand({
     'channel',
     'The channel to get info from. Leave blank to get the current one.'
   ),
-  async handle({ channel }) {
+  async handle({ channel: Channel }) {
     if (!this.guild) {
       return this.reply(CRBTError('This command cannot be used in DMs'));
     }
 
-    const c = (channel ?? (await this.channel.fetch())) as GuildChannel;
-    const i = icons.channels;
-    const categories = (await this.guild.fetch()).channels.cache.filter(
-      (c) => c.type === 'GUILD_CATEGORY'
-    ).size;
+    const channel = (Channel ?? this.channel) as GuildChannel;
+    const channels = this.guild.channels;
+    const categories = channels.cache.filter((c) => c.type === 'GUILD_CATEGORY');
 
-    const e = new MessageEmbed().addField('ID', c.id).setColor(await getColor(this.user));
+    const e = new MessageEmbed()
+      .setAuthor({ name: `${channel.name} - Channel info` })
+      .addField('ID', channel.id)
+      .addField(
+        'Created at',
+        `<t:${dayjs(channel.createdAt).unix()}> (<t:${dayjs(channel.createdAt).unix()}:R>)`
+      )
+      .setColor(await getColor(this.user));
 
-    if (c.type === 'GUILD_TEXT') {
-      const info = c as TextChannel;
+    if (channel instanceof CategoryChannel) {
       e.setAuthor({
-        name: `${info.name} - Channel info`,
-        iconURL: c.equals(this.guild.rulesChannel) ? i.rules : i.text,
-      });
-      if (info.topic) e.setDescription(info.topic);
-      if (info.threads.cache.size > 0) {
+        name: `${channel.name} - Category info`,
+        iconURL: icons.channels.category,
+      }).addField('Position', `${channel.rawPosition + 1} of ${categories.size} categories`);
+    } else if (!(channel instanceof ThreadChannel)) {
+      e.addField(
+        'Position',
+        `${channel.rawPosition}/${channels.channelCountWithoutThreads} (counting categories)`,
+        true
+      ).addField('Parent category', `${emojis.channels.category} ${channel.parent.name}`, true);
+    }
+
+    if (channel.isText()) {
+      e.setDescription(channel.topic || '').addField(
+        'Content safety',
+        channel.nsfw ? 'Age-restricted' : 'Safe',
+        true
+      );
+    }
+
+    if (channel.isVoice()) {
+      e.addField(
+        'Region Override',
+        channel.rtcRegion ? capitalCase(channel.rtcRegion) : 'Automatic',
+        true
+      )
+        .addField(
+          'Users in Voice',
+          channel.userLimit
+            ? `${channel.members.size}/${channel.userLimit} users`
+            : `${channel.members.size} (No user limit)`,
+          true
+        )
+        .addField('Bitrate', `${channel.bitrate / 1000}kbps`, true);
+    }
+    if (channel.type === 'GUILD_NEWS') e.author.iconURL = icons.channels.news;
+    if (channel.id === this.guild.rulesChannelId) e.author.iconURL = icons.channels.rules;
+
+    if (channel instanceof TextChannel) {
+      e.author.iconURL = channel.nsfw ? icons.channels.nsfw : icons.channels.text;
+      e.addField(
+        'Slowmode',
+        channel.rateLimitPerUser ? `${channel.rateLimitPerUser} seconds` : 'Off',
+        true
+      );
+      if (channel.threads.cache.size > 0) {
         e.addField(
-          'Threads',
-          info.threads.cache
+          `Threads (${channel.threads.cache.size})`,
+          channel.threads.cache
             .map((t) => `${t} (${threadDuration(t.autoArchiveDuration)})`)
             .join(', ')
         );
       }
-      e.addField('Parent category', info.parent.name).addField(
-        'Slowmode',
-        info.rateLimitPerUser ? `${info.rateLimitPerUser} seconds` : 'Off'
-      );
-    } else if (c.type === 'GUILD_VOICE') {
-      const info = c as VoiceChannel;
-      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.voice })
-        .addField('Region', info.rtcRegion ? info.rtcRegion : 'Automatic', true)
-        .addField('User limit', info.userLimit ? `${info.userLimit}` : 'Unlimited', true)
-        .addField('Bitrate', `${info.bitrate / 1000}kbps`, true)
-        .addField('Parent category', info.parent.name);
-    } else if (c.type === 'GUILD_CATEGORY') {
-      const info = c as CategoryChannel;
-      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.category }).addField(
-        'Position',
-        `${info.position} of ${categories} categories`
-      );
-    } else if (
-      (c.type === 'GUILD_PUBLIC_THREAD' ?? c.type === 'GUILD_PRIVATE_THREAD',
-      'GUILD_NEWS_THREAD' ?? c.type === 'GUILD_NEWS_THREAD')
-    ) {
-      const info = c as unknown as ThreadChannel;
-      const lm = await info.lastMessage.fetch();
-      console.log(lm);
-      e.setAuthor({ name: `${c.name} - Thread info` })
-        .addField('Archiving', `<t:// calculate the time left, from the createdTimestamp:R>`)
-        .addField('Parent channel', info.parent.name);
-    } else if (c.type === 'GUILD_NEWS') {
-      const info = c as NewsChannel;
-      e.setAuthor({ name: `${info.name} - Channel info`, iconURL: i.news });
-    } else if (c.type === 'GUILD_STAGE_VOICE') {
-      const info = c as StageChannel;
-      e.setAuthor({ name: `${info.name} - Channel info` });
+    }
+
+    if (channel instanceof VoiceChannel) {
+      e.author.iconURL = icons.channels.voice;
+      e.addField('Video Quality', channel.videoQualityMode === 'FULL' ? '720p' : 'Auto', true);
+    }
+
+    if (channel instanceof ThreadChannel) {
+      const autoArchives = dayjs(channel.createdAt).add(channel.autoArchiveDuration, 'm').unix();
+      e.setAuthor({ name: `${channel.name} - Thread info`, iconURL: icons.channels.text_thread })
+        .addField('Archives', `<t:${autoArchives}> (<t:${autoArchives}:R>)`)
+        .addField('Parent channel', `<#${channel.parentId}>`);
     }
 
     await this.reply({
@@ -97,14 +119,12 @@ export default ChatCommand({
 function threadDuration(tDuration: ThreadAutoArchiveDuration) {
   switch (tDuration) {
     case 60:
-      return '1 hour';
+      return '1 Hour';
     case 1440:
-      return '1 day';
+      return '24 Hours';
     case 4320:
-      return '3 days';
+      return '3 Days';
     case 10080:
-      return '1 week';
-    case 'MAX':
-      return 'Max';
+      return '1 Week';
   }
 }

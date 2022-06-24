@@ -7,7 +7,7 @@ export function avatar(
   dynamic: boolean = true
 ) {
   return user.displayAvatarURL({
-    format: format as DynamicImageFormat,
+    ...(dynamic ? { format: format as DynamicImageFormat } : {}),
     size: (typeof size === 'string' ? parseInt(size) : size) as AllowedImageSize,
     dynamic,
   });

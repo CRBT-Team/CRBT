@@ -6,18 +6,17 @@ import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage, RawServerJoin } from './shared';
 
 export default OnEvent('guildMemberUpdate', async (oldMember, member) => {
-  if (oldMember.pending && !member.pending) {
+  if (oldMember.pending && !member.pending && member.id !== member.client.user.id) {
     const { guild } = member;
-    console.log(member);
 
-    const {
-      joinChannel: channelId,
-      joinMessage: message,
-      modules,
-    } = (await db.servers.findFirst({
+    const serverData = (await db.servers.findFirst({
       where: { id: guild.id },
       select: { joinChannel: true, joinMessage: true, modules: true },
     })) as RawServerJoin & { modules: Modules[] };
+
+    if (!serverData) return;
+
+    const { joinChannel: channelId, joinMessage: message, modules } = serverData;
 
     if (!modules.includes('JOIN_MESSAGE')) return;
     if (!channelId || !message) return;

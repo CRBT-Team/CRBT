@@ -76,26 +76,25 @@ export const Modal = ModalComponent({
         ).setName('image.png')
       : null;
 
+    const e = new MessageEmbed()
+      .setAuthor({
+        name: `${this.user.tag} filed an issue`,
+        iconURL: avatar(this.user, 64),
+      })
+      .setURL(
+        !(this.channel instanceof DMChannel) ? ((await this.fetchReply()) as Message).url : null
+      )
+      .setTitle(title)
+      .setDescription(desc)
+      .addField('Status', '<:pending:954734893072519198> Pending', true)
+      .setImage(image_url ? 'attachment://image.png' : null)
+      .setFooter({ text: `User ID: ${this.user.id} • Last update` })
+      .setTimestamp()
+      .setColor(`#${colors.yellow}`);
+
     reportChannel.send({
-      embeds: [
-        new MessageEmbed({
-          title,
-          description: desc || '',
-          author: {
-            name: `${this.user.tag} filed an issue`,
-            iconURL: avatar(this.user, 64),
-          },
-          url: !(this.channel instanceof DMChannel)
-            ? ((await this.fetchReply()) as Message).url
-            : null,
-        })
-          .addField('Status', '<:pending:954734893072519198> Pending', true)
-          .setImage(image_url ? 'attachment://image.png' : null)
-          .setFooter({ text: `User ID: ${this.user.id} • Last update` })
-          .setTimestamp()
-          .setColor(`#${colors.yellow}`),
-      ],
-      files: [image],
+      embeds: [e],
+      files: image ? [image] : null,
     });
   },
 });
