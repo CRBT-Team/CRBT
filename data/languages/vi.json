@@ -16,7 +16,7 @@
     "PREVIOUS": "Trước",
     "NEXT": "Tiếp theo",
     "SAVE": "Lưu thay đổi",
-    "DONE": "Done",
+    "DONE": "Xong",
     "ADD_REMINDER": "Thêm nhắc nhỡ",
     "OPEN_DMS": "Mở DM",
     "PREVIEW": "Xem trước"
@@ -31,8 +31,8 @@
     "strings": {
       "TITLE": "Khoan đã!",
       "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "COMMAND": "câu lệnh",
+      "COMPONENT": "thành phần"
     }
   },
   "color set": {
@@ -252,11 +252,11 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Lấy ảnh đại diện"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "<USER> - Hình đại diện",
+      "DOWNLOAD": "Tải về (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
@@ -267,7 +267,7 @@
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Đánh dấu trang tin nhắn"
     },
     "errors": {
       "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
@@ -380,10 +380,10 @@
   "LEAVE_CHANNEL": "Kênh tạm biệt",
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> đã đặt!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> đã lưu.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the <TYPE> will look like when sent to <CHANNEL>.",
