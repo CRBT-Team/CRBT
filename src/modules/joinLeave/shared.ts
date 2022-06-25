@@ -15,7 +15,13 @@ import {
 import { ButtonComponent, components, ModalComponent, row, SelectMenuComponent } from 'purplet';
 import { colorsMap } from '../settings/color set';
 
+const invisibleChar = '‎';
+
 export type MessageTypes = 'JOIN_MESSAGE' | 'LEAVE_MESSAGE';
+export const resolveMsgType = {
+  JOIN_MESSAGE: 'joinMessage',
+  LEAVE_MESSAGE: 'leaveMessage',
+};
 
 export type JoinLeaveMessage = { script?: string; embed?: Partial<APIEmbed>; content?: string };
 
@@ -42,22 +48,22 @@ export interface RawServerLeave {
   leaveChannel?: string;
 }
 
-export function getValue(message: { content?: string; embed?: MessageEmbed }, id: string): string {
+export function getValue(message: { content?: string; embed?: APIEmbed }, id: string): string {
   switch (id) {
     case 'content':
       return message.content;
     case 'author':
-      return message.embed.author?.name;
+      return message.embed?.author?.name;
     case 'footer':
-      return message.embed.footer?.text;
+      return message.embed?.footer?.text;
     case 'color':
-      return message.embed.hexColor;
+      return message.embed?.color?.toString(16);
     case 'image':
-      return message.embed.image?.url;
+      return message.embed?.image?.url;
     case 'thumbnail':
-      return message.embed.thumbnail?.url;
+      return message.embed?.thumbnail?.url;
     default:
-      return message.embed[id];
+      return message.embed?.[id];
     // ?.length > 100
     //   ? `${message.embed[id].slice(0, 97)}...`
     //   : message.embed[id];
@@ -116,15 +122,12 @@ export async function renderJoinLeave(
   return {
     ephemeral: true,
     ...(message.content ? { content: message.content } : {}),
-    embeds: [new MessageEmbed(message.embed)],
+    embeds: message.embed ? [new MessageEmbed(message.embed)] : [],
     components: components(
       row(
         new FieldSelectMenu(type).setPlaceholder(t(locale, 'FIELD_SELECT_MENU')).setOptions(
           editableList.map(([id]) => {
-            const description = getValue(
-              { content: message.content, embed: new MessageEmbed(message?.embed) },
-              id
-            );
+            const description = getValue({ content: message.content, embed: message?.embed }, id);
             return {
               label: t(locale, `FIELDS_${id.toUpperCase()}` as any),
               value: id,
@@ -176,7 +179,7 @@ export const FieldSelectMenu = SelectMenuComponent({
       });
     } else {
       const value = getValue(
-        { embed: new MessageEmbed(this.message.embeds[0]), content: this.message.content },
+        { embed: new MessageEmbed(this.message.embeds[0]).toJSON(), content: this.message.content },
         fieldName
       );
       const name = t(this.locale, `FIELDS_${fieldName.toUpperCase()}` as any);
@@ -201,17 +204,17 @@ export const TestButton = ButtonComponent({
   async handle() {
     const parsed = parseCRBTscriptInMessage(
       {
-        content: this.message.content,
+        content: this.message.content === invisibleChar ? null : this.message.content,
         embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
       },
       {
-        channel: this.channel as TextChannel | NewsChannel,
+        channel: this.channel as TextChannel,
         member: this.member as GuildMember,
       }
     );
 
     await this.reply({
-      content: parsed.content || '‎',
+      content: parsed.content,
       embeds: [new MessageEmbed(parsed.embed)],
       ephemeral: true,
     });
@@ -238,7 +241,7 @@ export const SaveButton = ButtonComponent({
     const embed = this.message.embeds[0];
 
     const data = {
-      content: this.message.content,
+      content: this.message.content === invisibleChar ? null : this.message.content,
       embed: {
         title: embed.title,
         description: embed.description,
@@ -255,13 +258,11 @@ export const SaveButton = ButtonComponent({
     await db.servers.upsert({
       where: { id: this.guildId },
       update: {
-        joinMessage: data as any,
-        modules: { push: type },
+        [resolveMsgType[type]]: data,
       },
       create: {
         id: this.guildId,
-        joinMessage: data as any,
-        modules: { set: type },
+        [resolveMsgType[type]]: data,
       },
     });
 
@@ -318,10 +319,8 @@ export const EditModal = ModalComponent({
   async handle({ fieldName, type }) {
     const value = this.fields.getTextInputValue('VALUE');
 
-    const newMsg = {
-      embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
-      content: this.message.content,
-    };
+    const embed = this.message.embeds[0] || {};
+    let content = this.message.content;
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');
     const urlRegex = /^https?:(?:\/\/)\S+$/;
@@ -333,43 +332,64 @@ export const EditModal = ModalComponent({
 
     switch (fieldName) {
       case 'content':
-        newMsg.content = value ?? '‎';
+        content = value || invisibleChar;
         break;
       case 'author':
-        newMsg.embed.author = { name: value };
+        embed.author = { name: value };
         break;
       case 'footer':
-        newMsg.embed.footer = { text: value };
+        embed.footer = { text: value };
         break;
       case 'image':
         if (value && !urlRegex.test(parsed)) {
           return this.reply(CRBTError(invalidURL));
         }
-        newMsg.embed.image = { url: parsed };
+        embed.image = { url: parsed };
         break;
       case 'thumbnail':
         if (value && !urlRegex.test(parsed)) {
           return this.reply(CRBTError(invalidURL));
         }
-        newMsg.embed.thumbnail = { url: parsed };
+        embed.thumbnail = { url: parsed };
         break;
       case 'url':
         if (!urlRegex.test(value)) {
           return this.reply(CRBTError(invalidURL));
         }
 
-        newMsg.embed.url = value ?? '';
+        embed.url = value ?? '';
         break;
       case 'color':
         if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
           return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
         }
-        newMsg.embed.color = parseInt(value.replace('#', ''), 16);
+        embed.color = parseInt(value.replace('#', ''), 16);
         break;
       default:
-        newMsg.embed[fieldName] = value;
+        embed[fieldName] = value;
     }
 
-    this.update(await renderJoinLeave(type, newMsg, this.locale));
+    const textInEmbed =
+      embed && !!(embed.author?.name || embed.description || embed.title || embed.footer?.text);
+
+    console.log('doesEmbedHaveText', textInEmbed);
+    console.log('isContentInvisible', content === invisibleChar);
+    console.log('isThereAnyContent', !!content);
+    console.log('whatsTheContent', JSON.stringify(content));
+
+    if (content !== invisibleChar && !(content || textInEmbed)) {
+      return this.reply(CRBTError(t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY')));
+    }
+
+    this.update(
+      await renderJoinLeave(
+        type,
+        {
+          content,
+          embed: textInEmbed ? new MessageEmbed(embed).toJSON() : null,
+        },
+        this.locale
+      )
+    );
   },
 });

@@ -1,12 +1,11 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { Modules } from '@prisma/client';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 const choices = {
-  JOIN_MESSAGE: 'Welcome messages',
-  LEAVE_MESSAGE: 'Farewell messages',
+  joinMessage: 'Welcome messages',
+  leaveMessage: 'Farewell messages',
 };
 
 export default ChatCommand({
@@ -17,27 +16,23 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ module }) {
-    let mod = module as Modules;
-
-    const data = await db.servers.findFirst({
+    const data = await db.serverModules.findFirst({
       where: { id: this.guild.id },
-      select: { modules: true },
+      select: { [module]: true },
     });
 
-    if (data?.modules.includes(mod)) {
+    if (data[module]) {
       return this.reply(CRBTError(`The module "${choices[module]}" is already enabled.`));
     }
 
-    await db.servers.upsert({
+    await db.serverModules.upsert({
       where: { id: this.guild.id },
       create: {
         id: this.guild.id,
-        modules: { set: [mod] },
+        [module]: true,
       },
       update: {
-        modules: {
-          push: mod,
-        },
+        [module]: true,
       },
     });
 
@@ -62,29 +57,23 @@ export const disable = ChatCommand({
     required: true,
   }),
   async handle({ module }) {
-    let mod = module as Modules;
-
-    const data = await db.servers.findFirst({
+    const data = await db.serverModules.findFirst({
       where: { id: this.guild.id },
-      select: { modules: true },
+      select: { [module]: true },
     });
 
-    if (!data || !data.modules.includes(mod)) {
+    if (!data[module]) {
       return this.reply(CRBTError(`The module "${choices[module]}" is already disabled.`));
     }
 
-    const newData = data.modules.filter((m) => m !== mod);
-
-    await db.servers.upsert({
+    await db.serverModules.upsert({
       where: { id: this.guild.id },
       create: {
         id: this.guild.id,
-        modules: { set: newData },
+        [module]: false,
       },
       update: {
-        modules: {
-          set: newData,
-        },
+        [module]: false,
       },
     });
 

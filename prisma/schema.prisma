@@ -23,18 +23,18 @@ enum TimeoutTypes {
 }
 
 model servers {
-  id           String    @id
-  joinChannel  String?   @map("join_channel")
-  joinMessage  Json?     @map("join_message")
-  leaveChannel String?   @map("leave_channel")
-  leaveMessage Json?     @map("leave_message")
-  modules      Modules[] @map("enabled_modules")
-  accentColor  String?   @map("accent_color")
+  id           String  @id
+  joinChannel  String? @map("join_channel")
+  joinMessage  Json?   @map("join_message")
+  leaveChannel String? @map("leave_channel")
+  leaveMessage Json?   @map("leave_message")
+  accentColor  String? @map("accent_color")
 }
 
-enum Modules {
-  JOIN_MESSAGE
-  LEAVE_MESSAGE
+model serverModules {
+  id           String  @id
+  joinMessage  Boolean @default(false) @map("join_message")
+  leaveMessage Boolean @default(false) @map("leave_message")
 }
 
 model moderationStrikes {

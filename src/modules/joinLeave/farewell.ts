@@ -1,6 +1,5 @@
 import { db } from '$lib/db';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
-import { Modules } from '@prisma/client';
 import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage, RawServerLeave } from './shared';
@@ -8,17 +7,21 @@ import { parseCRBTscriptInMessage, RawServerLeave } from './shared';
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
 
-  const {
-    leaveChannel: channelId,
-    leaveMessage: message,
-    modules,
-  } = (await db.servers.findFirst({
+  const modules = await db.serverModules.findFirst({
     where: { id: guild.id },
-    select: { leaveChannel: true, leaveMessage: true, modules: true },
-  })) as RawServerLeave & { modules: Modules[] };
+    select: { leaveMessage: true },
+  });
 
-  if (!modules.includes('LEAVE_MESSAGE')) return;
-  if (!channelId || !message) return;
+  if (!modules?.leaveMessage) return;
+
+  const serverData = (await db.servers.findFirst({
+    where: { id: guild.id },
+    select: { leaveChannel: true, leaveMessage: true },
+  })) as RawServerLeave;
+
+  if (!serverData) return;
+
+  const { leaveChannel: channelId, leaveMessage: message } = serverData;
 
   const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
 

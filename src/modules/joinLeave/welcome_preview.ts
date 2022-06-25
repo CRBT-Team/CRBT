@@ -12,14 +12,14 @@ export default ChatCommand({
     t('en-US', 'JOIN_MESSAGE').toLowerCase()
   ),
   async handle() {
-    const { joinChannel: channelId, joinMessage: message } = (await db.servers.findFirst({
+    const data = (await db.servers.findFirst({
       where: { id: this.guild.id },
       select: { joinChannel: true, joinMessage: true },
     })) as RawServerJoin;
 
     const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
-    if (!message) {
+    if (!data) {
       return this.reply(
         CRBTError(
           t(this, 'JOIN_PREVIEW_ERROR_NO_MESSAGE')
@@ -28,6 +28,9 @@ export default ChatCommand({
         )
       );
     }
+
+    const { joinChannel: channelId, joinMessage: message } = data;
+
     if (!channelId) {
       return this.reply(
         CRBTError(

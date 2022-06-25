@@ -96,10 +96,12 @@ export default ChatCommand({
             })
             .setDescription(
               `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
-                emojis.buttons.menu
+                emojis.menu
               } menu. From this menu, you can also cancel it or view the entrants.`
-            ),
+            )
+            .setColor(`#${colors.success}`),
         ],
+        ephemeral: true,
       });
     } catch (error) {
       this.reply(UnknownError(this, String(error)));
@@ -148,6 +150,10 @@ export const GwayOptionsButton = ButtonComponent({
           new EndGwayButton(this.message.id)
             .setLabel('End Giveaway')
             .setEmoji(emojis.buttons.cross)
+            .setStyle('DANGER'),
+          new CancelGwayButton(this.message.id)
+            .setLabel('Cancel Giveaway')
+            .setEmoji(emojis.buttons.trash_bin)
             .setStyle('DANGER')
         )
       ),

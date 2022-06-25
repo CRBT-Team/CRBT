@@ -1,6 +1,5 @@
 import { db } from '$lib/db';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
-import { Modules } from '@prisma/client';
 import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage, RawServerJoin } from './shared';
@@ -9,16 +8,22 @@ export default OnEvent('guildMemberUpdate', async (oldMember, member) => {
   if (oldMember.pending && !member.pending && member.id !== member.client.user.id) {
     const { guild } = member;
 
+    const modules = await db.serverModules.findFirst({
+      where: { id: guild.id },
+      select: { joinMessage: true },
+    });
+
+    if (!modules?.joinMessage) return;
+
     const serverData = (await db.servers.findFirst({
       where: { id: guild.id },
-      select: { joinChannel: true, joinMessage: true, modules: true },
-    })) as RawServerJoin & { modules: Modules[] };
+      select: { joinChannel: true, joinMessage: true },
+    })) as RawServerJoin;
 
     if (!serverData) return;
 
-    const { joinChannel: channelId, joinMessage: message, modules } = serverData;
+    const { joinChannel: channelId, joinMessage: message } = serverData;
 
-    if (!modules.includes('JOIN_MESSAGE')) return;
     if (!channelId || !message) return;
 
     const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;

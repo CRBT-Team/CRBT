@@ -12,14 +12,14 @@ export default ChatCommand({
     t('en-US', 'LEAVE_MESSAGE').toLowerCase()
   ),
   async handle() {
-    const { leaveChannel: channelId, leaveMessage: message } = (await db.servers.findFirst({
+    const data = (await db.servers.findFirst({
       where: { id: this.guild.id },
       select: { leaveChannel: true, leaveMessage: true },
     })) as RawServerLeave;
 
     const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
-    if (!message) {
+    if (!data) {
       return this.reply(
         CRBTError(
           t(this, 'LEAVE_PREVIEW_ERROR_NO_MESSAGE')
@@ -28,6 +28,9 @@ export default ChatCommand({
         )
       );
     }
+
+    const { leaveChannel: channelId, leaveMessage: message } = data;
+
     if (!channelId) {
       return this.reply(
         CRBTError(
