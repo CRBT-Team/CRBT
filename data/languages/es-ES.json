@@ -210,7 +210,7 @@
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
       "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
+      "POLL_SELECT_MENU_VOTE": "Votar",
       "KEYWORD_YES__KEEP_LOWERCASE": "sí",
       "KEYWORD_NO__KEEP_LOWERCASE": "no",
       "SUCCESS_TITLE": "Poll created!",
@@ -366,10 +366,10 @@
       "SUCCESS_DESCRIPTION": "Los miembros del servidor ahora podrán seleccionar roles de este menú. Para deshabilitarlo, simplemente elimine el mensaje del Selector de Roles."
     }
   },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
+  "MODERATION_LOGS_ACTION_WARN": "Advertencia",
+  "MODERATION_LOGS_ACTION_KICK": "Expulsión",
+  "MODERATION_LOGS_ACTION_BAN": "Baneo",
+  "MODERATION_LOGS_ACTION_UNBAN": "Desbaneo",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
