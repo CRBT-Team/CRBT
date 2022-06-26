@@ -41,6 +41,8 @@ export default ChatCommand({
       );
     }
 
+    console.log(message);
+
     try {
       const channel = this.guild.channels.resolve(channelId) as TextChannel;
 
@@ -49,16 +51,20 @@ export default ChatCommand({
         member: this.member as GuildMember,
       });
 
+      console.log(parsedMessage);
+
       const { url } = await channel.send({
-        ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
+        ...(message.content ? { content: parsedMessage.content } : {}),
         embeds: [
-          new MessageEmbed().setAuthor({
-            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
-              '<TYPE>',
-              t(this, 'LEAVE_MESSAGE')
-            ),
-          }),
-          new MessageEmbed(parsedMessage.embed),
+          new MessageEmbed()
+            .setAuthor({
+              name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
+                '<TYPE>',
+                t(this, 'LEAVE_MESSAGE')
+              ),
+            })
+            .setColor(`#${colors.default}`),
+          ...(message.embed ? [new MessageEmbed(parsedMessage.embed)] : []),
         ],
       });
 
@@ -84,6 +90,7 @@ export default ChatCommand({
         ),
       });
     } catch (e) {
+      console.error(e);
       return this.reply(
         CRBTError(
           t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, 'JOIN_MESSAGE'))
