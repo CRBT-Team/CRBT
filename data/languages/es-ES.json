@@ -1,8 +1,8 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
+  "ERROR_ADMIN_ONLY": "Debe ser un administrador para utilizar este comando.",
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_URL": "La URL proporcionada es inválida.",
+  "ERROR_INVALID_HEX": "El código hexadecimal proporcionado es inválido.",
   "globalErrors": {
     "GUILD_ONLY": "Este comando no se puede utilizar en MD."
   },
@@ -15,11 +15,11 @@
     "EDIT": "Editar",
     "PREVIOUS": "Anterior",
     "NEXT": "Siguiente",
-    "SAVE": "Save Changes",
+    "SAVE": "Guardar cambios",
     "DONE": "Done",
     "ADD_REMINDER": "Establecer recordatorio",
     "OPEN_DMS": "Abrir MD",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Vista previa"
   },
   "UnknownError": {
     "strings": {
@@ -71,7 +71,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
+      "INVALID_COLOR_NAME": "Debe introducir un nombre de color válido utilizando el autocompletado o un color hexadecimal."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
@@ -211,7 +211,7 @@
       "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
       "POLL_FOOTER_CREATOR": "Poll started by <USER>",
       "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
+      "KEYWORD_YES__KEEP_LOWERCASE": "sí",
       "KEYWORD_NO__KEEP_LOWERCASE": "no",
       "SUCCESS_TITLE": "Poll created!",
       "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
@@ -402,7 +402,7 @@
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
+  "MANUAL_COLOR_EDIT_BUTTON": "Usar un color hexadecimal",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
