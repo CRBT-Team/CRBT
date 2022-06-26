@@ -171,15 +171,24 @@ export const FieldSelectMenu = SelectMenuComponent({
                   }))
               )
           ),
-          row(new BackButton(type as never).setStyle('SECONDARY').setLabel(BACK)),
-          new ManualColorEditButton(type as never)
-            .setStyle('PRIMARY')
-            .setLabel(t(this.locale, 'MANUAL_COLOR_EDIT_BUTTON'))
+          row(
+            new BackButton(type as never)
+              .setStyle('SECONDARY')
+              .setLabel(BACK)
+              .setEmoji(emojis.buttons.left_arrow),
+            new ManualColorEditButton(type as never)
+              .setStyle('PRIMARY')
+              .setLabel(t(this.locale, 'MANUAL_COLOR_EDIT_BUTTON'))
+          )
         ),
       });
     } else {
+      const embed = this.message.embeds[0];
       const value = getValue(
-        { embed: new MessageEmbed(this.message.embeds[0]).toJSON(), content: this.message.content },
+        {
+          embed: embed ? new MessageEmbed(this.message.embeds[0]).toJSON() : null,
+          content: this.message.content,
+        },
         fieldName
       );
       const name = t(this.locale, `FIELDS_${fieldName.toUpperCase()}` as any);
@@ -202,10 +211,11 @@ export const FieldSelectMenu = SelectMenuComponent({
 
 export const TestButton = ButtonComponent({
   async handle() {
+    const embed = this.message.embeds[0];
     const parsed = parseCRBTscriptInMessage(
       {
         content: this.message.content === invisibleChar ? null : this.message.content,
-        embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+        embed: embed ? new MessageEmbed(embed).toJSON() : null,
       },
       {
         channel: this.channel as TextChannel,
@@ -215,7 +225,7 @@ export const TestButton = ButtonComponent({
 
     await this.reply({
       content: parsed.content,
-      embeds: [new MessageEmbed(parsed.embed)],
+      embeds: embed ? [new MessageEmbed(parsed.embed)] : [],
       ephemeral: true,
     });
   },
@@ -223,12 +233,13 @@ export const TestButton = ButtonComponent({
 
 export const BackButton = ButtonComponent({
   async handle(type: MessageTypes) {
+    const embed = this.message.embeds[0];
     this.update(
       await renderJoinLeave(
         type,
         {
           content: this.message.content,
-          embed: new MessageEmbed(this.message.embeds[0]).toJSON(),
+          embed: embed ? new MessageEmbed(this.message.embeds[0]).toJSON() : null,
         },
         this.locale
       )
@@ -242,17 +253,19 @@ export const SaveButton = ButtonComponent({
 
     const data = {
       content: this.message.content === invisibleChar ? null : this.message.content,
-      embed: {
-        title: embed.title,
-        description: embed.description,
-        color: embed.color,
-        fields: embed.fields,
-        thumbnail: { url: embed.thumbnail?.url },
-        image: { url: embed.image?.url },
-        url: embed.url,
-        author: { name: embed.author?.name },
-        footer: { text: embed.footer?.text },
-      },
+      embed: embed
+        ? {
+            title: embed.title,
+            description: embed.description,
+            color: embed.color,
+            fields: embed.fields,
+            thumbnail: { url: embed.thumbnail?.url },
+            image: { url: embed.image?.url },
+            url: embed.url,
+            author: { name: embed.author?.name },
+            footer: { text: embed.footer?.text },
+          }
+        : null,
     };
 
     await db.servers.upsert({
