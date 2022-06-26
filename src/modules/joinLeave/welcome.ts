@@ -41,6 +41,9 @@ export default OnEvent('guildMemberUpdate', async (oldMember, member) => {
     });
 
     channel.send({
+      allowedMentions: {
+        users: [member.user.id],
+      },
       ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
       embeds: [new MessageEmbed(parsedMessage.embed)],
     });

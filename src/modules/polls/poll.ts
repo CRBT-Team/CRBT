@@ -458,7 +458,10 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
   await pollMsg.reply({
     embeds: [
       new MessageEmbed()
-        .setTitle(`🎉 ${strings.POLL_RESULTS_TITLE}`)
+        .setAuthor({
+          name: strings.POLL_RESULTS_TITLE,
+          iconURL: icons.giveaway,
+        })
         .setDescription(
           (winners.length > 1
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
