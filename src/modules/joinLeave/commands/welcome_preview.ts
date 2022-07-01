@@ -1,20 +1,21 @@
 import { db } from '$lib/db';
 import { t } from '$lib/language';
 import { ChatCommand } from 'purplet';
-import { RawServerLeave, renderJoinLeavePreview } from './shared';
+import { renderJoinLeavePreview } from '../renderers';
+import { RawServerJoin } from '../types';
 
 export default ChatCommand({
-  name: 'farewell preview',
+  name: 'welcome preview',
   description: t('en-US', 'JOINLEAVE_PREVIEW_DESCRIPTION').replace(
     '<TYPE>',
-    t('en-US', 'LEAVE_MESSAGE').toLowerCase()
+    t('en-US', 'JOIN_MESSAGE').toLowerCase()
   ),
   async handle() {
     const data = (await db.servers.findFirst({
       where: { id: this.guild.id },
-      select: { leaveChannel: true, leaveMessage: true },
-    })) as RawServerLeave;
+      select: { joinChannel: true, joinMessage: true },
+    })) as RawServerJoin;
 
-    await renderJoinLeavePreview.call(this, 'LEAVE_MESSAGE', data);
+    await renderJoinLeavePreview.call(this, 'JOIN_MESSAGE', data);
   },
 });

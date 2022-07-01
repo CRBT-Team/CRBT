@@ -1,6 +1,8 @@
 {
+  "baseURL": "https://crbt.app/",
   "policy": "https://crbt.app/policy",
   "discord": "https://crbt.app/discord",
+  "purplet": "https://crbt.app/purplet",
   "invite": "https://discord.com/oauth2/authorize?client_id=595731552709771264&permissions=8&scope=bot%20applications.commands",
   "CRBTscript": "https://crbt.notion.site/CRBTscript-Docs-v11-BETA-dd4dd7c310a94a20865eef8251b65d84",
   "donate": "https://buymeacoffee.com/clembs",

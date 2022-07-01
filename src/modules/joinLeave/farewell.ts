@@ -1,11 +1,18 @@
 import { db } from '$lib/db';
-import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
-import { parseCRBTscriptInMessage, RawServerLeave } from './shared';
+import { RawServerLeave } from './types';
+import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
+
+  const preferences = await db.users.findFirst({
+    where: { id: member.id },
+    select: { silentLeaves: true },
+  });
+
+  if (preferences && preferences.silentLeaves) return;
 
   const modules = await db.serverModules.findFirst({
     where: { id: guild.id },
@@ -25,13 +32,6 @@ export default OnEvent('guildMemberRemove', async (member) => {
 
   const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
 
-  if (message.script) {
-    parseCRBTscript(message.script, {
-      member,
-      channel,
-    });
-  }
-
   const parsedMessage = parseCRBTscriptInMessage(message, {
     channel,
     member,
@@ -41,7 +41,7 @@ export default OnEvent('guildMemberRemove', async (member) => {
     allowedMentions: {
       users: [member.user.id],
     },
-    ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
-    embeds: [new MessageEmbed(parsedMessage.embed)],
+    ...(message.content ? { content: parsedMessage.content } : {}),
+    embeds: message.embed ? [new MessageEmbed(parsedMessage.embed)] : [],
   });
 });

@@ -1,9 +1,9 @@
+import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
-import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
@@ -36,7 +36,7 @@ export default ChatCommand({
     .string('title', "What's your poll about?", { required: true })
     .string('end_date', 'When the poll should end.', {
       autocomplete({ end_date }) {
-        return timeAutocomplete(end_date, this, '3w', '20m');
+        return timeAutocomplete.call(this, end_date, '3w', '20m');
       },
       required: true,
     })
@@ -515,6 +515,12 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
         .setColor(`#${colors.gray}`),
     ],
     components: [],
+  });
+
+  activePolls.delete(`${pollMsg.channelId}/${pollMsg.id}`);
+
+  await db.timeouts.delete({
+    where: { id: `${pollMsg.channelId}/${pollMsg.id}` },
   });
 };
 

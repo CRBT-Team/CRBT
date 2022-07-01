@@ -1,8 +1,8 @@
+import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
-import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -20,7 +20,7 @@ export default ChatCommand({
     })
     .string('end_date', 'When to end the giveaway.', {
       autocomplete({ end_date }) {
-        return timeAutocomplete(end_date, this, '2M', '20s');
+        return timeAutocomplete.call(this, end_date, '2M', '20s');
       },
       required: true,
     })
@@ -284,12 +284,6 @@ export const endGiveaway = async (
     components: [],
   });
 
-  await db.timeouts.delete({
-    where: { id: `${gwayMsg.channelId}/${gwayMsg.id}` },
-  });
-
-  activeGiveaways.delete(`${gwayMsg.channelId}/${gwayMsg.id}`);
-
   await gwayMsg.reply({
     allowedMentions: {
       users: winners,
@@ -308,4 +302,10 @@ export const endGiveaway = async (
       row(new MessageButton().setStyle('LINK').setURL(gwayMsg.url).setLabel(JUMP_TO_MSG))
     ),
   });
+
+  await db.timeouts.delete({
+    where: { id: `${gwayMsg.channelId}/${gwayMsg.id}` },
+  });
+
+  activeGiveaways.delete(`${gwayMsg.channelId}/${gwayMsg.id}`);
 };

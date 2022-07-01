@@ -1,15 +1,14 @@
-import { GuildMember, NewsChannel, PartialGuildMember, TextChannel } from 'discord.js';
+import { GuildMember, GuildTextBasedChannel, PartialGuildMember } from 'discord.js';
 import { avatar } from './avatar';
 import { banner } from './banner';
 
-export function parseCRBTscript(
-  text: string,
-  data: {
-    channel: TextChannel | NewsChannel;
-    member: GuildMember | PartialGuildMember;
-  }
-): string {
-  const { channel, member } = data;
+export interface CRBTscriptParserArgs {
+  channel: GuildTextBasedChannel;
+  member: GuildMember | PartialGuildMember;
+}
+
+export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): string {
+  const { channel, member } = args;
   const { guild, client } = member;
 
   const values: [string | RegExp, string | ((values?: string) => string)][] = [
@@ -62,8 +61,8 @@ export function parseCRBTscript(
     ['<channel.id>', channel.id],
     ['<channel.created>', () => channel.createdAt.toISOString()],
     ['<channel.mention>', `<#${channel.id}>`],
-    ['<channel.topic>', channel.topic],
-    ['<channel.isAgeRestricted>', channel.nsfw.toString()],
+    ['<channel.topic>', 'topic' in channel ? channel.topic : null],
+    ['<channel.isAgeRestricted>', ('nsfw' in channel ? channel.nsfw : false).toString()],
 
     ['<newline>', '\n'],
 

@@ -1,10 +1,11 @@
+import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
-import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { t } from '$lib/language';
+import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
@@ -25,7 +26,7 @@ export default ChatCommand({
     .integer('delete_messages', 'The number of messages to delete.')
     .string('duration', 'Temporarily ban the user for a specified time.', {
       autocomplete({ duration }) {
-        return timeAutocomplete(duration, this, '5y', '1m');
+        return timeAutocomplete.call(this, duration, '5y', '1m');
       },
     }),
   handle: ban,
@@ -182,6 +183,7 @@ async function ban(
             subject: `Banned from ${this.guild.name}`,
             message: reason,
             guildName: this.guild.name,
+            expiration: dayjs().add(ms(duration)),
           }).setColor(`#${colors.error}`),
         ],
       })

@@ -1,4 +1,4 @@
-import { db, emojis, icons } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/db';
 import { t } from '$lib/language';
 import { timeouts, TimeoutTypes } from '@prisma/client';
 import { randomUUID } from 'crypto';
@@ -9,6 +9,7 @@ import { SnoozeButton } from '../../modules/components/RemindButton';
 import { endGiveaway } from '../../modules/giveaways/giveaway';
 import { endPoll } from '../../modules/polls/poll';
 import { getColor } from './getColor';
+import { createCRBTmsg } from './sendCRBTmsg';
 import { setLongerTimeout } from './setLongerTimeout';
 
 export interface TimeoutData {
@@ -34,7 +35,7 @@ export interface TimeoutData {
 }
 
 export type FullDBTimeout<T extends TimeoutTypes> = Omit<timeouts, 'id' | 'data'> & {
-  id?: string | undefined;
+  id: string | undefined;
   type: T;
   data: TimeoutData[T];
 };
@@ -63,7 +64,26 @@ export async function setDbTimeout<T extends TimeoutTypes>(
       case 'TEMPBAN': {
         const { data } = timeoutData as FullDBTimeout<'TEMPBAN'>;
         const guild = client.guilds.cache.get(data.guildId);
-        await guild.members.unban(data.userId);
+        const user = client.users.cache.get(data.userId);
+        try {
+          await guild.members.unban(data.userId);
+
+          await user
+            .send({
+              embeds: [
+                createCRBTmsg({
+                  type: 'moderation',
+                  subject: `Unbanned from ${guild.name}`,
+                  user,
+                  guildName: guild.name,
+                  message: data.reason,
+                }).setColor(`#${colors.success}`),
+              ],
+            })
+            .catch(() => {});
+        } catch (e) {
+          console.error(e);
+        }
         break;
       }
       case 'GIVEAWAY': {

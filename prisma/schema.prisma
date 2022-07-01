@@ -58,10 +58,12 @@ enum ModerationStrikeTypes {
 }
 
 model users {
-  id          String    @id(map: "misc_pkey")
-  telemetry   Boolean   @default(true)
-  accentColor String?   @map("accent_color")
-  birthday    DateTime? @db.Timestamptz(6)
+  id           String    @id(map: "misc_pkey")
+  telemetry    Boolean   @default(true)
+  accentColor  String?   @map("accent_color")
+  birthday     DateTime? @db.Timestamptz(6)
+  silentJoins  Boolean   @default(false) @map("silent_joins")
+  silentLeaves Boolean   @default(false) @map("silent_leaves")
 }
 
 model inventories {

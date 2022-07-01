@@ -18,7 +18,7 @@ const dates = {
   y: 365 * 24 * 60 * 60 * 1000,
 };
 
-export const ms = (time: string) => {
+export function ms(time: string) {
   let ms = 0;
   let timeStr = time.replaceAll(' ', '');
 
@@ -37,9 +37,28 @@ export const ms = (time: string) => {
   });
 
   return ms;
-};
+}
 
-export const isValidTime = (time: string) => {
+export function toShortForm(time: string) {
+  let timeStr = time.replaceAll(' ', '');
+
+  Object.keys(longForms).forEach((key) => {
+    const regex = new RegExp(`${key}s?`, 'g');
+    timeStr = timeStr.replace(regex, longForms[key]);
+  });
+
+  Object.keys(dates).forEach((key) => {
+    const regex = new RegExp(`\\d+${key}`, 'g');
+    timeStr = timeStr.replace(regex, (match) => {
+      const num = parseInt(match.replace(key, ''));
+      return `${num}${key}`;
+    });
+  });
+
+  return timeStr;
+}
+
+export function isValidTime(time: string) {
   return !!ms(time);
   // Object.keys(longForms).forEach((key) => {
   //   const regex = new RegExp(`${key}s?`, 'g');
@@ -47,4 +66,4 @@ export const isValidTime = (time: string) => {
   // });
 
   // return /^\d+\s?[smhdwMy]$/.test(time);
-};
+}

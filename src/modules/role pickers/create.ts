@@ -1,3 +1,4 @@
+import { colorAutocomplete } from '$lib/autocomplete/colorAutocomplete';
 import { colors, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
@@ -10,7 +11,6 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { colorsMap, localizedColorNames } from '../settings/color set';
 
 const { colorNames } = t('en-US', 'color set');
 const { pronouns } = t('en-US', 'profile');
@@ -227,19 +227,7 @@ export const useManual = ChatCommand({
     })
     .string('embed_color', "What color to use for the embed's background", {
       async autocomplete({ embed_color }) {
-        return colorsMap
-          .filter(
-            (colorObj) =>
-              !colorObj.private &&
-              localizedColorNames[this.locale][colorObj.key]
-                .toLowerCase()
-                .includes(embed_color.toLowerCase()) &&
-              colorObj.value !== 'profile'
-          )
-          .map((colorObj) => ({
-            name: localizedColorNames[this.locale][colorObj.key],
-            value: colorObj.value,
-          }));
+        return colorAutocomplete.call(this, embed_color, false);
       },
       required: true,
     })

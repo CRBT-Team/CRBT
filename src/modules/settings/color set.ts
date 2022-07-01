@@ -1,42 +1,19 @@
+import { colorAutocomplete } from '$lib/autocomplete/colorAutocomplete';
 import { cache } from '$lib/cache';
-import { colors, db, emojis, icons } from '$lib/db';
+import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { languages, t } from '$lib/language';
+import { t } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta, colorNames } = t('en-US', 'color set');
-
-export const localizedColorNames = Object.keys(languages).reduce((acc, lang) => {
-  const strings = t(lang, 'color set');
-  return {
-    ...acc,
-    [lang]: strings.colorNames,
-  };
-}, {});
-
-export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
-  key,
-  fullName: colorNames[key],
-  value: hex,
-  private: !(colorNames[key] || hex === 'profile'),
-  emoji: emojis.colors[key] || null,
-}));
+const { meta } = t('en-US', 'color set');
 
 export const colorset = ChatCommand({
   name: 'color set',
   description: meta.description,
   options: new OptionBuilder().string('color', meta.options[0].description, {
     autocomplete({ color }) {
-      return colorsMap
-        .filter((colorObj) => !colorObj.private)
-        .filter((colorObj) =>
-          localizedColorNames[this.locale][colorObj.key].toLowerCase().includes(color.toLowerCase())
-        )
-        .map((colorObj) => ({
-          name: localizedColorNames[this.locale][colorObj.key],
-          value: colorObj.value,
-        }));
+      return colorAutocomplete.call(this, color);
     },
     required: true,
   }),
@@ -50,14 +27,16 @@ export const colorset = ChatCommand({
     if (text.match(/^[0-9a-f]{6}$/) || colors[text]) {
       if (finalColor === colors.default) {
         cache.del(`color_${this.user.id}`);
-        await db.users.update({
-          data: { accentColor: null },
+        await db.users.upsert({
+          create: { id: this.user.id, accentColor: null },
+          update: { accentColor: null },
           where: { id: this.user.id },
         });
       } else {
         cache.set(`color_${user.id}`, `#${finalColor}`);
-        await db.users.update({
-          data: { accentColor: `#${finalColor}` },
+        await db.users.upsert({
+          update: { accentColor: `#${finalColor}` },
+          create: { id: this.user.id, accentColor: `#${finalColor}` },
           where: { id: user.id },
         });
       }
@@ -78,8 +57,9 @@ export const colorset = ChatCommand({
         await this.reply(CRBTError(errors.NO_DISCORD_COLOR));
       } else {
         cache.set(`color_${user.id}`, 'profile');
-        await db.users.update({
-          data: { accentColor: 'profile' },
+        await db.users.upsert({
+          update: { accentColor: 'profile' },
+          create: { id: this.user.id, accentColor: 'profile' },
           where: { id: user.id },
         });
         await this.reply({

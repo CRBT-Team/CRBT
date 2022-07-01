@@ -1,9 +1,9 @@
+import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
-import { timeAutocomplete } from '$lib/functions/timeAutocomplete';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import { ChannelType } from 'discord-api-types/v10';
@@ -24,7 +24,7 @@ export default ChatCommand({
   options: new OptionBuilder()
     .string('when', meta.options[0].description, {
       autocomplete({ when }) {
-        return timeAutocomplete(when, this, '2y');
+        return timeAutocomplete.call(this, when, '2y');
       },
       required: true,
     })
@@ -42,52 +42,6 @@ export default ChatCommand({
     }
 
     const now = dayjs();
-    // const w = when
-    //   .trim()
-    //   .replaceAll(keywords.AND, '')
-    //   .replace(keywords.AT, '')
-    //   .replace(keywords.ON, '')
-    //   .replace(keywords.IN, '')
-    //   .trim()
-    //   .replaceAll('  ', ' ');
-
-    // // console.log(w);
-    // let expiration: Dayjs;
-    // let timeMS: number;
-
-    // if (
-    //   w.trim().toLowerCase().startsWith(keywords.TODAY) ||
-    //   when.trim().toLowerCase().startsWith(keywords.AT)
-    // ) {
-    //   const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
-    //   expiration = time
-    //     ? dayjs(`${now.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
-    //     : now.add(30, 'm');
-    //   timeMS = expiration.diff(now);
-    // }
-    // if (w.trim().toLowerCase().startsWith(keywords.TOMORROW)) {
-    //   const tomorrow = now.add(1, 'day');
-    //   const time = w.split(' ').length === 1 ? null : w.split(' ').slice(1).join('');
-    //   // console.log(time);
-    //   expiration = !!time
-    //     ? dayjs(`${tomorrow.format('YYYY-MM-DD')}T${convertTime12to24(time)}Z`)
-    //     : tomorrow;
-    //   // console.log(expiration);
-    //   timeMS = tomorrow.diff(now);
-    // }
-
-    // if (!ms(w) && dayjs(w).isValid()) {
-    //   if (dayjs(w).isAfter(now)) {
-    //     expiration = dayjs(w);
-    //     timeMS = expiration.diff(now);
-    //   } else {
-    //     return this.reply(CRBTError(errors.PAST));
-    //   }
-    // } else if (!!ms(w) && !dayjs(w).isValid()) {
-    //   timeMS = ms(w);
-    //   expiration = now.add(timeMS, 'ms');
-    // }
-
     let expiration: dayjs.Dayjs;
 
     try {
@@ -178,7 +132,7 @@ export default ChatCommand({
                     .add(1, 'day')
                     .format('YYYYMMDD')}`,
                   details: `${strings.GCALENDAR_EVENT} ${
-                    destination && destination?.isText()
+                    destination
                       ? strings.GCALENDAR_EVENT_CHANNEL.replace(
                           '<CHANNEL>',
                           `#${(destination as TextChannel).name}`

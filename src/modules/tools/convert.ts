@@ -1,5 +1,6 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { capitalCase } from 'change-case';
 import convert, { Unit } from 'convert-units';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -7,15 +8,19 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 import Currencies from '../../../data/misc/currencies.json';
 
 const units = convert().list();
-const currencies = Object.entries(Currencies).map(([key, value]) => ({
-  name: value.name,
-  value: key,
+const currencies = Object.entries(Currencies).map(([_, { code, name, name_plural }]) => ({
+  abbr: code,
+  measure: 'currency',
+  singular: name,
+  plural: name_plural,
 }));
 
-const allUnits = [
-  ...currencies,
-  ...units.map(({ abbr, plural }) => ({ name: plural, value: abbr })),
-].sort(() => Math.random() - 0.5);
+const allUnits = [...currencies, ...units] as {
+  abbr: string;
+  measure: convert.Measure | 'currency';
+  singular: string;
+  plural: string;
+}[];
 
 export default ChatCommand({
   name: 'convert',
@@ -24,25 +29,49 @@ export default ChatCommand({
     .number('amount', 'The amount to convert.', { required: true })
     .string('from', 'The unit to convert from.', {
       autocomplete({ from }) {
-        return allUnits.filter((unit) => unit.name.toLowerCase().includes(from.toLowerCase()));
+        from = from?.toLowerCase();
+        const filtered = allUnits.filter(
+          ({ measure, abbr, singular, plural }) =>
+            measure.includes(from) ||
+            abbr.toLowerCase() === from ||
+            singular.toLowerCase().includes(from) ||
+            plural.toLowerCase().includes(from)
+        );
+        return filtered.map(({ measure, singular: name, abbr }) => ({
+          name: `${capitalCase(measure)} - ${name}`,
+          value: abbr,
+        }));
       },
       required: true,
     })
     .string('to', 'The unit to convert to.', {
-      autocomplete({ to }) {
-        return allUnits.filter((unit) => unit.name.toLowerCase().includes(to.toLowerCase()));
+      autocomplete({ from, to }) {
+        const fromType = allUnits.find(({ abbr }) => abbr === from)?.measure;
+        console.log(fromType);
+        to = to?.toLowerCase();
+        const filtered = allUnits
+          .filter(({ abbr, measure }) => (from ? measure === fromType && abbr !== from : true))
+          .filter(
+            ({ singular, plural }) =>
+              singular.toLowerCase().includes(to) || plural.toLowerCase().includes(to)
+          );
+        console.log(filtered.length);
+        return filtered.map(({ measure, singular: name, abbr }) => ({
+          name: `${capitalCase(measure)} - ${name}`,
+          value: abbr,
+        }));
       },
       required: true,
     }),
   async handle({ amount, from, to }) {
-    if (allUnits.find(({ value }) => value === from) === undefined) {
+    if (allUnits.find(({ abbr }) => abbr === from) === undefined) {
       return this.reply(
         CRBTError(
           `"${from}" is not a valid unit. Please use the autocomplete to select a valid unit.`
         )
       );
     }
-    if (allUnits.find(({ value }) => value === to) === undefined) {
+    if (allUnits.find(({ abbr }) => abbr === to) === undefined) {
       return this.reply(
         CRBTError(
           `"${to}" is not a valid unit. Please use the autocomplete to select a valid unit.`
@@ -51,16 +80,16 @@ export default ChatCommand({
     }
 
     if (
-      currencies.find(({ value }) => value === from) !== undefined &&
-      currencies.find(({ value }) => value === to) !== undefined
+      currencies.find(({ abbr }) => abbr === from) !== undefined &&
+      currencies.find(({ abbr }) => abbr === to) !== undefined
     ) {
       try {
         const { result, date } = (await fetch(
           `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`
         ).then((res) => res.json())) as any;
 
-        from = currencies.find(({ value }) => value === from).name;
-        to = currencies.find(({ value }) => value === to).name;
+        from = currencies.find(({ abbr }) => abbr === from).singular;
+        to = currencies.find(({ abbr }) => abbr === to).singular;
 
         await this.reply({
           embeds: [

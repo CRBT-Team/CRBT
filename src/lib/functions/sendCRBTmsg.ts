@@ -1,4 +1,5 @@
 import { icons, links } from '$lib/db';
+import { Dayjs } from 'dayjs';
 import { MessageEmbed, User } from 'discord.js';
 
 export function createCRBTmsg({
@@ -7,12 +8,14 @@ export function createCRBTmsg({
   subject,
   message,
   guildName,
+  expiration,
 }: {
   type: 'issue' | 'moderation';
   user: User;
   subject: string;
   message?: string;
   guildName?: string;
+  expiration?: Dayjs;
 }) {
   return new MessageEmbed()
     .setAuthor({
@@ -27,5 +30,10 @@ export function createCRBTmsg({
       }\nLearn more about CRBT messages **[here](${links.blog['about-crbt-messages']})**.`
     )
     .addField('Subject', subject)
-    .addFields(message ? [{ name: `Message from ${user.tag}`, value: message }] : []);
+    .addFields(
+      ...(message ? [{ name: `Message from ${user.tag}`, value: message }] : []),
+      ...(expiration
+        ? [{ name: 'Expires at', value: `<t:${expiration.unix()}> (<t:${expiration.unix()}:R>)` }]
+        : [])
+    );
 }

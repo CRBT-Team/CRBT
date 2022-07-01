@@ -2,18 +2,18 @@ import dayjs from 'dayjs';
 import relative from 'dayjs/plugin/relativeTime.js';
 import { AutocompleteInteraction } from 'discord.js';
 import { Choice } from 'purplet';
-import { ms } from './ms';
-import { resolveToDate } from './resolveToDate';
+import { ms } from '../functions/ms';
+import { resolveToDate } from '../functions/resolveToDate';
 
 dayjs.extend(relative);
 
 export async function timeAutocomplete(
+  this: AutocompleteInteraction,
   duration: string,
-  ctx: AutocompleteInteraction,
   max: string = '3y',
   min: string = '5s'
 ): Promise<Choice<string>[]> {
-  const locale = ctx.locale.split('-')[0];
+  const locale = this.locale.split('-')[0];
   await import(`dayjs/locale/${locale}.js`);
   const now = dayjs().locale(locale);
 

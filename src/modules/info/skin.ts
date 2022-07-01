@@ -1,4 +1,4 @@
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
@@ -16,17 +16,9 @@ export default ChatCommand({
     try {
       const req = await fetch(`https://api.mojang.com/users/profiles/minecraft/${player_name}`);
 
-      if (!req.ok) {
-        return this.reply(
-          CRBTError(
-            'This player does not exist. Make sure to use a Minecraft: Java Edition username.'
-          )
-        );
-      }
-
       const { id, name }: any = await req.json();
 
-      this.reply({
+      await this.reply({
         embeds: [
           new MessageEmbed()
             .setAuthor({
@@ -42,7 +34,11 @@ export default ChatCommand({
         ],
       });
     } catch (error) {
-      this.reply(UnknownError(this, String(error)));
+      this.reply(
+        CRBTError(
+          'This player does not exist. Make sure to use a Minecraft: Java Edition username.'
+        )
+      );
     }
   },
 });

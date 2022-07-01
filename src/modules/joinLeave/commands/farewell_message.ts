@@ -3,7 +3,8 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ChatCommand } from 'purplet';
-import { RawServerLeave, renderJoinLeave } from './shared';
+import { renderJoinLeaveBuilder } from '../renderers';
+import { RawServerLeave } from '../types';
 
 export default ChatCommand({
   name: 'farewell message',
@@ -24,6 +25,6 @@ export default ChatCommand({
       select: { leaveMessage: true },
     })) as RawServerLeave;
 
-    await this.reply(await renderJoinLeave('LEAVE_MESSAGE', data?.leaveMessage, this.locale));
+    await this.reply(await renderJoinLeaveBuilder.call(this, 'LEAVE_MESSAGE', data?.leaveMessage));
   },
 });

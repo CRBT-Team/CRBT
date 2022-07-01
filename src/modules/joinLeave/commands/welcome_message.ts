@@ -3,7 +3,8 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ChatCommand } from 'purplet';
-import { RawServerJoin, renderJoinLeave } from './shared';
+import { renderJoinLeaveBuilder } from '../renderers';
+import { RawServerJoin } from '../types';
 
 export default ChatCommand({
   name: 'welcome message',
@@ -24,6 +25,6 @@ export default ChatCommand({
       select: { joinMessage: true },
     })) as RawServerJoin;
 
-    await this.reply(await renderJoinLeave('JOIN_MESSAGE', data?.joinMessage, this.locale));
+    await this.reply(await renderJoinLeaveBuilder.call(this, 'JOIN_MESSAGE', data?.joinMessage));
   },
 });

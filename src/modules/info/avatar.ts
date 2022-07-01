@@ -95,8 +95,6 @@ export async function renderPfp(
 
   const av = avatar(type === 'user' ? user : member ?? user, size, format, !format);
 
-  console.log(navCtx, av, size, format);
-
   const color =
     ctx instanceof ButtonInteraction ? ctx.message.embeds[0].color : await getColor(user);
 
