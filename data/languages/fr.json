@@ -19,7 +19,9 @@
     "DONE": "Valider",
     "ADD_REMINDER": "Envoyer un rappel",
     "OPEN_DMS": "Ouvrir les MP",
-    "PREVIEW": "Aperçu"
+    "PREVIEW": "Aperçu",
+    "EXPORT": "Export",
+    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Connecté depuis",
       "BUTTON_WEBSITE": "Site web",
       "BUTTON_INVITE": "Ajouter au serveur",
-      "BUTTON_DISCORD": "Rejoindre la communauté"
+      "BUTTON_DISCORD": "Rejoindre la communauté",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "Infos utilisateur"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -200,7 +206,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Le titre de votre sondage doit être de 100 caractères ou moins.",
-      "CHOICE_TOO_LONG": "Un choix ne peut pas contenir plus de 20 caractères (émojis exclus).",
+      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "Un choix ne peut pas être vide (sans compter les émojis).",
       "POLL_DATA_NOT_ALLOWED": "Seuls les modérateurs de chat (avec la permission \"Gérer les messages\") et le créateur du sondage peuvent afficher ses données et ses options."
     },
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Obtenir l'avatar par défaut d'un utilisateur ou le vôtre si vous n'en spécifiez pas.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "utilisateur",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> choisi !",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Ouvrir le guide CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifiez ce message pour personnaliser le <TYPE> en utilisant le menu déroulant ci-dessous.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> enregistré.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Aperçu du <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Aperçu",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "La syntaxe Markdown et CRBTscript sont acceptés.",
   "FIELDS_CONTENT": "Texte standard",
   "FIELDS_AUTHOR": "Auteur de l'Embed",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Titre de l'Embed",
   "FIELDS_DESCRIPTION": "Description de l'Embed",
   "FIELDS_FOOTER": "Pied de page de l'Embed",
