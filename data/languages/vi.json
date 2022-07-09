@@ -20,8 +20,8 @@
     "ADD_REMINDER": "Thêm nhắc nhỡ",
     "OPEN_DMS": "Mở các tin nhắn trực tiếp",
     "PREVIEW": "Xem trước",
-    "EXPORT": "Export",
-    "IMPORT": "Import"
+    "EXPORT": "Xuất dữ liệu",
+    "IMPORT": "Nhập dữ liệu"
   },
   "UnknownError": {
     "strings": {
@@ -162,7 +162,7 @@
       "BUTTON_WEBSITE": "Trang web",
       "BUTTON_INVITE": "Thêm vào Máy chủ",
       "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi",
-      "BUTTON_DONATE": "Donate"
+      "BUTTON_DONATE": "Ủng hộ"
     }
   },
   "user_navbar": {
