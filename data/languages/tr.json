@@ -19,7 +19,9 @@
     "DONE": "Bitti",
     "ADD_REMINDER": "Hatırlatma Ayarla",
     "OPEN_DMS": "DM'ler Açık",
-    "PREVIEW": "Önizle"
+    "PREVIEW": "Önizle",
+    "EXPORT": "Export",
+    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Online since",
       "BUTTON_WEBSITE": "Website",
       "BUTTON_INVITE": "Sunucuya Ekle",
-      "BUTTON_DISCORD": "Topluluğa Katıl"
+      "BUTTON_DISCORD": "Topluluğa Katıl",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Profil Resmi",
-      "INFO": "Kullanıcı bilgisi"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -200,7 +206,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Anketinizin başlığı 100 karakter veya daha az olmalıdır.",
-      "CHOICE_TOO_LONG": "Bir seçim 20 karakterden uzun olamaz (emojiler hariç).",
+      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "Bir seçim boş olamaz (emoji hariç).",
       "POLL_DATA_NOT_ALLOWED": "Yalnızca sohbet moderatörleri (\"Mesajları Yönetme\" izni) ve orijinal anket oluşturucu, verilerini ve seçeneklerini görüntüleyebilir."
     },
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "user",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",
