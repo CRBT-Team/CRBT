@@ -5,75 +5,98 @@ import {
   EmbedField,
   Interaction,
   InteractionReplyOptions,
+  MessageAttachment,
   MessageEmbed,
   TextChannel,
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
 
-const handleError = (
-  description: string,
-  details?: string,
-  fields?: EmbedField[],
-  log?: boolean,
-  title?: string
-) => {
-  if (log) {
+const handleError = (opts: {
+  message: string;
+  detail?: {
+    title?: string;
+    description?: string;
+    fields?: EmbedField[];
+  };
+  error?: {
+    interaction: any;
+    error: any;
+    context: string;
+  };
+}) => {
+  const { message, detail, error } = opts;
+
+  if (error) {
+    console.log(error);
     (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
       embeds: [
-        new MessageEmbed({
-          description: `\`\`\`\n${details}\`\`\``,
-          fields: fields || [],
-          color: `#${colors.error}`,
-        }),
+        new MessageEmbed()
+          .setDescription(`\`\`\`\n${error.error}\`\`\``)
+          .addField('Context', error.context, true)
+          .setColor(`#${colors.error}`),
+      ],
+      files: [
+        new MessageAttachment(
+          Buffer.from(
+            typeof error.interaction === 'object'
+              ? JSON.stringify(
+                  error.interaction,
+                  (key, value) => (typeof value === 'bigint' ? value.toString() : value),
+                  2
+                )
+              : error.interaction
+          ),
+          'interaction.json'
+        ),
       ],
     });
   }
 
-  return new MessageEmbed({
-    author: {
+  return new MessageEmbed()
+    .setAuthor({
       iconURL: icons.error,
-      name: title ?? description,
-    },
-    description: title ? description : null,
-    fields: log ? [] : fields,
-    color: `#${colors.error}`,
-  });
+      name: detail?.title ?? message,
+    })
+    .setDescription(detail ? detail.description : message)
+    .setFields(detail?.fields ?? [])
+    .setColor(`#${colors.error}`);
 };
 
 export function CRBTError(
-  desc: string,
+  message: string,
   ephemeral = true,
   fields?: EmbedField[]
 ): InteractionReplyOptions {
-  return { embeds: [handleError(desc, null, fields)], ephemeral };
-}
-
-export function UnknownError(context: Interaction, desc: any): InteractionReplyOptions {
-  const { strings } = t(context.locale, 'UnknownError');
-  console.error(desc);
   return {
     embeds: [
-      handleError(
-        strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${desc}\`\`\``),
-        String(desc),
-        [
-          {
-            name: 'Context',
-            value: `\`\`\`\n${context.toString()}\`\`\``,
-            inline: false,
-          },
-          {
-            name: 'User ID',
-            value: `\`\`\`\n${context.user.id}\`\`\``,
-            inline: false,
-          },
-        ],
-        true,
-        strings.TITLE
-      ),
+      handleError({
+        message,
+        detail: { fields },
+      }),
     ],
-    ephemeral: true,
+    ephemeral,
+  };
+}
+
+export function UnknownError(i: any, error: any, context?: string, ephemeral = true) {
+  const { strings } = t(i?.locale ?? 'en-US', 'UnknownError');
+
+  console.error(error);
+
+  const embed = handleError({
+    message: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
+    error: {
+      interaction: i,
+      error,
+      context: context ?? String(i),
+    },
+    detail: { title: strings.TITLE },
+  });
+
+  return {
+    embeds: [embed],
+    ephemeral,
   };
 }
 
@@ -97,16 +120,13 @@ export async function CooldownError(
 
   return {
     embeds: [
-      handleError(
-        strings.DESCRIPTION.replace(
+      handleError({
+        message: strings.DESCRIPTION.replace(
           '<TYPE>',
           context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
         ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
-        null,
-        null,
-        false,
-        strings.TITLE
-      ),
+        detail: { title: strings.TITLE },
+      }),
     ],
     components:
       showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000

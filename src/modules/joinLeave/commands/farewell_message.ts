@@ -1,5 +1,6 @@
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ChatCommand } from 'purplet';
@@ -16,7 +17,7 @@ export default ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.memberPermissions.has(PermissionFlagsBits.Administrator, true)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
       return this.reply(CRBTError(t('en-US', 'ERROR_ADMIN_ONLY')));
     }
 

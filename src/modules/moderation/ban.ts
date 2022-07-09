@@ -1,6 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
@@ -102,10 +103,10 @@ async function ban(
     return this.reply(CRBTError('Invalid duration or exceeds 3 years'));
   }
 
-  if (!this.memberPermissions.has(PermissionFlagsBits.BanMembers)) {
+  if (!hasPerms(this.memberPermissions, PermissionFlagsBits.BanMembers)) {
     return this.reply(CRBTError('You do not have permission to ban members.'));
   }
-  if (!this.guild.me.permissions.has(PermissionFlagsBits.BanMembers)) {
+  if (!hasPerms(this.guild.me, PermissionFlagsBits.BanMembers)) {
     return this.reply(CRBTError('I do not have permission to ban members.'));
   }
   if (this.user.id === user.id) {

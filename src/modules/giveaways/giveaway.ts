@@ -1,6 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
@@ -31,7 +32,7 @@ export default ChatCommand({
   async handle({ prize, end_date, winners }) {
     const { GUILD_ONLY } = t(this, 'globalErrors');
 
-    if (!this.memberPermissions.has(PermissionFlagsBits.ManageGuild)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return this.reply(
         CRBTError('Only managers ("Manage Server" permission) can create giveaways.')
       );
@@ -122,7 +123,7 @@ export const GwayOptionsButton = ButtonComponent({
   async handle() {
     const { strings } = t(this, 'poll');
 
-    if (!this.memberPermissions.has(PermissionFlagsBits.ManageGuild)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return this.reply(
         CRBTError('Only managers ("Manage Server" permission) can manage this giveaway.')
       );

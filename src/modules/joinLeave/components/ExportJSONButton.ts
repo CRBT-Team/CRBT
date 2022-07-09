@@ -1,5 +1,6 @@
 import { emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
@@ -17,7 +18,7 @@ export const ExportJSONButton = ButtonComponent({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.memberPermissions.has(PermissionFlagsBits.Administrator, true)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
       return this.reply(CRBTError(t('en-US', 'ERROR_ADMIN_ONLY')));
     }
 

@@ -1,7 +1,9 @@
 import { colorAutocomplete } from '$lib/autocomplete/colorAutocomplete';
 import { colors, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, MessageEmbed, MessageSelectMenu, Role } from 'discord.js';
 import {
   ButtonComponent,
@@ -98,11 +100,11 @@ export const usePreset = ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
-    if (!this.guild.me.permissions.has('MANAGE_ROLES')) {
+    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageRoles)) {
       return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 
@@ -248,11 +250,11 @@ export const useManual = ChatCommand({
     const { strings, errors } = t(this.guildLocale, 'role-selectors');
     const { errors: colorErrors } = t(this.guildLocale, 'color set');
 
-    if (!(this.member as GuildMember).permissions.has('ADMINISTRATOR', true)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
-    if (!this.guild.me.permissions.has('MANAGE_ROLES')) {
+    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageRoles)) {
       return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 

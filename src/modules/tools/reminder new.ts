@@ -70,7 +70,7 @@ export default ChatCommand({
       })
     ).filter((r) => (r.data as any).userId === this.user.id);
 
-    if (userReminders.length >= 5) {
+    if (userReminders.length >= 7) {
       return this.reply(CRBTError(errors.REMINDERS_MAX_LIMIT));
     }
 

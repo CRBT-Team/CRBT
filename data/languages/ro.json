@@ -200,7 +200,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Titlul sondajului trebuie să aibă cel mult 100 de caractere.",
-      "CHOICE_TOO_LONG": "O variantă nu poate fi mai lungă de 20 de caractere (cu excepția emoji-urilor).",
+      "CHOICE_TOO_LONG": "O variantă nu poate fi mai lungă de 40 de caractere (cu excepția emoji-urilor).",
       "CHOICE_EMPTY": "O variantă nu poate fi goală (cu excepția emoji-urilor).",
       "POLL_DATA_NOT_ALLOWED": "Doar moderatorii chat-ului (permisiunea \"Gestionare mesaje\") și creatorul original de sondaje îi pot vizualiza datele și opțiunile."
     },

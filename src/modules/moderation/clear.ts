@@ -1,6 +1,8 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -17,10 +19,10 @@ export default ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.memberPermissions.has('MANAGE_MESSAGES')) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)) {
       return this.reply(CRBTError('You do not have permission to manage messages.'));
     }
-    if (!this.guild.me.permissions.has('MANAGE_MESSAGES')) {
+    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageMessages)) {
       return this.reply(CRBTError('I do not have permission to manage messages.'));
     }
     if (amount > 100 || amount < 1) {

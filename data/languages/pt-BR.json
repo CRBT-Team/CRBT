@@ -200,7 +200,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "O título de sua enquete deve ser de 100 caracteres ou menos.",
-      "CHOICE_TOO_LONG": "Uma alternativa não deve ser mais longa que 20 caracteres (excluindo emojis).",
+      "CHOICE_TOO_LONG": "Uma alternativa não deve ser mais longa que 40 caracteres (excluindo emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },

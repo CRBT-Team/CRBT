@@ -1,4 +1,5 @@
 import { db } from '$lib/db';
+import { UnknownError } from '$lib/functions/CRBTError';
 import { GuildMember, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { RawServerJoin } from './types';
@@ -6,7 +7,11 @@ import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 
 export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
-    welcome(newMember);
+    try {
+      welcome(newMember);
+    } catch (e) {
+      UnknownError(newMember, e);
+    }
   }
 });
 
@@ -14,12 +19,15 @@ export const join = OnEvent('guildMemberAdd', (member) => {
   if (member.pending) return;
   if (member.client.user.id === member.id) return;
 
-  welcome(member);
+  try {
+    welcome(member);
+  } catch (e) {
+    UnknownError(member, e);
+  }
 });
 
 async function welcome(member?: GuildMember) {
   const { guild } = member;
-
   const preferences = await db.users.findFirst({
     where: { id: member.id },
     select: { silentJoins: true },

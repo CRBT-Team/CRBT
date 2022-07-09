@@ -1,5 +1,6 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageEmbed, TextChannel } from 'discord.js';
@@ -29,7 +30,7 @@ export default ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.memberPermissions.has(PermissionFlagsBits.Administrator, true)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
       return this.reply(CRBTError(t(this, 'ERROR_ADMIN_ONLY')));
     }
     if (

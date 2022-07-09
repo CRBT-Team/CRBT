@@ -200,7 +200,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Le titre de votre sondage doit être de 100 caractères ou moins.",
-      "CHOICE_TOO_LONG": "Un choix ne peut pas contenir plus de 20 caractères (émojis exclus).",
+      "CHOICE_TOO_LONG": "Un choix ne peut pas contenir plus de 40 caractères (émojis exclus).",
       "CHOICE_EMPTY": "Un choix ne peut pas être vide (sans compter les émojis).",
       "POLL_DATA_NOT_ALLOWED": "Seuls les modérateurs de chat (avec la permission \"Gérer les messages\") et le créateur du sondage peuvent afficher ses données et ses options."
     },

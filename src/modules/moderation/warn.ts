@@ -1,5 +1,6 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -20,7 +21,7 @@ export default ChatCommand({
     }
 
     if (
-      !this.memberPermissions.has(PermissionFlagsBits.ModerateMembers) ||
+      !hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers) &&
       !(this.member.roles as GuildMemberRoleManager).cache.find((r) =>
         r.name.toLowerCase().includes('mod')
       )

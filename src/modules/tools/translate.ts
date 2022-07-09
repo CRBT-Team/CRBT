@@ -25,7 +25,7 @@ export default ChatCommand({
     try {
       await translate.call(this, text, { to: target, from: source });
     } catch (e) {
-      await this.reply(UnknownError(this, String(e)));
+      await this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
     }
   },
 });
@@ -34,7 +34,7 @@ export const ctxCommand = MessageContextCommand({
   name: 'Translate Message',
   async handle(message) {
     if (!message.content) {
-      return this.reply(
+      return this.editReply(
         CRBTError(
           "This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using `/translate`."
         )
@@ -43,7 +43,7 @@ export const ctxCommand = MessageContextCommand({
     try {
       await translate.call(this, message.content);
     } catch (e) {
-      await this.reply(UnknownError(this, String(e)));
+      await this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
     }
   },
 });
@@ -74,14 +74,16 @@ async function translate(
     text: translated,
   } = await googleTranslateApi(text, { to: target, from });
 
+  console.log(source, target);
+
   await this.editReply({
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          name: `Translated from ${languages[source].name} to ${languages[target].name}`,
+          name: `Translated from ${languages[source]} to ${languages[target]}`,
         })
-        .addField(languages[source].name, text)
-        .addField(languages[target].name, translated)
+        .addField(languages[source], text)
+        .addField(languages[target], translated)
         .setColor(await getColor(this.user)),
     ],
   });

@@ -2,6 +2,7 @@ import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { trimArray } from '$lib/functions/trimArray';
@@ -9,13 +10,7 @@ import { t } from '$lib/language';
 import { EmojiRegex } from '$lib/util/regex';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import {
-  Message,
-  MessageButton,
-  MessageEmbed,
-  MessageSelectMenu,
-  TextInputComponent,
-} from 'discord.js';
+import { Message, MessageButton, MessageEmbed, TextInputComponent } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -23,7 +18,6 @@ import {
   ModalComponent,
   OptionBuilder,
   row,
-  SelectMenuComponent,
 } from 'purplet';
 
 const activePolls = new Map<string, FullDBTimeout<'POLL'>>();
@@ -107,57 +101,28 @@ export default ChatCommand({
             })
             .setColor(`#${colors.default}`),
         ],
-        components:
-          pollChoices.length <= 3
-            ? components(
-                row()
-                  .addComponents(
-                    pollChoices.map((choice, index) => {
-                      const choiceEmoji = findEmojis(choice)[0] || null;
-                      const choiceText = choice.replace(EmojiRegex, '');
+        components: components(
+          row().addComponents(
+            pollChoices.map((choice, index) => {
+              const choiceEmoji = findEmojis(choice)[0] || null;
+              const choiceText = choice.replace(EmojiRegex, '');
 
-                      return new PollButton({ choiceId: index.toString() })
-                        .setLabel(choiceText)
-                        .setStyle(
-                          choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
-                            ? 'SUCCESS'
-                            : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
-                            ? 'DANGER'
-                            : 'PRIMARY'
-                        )
-                        .setEmoji(choiceEmoji);
-                    })
-                  )
-                  .addComponents(
-                    new PollOptionsButton(this.user.id)
-                      .setEmoji(emojis.buttons.menu)
-                      .setStyle('SECONDARY')
-                  )
-              )
-            : components(
-                row(
-                  new PollSelector()
-                    .setPlaceholder(strings.POLL_SELECT_MENU_VOTE)
-                    .addOptions(
-                      pollChoices.map((choice, index) => {
-                        const choiceEmoji = findEmojis(choice)[0] || null;
-                        const choiceText = choice.replace(EmojiRegex, '');
-                        return {
-                          label: choiceText,
-                          value: index.toString(),
-                          emoji: choiceEmoji,
-                        };
-                      })
-                    )
-                    .setMinValues(0)
-                    .setMaxValues(1)
-                ),
-                row(
-                  new PollOptionsButton(this.user.id)
-                    .setEmoji(emojis.buttons.menu)
-                    .setStyle('SECONDARY')
+              return new PollButton({ choiceId: index.toString() })
+                .setLabel(choiceText)
+                .setStyle(
+                  choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
+                    ? 'SUCCESS'
+                    : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
+                    ? 'DANGER'
+                    : 'PRIMARY'
                 )
-              ),
+                .setEmoji(choiceEmoji);
+            })
+          ),
+          row(
+            new PollOptionsButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY')
+          )
+        ),
       });
 
       const pollData = await setDbTimeout({
@@ -222,30 +187,13 @@ export const PollButton = ButtonComponent({
   },
 });
 
-export const PollSelector = SelectMenuComponent({
-  async handle(ctx: null) {
-    if (usersOnCooldown.has(this.user.id) && usersOnCooldown.get(this.user.id) > Date.now()) {
-      return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
-    }
-
-    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
-    const poll = this.message.embeds[0] as MessageEmbed;
-
-    this.update({
-      embeds: [await renderPoll(this.values[0], this.user.id, pollData, poll, this.guildLocale)],
-    });
-
-    usersOnCooldown.set(this.user.id, Date.now() + 3000);
-  },
-});
-
 export const PollOptionsButton = ButtonComponent({
   async handle(creatorId: string) {
     const { strings, errors } = t(this, 'poll');
 
     if (
       this.user.id !== creatorId &&
-      !this.memberPermissions.has(PermissionFlagsBits.ManageMessages)
+      !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)
     ) {
       return this.reply(CRBTError(errors.POLL_DATA_NOT_ALLOWED));
     }
@@ -339,29 +287,16 @@ export const EditPollModal = ModalComponent({
 
     const msg = await this.channel.messages.fetch(msgId);
 
-    const isSelectMenu = msg.components.length > 1;
-
-    if (isSelectMenu) {
-      (msg.components[0].components[0] as MessageSelectMenu).options = (
-        msg.components[0].components[0] as MessageSelectMenu
-      ).options.map((option, i) => ({
-        ...option,
-        label: choices[i],
-      }));
-    }
-
-    const Components = isSelectMenu
-      ? components(row(msg.components[0].components[0]), msg.components[1])
-      : components(
-          row(
-            //@ts-ignore
-            msg.components[0].components.slice(0, -1).map((component, i) => ({
-              ...component,
-              label: choices[i],
-            })),
-            msg.components[0].components.at(-1)
-          )
-        );
+    const Components = components(
+      row(
+        //@ts-ignore
+        msg.components[0].components.slice(0, -1).map((component, i) => ({
+          ...component,
+          label: choices[i],
+        })),
+        msg.components[0].components.at(-1)
+      )
+    );
 
     await msg.edit({
       embeds: [

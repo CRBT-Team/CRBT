@@ -16,7 +16,7 @@ export default ChatCommand({
       return this.reply(CRBTError(GUILD_ONLY));
     }
 
-    if (!this.guild.me.permissionsIn(this.channel).has(PermissionFlagsBits.ManageWebhooks)) {
+    if (!this.guild.me.permissionsIn(this.channel).has(PermissionFlagsBits.ManageWebhooks, true)) {
       return this.reply(CRBTError('I do not have the "Manage Webhooks" permission.'));
     }
 

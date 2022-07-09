@@ -126,13 +126,12 @@ export const BackButton = ButtonComponent({
 
 export const DeleteButton = ButtonComponent({
   async handle(index: number) {
-    const embed = this.message.embeds[0]
+    const embed = this.message.embeds[0];
     await this.update({
       embeds: [
-        new MessageEmbed({ ...embed })
-        .setAuthor({
-          name: 'Are you sure you want to delete this reminder?'
-        })
+        new MessageEmbed({ ...embed }).setAuthor({
+          name: 'Are you sure you want to delete this reminder?',
+        }),
       ],
       components: components(
         row(
@@ -267,20 +266,23 @@ async function renderList(
             : await getColor(this.user)
         ),
     ],
-    components: components(
-      row(
-        new ReminderSelectMenu()
-          .setPlaceholder('Select a reminder to edit or delete.')
-          .setMaxValues(1)
-          .addOptions(
-            userReminders.map(({ data, expiration }, index) => ({
-              label: data.subject,
-              description: `${dayjs(expiration).fromNow()}`,
-              value: index.toString(),
-            }))
-          )
-      )
-    ),
+    components:
+      userReminders.length === 0
+        ? []
+        : components(
+            row(
+              new ReminderSelectMenu()
+                .setPlaceholder('Select a reminder to edit or delete.')
+                .setMaxValues(1)
+                .addOptions(
+                  userReminders.map(({ data, expiration }, index) => ({
+                    label: data.subject,
+                    description: `${dayjs(expiration).fromNow()}`,
+                    value: index.toString(),
+                  }))
+                )
+            )
+          ),
   };
 }
 

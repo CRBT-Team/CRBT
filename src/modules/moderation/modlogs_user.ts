@@ -1,6 +1,7 @@
 import { db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { CommandInteraction, ContextMenuInteraction, MessageEmbed, User } from 'discord.js';
@@ -28,7 +29,10 @@ async function viewModLogs(
 ) {
   const user = opts.user || this.user;
 
-  if (user !== this.user && !this.memberPermissions.has(PermissionFlagsBits.ModerateMembers)) {
+  if (
+    user !== this.user &&
+    !hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)
+  ) {
     return this.reply(
       CRBTError(t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'))
     );
@@ -55,5 +59,5 @@ async function viewModLogs(
     )
     .setColor(await getColor(this.user));
 
-  await this.reply({ embeds: [embed] });
+  await this.reply({ embeds: [embed], ephemeral: this instanceof ContextMenuInteraction });
 }
