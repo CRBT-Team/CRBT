@@ -1,19 +1,19 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_ADMIN_ONLY": "Musisz być administratorem żeby użyj tej komendy.",
+  "ERROR_MISSING_PERMISSIONS": "Potrzebujesz <PERMISSIONS> uprawnień aby użyć tej komendy.",
+  "ERROR_INVALID_URL": "Podany URL jest nieprawidłowy.",
+  "ERROR_INVALID_HEX": "Podany kolor HEX jest nieprawidłowy.",
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Ta komenda nie może być użyta w DMach."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
+    "BACK": "Wróć",
+    "JUMP_TO_MSG": "Skocz do wiadomości",
+    "CANCEL": "Anuluj",
+    "CONFIRM": "Potwierdź",
+    "DELETE": "Usuń",
+    "EDIT": "Edytuj",
+    "PREVIOUS": "Poprzednie",
     "NEXT": "Next",
     "SAVE": "Save Changes",
     "DONE": "Done",
