@@ -20,8 +20,8 @@
     "ADD_REMINDER": "Adaugă memento",
     "OPEN_DMS": "Deschide DM-uri",
     "PREVIEW": "Previzualizare",
-    "EXPORT": "Export",
-    "IMPORT": "Import"
+    "EXPORT": "Exportă",
+    "IMPORT": "Importă"
   },
   "UnknownError": {
     "strings": {
@@ -162,7 +162,7 @@
       "BUTTON_WEBSITE": "Site Web",
       "BUTTON_INVITE": "Adaugă la Server",
       "BUTTON_DISCORD": "Alătură-te comunității",
-      "BUTTON_DONATE": "Donate"
+      "BUTTON_DONATE": "Donează"
     }
   },
   "user_navbar": {
@@ -171,17 +171,17 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "User Info",
-      "SERVER_AVATAR": "Server Avatar",
-      "USER_AVATAR": "User Avatar",
-      "USER_BANNER": "User Banner"
+      "INFO": "Informații despre utilizator",
+      "SERVER_AVATAR": "Avatarul serverului",
+      "USER_AVATAR": "Avatarul Utilizatorului",
+      "USER_BANNER": "Bannerul Utilizatorului"
     }
   },
   "profile": {
     "pronouns": {
       "hh": "El",
       "sh": "Ea",
-      "tt": "Dumnealor",
+      "tt": "Ei",
       "other": "Altul",
       "ask": "Întreabă-mă"
     }
@@ -206,7 +206,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Titlul sondajului trebuie să aibă cel mult 100 de caractere.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
+      "CHOICE_TOO_LONG": "O variantă nu poate fi mai lungă de 40 de caractere (cu excepția emoji-urilor).",
       "CHOICE_EMPTY": "O variantă nu poate fi goală (cu excepția emoji-urilor).",
       "POLL_DATA_NOT_ALLOWED": "Doar moderatorii chat-ului (permisiunea \"Gestionare mesaje\") și creatorul original de sondaje îi pot vizualiza datele și opțiunile."
     },
@@ -241,19 +241,19 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Obține un avatar a unui utilizator (De server sau Profil).",
       "options": [
         {
           "name": "utilizator",
-          "description": "Utilizatorul al cărui avatar vrei să-l copiezi."
+          "description": "Utilizatorul al cărui avatar vrei să-l obții."
         },
         {
           "name": "dimensiune",
-          "description": "Dimensiunea avatarului pe care vrei să-l copiezi."
+          "description": "Dimensiunea avatarului pe care vrei să-l obții."
         },
         {
           "name": "format",
-          "description": "Formatul avatarului pe care vrei să-l copiezi."
+          "description": "Formatul avatarului pe care vrei să-l obții."
         }
       ]
     },
@@ -389,7 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> setat!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Deschide Ghidul De Script-uri CRBT",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Editează acest mesaj pentru a personaliza <TYPE> folosind meniul selectat de mai jos.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Mesajul tău nu poate fi gol!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> salvat.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Previzualizează <TYPE>ul(a).",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Previzualizare",
@@ -413,9 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown și CRBTscript sunt acceptate.",
   "FIELDS_CONTENT": "Text simplu",
   "FIELDS_AUTHOR": "Încorporează autorul",
-  "FIELDS_AUTHOR_NAME": "Embed Author Name",
-  "FIELDS_AUTHOR_URL": "Embed Author URL",
-  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
+  "FIELDS_AUTHOR_NAME": "Încorporează numele autorului",
+  "FIELDS_AUTHOR_URL": "Încorporează URL-ul autorului",
+  "FIELDS_AUTHOR_ICON": "Încorporează pictograma autorului",
   "FIELDS_TITLE": "Încorporează titlul",
   "FIELDS_DESCRIPTION": "Încorporează descrierea",
   "FIELDS_FOOTER": "Încorporează Footer-ul",
