@@ -4,23 +4,23 @@
   "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
   "ERROR_INVALID_HEX": "आपका दिया गया HEX कलर गलत है|",
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "यह कमांड DMs में इस्तेमाल नहीं हो सकता |"
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
+    "BACK": "पीछे",
+    "JUMP_TO_MSG": "मेसेज पर जाएं",
+    "CANCEL": "रद्द करें",
+    "CONFIRM": "सहमत करे",
+    "DELETE": "डिलीट करें",
+    "EDIT": "बदले",
+    "PREVIOUS": "पिछला",
+    "NEXT": "अगला",
+    "SAVE": "परिवतर्न को सुरक्षित करें",
+    "DONE": "समाप्त",
     "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs",
-    "PREVIEW": "Preview",
-    "EXPORT": "Export",
+    "OPEN_DMS": "DMs खोले |",
+    "PREVIEW": "प्रीव्यू",
+    "EXPORT": "निर्यात",
     "IMPORT": "Import"
   },
   "UnknownError": {
