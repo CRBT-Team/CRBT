@@ -14,25 +14,25 @@
     "DELETE": "Usuń",
     "EDIT": "Edytuj",
     "PREVIOUS": "Poprzednie",
-    "NEXT": "Next",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs",
-    "PREVIEW": "Preview",
-    "EXPORT": "Export",
+    "NEXT": "Dalej",
+    "SAVE": "Zapisz zmiany",
+    "DONE": "Gotowe",
+    "ADD_REMINDER": "Dodaj przypomnienie",
+    "OPEN_DMS": "Otwórz DMy",
+    "PREVIEW": "Podgląd",
+    "EXPORT": "Eksport",
     "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Wystąpił nieznany błąd.",
+      "DESCRIPTION": "Nie mamy pojęcia, co mogło się stać. Oto Error, który otrzymaliśmy:\n<MESSAGE>\nTo automatycznie się do nas wysłało, i spróbujemy naprawić jak najszybciej. Przepraszamy za niedogodności."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+      "TITLE": "Zaczekaj!",
+      "DESCRIPTION": "Będziesz mógł użyć tego <TYPE> w <TIME>...",
       "COMMAND": "command",
       "COMPONENT": "component"
     }
