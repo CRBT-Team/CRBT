@@ -17,11 +17,11 @@
     "NEXT": "अगला",
     "SAVE": "परिवतर्न को सुरक्षित करें",
     "DONE": "समाप्त",
-    "ADD_REMINDER": "Add Reminder",
+    "ADD_REMINDER": "रिमाइंडर सेट करे",
     "OPEN_DMS": "DMs खोले |",
     "PREVIEW": "प्रीव्यू",
     "EXPORT": "निर्यात",
-    "IMPORT": "Import"
+    "IMPORT": "इम्पोर्ट"
   },
   "UnknownError": {
     "strings": {
