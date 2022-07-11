@@ -33,43 +33,43 @@
     "strings": {
       "TITLE": "Zaczekaj!",
       "DESCRIPTION": "Będziesz mógł użyć tego <TYPE> w <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "COMMAND": "komenda",
+      "COMPONENT": "komponent"
     }
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "Zmień kolor akcentu CRBT.",
       "options": [
         {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "name": "kolor",
+          "description": "Kolor, aby zmienić kolor akcentu. Użyj jednego z sugestii lub koloru HEX."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "sync": "Synchronizuj kolor profilu Discorda",
+      "lightred": "Jasnoczerwony",
+      "red": "Czerwony",
+      "darkred": "Ciemnoczerwony",
+      "orange": "Pomarańcz",
+      "yellow": "Żółty",
+      "lightgreen": "Jasnozielona",
+      "green": "Zielony",
+      "darkgreen": "Ciemnozielony",
+      "cyan": "Cyjan",
+      "lightblue": "Jasnoniebieski",
+      "blue": "Niebieski",
+      "darkblue": "Ciemnoniebieski",
+      "blurple": "Fiolebieski",
+      "lightpurple": "Jasnofioletowy",
+      "purple": "Fioletowy",
+      "darkpurple": "Ciemny Fiolet",
+      "pink": "Różowy",
+      "brown": "Brązowy",
+      "black": "Czarny",
+      "gray": "Szary",
+      "white": "Biały"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
