@@ -25,7 +25,7 @@
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "अज्ञात त्रुटि हुई |",
+      "TITLE": "An unknown error has occured.",
       "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
     }
   },
