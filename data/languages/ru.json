@@ -15,7 +15,7 @@
     "EDIT": "Изменить",
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
-    "SAVE": "Save Changes",
+    "SAVE": "Сохранить изменения",
     "DONE": "Done",
     "ADD_REMINDER": "Добавить напоминание",
     "OPEN_DMS": "Открыть ЛС",
@@ -122,8 +122,8 @@
       "GCALENDAR_EVENT_CHANNEL": "Вы также будете уведомлены в <CHANNEL> на <SERVER>.",
       "REMINDER_TITLE": "Reminder",
       "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Snooze",
-      "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
+      "BUTTON_SNOOZE": "Отложить",
+      "BUTTON_SNOOZE_SUCCESS": "Будильник отложен на 15 минут"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -162,7 +162,7 @@
       "BUTTON_WEBSITE": "Сайт",
       "BUTTON_INVITE": "Добавить на сервер",
       "BUTTON_DISCORD": "Присоединиться к Сообществу",
-      "BUTTON_DONATE": "Donate"
+      "BUTTON_DONATE": "Поддержать"
     }
   },
   "user_navbar": {
@@ -387,7 +387,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
