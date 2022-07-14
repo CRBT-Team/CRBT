@@ -1,8 +1,8 @@
 {
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права <PERMISSIONS>.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
+  "ERROR_INVALID_HEX": "Предоставленный цвет HEX недействителен.",
   "globalErrors": {
     "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
   },
@@ -16,12 +16,12 @@
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
     "SAVE": "Сохранить изменения",
-    "DONE": "Done",
+    "DONE": "Готово",
     "ADD_REMINDER": "Добавить напоминание",
     "OPEN_DMS": "Открыть ЛС",
-    "PREVIEW": "Preview",
-    "EXPORT": "Export",
-    "IMPORT": "Import"
+    "PREVIEW": "Предпросмотр",
+    "EXPORT": "Экспортировать",
+    "IMPORT": "Импортировать"
   },
   "UnknownError": {
     "strings": {
@@ -111,15 +111,15 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "Вас уведомят в <CHANNEL>",
-      "SUCCESS_DM": "Вас уведомят в ЛС",
+      "SUCCESS_CHANNEL": "Вы получите напонминание в <CHANNEL>",
+      "SUCCESS_DM": "Вы получите уведомление в ЛС",
       "SUBJECT": "Тема",
       "TOMORROW_AT": "Завтра в <TIME>",
       "TODAY_AT": "Сегодня в <TIME>",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
       "GCALENDAR_EVENT": "Установка напоминания CRBT.",
-      "GCALENDAR_EVENT_DM": "Вас также уведомят в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "Вы также будете уведомлены в <CHANNEL> на <SERVER>.",
+      "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
+      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будете отправлено в <CHANNEL> на <SERVER>.",
       "REMINDER_TITLE": "Reminder",
       "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
       "BUTTON_SNOOZE": "Отложить",
@@ -128,7 +128,7 @@
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
       "AT": "в",
-      "ON": "вкл",
+      "ON": "на",
       "IN": "в",
       "TOMORROW": "завтра",
       "TODAY": "сегодня"
@@ -241,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Получить аватар пользователя (Серверный или пользовательский аватар).",
       "options": [
         {
           "name": "пользователь",
@@ -384,12 +384,12 @@
   "LEAVE_MESSAGE": "Farewell message",
   "JOIN_CHANNEL": "Welcome channel",
   "LEAVE_CHANNEL": "Farewell channel",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить <TYPE>.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить <TYPE>.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> установлено!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
