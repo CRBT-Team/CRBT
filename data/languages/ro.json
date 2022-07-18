@@ -19,7 +19,9 @@
     "DONE": "Efectuat",
     "ADD_REMINDER": "Adaugă memento",
     "OPEN_DMS": "Deschide DM-uri",
-    "PREVIEW": "Previzualizare"
+    "PREVIEW": "Previzualizare",
+    "EXPORT": "Exportă",
+    "IMPORT": "Importă"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Online din",
       "BUTTON_WEBSITE": "Site Web",
       "BUTTON_INVITE": "Adaugă la Server",
-      "BUTTON_DISCORD": "Alătură-te comunității"
+      "BUTTON_DISCORD": "Alătură-te comunității",
+      "BUTTON_DONATE": "Donează"
     }
   },
   "user_navbar": {
@@ -168,14 +171,17 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "Informațiile utilizatorului"
+      "INFO": "Informații despre utilizator",
+      "SERVER_AVATAR": "Avatarul serverului",
+      "USER_AVATAR": "Avatarul Utilizatorului",
+      "USER_BANNER": "Bannerul Utilizatorului"
     }
   },
   "profile": {
     "pronouns": {
       "hh": "El",
       "sh": "Ea",
-      "tt": "Dumnealor",
+      "tt": "Ei",
       "other": "Altul",
       "ask": "Întreabă-mă"
     }
@@ -235,19 +241,19 @@
   },
   "avatar": {
     "meta": {
-      "description": "Copiază un avatar implicit al utilizatorului, sau al tău dacă nu îl specifici.",
+      "description": "Obține un avatar a unui utilizator (De server sau Profil).",
       "options": [
         {
           "name": "utilizator",
-          "description": "Utilizatorul al cărui avatar vrei să-l copiezi."
+          "description": "Utilizatorul al cărui avatar vrei să-l obții."
         },
         {
           "name": "dimensiune",
-          "description": "Dimensiunea avatarului pe care vrei să-l copiezi."
+          "description": "Dimensiunea avatarului pe care vrei să-l obții."
         },
         {
           "name": "format",
-          "description": "Formatul avatarului pe care vrei să-l copiezi."
+          "description": "Formatul avatarului pe care vrei să-l obții."
         }
       ]
     },
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> setat!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Deschide Ghidul De Script-uri CRBT",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Editează acest mesaj pentru a personaliza <TYPE> folosind meniul selectat de mai jos.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Mesajul tău nu poate fi gol!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> salvat.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Previzualizează <TYPE>ul(a).",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Previzualizare",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown și CRBTscript sunt acceptate.",
   "FIELDS_CONTENT": "Text simplu",
   "FIELDS_AUTHOR": "Încorporează autorul",
+  "FIELDS_AUTHOR_NAME": "Încorporează numele autorului",
+  "FIELDS_AUTHOR_URL": "Încorporează URL-ul autorului",
+  "FIELDS_AUTHOR_ICON": "Încorporează pictograma autorului",
   "FIELDS_TITLE": "Încorporează titlul",
   "FIELDS_DESCRIPTION": "Încorporează descrierea",
   "FIELDS_FOOTER": "Încorporează Footer-ul",

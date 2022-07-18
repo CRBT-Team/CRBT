@@ -1,25 +1,27 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
+  "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(यां) की आवश्यकता है |",
+  "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
+  "ERROR_INVALID_HEX": "आपका दिया गया HEX कलर गलत है|",
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "यह कमांड DMs में इस्तेमाल नहीं हो सकता |"
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs",
-    "PREVIEW": "Preview"
+    "BACK": "पीछे",
+    "JUMP_TO_MSG": "मेसेज पर जाएं",
+    "CANCEL": "रद्द करें",
+    "CONFIRM": "सहमत करे",
+    "DELETE": "डिलीट करें",
+    "EDIT": "बदले",
+    "PREVIOUS": "पिछला",
+    "NEXT": "अगला",
+    "SAVE": "परिवतर्न को सुरक्षित करें",
+    "DONE": "समाप्त",
+    "ADD_REMINDER": "रिमाइंडर सेट करे",
+    "OPEN_DMS": "DMs खोले |",
+    "PREVIEW": "प्रीव्यू",
+    "EXPORT": "निर्यात",
+    "IMPORT": "इम्पोर्ट"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Online since",
       "BUTTON_WEBSITE": "Website",
       "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_DISCORD": "Join the Community",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "user",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",

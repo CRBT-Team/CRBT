@@ -1,8 +1,8 @@
 {
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права <PERMISSIONS>.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
+  "ERROR_INVALID_HEX": "Предоставленный цвет HEX недействителен.",
   "globalErrors": {
     "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
   },
@@ -15,11 +15,13 @@
     "EDIT": "Изменить",
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
+    "SAVE": "Сохранить изменения",
+    "DONE": "Готово",
     "ADD_REMINDER": "Добавить напоминание",
     "OPEN_DMS": "Открыть ЛС",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Предпросмотр",
+    "EXPORT": "Экспортировать",
+    "IMPORT": "Импортировать"
   },
   "UnknownError": {
     "strings": {
@@ -71,12 +73,12 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "У вас нет цвета профиля Discord для синхронизации. Чтобы поставить его, измените пользовательский профиль Discord'а и смените его цвет.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
+      "INVALID_COLOR_NAME": "Вам стоит ввести название цвета используя автозаполнение, либо используйте HEX-код нужного вам цвета."
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с вашим цветом акцента CRBT.",
-      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также в вашем профиле и картах информации, когда кто-то еще их посещает."
+      "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с цветом вашего профиля CRBT.",
+      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также в вашем профиле и на вашей инфокарточке при просмотре."
     }
   },
   "remind me": {
@@ -84,7 +86,7 @@
       "description": "Установить напоминание.",
       "options": [
         {
-          "name": "в момент",
+          "name": "когда",
           "description": "Когда напомнить вам (например, 2 hours, 3w2d, 20:30)."
         },
         {
@@ -98,7 +100,7 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Тема должна быть не менее 120 символов.",
+      "SUBJECT_MAX_LENGTH": "Тема должна быть не более 120 символов.",
       "PAST": "Нельзя установить напоминание в прошлом.",
       "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
       "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
@@ -109,24 +111,24 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "Вас уведомят в <CHANNEL>",
-      "SUCCESS_DM": "Вас уведомят в ЛС",
+      "SUCCESS_CHANNEL": "Вы получите напонминание в <CHANNEL>",
+      "SUCCESS_DM": "Вы получите уведомление в ЛС",
       "SUBJECT": "Тема",
       "TOMORROW_AT": "Завтра в <TIME>",
       "TODAY_AT": "Сегодня в <TIME>",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
       "GCALENDAR_EVENT": "Установка напоминания CRBT.",
-      "GCALENDAR_EVENT_DM": "Вас также уведомят в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "Вы также будете уведомлены в <CHANNEL> на <SERVER>.",
-      "REMINDER_TITLE": "Reminder",
-      "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Snooze",
-      "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
+      "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
+      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будете отправлено в <CHANNEL> на <SERVER>.",
+      "REMINDER_TITLE": "Напоминание",
+      "REMINDER_DESCRIPTION": "Установлено на <TIME> (<RELATIVE_TIME>)",
+      "BUTTON_SNOOZE": "Отложить",
+      "BUTTON_SNOOZE_SUCCESS": "Будильник отложен на 15 минут"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
       "AT": "в",
-      "ON": "вкл",
+      "ON": "на",
       "IN": "в",
       "TOMORROW": "завтра",
       "TODAY": "сегодня"
@@ -134,7 +136,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Пинг CRBT. Возвращает задержку и информацию о соединении."
+      "description": "Пинг CRBT. Информация о соединении и времени ожидания."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - пинг",
@@ -159,16 +161,20 @@
       "UPTIME": "В сети с",
       "BUTTON_WEBSITE": "Сайт",
       "BUTTON_INVITE": "Добавить на сервер",
-      "BUTTON_DISCORD": "Присоединиться к Сообществу"
+      "BUTTON_DISCORD": "Присоединиться к Сообществу",
+      "BUTTON_DONATE": "Поддержать"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Только пользователь, который использовал эту команду может использовать эту кнопку."
+      "NOT_CMD_USER": "Только пользователь, который использовал эту команду, может использовать эту кнопку."
     },
     "strings": {
       "AVATAR": "Аватар",
-      "INFO": "Личные данные"
+      "INFO": "Информация о пользователе",
+      "SERVER_AVATAR": "Аватар сервера",
+      "USER_AVATAR": "Аватар пользователя",
+      "USER_BANNER": "Баннер пользователя"
     }
   },
   "profile": {
@@ -185,7 +191,7 @@
       "description": "Создать опрос с выбранными вариантами.",
       "options": [
         {
-          "description": "Выбор, который может быть выбран пользователем. Желательно сделайте его коротким."
+          "description": "Выбор, который может сделать пользователь. Желательно сделайте его коротким."
         },
         {
           "description": "Другой выбор, который пользователь может выбрать."
@@ -200,13 +206,13 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "Заголовок вашего опроса должен быть не более 100 символов.",
-      "CHOICE_TOO_LONG": "Выбор не может быть длиннее 40 символов (без учета эмодзи).",
+      "CHOICE_TOO_LONG": "Вариант голосования не может содержать в себе более 40 символов (за исключением эмодзи).",
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
-      "POLL_DATA_NOT_ALLOWED": "Только модераторы чата (разрешение \"Управлять сообщениями\") и оригинальный автор опроса могут просматривать свои данные и параметры."
+      "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
     },
     "strings": {
       "CHOICE": "Выбор",
-      "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать варианты и другие данные, нажав кнопку <ICON> ниже.",
+      "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать его параметры и другие данные, нажав кнопку <ICON> ниже.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> голос(ов)",
       "POLL_FOOTER_VOTES": "Всего голосов: <VOTES>",
       "POLL_FOOTER_CREATOR": "Опрос начат <USER>",
@@ -217,7 +223,7 @@
       "SUCCESS_DESCRIPTION": "Опрос закончится через <TIME>, но вы можете преждевременно завершить его с помощью меню <ICON>. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
       "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
       "POLL_DATA_NOVOTES": "Пока нет голосов",
-      "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться. Используйте кнопку снова, чтобы обновить данные.",
+      "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться в реальном времени. Используйте кнопку снова, чтобы обновить данные.",
       "BUTTON_EDIT_POLL": "Редактировать опрос",
       "BUTTON_CANCEL_POLL": "Удалить опрос",
       "BUTTON_END_POLL": "Завершить опрос",
@@ -225,17 +231,17 @@
       "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Опрос окончен.",
       "POLL_HEADER_ENDED": "Завершено",
-      "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете голосовать за него.",
-      "POLL_RESULTS_TITLE": "Результаты уже в опросе!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" связали <VOTES> голос(ов)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" выиграл с <VOTES> голос(ов)",
-      "POLL_RESULTS_DESCRIPTION_REST": "из <TOTAL>!\nНажмите кнопку ниже, чтобы просмотреть полные результаты.",
+      "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
+      "POLL_RESULTS_TITLE": "Результаты опроса!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" имеют равное число голосов: <VOTES>",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" выиграл с количеством голосов: <VOTES>",
+      "POLL_RESULTS_DESCRIPTION_REST": "из <TOTAL>!\nНажмите кнопку ниже, чтобы просмотреть все результаты.",
       "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Получить аватар пользователя по умолчанию, если вы его не указали.",
+      "description": "Получить аватар пользователя (Серверный или пользовательский аватар).",
       "options": [
         {
           "name": "пользователь",
@@ -243,11 +249,11 @@
         },
         {
           "name": "размер",
-          "description": "Размер аватара для получения."
+          "description": "Размер получаемого аватара."
         },
         {
           "name": "формат",
-          "description": "Формат аватара для получения."
+          "description": "Формат получаемого аватара."
         }
       ]
     },
@@ -256,12 +262,12 @@
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Аватар",
-      "DOWNLOAD": "Загрузить (<SIZE>px - <FORMAT>)"
+      "DOWNLOAD": "Скачать (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Спасибо, что пригласили <CRBT> на сервер!",
+      "EMBED_TITLE": "Спасибо, что пригласили <CRBT> на ваш сервер!",
       "EMBED_DESCRIPTION": "<CRBT> теперь на <SERVERS> серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки](<DISCORD>)**."
     }
   },
@@ -273,7 +279,7 @@
       "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Сообщение в закладках)",
+      "BOOKMARK_AUTHOR": "<USER> (сохранил сообщение)",
       "SUCCESS_MESSAGE": "Это сообщение отправлено в ЛС!"
     }
   },
@@ -299,9 +305,9 @@
           },
           {
             "name": "поведение",
-            "description": "Как должен вести себя выбор ролей.",
+            "description": "Как должен вести себя выборщик ролей.",
             "choices": [
-              "Вкл/выкл роль(и)",
+              "Вкл/выкл управление ролями",
               "Давать роли только один раз"
             ]
           },
@@ -318,11 +324,11 @@
     },
     "preset": {
       "meta": {
-        "description": "Создать новый выборщик ролей, используя один из пресетов.",
+        "description": "Создать новый выборщик ролей, используя шаблон.",
         "options": [
           {
-            "name": "пресет",
-            "description": "Пресет для выбора. CRBT будет автоматически создавать роли и отправлять в красивой вставке."
+            "name": "шаблон",
+            "description": "Выбор шаблона. CRBT сам создаст роли по шаблону и оформит красивую рамочку."
           }
         ]
       },
@@ -337,7 +343,7 @@
         },
         "zodiacSigns": {
           "name": "Знаки зодиака",
-          "message": "Какой у вас знак зодиака?"
+          "message": "Какой ваш знак зодиака?"
         },
         "verification": {
           "name": "Проверка на человека",
@@ -356,61 +362,65 @@
       "CHOOSE_ROLE": "Выберите роль",
       "CHOOSE_ROLES": "Выберите роли",
       "OPTION_LABEL_GET_ROLE": "Получить роль <ROLE>.",
-      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, выбрав их ниже.",
+      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, из списка ниже.",
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
-      "BUTTON_ROLES_ADD": "Добавлена <ROLE> к вашим ролям.",
+      "BUTTON_ROLES_ADD": "<ROLE> добавлена к вашим ролям.",
       "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
       "BUTTON_ROLES_REMOVE": "<ROLE> удалена из ваших ролей.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
-      "SUCCESS_TITLE": "Выбор роли создан!",
+      "SUCCESS_TITLE": "Выборщик ролей создан!",
       "SUCCESS_DESCRIPTION": "Участники смогут выбрать роли из этого меню. Чтобы отключить его, просто удалите сообщение выборщика ролей."
     }
   },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
-  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
-  "MODERATION_LOGS_CLEAR": "Channel message clear",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the <TYPE> will look like when sent to <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the <TYPE>. The channel may no longer exist or I don't have the permission to send messages there.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the `/welcome message` command.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the `/welcome channel` command.",
-  "JOIN_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user joins the server.",
-  "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /welcome message to set one.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /welcome channel to set one.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the `/farewell message` command.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the `/farewell channel` command.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /farewell message to set one.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
-  "FIELD_SELECT_MENU": "Select a field to edit",
-  "COLOR_PRESET_SELECT_MENU": "Select a color preset",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
-  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Plain Text",
-  "FIELDS_AUTHOR": "Embed Author",
-  "FIELDS_TITLE": "Embed Title",
-  "FIELDS_DESCRIPTION": "Embed Description",
-  "FIELDS_FOOTER": "Embed Footer",
-  "FIELDS_COLOR": "Embed Color",
-  "FIELDS_IMAGE": "Embed Image",
-  "FIELDS_THUMBNAIL": "Embed Thumbnail",
-  "FIELDS_URL": "Embed Title URL"
+  "MODERATION_LOGS_ACTION_WARN": "Предупреждение",
+  "MODERATION_LOGS_ACTION_KICK": "Исключение",
+  "MODERATION_LOGS_ACTION_BAN": "Бан",
+  "MODERATION_LOGS_ACTION_UNBAN": "Разбан",
+  "MODERATION_LOGS_ACTION_TIMEOUT": "Истечение времени ожидания",
+  "MODERATION_LOGS_CLEAR": "Удаление сообщений в канале",
+  "MODERATION_LOGS_VIEW_TITLE": "История действий на <SERVER>",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: <MODERATOR>",
+  "JOIN_MESSAGE": "Приветствие",
+  "LEAVE_MESSAGE": "Прощание",
+  "JOIN_CHANNEL": "Канал приветствий",
+  "LEAVE_CHANNEL": "Канал прощаний",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить <TYPE>.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить <TYPE>.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> установлено!",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить <TYPE>.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> сохранено.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр <TYPE>.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Предпросмотр",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть <TYPE> при отправке в <CHANNEL>.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра <TYPE>. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в <CHANNEL>. Используйте `/welcome message`, чтобы изменить содержание отправляемого сообщения.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте `/welcome channel`, чтобы изменить канал для приветствий.",
+  "JOIN_MESSAGE_DESCRIPTION": "Создать или изменить сообщение-приветствие.",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
+  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Сначала нужно выбрать <TYPE>. Используйте '/welcome message' для выбора.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/welcome channel' для выбора.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправляться в <CHANNEL>, когда участники будут покидать сервер. Чтобы изменить сообщение прощание, используйте команду `/farewell message`.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, когда участник покинеть сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду `/farewell channel`.",
+  "LEAVE_MESSAGE_DESCRIPTION": "Создать или редактировать сообщение-прощание.",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
+  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Сначала нужно выбрать <TYPE>. Используйте '/farewell message' для выбора.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/farewell channel' для выбора.",
+  "FIELD_SELECT_MENU": "Выберите поле для редактирования",
+  "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
+  "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Поддерживаются Markdown и CRBTscript.",
+  "FIELDS_CONTENT": "Обычный Текст",
+  "FIELDS_AUTHOR": "Вставить автора",
+  "FIELDS_AUTHOR_NAME": "Вставить имя автора",
+  "FIELDS_AUTHOR_URL": "Вставить URL автора",
+  "FIELDS_AUTHOR_ICON": "Вставить иконку автора",
+  "FIELDS_TITLE": "Вставить название",
+  "FIELDS_DESCRIPTION": "Вставить описание",
+  "FIELDS_FOOTER": "Вставить колонтитул",
+  "FIELDS_COLOR": "Вставить цвет",
+  "FIELDS_IMAGE": "Вставить изображение",
+  "FIELDS_THUMBNAIL": "Вставить предпросматриваемое изображение",
+  "FIELDS_URL": "Вставить URL название"
 }

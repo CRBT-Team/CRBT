@@ -1,8 +1,8 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_ADMIN_ONLY": "Debe ser un administrador para utilizar este comando.",
+  "ERROR_MISSING_PERMISSIONS": "Necesita el/los permiso(s) <PERMISSIONS> para usar este comando.",
+  "ERROR_INVALID_URL": "La URL proporcionada es inválida.",
+  "ERROR_INVALID_HEX": "El código hexadecimal proporcionado es inválido.",
   "globalErrors": {
     "GUILD_ONLY": "Este comando no se puede utilizar en MD."
   },
@@ -15,11 +15,13 @@
     "EDIT": "Editar",
     "PREVIOUS": "Anterior",
     "NEXT": "Siguiente",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
+    "SAVE": "Guardar cambios",
+    "DONE": "Listo",
     "ADD_REMINDER": "Establecer recordatorio",
     "OPEN_DMS": "Abrir MD",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Vista previa",
+    "EXPORT": "Exportar",
+    "IMPORT": "Importar"
   },
   "UnknownError": {
     "strings": {
@@ -71,7 +73,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "¡No tiene un color de perfil de Discord que sincronizar! Para establecer uno, edite su perfil de Discord y cambie su color de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
+      "INVALID_COLOR_NAME": "Debe introducir un nombre de color válido utilizando el autocompletado o un color hexadecimal."
     },
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
@@ -118,10 +120,10 @@
       "GCALENDAR_EVENT": "Establecido por un Recordatorio CRBT.",
       "GCALENDAR_EVENT_DM": "También se le será recordado por MD.",
       "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en <CHANNEL>, en <SERVER>.",
-      "REMINDER_TITLE": "Reminder",
-      "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Snooze",
-      "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
+      "REMINDER_TITLE": "Recordatorio",
+      "REMINDER_DESCRIPTION": "Establecido el <TIME> (<RELATIVE_TIME>)",
+      "BUTTON_SNOOZE": "Posponer",
+      "BUTTON_SNOOZE_SUCCESS": "Pospuesto por 15 minutos"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "y",
@@ -159,7 +161,8 @@
       "UPTIME": "Conectado desde",
       "BUTTON_WEBSITE": "Página web",
       "BUTTON_INVITE": "Añadir a un servidor",
-      "BUTTON_DISCORD": "Unirse a la comunidad"
+      "BUTTON_DISCORD": "Unirse a la comunidad",
+      "BUTTON_DONATE": "Donar"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "Información de usuario"
+      "INFO": "Información de usuario",
+      "SERVER_AVATAR": "Avatar de servidor",
+      "USER_AVATAR": "Avatar de usuario",
+      "USER_BANNER": "Cartel de usuario"
     }
   },
   "profile": {
@@ -182,60 +188,60 @@
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Crear una encuesta con las opciones dadas.",
       "options": [
         {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Alguna opción que el usuario pueda elegir. Preferiblemente corta."
         },
         {
-          "description": "An other choice a user can choose."
+          "description": "Otra opción que el usuario pueda elegir."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "Igual que las opciones 1 y 2, pero no obligatoria."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "Tras esta opción, no puede añadir más opciones."
         }
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "TITLE_TOO_LONG": "El título de su encuesta debe tener como mucho 100 caracteres.",
+      "CHOICE_TOO_LONG": "Una opción no puede tener más de 40 caracteres (excluyendo emojis).",
+      "CHOICE_EMPTY": "Una opción no puede estar vacía (excluyendo emoji).",
+      "POLL_DATA_NOT_ALLOWED": "Sólo los moderadores de chat (con el permiso \"Gestionar mensajes\") y el creador de la encuesta pueden ver sus datos y opciones."
     },
     "strings": {
-      "CHOICE": "Choice",
-      "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
+      "CHOICE": "Opción",
+      "POLL_DESCRIPTION": "La encuesta terminará <TIME>.\nEl creador de la encuesta puede ver las opciones y otros datos haciendo clic en el botón <ICON> debajo.",
+      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> voto(s)",
+      "POLL_FOOTER_VOTES": "Votos totales: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Encuesta iniciada por <USER>",
+      "POLL_SELECT_MENU_VOTE": "Votar",
+      "KEYWORD_YES__KEEP_LOWERCASE": "sí",
       "KEYWORD_NO__KEEP_LOWERCASE": "no",
-      "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
-      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "No votes yet",
-      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
-      "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
-      "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" has won with <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of <TOTAL>!\nClick the button below to view the full results.",
-      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
+      "SUCCESS_TITLE": "¡Encuesta creada!",
+      "SUCCESS_DESCRIPTION": "La encuesta terminará <TIME>, pero puede terminarla antes utilizando el menú <ICON>. Desde este menú, también puede editar la encuesta, eliminarla o ver los votantes.",
+      "POLL_DATA_OPTIONS": "Encuesta CRBT • Datos y opciones",
+      "POLL_DATA_NOVOTES": "Aún no hay votos",
+      "POLL_DATA_FOOTER": "Nota: Estos datos no se actualizan en directo. Utilice el botón de nuevo para actualizar los datos.",
+      "BUTTON_EDIT_POLL": "Editar encuesta",
+      "BUTTON_CANCEL_POLL": "Eliminar encuesta",
+      "BUTTON_END_POLL": "Finalizar encuesta",
+      "TITLE": "Título",
+      "SUCCESS_POLL_DELETED": "Encuesta eliminada.",
+      "SUCCESS_POLL_ENDED": "Encuesta finalizada.",
+      "POLL_HEADER_ENDED": "Finalizada",
+      "POLL_DESCRIPTION_ENDED": "La encuesta ya ha terminado. Ya no puede votar.",
+      "POLL_RESULTS_TITLE": "¡Tenemos los resultados!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "¡\"<OPTION1>\" y \"<OPTION2>\" han empatado con <VOTES> voto(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "¡\"<OPTION>\" ha ganado con <VOTES> voto(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "de <TOTAL>!\nHaga clic en el botón de abajo para ver los resultados completos.",
+      "BUTTON_JUMP_TO_POLL": "Ir a la encuesta"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Obtener el avatar por defecto de un usuario específico o el suyo.",
+      "description": "Obtener el avatar de un usuario (ya sea de servidor o de perfil).",
       "options": [
         {
           "name": "usuario",
@@ -366,51 +372,55 @@
       "SUCCESS_DESCRIPTION": "Los miembros del servidor ahora podrán seleccionar roles de este menú. Para deshabilitarlo, simplemente elimine el mensaje del Selector de Roles."
     }
   },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
-  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
-  "MODERATION_LOGS_CLEAR": "Channel message clear",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the <TYPE> will look like when sent to <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the <TYPE>. The channel may no longer exist or I don't have the permission to send messages there.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the `/welcome message` command.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the `/welcome channel` command.",
-  "JOIN_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user joins the server.",
-  "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /welcome message to set one.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /welcome channel to set one.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the `/farewell message` command.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the `/farewell channel` command.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /farewell message to set one.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
-  "FIELD_SELECT_MENU": "Select a field to edit",
-  "COLOR_PRESET_SELECT_MENU": "Select a color preset",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
-  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Plain Text",
-  "FIELDS_AUTHOR": "Embed Author",
-  "FIELDS_TITLE": "Embed Title",
-  "FIELDS_DESCRIPTION": "Embed Description",
-  "FIELDS_FOOTER": "Embed Footer",
-  "FIELDS_COLOR": "Embed Color",
-  "FIELDS_IMAGE": "Embed Image",
-  "FIELDS_THUMBNAIL": "Embed Thumbnail",
-  "FIELDS_URL": "Embed Title URL"
+  "MODERATION_LOGS_ACTION_WARN": "Advertencia",
+  "MODERATION_LOGS_ACTION_KICK": "Expulsión",
+  "MODERATION_LOGS_ACTION_BAN": "Baneo",
+  "MODERATION_LOGS_ACTION_UNBAN": "Desbaneo",
+  "MODERATION_LOGS_ACTION_TIMEOUT": "Aislamiento temporal",
+  "MODERATION_LOGS_CLEAR": "Eliminación de mensajes",
+  "MODERATION_LOGS_VIEW_TITLE": "Historial de moderación en <SERVER>",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderado por <MODERATOR>",
+  "JOIN_MESSAGE": "Mensaje de bienvenida",
+  "LEAVE_MESSAGE": "Mensaje de despedida",
+  "JOIN_CHANNEL": "Canal de bienvenida",
+  "LEAVE_CHANNEL": "Canal de despedida",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Establecer un canal donde enviar el <TYPE>.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Dónde enviar el <TYPE>.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "¡<TYPE> establecido!",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Abrir la guía de CRBTscript",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edite este mensaje para personalizar el <TYPE> utilizando el menú de selección a continuación.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "¡Su mensaje no debe estar vacío!",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> guardado.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Vista previa del <TYPE>.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Vista previa",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Así se verá el <TYPE> cuando se envíe a <CHANNEL>.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Ocurrió un error mientras se trataba de previsualizar el <TYPE>. Es posible que el canal ya no exista o que no tenga yo permiso para enviar mensajes allí.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Se dará la bienvenida a miembros nuevos en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando `/welcome message`.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Los miembros nuevos ahora verán este mensaje cuando se unan al servidor. Para cambiar el canal donde se envía, puede utilizar el comando `/welcome channel`.",
+  "JOIN_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario se una al servidor.",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "¡Bienvenido <user.name> a <server.name>!",
+  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Debe establecer un <TYPE> primero. Utilice /welcome message para establecerlo.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /welcome channel para establecerlo.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Se enviará un mensaje de despedida cuando salgan miembros en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando `/farewell message`.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Este mensaje se enviará cuando un miembro abandone el servidor. Para cambiar el canal donde se envía, puede utilizar el comando `/farewell channel`.",
+  "LEAVE_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario abandone el servidor.",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ha salido del servidor.",
+  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Debe establecer un <TYPE> primero. Utilice /farewell message para establecerlo.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /farewell channel para establecerlo.",
+  "FIELD_SELECT_MENU": "Seleccione un campo a editar",
+  "COLOR_PRESET_SELECT_MENU": "Escoja uno de los colores predeterminados",
+  "MANUAL_COLOR_EDIT_BUTTON": "Usar un color hexadecimal",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Se admiten Markdown y CRBTscript.",
+  "FIELDS_CONTENT": "Texto estándar",
+  "FIELDS_AUTHOR": "Autor de la inserción",
+  "FIELDS_AUTHOR_NAME": "Nombre del autor de la inserción",
+  "FIELDS_AUTHOR_URL": "URL del autor de la inserción",
+  "FIELDS_AUTHOR_ICON": "Icono del autor de la inserción",
+  "FIELDS_TITLE": "Título de la inserción",
+  "FIELDS_DESCRIPTION": "Descripción de la inserción",
+  "FIELDS_FOOTER": "Pie de página de la inserción",
+  "FIELDS_COLOR": "Color de la inserción",
+  "FIELDS_IMAGE": "Imagen de la inserción",
+  "FIELDS_THUMBNAIL": "Miniatura de la inserción",
+  "FIELDS_URL": "URL del título de la inserción"
 }

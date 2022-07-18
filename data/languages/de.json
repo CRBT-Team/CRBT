@@ -19,7 +19,9 @@
     "DONE": "Done",
     "ADD_REMINDER": "Erinnerung hinzufügen",
     "OPEN_DMS": "Open DMs",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Preview",
+    "EXPORT": "Export",
+    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Online seit",
       "BUTTON_WEBSITE": "Webseite",
       "BUTTON_INVITE": "Zu Server hinzufügen",
-      "BUTTON_DISCORD": "Der Community beitreten"
+      "BUTTON_DISCORD": "Der Community beitreten",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "Nutzerinformationen"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Holen Sie sich den Standard-Avatar eines Benutzers, oder Ihren Avatar, wenn Sie keinen angeben.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "benutzer",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",

@@ -19,7 +19,9 @@
     "DONE": "Done",
     "ADD_REMINDER": "Adicionar Lembrete",
     "OPEN_DMS": "Abrir mensagens diretas",
-    "PREVIEW": "Preview"
+    "PREVIEW": "Preview",
+    "EXPORT": "Export",
+    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
@@ -159,7 +161,8 @@
       "UPTIME": "Online desde",
       "BUTTON_WEBSITE": "Site",
       "BUTTON_INVITE": "Adicionar a um servidor",
-      "BUTTON_DISCORD": "Juntar-se à comunidade"
+      "BUTTON_DISCORD": "Juntar-se à comunidade",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Foto de perfil",
-      "INFO": "Informações do usuário"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -200,7 +206,7 @@
     },
     "errors": {
       "TITLE_TOO_LONG": "O título de sua enquete deve ser de 100 caracteres ou menos.",
-      "CHOICE_TOO_LONG": "Uma alternativa não deve ser mais longa que 40 caracteres (excluindo emojis).",
+      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Obtenha o avatar padrão de um usuário ou o seu, se você não especificar um.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "usuário",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",

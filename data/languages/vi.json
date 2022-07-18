@@ -1,8 +1,8 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
+  "ERROR_ADMIN_ONLY": "Bạn phải là quản trị viên để sử dụng lệnh này.",
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_URL": "URL bạn đã cung cấp không hợp lệ.",
+  "ERROR_INVALID_HEX": "Mã màu HEX bạn đã cung cấp không hợp lệ.",
   "globalErrors": {
     "GUILD_ONLY": "Câu lệnh này không thể sử dụng được trong tin nhắn trực tiếp."
   },
@@ -16,10 +16,12 @@
     "PREVIOUS": "Trước",
     "NEXT": "Tiếp theo",
     "SAVE": "Lưu thay đổi",
-    "DONE": "Done",
+    "DONE": "Xong",
     "ADD_REMINDER": "Thêm nhắc nhỡ",
-    "OPEN_DMS": "Mở DM",
-    "PREVIEW": "Xem trước"
+    "OPEN_DMS": "Mở các tin nhắn trực tiếp",
+    "PREVIEW": "Xem trước",
+    "EXPORT": "Xuất dữ liệu",
+    "IMPORT": "Nhập dữ liệu"
   },
   "UnknownError": {
     "strings": {
@@ -31,8 +33,8 @@
     "strings": {
       "TITLE": "Khoan đã!",
       "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "COMMAND": "câu lệnh",
+      "COMPONENT": "thành phần"
     }
   },
   "color set": {
@@ -46,7 +48,7 @@
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "Đồng bộ hóa màu từ hồ sơ Discord",
       "lightred": "Đỏ nhạt",
       "red": "Đỏ",
       "darkred": "Đỏ đậm",
@@ -110,13 +112,13 @@
     "strings": {
       "SUCCESS_TITLE": "Đã đặt lời nhắc!",
       "SUCCESS_CHANNEL": "You will be reminded in <CHANNEL>",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_DM": "Bạn sẽ được nhắc nhở trong tin nhắn trực tiếp của bạn",
       "SUBJECT": "Tiêu đề",
       "TOMORROW_AT": "Ngày mai lúc <TIME>",
       "TODAY_AT": "Hôm nay lúc <TIME>",
       "BUTTON_GCALENDAR": "Thêm sự kiện vào Google Lịch",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
+      "GCALENDAR_EVENT_DM": "Bạn sẽ được nhắc nhở trong tin nhắn trực tiếp của bạn.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
       "REMINDER_TITLE": "Nhắc nhở",
       "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
@@ -134,10 +136,10 @@
   },
   "ping": {
     "meta": {
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Trả về độ trễ và thông tin kết nối của CRBT."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
+      "EMBED_TITLE": "<CRBT> - Ping (Đỗ trễ công nghệ)",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Sự tương tác",
       "UPTIME": "Trực tuyến kể từ",
@@ -146,20 +148,21 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT"
+      "description": "Nhận thông tin về CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
+      "EMBED_TITLE": "<CRBT> - Thông tin",
+      "VERSION": "Phiên bản <VERSION> trên nền tảng <PURPLET>",
       "MEMBER_COUNT": "Số lượng thành viên",
       "SERVER_COUNT": "Số lượng máy chủ",
       "PING": "Độ trễ",
-      "PING_RESULT": "≈<PING> milliseconds",
+      "PING_RESULT": "≈<PING> milligiây",
       "CREATED": "Được tạo vào",
       "UPTIME": "Trực tuyến kể từ",
       "BUTTON_WEBSITE": "Trang web",
       "BUTTON_INVITE": "Thêm vào Máy chủ",
-      "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi"
+      "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi",
+      "BUTTON_DONATE": "Ủng hộ"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Ảnh đại diện",
-      "INFO": "Thông tin người dùng"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Nhận hình đại diện mặc định của người dùng hoặc của bạn nếu bạn không chỉ định.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "người dùng",
@@ -252,11 +258,11 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Lấy ảnh đại diện"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Download (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "<USER> - Hình đại diện",
+      "DOWNLOAD": "Tải về (<SIZE>px - <FORMAT>)"
     }
   },
   "crbt_introduction": {
@@ -267,23 +273,23 @@
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "Đánh dấu trang tin nhắn"
     },
     "errors": {
       "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "<USER> (Tin nhắn đã đánh dấu)",
+      "SUCCESS_MESSAGE": "Đã gửi tin nhắn này qua tin nhắn trực tiếp!"
     }
   },
   "calc": {
     "meta": {
-      "description": "Calculate a mathematical expression.",
+      "description": "Tính toán một biểu thức toán học.",
       "options": [
         {
           "name": "biểu thức",
-          "description": "The expression to calculate."
+          "description": "Biểu thức cần tính."
         }
       ]
     }
@@ -348,7 +354,7 @@
     "errors": {
       "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role <ROLE> does not exist or has been removed. Contact an admin to resolve the issue.",
+      "ROLE_DOES_NOT_EXIST": "Vai trò <ROLE> không tồn tại hoặc đã bị xóa. Liên hệ với quản trị viên để giải quyết vấn đề này.",
       "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
@@ -370,7 +376,7 @@
   "MODERATION_LOGS_ACTION_KICK": "Đuổi",
   "MODERATION_LOGS_ACTION_BAN": "Cấm",
   "MODERATION_LOGS_ACTION_UNBAN": "Bỏ cấm",
-  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
+  "MODERATION_LOGS_ACTION_TIMEOUT": "Thời gian chờ",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
@@ -380,12 +386,13 @@
   "LEAVE_CHANNEL": "Kênh tạm biệt",
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> đã đặt!",
+  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Mở hướng dẫn CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> đã lưu.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Xem trước",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the <TYPE> will look like when sent to <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the <TYPE>. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the `/welcome message` command.",
@@ -397,15 +404,18 @@
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the `/farewell message` command.",
   "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the `/farewell channel` command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> đã rời khỏi máy chủ này.",
   "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /farewell message to set one.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
-  "FIELD_SELECT_MENU": "Select a field to edit",
-  "COLOR_PRESET_SELECT_MENU": "Select a color preset",
+  "FIELD_SELECT_MENU": "Chọn một dòng để chỉnh sửa",
+  "COLOR_PRESET_SELECT_MENU": "Chọn một cài đặt trước màu",
   "MANUAL_COLOR_EDIT_BUTTON": "Sử dụng mã màu HEX",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown (ngôn ngữ đánh dấu) và CRBTscript được hỗ trợ.",
   "FIELDS_CONTENT": "Văn bản thô",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",

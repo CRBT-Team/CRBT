@@ -1,73 +1,75 @@
 {
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_ADMIN_ONLY": "Musisz być administratorem żeby użyj tej komendy.",
+  "ERROR_MISSING_PERMISSIONS": "Potrzebujesz <PERMISSIONS> uprawnień aby użyć tej komendy.",
+  "ERROR_INVALID_URL": "Podany URL jest nieprawidłowy.",
+  "ERROR_INVALID_HEX": "Podany kolor HEX jest nieprawidłowy.",
   "globalErrors": {
-    "GUILD_ONLY": "This command cannot be used in DMs."
+    "GUILD_ONLY": "Ta komenda nie może być użyta w DMach."
   },
   "genericButtons": {
-    "BACK": "Back",
-    "JUMP_TO_MSG": "Jump to message",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "DELETE": "Delete",
-    "EDIT": "Edit",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next",
-    "SAVE": "Save Changes",
-    "DONE": "Done",
-    "ADD_REMINDER": "Add Reminder",
-    "OPEN_DMS": "Open DMs",
-    "PREVIEW": "Preview"
+    "BACK": "Wróć",
+    "JUMP_TO_MSG": "Skocz do wiadomości",
+    "CANCEL": "Anuluj",
+    "CONFIRM": "Potwierdź",
+    "DELETE": "Usuń",
+    "EDIT": "Edytuj",
+    "PREVIOUS": "Poprzednie",
+    "NEXT": "Dalej",
+    "SAVE": "Zapisz zmiany",
+    "DONE": "Gotowe",
+    "ADD_REMINDER": "Dodaj przypomnienie",
+    "OPEN_DMS": "Otwórz DMy",
+    "PREVIEW": "Podgląd",
+    "EXPORT": "Eksport",
+    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n<MESSAGE>\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "TITLE": "Wystąpił nieznany błąd.",
+      "DESCRIPTION": "Nie mamy pojęcia, co mogło się stać. Oto Error, który otrzymaliśmy:\n<MESSAGE>\nTo automatycznie się do nas wysłało, i spróbujemy naprawić jak najszybciej. Przepraszamy za niedogodności."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
+      "TITLE": "Zaczekaj!",
+      "DESCRIPTION": "Będziesz mógł użyć tego <TYPE> w <TIME>...",
+      "COMMAND": "komenda",
+      "COMPONENT": "komponent"
     }
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "Zmień kolor akcentu CRBT.",
       "options": [
         {
-          "name": "color",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "name": "kolor",
+          "description": "Kolor, aby zmienić kolor akcentu. Użyj jednego z sugestii lub koloru HEX."
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "Purple",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "sync": "Synchronizuj kolor profilu Discorda",
+      "lightred": "Jasnoczerwony",
+      "red": "Czerwony",
+      "darkred": "Ciemnoczerwony",
+      "orange": "Pomarańcz",
+      "yellow": "Żółty",
+      "lightgreen": "Jasnozielona",
+      "green": "Zielony",
+      "darkgreen": "Ciemnozielony",
+      "cyan": "Cyjan",
+      "lightblue": "Jasnoniebieski",
+      "blue": "Niebieski",
+      "darkblue": "Ciemnoniebieski",
+      "blurple": "Fiolebieski",
+      "lightpurple": "Jasnofioletowy",
+      "purple": "Fioletowy",
+      "darkpurple": "Ciemny Fiolet",
+      "pink": "Różowy",
+      "brown": "Brązowy",
+      "black": "Czarny",
+      "gray": "Szary",
+      "white": "Biały"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
@@ -159,7 +161,8 @@
       "UPTIME": "Online since",
       "BUTTON_WEBSITE": "Website",
       "BUTTON_INVITE": "Add to Server",
-      "BUTTON_DISCORD": "Join the Community"
+      "BUTTON_DISCORD": "Join the Community",
+      "BUTTON_DONATE": "Donate"
     }
   },
   "user_navbar": {
@@ -168,7 +171,10 @@
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "User info"
+      "INFO": "User Info",
+      "SERVER_AVATAR": "Server Avatar",
+      "USER_AVATAR": "User Avatar",
+      "USER_BANNER": "User Banner"
     }
   },
   "profile": {
@@ -235,7 +241,7 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's default avatar, or yours if you don't specify one.",
+      "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
           "name": "user",
@@ -383,6 +389,7 @@
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
   "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the <TYPE>.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Preview",
@@ -406,6 +413,9 @@
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Plain Text",
   "FIELDS_AUTHOR": "Embed Author",
+  "FIELDS_AUTHOR_NAME": "Embed Author Name",
+  "FIELDS_AUTHOR_URL": "Embed Author URL",
+  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
   "FIELDS_TITLE": "Embed Title",
   "FIELDS_DESCRIPTION": "Embed Description",
   "FIELDS_FOOTER": "Embed Footer",
