@@ -59,7 +59,7 @@ export default ChatCommand({
 
     if (expires_at) {
       const date = dayjs(expires_at).unix();
-      e.addField('Expires', `<t:${date}>\n(<t:${date}:R>)`, true);
+      e.addField('Expires', `<t:${date}> • <t:${date}:R>`, true);
     }
 
     if (this.client.guilds.cache.has(guild.id)) {

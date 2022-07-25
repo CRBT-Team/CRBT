@@ -28,7 +28,6 @@ const handleError = (opts: {
   const { message, detail, error } = opts;
 
   if (error) {
-    console.log(error);
     (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
       embeds: [
         new MessageEmbed()
@@ -58,7 +57,7 @@ const handleError = (opts: {
       iconURL: icons.error,
       name: detail?.title ?? message,
     })
-    .setDescription(detail ? detail.description : message)
+    .setDescription(detail?.title ? detail?.description ?? message : '')
     .setFields(detail?.fields ?? [])
     .setColor(`#${colors.error}`);
 };

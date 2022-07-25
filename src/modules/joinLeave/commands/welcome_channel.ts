@@ -12,6 +12,7 @@ export default ChatCommand({
     '<TYPE>',
     t('en-US', 'JOIN_MESSAGE').toLowerCase()
   ),
+  allowInDMs: false,
   options: new OptionBuilder().channel(
     'channel',
     t('en-US', 'JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION').replace(
@@ -24,19 +25,14 @@ export default ChatCommand({
     }
   ),
   async handle({ channel }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
       return this.reply(CRBTError(t(this, 'ERROR_ADMIN_ONLY')));
     }
     if (
-      !(channel as TextChannel)
-        .permissionsFor(this.guild.me)
-        .has([PermissionFlagsBits.SendMessages])
+      !hasPerms(
+        this.guild.me.permissionsIn(channel as TextChannel),
+        PermissionFlagsBits.SendMessages
+      )
     ) {
       return this.reply(CRBTError('I do not have permission to send messages in this channel.'));
     }

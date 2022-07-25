@@ -5,7 +5,6 @@ import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
-import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -21,8 +20,10 @@ import { ChatCommand, ModalComponent, OptionBuilder, row, UserContextCommand } f
 export default ChatCommand({
   name: 'ban',
   description: 'Ban a chosen user from this server.',
+  allowInDMs: false,
   options: new OptionBuilder()
     .user('user', 'The user to ban.', { required: true })
+    //TODO add maxLength to those
     .string('reason', 'The reason for the ban.')
     .integer('delete_messages', 'The number of messages to delete.')
     .string('duration', 'Temporarily ban the user for a specified time.', {
@@ -93,11 +94,6 @@ async function ban(
   }
 ) {
   const { user, reason, delete_messages, duration } = opts;
-  const { GUILD_ONLY } = t(this, 'globalErrors');
-
-  if (!this.guild) {
-    return this.reply(CRBTError(GUILD_ONLY));
-  }
 
   if (duration && !isValidTime(duration) && ms(duration) > ms('3y')) {
     return this.reply(CRBTError('Invalid duration or exceeds 3 years'));
@@ -106,7 +102,7 @@ async function ban(
   if (!hasPerms(this.memberPermissions, PermissionFlagsBits.BanMembers)) {
     return this.reply(CRBTError('You do not have permission to ban members.'));
   }
-  if (!hasPerms(this.guild.me, PermissionFlagsBits.BanMembers)) {
+  if (!hasPerms(this.appPermissions, PermissionFlagsBits.BanMembers)) {
     return this.reply(CRBTError('I do not have permission to ban members.'));
   }
   if (this.user.id === user.id) {

@@ -60,7 +60,7 @@ export default ChatCommand({
           true
         )
         .setColor(await getColor(this.user))
-        .setFooter({ text: 'Source: Urban Dictionary' });
+        .setFooter({ text: 'Powered by Urban Dictionary' });
 
       await this.reply({ embeds: [e] });
     } catch (error) {

@@ -2,7 +2,6 @@ import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, GuildMemberRoleManager, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -10,16 +9,11 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'warn',
   description: 'Timeout a chosen user from this server.',
+  allowInDMs: false,
   options: new OptionBuilder()
     .user('user', 'The user to timeout.', { required: true })
     .string('reason', 'The reason for the timeout.'),
   async handle({ user, reason }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (
       !hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers) &&
       !(this.member.roles as GuildMemberRoleManager).cache.find((r) =>

@@ -82,6 +82,7 @@ const presets: {
 export const usePreset = ChatCommand({
   name: 'role-picker preset',
   description: preset.meta.description,
+  allowInDMs: false,
   options: new OptionBuilder().string('preset', preset.meta.options[0].description, {
     choices: Object.keys(presets).reduce(
       (acc, key) => ({
@@ -94,17 +95,12 @@ export const usePreset = ChatCommand({
   }),
   async handle(opts) {
     const { strings, errors } = t(this.guildLocale, 'role-selectors');
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
-    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageRoles)) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageRoles)) {
       return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 
@@ -213,8 +209,9 @@ export const usePreset = ChatCommand({
 export const useManual = ChatCommand({
   name: 'role-picker create',
   description: manual.meta.description,
+  allowInDMs: false,
   options: new OptionBuilder()
-    .string('prompt', manual.meta.options[0].description, { required: true })
+    .string('prompt', manual.meta.options[0].description, { required: true, maxLength: 200 })
     .string('behavior', manual.meta.options[1].description, {
       choices: {
         toggle: manual.meta.options[1].choices[0],
@@ -254,7 +251,7 @@ export const useManual = ChatCommand({
       return this.reply(CRBTError(errors.USER_MISSING_PERMS));
     }
 
-    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageRoles)) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageRoles)) {
       return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
     }
 

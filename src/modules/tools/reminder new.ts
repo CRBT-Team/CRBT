@@ -1,12 +1,13 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { ChannelType } from 'discord-api-types/v10';
+import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildTextBasedChannel,
   Message,
@@ -28,7 +29,11 @@ export default ChatCommand({
       },
       required: true,
     })
-    .string('subject', meta.options[1].description, { required: true })
+    .string('subject', meta.options[1].description, {
+      required: true,
+      minLength: 1,
+      maxLength: 512,
+    })
     .channel('destination', meta.options[2].description, {
       channelTypes: [ChannelType.GuildText, ChannelType.GuildNews],
     }),
@@ -36,10 +41,6 @@ export default ChatCommand({
     const { strings, errors } = t(this, 'remind me');
 
     dayjs.locale(this.locale);
-
-    if (subject.length > 120) {
-      return this.reply(CRBTError(errors.SUBJECT_MAX_LENGTH));
-    }
 
     const now = dayjs();
     let expiration: dayjs.Dayjs;
@@ -58,9 +59,11 @@ export default ChatCommand({
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
         return this.reply(CRBTError(errors.INVALID_CHANNEL_TYPE));
-      } else if (!channel.permissionsFor(this.user).has('SEND_MESSAGES')) {
+      } else if (!hasPerms(channel.permissionsFor(this.user), PermissionFlagsBits.SendMessages)) {
         return this.reply(CRBTError(errors.USER_MISSING_PERMS));
-      } else if (!channel.permissionsFor(this.guild.me).has('SEND_MESSAGES')) {
+      } else if (
+        !hasPerms(channel.permissionsFor(this.guild.me), PermissionFlagsBits.SendMessages)
+      ) {
         return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
       }
     }

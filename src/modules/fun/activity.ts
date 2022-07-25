@@ -1,6 +1,5 @@
 import { colors, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { t } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
@@ -32,17 +31,12 @@ const choices = activities.reduce(
 export default ChatCommand({
   name: 'activity',
   description: 'Start an activity in the current voice channel',
+  allowInDMs: false,
   options: new OptionBuilder().string('activity', 'The activity to start', {
     choices,
     required: true,
   }),
   async handle({ activity }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     const selected = activities.find(([_, id]) => id === activity);
 
     if (selected[0].includes('💎 Level 1 Boosting Required') && this.guild.premiumTier === 'NONE') {

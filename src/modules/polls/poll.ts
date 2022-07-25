@@ -26,8 +26,13 @@ const usersOnCooldown = new Map();
 export default ChatCommand({
   name: 'poll',
   description: 'Create a poll with the given choices.',
+  allowInDMs: false,
   options: new OptionBuilder()
-    .string('title', "What's your poll about?", { required: true })
+    .string('title', "What's your poll about?", {
+      required: true,
+      minLength: 3,
+      maxLength: 120,
+    })
     .string('end_date', 'When the poll should end.', {
       autocomplete({ end_date }) {
         return timeAutocomplete.call(this, end_date, '3w', '20m');
@@ -36,35 +41,34 @@ export default ChatCommand({
     })
     .string('choice1', 'The first choice a user can chose. Make it short preferably.', {
       required: true,
+      maxLength: 45,
     })
-    .string('choice2', 'An other choice a user can choose.', { required: true })
-    .string('choice3', 'Same as choice 1 and 2, not required.')
-    .string('choice4', "And that's how far choices can go."),
+    .string('choice2', 'An other choice a user can choose.', {
+      required: true,
+      maxLength: 45,
+    })
+    .string('choice3', 'Same as choice 1 and 2, not required.', {
+      maxLength: 45,
+    })
+    .string('choice4', "And that's how far choices can go.", {
+      maxLength: 45,
+    }),
   async handle({ title, end_date, ...choices }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-    const { errors } = t(this, 'poll');
     const { strings } = t(this.guildLocale, 'poll');
-    const { strings: userStrings } = t(this, 'poll');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
+    const { errors, strings: userStrings } = t(this, 'poll');
 
     if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
       return this.reply(CRBTError('Invalid duration or exceeds 3 weeks.'));
-    }
-
-    if (title.length > 100) {
-      return this.reply(CRBTError(errors.TITLE_TOO_LONG));
     }
 
     try {
       const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
       for (const choice of pollChoices) {
-        if (choice.replace(EmojiRegex, '').length > 40) {
-          return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
-        } else if (choice.replace(EmojiRegex, '').length === 0) {
+        // if (choice.replace(EmojiRegex, '').length > 40) {
+        //   return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
+        // } else
+        if (choice.replace(EmojiRegex, '').trim().length === 0) {
           return this.reply(CRBTError(errors.CHOICE_EMPTY));
         }
       }
@@ -102,26 +106,29 @@ export default ChatCommand({
             .setColor(`#${colors.default}`),
         ],
         components: components(
-          row().addComponents(
-            pollChoices.map((choice, index) => {
-              const choiceEmoji = findEmojis(choice)[0] || null;
-              const choiceText = choice.replace(EmojiRegex, '');
+          row()
+            .addComponents(
+              pollChoices.map((choice, index) => {
+                const choiceEmoji = findEmojis(choice)[0] || null;
+                const choiceText = choice.replace(EmojiRegex, '');
 
-              return new PollButton({ choiceId: index.toString() })
-                .setLabel(choiceText)
-                .setStyle(
-                  choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
-                    ? 'SUCCESS'
-                    : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
-                    ? 'DANGER'
-                    : 'PRIMARY'
-                )
-                .setEmoji(choiceEmoji);
-            })
-          ),
-          row(
-            new PollOptionsButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY')
-          )
+                return new PollButton({ choiceId: index.toString() })
+                  .setLabel(choiceText)
+                  .setStyle(
+                    choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
+                      ? 'SUCCESS'
+                      : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
+                      ? 'DANGER'
+                      : 'PRIMARY'
+                  )
+                  .setEmoji(choiceEmoji);
+              })
+            )
+            .addComponents(
+              new PollOptionsButton(this.user.id)
+                .setEmoji(emojis.buttons.menu)
+                .setStyle('SECONDARY')
+            )
         ),
       });
 
@@ -256,7 +263,7 @@ export const EditPollButton = ButtonComponent({
         new TextInputComponent()
           .setCustomId('poll_title')
           .setLabel(strings.TITLE)
-          .setMaxLength(100)
+          .setMaxLength(120)
           .setValue(msg.title)
           .setRequired(true)
           .setStyle('PARAGRAPH')

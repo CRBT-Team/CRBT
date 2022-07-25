@@ -1,7 +1,16 @@
+import { colors } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getColor } from '$lib/functions/getColor';
-import { AllowedImageSize, DynamicImageFormat, MessageButton, MessageEmbed } from 'discord.js';
+import {
+  AllowedImageSize,
+  DynamicImageFormat,
+  Guild,
+  Interaction,
+  MessageButton,
+  MessageEmbed,
+} from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { serverNavBar } from '../components/serverNavBar';
+import { AvatarFormats, AvatarSizes, NavBarContext } from '../components/userNavBar';
 
 export default ChatCommand({
   name: 'server icon',
@@ -11,17 +20,18 @@ export default ChatCommand({
 
     .string('size', 'The size of the icon to get.', {
       choices: {
-        '128': 'Small (128px)',
-        '512': 'Medium (512px)',
-        '4096': 'Largest (4096px)',
+        '1': 'Small (128px)',
+        '2': 'Medium (512px)',
+        '3': 'Large (2048px)',
+        '4': 'Largest (4096px)',
       },
     })
     .string('format', 'The format of the icon to get.', {
       choices: {
-        png: 'PNG',
-        jpg: 'JPG',
-        webp: 'WEBP',
-        gif: 'GIF',
+        '1': 'PNG',
+        '2': 'JPG',
+        '3': 'WEBP',
+        '4': 'GIF',
       },
     }),
   async handle({ id, size, format }) {
@@ -34,33 +44,51 @@ export default ChatCommand({
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
-    const av = guild.iconURL({
-      size: parseInt(size ?? '2048') as AllowedImageSize,
-      format: (format ?? 'png') as DynamicImageFormat,
-      dynamic: !!format,
-    });
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({ name: `${guild.name} - Server icon`, iconURL: av })
-          .setImage(av)
-          .setColor(await getColor(this.user)),
-      ],
-      components: components(
-        row(
-          new MessageButton()
-            .setStyle('LINK')
-            .setLabel(
-              !av.includes('embed/avatars')
-                ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                    ? 'GIF'
-                    : format ?? 'png'
-                  ).toUpperCase()})`
-                : 'Download (256px - PNG)'
-            )
-            .setURL(av)
-        )
-      ),
-    });
+    await this.reply(
+      await renderServerIcon.call(this, guild, {
+        targetId: this.guildId,
+        userId: this.user.id,
+        size: (size ?? '3') as any,
+        format: format as any,
+      })
+    );
   },
 });
+
+export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: NavBarContext) {
+  const size = AvatarSizes[navCtx.size];
+  const format = AvatarFormats[navCtx.format];
+
+  const av = guild.iconURL({
+    size: (size ?? parseInt('2048')) as AllowedImageSize,
+    format: (format ?? 'png') as DynamicImageFormat,
+    dynamic: !!format,
+  });
+
+  const color = colors.default;
+
+  return {
+    embeds: [
+      new MessageEmbed()
+        .setAuthor({ name: `${guild.name} - Server icon`, iconURL: av })
+        .setImage(av)
+        .setColor(`#${color}`),
+    ],
+    components: components(
+      serverNavBar(navCtx, this.locale, 'icon'),
+      row(
+        new MessageButton()
+          .setStyle('LINK')
+          .setLabel(
+            !av.includes('embed/avatars')
+              ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
+                  ? 'GIF'
+                  : format ?? 'png'
+                ).toUpperCase()})`
+              : 'Download (256px - PNG)'
+          )
+          .setURL(av)
+      )
+    ),
+  };
+}

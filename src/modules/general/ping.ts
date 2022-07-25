@@ -11,6 +11,7 @@ export default ChatCommand({
   name: 'ping',
   description: meta.description,
   async handle() {
+    console.log('pong');
     await this.deferReply();
 
     const { strings } = t(this, 'ping');

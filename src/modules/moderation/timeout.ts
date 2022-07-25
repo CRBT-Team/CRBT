@@ -3,7 +3,6 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -11,6 +10,7 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'timeout',
   description: 'Timeout a chosen user from this server.',
+  allowInDMs: false,
   options: new OptionBuilder()
     .user('user', 'The user to timeout.', { required: true })
     .string('duration', 'How long they should be timed out for.', {
@@ -28,16 +28,10 @@ export default ChatCommand({
     })
     .string('reason', 'The reason for timing them out.'),
   async handle({ user, reason, duration }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)) {
       return this.reply(CRBTError('You do not have permission to timeout members.'));
     }
-    if (!hasPerms(this.guild.me, PermissionFlagsBits.ModerateMembers)) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ModerateMembers)) {
       return this.reply(CRBTError('I do not have permission to timeout members.'));
     }
     if (this.user.id === user.id) {

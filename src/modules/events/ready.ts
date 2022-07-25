@@ -1,5 +1,6 @@
 import { db } from '$lib/db';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
+import { initStatcord } from '$lib/statcord';
 import { OnEvent } from 'purplet';
 
 export default OnEvent('ready', async (client) => {
@@ -8,7 +9,17 @@ export default OnEvent('ready', async (client) => {
     type: 'WATCHING',
   });
 
-  (await db.timeouts.findMany()).forEach(async (timeout) => {
+  const timeouts = await db.timeouts.findMany();
+
+  console.log(`Loaded ${timeouts.length} timeouts`);
+
+  timeouts.forEach(async (timeout) => {
     await setDbTimeout(timeout, true);
   });
+
+  const statcord = initStatcord(client);
+
+  statcord.autopost();
+
+  console.log('Connected to Statcord');
 });

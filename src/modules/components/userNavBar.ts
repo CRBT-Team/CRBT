@@ -1,13 +1,15 @@
+import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { GuildMember, User } from 'discord.js';
+import { GuildMember, Integration, User } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 // import { renderProfile } from '../../../disabled/profile';
 import { renderPfp } from '../info/avatar';
 import { renderBanner } from '../info/banner';
+import { renderBotInfo } from '../info/bot info';
 import { renderUser } from '../info/user info';
 
-type DefaultTabs = 'avatar' | 'userinfo';
+type DefaultTabs = 'avatar' | 'userinfo' | 'botinfo';
 type Tabs = DefaultTabs | 'banner' | 'user_avatar' | 'user_banner';
 export const AvatarSizes = {
   '1': 128,
@@ -24,7 +26,7 @@ export const AvatarFormats = {
 
 export type NavBarContext = {
   userId: string;
-  cmdUID: string;
+  targetId: string;
   size?: keyof typeof AvatarSizes;
   format?: keyof typeof AvatarFormats;
 };
@@ -33,7 +35,7 @@ export const UserInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.cmdUID) {
+    if (this.user.id !== opts.targetId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = await this.client.users.fetch(opts.userId);
@@ -44,11 +46,33 @@ export const UserInfoBtn = ButtonComponent({
   },
 });
 
+export const BotInfoBtn = ButtonComponent({
+  async handle(opts: NavBarContext) {
+    const { errors } = t(this, 'user_navbar');
+
+    if (this.user.id !== opts.targetId) {
+      return this.reply(CRBTError(errors.NOT_CMD_USER));
+    }
+    const bots =
+      cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
+      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
+
+    const bot = bots.find(({ application }) => application.bot.id === opts.userId);
+
+    cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
+
+    console.log(opts);
+    console.log(bots);
+
+    await this.update(await renderBotInfo(this, opts, bot));
+  },
+});
+
 export const PfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.cmdUID) {
+    if (this.user.id !== opts.targetId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = await this.client.users.fetch(opts.userId);
@@ -65,7 +89,7 @@ export const UserPfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.cmdUID) {
+    if (this.user.id !== opts.targetId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = await this.client.users.fetch(opts.userId);
@@ -78,7 +102,7 @@ export const UserBannerBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.cmdUID) {
+    if (this.user.id !== opts.targetId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const u = await this.client.users.fetch(opts.userId);
@@ -90,9 +114,13 @@ export const UserBannerBtn = ButtonComponent({
   },
 });
 
-export function getTabs(activeTab: Tabs, user: User, member?: GuildMember) {
+export function getTabs(activeTab: Tabs, user: User, member?: GuildMember, bot?: boolean) {
   const tabs = new Set<Tabs>();
   tabs.add(activeTab);
+
+  if (bot) {
+    tabs.add('botinfo');
+  }
 
   if (member?.avatar) {
     tabs.add('user_avatar');
@@ -118,6 +146,12 @@ export function navBar(
       .setLabel(strings.INFO)
       .setStyle('SECONDARY')
       .setDisabled(activeTab === 'userinfo'),
+    addTabs?.has('botinfo')
+      ? new BotInfoBtn(ctx)
+          .setLabel(strings.BOTINFO)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'botinfo')
+      : null,
     ...(addTabs?.has('user_avatar')
       ? [
           new PfpBtn(ctx)

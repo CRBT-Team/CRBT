@@ -2,328 +2,141 @@
   "banners": {
     "christmas2020": {
       "name": "Christmas 2020",
-      "season": "special",
-      "value": 2500,
       "credits": "Dee Jeh"
     },
     "halloween2020": {
       "name": "Halloween 2020",
-      "season": "special",
-      "value": 5500,
       "credits": "Clembs"
     },
     "summer2021": {
       "name": "Summer 2020",
-      "season": "special",
-      "value": 12000,
       "credits": "CRBT Design Team"
     },
     "halloween2021": {
       "name": "Halloween 2021",
-      "season": "special",
-      "value": 5500,
       "credits": "CRBT Design Team"
     },
     "red": {
       "name": "Red",
-      "season": 1,
-      "value": 300,
       "credits": "Clembs"
     },
     "green": {
       "name": "Green",
-      "season": 1,
-      "value": 300,
       "credits": "Clembs"
     },
     "blue": {
       "name": "Blue",
-      "season": 1,
-      "value": 300,
       "credits": "Clembs"
     },
     "dark blue": {
       "name": "Dark blue",
-      "season": 1,
-      "value": 300,
       "credits": "Clembs"
     },
     "turquoise": {
       "name": "Turquoise",
-      "season": 1,
-      "value": 300,
       "credits": "delnyn"
     },
     "pink": {
       "name": "Pink",
-      "season": 1,
-      "value": 300,
       "credits": "Clembs"
     },
     "purple": {
       "name": "Purple",
-      "season": 1,
-      "value": 300,
       "credits": "Onyxcode"
     },
     "bars": {
       "name": "Bars",
-      "season": 2,
-      "value": 250,
       "credits": "navy"
     },
     "curve": {
       "name": "Curve",
-      "season": 2,
-      "value": 250,
       "credits": "Username *"
     },
     "minefield": {
       "name": "Minefield",
-      "season": 2,
-      "value": 250,
       "credits": "venn"
     },
     "waves": {
       "name": "Waves",
-      "season": 2,
-      "value": 250,
       "credits": "Leap of Azzam"
     },
     "sunrise": {
       "name": "Sunrise",
-      "season": 2,
-      "value": 250,
       "credits": "Clembs"
     },
     "wallpaper": {
       "name": "Wallpaper",
-      "season": 2,
-      "value": 250,
       "credits": "Username *"
     },
     "sweet": {
       "name": "Sweet",
-      "season": 2,
-      "value": 250,
       "credits": "james."
     },
     "flower": {
       "name": "Flower",
-      "season": 3,
-      "value": 300,
       "credits": "Clembs"
     },
     "cake": {
       "name": "Cake",
-      "season": 3,
-      "value": 400,
       "credits": "Addy Visuals"
     },
     "mountains": {
       "name": "Mountains",
-      "season": 3,
-      "value": 250,
       "credits": "Clembs"
     },
     "stripes": {
       "name": "Stripes",
-      "season": 3,
-      "value": 500,
       "credits": "CRBT Design Team"
     },
     "blood": {
       "name": "Blood",
-      "season": 3,
-      "value": 300,
       "credits": "CRBT Design Team"
     },
     "space": {
       "name": "Space",
-      "season": 3,
-      "value": 400,
       "credits": "bkly"
     },
     "bubbles": {
       "name": "Bubbles",
-      "season": 3,
-      "value": 400,
       "credits": "Username *"
     },
     "colorwave": {
       "name": "Color Wave",
-      "season": 4,
-      "value": 500,
       "credits": "Username *"
     },
     "beach": {
       "name": "Sunset on the Beach",
-      "season": 4,
-      "value": 500,
       "credits": "navy"
     }
   },
   "badges": {
-    "russia": {
-      "name": "Russian flag",
-      "type": "flags",
-      "value": 150,
-      "contents": "🇷🇺",
-      "available": true
-    },
-    "france": {
-      "name": "French flag",
-      "type": "flags",
-      "value": 150,
-      "contents": "🇫🇷",
-      "available": true
-    },
-    "usa": {
-      "name": "American flag",
-      "type": "flags",
-      "value": 150,
-      "contents": "🇺🇸",
-      "available": true
-    },
-    "brazil": {
-      "name": "Brazilian flag",
-      "type": "flags",
-      "value": 170,
-      "contents": "🇧🇷",
-      "available": true
-    },
-    "poland": {
-      "name": "Polish flag",
-      "type": "flags",
-      "value": 150,
-      "contents": "🇵🇱",
-      "available": true
-    },
     "goodmeal": {
       "name": "Good meal",
-      "type": "familiar faces",
-      "value": 1000,
-      "contents": "<:good_meal:750034917743919256>",
-      "available": true
+      "contents": "<:good_meal:750034917743919256>"
     },
     "dollidot": {
       "name": "Dollidot",
-      "type": "familiar faces",
-      "value": 420,
-      "contents": "<:dollidot:730074523277197333>",
-      "available": false
+      "contents": "<:dollidot:730074523277197333>"
     },
     "udu": {
       "name": "udu",
-      "type": "familiar faces",
-      "value": 444,
-      "contents": "<:udu:800716716627853332>",
-      "available": true
-    },
-    "developer": {
-      "name": "Developer",
-      "type": "jobs",
-      "value": 150,
-      "contents": "🧑‍💻",
-      "available": true
-    },
-    "doctor": {
-      "name": "Doctor",
-      "type": "jobs",
-      "value": 150,
-      "contents": "🧑‍⚕️",
-      "available": true
-    },
-    "musician": {
-      "name": "Musician",
-      "type": "jobs",
-      "value": 150,
-      "contents": "🧑‍🎤",
-      "available": true
-    },
-    "illustrator": {
-      "name": "Illustrator",
-      "type": "jobs",
-      "value": 150,
-      "contents": "🧑‍🎨",
-      "available": true
+      "contents": "<:udu:800716716627853332>"
     },
     "purplet": {
       "name": "Purplet",
-      "type": "special",
-      "value": 0,
-      "contents": "<:purplet:866116902215745576>",
-      "available": false
+      "contents": "<:purplet:866116902215745576>"
     },
     "dave": {
       "name": "dave",
-      "type": "special",
-      "value": 0,
-      "contents": "<:davecool:789190897803591740>",
-      "available": false
+      "contents": "<:davecool:789190897803591740>"
     },
     "issuefinder": {
       "name": "Issue Finder",
-      "type": "special",
-      "value": 0,
-      "contents": "<:issuefinder:957010384768893008>",
-      "available": false
+      "contents": "<:issuefinder:957010384768893008>"
     },
-    "flushed": {
-      "name": "Flushed face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cflushed:843530751738642492>",
-      "available": true
-    },
-    "joy": {
-      "name": "Laughing face",
-      "type": "emotions",
-      "value": 500,
-      "contents": "<:cjoy:843530751182241842>",
-      "available": true
-    },
-    "smile": {
-      "name": "Smiling face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:csmile:843530751152357396>",
-      "available": true
-    },
-    "thinking": {
-      "name": "Thinking face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cthinking_face:843530751144493126>",
-      "available": true
-    },
-    "winktongue": {
-      "name": "Tongue out winking face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cstuck_out_tongue_winking_eye:843530751014207541>",
-      "available": true
-    },
-    "starstruck": {
-      "name": "Star struck face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cstar_struck:843530751177261087>",
-      "available": true
-    },
-    "pensive": {
-      "name": "Pensive face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cpensive:843530751118409759>",
-      "available": true
-    },
-    "wink": {
-      "name": "Winking face",
-      "type": "emotions",
-      "value": 400,
-      "contents": "<:cwink:843530751454216212>",
-      "available": true
+    "gold_purplet": {
+      "name": "Gold Purplet",
+      "contents": "<:gold_purplet:1000783727875596368>"
     }
   }
 }

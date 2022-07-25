@@ -100,7 +100,6 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
       "PAST": "You cannot set a reminder in the past.",
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
@@ -172,9 +171,19 @@
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "User Info",
+      "BOTINFO": "Bot Info",
       "SERVER_AVATAR": "Server Avatar",
       "USER_AVATAR": "User Avatar",
       "USER_BANNER": "User Banner"
+    }
+  },
+  "server_navbar": {
+    "strings": {
+      "INFO": "Server info",
+      "ICON": "Icon",
+      "BANNER": "Banner",
+      "ROLES": "Roles and Members",
+      "EXTRA": "More"
     }
   },
   "profile": {
@@ -205,7 +214,6 @@
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
       "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."

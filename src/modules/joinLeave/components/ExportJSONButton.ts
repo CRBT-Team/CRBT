@@ -12,11 +12,6 @@ import { BackButton } from './BackButton';
 export const ExportJSONButton = ButtonComponent({
   async handle(type: MessageTypes) {
     const data = joinBuilderCache.get(this.guildId);
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
       return this.reply(CRBTError(t('en-US', 'ERROR_ADMIN_ONLY')));

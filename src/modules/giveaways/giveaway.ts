@@ -15,9 +15,11 @@ const activeGiveaways = new Map<string, FullDBTimeout<'GIVEAWAY'>>();
 export default ChatCommand({
   name: 'giveaway',
   description: 'Create a giveaway.',
+  allowInDMs: false,
   options: new OptionBuilder()
     .string('prize', 'What to giveaway.', {
       required: true,
+      maxLength: 100,
     })
     .string('end_date', 'When to end the giveaway.', {
       autocomplete({ end_date }) {
@@ -30,25 +32,16 @@ export default ChatCommand({
       maxValue: 40,
     }),
   async handle({ prize, end_date, winners }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return this.reply(
         CRBTError('Only managers ("Manage Server" permission) can create giveaways.')
       );
     }
 
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (!isValidTime(end_date) && ms(end_date) > ms('1M')) {
       return this.reply(CRBTError('Invalid duration or exceeds 1 month in the future.'));
     }
 
-    if (prize.length > 100) {
-      return this.reply(CRBTError('Prize name must be under 100 characters.'));
-    }
     winners = winners || 1;
 
     try {

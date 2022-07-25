@@ -3,8 +3,8 @@ import { cache } from '$lib/cache';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { MessageEmbed } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { MessageButton, MessageEmbed } from 'discord.js';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 const { meta } = t('en-US', 'color set');
 
@@ -54,7 +54,17 @@ export const colorset = ChatCommand({
       });
     } else if (text === 'profile') {
       if (!user.hexAccentColor) {
-        await this.reply(CRBTError(errors.NO_DISCORD_COLOR));
+        await this.reply({
+          ...CRBTError(errors.NO_DISCORD_COLOR),
+          components: components(
+            row(
+              new MessageButton()
+                .setLabel('User Profile settings (desktop/web only)')
+                .setURL('discord://-/settings/profile-customization')
+                .setStyle('LINK')
+            )
+          ),
+        });
       } else {
         cache.set(`color_${user.id}`, 'profile');
         await db.users.upsert({

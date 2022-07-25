@@ -18,7 +18,7 @@
   "pencil": "<:pencil:970980242560794686>",
   "menu": "<:menu:970980242925711402>",
   "id": "<:id:970983898613948456>",
-  "tada": "<:tada_deluxe:988009226104340520>",
+  "tada": "<:tada:1000761543350296626>",
   "toggle": {
     "on": "<:toggleon:866036010663542816>",
     "off": "<:toggleoff:866036062471192627>",
@@ -35,7 +35,8 @@
     "link": "<:link_white:971363011275157524>",
     "left_arrow": "<:left_arrow_white:987721485978304514>",
     "right_arrow": "<:right_arrow_white:987721488557801552>",
-    "preview": "<:preview_white:987721487467302982>"
+    "preview": "<:preview_white:987721487467302982>",
+    "add": "<:add_white:1000780051370999839>"
   },
   "channels": {
     "text": "<:text_channel:970653903681114182>",

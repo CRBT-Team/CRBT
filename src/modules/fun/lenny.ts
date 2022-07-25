@@ -1,6 +1,6 @@
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { t } from '$lib/language';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -8,22 +8,13 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'lenny',
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
-  options: new OptionBuilder().string('message', 'Your message.'),
+  allowInDMs: false,
+  options: new OptionBuilder().string('message', 'Your message.', {
+    maxLength: 4096,
+  }),
   async handle({ message }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.channel.isText()) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
-    if (!this.guild.me.permissionsIn(this.channel).has(PermissionFlagsBits.ManageWebhooks, true)) {
+    if (!hasPerms(this.guild.me.permissionsIn(this.channel), PermissionFlagsBits.ManageWebhooks)) {
       return this.reply(CRBTError('I do not have the "Manage Webhooks" permission.'));
-    }
-
-    if (message && message.length > 4096) {
-      return this.reply(
-        CRBTError(`（＞人＜；） Your message is too long. Make it under 4096 characters.`)
-      );
     }
 
     const content = message ? `${message} ( ͡° ͜ʖ ͡°)` : '( ͡° ͜ʖ ͡°)';

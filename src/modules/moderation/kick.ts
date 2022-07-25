@@ -2,7 +2,6 @@ import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -10,20 +9,15 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'kick',
   description: 'Kick a chosen user from this server.',
+  allowInDMs: false,
   options: new OptionBuilder()
     .user('user', 'The user to kick.', { required: true })
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.KickMembers)) {
       return this.reply(CRBTError('You do not have permission to kick members.'));
     }
-    if (!hasPerms(this.guild.me, PermissionFlagsBits.KickMembers)) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.KickMembers)) {
       return this.reply(CRBTError('I do not have permission to kick members.'));
     }
     if (this.user.id === user.id) {

@@ -62,6 +62,7 @@ model users {
   telemetry    Boolean   @default(true)
   accentColor  String?   @map("accent_color")
   birthday     DateTime? @db.Timestamptz(6)
+  crbtBadges   String[]  @map("crbt_badges")
   silentJoins  Boolean   @default(false) @map("silent_joins")
   silentLeaves Boolean   @default(false) @map("silent_leaves")
 }
@@ -131,23 +132,6 @@ enum ItemTypes {
   OTHER
 }
 
-// enum Jobs {
-//   FARMER
-//   CASHIER
-//   BAKER
-//   COOK
-//   DEVELOPER
-//   DOCTOR
-//   TEACHER
-//   ENGINEER
-//   POLICE_OFFICER
-//   FIREFIGHTER
-//   NURSE
-//   LAWYER
-//   MUSICIAN
-//   ATHLETE
-//   STREAMER
-//   ARTIST
-//   WRITER
-//   INFLUENCER
-// }
+model tokens {
+  token String @id
+}

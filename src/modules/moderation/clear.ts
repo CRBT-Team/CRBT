@@ -1,7 +1,6 @@
 import { colors, db, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -9,25 +8,22 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'clear',
   description: 'Clear a number of messages from this channel.',
+  allowInDMs: false,
   options: new OptionBuilder().integer('amount', 'The number of messages to delete.', {
     required: true,
   }),
   async handle({ amount }) {
-    const { GUILD_ONLY } = t(this, 'globalErrors');
-
-    if (!this.guild) {
-      return this.reply(CRBTError(GUILD_ONLY));
-    }
-
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)) {
       return this.reply(CRBTError('You do not have permission to manage messages.'));
     }
-    if (!hasPerms(this.guild.me, PermissionFlagsBits.ManageMessages)) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageMessages)) {
       return this.reply(CRBTError('I do not have permission to manage messages.'));
     }
     if (amount > 100 || amount < 1) {
       return this.reply(CRBTError('You can only delete between 1 and 100 messages.'));
     }
+
+    await this.deferReply();
 
     try {
       const { size: messagesDeleted } = await (this.channel as GuildTextBasedChannel).bulkDelete(
@@ -44,7 +40,7 @@ export default ChatCommand({
         },
       });
 
-      await this.reply({
+      await this.editReply({
         embeds: [
           new MessageEmbed()
             .setAuthor({
@@ -55,7 +51,7 @@ export default ChatCommand({
         ],
       });
     } catch (e) {
-      return this.reply(UnknownError(this, String(e)));
+      return await this[this.replied ? 'editReply' : 'reply'](UnknownError(this, String(e)));
     }
   },
 });

@@ -1,15 +1,35 @@
 import { cache } from '$lib/cache';
 import { db, misc } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
+import { statcord } from '$lib/statcord';
 import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
+// import { customCmds } from '../customCommands/commands';
 
 export default OnEvent('interactionCreate', async (i) => {
   if (!i.isCommand() && !i.isContextMenu()) return;
 
   if (!['859369676140314624', misc.CRBTid].includes(i.client.user.id)) return;
 
+  const cmdName = [
+    i.commandName,
+    i.options.data.find((o) => o.type === 'SUB_COMMAND_GROUP')?.name,
+    i.options.data.find((o) => o.type === 'SUB_COMMAND')?.name,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  // custom command handler
+
+  // if (i.isCommand() && customCmds.has(i.commandName)) {
+  //   const cmd = customCmds.get(i.commandName);
+  //   cmd.handle(i, i.options);
+  // }
+
   try {
+    console.log(cmdName);
+    statcord.postCommand(cmdName, i.user.id);
+
     let value = cache.get(`tlm_${i.user.id}`);
 
     if (value === undefined) {
@@ -24,7 +44,7 @@ export default OnEvent('interactionCreate', async (i) => {
 
     if (value === false) return;
   } catch (e) {
-    UnknownError(i, String(e));
+    UnknownError(i, e);
   }
   if (i.isCommand()) {
     (i.client.channels.cache.get(misc.channels.telemetry) as TextChannel).send({

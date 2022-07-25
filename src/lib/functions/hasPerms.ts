@@ -1,5 +1,4 @@
 import { misc } from '$lib/db';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember, PermissionResolvable, Permissions } from 'discord.js';
 
 export function hasPerms(
@@ -18,5 +17,3 @@ export function hasPerms(
     return theperms.has(perms, checkAdmin);
   }
 }
-
-hasPerms({} as any, [PermissionFlagsBits.AddReactions]);

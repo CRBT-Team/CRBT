@@ -1,5 +1,4 @@
 import { emojis, icons } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';
@@ -20,15 +19,12 @@ dayjs.extend(duration);
 export default ChatCommand({
   name: 'channel info',
   description: 'Gives info on a given channel.',
+  allowInDMs: false,
   options: new OptionBuilder().channel(
     'channel',
     'The channel to get info from. Leave blank to get the current one.'
   ),
   async handle({ channel: Channel }) {
-    if (!this.guild) {
-      return this.reply(CRBTError('This command cannot be used in DMs'));
-    }
-
     const channel = (Channel ?? this.channel) as GuildChannel;
     const channels = this.guild.channels;
     const categories = channels.cache.filter((c) => c.type === 'GUILD_CATEGORY');
@@ -56,7 +52,7 @@ export default ChatCommand({
     }
 
     if (channel.isText()) {
-      e.setDescription(channel.topic || '').addField(
+      e.setDescription('topic' in channel ? channel?.topic : '').addField(
         'Content safety',
         channel.nsfw ? 'Age-restricted' : 'Safe',
         true

@@ -10,7 +10,13 @@ import {
   User,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from '../components/navBar';
+import {
+  AvatarFormats,
+  AvatarSizes,
+  getTabs,
+  navBar,
+  NavBarContext,
+} from '../components/userNavBar';
 
 const { meta, ctxMeta } = t('en-US', 'avatar');
 
@@ -49,7 +55,7 @@ export const defaultPfp = ChatCommand({
         u,
         this,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: u.id,
           format: format as any,
           size: (size ?? '3') as any,
@@ -70,7 +76,7 @@ export const ctxDefaultPfp = UserContextCommand({
         user,
         this,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: user.id,
           size: '3',
         },

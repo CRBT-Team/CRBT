@@ -1,4 +1,3 @@
-import { CRBTError } from '$lib/functions/CRBTError';
 import { keyPerms } from '$lib/functions/keyPerms';
 import canvas from 'canvas';
 import dayjs from 'dayjs';
@@ -8,13 +7,10 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 export default ChatCommand({
   name: 'role info',
   description: 'Get information about a specified server role.',
+  allowInDMs: false,
   options: new OptionBuilder().role('role', 'The role whose info to get.', { required: true }),
   async handle({ role }) {
-    if (!this.guild) {
-      return this.reply(CRBTError('This command cannot be used in DMs'));
-    }
-
-    const img = canvas.createCanvas(512, 512);
+    const img = canvas.createCanvas(256, 256);
     const ctx = img.getContext('2d');
     ctx.fillStyle = role.hexColor;
     ctx.fillRect(0, 0, img.width, img.height);
@@ -34,7 +30,7 @@ export default ChatCommand({
           )
           .addField(
             'Added',
-            `<t:${dayjs(role.createdAt).unix()}> (<t:${dayjs(role.createdAt).unix()}:R>)`
+            `<t:${dayjs(role.createdAt).unix()}> • <t:${dayjs(role.createdAt).unix()}:R>`
           )
           .addField('Hoisted', role.hoist ? 'Yes' : ' No', true)
           .addField('Mentionable', role.mentionable ? 'Yes' : ' No', true)

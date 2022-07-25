@@ -4,7 +4,13 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from '../components/navBar';
+import {
+  AvatarFormats,
+  AvatarSizes,
+  getTabs,
+  navBar,
+  NavBarContext,
+} from '../components/userNavBar';
 
 export default ChatCommand({
   name: 'banner',
@@ -40,7 +46,7 @@ export default ChatCommand({
         u,
         this,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: u.id,
           format: format as any,
           size: (size ?? '3') as any,
@@ -61,7 +67,7 @@ export const ctxUserBanner = UserContextCommand({
         user,
         this,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: user.id,
           size: '3',
         },

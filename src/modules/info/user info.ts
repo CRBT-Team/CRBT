@@ -1,18 +1,28 @@
-import { emojis } from '$lib/db';
+import { db, emojis, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
+import { invisibleChar } from '$lib/util/invisibleChar';
 import dayjs from 'dayjs';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildMember,
   Interaction,
   MessageEmbed,
   User,
   UserContextMenuInteraction,
+  UserFlags,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from '../components/navBar';
+import {
+  AvatarFormats,
+  AvatarSizes,
+  getTabs,
+  navBar,
+  NavBarContext,
+} from '../components/userNavBar';
 
 export default ChatCommand({
   name: 'user info',
@@ -21,7 +31,6 @@ export default ChatCommand({
   async handle({ user }) {
     const u = await (user ?? this.user).fetch();
     const m = (user ? this.options.getMember('user') : this.member) as GuildMember;
-    // const m = this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u.id) : null;
 
     // enum UserStatus {
     //   online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
@@ -31,19 +40,12 @@ export default ChatCommand({
     //   invisible = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
     // }
 
-    // const acts = activities(m);
-    // if (m.presence && acts.length > 0)
-    //   if (acts.length === 1) e.addField('Activity', acts.toString(), true);
-    //   else e.addField(`Activities (${acts.length})`, `• ${acts.join('\n• ')}`, true);
-
-    // if (m.presence && m.presence.activities.filter((a) => a.type === 'CUSTOM').length > 0)
-    //   e.addField('Custom status', `${customStatus(m)}`, true);
     await this.reply(
       await renderUser(
         this,
         u,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: u.id,
         },
         m
@@ -62,7 +64,7 @@ export const ctxCommand = UserContextCommand({
         this,
         user,
         {
-          cmdUID: this.user.id,
+          targetId: this.user.id,
           userId: user.id,
         },
         member
@@ -72,44 +74,40 @@ export const ctxCommand = UserContextCommand({
   },
 });
 
-// function customStatus(member: GuildMember) {
-//   const status = member.presence.activities.find((a) => a.type === 'CUSTOM');
-//   if (!status) return null;
-//   else return status.emoji ? `${status.emoji} ${status.state}` : status.state;
-// }
-
-// function activities(member: GuildMember) {
-//   const acts = [];
-//   if (!member.presence || member.presence.status.match(/offline|invisible/)) return null;
-//   for (const activity of member.presence.activities.values()) {
-//     switch (activity.type) {
-//       case 'STREAMING':
-//         acts.push(`Streaming **[${activity.name}](${activity.url})** on **${activity.details}**`);
-//         break;
-
-//       case 'LISTENING':
-//         if (activity.name === 'Spotify')
-//           acts.push(
-//             `<:spotify:771863394709536768> **[${activity.details}](https://open.spotify.com/track/${activity.syncId})**`
-//           );
-//         else acts.push(`Listening to **${activity.name}**`);
-//         break;
-
-//       case 'PLAYING':
-//         // if (activity.state) acts.push(`**${activity.name}**, ${activity.state}`);
-//         acts.push(`${activity.name}`);
-//         break;
-
-//       case 'WATCHING':
-//         acts.push(`Watching ${activity.name}`);
-//         break;
-//       case 'COMPETING':
-//         acts.push(`Competing in ${activity.name}`);
-//         break;
-//     }
-//   }
-//   return acts;
-// }
+export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
+  const { badges } = emojis;
+  return [
+    ...additionalBadges.map((b) => items.badges[b].contents),
+    ...flags.toArray().map((flag) => {
+      switch (flag) {
+        case 'VERIFIED_BOT':
+          return badges.verifiedBot;
+        case 'DISCORD_EMPLOYEE':
+          return badges.discordStaff;
+        case 'PARTNERED_SERVER_OWNER':
+          return badges.partner;
+        case 'DISCORD_CERTIFIED_MODERATOR':
+          return badges.cerifiedMod;
+        case 'HYPESQUAD_EVENTS':
+          return badges.hypesquad;
+        case 'HOUSE_BRILLIANCE':
+          return badges.houses.brilliance;
+        case 'HOUSE_BALANCE':
+          return badges.houses.balance;
+        case 'HOUSE_BRAVERY':
+          return badges.houses.bravery;
+        case 'BUGHUNTER_LEVEL_1':
+          return badges.bugHunter1;
+        case 'BUGHUNTER_LEVEL_2':
+          return badges.bugHunter1;
+        case 'EARLY_SUPPORTER':
+          return badges.earlySupporter;
+        case 'EARLY_VERIFIED_BOT_DEVELOPER':
+          return badges.developer;
+      }
+    }),
+  ];
+}
 
 export async function renderUser(
   ctx: Interaction,
@@ -117,36 +115,12 @@ export async function renderUser(
   navCtx: NavBarContext,
   member?: GuildMember
 ) {
-  const { badges } = emojis;
-  const flags = (await user.fetchFlags()).toArray();
-  const userBadges = flags.map((flag) => {
-    switch (flag) {
-      case 'VERIFIED_BOT':
-        return badges.verifiedBot;
-      case 'DISCORD_EMPLOYEE':
-        return badges.discordStaff;
-      case 'PARTNERED_SERVER_OWNER':
-        return badges.partner;
-      case 'DISCORD_CERTIFIED_MODERATOR':
-        return badges.cerifiedMod;
-      case 'HYPESQUAD_EVENTS':
-        return badges.hypesquad;
-      case 'HOUSE_BRILLIANCE':
-        return badges.houses.brilliance;
-      case 'HOUSE_BALANCE':
-        return badges.houses.balance;
-      case 'HOUSE_BRAVERY':
-        return badges.houses.bravery;
-      case 'BUGHUNTER_LEVEL_1':
-        return badges.bugHunter1;
-      case 'BUGHUNTER_LEVEL_2':
-        return badges.bugHunter1;
-      case 'EARLY_SUPPORTER':
-        return badges.earlySupporter;
-      case 'EARLY_VERIFIED_BOT_DEVELOPER':
-        return badges.developer;
-    }
+  const crbtUser = await db.users.findUnique({
+    where: { id: user.id },
+    select: { crbtBadges: true },
   });
+
+  const userBadges = getBadgeEmojis(user.flags, crbtUser?.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
 
@@ -155,7 +129,7 @@ export async function renderUser(
       name: `${user.tag} - User info`,
       iconURL: avatar(member ?? user, 64),
     })
-    .setDescription(userBadges.join('‎ '))
+    .setDescription(userBadges ? userBadges.join('‎ ') + invisibleChar : '')
     .addField('ID', user.id)
     .setImage(banner(user, size ?? 2048, format))
     .setThumbnail(avatar(member ?? user, size ?? 256, format))
@@ -170,26 +144,32 @@ export async function renderUser(
     if (member.nickname) e.addField('Server nickname', member.nickname);
 
     e.addField(
-      `${roles.size === 1 ? 'Role' : 'Roles'} (${roles.size})`,
+      `${roles.size === 1 ? 'Role' : 'Roles'} • ${roles.size}`,
       roles.size > 0
         ? roles.map((r) => r.toString()).join(' ')
         : "*This user doesn't have any roles...*"
     )
       .addField(
         `Global major permissions`,
-        member.permissions.has('ADMINISTRATOR', true) || member.permissions.toArray().length === 0
+        hasPerms(member, PermissionFlagsBits.Administrator) ||
+          member.permissions.toArray().length === 0
           ? 'Administrator (all permissions)'
           : keyPerms(member.permissions).join(', ')
       )
       .addField('Joined Discord', `<t:${joinedDiscord}>\n<t:${joinedDiscord}:R>`, true)
       .addField('Joined server', `<t:${joinedServer}>\n<t:${joinedServer}:R>`, true);
   } else {
-    e.addField('Joined Discord', `<t:${joinedDiscord}> (<t:${joinedDiscord}:R>)`);
+    e.addField('Joined Discord', `<t:${joinedDiscord}> • <t:${joinedDiscord}:R>`);
   }
   return {
     embeds: [e],
     components: components(
-      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
+      navBar(
+        navCtx,
+        ctx.locale,
+        'userinfo',
+        getTabs('userinfo', user, member, user.bot && !!member)
+      )
     ),
   };
 }
