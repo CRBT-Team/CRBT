@@ -9,7 +9,8 @@ import pjson from '../../../package.json';
 
 const { meta } = t('en-US', 'crbt info');
 
-export default ChatCommand({
+// export default
+ChatCommand({
   name: 'crbt info',
   description: meta.description,
   async handle() {

@@ -1,0 +1,32 @@
+{
+  "ERROR_MASTER": {
+    "name": "Master of Errors",
+    "howToGet": "Use the secret error command.",
+    "secret": true,
+    "steps": 1
+  },
+  "ARTIST": {
+    "name": "Artist",
+    "howToGet": "Change your accent color.",
+    "secret": false,
+    "steps": 1
+  },
+  "IMITATING_THE_CREATOR": {
+    "name": "Imitating the Creator",
+    "howToGet": "Discover and set the hidden accent color.",
+    "secret": true,
+    "steps": 1
+  },
+  "SAFETY_FIRST": {
+    "name": "Safety First",
+    "howToGet": "Check CRBT's privacy settings.",
+    "secret": false,
+    "steps": 1
+  },
+  "BOOKMARKER": {
+    "name": "Bookmarker",
+    "howToGet": "Bookmark 5 messages.",
+    "secret": false,
+    "steps": 5
+  }
+}

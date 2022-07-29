@@ -8,7 +8,7 @@ export default MessageContextCommand({
   name: 'Find Text in Image',
   async handle(message) {
     if (
-      !message.attachments.size ??
+      !message.attachments.size &&
       !message.embeds.some((embed) => embed.image && embed.image.url)
     ) {
       return this.reply(CRBTError("This message doesn't have any images!"));
@@ -24,10 +24,14 @@ export default MessageContextCommand({
       apiKey: process.env.OCR_TOKEN,
     });
 
+    console.log(req);
+
     if (
       !req ||
       !req.ParsedResults ||
       req.IsErroredOnProcessing ||
+      !req.ParsedResults.length ||
+      !req.ParsedResults[0].ParsedText ||
       req.ParsedResults?.ErrorMessage
     ) {
       await this.editReply(

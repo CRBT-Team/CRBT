@@ -2,8 +2,16 @@ import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { MessageButton, MessageEmbed } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import {
+  CommandInteraction,
+  ContextMenuInteraction,
+  Guild,
+  GuildTextBasedChannel,
+  Message,
+  MessageButton,
+  MessageEmbed,
+} from 'discord.js';
+import { ChatCommand, components, MessageContextCommand, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'quote',
@@ -45,43 +53,61 @@ export default ChatCommand({
       return this.reply(CRBTError('The message ID that you provided is invalid.'));
     }
 
-    const { JUMP_TO_MSG } = t(this, 'genericButtons');
-
-    const firstEmbeds = [
-      new MessageEmbed()
-        .setAuthor({
-          name: `${message.author.tag} (Quoted message)`,
-          iconURL: avatar(message.author, 64),
-        })
-        .setDescription(message.content)
-        .setImage(message.attachments.size ? message.attachments.first()?.proxyURL : undefined)
-        .setTimestamp(message.createdAt)
-        .setFooter({
-          text: `${guild.name} • #${channel.name}`,
-        })
-        .setColor(message.member.displayColor ?? `#${colors.blurple}`)
-        .setURL(message_link),
-      ...message.embeds.slice(0, 4),
-    ];
-
-    if (message.embeds.length > 4) {
-      await this.reply({
-        embeds: firstEmbeds,
-        components: components(
-          row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
-        ),
-      });
-    } else {
-      await this.reply({
-        embeds: firstEmbeds,
-      });
-
-      await this.reply({
-        embeds: message.embeds.slice(4),
-        components: components(
-          row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
-        ),
-      });
-    }
+    renderMessageQuote.call(this, message, this.channel, this.guild);
   },
 });
+
+export const ctx = MessageContextCommand({
+  name: 'Quote Message',
+  handle(message) {
+    renderMessageQuote.call(this, message, this.channel, this.guild);
+  },
+});
+
+async function renderMessageQuote(
+  this: CommandInteraction | ContextMenuInteraction,
+  message: Message,
+  channel: GuildTextBasedChannel,
+  guild: Guild
+) {
+  const { JUMP_TO_MSG } = t(this, 'genericButtons');
+
+  const firstEmbeds = [
+    new MessageEmbed()
+      .setAuthor({
+        name: `${message.author.tag} (Quoted message)`,
+        iconURL: avatar(message.author, 64),
+      })
+      .setDescription(message.content)
+      .setImage(message.attachments.size ? message.attachments.first()?.proxyURL : undefined)
+      .setTimestamp(message.createdAt)
+      .setFooter({
+        text: `${guild.name} • #${channel.name}`,
+      })
+      .setColor(message.member.displayColor ?? `#${colors.blurple}`)
+      .setURL(message.url),
+    ...message.embeds.slice(0, 4),
+  ];
+
+  console.log(message.embeds.length);
+
+  if (message.embeds.length > 4) {
+    await this.reply({
+      embeds: firstEmbeds,
+      components: components(
+        row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
+      ),
+    });
+  } else {
+    await this.reply({
+      embeds: firstEmbeds,
+    });
+
+    await this.channel.send({
+      embeds: message.embeds.slice(4),
+      components: components(
+        row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
+      ),
+    });
+  }
+}

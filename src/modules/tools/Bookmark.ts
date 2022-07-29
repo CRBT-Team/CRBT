@@ -2,6 +2,7 @@ import { colors } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import { GuildChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, MessageContextCommand, row } from 'purplet';
 
@@ -47,5 +48,7 @@ export default MessageContextCommand({
       .catch(() => {
         return this.reply(CRBTError(errors.DMS_DISABLED));
       });
+
+    await AchievementProgress.call(this, 'BOOKMARKER');
   },
 });

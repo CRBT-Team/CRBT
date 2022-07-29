@@ -6,8 +6,8 @@ import { ButtonComponent, row } from 'purplet';
 // import { renderProfile } from '../../../disabled/profile';
 import { renderPfp } from '../info/avatar';
 import { renderBanner } from '../info/banner';
-import { renderBotInfo } from '../info/bot info';
-import { renderUser } from '../info/user info';
+import { renderBotInfo } from '../info/bot_info';
+import { renderUser } from '../info/user_info';
 
 type DefaultTabs = 'avatar' | 'userinfo' | 'botinfo';
 type Tabs = DefaultTabs | 'banner' | 'user_avatar' | 'user_banner';
@@ -35,10 +35,10 @@ export const UserInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.targetId) {
+    if (this.user.id !== opts.userId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const u = await this.client.users.fetch(opts.userId);
+    const u = await this.client.users.fetch(opts.targetId);
     const m =
       this.guild && this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u) : null;
 
@@ -50,21 +50,18 @@ export const BotInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.targetId) {
+    if (this.user.id !== opts.userId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
     const bots =
       cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
       (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
 
-    const bot = bots.find(({ application }) => application.bot.id === opts.userId);
+    const bot = bots.find(({ application }) => application.bot.id === opts.targetId);
 
     cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
 
-    console.log(opts);
-    console.log(bots);
-
-    await this.update(await renderBotInfo(this, opts, bot));
+    await this.update(await renderBotInfo.call(this, opts, bot));
   },
 });
 
@@ -72,10 +69,10 @@ export const PfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.targetId) {
+    if (this.user.id !== opts.userId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const u = await this.client.users.fetch(opts.userId);
+    const u = await this.client.users.fetch(opts.targetId);
     const m =
       this.guild && this.guild.members.cache.has(u.id)
         ? await this.guild.members.fetch(u.id)
@@ -89,10 +86,10 @@ export const UserPfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.targetId) {
+    if (this.user.id !== opts.userId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const u = await this.client.users.fetch(opts.userId);
+    const u = await this.client.users.fetch(opts.targetId);
 
     await this.update(await renderPfp('user', u, this, opts));
   },
@@ -102,10 +99,10 @@ export const UserBannerBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     const { errors } = t(this, 'user_navbar');
 
-    if (this.user.id !== opts.targetId) {
+    if (this.user.id !== opts.userId) {
       return this.reply(CRBTError(errors.NOT_CMD_USER));
     }
-    const u = await this.client.users.fetch(opts.userId);
+    const u = await this.client.users.fetch(opts.targetId);
     const m =
       this.guild && this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u) : null;
 
@@ -114,11 +111,11 @@ export const UserBannerBtn = ButtonComponent({
   },
 });
 
-export function getTabs(activeTab: Tabs, user: User, member?: GuildMember, bot?: boolean) {
+export function getTabs(activeTab: Tabs, user: User, member?: GuildMember) {
   const tabs = new Set<Tabs>();
   tabs.add(activeTab);
 
-  if (bot) {
+  if (user.bot && !!member) {
     tabs.add('botinfo');
   }
 

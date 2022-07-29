@@ -5,6 +5,7 @@ import { t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
+import { allCommands } from '../../events/ready';
 import { joinBuilderCache } from '../renderers';
 import { MessageTypes, resolveMsgType } from '../types';
 import { BackButton } from './BackButton';
@@ -33,8 +34,14 @@ export const ExportJSONButton = ButtonComponent({
     const buffer = Buffer.from(JSON.stringify(data, null, 2));
     const { BACK } = t(this, 'genericButtons');
 
+    const messageCommand = allCommands.find(
+      ({ name }) => name === (type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell')
+    );
+
     return this.update({
-      content: `JSON file generated! You can now reuse this welcome message elsewhere by clicking Import in \`/welcome message\`.`,
+      content: `JSON file generated! You can now reuse this welcome message elsewhere by clicking Import in </${
+        type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell'
+      } message:${messageCommand.id}>.`,
       embeds: [],
       files: [new MessageAttachment(buffer).setName(`${resolveMsgType[type]}.json`)],
       components: components(

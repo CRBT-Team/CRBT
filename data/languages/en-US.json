@@ -150,8 +150,6 @@
       "description": "Get information about CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> on <PURPLET>",
       "MEMBER_COUNT": "Member count",
       "SERVER_COUNT": "Server count",
       "PING": "Ping",
@@ -182,7 +180,8 @@
       "INFO": "Server info",
       "ICON": "Icon",
       "BANNER": "Banner",
-      "ROLES": "Roles and Members",
+      "ROLES": "Roles & Members",
+      "EMOJIS": "Emojis & Stickers",
       "EXTRA": "More"
     }
   },

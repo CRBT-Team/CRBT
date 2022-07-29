@@ -10,6 +10,7 @@ import { ChatCommand, OptionBuilder, UserContextCommand } from 'purplet';
 export default ChatCommand({
   name: 'modlogs user',
   description: 'View the moderation history for a chosen user, or yours.',
+  allowInDMs: false,
   options: new OptionBuilder().user('user', 'The user to view the history of.'),
   handle: viewModLogs,
 });

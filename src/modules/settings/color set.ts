@@ -3,6 +3,7 @@ import { cache } from '$lib/cache';
 import { colors, db, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
@@ -52,6 +53,12 @@ export const colorset = ChatCommand({
         ],
         ephemeral: true,
       });
+
+      await AchievementProgress.call(this, 'ARTIST');
+
+      if (color.toLowerCase().trim() === 'clembs') {
+        await AchievementProgress.call(this, 'IMITATING_THE_CREATOR');
+      }
     } else if (text === 'profile') {
       if (!user.hexAccentColor) {
         await this.reply({
@@ -84,63 +91,11 @@ export const colorset = ChatCommand({
           ],
           ephemeral: true,
         });
+
+        await AchievementProgress.call(this, 'ARTIST');
       }
     } else {
       await this.reply(CRBTError(errors.INVALID_COLOR_NAME));
     }
   },
 });
-
-// export const colorlist = ChatCommand({
-//   name: 'color list',
-//   description: 'Returns a list of CRBT accent color names and info.',
-//   async handle() {
-//     const { colorNames } = t(this, 'color set');
-
-//     const userColor = await getColor(this.user);
-//     const colorRows = [[], [], []];
-//     const filteredColorsMap = colorsMap.filter(
-//       (colorObj) => !(colorObj.private || colorObj.value === 'profile')
-//     );
-
-//     filteredColorsMap.forEach((colorObj) => {
-//       let currentRow = 0;
-//       const maxLength = Math.round(filteredColorsMap.length / 3);
-
-//       if (colorRows[0].length >= maxLength) currentRow = 1;
-//       if (colorRows[1].length >= maxLength) currentRow = 2;
-
-//       colorRows[currentRow].push(`${colorObj.emoji} \`${colorNames[colorObj.key]}\``);
-//     });
-
-//     const img = canvas.createCanvas(512, 512);
-//     const ctx = img.getContext('2d');
-//     ctx.fillStyle = userColor;
-//     ctx.fillRect(0, 0, img.width, img.height);
-//     const e = new MessageEmbed()
-//       .setAuthor({ name: 'CRBT Settings - Accent color', iconURL: icons.settings })
-//       .setThumbnail(`attachment://color.png`)
-//       .setDescription(
-//         `**Current color:** \`${userColor}\`` +
-//           '\n' +
-//           "This color is used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them." +
-//           '\n' +
-//           'You can either choose one of these colors below or provide your own [HEX color value](https://htmlcolorcodes.com/color-picker/).' +
-//           '\n' +
-//           '**To change your accent color, use `/color set`**' +
-//           '\n' +
-//           'You can sync your CRBT accent color with your Discord profile color by using `/color set Sync Discord Profile Color`.'
-//       )
-//       .setColor(userColor);
-
-//     colorRows.forEach((row) => {
-//       if (row.length !== 0) e.addField('‎', row.join('\n'), true);
-//     });
-
-//     await this.reply({
-//       embeds: [e],
-//       files: [new MessageAttachment(img.toBuffer(), 'color.png')],
-//       ephemeral: true,
-//     });
-//   },
-// });

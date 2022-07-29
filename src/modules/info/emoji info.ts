@@ -7,8 +7,25 @@ import { EmojiRegex } from '$lib/util/regex';
 import { capitalCase } from 'change-case';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageButton, MessageEmbed } from 'discord.js';
-import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
+import {
+  ButtonComponent,
+  ChatCommand,
+  components,
+  OptionBuilder,
+  row,
+  SelectMenuComponent,
+} from 'purplet';
 import emojiJSON from '../../../data/misc/emoji.json';
+
+const emojiImg = (emojipediaCode: string, size = '120') => ({
+  Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
+  'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/313/${emojipediaCode}.png`,
+  Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/304/${emojipediaCode}.png`,
+  Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
+  Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/310/${emojipediaCode}.png`,
+  WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/312/${emojipediaCode}.png`,
+  'Microsoft Teams': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
+});
 
 export default ChatCommand({
   name: 'emoji info',
@@ -60,17 +77,10 @@ export default ChatCommand({
       const emojiData = emojiJSON.find((e) => e.char === emoji);
       const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
         .toLowerCase()
-        .replace(/ /g, '-')}`;
-      // eye_1f441-fe0f.png
-      const emojiImg = {
-        google: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/313/${emojipediaCode}.png`,
-        twitter: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/${emojipediaCode}.png`,
-        facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/304/${emojipediaCode}.png`,
-        apple: `https://raw.githubusercontent.com/iamcal/emoji-data/master/img-apple-160/${emojipediaCode}.png`,
-        microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/310/${emojipediaCode}.png`,
-      };
+        .replace(/ /g, '-')
+        .replace(/:/g, '')}`;
 
-      const emojiURL = emojiImg.twitter;
+      const emojiURL = emojiImg(emojipediaCode).Twemoji;
 
       await this.reply({
         embeds: [
@@ -86,16 +96,11 @@ export default ChatCommand({
               `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
               true
             )
-            .addField(
-              'Designs',
-              Object.entries(emojiImg)
-                .map(([brand, url]) => `**[${brand[0].toUpperCase() + brand.slice(1)}](${url})**`)
-                .join(' | ')
-            )
             .addField('Category', emojiData.category, true)
             .setImage(emojiURL)
             .setColor(await getColor(this.user)),
         ],
+        components: components(renderSelect(emojipediaCode)),
       });
     } else {
       await this.reply(
@@ -104,6 +109,29 @@ export default ChatCommand({
         )
       );
     }
+  },
+});
+
+function renderSelect(emojipediaCode: string, current = 'Twemoji') {
+  return row(
+    new EmojiDesignSelect(emojipediaCode).setOptions(
+      Object.entries(emojiImg(emojipediaCode)).map(([brand, url]) => ({
+        label: brand === current ? `Viewing design: ${capitalCase(brand)}` : brand,
+        value: brand,
+        default: brand === current,
+      }))
+    )
+  );
+}
+
+export const EmojiDesignSelect = SelectMenuComponent({
+  async handle(emojiCode: string) {
+    const brand = this.values[0];
+
+    await this.update({
+      embeds: [new MessageEmbed(this.message.embeds[0]).setImage(emojiImg(emojiCode)[brand])],
+      components: components(renderSelect(emojiCode, brand)),
+    });
   },
 });
 

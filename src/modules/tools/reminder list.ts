@@ -26,6 +26,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
+import { allCommands } from '../events/ready';
 
 export default ChatCommand({
   name: 'reminder list',
@@ -238,6 +239,8 @@ async function renderList(
   this: CommandInteraction | ButtonInteraction,
   userReminders: FullDBTimeout<'REMINDER'>[]
 ) {
+  const reminderCmd = allCommands.find(({ name }) => name === 'reminder');
+
   return {
     embeds: [
       new MessageEmbed()
@@ -247,8 +250,8 @@ async function renderList(
         })
         .setDescription(
           userReminders.length === 0
-            ? "Uh oh, you don't have any reminders set. Use `/reminder new` to set one!"
-            : 'You can create a new reminder with `/reminder new`!'
+            ? `Uh oh, you don't have any reminders set. Use </reminder new:${reminderCmd.id}> to set one!`
+            : `You can create a new reminder with </reminder new:${reminderCmd.id}>!`
         )
         .setFields(
           userReminders

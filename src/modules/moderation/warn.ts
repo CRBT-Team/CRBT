@@ -8,11 +8,11 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'warn',
-  description: 'Timeout a chosen user from this server.',
+  description: "Warn a chosen user. This will add a strike to the user's moderation history.",
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to timeout.', { required: true })
-    .string('reason', 'The reason for the timeout.'),
+    .user('user', 'The user to warn.', { required: true })
+    .string('reason', 'The reason for warning.'),
   async handle({ user, reason }) {
     if (
       !hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers) &&

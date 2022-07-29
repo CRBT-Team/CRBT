@@ -9,7 +9,7 @@ import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageAttachment, MessageEmbed } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
-import { serverNavBar } from '../components/serverNavBar';
+import { getTabs, serverNavBar } from '../components/serverNavBar';
 import { NavBarContext } from '../components/userNavBar';
 
 export default ChatCommand({
@@ -162,7 +162,9 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   return {
     embeds: [e],
     files: guild.icon ? [] : [new MessageAttachment(img.toBuffer(), 'icon.png')],
-    components: components(serverNavBar(navCtx, this.locale, 'server_info')),
+    components: components(
+      serverNavBar(navCtx, this.locale, 'server_info', getTabs('server_info', guild))
+    ),
   };
 }
 
@@ -183,7 +185,7 @@ export async function renderServerMembersRoles(
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${guild.name} - Roles and Members`,
+      name: `${guild.name} - Roles & Members`,
       iconURL: guild.iconURL({ format: 'png', dynamic: true }),
     })
     .setDescription(
@@ -194,6 +196,38 @@ export async function renderServerMembersRoles(
 
   return {
     embeds: [e],
-    components: components(serverNavBar(navCtx, this.locale, 'roles')),
+    components: components(serverNavBar(navCtx, this.locale, 'roles', getTabs('icon', guild))),
+  };
+}
+
+export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx: NavBarContext) {
+  const color = colors.default;
+  const emojis = guild.emojis.cache;
+  const stickers = guild.stickers.cache;
+
+  const e = new MessageEmbed().setAuthor({
+    name: `${guild.name} - Emojis & Stickers`,
+    iconURL: guild.iconURL({ format: 'png', dynamic: true }),
+  });
+
+  if (emojis.size > 0)
+    e.addField(
+      `Emojis • ${emojis.size}`,
+      `${emojis.filter((r) => !r.animated).size} static • ${
+        emojis.filter((r) => r.animated).size
+      } animated`,
+      true
+    );
+
+  if (stickers.size > 0)
+    e.addField(
+      `Stickers • ${stickers.size}`,
+      stickers.map((r) => `${r.name}`).join(', '),
+      true
+    ).setColor(`#${color}`);
+
+  return {
+    embeds: [e],
+    components: components(serverNavBar(navCtx, this.locale, 'emojis')),
   };
 }

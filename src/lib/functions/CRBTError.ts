@@ -1,4 +1,4 @@
-import { colors, db, emojis, icons, misc } from '$lib/db';
+import { colors, db, emojis, misc } from '$lib/db';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
 import {
@@ -32,7 +32,7 @@ const handleError = (opts: {
       embeds: [
         new MessageEmbed()
           .setDescription(`\`\`\`\n${error.error}\`\`\``)
-          .addField('Context', error.context, true)
+          .addField('Context', `\`\`\`\n${error.context}\`\`\``, true)
           .setColor(`#${colors.error}`),
       ],
       files: [
@@ -53,10 +53,7 @@ const handleError = (opts: {
   }
 
   return new MessageEmbed()
-    .setAuthor({
-      iconURL: icons.error,
-      name: detail?.title ?? message,
-    })
+    .setTitle(`${emojis.error} ${detail?.title ?? message}`)
     .setDescription(detail?.title ? detail?.description ?? message : '')
     .setFields(detail?.fields ?? [])
     .setColor(`#${colors.error}`);

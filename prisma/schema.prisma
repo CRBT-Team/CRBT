@@ -57,14 +57,32 @@ enum ModerationStrikeTypes {
   WARN
 }
 
+enum AchievementNames {
+  ERROR_MASTER
+  ARTIST
+  IMITATING_THE_CREATOR
+  SAFETY_FIRST
+  BOOKMARKER
+}
+
 model users {
-  id           String    @id(map: "misc_pkey")
-  telemetry    Boolean   @default(true)
-  accentColor  String?   @map("accent_color")
-  birthday     DateTime? @db.Timestamptz(6)
-  crbtBadges   String[]  @map("crbt_badges")
-  silentJoins  Boolean   @default(false) @map("silent_joins")
-  silentLeaves Boolean   @default(false) @map("silent_leaves")
+  id           String         @id(map: "misc_pkey")
+  telemetry    Boolean        @default(true)
+  accentColor  String?        @map("accent_color")
+  birthday     DateTime?      @db.Timestamptz(6)
+  crbtBadges   String[]       @map("crbt_badges")
+  achievements Achievements[]
+  silentJoins  Boolean        @default(false) @map("silent_joins")
+  silentLeaves Boolean        @default(false) @map("silent_leaves")
+}
+
+model Achievements {
+  id          String           @id
+  userId      String           @map("user_id")
+  user        users            @relation(fields: [userId], references: [id])
+  achievement AchievementNames
+  achievedAt  DateTime?        @map("achieved_at") @db.Timestamptz(6)
+  progression Int
 }
 
 model inventories {
@@ -114,8 +132,8 @@ model economyItems {
   value                     String?
   inventories               inventories? @relation("Inventory", fields: [inventoriesServerId], references: [serverId])
   activeInventories         inventories? @relation("ActiveInventory", fields: [activeInventoriesServerId], references: [serverId])
-  inventoriesServerId       String?
-  activeInventoriesServerId String?
+  inventoriesServerId       String?      @map("inventories_server_id")
+  activeInventoriesServerId String?      @map("active_inventories_server_id")
 }
 
 enum EconomyCommands {

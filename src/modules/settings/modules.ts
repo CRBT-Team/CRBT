@@ -11,6 +11,7 @@ const choices = {
 export default ChatCommand({
   name: 'module enable',
   description: 'Choose a module to enable.',
+  allowInDMs: false,
   options: new OptionBuilder().string('module', 'The module to enable.', {
     choices,
     required: true,
@@ -52,6 +53,7 @@ export default ChatCommand({
 export const disable = ChatCommand({
   name: 'module disable',
   description: 'Choose a module to disable.',
+  allowInDMs: false,
   options: new OptionBuilder().string('module', 'The module to disable.', {
     choices,
     required: true,

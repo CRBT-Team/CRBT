@@ -11,6 +11,7 @@ import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 export default ChatCommand({
   name: 'modlogs all',
   description: 'View the moderation history for all users and channels in this server.',
+  allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)) {
       return this.reply(

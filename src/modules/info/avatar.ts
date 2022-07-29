@@ -55,8 +55,8 @@ export const defaultPfp = ChatCommand({
         u,
         this,
         {
-          targetId: this.user.id,
-          userId: u.id,
+          targetId: u.id,
+          userId: this.user.id,
           format: format as any,
           size: (size ?? '3') as any,
         },
@@ -76,8 +76,8 @@ export const ctxDefaultPfp = UserContextCommand({
         user,
         this,
         {
-          targetId: this.user.id,
-          userId: user.id,
+          targetId: user.id,
+          userId: this.user.id,
           size: '3',
         },
         m

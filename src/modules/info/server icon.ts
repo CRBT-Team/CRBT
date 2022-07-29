@@ -9,7 +9,7 @@ import {
   MessageEmbed,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
-import { serverNavBar } from '../components/serverNavBar';
+import { getTabs, serverNavBar } from '../components/serverNavBar';
 import { AvatarFormats, AvatarSizes, NavBarContext } from '../components/userNavBar';
 
 export default ChatCommand({
@@ -75,7 +75,6 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
         .setColor(`#${color}`),
     ],
     components: components(
-      serverNavBar(navCtx, this.locale, 'icon'),
       row(
         new MessageButton()
           .setStyle('LINK')
@@ -88,7 +87,8 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
               : 'Download (256px - PNG)'
           )
           .setURL(av)
-      )
+      ),
+      serverNavBar(navCtx, this.locale, 'icon', getTabs('icon', guild))
     ),
   };
 }

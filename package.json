@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.7.0",
+  "version": "11.7.2",
   "scripts": {
     "start": "npm run generate && npm run build && node dist/bot.mjs",
     "dev": "yarn build && node dist/bot.mjs --dev",
@@ -14,7 +14,6 @@
   "dependencies": {
     "@prisma/client": "^3.15.0",
     "@purplet/polyfill": "^1.1.0",
-    "@purplet/rest": "^1.0.1",
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
     "change-case": "^4.1.2",

@@ -1,6 +1,7 @@
 import { cache } from '$lib/cache';
 import { db, emojis, icons, links } from '$lib/db';
 import { getColor } from '$lib/functions/getColor';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import { users } from '@prisma/client';
 import { ButtonInteraction, CommandInteraction, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
@@ -22,6 +23,8 @@ export default ChatCommand({
       ...(await renderPrivacySettings.call(this, preferences)),
       ephemeral: true,
     });
+
+    await AchievementProgress.call(this, 'SAFETY_FIRST');
   },
 });
 

@@ -45,8 +45,8 @@ export default ChatCommand({
         this,
         u,
         {
-          targetId: this.user.id,
-          userId: u.id,
+          targetId: u.id,
+          userId: this.user.id,
         },
         m
       )
@@ -64,8 +64,8 @@ export const ctxCommand = UserContextCommand({
         this,
         user,
         {
-          targetId: this.user.id,
-          userId: user.id,
+          targetId: user.id,
+          userId: this.user.id,
         },
         member
       )),
@@ -77,8 +77,8 @@ export const ctxCommand = UserContextCommand({
 export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
   const { badges } = emojis;
   return [
-    ...additionalBadges.map((b) => items.badges[b].contents),
-    ...flags.toArray().map((flag) => {
+    ...(additionalBadges ? additionalBadges.map((b) => items.badges[b].contents) : []),
+    ...flags.toArray()?.map((flag) => {
       switch (flag) {
         case 'VERIFIED_BOT':
           return badges.verifiedBot;
@@ -106,7 +106,7 @@ export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
           return badges.developer;
       }
     }),
-  ];
+  ].filter(Boolean);
 }
 
 export async function renderUser(
@@ -129,7 +129,7 @@ export async function renderUser(
       name: `${user.tag} - User info`,
       iconURL: avatar(member ?? user, 64),
     })
-    .setDescription(userBadges ? userBadges.join('‎ ') + invisibleChar : '')
+    .setDescription(userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '')
     .addField('ID', user.id)
     .setImage(banner(user, size ?? 2048, format))
     .setThumbnail(avatar(member ?? user, size ?? 256, format))
@@ -164,12 +164,7 @@ export async function renderUser(
   return {
     embeds: [e],
     components: components(
-      navBar(
-        navCtx,
-        ctx.locale,
-        'userinfo',
-        getTabs('userinfo', user, member, user.bot && !!member)
-      )
+      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
     ),
   };
 }
