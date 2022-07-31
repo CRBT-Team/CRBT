@@ -57,14 +57,6 @@ enum ModerationStrikeTypes {
   WARN
 }
 
-enum AchievementNames {
-  ERROR_MASTER
-  ARTIST
-  IMITATING_THE_CREATOR
-  SAFETY_FIRST
-  BOOKMARKER
-}
-
 model users {
   id           String         @id(map: "misc_pkey")
   telemetry    Boolean        @default(true)
@@ -77,11 +69,11 @@ model users {
 }
 
 model Achievements {
-  id          String           @id
-  userId      String           @map("user_id")
-  user        users            @relation(fields: [userId], references: [id])
-  achievement AchievementNames
-  achievedAt  DateTime?        @map("achieved_at") @db.Timestamptz(6)
+  id          String    @id
+  userId      String    @map("user_id")
+  user        users     @relation(fields: [userId], references: [id])
+  achievement String
+  achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
   progression Int
 }
 
@@ -150,6 +142,13 @@ enum ItemTypes {
   OTHER
 }
 
+enum TokenTypes {
+  API
+  REDEEM
+}
+
 model tokens {
-  token String @id
+  token String     @id
+  type  TokenTypes
+  data  Json       @db.Json()
 }

@@ -5,6 +5,7 @@ import { t } from '$lib/language';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { allCommands } from '../../events/ready';
 
 export default ChatCommand({
   name: 'welcome channel',
@@ -50,6 +51,8 @@ export default ChatCommand({
       update: { joinMessage: true },
     });
 
+    const command = allCommands.find((c) => c.name === 'welcome');
+
     await this.editReply({
       embeds: [
         new MessageEmbed()
@@ -61,7 +64,10 @@ export default ChatCommand({
             iconURL: icons.success,
           })
           .setDescription(
-            t(this, 'JOIN_CHANNEL_SUCCESS_DESCRIPTION').replace('<CHANNEL>', channel.toString())
+            t(this, 'JOIN_CHANNEL_SUCCESS_DESCRIPTION')
+              .replace('<COMMAND>', `</farewell message:${command.id}>`)
+
+              .replace('<CHANNEL>', channel.toString())
           )
           .setColor(`#${colors.success}`),
       ],

@@ -1,6 +1,7 @@
-import { achievements, db } from '$lib/db';
+import { achievements, db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
+import type { Achievement } from '$lib/responses/Achievements';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
@@ -16,8 +17,8 @@ export default ChatCommand({
       select: { achievements: true },
     });
 
-    const fields = Object.entries(achievements)
-      .map(([id, { howToGet, name, secret, steps }]) => {
+    const fields = Object.entries(achievements as { [k: string]: Achievement })
+      .map(([id, { howToGet, name, secret, steps, emoji }]) => {
         const userData = userAchievements?.achievements?.find((a) => a?.achievement === id);
 
         console.log(id);
@@ -29,24 +30,24 @@ export default ChatCommand({
 
           if (userData.achievedAt) {
             return {
-              name: `🔓 ${name}`,
+              name: `${emoji ? `<:a:${emoji}>` : '🔓'} ${name}`,
               value:
                 `${percentage}% completed • Achieved <t:${Math.round(
                   achievedAt.getTime() / 1000
-                )}:R>` + (u.id !== this.user.id && secret ? '' : `\n${howToGet}`),
+                )}:R>` + (u.id !== this.user.id && secret ? '?????' : `\n${howToGet}`),
             };
           } else {
             return {
-              name: `🔒 ${name}`,
+              name: `${emojis.lock} ${name}`,
               value:
                 `${percentage}% completed` +
-                (u.id !== this.user.id && secret ? '' : `\n${howToGet}`),
+                (u.id !== this.user.id && secret ? '?????' : `\n${howToGet}`),
             };
           }
         } else {
           if (secret) return;
           return {
-            name: `🔒 ${name}`,
+            name: `${emojis.lock} ${name}`,
             value: howToGet,
           };
         }

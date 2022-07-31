@@ -3,7 +3,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { MessageButton } from 'discord.js';
+import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const RemindButton = ButtonComponent({
@@ -59,24 +59,24 @@ export const RemindButton = ButtonComponent({
 
 export const SnoozeButton = ButtonComponent({
   async handle() {
-    if (!this.guild && this.message.mentions.toString().includes(this.user.id)) {
+    if (this.guild && !(this.message.mentions as MessageMentions).has(this.user.id)) {
       return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
     }
 
     const { strings } = t(this, 'remind me');
     const { JUMP_TO_MSG } = t(this, 'genericButtons');
     const button = this.message.components[0].components[0];
-    const url = (button as MessageButton).url.replace('https://discord.com/channels/', '');
+    const url = (this.message as Message).url;
 
     await setDbTimeout({
       id: url,
       type: 'REMINDER',
       expiration: dayjs().add(15, 'minutes').toDate(),
       data: {
-        destination: url.startsWith('@me') ? 'dm' : url.split('/')[1],
+        destination: url.includes('@me') ? 'dm' : url.split('/')[1],
         userId: this.user.id,
         subject: this.message.embeds[0].fields[0].value,
-        url,
+        url: (button as MessageButton).url.replace('https://discord.com/channels/', ''),
       },
       locale: this.locale,
     });

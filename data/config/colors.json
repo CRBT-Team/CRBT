@@ -2,7 +2,6 @@
   "success": "4ADC67",
   "error": "FF2A2A",
   "default": "F27187",
-
   "sync": "profile",
   "lightred": "F27187",
   "red": "FF2A2A",
@@ -25,7 +24,7 @@
   "black": "000001",
   "gray": "C8C5C9",
   "white": "FFFFFE",
-
+  "gold": "EF9841",
   "clembs": "826FE5",
   "aïlath": "033818",
   "navy": "004BAA",

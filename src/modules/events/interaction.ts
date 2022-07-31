@@ -19,8 +19,6 @@ export default OnEvent('interactionCreate', async (i) => {
     .filter(Boolean)
     .join(' ');
 
-  // custom command handler
-
   // if (i.isCommand() && customCmds.has(i.commandName)) {
   //   const cmd = customCmds.get(i.commandName);
   //   cmd.handle(i, i.options);

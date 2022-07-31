@@ -1,5 +1,6 @@
 import { colors, icons, links, misc } from '$lib/db';
 import { t } from '$lib/language';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -40,4 +41,8 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
       ],
     });
   }
+
+  const owner = await guild.fetchOwner();
+
+  await AchievementProgress.call(owner, 'WELCOME_TO_CRBT');
 });

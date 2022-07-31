@@ -3,20 +3,24 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 
+const boostRequired = '💎 Level 1 Boosting Required';
+
 const activities = [
   ['Watch Together', '880218394199220334'],
   ['Sketch Heads', '902271654783242291'],
   ['Word Snacks', '879863976006127627'],
 
-  ['Poker Night - 💎 Level 1 Boosting Required', '755827207812677713'],
-  ['Chess In The Park - 💎 Level 1 Boosting Required', '832012774040141894'],
-  ['Letter League - 💎 Level 1 Boosting Required', '879863686565621790'],
-  ['SpellCast - 💎 Level 1 Boosting Required', '852509694341283871'],
-  ['Checkers In The Park - 💎 Level 1 Boosting Required', '832013003968348200'],
-  ['Blazing 8s - 💎 Level 1 Boosting Required', '832025144389533716'],
-  ['Land-io - 💎 Level 1 Boosting Required', '903769130790969345'],
-  ['Putt Party - 💎 Level 1 Boosting Required', '945737671223947305'],
-  ['Bobble League - 💎 Level 1 Boosting Required', '947957217959759964'],
+  [`Poker Night - ${boostRequired}`, '755827207812677713'],
+  [`Chess In The Park - ${boostRequired}`, '832012774040141894'],
+  [`Letter League - ${boostRequired}`, '879863686565621790'],
+  [`SpellCast - ${boostRequired}`, '852509694341283871'],
+  [`Checkers In The Park - ${boostRequired}`, '832013003968348200'],
+  [`Blazing 8s - ${boostRequired}`, '832025144389533716'],
+  [`Land-io - ${boostRequired}`, '903769130790969345'],
+  [`Putt Party - ${boostRequired}`, '945737671223947305'],
+  [`NEW - Bobble League - ${boostRequired}`, '947957217959759964'],
+  [`NEW - Know What I Meme - ${boostRequired}`, '950505761862189096'],
+  [`NEW - Ask Away - ${boostRequired}`, '976052223358406656'],
 ];
 
 const choices = activities.reduce(
@@ -39,7 +43,7 @@ export default ChatCommand({
   async handle({ activity }) {
     const selected = activities.find(([_, id]) => id === activity);
 
-    if (selected[0].includes('💎 Level 1 Boosting Required') && this.guild.premiumTier === 'NONE') {
+    if (selected[0].includes(boostRequired) && this.guild.premiumTier === 'NONE') {
       return this.reply(
         CRBTError('This server requires at least level 1 Server Boosting to use this activity!')
       );

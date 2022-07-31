@@ -152,7 +152,7 @@ export const ReplyButton = ButtonComponent({
       .find((c) => c.label !== 'Reply')
       .url.split('/')[6];
 
-    const modal = new Modal(issueId)
+    const modal = new ReplyModal(issueId)
       .setTitle('Reply to issue')
       .setComponents(
         row(
@@ -171,7 +171,7 @@ export const ReplyButton = ButtonComponent({
   },
 });
 
-export const Modal = ModalComponent({
+export const ReplyModal = ModalComponent({
   async handle(issueId: string) {
     const issueChannel = this.client.channels.cache.get(misc.channels.reportDev) as TextChannel;
     const issueMsg = await issueChannel.messages.fetch(issueId);

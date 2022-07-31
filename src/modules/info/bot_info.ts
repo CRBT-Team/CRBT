@@ -146,7 +146,6 @@ export async function renderBotInfo(
                 .setURL(links.invite),
               new MessageButton()
                 .setStyle('LINK')
-                .setEmoji('❤️')
                 .setLabel(strings.BUTTON_DONATE)
                 .setURL(links.donate),
               new MessageButton()

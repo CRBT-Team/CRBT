@@ -5,6 +5,7 @@ import googleTranslateApi from '@vitalets/google-translate-api';
 import { CommandInteraction, ContextMenuInteraction, MessageEmbed } from 'discord.js';
 import { ChatCommand, MessageContextCommand, OptionBuilder } from 'purplet';
 import languages from '../../../data/misc/languages.json';
+import { allCommands } from '../events/ready';
 
 export default ChatCommand({
   name: 'translate',
@@ -34,9 +35,11 @@ export const ctxCommand = MessageContextCommand({
   name: 'Translate Message',
   async handle(message) {
     if (!message.content) {
-      return this.editReply(
+      const translateCmd = allCommands.find(({ name }) => name === 'translate');
+
+      return this.reply(
         CRBTError(
-          "This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using `/translate`."
+          `This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using </translate:${translateCmd.id}>.`
         )
       );
     }

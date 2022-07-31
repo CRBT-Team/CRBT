@@ -4,13 +4,18 @@
   "discord": "https://crbt.app/discord",
   "purplet": "https://purplet.js.org/",
   "invite": "https://discord.com/oauth2/authorize?client_id=595731552709771264&permissions=8&scope=bot%20applications.commands",
-  "CRBTscript": "https://crbt.notion.site/CRBTscript-Docs-v11-BETA-dd4dd7c310a94a20865eef8251b65d84",
+  "CRBTscript": "https://resources.crbt.app/docs/crbtscript/intro",
   "donate": "https://buymeacoffee.com/clembs",
   "external": {
     "topgg": "https://crbt.app/vote",
     "discordbots": "https://discord.bots.gg/bots/595731552709771264"
   },
+  "docs": {
+    "CRBTscript": "https://resources.crbt.app/docs/crbtscript/intro",
+    "api": "https://resources.crbt.app/docs/api/intro"
+  },
   "blog": {
-    "about-crbt-messages": "https://resources.crbt.app/about-crbt-messages"
+    "about-crbt-messages": "https://resources.crbt.app/about-crbt-messages",
+    "crbtTokens": "https://resources.crbt.app/crbt-tokens"
   }
 }

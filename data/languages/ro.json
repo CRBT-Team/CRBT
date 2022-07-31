@@ -402,7 +402,7 @@
   "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /welcome message pentru a seta unul.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Trebuie să setezi un canal pentru a trimite <TYPE> primul. Folosește /welcome channel pentru a seta unul.",
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Un mesaj de la revedere va fi trimis când membrii ies în <CHANNEL>. Ca să schimbi mesajul trimis, folosește comanda /farewell message.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Acest mesaj va fi trimis atunci când membrii decid să iasă din server. Pentru a schimba canalul în care e trimis, poți utiliza comanda `/farewell channel`.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Acest mesaj va fi trimis atunci când membrii decid să iasă din server. Pentru a schimba canalul în care e trimis, poți utiliza comanda <COMMAND>.",
   "LEAVE_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator părăsește serverul.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a părăsit serverul.",
   "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /farewell message pentru a seta unul.",

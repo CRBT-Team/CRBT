@@ -32,6 +32,7 @@ export default ChatCommand({
   name: 'reminder list',
   description: 'Get a list of all of your reminders.',
   async handle() {
+    dayjs.locale(this.locale);
     const userReminders = (
       (await db.timeouts.findMany({ where: { type: 'REMINDER' } })) as FullDBTimeout<'REMINDER'>[]
     )

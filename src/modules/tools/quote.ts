@@ -91,7 +91,7 @@ async function renderMessageQuote(
 
   console.log(message.embeds.length);
 
-  if (message.embeds.length > 4) {
+  if (message.embeds.length <= 4) {
     await this.reply({
       embeds: firstEmbeds,
       components: components(

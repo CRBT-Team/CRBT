@@ -7,6 +7,8 @@ import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
+
+  console.log(member.id);
   try {
     const preferences = await db.users.findFirst({
       where: { id: member.id },

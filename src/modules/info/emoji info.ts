@@ -36,7 +36,7 @@ export default ChatCommand({
     { required: true }
   ),
   async handle({ emoji }) {
-    if (emoji.match(EmojiRegex)) {
+    if (EmojiRegex.test(emoji)) {
       const emojiData = {
         animated: emoji.split(':')[0] === '<a',
         name: emoji.split(':')[1],
