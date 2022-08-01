@@ -6,6 +6,7 @@ import {
   Interaction,
   MessageEmbed,
   ModalSubmitInteraction,
+  User,
 } from 'discord.js';
 import { allCommands } from '../../modules/events/ready';
 
@@ -18,11 +19,11 @@ export interface Achievement {
 }
 
 export async function AchievementProgress(
-  this: CommandInteraction | ContextMenuInteraction | ModalSubmitInteraction | GuildMember,
+  this: CommandInteraction | ContextMenuInteraction | ModalSubmitInteraction | GuildMember | User,
   type: keyof typeof achievements
 ) {
   const achievement = achievements[type] as Achievement;
-  const uId = this.user?.id;
+  const uId = 'user' in this ? this.user?.id : this.id;
 
   const data = await db.achievements.findUnique({
     where: {

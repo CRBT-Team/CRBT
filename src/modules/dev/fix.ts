@@ -1,6 +1,7 @@
 import { colors, emojis, icons, links, misc } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import {
   Message,
   MessageButton,
@@ -104,6 +105,8 @@ export const issueReply = async (
       .setName(`${type === 'fix' ? '✅' : '❌'} - ${title}`)
       .then((t) => t.setArchived(true, `Suggestion ${type === 'fix' ? 'accepted' : 'denied'}`));
   }
+
+  await AchievementProgress.call(target, 'BUG_NINJA');
 
   await target
     .send({

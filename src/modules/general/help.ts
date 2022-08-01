@@ -27,7 +27,7 @@ export default ChatCommand({
           'There are also some commands you can quickly access by right clicking or long-pressing a message or a user.\n' +
           'Handy commands and powerful feature come with CRBT, including:\n' +
           `Setting reminders (${commands.reminder}), announcing new and leaving members (${commands.welcome}), getting info (${commands.emojiInfo}, ${commands.userInfo}, ${commands.serverInfo}, etc.)... \n\n` +
-          `...with many more to come! Stay up to date on CRBT news by visiting **[our website](https://crbt.app)**!`
+          `...with many more to come! Stay up to date on CRBT news by visiting **[our blog](https://crbt.app/blog)**!`
       )
       .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
       .setColor(await getColor(this.user));

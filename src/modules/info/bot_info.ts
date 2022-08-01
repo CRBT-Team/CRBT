@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
 import { links, misc } from '$lib/db';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
@@ -21,6 +22,16 @@ export default ChatCommand({
   description: 'Get info on a given Discord bot, or stats about CRBT if no bot is given.',
   options: new OptionBuilder().user('bot', 'What bot to get info on. Defaults to CRBT.'),
   async handle({ bot }) {
+    const userInfo = allCommands.find((c) => c.name === 'user');
+
+    if (!bot.bot) {
+      return this.reply(
+        CRBTError(
+          `This command only works on bot users. To get a regular user's info, run </user info:${userInfo.id}>.`
+        )
+      );
+    }
+
     bot = bot || this.client.user;
     this.client.application;
 
@@ -28,9 +39,15 @@ export default ChatCommand({
       cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
       (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
 
+    cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
+
     const botInfo = bots.find(({ application }) => application.bot.id === bot.id);
 
-    cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
+    if (!botInfo) {
+      await this.reply(
+        CRBTError("Couldn't find that bot on the server. Make sure that it is on the server.")
+      );
+    }
 
     await this.reply(
       await renderBotInfo.call(

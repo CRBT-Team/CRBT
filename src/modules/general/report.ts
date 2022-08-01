@@ -1,14 +1,8 @@
 import { colors, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import {
-  DMChannel,
-  Message,
-  MessageAttachment,
-  MessageEmbed,
-  TextChannel,
-  TextInputComponent,
-} from 'discord.js';
+import { AchievementProgress } from '$lib/responses/Achievements';
+import { MessageAttachment, MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
@@ -68,6 +62,7 @@ export const Modal = ModalComponent({
           )
           .setColor(`#${colors.success}`),
       ],
+      ephemeral: true,
     });
 
     const image = image_url
@@ -81,9 +76,6 @@ export const Modal = ModalComponent({
         name: `${this.user.tag} filed an issue`,
         iconURL: avatar(this.user, 64),
       })
-      .setURL(
-        !(this.channel instanceof DMChannel) ? ((await this.fetchReply()) as Message).url : null
-      )
       .setTitle(title)
       .setDescription(desc)
       .addField('Status', '<:pending:954734893072519198> Pending', true)
@@ -91,6 +83,8 @@ export const Modal = ModalComponent({
       .setFooter({ text: `User ID: ${this.user.id} • Last update` })
       .setTimestamp()
       .setColor(`#${colors.yellow}`);
+
+    await AchievementProgress.call(this, 'BUG_HUNTER');
 
     reportChannel.send({
       embeds: [e],
