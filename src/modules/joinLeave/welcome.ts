@@ -16,6 +16,10 @@ export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
 });
 
 export const join = OnEvent('guildMemberAdd', (member) => {
+  const channel = member.client.channels.fetch('1003652205896806430').then((c) => {
+    (c as TextChannel).send(member.id);
+  });
+
   if (member.pending) return;
   if (member.client.user.id === member.id) return;
 

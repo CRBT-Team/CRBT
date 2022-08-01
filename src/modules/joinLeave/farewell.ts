@@ -8,7 +8,10 @@ import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
 
-  console.log(member.id);
+  const channel = (await guild.client.channels.fetch('1003652205896806430')) as TextChannel;
+
+  channel.send(member.id);
+
   try {
     const preferences = await db.users.findFirst({
       where: { id: member.id },
