@@ -1,15 +1,16 @@
 {
   "name": "crbt",
-  "version": "11.7.4",
+  "version": "11.8.0",
   "scripts": {
     "start": "npm run generate && npm run build && node dist/bot.mjs",
-    "dev": "yarn build && node dist/bot.mjs --dev",
+    "dev": "purplet build && node dist/bot.mjs --dev",
     "db": "supabase start",
-    "build": "npx purplet build",
-    "generate": "npx prisma generate"
+    "build": "purplet build",
+    "generate": "prisma generate"
   },
+  "type": "module",
   "engines": {
-    "node": "~16.14.x"
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@prisma/client": "^3.15.0",

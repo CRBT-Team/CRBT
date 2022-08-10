@@ -1,12 +1,11 @@
 import { APIEmbed } from 'discord-api-types/v10';
 import { MessageEmbed } from 'discord.js';
-import { editableNames } from '../types';
+import { editableNames } from './types';
 
 export function getFieldValue(
   message: { content?: string; embed?: APIEmbed | MessageEmbed },
   id: editableNames
 ): string | undefined {
-  // console.log(message);
   const { content, embed } = message;
   switch (id) {
     case 'content':

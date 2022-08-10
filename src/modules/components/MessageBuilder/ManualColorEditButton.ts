@@ -1,11 +1,11 @@
 import { t } from '$lib/language';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-import { editableList, MessageTypes } from '../types';
 import { FieldEditModal } from './FieldEditModal';
+import { editableList, MessageBuilderTypes } from './types';
 
 export const ManualColorEditButton = ButtonComponent({
-  handle(type: MessageTypes) {
+  handle(type: MessageBuilderTypes) {
     const [id, maxLength] = editableList.find(([id]) => id === 'color')!;
 
     this.showModal(

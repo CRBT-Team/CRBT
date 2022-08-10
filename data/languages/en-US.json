@@ -185,15 +185,6 @@
       "EXTRA": "More"
     }
   },
-  "profile": {
-    "pronouns": {
-      "hh": "He/Him",
-      "sh": "She/Her",
-      "tt": "They/Them",
-      "other": "Other",
-      "ask": "Ask me"
-    }
-  },
   "poll": {
     "meta": {
       "description": "Create a poll with the given choices.",
@@ -329,35 +320,6 @@
         ]
       }
     },
-    "preset": {
-      "meta": {
-        "description": "Create a new Role Picker using one of the presets.",
-        "options": [
-          {
-            "name": "preset",
-            "description": "A preset to choose from. CRBT will auto create the roles and send a pretty embed."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Colors",
-          "message": "Choose a color for your display name."
-        },
-        "pronouns": {
-          "name": "Pronouns",
-          "message": "What are your pronouns?"
-        },
-        "zodiacSigns": {
-          "name": "Zodiac Signs",
-          "message": "What's your zodiac sign?"
-        },
-        "verification": {
-          "name": "Human Verification",
-          "message": "Click on the button to verify your account."
-        }
-      }
-    },
     "errors": {
       "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
@@ -394,7 +356,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> set!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the <TYPE> using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> saved.",
@@ -406,13 +368,12 @@
   "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "JOIN_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user joins the server.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /welcome message to set one.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /welcome channel to set one.",
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "You must set a <TYPE> first. Use /farewell message to set one.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",

@@ -1,24 +1,24 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
+import { cache } from '$lib/cache';
 import { emojis } from '$lib/db';
 import { t } from '$lib/language';
 import { TextInputComponent } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
-import { joinBuilderCache } from '../renderers';
-import { editableList, editableNames } from '../types';
-import { getFieldValue } from '../utility/getFieldValue';
 import { AuthorEditModal } from './AuthorEditModal';
 import { BackButton } from './BackButton';
 import { ColorPresetSelectMenu } from './ColorPresetSelectMenu';
 import { FieldEditModal } from './FieldEditModal';
+import { getFieldValue } from './getFieldValue';
 import { ManualColorEditButton } from './ManualColorEditButton';
+import { editableList, editableNames, MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const FieldSelectMenu = SelectMenuComponent({
-  handle(type: string) {
+  handle(type: MessageBuilderTypes) {
     const fieldName = this.values[0] as editableNames;
     const { BACK } = t(this, 'genericButtons');
 
-    const messageData = joinBuilderCache.get(this.guildId);
-    console.log('messageData', messageData);
+    const messageData = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
+
     if (fieldName === 'color') {
       return this.update({
         components: components(
@@ -51,7 +51,7 @@ export const FieldSelectMenu = SelectMenuComponent({
     if (fieldName.startsWith('author')) {
       const authorFields: editableNames[] = ['author_name', 'author_icon', 'author_url'];
 
-      const modal = new AuthorEditModal()
+      const modal = new AuthorEditModal(type as never)
         .setTitle(`Edit ${t(this, 'FIELDS_AUTHOR')}`)
         .setComponents(
           ...authorFields.map((fieldName) => {

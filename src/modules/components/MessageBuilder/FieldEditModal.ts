@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
@@ -5,15 +6,16 @@ import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
-import { joinBuilderCache, renderJoinLeaveBuilder } from '../renderers';
-import { toJoinLeaveMessage } from '../utility/toJoinLeaveMessage';
+import { MessageBuilder } from '../../components/MessageBuilder';
+import { MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const FieldEditModal = ModalComponent({
-  async handle({ fieldName, type }) {
+  async handle({ fieldName, type }: { fieldName: string; type: MessageBuilderTypes }) {
     const value = this.fields.getTextInputValue('VALUE');
 
-    const data = joinBuilderCache.get(this.guildId);
-    const { embed } = { ...data };
+    const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
+
+    const { embed } = data;
     let content = data.content;
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');
@@ -70,16 +72,19 @@ export const FieldEditModal = ModalComponent({
     console.log('isThereAnyContent', !!content);
     console.log('whatsTheContent', JSON.stringify(content));
 
-    const cleanMessage = toJoinLeaveMessage({
-      content: content,
-      embeds: textInEmbed ? [embed] : [],
-    });
-    console.log('cleanMessage', cleanMessage);
-
     if (noTextInMessage) {
       return this.reply(CRBTError(t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY')));
     }
 
-    this.update(await renderJoinLeaveBuilder.call(this, type, cleanMessage));
+    const builder = MessageBuilder({
+      data: {
+        ...data,
+        content,
+        embed: textInEmbed ? embed : null,
+      },
+      interaction: this,
+    });
+
+    this.update(builder);
   },
 });

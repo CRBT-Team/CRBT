@@ -1,10 +1,11 @@
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-import { MessageTypes, resolveMsgType } from '../types';
+import { MessageBuilderTypes } from '../../components/MessageBuilder';
+import { resolveMsgType } from '../types';
 import { ImportJSONModal } from './ImportJSONModal';
 
 export const ImportJSONButton = ButtonComponent({
-  async handle(type: MessageTypes) {
+  async handle(type: MessageBuilderTypes) {
     const modal = new ImportJSONModal(type as never)
       .setTitle('Import from JSON')
       .setComponents(

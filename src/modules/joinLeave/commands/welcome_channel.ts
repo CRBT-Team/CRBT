@@ -65,7 +65,7 @@ export default ChatCommand({
           })
           .setDescription(
             t(this, 'JOIN_CHANNEL_SUCCESS_DESCRIPTION')
-              .replace('<COMMAND>', `</farewell message:${command.id}>`)
+              .replace('<COMMAND>', `</welcome message:${command.id}>`)
 
               .replace('<CHANNEL>', channel.toString())
           )

@@ -1,26 +1,13 @@
-import { db } from '$lib/db';
-import { CRBTError } from '$lib/functions/CRBTError';
-import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ChatCommand } from 'purplet';
-import { renderJoinLeaveBuilder } from '../renderers';
-import { RawServerJoin } from '../types';
+import { MessageBuilderTypes } from '../../components/MessageBuilder/types';
+import { renderJoinLeavePrebuilder } from '../renderers';
 
 export default ChatCommand({
   name: 'welcome message',
   description: t('en-US', 'JOIN_MESSAGE_DESCRIPTION'),
   allowInDMs: false,
-  async handle() {
-    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
-      return this.reply(CRBTError(t('en-US', 'ERROR_ADMIN_ONLY')));
-    }
-
-    const data = (await db.servers.findFirst({
-      where: { id: this.guildId },
-      select: { joinMessage: true },
-    })) as RawServerJoin;
-
-    await this.reply(await renderJoinLeaveBuilder.call(this, 'JOIN_MESSAGE', data?.joinMessage));
+  handle() {
+    renderJoinLeavePrebuilder.call(this, MessageBuilderTypes.joinMessage);
   },
 });

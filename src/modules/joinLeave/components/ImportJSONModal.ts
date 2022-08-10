@@ -1,10 +1,9 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { ModalComponent } from 'purplet';
-import { renderJoinLeaveBuilder } from '../renderers';
-import { MessageTypes } from '../types';
+import { MessageBuilder, MessageBuilderTypes } from '../../components/MessageBuilder';
 
 export const ImportJSONModal = ModalComponent({
-  async handle(type: MessageTypes) {
+  async handle(type: MessageBuilderTypes) {
     const input = this.fields.getTextInputValue('value');
 
     try {
@@ -15,7 +14,13 @@ export const ImportJSONModal = ModalComponent({
         return this.reply(CRBTError('Invalid JSON'));
       }
 
-      await this.update(await renderJoinLeaveBuilder.call(this, type, parsed));
+      const builder = MessageBuilder({
+        type,
+        message: parsed,
+        interaction: this,
+      });
+
+      await this.update(builder);
     } catch (e) {
       return this.reply(CRBTError('Invalid JSON'));
     }

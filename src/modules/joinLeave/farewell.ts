@@ -2,15 +2,15 @@ import { db } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
+import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerLeave } from './types';
-import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
 
-  const channel = (await guild.client.channels.fetch('1003652205896806430')) as TextChannel;
+  // const channel = (await guild.client.channels.fetch('1003652205896806430')) as TextChannel;
 
-  channel.send(member.id);
+  // channel.send(member.id);
 
   try {
     const preferences = await db.users.findFirst({

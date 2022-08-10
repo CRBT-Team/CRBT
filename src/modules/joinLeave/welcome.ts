@@ -2,8 +2,8 @@ import { db } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { GuildMember, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
+import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerJoin } from './types';
-import { parseCRBTscriptInMessage } from './utility/parseCRBTscriptInMessage';
 
 export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
@@ -16,9 +16,9 @@ export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
 });
 
 export const join = OnEvent('guildMemberAdd', (member) => {
-  const channel = member.client.channels.fetch('1003652205896806430').then((c) => {
-    (c as TextChannel).send(member.id);
-  });
+  // const channel = member.client.channels.fetch('1003652205896806430').then((c) => {
+  //   (c as TextChannel).send(member.id);
+  // });
 
   if (member.pending) return;
   if (member.client.user.id === member.id) return;

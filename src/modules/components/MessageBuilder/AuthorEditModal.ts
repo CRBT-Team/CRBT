@@ -1,18 +1,20 @@
+import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember } from 'discord.js';
 import { ModalComponent } from 'purplet';
-import { joinBuilderCache, renderJoinLeaveBuilder } from '../renderers';
+import { MessageBuilder } from '../../components/MessageBuilder';
+import { MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const AuthorEditModal = ModalComponent({
-  async handle(ctx: null) {
+  async handle(type: MessageBuilderTypes) {
     const name = this.fields.getTextInputValue('AUTHOR_NAME');
     const icon = this.fields.getTextInputValue('AUTHOR_ICON');
     const url = this.fields.getTextInputValue('AUTHOR_URL');
 
-    const data = joinBuilderCache.get(this.guildId);
+    const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
     const parsedIcon = icon
       ? parseCRBTscript(icon, {
@@ -38,6 +40,11 @@ export const AuthorEditModal = ModalComponent({
       },
     };
 
-    await this.update(await renderJoinLeaveBuilder.call(this, 'JOIN_MESSAGE', data));
+    const builder = MessageBuilder({
+      data,
+      interaction: this,
+    });
+
+    await this.update(builder);
   },
 });

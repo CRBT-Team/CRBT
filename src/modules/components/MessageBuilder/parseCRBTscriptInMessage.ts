@@ -1,14 +1,14 @@
 import { CRBTscriptParserArgs, parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { APIEmbedField } from 'discord-api-types/v10';
-import { JoinLeaveMessage } from '../types';
+import { MessageBuilderData, MessageBuilderTypes } from './types';
 
-export function parseCRBTscriptInMessage(
-  message: JoinLeaveMessage,
+export function parseCRBTscriptInMessage<T extends MessageBuilderData>(
+  message: Partial<MessageBuilderData>,
   args: CRBTscriptParserArgs
-): JoinLeaveMessage {
-  const parsed: JoinLeaveMessage = {};
+): T {
+  const parsed = {} as MessageBuilderData;
 
-  if (message.script) {
+  if (message.type !== MessageBuilderTypes.rolePicker) {
     parseCRBTscript(message.script, args);
   }
 
@@ -39,5 +39,8 @@ export function parseCRBTscriptInMessage(
       url: embed.url,
     };
   }
-  return parsed;
+  return {
+    ...message,
+    ...parsed,
+  } as T;
 }
