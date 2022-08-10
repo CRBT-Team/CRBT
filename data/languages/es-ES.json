@@ -100,7 +100,6 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "El asunto debe tener como mucho 120 caracteres.",
       "PAST": "No se puede establecer un recordatorio en el pasado.",
       "INVALID_FORMAT": "La fecha que ha introducido está en un formato inválido o está en el pasado.",
       "TOO_LONG": "No se puede establecer un recordatorio para dentro de más de 2 años.",
@@ -151,8 +150,6 @@
       "description": "Obtener información sobre CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Información",
-      "VERSION": "Versión <VERSION> sobre <PURPLET>",
       "MEMBER_COUNT": "Número de miembros",
       "SERVER_COUNT": "Número de servidores",
       "PING": "Latencia",
@@ -172,18 +169,20 @@
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "Información de usuario",
+      "BOTINFO": "Bot Info",
       "SERVER_AVATAR": "Avatar de servidor",
       "USER_AVATAR": "Avatar de usuario",
       "USER_BANNER": "Cartel de usuario"
     }
   },
-  "profile": {
-    "pronouns": {
-      "hh": "Él/él",
-      "sh": "Ella/ella",
-      "tt": "Elle/elle",
-      "other": "Otro",
-      "ask": "Pregúntame"
+  "server_navbar": {
+    "strings": {
+      "INFO": "Server info",
+      "ICON": "Icon",
+      "BANNER": "Banner",
+      "ROLES": "Roles & Members",
+      "EMOJIS": "Emojis & Stickers",
+      "EXTRA": "More"
     }
   },
   "poll": {
@@ -205,7 +204,6 @@
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "El título de su encuesta debe tener como mucho 100 caracteres.",
       "CHOICE_TOO_LONG": "Una opción no puede tener más de 40 caracteres (excluyendo emojis).",
       "CHOICE_EMPTY": "Una opción no puede estar vacía (excluyendo emoji).",
       "POLL_DATA_NOT_ALLOWED": "Sólo los moderadores de chat (con el permiso \"Gestionar mensajes\") y el creador de la encuesta pueden ver sus datos y opciones."
@@ -322,35 +320,6 @@
         ]
       }
     },
-    "preset": {
-      "meta": {
-        "description": "Crear un nuevo Selector de Roles utilizando una de las siguientes plantillas.",
-        "options": [
-          {
-            "name": "plantilla",
-            "description": "Una plantilla que escoger. CRBT automáticamente creará los roles y enviará una bonita inserción."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Colores",
-          "message": "Elija un color para su nombre de pantalla."
-        },
-        "pronouns": {
-          "name": "Pronombres",
-          "message": "¿Cuáles son sus pronombres?"
-        },
-        "zodiacSigns": {
-          "name": "Signos del Zodiaco",
-          "message": "¿Cuál es su signo del zodiaco?"
-        },
-        "verification": {
-          "name": "Verificación humana",
-          "message": "Haga clic en el botón para verificar su cuenta."
-        }
-      }
-    },
     "errors": {
       "USER_MISSING_PERMS": "Sólo los administradores del servidor pueden crear Selectores de Roles.",
       "BOT_MISSING_PERMS": "Necesito el permiso \"Gestionar roles\" para poder crear un Selector de Roles.",
@@ -387,7 +356,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Establecer un canal donde enviar el <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Dónde enviar el <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "¡<TYPE> establecido!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Abrir la guía de CRBTscript",
+  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edite este mensaje para personalizar el <TYPE> utilizando el menú de selección a continuación.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "¡Su mensaje no debe estar vacío!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> guardado.",
@@ -395,17 +364,16 @@
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Vista previa",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Así se verá el <TYPE> cuando se envíe a <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Ocurrió un error mientras se trataba de previsualizar el <TYPE>. Es posible que el canal ya no exista o que no tenga yo permiso para enviar mensajes allí.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Se dará la bienvenida a miembros nuevos en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando `/welcome message`.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Los miembros nuevos ahora verán este mensaje cuando se unan al servidor. Para cambiar el canal donde se envía, puede utilizar el comando `/welcome channel`.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "JOIN_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario se una al servidor.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "¡Bienvenido <user.name> a <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Debe establecer un <TYPE> primero. Utilice /welcome message para establecerlo.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /welcome channel para establecerlo.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Se enviará un mensaje de despedida cuando salgan miembros en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando `/farewell message`.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Este mensaje se enviará cuando un miembro abandone el servidor. Para cambiar el canal donde se envía, puede utilizar el comando `/farewell channel`.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario abandone el servidor.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ha salido del servidor.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Debe establecer un <TYPE> primero. Utilice /farewell message para establecerlo.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /farewell channel para establecerlo.",
   "FIELD_SELECT_MENU": "Seleccione un campo a editar",
   "COLOR_PRESET_SELECT_MENU": "Escoja uno de los colores predeterminados",
