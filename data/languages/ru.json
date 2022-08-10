@@ -100,7 +100,6 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Тема должна быть не более 120 символов.",
       "PAST": "Нельзя установить напоминание в прошлом.",
       "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
       "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
@@ -151,8 +150,6 @@
       "description": "Получить информацию о CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Информация",
-      "VERSION": "Версия <VERSION> на <PURPLET>",
       "MEMBER_COUNT": "Количество участников",
       "SERVER_COUNT": "Количество серверов",
       "PING": "Пинг",
@@ -172,18 +169,20 @@
     "strings": {
       "AVATAR": "Аватар",
       "INFO": "Информация о пользователе",
+      "BOTINFO": "Bot Info",
       "SERVER_AVATAR": "Аватар сервера",
       "USER_AVATAR": "Аватар пользователя",
       "USER_BANNER": "Баннер пользователя"
     }
   },
-  "profile": {
-    "pronouns": {
-      "hh": "Он/Его",
-      "sh": "Она/Ее",
-      "tt": "Они/Их",
-      "other": "Другое",
-      "ask": "Спрашивать"
+  "server_navbar": {
+    "strings": {
+      "INFO": "Server info",
+      "ICON": "Icon",
+      "BANNER": "Banner",
+      "ROLES": "Roles & Members",
+      "EMOJIS": "Emojis & Stickers",
+      "EXTRA": "More"
     }
   },
   "poll": {
@@ -205,7 +204,6 @@
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "Заголовок вашего опроса должен быть не более 100 символов.",
       "CHOICE_TOO_LONG": "Вариант голосования не может содержать в себе более 40 символов (за исключением эмодзи).",
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
       "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
@@ -322,35 +320,6 @@
         ]
       }
     },
-    "preset": {
-      "meta": {
-        "description": "Создать новый выборщик ролей, используя шаблон.",
-        "options": [
-          {
-            "name": "шаблон",
-            "description": "Выбор шаблона. CRBT сам создаст роли по шаблону и оформит красивую рамочку."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Цвета",
-          "message": "Выберите цвет для вашего отображаемого имени."
-        },
-        "pronouns": {
-          "name": "Обращение",
-          "message": "Как к вам обращаться?"
-        },
-        "zodiacSigns": {
-          "name": "Знаки зодиака",
-          "message": "Какой ваш знак зодиака?"
-        },
-        "verification": {
-          "name": "Проверка на человека",
-          "message": "Нажмите на кнопку, чтобы подтвердить свой аккаунт."
-        }
-      }
-    },
     "errors": {
       "USER_MISSING_PERMS": "Только администраторы сервера могут создавать выборщики ролей.",
       "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
@@ -387,7 +356,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> установлено!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
+  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить <TYPE>.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> сохранено.",
@@ -395,17 +364,16 @@
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Предпросмотр",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть <TYPE> при отправке в <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра <TYPE>. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в <CHANNEL>. Используйте `/welcome message`, чтобы изменить содержание отправляемого сообщения.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте `/welcome channel`, чтобы изменить канал для приветствий.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "JOIN_MESSAGE_DESCRIPTION": "Создать или изменить сообщение-приветствие.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Сначала нужно выбрать <TYPE>. Используйте '/welcome message' для выбора.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/welcome channel' для выбора.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправляться в <CHANNEL>, когда участники будут покидать сервер. Чтобы изменить сообщение прощание, используйте команду `/farewell message`.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, когда участник покинеть сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду `/farewell channel`.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Создать или редактировать сообщение-прощание.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Сначала нужно выбрать <TYPE>. Используйте '/farewell message' для выбора.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/farewell channel' для выбора.",
   "FIELD_SELECT_MENU": "Выберите поле для редактирования",
   "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
