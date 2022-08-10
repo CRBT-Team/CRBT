@@ -100,7 +100,6 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Trebuie să conțină cel mult 120 de caractere.",
       "PAST": "Dacă n-ai o mașină a timpului, nu poți seta un memento în trecut.",
       "INVALID_FORMAT": "Timpul introdus este într-un format nevalid, sau sub 0 secunde în viitor.",
       "TOO_LONG": "Îți apreciăm mentalitatea, dar nu poți seta un memento pentru mai mult de 2 ani de-acum.",
@@ -151,8 +150,6 @@
       "description": "Obține informații despre CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Informații",
-      "VERSION": "Versiunea <VERSION> pe <PURPLET>",
       "MEMBER_COUNT": "Număr de membri",
       "SERVER_COUNT": "Rang server",
       "PING": "Bipuire",
@@ -172,18 +169,20 @@
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "Informații despre utilizator",
+      "BOTINFO": "Bot Info",
       "SERVER_AVATAR": "Avatarul serverului",
       "USER_AVATAR": "Avatarul Utilizatorului",
       "USER_BANNER": "Bannerul Utilizatorului"
     }
   },
-  "profile": {
-    "pronouns": {
-      "hh": "El",
-      "sh": "Ea",
-      "tt": "Ei",
-      "other": "Altul",
-      "ask": "Întreabă-mă"
+  "server_navbar": {
+    "strings": {
+      "INFO": "Server info",
+      "ICON": "Icon",
+      "BANNER": "Banner",
+      "ROLES": "Roles & Members",
+      "EMOJIS": "Emojis & Stickers",
+      "EXTRA": "More"
     }
   },
   "poll": {
@@ -205,7 +204,6 @@
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "Titlul sondajului trebuie să aibă cel mult 100 de caractere.",
       "CHOICE_TOO_LONG": "O variantă nu poate fi mai lungă de 40 de caractere (cu excepția emoji-urilor).",
       "CHOICE_EMPTY": "O variantă nu poate fi goală (cu excepția emoji-urilor).",
       "POLL_DATA_NOT_ALLOWED": "Doar moderatorii chat-ului (permisiunea \"Gestionare mesaje\") și creatorul original de sondaje îi pot vizualiza datele și opțiunile."
@@ -322,35 +320,6 @@
         ]
       }
     },
-    "preset": {
-      "meta": {
-        "description": "Creați un nou selector de roluri folosind una dintre presetări.",
-        "options": [
-          {
-            "name": "preset",
-            "description": "O presetare din care să alegi. CRBT va crea rolurile și va trimite o integrare fermecător de frumoasă."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Culori",
-          "message": "Alege o culoare pentru pseudonimul tău."
-        },
-        "pronouns": {
-          "name": "Pronume personale",
-          "message": "Care-s pronumele tale?"
-        },
-        "zodiacSigns": {
-          "name": "Semne de Zodiac",
-          "message": "Care-i indicatorul tău zodiac?"
-        },
-        "verification": {
-          "name": "Verificarea umană",
-          "message": "Apasă pe buton ca să-ți verifici contul."
-        }
-      }
-    },
     "errors": {
       "USER_MISSING_PERMS": "Doar administratorii de server pot crea selectori de roluri.",
       "BOT_MISSING_PERMS": "Am nevoie de permisiunea de \"Gestionare roluri\" pentru a crea un selector de roluri.",
@@ -387,7 +356,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Setează un canal unde <TYPE> se va trimite.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Unde <TYPE> se va trimite.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> setat!",
-  "JOINLEAVE_MESSAGE_CRBTSCRIPT_GUIDE": "Deschide Ghidul De Script-uri CRBT",
+  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Editează acest mesaj pentru a personaliza <TYPE> folosind meniul selectat de mai jos.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Mesajul tău nu poate fi gol!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> salvat.",
@@ -395,17 +364,16 @@
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Previzualizare",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Așa va arăta <TYPE> când va fi trimis la <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Am întâmpinat o eroare în timp ce se previzualiza <TYPE>. Este posibil canalul să nu mai existe sau nu am permisiunea de a trimite mesaje acolo.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Noii membri vor fi întâmpinați în <CHANNEL>. Pentru a schimba mesajul care este trimis, poți utiliza comanda \"/welcome'.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Acum, membrii noi vor vedea acest mesaj când se vor alătura serverului. Pentru a schimba canalul în care acesta este trimis, poți utiliza comanda `/welcome`.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "JOIN_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator se alătură serverului.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bun venit <user.name> la <server.name>!",
-  "JOIN_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /welcome message pentru a seta unul.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Trebuie să setezi un canal pentru a trimite <TYPE> primul. Folosește /welcome channel pentru a seta unul.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Un mesaj de la revedere va fi trimis când membrii ies în <CHANNEL>. Ca să schimbi mesajul trimis, folosește comanda /farewell message.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Acest mesaj va fi trimis atunci când membrii decid să iasă din server. Pentru a schimba canalul în care e trimis, poți utiliza comanda `/farewell channel`.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator părăsește serverul.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a părăsit serverul.",
-  "LEAVE_PREVIEW_ERROR_NO_MESSAGE": "Trebuie să setezi mai întâi un <TYPE>. Folosește /farewell message pentru a seta unul.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Prima oară, trebuie să setezi un canal în care <TYPE> se trimite. Folosește /farewell channel pentru a seta unul.",
   "FIELD_SELECT_MENU": "Selectează un câmp pentru a edita",
   "COLOR_PRESET_SELECT_MENU": "Selectează o presetare de culoare",
