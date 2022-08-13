@@ -169,7 +169,7 @@
     "strings": {
       "AVATAR": "Аватар",
       "INFO": "Информация о пользователе",
-      "BOTINFO": "Bot Info",
+      "BOTINFO": "Информация о боте",
       "SERVER_AVATAR": "Аватар сервера",
       "USER_AVATAR": "Аватар пользователя",
       "USER_BANNER": "Баннер пользователя"
@@ -177,12 +177,12 @@
   },
   "server_navbar": {
     "strings": {
-      "INFO": "Server info",
-      "ICON": "Icon",
-      "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
-      "EXTRA": "More"
+      "INFO": "Информация о сервере",
+      "ICON": "Значок",
+      "BANNER": "Баннер",
+      "ROLES": "Роли и участники",
+      "EMOJIS": "Эмодзи и стикеры",
+      "EXTRA": "Дополнительно"
     }
   },
   "poll": {
@@ -356,7 +356,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> установлено!",
-  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить <TYPE>.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> сохранено.",
@@ -364,14 +364,14 @@
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Предпросмотр",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть <TYPE> при отправке в <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра <TYPE>. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в <CHANNEL>. Используйте <COMMAND>, чтобы изменить отправляемое сообщение.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте <COMMAND>, чтобы изменить канал для приветствий.",
   "JOIN_MESSAGE_DESCRIPTION": "Создать или изменить сообщение-приветствие.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
+  "ERROR_NO_MESSAGE": "Для начала, задайте сообщение при помощи команды <COMMAND>.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/welcome channel' для выбора.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправлено в <CHANNEL>, если кто-нибудь из участников покинет сервер. Чтобы изменить сообщение прощание, используйте команду <COMMAND>.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, если участник покинет сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду <COMMAND>.",
   "LEAVE_MESSAGE_DESCRIPTION": "Создать или редактировать сообщение-прощание.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/farewell channel' для выбора.",
