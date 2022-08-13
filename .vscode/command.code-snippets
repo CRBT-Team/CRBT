@@ -26,7 +26,7 @@
       "",
       "export default MessageContextCommand({",
       "  name: '$1',",
-      "  async handle({ message }) {",
+      "  async handle(message) {",
       "    $2",
       "  },",
       "});"
@@ -42,7 +42,7 @@
       "",
       "export default UserContextCommand({",
       "  name: '$1',",
-      "  async handle({ message }) {",
+      "  async handle(user) {",
       "    $2",
       "  },",
       "});"

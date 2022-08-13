@@ -8,18 +8,11 @@ datasource db {
 }
 
 model timeouts {
-  id         String       @id
-  expiration DateTime     @db.Timestamptz(6)
+  id         String   @id
+  expiration DateTime @db.Timestamptz(6)
   locale     String
-  type       TimeoutTypes
-  data       Json         @db.Json()
-}
-
-enum TimeoutTypes {
-  REMINDER
-  POLL
-  TEMPBAN
-  GIVEAWAY
+  type       String
+  data       Json     @db.Json()
 }
 
 model servers {

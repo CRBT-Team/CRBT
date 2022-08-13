@@ -1,6 +1,6 @@
 import { CRBTscriptParserArgs, parseCRBTscript } from '$lib/functions/parseCRBTscript';
+import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { APIEmbedField } from 'discord-api-types/v10';
-import { MessageBuilderData, MessageBuilderTypes } from './types';
 
 export function parseCRBTscriptInMessage<T extends MessageBuilderData>(
   message: Partial<MessageBuilderData>,

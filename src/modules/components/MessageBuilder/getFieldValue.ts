@@ -1,6 +1,6 @@
+import { editableNames } from '$lib/types/messageBuilder';
 import { APIEmbed } from 'discord-api-types/v10';
 import { MessageEmbed } from 'discord.js';
-import { editableNames } from './types';
 
 export function getFieldValue(
   message: { content?: string; embed?: APIEmbed | MessageEmbed },

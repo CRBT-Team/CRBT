@@ -1,8 +1,8 @@
 import { t } from '$lib/language';
+import { editableList, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 import { FieldEditModal } from './FieldEditModal';
-import { editableList, MessageBuilderTypes } from './types';
 
 export const ManualColorEditButton = ButtonComponent({
   handle(type: MessageBuilderTypes) {

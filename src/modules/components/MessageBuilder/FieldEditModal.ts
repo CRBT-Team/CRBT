@@ -2,12 +2,12 @@ import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
+import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const FieldEditModal = ModalComponent({
   async handle({ fieldName, type }: { fieldName: string; type: MessageBuilderTypes }) {
@@ -20,10 +20,13 @@ export const FieldEditModal = ModalComponent({
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');
 
-    const parsed = parseCRBTscript(value, {
-      channel: this.channel as TextChannel,
-      member: this.member as GuildMember,
-    });
+    const parsed =
+      type === MessageBuilderTypes.rolePicker
+        ? value
+        : parseCRBTscript(value, {
+            channel: this.channel as TextChannel,
+            member: this.member as GuildMember,
+          });
 
     switch (fieldName) {
       case 'content':

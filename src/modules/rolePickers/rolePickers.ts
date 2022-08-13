@@ -2,11 +2,11 @@ import { colors } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Role } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { MessageBuilder } from '../components/MessageBuilder';
-import { MessageBuilderTypes } from '../components/MessageBuilder/types';
 import { RoleButton } from './Button';
 import { RoleSelector } from './Selector';
 

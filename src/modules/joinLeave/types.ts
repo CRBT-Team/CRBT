@@ -1,4 +1,4 @@
-import { JoinLeaveData } from '../components/MessageBuilder/types';
+import { JoinLeaveData } from '$lib/types/messageBuilder';
 
 export const resolveMsgType = {
   JOIN_MESSAGE: 'joinMessage',

@@ -2,6 +2,12 @@ import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
 import { cache } from '$lib/cache';
 import { emojis } from '$lib/db';
 import { t } from '$lib/language';
+import {
+  editableList,
+  editableNames,
+  MessageBuilderData,
+  MessageBuilderTypes,
+} from '$lib/types/messageBuilder';
 import { TextInputComponent } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
 import { AuthorEditModal } from './AuthorEditModal';
@@ -10,7 +16,6 @@ import { ColorPresetSelectMenu } from './ColorPresetSelectMenu';
 import { FieldEditModal } from './FieldEditModal';
 import { getFieldValue } from './getFieldValue';
 import { ManualColorEditButton } from './ManualColorEditButton';
-import { editableList, editableNames, MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const FieldSelectMenu = SelectMenuComponent({
   handle(type: MessageBuilderTypes) {
@@ -23,7 +28,7 @@ export const FieldSelectMenu = SelectMenuComponent({
       return this.update({
         components: components(
           row(
-            new ColorPresetSelectMenu()
+            new ColorPresetSelectMenu(type as never)
               .setPlaceholder(t(this, 'COLOR_PRESET_SELECT_MENU'))
               .setOptions(
                 colorsMap
@@ -84,7 +89,11 @@ export const FieldSelectMenu = SelectMenuComponent({
           .setCustomId('VALUE')
           .setStyle(maxLength <= 256 ? 'SHORT' : 'PARAGRAPH')
           .setMaxLength(maxLength)
-          .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : '')
+          .setPlaceholder(
+            markdownSupport && type !== MessageBuilderTypes.rolePicker
+              ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT')
+              : ''
+          )
       )
     );
 

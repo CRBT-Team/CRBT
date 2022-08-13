@@ -1,8 +1,8 @@
 import { APIEmbed } from 'discord-api-types/v10';
 import {
-  ButtonInteraction,
   CommandInteraction,
   MessageActionRow,
+  MessageComponentInteraction,
   ModalSubmitInteraction,
 } from 'discord.js';
 
@@ -31,7 +31,7 @@ export type MessageBuilderData = JoinLeaveData | RolePickerData;
 
 export interface MessageBuilderProps {
   data: MessageBuilderData;
-  interaction: CommandInteraction | ModalSubmitInteraction | ButtonInteraction;
+  interaction: CommandInteraction | ModalSubmitInteraction | MessageComponentInteraction;
 }
 
 // [id, name, maxLength, markdownSupport, CRBTscriptSupport

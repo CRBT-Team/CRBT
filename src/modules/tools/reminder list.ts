@@ -4,9 +4,9 @@ import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
-import { FullDBTimeout } from '$lib/functions/setDbTimeout';
 import { snowStamp } from '$lib/functions/snowStamp';
 import { t } from '$lib/language';
+import { ReminderData } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import {
   ButtonInteraction,
@@ -34,7 +34,7 @@ export default ChatCommand({
   async handle() {
     dayjs.locale(this.locale);
     const userReminders = (
-      (await db.timeouts.findMany({ where: { type: 'REMINDER' } })) as FullDBTimeout<'REMINDER'>[]
+      (await db.timeouts.findMany({ where: { type: 'REMINDER' } })) as ReminderData[]
     )
       .filter((reminder) => reminder.data.userId === this.user.id)
       .sort((a, b) => a.expiration.getTime() - b.expiration.getTime());
@@ -51,7 +51,7 @@ export default ChatCommand({
 export const ReminderSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const index = parseInt(this.values[0]);
-    const userReminders = cache.get<FullDBTimeout<'REMINDER'>[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
 
     await this.update(await renderReminder.call(this, userReminders, index));
   },
@@ -59,9 +59,7 @@ export const ReminderSelectMenu = SelectMenuComponent({
 
 export const EditButton = ButtonComponent({
   async handle(index: number) {
-    const { data, expiration } = cache.get<FullDBTimeout<'REMINDER'>[]>(
-      `reminders:${this.user.id}`
-    )[index];
+    const { data, expiration } = cache.get<ReminderData[]>(`reminders:${this.user.id}`)[index];
 
     const modal = new EditModal(index)
       .setTitle('Edit Reminder')
@@ -93,7 +91,7 @@ export const EditButton = ButtonComponent({
 
 export const EditModal = ModalComponent({
   async handle(index: number) {
-    const reminderList = cache.get<FullDBTimeout<'REMINDER'>[]>(`reminders:${this.user.id}`);
+    const reminderList = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
     const reminder = reminderList[index];
     const subject = this.fields.getTextInputValue('subject');
 
@@ -108,7 +106,7 @@ export const EditModal = ModalComponent({
     const newTimeout = (await db.timeouts.update({
       where: { id: reminder.id },
       data: { data: { ...reminder.data, subject }, expiration },
-    })) as FullDBTimeout<'REMINDER'>;
+    })) as ReminderData;
 
     reminderList.splice(index, 1, newTimeout);
 
@@ -120,7 +118,7 @@ export const EditModal = ModalComponent({
 
 export const BackButton = ButtonComponent({
   async handle() {
-    const userReminders = cache.get<FullDBTimeout<'REMINDER'>[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
 
     return await this.update(await renderList.call(this, userReminders));
   },
@@ -147,7 +145,7 @@ export const DeleteButton = ButtonComponent({
 
 export const ConfirmDeleteButton = ButtonComponent({
   async handle(index: number) {
-    const userReminders = cache.get<FullDBTimeout<'REMINDER'>[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
     const reminder = userReminders[index];
 
     await db.timeouts.delete({ where: { id: reminder.id } });
@@ -162,7 +160,7 @@ export const ConfirmDeleteButton = ButtonComponent({
 
 async function renderReminder(
   this: SelectMenuInteraction | ModalSubmitInteraction,
-  userReminders: FullDBTimeout<'REMINDER'>[],
+  userReminders: ReminderData[],
   index: number
 ) {
   const { data, expiration } = userReminders[index];
@@ -238,7 +236,7 @@ async function renderReminder(
 
 async function renderList(
   this: CommandInteraction | ButtonInteraction,
-  userReminders: FullDBTimeout<'REMINDER'>[]
+  userReminders: ReminderData[]
 ) {
   const reminderCmd = allCommands.find(({ name }) => name === 'reminder');
 

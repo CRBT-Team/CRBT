@@ -4,8 +4,9 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
 import { resolveToDate } from '$lib/functions/resolveToDate';
-import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -88,9 +89,9 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await setDbTimeout({
+      await dbTimeout({
         id: url,
-        type: 'REMINDER',
+        type: TimeoutTypes.Reminder,
         expiration: expiration.toDate(),
         data: {
           destination: destination ? destination.id : 'dm',

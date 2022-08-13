@@ -1,6 +1,12 @@
 import { cache } from '$lib/cache';
 import { links } from '$lib/db';
 import { t } from '$lib/language';
+import {
+  editableList,
+  MessageBuilderData,
+  MessageBuilderProps,
+  MessageBuilderTypes,
+} from '$lib/types/messageBuilder';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
@@ -10,12 +16,7 @@ import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';
 import { SaveButton } from './SaveButton';
-import {
-  editableList,
-  MessageBuilderData,
-  MessageBuilderProps,
-  MessageBuilderTypes,
-} from './types';
+import { SendMessageButton } from './SendMessageButton';
 
 export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
   const { type } = data;
@@ -24,12 +25,15 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
 
   cache.set<MessageBuilderData>(`${type}_BUILDER:${i.guildId}`, data);
 
-  const parsed = parseCRBTscriptInMessage(data, {
-    channel: i.channel as GuildTextBasedChannel,
-    member: i.member as GuildMember,
-  });
+  const parsed =
+    type === MessageBuilderTypes.rolePicker
+      ? data
+      : parseCRBTscriptInMessage(data, {
+          channel: i.channel as GuildTextBasedChannel,
+          member: i.member as GuildMember,
+        });
 
-  const { SAVE, IMPORT, EXPORT } = t(i, 'genericButtons');
+  const { SAVE, IMPORT, EXPORT, SEND } = t(i, 'genericButtons');
 
   const fieldSelect = new FieldSelectMenu(type as never)
     .setPlaceholder(t(i, 'FIELD_SELECT_MENU'))
@@ -56,6 +60,19 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
         .filter(Boolean)
     );
 
+  const buttons = {
+    save:
+      type !== MessageBuilderTypes.rolePicker
+        ? new SaveButton(type as never).setLabel(SAVE).setStyle('SUCCESS')
+        : new SendMessageButton(type as never).setLabel(SEND).setStyle('SUCCESS'),
+    import: new ImportJSONButton(type as never).setLabel(IMPORT).setStyle('SECONDARY'),
+    export: new ExportJSONButton(type as never).setLabel(EXPORT).setStyle('SECONDARY'),
+    CRBTscript: new MessageButton()
+      .setURL(links.CRBTscript)
+      .setStyle('LINK')
+      .setLabel(t(i, 'CRBTSCRIPT_GUIDE')),
+  };
+
   return {
     allowedMentions: {
       users: [i.user.id],
@@ -67,21 +84,9 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
       ...[
         type === MessageBuilderTypes.rolePicker ? data.components[0] : null,
         row(fieldSelect),
-        row(
-          new SaveButton(type as never).setLabel(SAVE).setStyle('SUCCESS'),
-          ...(type !== 'ROLE_PICKER'
-            ? [
-                new ExportJSONButton(type as never).setLabel(EXPORT).setStyle('SECONDARY'),
-                new ImportJSONButton(type as never).setLabel(IMPORT).setStyle('SECONDARY'),
-              ]
-            : [])
-        ),
-        row(
-          new MessageButton()
-            .setURL(links.CRBTscript)
-            .setStyle('LINK')
-            .setLabel(t(i, 'CRBTSCRIPT_GUIDE'))
-        ),
+        ...(type !== MessageBuilderTypes.rolePicker
+          ? [row(buttons.save, buttons.import, buttons.export), row(buttons.CRBTscript)]
+          : [row(buttons.save)]),
       ].filter(Boolean)
     ),
     files: [],

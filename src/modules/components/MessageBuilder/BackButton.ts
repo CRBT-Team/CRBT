@@ -1,7 +1,7 @@
 import { cache } from '$lib/cache';
+import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { ButtonComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { MessageBuilderData, MessageBuilderTypes } from './types';
 
 export const BackButton = ButtonComponent({
   async handle(type: MessageBuilderTypes) {

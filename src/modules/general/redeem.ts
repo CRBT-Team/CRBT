@@ -2,18 +2,9 @@ import { db, links } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { AchievementProgress } from '$lib/responses/Achievements';
+import { TokenData, TokenTypes } from '$lib/types/tokens';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-
-interface APITokenData {
-  userId: string;
-  guildId?: string;
-}
-
-interface RedeemTokenData {
-  type: 'BetaAccess1Month' | 'BetaAccess12Months';
-  output: string;
-}
 
 export default ChatCommand({
   name: 'redeem',
@@ -28,25 +19,22 @@ export default ChatCommand({
       ephemeral: true,
     });
 
-    const token = await db.tokens.findUnique({
-      where: {
-        token: tokenString,
-      },
-    });
+    const token: TokenData = (await db.tokens.findUnique({
+      where: { token: tokenString },
+    })) as any;
 
     if (!token) {
       return this.editReply(
         CRBTError(
-          `"${token}" is not a valid token. For more info about redeemable tokens, check this [article](${links.blog.crbtTokens})`
+          `"${tokenString}" is not a valid token. For more info about redeemable tokens, check this [article](${links.blog.crbtTokens})`
         )
       );
     }
 
-    if (token.type === 'API') {
-      const data = token.data as any as APITokenData;
+    if (token.type === TokenTypes.API) {
       const decoded = decodeAPIToken(token.token);
 
-      if (decoded.userId !== this.user.id && data.userId !== this.user.id) {
+      if (decoded.userId !== this.user.id && token.data.userId !== this.user.id) {
         return this.editReply(CRBTError('You are not authorized to use this token.'));
       }
 
@@ -66,10 +54,8 @@ export default ChatCommand({
 
       await AchievementProgress.call(this, 'BREWING_APPS');
     }
-    if (token.type === 'REDEEM') {
-      const data = token.data as any as RedeemTokenData;
-
-      await this.reply(data.output);
+    if (token.type === TokenTypes.Redeem) {
+      await this.reply(token.data.output);
     }
   },
 });

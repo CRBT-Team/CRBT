@@ -4,9 +4,10 @@ import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError
 import { findEmojis } from '$lib/functions/findEmojis';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { PollData, TimeoutTypes } from '$lib/types/timeouts';
 import { EmojiRegex } from '$lib/util/regex';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -20,7 +21,7 @@ import {
   row,
 } from 'purplet';
 
-const activePolls = new Map<string, FullDBTimeout<'POLL'>>();
+const activePolls = new Map<string, PollData>();
 const usersOnCooldown = new Map();
 
 export default ChatCommand({
@@ -65,9 +66,6 @@ export default ChatCommand({
       const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
       for (const choice of pollChoices) {
-        // if (choice.replace(EmojiRegex, '').length > 40) {
-        //   return this.reply(CRBTError(errors.CHOICE_TOO_LONG));
-        // } else
         if (choice.replace(EmojiRegex, '').trim().length === 0) {
           return this.reply(CRBTError(errors.CHOICE_EMPTY));
         }
@@ -132,9 +130,9 @@ export default ChatCommand({
         ),
       });
 
-      const pollData = await setDbTimeout({
+      const pollData = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        type: 'POLL',
+        type: TimeoutTypes.Poll,
         expiration: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         data: {
@@ -173,7 +171,7 @@ async function getPollData(id: string) {
     activePolls.get(id) ??
     ((await db.timeouts.findFirst({
       where: { id },
-    })) as FullDBTimeout<'POLL'>)
+    })) as PollData)
   );
 }
 
@@ -384,7 +382,7 @@ export const EndPollButton = ButtonComponent({
   },
 });
 
-export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, locale: string) => {
+export const endPoll = async (pollData: PollData['data'], pollMsg: Message, locale: string) => {
   const { strings } = t(locale, 'poll');
 
   const choices = pollData.choices;
@@ -469,7 +467,7 @@ export const endPoll = async (pollData: TimeoutData['POLL'], pollMsg: Message, l
 const renderPoll = async (
   choiceId: string,
   userId: string,
-  pollData: FullDBTimeout<'POLL'>,
+  pollData: PollData,
   pollEmbed: MessageEmbed,
   locale: string
 ) => {
@@ -492,7 +490,7 @@ const renderPoll = async (
   const newData = (await db.timeouts.update({
     where: { id: pollData.id },
     data: { data: { ...pollData.data, choices } },
-  })) as FullDBTimeout<'POLL'>;
+  })) as PollData;
 
   activePolls.set(pollData.id, newData);
 

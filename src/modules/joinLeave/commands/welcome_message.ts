@@ -1,6 +1,6 @@
 import { t } from '$lib/language';
+import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { ChatCommand } from 'purplet';
-import { MessageBuilderTypes } from '../../components/MessageBuilder/types';
 import { renderJoinLeavePrebuilder } from '../renderers';
 
 export default ChatCommand({

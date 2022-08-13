@@ -3,14 +3,15 @@ import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { FullDBTimeout, setDbTimeout, TimeoutData } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { GiveawayData, TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageButton, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 
-const activeGiveaways = new Map<string, FullDBTimeout<'GIVEAWAY'>>();
+const activeGiveaways = new Map<string, GiveawayData>();
 
 export default ChatCommand({
   name: 'giveaway',
@@ -68,9 +69,9 @@ export default ChatCommand({
         ),
       });
 
-      const data = await setDbTimeout({
+      const data = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        type: 'GIVEAWAY',
+        type: TimeoutTypes.Giveaway,
         expiration: end.toDate(),
         locale: this.guildLocale,
         data: {
@@ -108,7 +109,7 @@ async function getGiveawayData(id: string) {
     activeGiveaways.get(id) ??
     ((await db.timeouts.findFirst({
       where: { id },
-    })) as FullDBTimeout<'GIVEAWAY'>)
+    })) as GiveawayData)
   );
 }
 
@@ -220,7 +221,7 @@ export const EnterGwayButton = ButtonComponent({
     (await db.timeouts.update({
       where: { id: gwayData.id },
       data: { data: { ...gwayData.data, participants } },
-    })) as FullDBTimeout<'GIVEAWAY'>;
+    })) as GiveawayData;
 
     this.update({
       embeds: [
@@ -247,7 +248,7 @@ export const EnterGwayButton = ButtonComponent({
 });
 
 export const endGiveaway = async (
-  gwayData: TimeoutData['GIVEAWAY'],
+  gwayData: GiveawayData['data'],
   gwayMsg: Message,
   locale: string
 ) => {

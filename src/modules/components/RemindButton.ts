@@ -1,8 +1,8 @@
 import { emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { setDbTimeout } from '$lib/functions/setDbTimeout';
 import { t } from '$lib/language';
-import dayjs from 'dayjs';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
@@ -68,10 +68,10 @@ export const SnoozeButton = ButtonComponent({
     const button = this.message.components[0].components[0];
     const url = (this.message as Message).url;
 
-    await setDbTimeout({
+    await dbTimeout({
       id: url,
-      type: 'REMINDER',
-      expiration: dayjs().add(15, 'minutes').toDate(),
+      type: TimeoutTypes.Reminder,
+      expiration: new Date(Date.now() + 60 * 1000 * 15),
       data: {
         destination: url.includes('@me') ? 'dm' : url.split('/')[1],
         userId: this.user.id,

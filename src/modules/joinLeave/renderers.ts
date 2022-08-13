@@ -2,6 +2,7 @@ import { colors, db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
@@ -14,7 +15,6 @@ import {
 import { components, row } from 'purplet';
 import { MessageBuilder } from '../components/MessageBuilder';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
-import { JoinLeaveData, MessageBuilderTypes } from '../components/MessageBuilder/types';
 import { RawServerJoin, RawServerLeave, resolveMsgType } from './types';
 
 export function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
