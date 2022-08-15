@@ -16,6 +16,7 @@
     "PREVIOUS": "Vorheriges",
     "NEXT": "Nächstes",
     "SAVE": "Save Changes",
+    "SEND": "Send",
     "DONE": "Done",
     "ADD_REMINDER": "Erinnerung hinzufügen",
     "OPEN_DMS": "Open DMs",
@@ -256,7 +257,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar"
+      "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -346,6 +347,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Ban",
   "MODERATION_LOGS_ACTION_UNBAN": "Unban",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
@@ -390,5 +392,6 @@
   "FIELDS_COLOR": "Embed Color",
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
-  "FIELDS_URL": "Embed Title URL"
+  "FIELDS_URL": "Embed Title URL",
+  "SETTINGS": "Settings"
 }
