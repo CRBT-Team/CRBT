@@ -2,10 +2,17 @@ import { t } from '$lib/language';
 import { editableList, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
+import { EditableFeatures } from '../../settings/settings';
 import { FieldEditModal } from './FieldEditModal';
 
 export const ManualColorEditButton = ButtonComponent({
-  handle(type: MessageBuilderTypes) {
+  handle({
+    type,
+    value,
+  }: {
+    type: MessageBuilderTypes | EditableFeatures.accentColor;
+    value: string;
+  }) {
     const [id, maxLength] = editableList.find(([id]) => id === 'color')!;
 
     this.showModal(
@@ -16,7 +23,8 @@ export const ManualColorEditButton = ButtonComponent({
             new TextInputComponent()
               .setLabel('Value')
               .setCustomId('VALUE')
-              .setStyle(maxLength > 256 ? 'SHORT' : 'PARAGRAPH')
+              .setStyle('SHORT')
+              .setValue(value)
               .setMaxLength(maxLength)
           )
         )

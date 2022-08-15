@@ -1,6 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
@@ -59,7 +60,7 @@ export default ChatCommand({
             .setDescription(`Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`)
             .addField('Entrants', `0`, true)
             .addField('Winners', `${winners}`, true)
-            .setColor(`#${colors.default}`),
+            .setColor(await getColor(this.guild)),
         ],
         components: components(
           row(
@@ -138,7 +139,7 @@ export const GwayOptionsButton = ButtonComponent({
           .setFooter({
             text: strings.POLL_DATA_FOOTER,
           })
-          .setColor(`#${colors.default}`),
+          .setColor(await getColor(this.guild)),
       ],
       components: components(
         row(

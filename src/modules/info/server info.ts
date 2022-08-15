@@ -1,12 +1,19 @@
 import { colors, emojis } from '$lib/db';
 import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { trimArray } from '$lib/functions/trimArray';
 import canvas from 'canvas';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Guild, Interaction, MessageAttachment, MessageEmbed } from 'discord.js';
+import {
+  Guild,
+  Interaction,
+  MessageAttachment,
+  MessageComponentInteraction,
+  MessageEmbed,
+} from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 import { getTabs, serverNavBar } from '../components/serverNavBar';
@@ -173,7 +180,11 @@ export async function renderServerMembersRoles(
   guild: Guild,
   navCtx: NavBarContext
 ) {
-  const color = colors.default;
+  const color =
+    this instanceof MessageComponentInteraction
+      ? this.message.embeds[0].color
+      : await getColor(guild);
+
   const members = guild.memberCount;
   const bots = hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuild)
     ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
@@ -192,7 +203,7 @@ export async function renderServerMembersRoles(
       `${emojis.members} ${members - bots.size} Humans • ${emojis.bot} ${bots.size} Bots`
     )
     .addField(`Roles • ${roles.length}`, roles.map((r) => `${r}`).join(''), true)
-    .setColor(`#${color}`);
+    .setColor(color);
 
   return {
     embeds: [e],
@@ -201,7 +212,10 @@ export async function renderServerMembersRoles(
 }
 
 export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx: NavBarContext) {
-  const color = colors.default;
+  const color =
+    this instanceof MessageComponentInteraction
+      ? this.message.embeds[0].color
+      : await getColor(guild);
   const emojis = guild.emojis.cache;
   const stickers = guild.stickers.cache;
 
@@ -224,7 +238,7 @@ export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx
       `Stickers • ${stickers.size}`,
       stickers.map((r) => `${r.name}`).join(', '),
       true
-    ).setColor(`#${color}`);
+    ).setColor(color);
 
   return {
     embeds: [e],

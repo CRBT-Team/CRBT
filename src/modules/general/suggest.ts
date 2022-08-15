@@ -1,4 +1,4 @@
-import { colors, icons, links, misc } from '$lib/db';
+import { colors, emojis, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent, row } from 'purplet';
@@ -54,15 +54,15 @@ export const Modal = ModalComponent({
           })
           .setTitle(title)
           .setDescription(desc)
-          .addField('Status', '<:pending:954734893072519198> Pending', true)
+          .addField('Status', `${emojis.pending} Pending`, true)
           .setFooter({ text: `User ID: ${this.user.id} • Last update` })
           .setTimestamp()
           .setColor(`#${colors.yellow}`),
       ],
     });
 
-    // await msg.react(emojis.thumbsup);
-    // await msg.react(emojis.thumbsdown);
+    await msg.react(emojis.thumbsup);
+    await msg.react(emojis.thumbsdown);
 
     await this.reply({
       embeds: [

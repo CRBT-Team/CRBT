@@ -1,11 +1,12 @@
-import { colors } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import {
   AllowedImageSize,
   DynamicImageFormat,
   Guild,
   Interaction,
   MessageButton,
+  MessageComponentInteraction,
   MessageEmbed,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -65,7 +66,10 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
     dynamic: !!format,
   });
 
-  const color = colors.default;
+  const color =
+    this instanceof MessageComponentInteraction
+      ? this.message.embeds[0].color
+      : await getColor(this.guild);
 
   return {
     embeds: [

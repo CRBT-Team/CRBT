@@ -7,12 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TimeoutTypes {
+  POLL
+  REMINDER
+  TEMPBAN
+  GIVEAWAY
+}
+
 model timeouts {
+  id         String       @id
   expiration DateTime     @db.Timestamptz(6)
   locale     String
   type       TimeoutTypes
-  data       Json         @db.Json
-  id         String       @id
+  data       Json         @db.Json()
 }
 
 model servers {
@@ -22,36 +29,44 @@ model servers {
   leaveChannel String?        @map("leave_channel")
   leaveMessage Json?          @map("leave_message")
   accentColor  String?        @map("accent_color")
-  economy      Economy?
   modules      serverModules?
-  flags        BigInt?        @default(0)
+  economy      Economy?
 }
 
 model serverModules {
   id           String  @id
+  server       servers @relation(fields: [id], references: [id])
   joinMessage  Boolean @default(false) @map("join_message")
   leaveMessage Boolean @default(false) @map("leave_message")
-  server       servers @relation(fields: [id], references: [id])
 }
 
 model moderationStrikes {
   id          String                @id @default(uuid()) @db.Uuid
-  moderatorId String                @map("moderator_id")
   serverId    String                @map("server_id")
   targetId    String                @map("target_id")
+  moderatorId String                @map("moderator_id")
   reason      String?
   createdAt   DateTime              @map("created_at") @db.Timestamptz(6)
   expiresAt   DateTime?             @map("expires_at") @db.Timestamptz(6)
   type        ModerationStrikeTypes
 }
 
+enum ModerationStrikeTypes {
+  BAN
+  TEMPBAN
+  CLEAR
+  KICK
+  TIMEOUT
+  WARN
+}
+
 model users {
   id           String         @id(map: "misc_pkey")
+  telemetry    Boolean        @default(true)
   accentColor  String?        @map("accent_color")
-  achievements Achievements[]
   birthday     DateTime?      @db.Timestamptz(6)
   crbtBadges   String[]       @map("crbt_badges")
-  telemetry    Boolean        @default(true)
+  achievements Achievements[]
   silentJoins  Boolean        @default(false) @map("silent_joins")
   silentLeaves Boolean        @default(false) @map("silent_leaves")
 }
@@ -61,29 +76,35 @@ model Achievements {
   userId      String    @map("user_id")
   user        users     @relation(fields: [userId], references: [id])
   achievement String
-  progression Int
   achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
+  progression Int
 }
 
 model Inventory {
   serverId    String        @id @map("server_id")
   userId      String        @map("user_id")
-  dailyStreak Int           @default(0) @map("daily_streak") @db.SmallInt
-  activeItems EconomyItem[] @relation("ActiveInventory")
   items       EconomyItem[] @relation("Inventory")
+  activeItems EconomyItem[] @relation("ActiveInventory")
+  dailyStreak Int           @default(0) @map("daily_streak") @db.SmallInt
 }
 
 model Economy {
   serverId             String  @id
+  server               servers @relation(fields: [serverId], references: [id])
   currencyNameSingular String  @map("currency_name_singular")
   currencyNamePlural   String  @map("currency_name_plural")
   currencySymbol       String  @map("currency_symbol")
-  server               servers @relation(fields: [serverId], references: [id])
+  // these three are temporary flags, will be removed when economy is fully implemented
+  hasEconomy           Boolean @map("economy_enabled")
+  hasLeveling          Boolean @map("leveling_enabled")
+  hasShop              Boolean @map("shop_enabled")
+  hasChatMoney         Boolean @map("chat_money_enabled")
 }
 
 model EconomyCommand {
   serverId String          @id @map("server_id")
   type     EconomyCommands
+  // rates    Int
   enabled  Boolean         @default(true)
   strings  String[]
   cooldown Int             @default(20000)
@@ -105,32 +126,10 @@ model EconomyItem {
   availableUntil            DateTime?  @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
   value                     String?
+  inventories               Inventory? @relation("Inventory", fields: [inventoriesServerId], references: [serverId])
+  activeInventories         Inventory? @relation("ActiveInventory", fields: [activeInventoriesServerId], references: [serverId])
   inventoriesServerId       String?    @map("inventories_server_id")
   activeInventoriesServerId String?    @map("active_inventories_server_id")
-  activeInventories         Inventory? @relation("ActiveInventory", fields: [activeInventoriesServerId], references: [serverId])
-  inventories               Inventory? @relation("Inventory", fields: [inventoriesServerId], references: [serverId])
-}
-
-model Token {
-  token String     @id
-  data  Json       @db.Json
-  type  TokenTypes
-}
-
-enum TimeoutTypes {
-  REMINDER
-  POLL
-  TEMPBAN
-  GIVEAWAY
-}
-
-enum ModerationStrikeTypes {
-  BAN
-  TEMPBAN
-  CLEAR
-  KICK
-  TIMEOUT
-  WARN
 }
 
 enum EconomyCommands {
@@ -150,4 +149,10 @@ enum ItemTypes {
 enum TokenTypes {
   API
   REDEEM
+}
+
+model tokens {
+  token String     @id
+  type  TokenTypes
+  data  Json       @db.Json()
 }

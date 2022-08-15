@@ -19,7 +19,7 @@ export default ChatCommand({
       ephemeral: true,
     });
 
-    const token: TokenData = (await db.tokens.findUnique({
+    const token: TokenData = (await db.token.findUnique({
       where: { token: tokenString },
     })) as any;
 

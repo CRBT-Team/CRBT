@@ -45,7 +45,7 @@ export const FieldSelectMenu = SelectMenuComponent({
               .setLabel(BACK)
               .setEmoji(emojis.buttons.left_arrow)
               .setStyle('SECONDARY'),
-            new ManualColorEditButton(type as never)
+            new ManualColorEditButton({ type, value: messageData.embed.color.toString(16) })
               .setLabel(t(this, 'MANUAL_COLOR_EDIT_BUTTON'))
               .setEmoji(emojis.buttons.pencil)
               .setStyle('PRIMARY')

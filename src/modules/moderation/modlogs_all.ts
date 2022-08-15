@@ -1,7 +1,9 @@
 import { cache } from '$lib/cache';
-import { colors, db, emojis } from '$lib/db';
+import { db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { unix } from '$lib/functions/unix';
 import { t } from '$lib/language';
 import { moderationStrikes } from '@prisma/client';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -50,23 +52,27 @@ async function renderModlogs(this: Interaction, index: number) {
         })
         .setFields(
           page.map((strike) => {
-            switch (strike.type) {
-              case 'CLEAR': {
-                return {
-                  name: `${strike.type} - <t:${Math.floor(strike.createdAt.getTime() / 1000)}:R>`,
-                  value: `In <#${strike.targetId}>, moderated by <@${strike.moderatorId}>`,
-                };
-              }
-              default: {
-                return {
-                  name: `${strike.type} - <t:${Math.floor(strike.createdAt.getTime() / 1000)}:R>`,
-                  value: `<@${strike.targetId}>, moderated by <@${strike.moderatorId}>`,
-                };
-              }
+            if (strike.type === 'CLEAR') {
+              return {
+                name: `${t(this.guildLocale, `MODERATION_LOGS_CLEAR`)} - ${unix(
+                  strike.createdAt,
+                  true
+                )}`,
+                value: `In <#${strike.targetId}>, moderated by <@${strike.moderatorId}>`,
+              };
+            } else {
+              return {
+                name: `${t(this.guildLocale, `MODERATION_LOGS_ACTION_${strike.type}`)} ${
+                  strike.expiresAt ? `(Expires ${unix(strike.expiresAt, true)})` : ''
+                }- ${unix(strike.createdAt, true)}`,
+                value: `${strike.reason ?? '*No reason specified*'}\n<@${
+                  strike.targetId
+                }>, moderated by <@${strike.moderatorId}>`,
+              };
             }
           })
         )
-        .setColor(`#${colors.default}`),
+        .setColor(await getColor(this.guild)),
     ],
     components: components(
       row(

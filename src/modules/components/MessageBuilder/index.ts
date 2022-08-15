@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { links } from '$lib/db';
+import { emojis, links } from '$lib/db';
 import { t } from '$lib/language';
 import {
   editableList,
@@ -12,6 +12,7 @@ import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 
 import { components, row } from 'purplet';
 import { ExportJSONButton } from '../../joinLeave/components/ExportJSONButton';
 import { ImportJSONButton } from '../../joinLeave/components/ImportJSONButton';
+import { BackSettingsButton } from '../../settings/settings';
 import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';
@@ -20,8 +21,6 @@ import { SendMessageButton } from './SendMessageButton';
 
 export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
   const { type } = data;
-
-  console.log(data);
 
   cache.set<MessageBuilderData>(`${type}_BUILDER:${i.guildId}`, data);
 
@@ -32,6 +31,8 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
           channel: i.channel as GuildTextBasedChannel,
           member: i.member as GuildMember,
         });
+
+  console.log(parsed);
 
   const { SAVE, IMPORT, EXPORT, SEND } = t(i, 'genericButtons');
 
@@ -61,6 +62,10 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
     );
 
   const buttons = {
+    back: new BackSettingsButton(type)
+      .setLabel(t(i, 'SETTINGS'))
+      .setEmoji(emojis.buttons.left_arrow)
+      .setStyle('SECONDARY'),
     save:
       type !== MessageBuilderTypes.rolePicker
         ? new SaveButton(type as never).setLabel(SAVE).setStyle('SUCCESS')
@@ -85,7 +90,10 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
         type === MessageBuilderTypes.rolePicker ? data.components[0] : null,
         row(fieldSelect),
         ...(type !== MessageBuilderTypes.rolePicker
-          ? [row(buttons.save, buttons.import, buttons.export), row(buttons.CRBTscript)]
+          ? [
+              row(buttons.back, buttons.save, buttons.import, buttons.export),
+              row(buttons.CRBTscript),
+            ]
           : [row(buttons.save)]),
       ].filter(Boolean)
     ),

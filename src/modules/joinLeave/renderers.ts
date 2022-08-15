@@ -1,5 +1,6 @@
 import { colors, db } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
@@ -49,7 +50,7 @@ export async function renderJoinLeavePrebuilder(
           '<TYPE>',
           t(this.guildLocale, type)
         ),
-        color: parseInt(colors.default, 16),
+        color: await getColor(this.guild),
       },
     },
   }) as typeof type extends MessageBuilderTypes.joinMessage ? RawServerJoin : RawServerLeave;
@@ -115,7 +116,7 @@ export async function renderJoinLeavePreview(this: CommandInteraction, data: Joi
               t(this.guildLocale, data.type)
             ),
           })
-          .setColor(`#${colors.default}`),
+          .setColor(await getColor(this.guild)),
         ...(message.embed ? [new MessageEmbed(parsedMessage.embed)] : []),
       ],
     });
@@ -132,7 +133,7 @@ export async function renderJoinLeavePreview(this: CommandInteraction, data: Joi
               .replace('<TYPE>', t(this, data.type))
               .replace('<CHANNEL>', channel.toString())
           )
-          .setColor(`#${colors.default}`),
+          .setColor(await getColor(this.guild)),
       ],
       components: components(
         row(new MessageButton().setLabel(JUMP_TO_MSG).setURL(url).setStyle('LINK'))

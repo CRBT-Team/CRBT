@@ -9,14 +9,8 @@ import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
-import {
-  GuildTextBasedChannel,
-  Message,
-  MessageButton,
-  MessageEmbed,
-  TextChannel,
-} from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta } = t('en-US', 'remind me');
 
@@ -123,31 +117,6 @@ export default ChatCommand({
             .addField(strings.SUBJECT, subject)
             .setColor(`#${colors.success}`),
         ],
-        components: components(
-          row(
-            new MessageButton()
-              .setStyle('LINK')
-              .setLabel(strings.BUTTON_GCALENDAR)
-              .setURL(
-                `https://calendar.google.com/calendar/render?${new URLSearchParams({
-                  action: 'TEMPLATE',
-                  text: subject,
-                  dates: `${expiration.format('YYYYMMDD')}/${expiration
-                    .add(1, 'day')
-                    .format('YYYYMMDD')}`,
-                  details: `${strings.GCALENDAR_EVENT} ${
-                    destination
-                      ? strings.GCALENDAR_EVENT_CHANNEL.replace(
-                          '<CHANNEL>',
-                          `#${(destination as TextChannel).name}`
-                        ).replace('<SERVER>', (destination as TextChannel).guild.name)
-                      : strings.GCALENDAR_EVENT_DM
-                  }`,
-                  location: ((await this.fetchReply()) as Message).url,
-                })}`
-              )
-          )
-        ),
       });
     } catch (error) {
       await this.editReply(UnknownError(this, String(error)));

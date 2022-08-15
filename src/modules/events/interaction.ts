@@ -1,7 +1,6 @@
 import { cache } from '$lib/cache';
 import { db, misc } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
-import { statcord } from '$lib/statcord';
 import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 // import { customCmds } from '../customCommands/commands';
@@ -26,7 +25,6 @@ export default OnEvent('interactionCreate', async (i) => {
 
   try {
     console.log(cmdName);
-    statcord.postCommand(cmdName, i.user.id);
 
     let value = cache.get(`tlm_${i.user.id}`);
 

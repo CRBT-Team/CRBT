@@ -8,6 +8,7 @@ export function hasPerms(
 ): boolean {
   if (memberOrPerms instanceof GuildMember) {
     const member = memberOrPerms;
+    console.log(misc.devs.includes(member.id));
     if (misc.devs.includes(member.id)) return true;
     if (member.id === member.guild.ownerId) return true;
 

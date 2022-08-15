@@ -1,33 +1,34 @@
 import { cache } from '$lib/cache';
 import { colors, db } from '$lib/db';
-import { User } from 'discord.js';
+import { Guild, User } from 'discord.js';
 
-export async function getColor(user: User): Promise<`#${string}`> {
-  let result: string;
+type colorString = `#${string}`;
 
-  try {
-    // get from the cache, if it doesn't exist, get from the db and cache that
-    if (cache.has(`color_${user.id}`)) {
-      result = cache.get(`color_${user.id}`);
-    } else {
-      const { accentColor } = await db.users.findFirst({
-        where: { id: user.id },
-        select: { accentColor: true },
-      });
-      if (accentColor) {
-        result = accentColor as `#${string}`;
-        cache.set(`color_${user.id}`, result);
-      } else {
-        result = `#${colors.default}`;
-      }
-    }
+export async function getColor(thing: User | Guild): Promise<colorString> {
+  const isUser = thing instanceof User;
 
-    if (result === 'profile') {
-      result = (await user.fetch()).hexAccentColor ?? `#${colors.default}`;
-      cache.set(`color_${user.id}`, result);
-    }
-  } catch (e) {
-    result = `#${colors.default}`;
+  if (cache.has(`${thing.id}:color`)) {
+    return cache.get<colorString>(`${thing.id}:color`);
   }
-  return result as `#${string}`;
+
+  const query = {
+    where: { id: thing.id },
+    select: { accentColor: true },
+  };
+
+  const accentColor = (isUser ? await db.users.findFirst(query) : await db.servers.findFirst(query))
+    .accentColor;
+
+  if (accentColor === 'profile' && isUser) {
+    cache.set(`${thing.id}:color`, accentColor);
+    return (await thing.fetch()).hexAccentColor ?? `#${colors.default}`;
+  }
+
+  if (accentColor) {
+    cache.set(`${thing.id}:color`, accentColor);
+    return accentColor as colorString;
+  }
+
+  cache.set(`${thing.id}:color`, `#${colors.default}`);
+  return `#${colors.default}`;
 }

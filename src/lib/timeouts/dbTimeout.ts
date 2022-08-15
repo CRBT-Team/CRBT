@@ -25,22 +25,18 @@ export async function dbTimeout<T extends TimeoutData>(
 
     if (timeoutData.type === TimeoutTypes.TempBan) {
       handleTempBan(timeoutData, client);
-      return;
     }
 
     if (timeoutData.type === TimeoutTypes.Poll) {
       handlePoll(timeoutData, client);
-      return;
     }
 
     if (timeoutData.type === TimeoutTypes.Giveaway) {
       handleGiveaway(timeoutData, client);
-      return;
     }
 
     if (timeoutData.type === TimeoutTypes.Reminder) {
       handleReminder(timeoutData, client);
-      return;
     }
 
     await db.timeouts

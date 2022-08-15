@@ -8,10 +8,24 @@ import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
+import { EditableFeatures, saveColorSettings } from '../../settings/settings';
 
 export const FieldEditModal = ModalComponent({
-  async handle({ fieldName, type }: { fieldName: string; type: MessageBuilderTypes }) {
+  async handle({
+    fieldName,
+    type,
+  }: {
+    fieldName: string;
+    type: MessageBuilderTypes | EditableFeatures.accentColor;
+  }) {
     const value = this.fields.getTextInputValue('VALUE');
+
+    if (type === EditableFeatures.accentColor) {
+      if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
+        return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
+      }
+      return await saveColorSettings.call(this, value.toLowerCase().replace('#', ''));
+    }
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 

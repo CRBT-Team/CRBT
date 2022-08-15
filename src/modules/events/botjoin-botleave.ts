@@ -1,4 +1,5 @@
 import { colors, icons, links, misc } from '$lib/db';
+import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { MessageEmbed, TextChannel } from 'discord.js';
@@ -37,7 +38,7 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
               .replace('<DISCORD>', links.discord)
           )
           .setImage(icons.welcome)
-          .setColor(`#${colors.default}`),
+          .setColor(await getColor(guild)),
       ],
     });
   }

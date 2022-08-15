@@ -3,7 +3,7 @@ import { banner } from '$lib/functions/banner';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import {
   AvatarFormats,
   AvatarSizes,
@@ -54,27 +54,6 @@ export default ChatCommand({
         m
       )
     );
-  },
-});
-
-export const ctxUserBanner = UserContextCommand({
-  name: 'Get Banner',
-  async handle(user) {
-    const m = this.options.getMember('user') as GuildMember;
-    await this.reply({
-      ...(await renderBanner(
-        'user',
-        user,
-        this,
-        {
-          targetId: user.id,
-          userId: this.user.id,
-          size: '3',
-        },
-        m
-      )),
-      ephemeral: true,
-    });
   },
 });
 

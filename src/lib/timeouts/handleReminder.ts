@@ -5,11 +5,10 @@ import { ReminderData } from '$lib/types/timeouts';
 import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
-import timeout from '../../modules/moderation/timeout';
 
 export async function handleReminder(reminder: ReminderData, client: Client) {
-  const { JUMP_TO_MSG } = t(timeout.locale, 'genericButtons');
-  const { strings } = t(timeout.locale, 'remind me');
+  const { JUMP_TO_MSG } = t(reminder.locale, 'genericButtons');
+  const { strings } = t(reminder.locale, 'remind me');
   const { data } = reminder;
 
   const user = await client.users.fetch(data.userId);
@@ -18,7 +17,7 @@ export async function handleReminder(reminder: ReminderData, client: Client) {
       ? user
       : ((await client.channels.fetch(data.url.split('/')[1])) as GuildTextBasedChannel);
 
-  const unix = Math.floor(timeout.expiration.getTime() / 1000);
+  const unix = Math.floor(reminder.expiration.getTime() / 1000);
 
   const message = {
     embeds: [

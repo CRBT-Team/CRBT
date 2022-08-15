@@ -23,6 +23,7 @@ export default ChatCommand({
   options: new OptionBuilder().user('bot', 'What bot to get info on. Defaults to CRBT.'),
   async handle({ bot }) {
     const userInfo = allCommands.find((c) => c.name === 'user');
+    bot = bot || this.client.user;
 
     if (!bot.bot) {
       return this.reply(
@@ -31,9 +32,6 @@ export default ChatCommand({
         )
       );
     }
-
-    bot = bot || this.client.user;
-    this.client.application;
 
     const bots =
       cache.get<Integration[]>(`${this.guild.id}:integrations`) ??

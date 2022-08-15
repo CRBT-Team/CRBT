@@ -19,9 +19,6 @@ export const RoleButton = ButtonComponent({
 
     const { strings, errors } = t(this, 'role-selectors');
 
-    // console.log(this.guild.roles.cache.get(role.id));
-    // console.log(role);
-
     if (!this.guild.roles.cache.has(role.id)) {
       return this.reply(CRBTError(errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name)));
     }

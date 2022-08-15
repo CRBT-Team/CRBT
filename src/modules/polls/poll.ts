@@ -2,6 +2,7 @@ import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { colors, db, emojis, icons } from '$lib/db';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { trimArray } from '$lib/functions/trimArray';
@@ -11,7 +12,7 @@ import { PollData, TimeoutTypes } from '$lib/types/timeouts';
 import { EmojiRegex } from '$lib/util/regex';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageButton, MessageEmbed, TextInputComponent } from 'discord.js';
+import { Message, MessageEmbed, TextInputComponent } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -101,7 +102,7 @@ export default ChatCommand({
                 '0'
               )} • ${strings.POLL_FOOTER_CREATOR.replace('<USER>', this.user.tag)}`,
             })
-            .setColor(`#${colors.default}`),
+            .setColor(await getColor(this.guild)),
         ],
         components: components(
           row()
@@ -228,7 +229,7 @@ export const PollOptionsButton = ButtonComponent({
           .setFooter({
             text: strings.POLL_DATA_FOOTER,
           })
-          .setColor(`#${colors.default}`),
+          .setColor(await getColor(this.guild)),
       ],
       components: components(
         row(
@@ -422,14 +423,6 @@ export const endPoll = async (pollData: PollData['data'], pollMsg: Message, loca
         )
         .setColor(`#${colors.success}`),
     ],
-    components: components(
-      row(
-        new MessageButton()
-          .setLabel(strings.BUTTON_JUMP_TO_POLL)
-          .setStyle('LINK')
-          .setURL(pollMsg.url)
-      )
-    ),
   });
 
   await pollMsg.edit({

@@ -1,4 +1,5 @@
 import { db } from '$lib/db';
+import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -47,7 +48,7 @@ async function viewModLogs(
   const embed = new MessageEmbed()
     .setAuthor({
       name: `${user.username}#${user.discriminator} - Moderation history in ${this.guild.name}`,
-      iconURL: user.avatarURL(),
+      iconURL: avatar(user),
     })
     .setDescription(!data || data.length === 0 ? '*No moderation history found.*' : '')
     .setFields(
