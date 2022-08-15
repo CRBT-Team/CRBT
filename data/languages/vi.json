@@ -16,6 +16,7 @@
     "PREVIOUS": "Trước",
     "NEXT": "Tiếp theo",
     "SAVE": "Lưu thay đổi",
+    "SEND": "Send",
     "DONE": "Xong",
     "ADD_REMINDER": "Thêm nhắc nhỡ",
     "OPEN_DMS": "Mở các tin nhắn trực tiếp",
@@ -256,7 +257,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Lấy ảnh đại diện"
+      "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Hình đại diện",
@@ -346,6 +347,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Cấm",
   "MODERATION_LOGS_ACTION_UNBAN": "Bỏ cấm",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Thời gian chờ",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
@@ -390,5 +392,6 @@
   "FIELDS_COLOR": "Embed Color",
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
-  "FIELDS_URL": "Embed Title URL"
+  "FIELDS_URL": "Embed Title URL",
+  "SETTINGS": "Settings"
 }
