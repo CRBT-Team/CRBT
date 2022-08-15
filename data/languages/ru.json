@@ -16,6 +16,7 @@
     "PREVIOUS": "Предыдущий",
     "NEXT": "Следующий",
     "SAVE": "Сохранить изменения",
+    "SEND": "Send",
     "DONE": "Готово",
     "ADD_REMINDER": "Добавить напоминание",
     "OPEN_DMS": "Открыть ЛС",
@@ -256,7 +257,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Получить аватар"
+      "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Аватар",
@@ -346,6 +347,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Бан",
   "MODERATION_LOGS_ACTION_UNBAN": "Разбан",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Истечение времени ожидания",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Удаление сообщений в канале",
   "MODERATION_LOGS_VIEW_TITLE": "История действий на <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: <MODERATOR>",
@@ -390,5 +392,6 @@
   "FIELDS_COLOR": "Вставить цвет",
   "FIELDS_IMAGE": "Вставить изображение",
   "FIELDS_THUMBNAIL": "Вставить предпросматриваемое изображение",
-  "FIELDS_URL": "Вставить URL название"
+  "FIELDS_URL": "Вставить URL название",
+  "SETTINGS": "Settings"
 }
