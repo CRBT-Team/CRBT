@@ -16,6 +16,7 @@
     "PREVIOUS": "Précédent",
     "NEXT": "Suivant",
     "SAVE": "Enregistrer les modifications",
+    "SEND": "Send",
     "DONE": "Valider",
     "ADD_REMINDER": "Envoyer un rappel",
     "OPEN_DMS": "Ouvrir les MP",
@@ -256,7 +257,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Voir l'avatar"
+      "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -346,6 +347,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Bannissement",
   "MODERATION_LOGS_ACTION_UNBAN": "Débannissement",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Exclusion",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Suppression de messages",
   "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Modéré par <MODERATOR>",
@@ -390,5 +392,6 @@
   "FIELDS_COLOR": "Couleur de l'Embed",
   "FIELDS_IMAGE": "Image de l'Embed",
   "FIELDS_THUMBNAIL": "Vignette de l'Embed",
-  "FIELDS_URL": "Lien sur Titre de l'Embed"
+  "FIELDS_URL": "Lien sur Titre de l'Embed",
+  "SETTINGS": "Settings"
 }
