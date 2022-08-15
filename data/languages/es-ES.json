@@ -16,6 +16,7 @@
     "PREVIOUS": "Anterior",
     "NEXT": "Siguiente",
     "SAVE": "Guardar cambios",
+    "SEND": "Send",
     "DONE": "Listo",
     "ADD_REMINDER": "Establecer recordatorio",
     "OPEN_DMS": "Abrir MD",
@@ -256,7 +257,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Obtener avatar"
+      "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -346,6 +347,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Baneo",
   "MODERATION_LOGS_ACTION_UNBAN": "Desbaneo",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Aislamiento temporal",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Eliminación de mensajes",
   "MODERATION_LOGS_VIEW_TITLE": "Historial de moderación en <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderado por <MODERATOR>",
@@ -390,5 +392,6 @@
   "FIELDS_COLOR": "Color de la inserción",
   "FIELDS_IMAGE": "Imagen de la inserción",
   "FIELDS_THUMBNAIL": "Miniatura de la inserción",
-  "FIELDS_URL": "URL del título de la inserción"
+  "FIELDS_URL": "URL del título de la inserción",
+  "SETTINGS": "Settings"
 }
