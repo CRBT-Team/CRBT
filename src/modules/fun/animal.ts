@@ -100,7 +100,7 @@ async function renderAnimal(this: Interaction, animal: string) {
             .map((tag) => `\`${tag}\``)
             .join(', ')}`
         )
-        .setImage(result.largeImageURL)
+        .setImage(result.previewURL)
         .setColor(color)
         .setFooter({
           text: 'Powered by Pixabay • pixabay.com',

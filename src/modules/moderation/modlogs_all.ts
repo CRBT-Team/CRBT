@@ -3,7 +3,7 @@ import { db, emojis } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { unix } from '$lib/functions/unix';
+import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { moderationStrikes } from '@prisma/client';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -54,7 +54,7 @@ async function renderModlogs(this: Interaction, index: number) {
           page.map((strike) => {
             if (strike.type === 'CLEAR') {
               return {
-                name: `${t(this.guildLocale, `MODERATION_LOGS_CLEAR`)} - ${unix(
+                name: `${t(this.guildLocale, `MODERATION_LOGS_CLEAR`)} - ${time(
                   strike.createdAt,
                   true
                 )}`,
@@ -63,8 +63,8 @@ async function renderModlogs(this: Interaction, index: number) {
             } else {
               return {
                 name: `${t(this.guildLocale, `MODERATION_LOGS_ACTION_${strike.type}`)} ${
-                  strike.expiresAt ? `(Expires ${unix(strike.expiresAt, true)})` : ''
-                }- ${unix(strike.createdAt, true)}`,
+                  strike.expiresAt ? `(Expires ${time(strike.expiresAt, true)})` : ''
+                }- ${time(strike.createdAt, true)}`,
                 value: `${strike.reason ?? '*No reason specified*'}\n<@${
                   strike.targetId
                 }>, moderated by <@${strike.moderatorId}>`,

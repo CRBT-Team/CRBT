@@ -20,7 +20,8 @@ const convertTime12to24 = (time12h: string) => {
 
 export async function resolveToDate(
   when: Date | string | dayjs.Dayjs | number,
-  locale = 'en'
+  locale = 'en',
+  allowPast = false
 ): Promise<dayjs.Dayjs> {
   const { keywordsDetection__KEEPLOWERCASE: keywords } = t(locale, 'remind me');
 
@@ -75,10 +76,10 @@ export async function resolveToDate(
   }
 
   if (dayjs(when).isValid()) {
-    if (dayjs(when).isAfter(now)) {
-      return dayjs(when);
-    } else {
+    if (allowPast === false && now.isAfter(dayjs(when))) {
       throw new Error('Date cannot be in the past');
+    } else {
+      return dayjs(when);
     }
   }
 

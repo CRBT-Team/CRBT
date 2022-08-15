@@ -9,7 +9,6 @@ export default !process.argv.includes('--dev')
         const output = message.toJSON();
 
         this.reply({
-          content: `\`\`\`json\n${JSON.stringify(output, null, 2)}\n\`\`\``,
           files: [
             new MessageAttachment(
               Buffer.from(JSON.stringify(output, null, 2)),
