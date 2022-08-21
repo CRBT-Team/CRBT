@@ -5,6 +5,7 @@ import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
+import { progressBar } from '$lib/functions/progressBar';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
@@ -495,34 +496,7 @@ const renderPoll = async (
     if (isNaN(percentage)) percentage = 0;
     if (percentage === Infinity) percentage = 100;
 
-    const progressBar = (
-      `${emojis.progress.fill}.`.repeat(Math.round(percentage / 10)) +
-      `${emojis.progress.empty}.`.repeat(10 - Math.round(percentage / 10))
-    )
-      .split('.')
-      .map((e, i) => {
-        if (i === 0) {
-          if (e === emojis.progress.empty) {
-            return emojis.progress.emptystart;
-          } else if (e === emojis.progress.fill) {
-            return emojis.progress.fillstart;
-          }
-        } else if (i === 9) {
-          if (e === emojis.progress.empty) {
-            return emojis.progress.emptyend;
-          } else if (e === emojis.progress.fill) {
-            return emojis.progress.fillend;
-          }
-        } else {
-          return e;
-        }
-      })
-      .join('')
-      .replace(`${emojis.progress.fillstart}${emojis.progress.empty}`, emojis.progress.fillstartcut)
-      .replace(`${emojis.progress.fill}${emojis.progress.empty}`, emojis.progress.fillcut)
-      .replace(`${emojis.progress.fill}${emojis.progress.emptyend}`, emojis.progress.fillcut);
-
-    choice.value = `${progressBar}\n${strings.POLL_OPTION_RESULT.replace(
+    choice.value = `${progressBar(percentage)}\n${strings.POLL_OPTION_RESULT.replace(
       '<PERCENTAGE>',
       percentage.toString()
     ).replace('<VOTES>', votes.toString())}`;

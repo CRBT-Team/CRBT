@@ -1,4 +1,5 @@
 import { achievements, colors, db, icons } from '$lib/db';
+import { slashCmd } from '$lib/functions/commandMention';
 import {
   CommandInteraction,
   ContextMenuInteraction,
@@ -8,7 +9,6 @@ import {
   ModalSubmitInteraction,
   User,
 } from 'discord.js';
-import { allCommands } from '../../modules/events/ready';
 
 export interface Achievement {
   name: string;
@@ -63,7 +63,6 @@ export async function AchievementProgress(
 
   if (newData.progression !== achievement.steps) return;
 
-  const achievementsCmd = allCommands.find(({ name }) => name === 'achievements');
   const icon = achievement?.emoji
     ? `https://cdn.discordapp.com/emojis/${achievement.emoji}.png`
     : icons.giveaway;
@@ -75,7 +74,7 @@ export async function AchievementProgress(
         iconURL: icons.giveaway,
       })
       .setDescription(
-        `${achievement.howToGet}\nCheck your achievements with </${achievementsCmd.name}:${achievementsCmd.id}>.`
+        `${achievement.howToGet}\nCheck your achievements with ${slashCmd('achievements')}.`
       )
       .setThumbnail(icon)
       .setColor(`#${colors[achievement.secret ? 'gold' : 'success']}`),

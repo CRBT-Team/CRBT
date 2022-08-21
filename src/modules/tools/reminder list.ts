@@ -1,6 +1,7 @@
 import { cache } from '$lib/cache';
 import { db, emojis } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
@@ -10,6 +11,7 @@ import { ReminderData } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import {
   ButtonInteraction,
+  Client,
   CommandInteraction,
   MessageButton,
   MessageEmbed,
@@ -26,7 +28,6 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { allCommands } from '../events/ready';
 
 export default ChatCommand({
   name: 'reminder list',
@@ -59,7 +60,7 @@ export const ReminderSelectMenu = SelectMenuComponent({
 
 export const EditButton = ButtonComponent({
   async handle(index: number) {
-    const { data, expiration } = cache.get<ReminderData[]>(`reminders:${this.user.id}`)[index];
+    const r = cache.get<ReminderData[]>(`reminders:${this.user.id}`)[index];
 
     const modal = new EditModal(index)
       .setTitle('Edit Reminder')
@@ -67,7 +68,7 @@ export const EditButton = ButtonComponent({
         row(
           new TextInputComponent()
             .setLabel('Subject')
-            .setValue(data.subject)
+            .setValue(getReminderSubject(r, this.client))
             .setCustomId('subject')
             .setMaxLength(100)
             .setStyle('PARAGRAPH')
@@ -76,7 +77,7 @@ export const EditButton = ButtonComponent({
         row(
           new TextInputComponent()
             .setLabel('When to send')
-            .setValue(dayjs(expiration).format('YYYY-MM-DD HH:mm'))
+            .setValue(dayjs(r.expiration).format('YYYY-MM-DD HH:mm'))
             .setCustomId('date')
             .setMaxLength(16)
             .setMinLength(16)
@@ -158,12 +159,20 @@ export const ConfirmDeleteButton = ButtonComponent({
   },
 });
 
+function getReminderSubject(reminder: ReminderData, client: Client) {
+  if (reminder.id.endsWith('BIRTHDAY')) {
+    const user = client.users.cache.get(reminder.data.subject);
+    return `${user?.username ?? `<@${reminder.data.subject}>`}'s birthday`;
+  }
+  return reminder.data.subject;
+}
+
 async function renderReminder(
   this: SelectMenuInteraction | ModalSubmitInteraction,
   userReminders: ReminderData[],
   index: number
 ) {
-  const { data, expiration } = userReminders[index];
+  const { data, expiration, id } = userReminders[index];
   const [guildId, channelId, messageId] = data.url.split('/');
   const { JUMP_TO_MSG, BACK, EDIT, DELETE } = t(this, 'genericButtons');
   const { strings } = t(this, 'remind me');
@@ -177,7 +186,7 @@ async function renderReminder(
           name: `${this.user.tag} - Reminders (${userReminders.length})`,
           iconURL: avatar(this.user, 64),
         })
-        .setTitle(data.subject)
+        .setTitle(getReminderSubject(userReminders[index], this.client))
         .setDescription(
           `Will be sent <t:${dayjs(expiration).unix()}:R> in ${
             data.destination === 'dm' ? 'your DMs' : `${channel}`
@@ -191,9 +200,9 @@ async function renderReminder(
           .setPlaceholder('Select a reminder to edit or delete.')
           .setMaxValues(1)
           .addOptions(
-            userReminders.map(({ data, expiration }, index) => ({
-              label: data.subject,
-              description: `${dayjs(expiration).fromNow()}`,
+            userReminders.map((r, index) => ({
+              label: getReminderSubject(r, this.client),
+              description: `${dayjs(r.expiration).fromNow()}`,
               value: index.toString(),
             }))
           )
@@ -207,14 +216,16 @@ async function renderReminder(
           .setStyle('DANGER')
       ),
       row(
-        new MessageButton().setStyle('LINK').setURL(url).setLabel(JUMP_TO_MSG),
+        id.endsWith('BIRTHDAY')
+          ? null
+          : new MessageButton().setStyle('LINK').setURL(url).setLabel(JUMP_TO_MSG),
         new MessageButton()
           .setStyle('LINK')
           .setLabel(strings.BUTTON_GCALENDAR)
           .setURL(
             `https://calendar.google.com/calendar/render?${new URLSearchParams({
               action: 'TEMPLATE',
-              text: data.subject,
+              text: getReminderSubject(userReminders[index], this.client),
               dates: `${dayjs(expiration).format('YYYYMMDD')}/${dayjs(expiration)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
@@ -238,8 +249,6 @@ async function renderList(
   this: CommandInteraction | ButtonInteraction,
   userReminders: ReminderData[]
 ) {
-  const reminderCmd = allCommands.find(({ name }) => name === 'reminder');
-
   return {
     embeds: [
       new MessageEmbed()
@@ -249,16 +258,16 @@ async function renderList(
         })
         .setDescription(
           userReminders.length === 0
-            ? `Uh oh, you don't have any reminders set. Use </reminder new:${reminderCmd.id}> to set one!`
-            : `You can create a new reminder with </reminder new:${reminderCmd.id}>!`
+            ? `Uh oh, you don't have any reminders set. Use ${slashCmd('reminder new')} to set one!`
+            : `You can create a new reminder with ${slashCmd('reminder new')}!`
         )
         .setFields(
           userReminders
             .sort((a, b) => a.expiration.getTime() - b.expiration.getTime())
-            .map(({ data, expiration }) => ({
-              name: `${data.subject}`,
-              value: `<t:${dayjs(expiration).unix()}:R>\nDestination: ${
-                data.destination === 'dm' ? 'In your DMs' : `<#${data.destination}>`
+            .map((r) => ({
+              name: getReminderSubject(r, this.client),
+              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${
+                r.data.destination === 'dm' ? 'In your DMs' : `<#${r.data.destination}>`
               }`,
             }))
         )
@@ -277,9 +286,9 @@ async function renderList(
                 .setPlaceholder('Select a reminder to edit or delete.')
                 .setMaxValues(1)
                 .addOptions(
-                  userReminders.map(({ data, expiration }, index) => ({
-                    label: data.subject,
-                    description: `${dayjs(expiration).fromNow()}`,
+                  userReminders.map((r, index) => ({
+                    label: getReminderSubject(r, this.client),
+                    description: `${dayjs(r.expiration).fromNow()}`,
                     value: index.toString(),
                   }))
                 )

@@ -10,8 +10,8 @@ import {
   MessageEmbed,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
-import { getTabs, serverNavBar } from '../components/serverNavBar';
-import { AvatarFormats, AvatarSizes, NavBarContext } from '../components/userNavBar';
+import { AvatarFormats, AvatarSizes, NavBarContext } from '../user/_navbar';
+import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server icon',

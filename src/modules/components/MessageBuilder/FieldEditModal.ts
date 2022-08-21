@@ -5,7 +5,7 @@ import { t } from '$lib/language';
 import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
-import { GuildMember, TextChannel } from 'discord.js';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { EditableFeatures, saveColorSettings } from '../../settings/settings';
@@ -29,7 +29,7 @@ export const FieldEditModal = ModalComponent({
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const { embed } = data;
+    const embed = data.embed || new MessageEmbed().toJSON();
     let content = data.content;
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');

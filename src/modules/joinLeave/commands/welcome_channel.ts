@@ -1,4 +1,5 @@
 import { colors, db, icons } from '$lib/db';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -65,7 +66,7 @@ export default ChatCommand({
           })
           .setDescription(
             t(this, 'JOIN_CHANNEL_SUCCESS_DESCRIPTION')
-              .replace('<COMMAND>', `</welcome message:${command.id}>`)
+              .replace('<COMMAND>', slashCmd('welcome message'))
 
               .replace('<CHANNEL>', channel.toString())
           )

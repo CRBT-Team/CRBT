@@ -2,13 +2,9 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { Guild } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-import { renderServerIcon } from '../info/server icon';
-import {
-  renderServerEmojis,
-  renderServerInfo,
-  renderServerMembersRoles,
-} from '../info/server info';
-import { NavBarContext } from './userNavBar';
+import { NavBarContext } from '../user/_navbar';
+import { renderServerIcon } from './server_icon';
+import { renderServerEmojis, renderServerInfo, renderServerMembersRoles } from './server_info';
 
 type DefaultTabs = 'server_info' | 'roles' | 'extra';
 type Tabs = 'server_info' | 'icon' | 'roles' | 'emojis' | 'extra';

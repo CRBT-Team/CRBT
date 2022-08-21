@@ -10,13 +10,7 @@ import {
   User,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
-import {
-  AvatarFormats,
-  AvatarSizes,
-  getTabs,
-  navBar,
-  NavBarContext,
-} from '../components/userNavBar';
+import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 const { meta, ctxMeta } = t('en-US', 'avatar');
 

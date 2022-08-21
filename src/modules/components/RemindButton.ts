@@ -1,10 +1,69 @@
-import { emojis } from '$lib/db';
+import { colors, emojis, icons } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { Message, MessageButton, MessageMentions } from 'discord.js';
+import { Message, MessageButton, MessageEmbed, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
+
+export function findNextBirthday(birthday: Date): Date {
+  const today = new Date();
+  const next = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate());
+  if (next < today) {
+    next.setFullYear(next.getFullYear() + 1);
+  }
+  return next;
+}
+
+export const ReminderBirthdayBtn = ButtonComponent({
+  async handle({ targetId, bday }) {
+    console.log(targetId, bday);
+
+    const nextBday = new Date(bday);
+
+    const timeout = await dbTimeout({
+      type: TimeoutTypes.Reminder,
+      data: {
+        userId: this.user.id,
+        destination: 'dm',
+        subject: targetId,
+        url: `${this.guild?.id}/${this.channel.id}/${this.message.id}`,
+      },
+      expiration: nextBday,
+      id: `${targetId}-BIRTHDAY`,
+      locale: this.locale,
+    });
+
+    console.log(timeout);
+
+    await this.update({
+      components: components(
+        row().addComponents(this.message.components[0].components),
+        row(
+          new ReminderBirthdayBtn(null)
+            .setDisabled()
+            .setStyle('PRIMARY')
+            .setLabel(t(this.locale, 'remind me').strings.SUCCESS_TITLE)
+            .setEmoji(emojis.success)
+        )
+      ),
+    });
+
+    await this.followUp({
+      embeds: [
+        new MessageEmbed()
+          .setAuthor({
+            name: `Birthday reminder set!`,
+            iconURL: icons.success,
+          })
+          .setColor(`#${colors.success}`)
+          .setDescription(`You will be reminded on ${time(nextBday)} by DM.`),
+      ],
+      ephemeral: true,
+    });
+  },
+});
 
 export const RemindButton = ButtonComponent({
   async handle({ relativetime, userId }) {
@@ -60,7 +119,7 @@ export const RemindButton = ButtonComponent({
 export const SnoozeButton = ButtonComponent({
   async handle() {
     if (this.guild && !(this.message.mentions as MessageMentions).has(this.user.id)) {
-      return this.reply(CRBTError('You cannot snooze a reminder you did not set.'));
+      return this.reply(CRBTError(t(this.locale, 'user_navbar').errors.NOT_CMD_USER));
     }
 
     const { strings } = t(this, 'remind me');

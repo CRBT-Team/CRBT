@@ -1,3 +1,4 @@
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
@@ -30,7 +31,9 @@ export default ChatCommand({
       if (!res.ok) {
         return await this.reply(
           CRBTError(
-            "I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (/urban)"
+            `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
+              'urban'
+            )}).`
           )
         );
       }

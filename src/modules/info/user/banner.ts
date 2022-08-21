@@ -4,13 +4,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
-import {
-  AvatarFormats,
-  AvatarSizes,
-  getTabs,
-  navBar,
-  NavBarContext,
-} from '../components/userNavBar';
+import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
   name: 'banner',

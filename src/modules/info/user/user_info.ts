@@ -4,8 +4,9 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
+import { time } from '$lib/functions/time';
+import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
-import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildMember,
@@ -15,14 +16,9 @@ import {
   UserContextMenuInteraction,
   UserFlags,
 } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
-import {
-  AvatarFormats,
-  AvatarSizes,
-  getTabs,
-  navBar,
-  NavBarContext,
-} from '../components/userNavBar';
+import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
+import { findNextBirthday, ReminderBirthdayBtn } from '../../components/RemindButton';
+import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
   name: 'user info',
@@ -115,9 +111,9 @@ export async function renderUser(
   navCtx: NavBarContext,
   member?: GuildMember
 ) {
-  const crbtUser = await db.users.findUnique({
+  const crbtUser = await db.users.findFirst({
     where: { id: user.id },
-    select: { crbtBadges: true },
+    select: { crbtBadges: true, achievements: true, birthday: true },
   });
 
   const userBadges = getBadgeEmojis(user.flags, crbtUser?.crbtBadges);
@@ -126,7 +122,7 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: `${user.tag} - User info`,
+      name: t(ctx.locale, 'USER_INFO_EMBED_TITLE').replace('<USER>', user.tag),
       iconURL: avatar(member ?? user, 64),
     })
     .setDescription(userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '')
@@ -135,36 +131,91 @@ export async function renderUser(
     .setThumbnail(avatar(member ?? user, size ?? 256, format))
     .setColor(await getColor(user));
 
-  const joinedDiscord = dayjs(user.createdAt).unix();
+  if (crbtUser.birthday) {
+    const nextBday = findNextBirthday(crbtUser.birthday);
+
+    e.addField('Birthday', `${time(crbtUser.birthday, 'D')} • ${time(nextBday, 'R')}`);
+  }
 
   if (member) {
     const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
-    const joinedServer = dayjs(member.joinedAt).unix();
 
-    if (member.nickname) e.addField('Server nickname', member.nickname);
+    if (member.nickname) e.addField(t(ctx.locale, 'USER_INFO_NICKNAME'), member.nickname);
 
     e.addField(
-      `${roles.size === 1 ? 'Role' : 'Roles'} • ${roles.size}`,
+      `${t(ctx.locale, 'USER_INFO_ROLES')} • ${roles.size}`,
       roles.size > 0
         ? roles.map((r) => r.toString()).join(' ')
-        : "*This user doesn't have any roles...*"
+        : t(ctx.locale, 'USER_INFO_NO_ROLES')
     )
       .addField(
-        `Global major permissions`,
+        t(ctx.locale, 'USER_INFO_PERMS'),
         hasPerms(member, PermissionFlagsBits.Administrator) ||
           member.permissions.toArray().length === 0
           ? 'Administrator (all permissions)'
           : keyPerms(member.permissions).join(', ')
       )
-      .addField('Joined Discord', `<t:${joinedDiscord}>\n<t:${joinedDiscord}:R>`, true)
-      .addField('Joined server', `<t:${joinedServer}>\n<t:${joinedServer}:R>`, true);
+      .addField(
+        t(ctx.locale, 'USER_INFO_CREATED_AT'),
+        `${time(user.createdAt)}\n${time(user.createdAt, true)}`,
+        true
+      )
+      .addField(
+        t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
+        `${time(member.joinedAt)}\n${time(member.joinedAt, true)}`,
+        true
+      );
   } else {
-    e.addField('Joined Discord', `<t:${joinedDiscord}> • <t:${joinedDiscord}:R>`);
+    e.addField(
+      t(ctx.locale, 'USER_INFO_CREATED_AT'),
+      `${time(user.createdAt)} • ${time(user.createdAt, true)}`
+    );
   }
   return {
     embeds: [e],
     components: components(
-      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
+      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member)),
+      ...(ctx.user.id !== user.id && !crbtUser.birthday
+        ? []
+        : [
+            row(
+              ctx.user.id === user.id
+                ? new ReminderBirthdayBtn({
+                    targetId: user.id,
+                    bday: findNextBirthday(crbtUser.birthday).toISOString(),
+                  })
+                    .setLabel(t(ctx.locale, 'BIRTHDAY_REMINDER_BUTTON'))
+                    .setEmoji(emojis.reminder)
+                    .setStyle('PRIMARY')
+                : crbtUser.birthday
+                ? new ReminderBirthdayBtn({
+                    targetId: user.id,
+                    bday: findNextBirthday(crbtUser.birthday).toISOString(),
+                  })
+                    .setLabel(t(ctx.locale, 'BIRTHDAY_REMINDER_BUTTON'))
+                    .setEmoji(emojis.reminder)
+                    .setStyle('PRIMARY')
+                : null
+            ),
+          ])
     ),
   };
 }
+
+// export const EditCRBTInfo = ButtonComponent({
+//   async handle(userId: string) {
+//     if (this.user.id !== userId) {
+//       return this.reply(CRBTError(t(this, 'user_navbar').errors.NOT_CMD_USER))
+//     }
+
+//     const user = await db.users.findFirst({
+//       where: { id: userId },
+//       select: { accentColor: true,  }
+//     })
+
+//     this.showModal(
+//       new Modal()
+
+//     )
+//   }
+// })

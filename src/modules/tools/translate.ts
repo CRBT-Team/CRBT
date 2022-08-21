@@ -1,4 +1,5 @@
 import { languagesAutocomplete } from '$lib/autocomplete/languagesAutocomplete';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import googleTranslateApi from '@vitalets/google-translate-api';
@@ -32,14 +33,16 @@ export default ChatCommand({
 });
 
 export const ctxCommand = MessageContextCommand({
-  name: 'Translate Message',
+  name: 'Translate with Scan',
   async handle(message) {
     if (!message.content) {
       const translateCmd = allCommands.find(({ name }) => name === 'translate');
 
       return this.reply(
         CRBTError(
-          `This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using </translate:${translateCmd.id}>.`
+          `This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using ${slashCmd(
+            'translate'
+          )}.`
         )
       );
     }

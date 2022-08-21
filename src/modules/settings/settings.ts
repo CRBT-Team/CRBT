@@ -13,6 +13,7 @@ import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
   CommandInteraction,
+  Guild,
   MessageComponentInteraction,
   MessageEmbed,
   ModalSubmitInteraction,
@@ -90,7 +91,8 @@ async function renderSettingsMenu(
                 ? settings.joinChannel
                 : settings.leaveChannel;
             const channel = this.guild.channels.cache.find((c) => c.id === channelId);
-            description = `Sending in #${channel.name}`;
+
+            description = `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`;
           }
           break;
       }
@@ -108,7 +110,7 @@ async function renderSettingsMenu(
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          name: 'CRBT - Settings',
+          name: `${this.guild.name} - CRBT Settings`,
           iconURL: icons.settings,
         })
         .setDescription(`Use the select menu below to configure a feature.`)
@@ -167,9 +169,9 @@ async function renderFeatureSettings(
   return {
     content: invisibleChar,
     embeds: [
-      new MessageEmbed(getDescriptionForFeature(snake_key, this.locale, settings))
+      new MessageEmbed(getDescriptionForFeature(snake_key, this.locale, settings, this.guild))
         .setAuthor({
-          name: `CRBT - ${strings[snake_key]} Settings`,
+          name: `${this.guild.name} - ${strings[snake_key]} Settings`,
           iconURL: icons.settings,
         })
         .setColor(await getColor(this.guild)),
@@ -190,18 +192,29 @@ export const BackSettingsButton = ButtonComponent({
 function getDescriptionForFeature(
   feature: EditableFeatures,
   locale: string,
-  settings: FullSettings
+  settings: FullSettings,
+  guild: Guild
 ) {
   switch (feature) {
     case EditableFeatures.joinMessage:
     case EditableFeatures.leaveMessage: {
       const isEnabled = settings.modules[resolveMsgType[feature]];
+      const channelId =
+        settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+      const channel = guild.channels.cache.find((c) => c.id === channelId);
+
       return {
-        description: `This feature is currently ${
-          isEnabled ? 'enabled' : 'disabled'
-        } in this server.\nMessages currently are sent in <#${
-          settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel']
-        }>.\nUse the buttons below to toggle the feature, or to configure it.`,
+        description:
+          `This feature is currently ${isEnabled ? 'enabled' : 'disabled'} in this server.` +
+          (!isEnabled
+            ? ''
+            : '\n' +
+              (channel
+                ? `Messages currently are sent in ${channel}.`
+                : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please change it in order to receive them.**')) +
+          `\nUse the buttons below to configure the feature or to ${
+            isEnabled ? 'enable' : 'disable'
+          } it.`,
       };
     }
     case EditableFeatures.accentColor: {
@@ -293,7 +306,7 @@ export const EditJoinLeaveChannelBtn = ButtonComponent({
     const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
     const channelId =
       data[type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel'];
-    const channelName = channelId ? (await this.guild.channels.fetch(channelId)).name : '';
+    const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
       new EditJoinLeaveChannelModal(type as never)

@@ -4,11 +4,9 @@ import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Role } from 'discord.js';
+import { MessageButton, MessageSelectMenu, Role } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { MessageBuilder } from '../components/MessageBuilder';
-import { RoleButton } from './Button';
-import { RoleSelector } from './Selector';
 
 const { manual } = t('en-US', 'role-selectors');
 
@@ -17,8 +15,8 @@ export const usersOnCooldown = new Map();
 const options = new OptionBuilder()
   .string('behavior', manual.meta.options[1].description, {
     choices: {
-      toggle: manual.meta.options[1].choices[0],
-      once: manual.meta.options[1].choices[1],
+      0: manual.meta.options[1].choices[0],
+      1: manual.meta.options[1].choices[1],
     },
     required: true,
   })
@@ -66,14 +64,16 @@ export const useManual = ChatCommand({
           rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)
             ? row().addComponents(
                 rolesList.map(({ name, id }) => {
-                  return new RoleButton({ name, id, behavior })
+                  return new MessageButton()
                     .setLabel(name)
+                    .setCustomId(`PICKER_${id}_${behavior}`)
                     .setStyle('SECONDARY')
                     .setDisabled(true);
                 })
               )
             : row(
-                new RoleSelector()
+                new MessageSelectMenu()
+                  .setCustomId('PICKER')
                   .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
                   .setMinValues(0)
                   .setMaxValues(limit)

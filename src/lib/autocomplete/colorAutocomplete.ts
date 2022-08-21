@@ -26,14 +26,21 @@ export async function colorAutocomplete(
   includeSync = true,
   includePrivate = false
 ) {
-  return colorsMap
+  color = color.toLowerCase().replace(/ |#/g, '');
+  const presetResults = colorsMap
     .filter((colorObj) => (!includePrivate ? !colorObj.private : true))
     .filter((colorObj) =>
-      localizedColorNames[this.locale][colorObj.key].toLowerCase().includes(color.toLowerCase())
+      localizedColorNames[this.locale][colorObj.key].toLowerCase().includes(color)
     )
     .filter((colorObj) => (!includeSync ? colorObj.key !== 'sync' : true))
     .map((colorObj) => ({
       name: localizedColorNames[this.locale][colorObj.key],
       value: colorObj.value,
     }));
+
+  return presetResults.length > 0
+    ? presetResults
+    : /#?[0-9a-f]{6}/i.test(color)
+    ? [{ name: `#${color}`, value: color }]
+    : [{ name: 'Error: Invalid color', value: 'error' }];
 }

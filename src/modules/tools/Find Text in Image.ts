@@ -5,7 +5,7 @@ import { ocrSpace } from 'ocr-space-api-wrapper';
 import { MessageContextCommand } from 'purplet';
 
 export default MessageContextCommand({
-  name: 'Find Text in Image',
+  name: 'Scan Message',
   async handle(message) {
     if (
       !message.attachments.size &&

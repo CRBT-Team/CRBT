@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
 import { colors, db, icons } from '$lib/db';
+import { slashCmd } from '$lib/functions/commandMention';
 import { t } from '$lib/language';
 import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { invisibleChar } from '$lib/util/invisibleChar';
@@ -41,7 +42,7 @@ export const SaveButton = ButtonComponent({
           .setDescription(
             t(this.locale, `${data.type}_SAVE_DESCRIPTION`).replace(
               '<COMMAND>',
-              `</${type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell'} channel:${command.id}>`
+              slashCmd((type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell') + 'channel')
             )
           )
           .setColor(`#${colors.success}`),

@@ -3,11 +3,10 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { GuildMember, Integration, User } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-// import { renderProfile } from '../../../disabled/profile';
-import { renderPfp } from '../info/avatar';
-import { renderBanner } from '../info/banner';
-import { renderBotInfo } from '../info/bot_info';
-import { renderUser } from '../info/user_info';
+import { renderPfp } from './avatar';
+import { renderBanner } from './banner';
+import { renderBotInfo } from './bot_info';
+import { renderUser } from './user_info';
 
 type DefaultTabs = 'avatar' | 'userinfo' | 'botinfo';
 type Tabs = DefaultTabs | 'banner' | 'user_avatar' | 'user_banner';

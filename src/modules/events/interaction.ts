@@ -3,9 +3,26 @@ import { db, misc } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { MessageContextMenuInteraction, MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
+import { handleRolePickerButton } from '../rolePickers/handleButton';
+import { handleRolePickerSelectMenu } from '../rolePickers/handleSelectMenu';
 // import { customCmds } from '../customCommands/commands';
 
+enum RolePickerBehavior {
+  TOGGLE,
+  ONCE,
+}
+
 export default OnEvent('interactionCreate', async (i) => {
+  if ((i.isButton() || i.isSelectMenu()) && i.customId.startsWith('PICKER')) {
+    const data = {
+      id: i.customId.split('_')[1],
+      behavior: RolePickerBehavior[i.customId.split('_')[2]],
+    };
+
+    if (i.isButton()) return handleRolePickerButton.call(i, data);
+    if (i.isSelectMenu()) return handleRolePickerSelectMenu.call(i);
+  }
+
   if (!i.isCommand() && !i.isContextMenu()) return;
 
   if (!['859369676140314624', misc.CRBTid].includes(i.client.user.id)) return;

@@ -1,11 +1,11 @@
 import { colors, db, icons } from '$lib/db';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { allCommands } from '../../events/ready';
 
 export default ChatCommand({
   name: 'farewell channel',
@@ -51,8 +51,6 @@ export default ChatCommand({
       update: { leaveMessage: true },
     });
 
-    const command = allCommands.find((c) => c.name === 'farewell');
-
     await this.editReply({
       embeds: [
         new MessageEmbed()
@@ -65,7 +63,7 @@ export default ChatCommand({
           })
           .setDescription(
             t(this, 'LEAVE_CHANNEL_SUCCESS_DESCRIPTION')
-              .replace('<COMMAND>', `</farewell message:${command.id}>`)
+              .replace('<COMMAND>', slashCmd('farewell message'))
               .replace('<CHANNEL>', channel.toString())
           )
           .setColor(`#${colors.success}`),

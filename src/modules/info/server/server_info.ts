@@ -16,8 +16,8 @@ import {
 } from 'discord.js';
 import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
-import { getTabs, serverNavBar } from '../components/serverNavBar';
-import { NavBarContext } from '../components/userNavBar';
+import { NavBarContext } from '../user/_navbar';
+import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server info',

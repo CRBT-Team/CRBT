@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
 import { links, misc } from '$lib/db';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
@@ -12,23 +13,23 @@ import {
   MessageEmbed,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
-import pjson from '../../../package.json';
-import { getTabs, navBar, NavBarContext } from '../components/userNavBar';
-import { allCommands } from '../events/ready';
+import pjson from '../../../../package.json';
 import { getBadgeEmojis } from './user_info';
+import { getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
   name: 'bot info',
   description: 'Get info on a given Discord bot, or stats about CRBT if no bot is given.',
   options: new OptionBuilder().user('bot', 'What bot to get info on. Defaults to CRBT.'),
   async handle({ bot }) {
-    const userInfo = allCommands.find((c) => c.name === 'user');
     bot = bot || this.client.user;
 
     if (!bot.bot) {
       return this.reply(
         CRBTError(
-          `This command only works on bot users. To get a regular user's info, run </user info:${userInfo.id}>.`
+          `This command only works on bot users. To get a regular user's info, run ${slashCmd(
+            'user info'
+          )}.`
         )
       );
     }
@@ -107,8 +108,6 @@ export async function renderBotInfo(
   }
 
   if (isSelf) {
-    const pingCmd = allCommands.find(({ name }) => name === 'ping');
-
     e.addField(strings.MEMBER_COUNT, this.client.users.cache.size.toLocaleString(this.locale), true)
       .addField(
         strings.SERVER_COUNT,
@@ -117,9 +116,10 @@ export async function renderBotInfo(
       )
       .addField(
         strings.PING,
-        `${strings.PING_RESULT.replace('<PING>', `${Date.now() - this.createdTimestamp}`)} • </${
-          pingCmd.name
-        }:${pingCmd.id}>`,
+        `${strings.PING_RESULT.replace(
+          '<PING>',
+          `${Date.now() - this.createdTimestamp}`
+        )} • ${slashCmd('ping')}`,
         true
       )
       .setFooter({
