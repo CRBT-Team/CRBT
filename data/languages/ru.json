@@ -393,5 +393,16 @@
   "FIELDS_IMAGE": "Вставить изображение",
   "FIELDS_THUMBNAIL": "Вставить предпросматриваемое изображение",
   "FIELDS_URL": "Вставить URL название",
-  "SETTINGS": "Settings"
+  "SETTINGS": "Settings",
+  "BIRTHDAY_REMINDER_MESSAGE": "Wish <USER> a happy birthday!",
+  "BIRTHDAY_REMINDER_BUTTON": "Set birthday reminder",
+  "BIRTHDAY_LIST_CONTENT": "<USER>'s birthday",
+  "USER_INFO_EMBED_TITLE": "<USER> - User info",
+  "USER_INFO_BIRTHDAY": "Birthday",
+  "USER_INFO_CREATED_AT": "Joined Discord",
+  "USER_INFO_JOINED_SERVER": "Joined Server",
+  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
+  "USER_INFO_NICKNAME": "Server nickname",
+  "USER_INFO_ROLES": "Role(s)",
+  "USER_INFO_PERMS": "Major permissions in this server"
 }
