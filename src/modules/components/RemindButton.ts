@@ -20,12 +20,14 @@ export const ReminderBirthdayBtn = ButtonComponent({
   async handle({ targetId, bday }) {
     const nextBday = new Date(bday);
 
+    const target = await this.client.users.fetch(targetId);
+
     await dbTimeout({
       type: TimeoutTypes.Reminder,
       data: {
         userId: this.user.id,
         destination: 'dm',
-        subject: targetId,
+        subject: `${targetId}-${target.username}`,
         url: `${this.guild?.id}/${this.channel.id}/${this.message.id}`,
       },
       expiration: nextBday,

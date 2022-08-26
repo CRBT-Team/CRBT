@@ -52,9 +52,6 @@ export default ChatCommand({
       ? await this.client.application.fetch()
       : bots.find(({ application }) => application.bot.id === bot.id);
 
-    console.log(isSelf);
-    console.log(JSON.stringify(botInfo, null, 2));
-
     if (!botInfo) {
       await this.reply(
         CRBTError("Couldn't find that bot on the server. Make sure that it is on the server.")

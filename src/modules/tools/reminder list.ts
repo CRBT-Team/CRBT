@@ -28,6 +28,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
+import { timeouts } from '../events/ready';
 
 export default ChatCommand({
   name: 'reminder list',
@@ -150,6 +151,7 @@ export const ConfirmDeleteButton = ButtonComponent({
     const reminder = userReminders[index];
 
     await db.timeouts.delete({ where: { id: reminder.id } });
+    timeouts.delete(reminder.id);
 
     userReminders.splice(index, 1);
 
@@ -161,11 +163,12 @@ export const ConfirmDeleteButton = ButtonComponent({
 
 export function getReminderSubject(reminder: ReminderData, client: Client, isListString = 1) {
   if (reminder.id.endsWith('BIRTHDAY')) {
-    const user = client.users.cache.get(reminder.data.subject);
+    const [userId, username] = reminder.data.subject.split('-');
+    const user = client.users.cache.get(userId);
     return t(
       reminder.locale,
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE'
-    ).replace('<USER>', user?.username ?? `<@${reminder.data.subject}>`);
+    ).replace('<USER>', user?.username ?? `${username}`);
   }
   return reminder.data.subject;
 }
