@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
   "ERROR_INVALID_URL": "The URL you provided is invalid.",
   "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
       "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
       "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 5 reminders at once."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",
@@ -404,5 +405,7 @@
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Server nickname",
   "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
