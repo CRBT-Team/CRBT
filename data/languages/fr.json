@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) <PERMISSIONS> pour utiliser cette commande.",
   "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
   "ERROR_INVALID_HEX": "La couleur HEX que vous avez fournie est invalide.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
@@ -16,7 +17,7 @@
     "PREVIOUS": "Précédent",
     "NEXT": "Suivant",
     "SAVE": "Enregistrer les modifications",
-    "SEND": "Send",
+    "SEND": "Envoyer",
     "DONE": "Valider",
     "ADD_REMINDER": "Envoyer un rappel",
     "OPEN_DMS": "Ouvrir les MP",
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
       "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
       "USER_MISSING_PERMS": "Vous n'avez pas la permission d'envoyer des messages dans ce salon.",
-      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas avoir plus de 5 rappels à la fois."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Rappel créé !",
@@ -170,7 +171,7 @@
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "Infos utilisateur",
-      "BOTINFO": "Bot Info",
+      "BOTINFO": "Infos du Bot",
       "SERVER_AVATAR": "Avatar de serveur",
       "USER_AVATAR": "Avatar de l'utilisateur",
       "USER_BANNER": "Bannière de l'utilisateur"
@@ -178,12 +179,12 @@
   },
   "server_navbar": {
     "strings": {
-      "INFO": "Server info",
-      "ICON": "Icon",
-      "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
-      "EXTRA": "More"
+      "INFO": "Informations sur le serveur",
+      "ICON": "Icône",
+      "BANNER": "Bannière",
+      "ROLES": "Rôles & Membres",
+      "EMOJIS": "Émojis et Stickers",
+      "EXTRA": "Voir plus"
     }
   },
   "poll": {
@@ -257,7 +258,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Voir l'avatar/la bannière"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -347,7 +348,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Bannissement",
   "MODERATION_LOGS_ACTION_UNBAN": "Débannissement",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Exclusion",
-  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Bannissement temporaire",
   "MODERATION_LOGS_CLEAR": "Suppression de messages",
   "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Modéré par <MODERATOR>",
@@ -358,7 +359,7 @@
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Change le salon où envoyer le <TYPE>.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Où envoyer le <TYPE>.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> choisi !",
-  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "CRBTSCRIPT_GUIDE": "Ouvrir le guide CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifiez ce message pour personnaliser le <TYPE> en utilisant le menu déroulant ci-dessous.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> enregistré.",
@@ -366,14 +367,14 @@
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Aperçu",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le <TYPE> lorsqu'il sera envoyé dans <CHANNEL>.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Une erreur s'est produite en essayant de prévisualiser le <TYPE>. Le salon n'existe peut-être plus, ou je n'ai pas la permission d'y envoyer des messages.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Les nouveaux membres seront maintenant les bienvenus dans <CHANNEL>. Pour modifier le message qui sera envoyé, vous pouvez utiliser la commande <COMMAND>.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Les nouveaux membres verront désormais ce message lorsqu'ils rejoindront le serveur. Pour changer le salon où il est envoyé, utilisez <COMMAND>.",
   "JOIN_MESSAGE_DESCRIPTION": "Créer ou modifier le message à envoyer lorsqu'un utilisateur rejoint le serveur.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
+  "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message. Utilisez <COMMAND> pour en définir un.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Vous devez d'abord choisir un salon où envoyer le <TYPE>. Utilisez /welcome channel pour en choisir un.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Lorsqu'un membre quittera le serveur, le message de leur départ sera désormais envoyé dans <CHANNEL>. Pour changer le message à envoyer, utilisez <COMMAND>.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Ce message sera désormais envoyé dès qu'un membre quittera le serveur. Pour changer le salon où ce message s'envoie, utilisez <COMMAND>.",
   "LEAVE_MESSAGE_DESCRIPTION": "Créer ou modifier le message à envoyer lorsqu'un utilisateur quitte le serveur.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a quitté le serveur.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Vous devez d'abord choisir un salon où envoyer le <TYPE>. Utilisez /farewell channel pour en choisir un.",
@@ -393,16 +394,18 @@
   "FIELDS_IMAGE": "Image de l'Embed",
   "FIELDS_THUMBNAIL": "Vignette de l'Embed",
   "FIELDS_URL": "Lien sur Titre de l'Embed",
-  "SETTINGS": "Settings",
-  "BIRTHDAY_REMINDER_MESSAGE": "Wish <USER> a happy birthday!",
-  "BIRTHDAY_REMINDER_BUTTON": "Set birthday reminder",
-  "BIRTHDAY_LIST_CONTENT": "<USER>'s birthday",
-  "USER_INFO_EMBED_TITLE": "<USER> - User info",
-  "USER_INFO_BIRTHDAY": "Birthday",
-  "USER_INFO_CREATED_AT": "Joined Discord",
-  "USER_INFO_JOINED_SERVER": "Joined Server",
-  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
-  "USER_INFO_NICKNAME": "Server nickname",
-  "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "SETTINGS": "Réglages",
+  "BIRTHDAY_REMINDER_MESSAGE": "Souhaitez un joyeux anniversaire à <USER> !",
+  "BIRTHDAY_REMINDER_BUTTON": "Rappel pour leur anniversaire",
+  "BIRTHDAY_LIST_CONTENT": "L'anniversaire de <USER>",
+  "USER_INFO_EMBED_TITLE": "<USER> - Informations utilisateur",
+  "USER_INFO_BIRTHDAY": "Date de naissance",
+  "USER_INFO_CREATED_AT": "A rejoint Discord",
+  "USER_INFO_JOINED_SERVER": "A rejoint le serveur",
+  "USER_INFO_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
+  "USER_INFO_NICKNAME": "Pseudo du serveur",
+  "USER_INFO_ROLES": "Rôle(s)",
+  "USER_INFO_PERMS": "Permissions principales sur ce serveur",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
