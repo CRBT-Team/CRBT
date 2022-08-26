@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Ai nevoie de permisiunea(ile) <PERMISSIONS> pentru a folosi această comandă.",
   "ERROR_INVALID_URL": "URL-ul furnizat este invalid.",
   "ERROR_INVALID_HEX": "Culoarea HEX furnizată este invalidă.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Această comandă nu poate fi utilizată în DM-uri."
   },
@@ -16,7 +17,7 @@
     "PREVIOUS": "În spate",
     "NEXT": "Mai departe",
     "SAVE": "Salvează modificările",
-    "SEND": "Send",
+    "SEND": "Trimite",
     "DONE": "Efectuat",
     "ADD_REMINDER": "Adaugă memento",
     "OPEN_DMS": "Deschide DM-uri",
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "Canalul specificat nu este un canal text valid.",
       "BOT_MISSING_PERMS": "N-am permisiunea de a trimite mesaje pe acest canal.",
       "USER_MISSING_PERMS": "N-ai permisiunea de a trimite mesaje pe acest canal.",
-      "REMINDERS_MAX_LIMIT": "Nu poți seta mai mult de 5 memento-uri deodată."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Memento setat!",
@@ -170,7 +171,7 @@
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "Informații despre utilizator",
-      "BOTINFO": "Bot Info",
+      "BOTINFO": "Informații Bot",
       "SERVER_AVATAR": "Avatarul serverului",
       "USER_AVATAR": "Avatarul Utilizatorului",
       "USER_BANNER": "Bannerul Utilizatorului"
@@ -178,12 +179,12 @@
   },
   "server_navbar": {
     "strings": {
-      "INFO": "Server info",
-      "ICON": "Icon",
+      "INFO": "Informații server",
+      "ICON": "Pictogramă",
       "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
-      "EXTRA": "More"
+      "ROLES": "Roluri și membri",
+      "EMOJIS": "Emoji-uri și Stickere",
+      "EXTRA": "Mai mult"
     }
   },
   "poll": {
@@ -257,7 +258,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Obține avatar/banner"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Avatar",
@@ -347,7 +348,7 @@
   "MODERATION_LOGS_ACTION_BAN": "Interzice-le accesul",
   "MODERATION_LOGS_ACTION_UNBAN": "Redă accesul",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Pauză de scris",
-  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Interzicere temporară",
   "MODERATION_LOGS_CLEAR": "Curăță mesajele canalului",
   "MODERATION_LOGS_VIEW_TITLE": "Istoricul moderării în <SERVER>",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderat de <MODERATOR>",
@@ -404,5 +405,7 @@
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Server nickname",
   "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
