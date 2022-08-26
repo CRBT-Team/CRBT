@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права <PERMISSIONS>.",
   "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
   "ERROR_INVALID_HEX": "Предоставленный цвет HEX недействителен.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
   },
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "Указанный вами текстовый канал некорректен.",
       "BOT_MISSING_PERMS": "У меня недостаточно прав, чтобы отправлять сообщения в этом канале.",
       "USER_MISSING_PERMS": "У вас недостаточно прав, чтобы отправлять сообщения в этом канале.",
-      "REMINDERS_MAX_LIMIT": "Вы не можете установить более 5 напоминаний одновременно."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание установлено!",
@@ -404,5 +405,7 @@
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Server nickname",
   "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
