@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Necesita el/los permiso(s) <PERMISSIONS> para usar este comando.",
   "ERROR_INVALID_URL": "La URL proporcionada es inválida.",
   "ERROR_INVALID_HEX": "El código hexadecimal proporcionado es inválido.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Este comando no se puede utilizar en MD."
   },
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "El canal especificado no es un canal de texto válido.",
       "BOT_MISSING_PERMS": "No tengo permiso para enviar mensajes en ese canal.",
       "USER_MISSING_PERMS": "No tiene permiso para enviar mensajes en ese canal.",
-      "REMINDERS_MAX_LIMIT": "No se pueden establecer más de 5 recordatorios a la vez."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "¡Recordatorio establecido!",
@@ -404,5 +405,7 @@
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Server nickname",
   "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
