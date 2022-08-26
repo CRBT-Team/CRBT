@@ -3,6 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
   "ERROR_INVALID_URL": "The URL you provided is invalid.",
   "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
+  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Esse comando não pode ser usado por mensagens diretas."
   },
@@ -107,7 +108,7 @@
       "INVALID_CHANNEL_TYPE": "O canal que você especificou não é um canal de texto válido.",
       "BOT_MISSING_PERMS": "Eu não tenho permissão para enviar mensagens neste canal.",
       "USER_MISSING_PERMS": "Você não tem permissão para enviar mensagens neste canal.",
-      "REMINDERS_MAX_LIMIT": "Você não pode definir mais de 5 lembretes de uma vez."
+      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Lembrete definido!",
@@ -404,5 +405,7 @@
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Server nickname",
   "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server"
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "EDIT_CRBT_PROFILE_BUTTON": "Edit Profile Settings",
+  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
 }
