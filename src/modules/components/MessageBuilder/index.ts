@@ -32,8 +32,6 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
           member: i.member as GuildMember,
         });
 
-  console.log(parsed);
-
   const { SAVE, IMPORT, EXPORT, SEND } = t(i, 'genericButtons');
 
   const fieldSelect = new FieldSelectMenu(type as never)

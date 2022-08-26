@@ -25,7 +25,7 @@ export const colorset = ChatCommand({
     colorHex = colorHex.toLowerCase().replace(/ |#/g, '');
     const color = colors[colorHex] ?? colorHex;
 
-    if (colorHex.match(/^[0-9a-f]{6}$/) || colors[colorHex]) {
+    if (/^[0-9a-f]{6}$/.test(colorHex) || colors[colorHex]) {
       if (color === colors.default) {
         cache.del(`${this.user.id}:color`);
         await db.users.upsert({

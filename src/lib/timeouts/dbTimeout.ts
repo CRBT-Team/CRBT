@@ -2,6 +2,7 @@ import { db } from '$lib/db';
 import { TimeoutData, TimeoutTypes } from '$lib/types/timeouts';
 import { randomUUID } from 'crypto';
 import { getDiscordClient } from 'purplet';
+import { timeouts } from '../../modules/events/ready';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
 import { handlePoll } from './handlePoll';
@@ -15,6 +16,8 @@ export async function dbTimeout<T extends TimeoutData>(
   const client = getDiscordClient();
 
   timeout.id = timeout.id ?? randomUUID();
+
+  timeouts.set(timeout.id, timeout);
 
   setLongerTimeout(async () => {
     const timeoutData = (await db.timeouts.findFirst({

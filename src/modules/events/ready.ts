@@ -5,6 +5,7 @@ import { ApplicationCommand, Collection } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export let allCommands: Collection<string, ApplicationCommand>;
+export let timeouts = new Collection<string, TimeoutData>;
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({

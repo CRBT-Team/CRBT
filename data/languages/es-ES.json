@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "El canal especificado no es un canal de texto válido.",
       "BOT_MISSING_PERMS": "No tengo permiso para enviar mensajes en ese canal.",
       "USER_MISSING_PERMS": "No tiene permiso para enviar mensajes en ese canal.",
-      "REMINDERS_MAX_LIMIT": "No se pueden establecer más de 5 recordatorios a la vez."
+      "REMINDERS_MAX_LIMIT": "No se pueden establecer más de 10 recordatorios a la vez."
     },
     "strings": {
       "SUCCESS_TITLE": "¡Recordatorio establecido!",

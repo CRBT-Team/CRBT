@@ -18,11 +18,9 @@ export function findNextBirthday(birthday: Date): Date {
 
 export const ReminderBirthdayBtn = ButtonComponent({
   async handle({ targetId, bday }) {
-    console.log(targetId, bday);
-
     const nextBday = new Date(bday);
 
-    const timeout = await dbTimeout({
+    await dbTimeout({
       type: TimeoutTypes.Reminder,
       data: {
         userId: this.user.id,
@@ -31,11 +29,9 @@ export const ReminderBirthdayBtn = ButtonComponent({
         url: `${this.guild?.id}/${this.channel.id}/${this.message.id}`,
       },
       expiration: nextBday,
-      id: `${targetId}-BIRTHDAY`,
+      id: `${targetId}/${this.user.id}-BIRTHDAY`,
       locale: this.locale,
     });
-
-    console.log(timeout);
 
     await this.update({
       components: components(

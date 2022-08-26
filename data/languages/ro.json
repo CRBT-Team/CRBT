@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "Canalul specificat nu este un canal text valid.",
       "BOT_MISSING_PERMS": "N-am permisiunea de a trimite mesaje pe acest canal.",
       "USER_MISSING_PERMS": "N-ai permisiunea de a trimite mesaje pe acest canal.",
-      "REMINDERS_MAX_LIMIT": "Nu poți seta mai mult de 5 memento-uri deodată."
+      "REMINDERS_MAX_LIMIT": "Nu poți seta mai mult de 10 memento-uri deodată."
     },
     "strings": {
       "SUCCESS_TITLE": "Memento setat!",

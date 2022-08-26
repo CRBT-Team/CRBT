@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "O canal que você especificou não é um canal de texto válido.",
       "BOT_MISSING_PERMS": "Eu não tenho permissão para enviar mensagens neste canal.",
       "USER_MISSING_PERMS": "Você não tem permissão para enviar mensagens neste canal.",
-      "REMINDERS_MAX_LIMIT": "Você não pode definir mais de 5 lembretes de uma vez."
+      "REMINDERS_MAX_LIMIT": "Você não pode definir mais de 10 lembretes de uma vez."
     },
     "strings": {
       "SUCCESS_TITLE": "Lembrete definido!",

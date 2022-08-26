@@ -1,6 +1,7 @@
 {
   "name": "crbt",
-  "version": "11.8.3",
+  "version": "11.8.0",
+  "build": "1204",
   "scripts": {
     "start": "npm run generate && npm run build && node dist/bot.mjs",
     "dev": "purplet build && node dist/bot.mjs --dev",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@prisma/client": "^3.15.0",
     "@purplet/polyfill": "^1.1.0",
+    "@purplet/serialize": "^2.0.0",
     "@vitalets/google-translate-api": "^7.0.0",
     "canvas": "^2.9.0",
     "change-case": "^4.1.2",
@@ -23,6 +25,7 @@
     "dedent": "^0.7.0",
     "discord.js": "13",
     "dotenv": "^10.0.0",
+    "duck-duck-scrape": "^2.2.1",
     "expr-eval": "^2.0.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.1.0",

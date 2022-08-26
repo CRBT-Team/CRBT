@@ -5,6 +5,7 @@ import { ReminderData } from '$lib/types/timeouts';
 import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
+import { getReminderSubject } from '../../modules/tools/reminder list';
 
 export async function handleReminder(reminder: ReminderData, client: Client) {
   const { JUMP_TO_MSG } = t(reminder.locale, 'genericButtons');
@@ -32,7 +33,7 @@ export async function handleReminder(reminder: ReminderData, client: Client) {
             `<t:${unix}:R>`
           )
         )
-        .addField(strings.SUBJECT, data.subject)
+        .addField(strings.SUBJECT, getReminderSubject(reminder, client, 0))
         .setColor(await getColor(user)),
     ],
     components: components(

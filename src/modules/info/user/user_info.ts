@@ -1,23 +1,37 @@
+import { cache } from '$lib/cache';
 import { db, emojis, items } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
 import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildMember,
   Interaction,
   MessageEmbed,
+  TextInputComponent,
   User,
   UserContextMenuInteraction,
   UserFlags,
 } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
+import {
+  ButtonComponent,
+  ChatCommand,
+  components,
+  ModalComponent,
+  OptionBuilder,
+  row,
+  UserContextCommand,
+} from 'purplet';
 import { findNextBirthday, ReminderBirthdayBtn } from '../../components/RemindButton';
+import { timeouts } from '../../events/ready';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -116,6 +130,13 @@ export async function renderUser(
     select: { crbtBadges: true, achievements: true, birthday: true },
   });
 
+  const birthdayReminder = timeouts.find(
+    ({ id, type, data }) =>
+      type === TimeoutTypes.Reminder &&
+      id === `${user.id}/${ctx.user.id}-BIRTHDAY` &&
+      data.userId === ctx.user.id
+  );
+
   const userBadges = getBadgeEmojis(user.flags, crbtUser?.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
@@ -131,7 +152,7 @@ export async function renderUser(
     .setThumbnail(avatar(member ?? user, size ?? 256, format))
     .setColor(await getColor(user));
 
-  if (crbtUser.birthday) {
+  if (crbtUser?.birthday) {
     const nextBday = findNextBirthday(crbtUser.birthday);
 
     e.addField('Birthday', `${time(crbtUser.birthday, 'D')} • ${time(nextBday, 'R')}`);
@@ -175,26 +196,28 @@ export async function renderUser(
     embeds: [e],
     components: components(
       navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member)),
-      ...(ctx.user.id !== user.id && !crbtUser.birthday
+      ...(ctx.user.id !== user.id && !crbtUser?.birthday
         ? []
         : [
             row(
               ctx.user.id === user.id
+                ? new EditCRBTInfoBtn()
+                    .setLabel(t(ctx.locale, 'EDIT_CRBT_PROFILE_BUTTON'))
+                    .setEmoji(emojis.buttons.pencil)
+                    .setStyle('PRIMARY')
+                : crbtUser?.birthday
                 ? new ReminderBirthdayBtn({
                     targetId: user.id,
                     bday: findNextBirthday(crbtUser.birthday).toISOString(),
                   })
-                    .setLabel(t(ctx.locale, 'BIRTHDAY_REMINDER_BUTTON'))
+                    .setLabel(
+                      !!birthdayReminder
+                        ? t(ctx, 'remind me').strings.SUCCESS_TITLE
+                        : t(ctx, 'BIRTHDAY_REMINDER_BUTTON')
+                    )
                     .setEmoji(emojis.reminder)
                     .setStyle('PRIMARY')
-                : crbtUser.birthday
-                ? new ReminderBirthdayBtn({
-                    targetId: user.id,
-                    bday: findNextBirthday(crbtUser.birthday).toISOString(),
-                  })
-                    .setLabel(t(ctx.locale, 'BIRTHDAY_REMINDER_BUTTON'))
-                    .setEmoji(emojis.reminder)
-                    .setStyle('PRIMARY')
+                    .setDisabled(!!birthdayReminder)
                 : null
             ),
           ])
@@ -202,20 +225,93 @@ export async function renderUser(
   };
 }
 
-// export const EditCRBTInfo = ButtonComponent({
-//   async handle(userId: string) {
-//     if (this.user.id !== userId) {
-//       return this.reply(CRBTError(t(this, 'user_navbar').errors.NOT_CMD_USER))
-//     }
+export const EditCRBTInfoBtn = ButtonComponent({
+  async handle() {
+    if (this.user.id !== this.message.interaction.user.id) {
+      return this.reply(CRBTError(t(this, 'user_navbar').errors.NOT_CMD_USER));
+    }
 
-//     const user = await db.users.findFirst({
-//       where: { id: userId },
-//       select: { accentColor: true,  }
-//     })
+    const user = await db.users.findFirst({
+      where: { id: this.user.id },
+      select: { accentColor: true, birthday: true },
+    });
 
-//     this.showModal(
-//       new Modal()
+    await this.showModal(
+      new EditCRBTInfoModal().setTitle('Edit CRBT Profile').setComponents(
+        row(
+          new TextInputComponent()
+            .setCustomId('accent_color')
+            .setLabel(t(this, 'CRBT_ACCENT_COLOR'))
+            .setValue(user.accentColor)
+            .setMaxLength(7)
+            .setMinLength(6)
+            // .setPlaceholder(t(this, 'EDIT_PROFILE_MODAL_COLOR_PLACEHOLDER'))
+            .setStyle('SHORT')
+        ),
+        row(
+          new TextInputComponent()
+            .setCustomId('birthday')
+            .setLabel(t(this, 'USER_INFO_BIRTHDAY'))
+            .setStyle('SHORT')
+            .setPlaceholder('YYYY-MM-DD')
+            .setValue(user?.birthday?.toISOString()?.split('T')[0] ?? '')
+            .setMinLength(10)
+            .setMaxLength(10)
+        )
+      )
+    );
+  },
+});
 
-//     )
-//   }
-// })
+export const EditCRBTInfoModal = ModalComponent({
+  async handle(ctx: null) {
+    let color = this.fields.getTextInputValue('accent_color').toLowerCase().replace('#', '');
+    const bday = dayjs(this.fields.getTextInputValue('birthday').trim() + 'T12:00:00');
+
+    if (!/[0-9a-f]{6}/.test(color) && color !== 'profile') {
+      return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
+    }
+
+    color = color === 'profile' ? color : `#${color}`;
+
+    cache.set(`${this.user.id}:color`, color);
+
+    if (!bday.isValid() || !bday.isBefore(new Date())) {
+      return this.reply(CRBTError(t(this, 'ERROR_INVALID_BIRTHDAY')));
+    }
+
+    await db.users.upsert({
+      where: { id: this.user.id },
+      update: {
+        accentColor: color,
+        birthday: bday.toDate(),
+      },
+      create: {
+        accentColor: color,
+        birthday: bday.toDate(),
+        id: this.user.id,
+      },
+    });
+
+    const c = await getColor(this.user);
+
+    console.log(c);
+
+    this.update({
+      embeds: [
+        new MessageEmbed(this.message.embeds[0]).setColor(c).setFields(
+          this.message.embeds[0].fields.map((f) => {
+            if (f.name === t(this, 'USER_INFO_BIRTHDAY')) {
+              const nextBday = findNextBirthday(bday.toDate());
+              return {
+                name: f.name,
+                value: `${time(bday, 'D')} • ${time(nextBday, 'R')}`,
+              };
+            }
+            return f;
+          })
+        ),
+      ],
+    });
+  },
+});

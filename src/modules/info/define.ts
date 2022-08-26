@@ -45,7 +45,7 @@ export default ChatCommand({
         })
         .addField('Phonetics', def.phonetic ? def.phonetic : '*None available*', true)
         .setColor(await getColor(this.user))
-        .setFooter({ text: 'Powered by Dictionary API' });
+        .setFooter({ text: 'Powered by Google Dictionary' });
       for (const meaning of def.meanings) {
         e.addField(
           `*${meaning.partOfSpeech}*`,

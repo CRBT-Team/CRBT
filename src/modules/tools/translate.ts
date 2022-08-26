@@ -2,11 +2,24 @@ import { languagesAutocomplete } from '$lib/autocomplete/languagesAutocomplete';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { t } from '$lib/language';
 import googleTranslateApi from '@vitalets/google-translate-api';
-import { CommandInteraction, ContextMenuInteraction, MessageEmbed } from 'discord.js';
-import { ChatCommand, MessageContextCommand, OptionBuilder } from 'purplet';
+import {
+  CommandInteraction,
+  ContextMenuInteraction,
+  MessageComponentInteraction,
+  MessageEmbed,
+} from 'discord.js';
+import {
+  ChatCommand,
+  components,
+  MessageContextCommand,
+  OptionBuilder,
+  row,
+  SelectMenuComponent,
+} from 'purplet';
+import langCodes from '../../../data/misc/langCodes.json';
 import languages from '../../../data/misc/languages.json';
-import { allCommands } from '../events/ready';
 
 export default ChatCommand({
   name: 'translate',
@@ -24,10 +37,13 @@ export default ChatCommand({
       },
     }),
   async handle({ text, target, source }) {
+    await this.deferReply();
     try {
-      await translate.call(this, text, { to: target, from: source });
+      const result = await translate.call(this, text, { to: target, from: source });
+
+      if (result) await this.editReply(result);
     } catch (e) {
-      await this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
+      await this.editReply(UnknownError(this, e));
     }
   },
 });
@@ -36,8 +52,6 @@ export const ctxCommand = MessageContextCommand({
   name: 'Translate with Scan',
   async handle(message) {
     if (!message.content) {
-      const translateCmd = allCommands.find(({ name }) => name === 'translate');
-
       return this.reply(
         CRBTError(
           `This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using ${slashCmd(
@@ -46,16 +60,23 @@ export const ctxCommand = MessageContextCommand({
         )
       );
     }
+
+    await this.deferReply({
+      ephemeral: true,
+    });
+
     try {
-      await translate.call(this, message.content);
+      const result = await translate.call(this, message.content);
+
+      if (result) await this.editReply(result);
     } catch (e) {
-      await this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
+      await this.editReply(UnknownError(this, e));
     }
   },
 });
 
 async function translate(
-  this: CommandInteraction | ContextMenuInteraction,
+  this: CommandInteraction | ContextMenuInteraction | MessageComponentInteraction,
   text: string,
   opts?: { to?: string; from?: string }
 ) {
@@ -63,15 +84,13 @@ async function translate(
   const from = opts?.from ?? 'auto';
 
   if (!languages[from]) {
-    return this.reply(CRBTError(`"${from}" is not a valid source language.`));
+    this.editReply(CRBTError(`"${from}" is not a valid source language.`));
+    return;
   }
   if (!languages[target]) {
-    return this.reply(CRBTError(`"${target}" is not a valid target language.`));
+    this.editReply(CRBTError(`"${target}" is not a valid target language.`));
+    return;
   }
-
-  await this.deferReply({
-    ephemeral: this instanceof ContextMenuInteraction,
-  });
 
   const {
     from: {
@@ -80,9 +99,11 @@ async function translate(
     text: translated,
   } = await googleTranslateApi(text, { to: target, from });
 
-  console.log(source, target);
+  const color = await getColor(this.user);
 
-  await this.editReply({
+  console.log(color);
+
+  return {
     embeds: [
       new MessageEmbed()
         .setAuthor({
@@ -90,7 +111,40 @@ async function translate(
         })
         .addField(languages[source], text)
         .addField(languages[target], translated)
-        .setColor(await getColor(this.user)),
+        .setColor(color),
     ],
-  });
+    components: components(
+      row(
+        new TargetLangSelectMenu(source)
+          .setPlaceholder('Select a target language to translate to.')
+          .setOptions(
+            Object.entries(langCodes).map(([code, lang]) => {
+              return {
+                label: lang,
+                value: code,
+                default: code === target,
+              };
+            })
+          )
+      )
+    ),
+  };
 }
+
+export const TargetLangSelectMenu = SelectMenuComponent({
+  async handle(sourceLang: string) {
+    const lang = this.values[0];
+    const sourceText = this.message.embeds[0].fields[0].value;
+
+    if (this.user.id !== this.message.interaction.user.id) {
+      return this.reply(CRBTError(t(this, 'user_navbar').errors.NOT_CMD_USER));
+    }
+
+    await this.update(
+      await translate.call(this, sourceText, {
+        to: lang,
+        from: sourceLang,
+      })
+    );
+  },
+});

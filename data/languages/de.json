@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "Der von Ihnen angegebene Kanal ist kein gültiger Textkanal.",
       "BOT_MISSING_PERMS": "Ich habe keine Berechtigung, in diesem Kanal Nachrichten zu versenden.",
       "USER_MISSING_PERMS": "Du hast keine Berechtigung in diesem Kanal Nachrichten zu versenden.",
-      "REMINDERS_MAX_LIMIT": "Sie können nicht mehr als 5 Erinnerungen gleichzeitig setzen."
+      "REMINDERS_MAX_LIMIT": "Sie können nicht mehr als 10 Erinnerungen gleichzeitig setzen."
     },
     "strings": {
       "SUCCESS_TITLE": "Erinnerung festgelegt!",

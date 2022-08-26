@@ -83,11 +83,11 @@ export const FieldEditModal = ModalComponent({
 
     const noTextInMessage = content !== invisibleChar && !(content || textInEmbed);
 
-    console.log('noTextInMessage', noTextInMessage);
-    console.log('doesEmbedHaveText', textInEmbed);
-    console.log('isContentInvisible', content === invisibleChar);
-    console.log('isThereAnyContent', !!content);
-    console.log('whatsTheContent', JSON.stringify(content));
+    // console.log('noTextInMessage', noTextInMessage);
+    // console.log('doesEmbedHaveText', textInEmbed);
+    // console.log('isContentInvisible', content === invisibleChar);
+    // console.log('isThereAnyContent', !!content);
+    // console.log('whatsTheContent', JSON.stringify(content));
 
     if (noTextInMessage) {
       return this.reply(CRBTError(t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY')));

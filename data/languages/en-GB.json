@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
       "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
       "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
-      "REMINDERS_MAX_LIMIT": "You cannot have more than 5 reminders at once."
+      "REMINDERS_MAX_LIMIT": "You cannot have more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",

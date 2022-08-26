@@ -21,7 +21,6 @@ export default ChatCommand({
       .map(([id, { howToGet, name, secret, steps, emoji }]) => {
         const userData = userAchievements?.achievements?.find((a) => a?.achievement === id);
 
-        console.log(id);
         if (userAchievements?.achievements && userData) {
           if (u.id !== this.user.id && !userData.achievedAt && secret) return;
 
@@ -66,7 +65,5 @@ export default ChatCommand({
       ],
       ephemeral: true,
     });
-
-    console.log(fields);
   },
 });

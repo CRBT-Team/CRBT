@@ -159,10 +159,13 @@ export const ConfirmDeleteButton = ButtonComponent({
   },
 });
 
-function getReminderSubject(reminder: ReminderData, client: Client) {
+export function getReminderSubject(reminder: ReminderData, client: Client, isListString = 1) {
   if (reminder.id.endsWith('BIRTHDAY')) {
     const user = client.users.cache.get(reminder.data.subject);
-    return `${user?.username ?? `<@${reminder.data.subject}>`}'s birthday`;
+    return t(
+      reminder.locale,
+      isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE'
+    ).replace('<USER>', user?.username ?? `<@${reminder.data.subject}>`);
   }
   return reminder.data.subject;
 }

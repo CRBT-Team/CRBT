@@ -43,8 +43,6 @@ export const defaultPfp = ChatCommand({
       : (this.member as GuildMember);
     const u = user ?? this.user;
 
-    console.log(size, format);
-
     await this.reply(
       await renderPfp(
         'default',
@@ -93,13 +91,9 @@ export async function renderPfp(
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
 
-  console.log(size, format);
-
   const { strings } = t(ctx.locale, 'avatar');
 
   const av = avatar(type === 'user' ? user : member ?? user, size, format, !format);
-
-  console.log(av);
 
   const color =
     ctx instanceof ButtonInteraction ? ctx.message.embeds[0].color : await getColor(user);

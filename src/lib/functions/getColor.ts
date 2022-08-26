@@ -6,9 +6,15 @@ type colorString = `#${string}`;
 
 export async function getColor(thing: User | Guild): Promise<colorString> {
   const isUser = thing instanceof User;
+  const fromCache = cache.get(`${thing.id}:color`);
 
-  if (cache.has(`${thing.id}:color`)) {
-    return cache.get<colorString>(`${thing.id}:color`);
+  console.log(fromCache);
+
+  if (fromCache) {
+    if (fromCache === 'profile' && isUser) {
+      return (await thing.fetch()).hexAccentColor ?? `#${colors.default}`;
+    }
+    return fromCache as colorString;
   }
 
   const query = {
@@ -16,17 +22,17 @@ export async function getColor(thing: User | Guild): Promise<colorString> {
     select: { accentColor: true },
   };
 
-  const accentColor = (isUser ? await db.users.findFirst(query) : await db.servers.findFirst(query))
-    .accentColor;
+  const preferences = isUser ? await db.users.findFirst(query) : await db.servers.findFirst(query);
 
-  if (accentColor === 'profile' && isUser) {
-    cache.set(`${thing.id}:color`, accentColor);
-    return (await thing.fetch()).hexAccentColor ?? `#${colors.default}`;
-  }
+  if (preferences && preferences.accentColor) {
+    const color = preferences.accentColor;
+    cache.set(`${thing.id}:color`, color);
 
-  if (accentColor) {
-    cache.set(`${thing.id}:color`, accentColor);
-    return accentColor as colorString;
+    if (color === 'profile' && isUser) {
+      return (await thing.fetch()).hexAccentColor ?? `#${colors.default}`;
+    }
+
+    return color as colorString;
   }
 
   cache.set(`${thing.id}:color`, `#${colors.default}`);

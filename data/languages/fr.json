@@ -107,7 +107,7 @@
       "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
       "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
       "USER_MISSING_PERMS": "Vous n'avez pas la permission d'envoyer des messages dans ce salon.",
-      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas avoir plus de 5 rappels à la fois."
+      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas avoir plus de 10 rappels à la fois."
     },
     "strings": {
       "SUCCESS_TITLE": "Rappel créé !",

@@ -3,11 +3,14 @@ import { links, misc } from '$lib/db';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import {
   ButtonInteraction,
+  ClientApplication,
   Integration,
+  IntegrationApplication,
   Interaction,
   MessageButton,
   MessageEmbed,
@@ -34,13 +37,23 @@ export default ChatCommand({
       );
     }
 
-    const bots =
-      cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
-      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
+    const isSelf = bot.id === this.client.user.id;
 
-    cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
+    const bots = !this.guild
+      ? null
+      : cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
+        (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
 
-    const botInfo = bots.find(({ application }) => application.bot.id === bot.id);
+    if (bots) {
+      cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
+    }
+
+    const botInfo = isSelf
+      ? await this.client.application.fetch()
+      : bots.find(({ application }) => application.bot.id === bot.id);
+
+    console.log(isSelf);
+    console.log(JSON.stringify(botInfo, null, 2));
 
     if (!botInfo) {
       await this.reply(
@@ -64,15 +77,13 @@ export default ChatCommand({
 export async function renderBotInfo(
   this: Interaction,
   navCtx: NavBarContext,
-  integration: Integration
+  integration: Integration | ClientApplication
 ) {
-  console.log(integration);
+  const isSelf = integration instanceof ClientApplication;
+  const app = isSelf ? integration : integration.application;
+  const bot = app instanceof IntegrationApplication ? app.bot : this.client.user;
 
-  const { application: app } = integration;
-  const { bot } = app;
   const userBadges = getBadgeEmojis(bot.flags);
-
-  const isSelf = bot.id === this.client.user.id;
 
   const uptime = Math.round((Date.now() - this.client.uptime) / 1000);
 
@@ -90,20 +101,20 @@ export async function renderBotInfo(
       (userBadges.length > 0 ? `${userBadges.join(' ')} ${invisibleChar}\n` : '') + app.description
     )
     .addField('ID', app.id, true)
-    .addField('Added by', integration.user.toString(), true)
-    .addField(
-      strings.CREATED,
-      `<t:${Math.round(app.createdAt.getTime() / 1000)}> • <t:${Math.round(
-        app.createdAt.getTime() / 1000
-      )}:R>`
-    )
     .setColor(color)
     .setThumbnail(app.iconURL());
+
+  if (this.guild && !isSelf) {
+    e.addField('Added by', integration.user.toString(), true);
+  }
+
+  e.addField(strings.CREATED, `${time(app.createdAt)} • ${time(app.createdAt, 'R')}`);
+
   if (isSelf) {
     e.addField(strings.UPTIME, `<t:${uptime}> • <t:${uptime}:R>`);
   }
 
-  if (integration.role) {
+  if (!isSelf && integration.role) {
     e.addField('Managed role', integration.role.toString());
   }
 
@@ -123,9 +134,9 @@ export async function renderBotInfo(
         true
       )
       .setFooter({
-        text: `${this.client.user.id === misc.CRBTid ? 'Stable' : 'Dev'} ${
-          pjson.version
-        } • Purplet ${pjson.dependencies['purplet'].slice(1)}`,
+        text: `CRBT v${pjson.version} • Build ${pjson.build} ${
+          this.client.user.id === misc.CRBTid ? '' : '(Dev) '
+        }• Purplet ${pjson.dependencies['purplet'].slice(1)}`,
       });
   }
 
@@ -141,17 +152,17 @@ export async function renderBotInfo(
                 .setURL(
                   `https://discord.com/api/oauth2/authorize?client_id=${bot.id}&scope=applications.commands%20bot&permissions=0`
                 ),
-              app.termsOfServiceURL
-                ? new MessageButton()
-                    .setStyle('LINK')
-                    .setLabel('Terms of Service')
-                    .setURL(app.termsOfServiceURL)
-                : null,
-              app.privacyPolicyURL
+              // isSelf
+              //   ? new MessageButton()
+              //       .setStyle('LINK')
+              //       .setLabel('Terms of Service')
+              //       .setURL(app.termsOfServiceURL)
+              //   : null,
+              isSelf
                 ? new MessageButton()
                     .setStyle('LINK')
                     .setLabel('Privacy Policy')
-                    .setURL(app.privacyPolicyURL)
+                    .setURL(links.policy)
                 : null,
             ]
           : [
