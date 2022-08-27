@@ -1,9 +1,9 @@
 {
   "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
-  "ERROR_INVALID_URL": "The URL you provided is invalid.",
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
-  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
+  "ERROR_INVALID_URL": "The URL you have provided is invalid.",
+  "ERROR_INVALID_HEX": "The HEX colour you have provided is invalid.",
+  "ERROR_INVALID_BIRTHDAY": "The birthdate you have set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
@@ -27,7 +27,7 @@
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
+      "TITLE": "An unknown error has occurred.",
       "DESCRIPTION": "We have no idea what this issue is. The error we received is:\n<MESSAGE>\nThis error was reported to us automatically, and we'll get to work on it as soon as possible. Sorry for any inconvenience caused."
     }
   },
@@ -75,7 +75,7 @@
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord Profile Colour to sync from! To set one, edit your Discord User Profile and change your Profile Colour.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
+      "INVALID_COLOR_NAME": "You need to enter a valid colour name using the autocomplete or use a HEX colour."
     },
     "strings": {
       "EMBED_TITLE": "Accent colour updated.",
@@ -106,8 +106,8 @@
       "INVALID_FORMAT": "The time you entered is either in an invalid format or in the past.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
+      "BOT_MISSING_PERMS": "I do not have permission to sent messages in that channel.",
+      "USER_MISSING_PERMS": "You do not have permission to send messages in that channel.",
       "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
@@ -119,8 +119,8 @@
       "TODAY_AT": "Today at <TIME>",
       "BUTTON_GCALENDAR": "Add to Google Calendar",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
+      "GCALENDAR_EVENT_DM": "You will also be reminded via DM.",
+      "GCALENDAR_EVENT_CHANNEL": "You will also be reminded in <CHANNEL> in <SERVER>.",
       "REMINDER_TITLE": "Reminder",
       "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
       "BUTTON_SNOOZE": "Snooze",
@@ -137,7 +137,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Pings CRBT and returns latency and connection info."
     },
     "strings": {
       "EMBED_TITLE": "<CRBT> - Ping",
