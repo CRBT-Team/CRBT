@@ -46,7 +46,7 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
   // console.log(added, removed, nope);
   // console.log(chosen);
   if (nope.length > 0) {
-    return this.reply(CRBTError(errors.ROLES_DO_NOT_EXIST));
+    return CRBTError(this, errors.ROLES_DO_NOT_EXIST);
   }
   if ((this.component as MessageSelectMenu).maxValues !== 1) {
     this.reply({
@@ -58,9 +58,8 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
           })
           .setDescription(
             added.length > 0 || removed.length > 0
-              ? `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${
-                  removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
-                }\n\`\`\``
+              ? `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
+              }\n\`\`\``
               : ''
           )
           .setColor(`#${colors.success}`),
@@ -75,9 +74,8 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
-                role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
-              }`,
+              name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+                }`,
               iconURL: icons.success,
             })
             .setColor(`#${colors.success}`),

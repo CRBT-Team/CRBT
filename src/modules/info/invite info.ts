@@ -18,13 +18,8 @@ export default ChatCommand({
 
     const req = (await getRestClient()
       .get(Routes.invite(inviteCode))
-      .catch(async (r) => {
-        await this.reply(
-          CRBTError(
-            "Invalid invite code or URL. Make sure it hasn't expired and anyone has access to it."
-          )
-        );
-      })) as APIInvite;
+      .catch(async (r) => await CRBTError(this, "Invalid invite code or URL. Make sure it hasn't expired and anyone has access to it.")
+      )) as APIInvite;
 
     const { code, expires_at, guild, channel, inviter } = req;
 
@@ -49,8 +44,8 @@ export default ChatCommand({
         guild.banner
           ? `https://cdn.discordapp.com/banners/${guild.id}/${guild.banner}.png`
           : guild.splash
-          ? `https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png`
-          : null
+            ? `https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png`
+            : null
       )
       .setThumbnail(
         guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : null

@@ -3,12 +3,13 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
 import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { EditableFeatures, saveColorSettings } from '../../settings/settings';
+import { saveColorSettings } from '../../settings/serverSettings/accentColor';
 
 export const FieldEditModal = ModalComponent({
   async handle({
@@ -22,7 +23,7 @@ export const FieldEditModal = ModalComponent({
 
     if (type === EditableFeatures.accentColor) {
       if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
-        return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
+        return CRBTError(this, { title: t(this, 'ERROR_INVALID_HEX') });
       }
       return await saveColorSettings.call(this, value.toLowerCase().replace('#', ''));
     }
@@ -38,9 +39,9 @@ export const FieldEditModal = ModalComponent({
       type === MessageBuilderTypes.rolePicker
         ? value
         : parseCRBTscript(value, {
-            channel: this.channel as TextChannel,
-            member: this.member as GuildMember,
-          });
+          channel: this.channel as TextChannel,
+          member: this.member as GuildMember,
+        });
 
     switch (fieldName) {
       case 'content':
@@ -51,26 +52,26 @@ export const FieldEditModal = ModalComponent({
         break;
       case 'image':
         if (value && !ImageUrlRegex.test(parsed)) {
-          return this.reply(CRBTError(invalidURL));
+          return CRBTError(this, { title: invalidURL });
         }
         embed.image = { url: value };
         break;
       case 'thumbnail':
         if (value && !ImageUrlRegex.test(parsed)) {
-          return this.reply(CRBTError(invalidURL));
+          return CRBTError(this, { title: invalidURL });
         }
         embed.thumbnail = { url: value };
         break;
       case 'url':
         if (value && !UrlRegex.test(value)) {
-          return this.reply(CRBTError(invalidURL));
+          return CRBTError(this, { title: invalidURL });
         }
 
         embed.url = value ?? '';
         break;
       case 'color':
         if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
-          return this.reply(CRBTError(t(this, 'ERROR_INVALID_HEX')));
+          return CRBTError(this, { title: t(this, 'ERROR_INVALID_HEX') });
         }
         embed.color = parseInt(value.replace('#', ''), 16);
         break;
@@ -90,7 +91,7 @@ export const FieldEditModal = ModalComponent({
     // console.log('whatsTheContent', JSON.stringify(content));
 
     if (noTextInMessage) {
-      return this.reply(CRBTError(t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY')));
+      return CRBTError(this, { title: t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY') });
     }
 
     const builder = MessageBuilder({

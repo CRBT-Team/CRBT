@@ -29,33 +29,33 @@ export default ChatCommand({
     .string('reason', 'The reason for timing them out.'),
   async handle({ user, reason, duration }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)) {
-      return this.reply(CRBTError('You do not have permission to timeout members.'));
+      return CRBTError(this, 'You do not have permission to timeout members.');
     }
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ModerateMembers)) {
-      return this.reply(CRBTError('I do not have permission to timeout members.'));
+      return CRBTError(this, 'I do not have permission to timeout members.');
     }
     if (this.user.id === user.id) {
-      return this.reply(CRBTError('You cannot timeout yourself! (╯°□°）╯︵ ┻━┻'));
+      return CRBTError(this, 'You cannot timeout yourself! (╯°□°）╯︵ ┻━┻');
     }
     if (!this.guild.members.cache.has(user.id)) {
-      return this.reply(CRBTError('The user is not in this server.'));
+      return CRBTError(this, 'The user is not in this server.');
     }
     const member =
       this.guild.members.cache.get(user.id) ?? (await this.guild.members.fetch(user.id));
     if (!member.moderatable) {
-      return this.reply(CRBTError('You cannot timeout this user.'));
+      return CRBTError(this, 'You cannot timeout this user.');
     }
     // if (member.isCommunicationDisabled()) {
-    //   return this.reply(CRBTError('This user is already timed out.'));
+    //   return CRBTError(this, 'This user is already timed out.');
     // }
     if (this.guild.ownerId === user.id) {
-      return this.reply(CRBTError('You cannot timeout the owner of the server.'));
+      return CRBTError(this, 'You cannot timeout the owner of the server.');
     }
     if (
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
-      return this.reply(CRBTError('You cannot timeout a user with a higher role than you.'));
+      return CRBTError(this, 'You cannot timeout a user with a higher role than you.');
     }
 
     try {
@@ -96,7 +96,7 @@ export default ChatCommand({
             }).setColor(`#${colors.yellow}`),
           ],
         })
-        .catch((e) => {});
+        .catch((e) => { });
     } catch (e) {
       return this.reply(UnknownError(this, String(e)));
     }

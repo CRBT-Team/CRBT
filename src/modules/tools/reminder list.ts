@@ -100,7 +100,7 @@ export const EditModal = ModalComponent({
     try {
       resolveToDate(this.fields.getTextInputValue('date'));
     } catch (e) {
-      return this.reply(CRBTError('Invalid date format'));
+      return CRBTError(this, 'Invalid date format');
     }
 
     const expiration = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
@@ -194,8 +194,7 @@ async function renderReminder(
         })
         .setTitle(getReminderSubject(userReminders[index], this.client))
         .setDescription(
-          `Will be sent <t:${dayjs(expiration).unix()}:R> in ${
-            data.destination === 'dm' ? 'your DMs' : `${channel}`
+          `Will be sent <t:${dayjs(expiration).unix()}:R> in ${data.destination === 'dm' ? 'your DMs' : `${channel}`
           }\nCreated <t:${snowStamp(messageId).unix()}> (<t:${snowStamp(messageId).unix()}:R>)`
         )
         .setColor(this.message.embeds[0].color),
@@ -235,14 +234,13 @@ async function renderReminder(
               dates: `${dayjs(expiration).format('YYYYMMDD')}/${dayjs(expiration)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
-              details: `${strings.GCALENDAR_EVENT} ${
-                data.destination
-                  ? strings.GCALENDAR_EVENT_CHANNEL.replace(
-                      '<CHANNEL>',
-                      `#${channel.name}`
-                    ).replace('<SERVER>', channel.guild.name)
-                  : strings.GCALENDAR_EVENT_DM
-              }`,
+              details: `${strings.GCALENDAR_EVENT} ${data.destination
+                ? strings.GCALENDAR_EVENT_CHANNEL.replace(
+                  '<CHANNEL>',
+                  `#${channel.name}`
+                ).replace('<SERVER>', channel.guild.name)
+                : strings.GCALENDAR_EVENT_DM
+                }`,
               location: url,
             })}`
           )
@@ -272,9 +270,8 @@ async function renderList(
             .sort((a, b) => a.expiration.getTime() - b.expiration.getTime())
             .map((r) => ({
               name: getReminderSubject(r, this.client),
-              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${
-                r.data.destination === 'dm' ? 'In your DMs' : `<#${r.data.destination}>`
-              }`,
+              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${r.data.destination === 'dm' ? 'In your DMs' : `<#${r.data.destination}>`
+                }`,
             }))
         )
         .setColor(
@@ -287,19 +284,19 @@ async function renderList(
       userReminders.length === 0
         ? []
         : components(
-            row(
-              new ReminderSelectMenu()
-                .setPlaceholder('Select a reminder to edit or delete.')
-                .setMaxValues(1)
-                .addOptions(
-                  userReminders.map((r, index) => ({
-                    label: getReminderSubject(r, this.client),
-                    description: `${dayjs(r.expiration).fromNow()}`,
-                    value: index.toString(),
-                  }))
-                )
-            )
-          ),
+          row(
+            new ReminderSelectMenu()
+              .setPlaceholder('Select a reminder to edit or delete.')
+              .setMaxValues(1)
+              .addOptions(
+                userReminders.map((r, index) => ({
+                  label: getReminderSubject(r, this.client),
+                  description: `${dayjs(r.expiration).fromNow()}`,
+                  value: index.toString(),
+                }))
+              )
+          )
+        ),
   };
 }
 

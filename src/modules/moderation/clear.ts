@@ -14,13 +14,13 @@ export default ChatCommand({
   }),
   async handle({ amount }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)) {
-      return this.reply(CRBTError('You do not have permission to manage messages.'));
+      return CRBTError(this, 'You do not have permission to manage messages.');
     }
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageMessages)) {
-      return this.reply(CRBTError('I do not have permission to manage messages.'));
+      return CRBTError(this, 'I do not have permission to manage messages.');
     }
     if (amount > 100 || amount < 1) {
-      return this.reply(CRBTError('You can only delete between 1 and 100 messages.'));
+      return CRBTError(this, 'You can only delete between 1 and 100 messages.');
     }
 
     await this.deferReply();

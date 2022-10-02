@@ -19,12 +19,12 @@ export default ChatCommand({
       const uptime = dayjs().subtract(this.client.uptime).unix();
       await this.editReply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
+          {
+            author: {
               name: strings.EMBED_TITLE.replace('<CRBT>', this.client.user.username),
               iconURL: avatar(this.client.user, 64),
-            })
-            .addFields([
+            },
+            fields: [
               {
                 name: strings.WEBSOCKET,
                 value: `${this.client.ws.ping}ms`,
@@ -39,8 +39,9 @@ export default ChatCommand({
                 name: strings.UPTIME,
                 value: `<t:${uptime}> (<t:${uptime}:R>)`,
               },
-            ])
-            .setColor(await getColor(this.user)),
+            ],
+            color: await getColor(this.user)
+          }
         ],
       });
     }, 300);

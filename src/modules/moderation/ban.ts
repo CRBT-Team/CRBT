@@ -71,10 +71,10 @@ export const BanModal = ModalComponent({
     const delete_messages = parseInt(this.fields.getTextInputValue('DELETE_MESSAGES'));
 
     if (isNaN(delete_messages)) {
-      return this.reply(CRBTError(`${delete_messages} is not a number!`));
+      return CRBTError(this, `${delete_messages} is not a number!`);
     }
     if (delete_messages < 0 || delete_messages > 100) {
-      return this.reply(CRBTError(`${delete_messages} is not between 0 and 100!`));
+      return CRBTError(this, `${delete_messages} is not between 0 and 100!`);
     }
 
     ban.call(this, {
@@ -97,24 +97,24 @@ async function ban(
   const { user, reason, delete_messages, duration } = opts;
 
   if (duration && !isValidTime(duration) && ms(duration) > ms('3y')) {
-    return this.reply(CRBTError('Invalid duration or exceeds 3 years'));
+    return CRBTError(this, 'Invalid duration or exceeds 3 years');
   }
 
   if (!hasPerms(this.memberPermissions, PermissionFlagsBits.BanMembers)) {
-    return this.reply(CRBTError('You do not have permission to ban members.'));
+    return CRBTError(this, 'You do not have permission to ban members.');
   }
   if (!hasPerms(this.appPermissions, PermissionFlagsBits.BanMembers)) {
-    return this.reply(CRBTError('I do not have permission to ban members.'));
+    return CRBTError(this, 'I do not have permission to ban members.');
   }
   if (this.user.id === user.id) {
-    return this.reply(CRBTError('You cannot ban yourself! (╯°□°）╯︵ ┻━┻'));
+    return CRBTError(this, 'You cannot ban yourself! (╯°□°）╯︵ ┻━┻');
   }
   if (!this.guild.members.cache.has(user.id)) {
-    return this.reply(CRBTError('The user is not in this server.'));
+    return CRBTError(this, 'The user is not in this server.');
   }
 
   if (this.guild.ownerId === user.id) {
-    return this.reply(CRBTError('You cannot ban the owner of the server.'));
+    return CRBTError(this, 'You cannot ban the owner of the server.');
   }
 
   const member = this.guild.members.cache.get(user.id);
@@ -123,10 +123,10 @@ async function ban(
     this.user.id !== this.guild.ownerId &&
     (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
   ) {
-    return this.reply(CRBTError('You cannot ban a user with a higher role than you.'));
+    return CRBTError(this, 'You cannot ban a user with a higher role than you.');
   }
   if (!isValidTime(duration)) {
-    return this.reply(CRBTError('Invalid duration.'));
+    return CRBTError(this, 'Invalid duration.');
   }
 
   try {
@@ -185,7 +185,7 @@ async function ban(
           }).setColor(`#${colors.error}`),
         ],
       })
-      .catch((e) => {});
+      .catch((e) => { });
   } catch (e) {
     return this.reply(UnknownError(this, String(e)));
   }

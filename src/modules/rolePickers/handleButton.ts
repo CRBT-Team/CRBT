@@ -23,13 +23,13 @@ export async function handleRolePickerButton(
   const { strings, errors } = t(this, 'role-selectors');
 
   if (!this.guild.roles.cache.has(data.id)) {
-    return this.reply(CRBTError(errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name)));
+    return CRBTError(this, errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name));
   }
 
   const member = this.member as GuildMember;
 
   if (data.behavior === 'once' && member.roles.cache.has(data.id)) {
-    return this.reply(CRBTError(errors.BUTTON_ROLES_ONCE));
+    return CRBTError(this, errors.BUTTON_ROLES_ONCE);
   }
 
   if (!member.roles.cache.has(data.id)) {
@@ -38,9 +38,8 @@ export async function handleRolePickerButton(
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
-              data.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
-            }`,
+            name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${data.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+              }`,
             iconURL: icons.success,
           })
           .setColor(`#${colors.success}`),
@@ -53,9 +52,8 @@ export async function handleRolePickerButton(
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
-              data.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
-            }`,
+            name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${data.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
+              }`,
             iconURL: icons.success,
           })
           .setColor(`#${colors.success}`),

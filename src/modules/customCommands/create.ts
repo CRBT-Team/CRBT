@@ -11,7 +11,7 @@
 //     .string('output', 'what to reply', { required: true }),
 //   async handle({ name, description, output }) {
 //     if (name.includes(' ')) {
-//       return this.reply(CRBTError('Command name cannot contain spaces.'));
+//       return CRBTError(this, 'Command name cannot contain spaces.');
 //     }
 
 //     const newCommand = await registerCustomCmd(

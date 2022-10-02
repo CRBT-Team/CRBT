@@ -61,7 +61,7 @@ export const colorset = ChatCommand({
       }
     } else if (colorHex === 'profile') {
       if (!user.hexAccentColor) {
-        await this.reply(CRBTError(errors.NO_DISCORD_COLOR));
+        await CRBTError(this, errors.NO_DISCORD_COLOR);
       } else {
         cache.set(`color_${user.id}`, 'profile');
         await db.users.upsert({
@@ -85,7 +85,7 @@ export const colorset = ChatCommand({
         await AchievementProgress.call(this, 'ARTIST');
       }
     } else {
-      await this.reply(CRBTError(errors.INVALID_COLOR_NAME));
+      await CRBTError(this, errors.INVALID_COLOR_NAME);
     }
   },
 });

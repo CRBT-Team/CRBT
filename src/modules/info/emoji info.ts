@@ -41,9 +41,8 @@ export default ChatCommand({
         animated: emoji.split(':')[0] === '<a',
         name: emoji.split(':')[1],
         id: emoji.split(':')[2].replace('>', ''),
-        url: `https://cdn.discordapp.com/emojis/${emoji.split(':')[2].replace('>', '')}.${
-          emoji.split(':')[0] === '<a' ? 'gif' : 'png'
-        }`,
+        url: `https://cdn.discordapp.com/emojis/${emoji.split(':')[2].replace('>', '')}.${emoji.split(':')[0] === '<a' ? 'gif' : 'png'
+          }`,
         createdAt: snowStamp(emoji.split(':')[2].replace('>', '')),
       };
 
@@ -65,13 +64,13 @@ export default ChatCommand({
         components: isEmojiInServer
           ? []
           : components(
-              row(
-                new AddEmojiButton(emoji)
-                  .setStyle('SECONDARY')
-                  .setLabel('Clone to this server')
-                  .setEmoji(emojis.buttons.add)
-              )
-            ),
+            row(
+              new AddEmojiButton(emoji)
+                .setStyle('SECONDARY')
+                .setLabel('Clone to this server')
+                .setEmoji(emojis.buttons.add)
+            )
+          ),
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
       const emojiData = emojiJSON.find((e) => e.char === emoji);
@@ -103,11 +102,7 @@ export default ChatCommand({
         components: components(renderSelect(emojipediaCode)),
       });
     } else {
-      await this.reply(
-        CRBTError(
-          'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃'
-        )
-      );
+      await CRBTError(this, 'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃')
     }
   },
 });
@@ -138,20 +133,19 @@ export const EmojiDesignSelect = SelectMenuComponent({
 export const AddEmojiButton = ButtonComponent({
   async handle(emojiString: string) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageEmojisAndStickers)) {
-      return this.reply(CRBTError('You do not have permission to add emojis to this server.'));
+      return CRBTError(this, 'You do not have permission to add emojis to this server.');
     }
 
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageEmojisAndStickers)) {
-      return this.reply(CRBTError('I do not have permission to add emojis to this server.'));
+      return CRBTError(this, 'I do not have permission to add emojis to this server.');
     }
 
     const emojiData = {
       animated: emojiString.split(':')[0] === '<a',
       name: emojiString.split(':')[1],
       id: emojiString.split(':')[2].replace('>', ''),
-      url: `https://cdn.discordapp.com/emojis/${emojiString.split(':')[2].replace('>', '')}.${
-        emojiString.split(':')[0] === '<a' ? 'gif' : 'png'
-      }`,
+      url: `https://cdn.discordapp.com/emojis/${emojiString.split(':')[2].replace('>', '')}.${emojiString.split(':')[0] === '<a' ? 'gif' : 'png'
+        }`,
     };
 
     await this.guild.emojis.create(emojiData.url, emojiData.name);

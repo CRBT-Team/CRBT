@@ -24,6 +24,7 @@ model servers {
   accentColor  String?        @map("accent_color")
   economy      Economy?
   modules      serverModules?
+  // achievements Achievement[]
   flags        BigInt?        @default(0)
 }
 
@@ -46,14 +47,24 @@ model moderationStrikes {
 }
 
 model users {
-  id           String         @id(map: "misc_pkey")
-  accentColor  String?        @map("accent_color")
-  achievements Achievements[]
-  birthday     DateTime?      @db.Timestamptz(6)
-  crbtBadges   String[]       @map("crbt_badges")
-  telemetry    Boolean        @default(true)
-  silentJoins  Boolean        @default(false) @map("silent_joins")
-  silentLeaves Boolean        @default(false) @map("silent_leaves")
+  id                    String         @id(map: "misc_pkey")
+  guildedId             String?        @map("guilded_id")
+  accentColor           String?        @map("accent_color")
+  achievements          Achievements[]
+  birthday              DateTime?      @db.Timestamptz(6)
+  crbtBadges            String[]       @map("crbt_badges")
+  telemetry             Boolean        @default(true)
+  silentJoins           Boolean        @default(false) @map("silent_joins")
+  silentLeaves          Boolean        @default(false) @map("silent_leaves")
+  subscriptionExpiresAt DateTime?      @map("sub_expiration")
+}
+
+model Statistics {
+  date         DateTime @unique
+  servers      Int
+  uniqueUsers  String[]
+  commandsUsed String[]
+  members      Int
 }
 
 model Achievements {
@@ -62,8 +73,18 @@ model Achievements {
   user        users     @relation(fields: [userId], references: [id])
   achievement String
   progression Int
+  // totalSteps  Int
   achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
 }
+
+// model Achievement {
+//   id         String   @id
+//   serverId   String   @map("server_id")
+//   userId     String   @map("user_id")
+//   server     servers? @relation(fields: [serverId], references: [id])
+//   users      users[]
+//   totalSteps Int
+// }
 
 model Inventory {
   serverId    String        @id @map("server_id")

@@ -20,6 +20,7 @@ import {
 } from 'purplet';
 import langCodes from '../../../data/misc/langCodes.json';
 import languages from '../../../data/misc/languages.json';
+import { useOcrScan } from './Find Text in Image';
 
 export default ChatCommand({
   name: 'translate',
@@ -51,13 +52,16 @@ export default ChatCommand({
 export const ctxCommand = MessageContextCommand({
   name: 'Translate with Scan',
   async handle(message) {
-    if (!message.content) {
-      return this.reply(
-        CRBTError(
-          `This message doesn't have any content!\nNote: CRBT cannot translate embeds for now. Please manually translate the content you want using ${slashCmd(
-            'translate'
-          )}.`
-        )
+    const image = message.attachments.size
+      ? message.attachments.first().url
+      : message.embeds.find((e) => e.image)?.image?.url ?? message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
+
+    if (!message.content && !image) {
+      return CRBTError(
+        this,
+        `This message doesn't have any content or images to translate!\nNote: CRBT doesn't translate embeds for now. You can translate any text with ${slashCmd(
+          'translate'
+        )}.`
       );
     }
 
@@ -66,9 +70,23 @@ export const ctxCommand = MessageContextCommand({
     });
 
     try {
-      const result = await translate.call(this, message.content);
+      if (message.content) {
+        const { content } = message;
 
-      if (result) await this.editReply(result);
+        const result = await translate.call(this, content);
+        if (result) await this.editReply(result);
+      } else if (image) {
+        const [content, error] = (await useOcrScan(image));
+
+        if (error)
+          await CRBTError(
+            this,
+            'No text was recognized from this image. Please try again with a different image, and make sure that the text is legible.'
+          );
+
+        const result = await translate.call(this, content);
+        if (result) await this.editReply(result);
+      }
     } catch (e) {
       await this.editReply(UnknownError(this, e));
     }
@@ -84,11 +102,11 @@ async function translate(
   const from = opts?.from ?? 'auto';
 
   if (!languages[from]) {
-    this.editReply(CRBTError(`"${from}" is not a valid source language.`));
+    CRBTError(this, `"${from}" is not a valid source language.`);
     return;
   }
   if (!languages[target]) {
-    this.editReply(CRBTError(`"${target}" is not a valid target language.`));
+    CRBTError(this, `"${target}" is not a valid target language.`);
     return;
   }
 
@@ -137,7 +155,7 @@ export const TargetLangSelectMenu = SelectMenuComponent({
     const sourceText = this.message.embeds[0].fields[0].value;
 
     if (this.user.id !== this.message.interaction.user.id) {
-      return this.reply(CRBTError(t(this, 'user_navbar').errors.NOT_CMD_USER));
+      return CRBTError(this, t(this, 'user_navbar').errors.NOT_CMD_USER);
     }
 
     await this.update(

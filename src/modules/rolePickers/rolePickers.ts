@@ -41,11 +41,11 @@ export const useManual = ChatCommand({
     const { strings, errors } = t(this.guildLocale, 'role-selectors');
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
-      return this.reply(CRBTError(errors.USER_MISSING_PERMS));
+      return CRBTError(this, errors.USER_MISSING_PERMS);
     }
 
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageRoles)) {
-      return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
+      return CRBTError(this, errors.BOT_MISSING_PERMS);
     }
 
     await this.deferReply({
@@ -65,31 +65,31 @@ export const useManual = ChatCommand({
         components: components(
           rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)
             ? row().addComponents(
-                rolesList.map(({ name, id }) => {
-                  return new Button({
-                    id,
-                    behavior,
-                  })
-                    .setLabel(name)
-                    .setStyle('SECONDARY')
-                    .setDisabled(true);
+              rolesList.map(({ name, id }) => {
+                return new Button({
+                  id,
+                  behavior,
                 })
-              )
+                  .setLabel(name)
+                  .setStyle('SECONDARY')
+                  .setDisabled(true);
+              })
+            )
             : row(
-                new SelectMenu(null)
-                  .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
-                  .setMinValues(0)
-                  .setMaxValues(limit)
-                  .setOptions(
-                    rolesList.map((role) => {
-                      return {
-                        label: role.name,
-                        value: JSON.stringify({ id: role.id, behavior }),
-                      };
-                    })
-                  )
-                  .setDisabled(true)
-              )
+              new SelectMenu(null)
+                .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
+                .setMinValues(0)
+                .setMaxValues(limit)
+                .setOptions(
+                  rolesList.map((role) => {
+                    return {
+                      label: role.name,
+                      value: JSON.stringify({ id: role.id, behavior }),
+                    };
+                  })
+                )
+                .setDisabled(true)
+            )
         ),
       },
       interaction: this,

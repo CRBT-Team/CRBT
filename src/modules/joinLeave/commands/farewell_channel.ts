@@ -27,7 +27,7 @@ export default ChatCommand({
   ),
   async handle({ channel }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
-      return this.reply(CRBTError(t(this, 'ERROR_ADMIN_ONLY')));
+      return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
     }
     if (
       !hasPerms(
@@ -35,7 +35,7 @@ export default ChatCommand({
         PermissionFlagsBits.SendMessages
       )
     ) {
-      return this.reply(CRBTError('I do not have permission to send messages in this channel.'));
+      return CRBTError(this, 'I do not have permission to send messages in this channel.');
     }
 
     await this.deferReply({ ephemeral: true });

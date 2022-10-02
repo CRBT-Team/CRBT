@@ -57,12 +57,12 @@ export const issueReply = async (
         .addFields(
           message
             ? [
-                ...fields.slice(0, fields.length - 1),
-                {
-                  name: `${user.id === target.id ? '[OP]' : '[DEV]'} ${user.tag} replied`,
-                  value: message,
-                },
-              ]
+              ...fields.slice(0, fields.length - 1),
+              {
+                name: `${user.id === target.id ? '[OP]' : '[DEV]'} ${user.tag} replied`,
+                value: message,
+              },
+            ]
             : fields.slice(0, fields.length - 1)
         )
         .addField(
@@ -70,8 +70,8 @@ export const issueReply = async (
           type === 'reply'
             ? '<:pending:954734893072519198> Pending'
             : type === 'fix'
-            ? `${emojis.success} ${isSuggestion ? 'Accepted' : 'Fixed'}`
-            : `${emojis.error} Denied`
+              ? `${emojis.success} ${isSuggestion ? 'Accepted' : 'Fixed'}`
+              : `${emojis.error} Denied`
         )
         .setTimestamp()
         .setColor(`#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`),
@@ -93,8 +93,7 @@ export const issueReply = async (
             iconURL: icons.information,
           })
           .setDescription(
-            `As ${user.tag} ${
-              type === 'fix' ? 'accepted' : 'denied'
+            `As ${user.tag} ${type === 'fix' ? 'accepted' : 'denied'
             } this suggestion, this thread will be closed.`
           )
           .setColor(`#${colors[type === 'fix' ? 'success' : 'error']}`),
@@ -118,10 +117,9 @@ export const issueReply = async (
             type === 'reply'
               ? `A CRBT developer has replied to your ${isSuggestion} "${trimmed}"`
               : type === 'fix'
-              ? `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been ${
-                  isSuggestion ? 'accepted' : 'fixed'
+                ? `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been ${isSuggestion ? 'accepted' : 'fixed'
                 }`
-              : `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been denied`,
+                : `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been denied`,
           message,
         }).setColor(
           `#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`
@@ -131,9 +129,9 @@ export const issueReply = async (
         row(
           type === 'reply'
             ? new ReplyButton({ state: type })
-                .setLabel('Reply')
-                .setEmoji(emojis.buttons.reply)
-                .setStyle('PRIMARY')
+              .setLabel('Reply')
+              .setEmoji(emojis.buttons.reply)
+              .setStyle('PRIMARY')
             : null,
           new MessageButton()
             .setStyle('LINK')
@@ -142,13 +140,13 @@ export const issueReply = async (
         )
       ),
     })
-    .catch(() => {});
+    .catch(() => { });
 };
 
 export const ReplyButton = ButtonComponent({
   async handle({ state }) {
     if (state !== 'reply') {
-      return this.reply(CRBTError("You can't reply to an issue that has been closed."));
+      return CRBTError(this, "You can't reply to an issue that has been closed.");
     }
 
     const issueId = (this.message.components[0].components as MessageButton[])

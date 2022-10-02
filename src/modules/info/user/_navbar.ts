@@ -35,7 +35,7 @@ export const UserInfoBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -50,7 +50,7 @@ export const BotInfoBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const bots =
       cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
@@ -69,7 +69,7 @@ export const PfpBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -86,7 +86,7 @@ export const UserPfpBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const u = await this.client.users.fetch(opts.targetId);
 
@@ -99,7 +99,7 @@ export const UserBannerBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -144,32 +144,32 @@ export function navBar(
       .setDisabled(activeTab === 'userinfo'),
     addTabs?.has('botinfo')
       ? new BotInfoBtn(ctx)
-          .setLabel(strings.BOTINFO)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'botinfo')
+        .setLabel(strings.BOTINFO)
+        .setStyle('SECONDARY')
+        .setDisabled(activeTab === 'botinfo')
       : null,
     ...(addTabs?.has('user_avatar')
       ? [
-          new PfpBtn(ctx)
-            .setLabel(strings.SERVER_AVATAR)
-            .setStyle('SECONDARY')
-            .setDisabled(activeTab === 'avatar'),
-          new UserPfpBtn(ctx)
-            .setLabel(strings.USER_AVATAR)
-            .setStyle('SECONDARY')
-            .setDisabled(activeTab === 'user_avatar'),
-        ]
+        new PfpBtn(ctx)
+          .setLabel(strings.SERVER_AVATAR)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'avatar'),
+        new UserPfpBtn(ctx)
+          .setLabel(strings.USER_AVATAR)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'user_avatar'),
+      ]
       : [
-          new PfpBtn(ctx)
-            .setLabel(strings.AVATAR)
-            .setStyle('SECONDARY')
-            .setDisabled(activeTab === 'avatar'),
-        ]),
+        new PfpBtn(ctx)
+          .setLabel(strings.AVATAR)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'avatar'),
+      ]),
     addTabs?.has('user_banner')
       ? new UserBannerBtn(ctx)
-          .setLabel(strings.USER_BANNER)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'user_banner')
+        .setLabel(strings.USER_BANNER)
+        .setStyle('SECONDARY')
+        .setDisabled(activeTab === 'user_banner')
       : null
   );
 }

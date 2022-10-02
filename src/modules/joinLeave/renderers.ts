@@ -36,7 +36,7 @@ export async function renderJoinLeavePrebuilder(
   type: JoinLeaveData['type']
 ) {
   if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
-    return this.reply(CRBTError(t(this.locale, 'ERROR_ADMIN_ONLY')));
+    return CRBTError(this, t(this.locale, 'ERROR_ADMIN_ONLY'));
   }
 
   const data = ((await db.servers.findFirst({
@@ -66,32 +66,28 @@ export async function renderJoinLeavePrebuilder(
   await this.reply(builder);
 }
 
-export async function renderJoinLeavePreview(this: CommandInteraction, data: JoinLeaveData) {
+export async function renderJoinLeavePreview(this: CommandInteraction, type: 'JOIN_MESSAGE' | 'LEAVE_MESSAGE', data: RawServerJoin | RawServerLeave) {
   const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
   const message: JoinLeaveData =
-    data && data.type === MessageBuilderTypes.joinMessage
+    data && type === MessageBuilderTypes.joinMessage
       ? data['joinMessage']
       : data['leaveMessage'];
 
   if (!data || !message) {
-    return this.reply(
-      CRBTError(t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, data.type)))
-    );
+    return CRBTError(this, t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, type)));
   }
   const channelId: string =
-    data.type === MessageBuilderTypes.joinMessage ? data['joinChannel'] : data['leaveChannel'];
+    type === MessageBuilderTypes.joinMessage ? data['joinChannel'] : data['leaveChannel'];
 
   if (!channelId) {
-    return this.reply(
-      CRBTError(
-        t(
-          this,
-          data.type === MessageBuilderTypes.joinMessage
-            ? 'JOIN_PREVIEW_ERROR_NO_CHANNEL'
-            : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL'
-        ).replace('<TYPE>', t(this, data.type))
-      )
+    return CRBTError(this,
+      t(
+        this,
+        type === MessageBuilderTypes.joinMessage
+          ? 'JOIN_PREVIEW_ERROR_NO_CHANNEL'
+          : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL'
+      ).replace('<TYPE>', t(this, type))
     );
   }
 
@@ -113,7 +109,7 @@ export async function renderJoinLeavePreview(this: CommandInteraction, data: Joi
           .setAuthor({
             name: t(this.guildLocale, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
               '<TYPE>',
-              t(this.guildLocale, data.type)
+              t(this.guildLocale, type)
             ),
           })
           .setColor(await getColor(this.guild)),
@@ -125,12 +121,12 @@ export async function renderJoinLeavePreview(this: CommandInteraction, data: Joi
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace('<TYPE>', t(this, data.type)),
+            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace('<TYPE>', t(this, type)),
             iconURL: this.guild.iconURL(),
           })
           .setDescription(
             t(this, 'JOINLEAVE_PREVIEW_EMBED_DESCRIPTION')
-              .replace('<TYPE>', t(this, data.type))
+              .replace('<TYPE>', t(this, type))
               .replace('<CHANNEL>', channel.toString())
           )
           .setColor(await getColor(this.guild)),
@@ -142,8 +138,6 @@ export async function renderJoinLeavePreview(this: CommandInteraction, data: Joi
     });
   } catch (e) {
     console.error(e);
-    return this.reply(
-      CRBTError(t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, data.type)))
-    );
+    return CRBTError(this, t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, type)));
   }
 }

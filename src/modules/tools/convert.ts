@@ -65,18 +65,16 @@ export default ChatCommand({
     }),
   async handle({ amount, from, to }) {
     if (allUnits.find(({ abbr }) => abbr === from) === undefined) {
-      return this.reply(
-        CRBTError(
-          `"${from}" is not a valid unit. Please use the autocomplete to select a valid unit.`
-        )
-      );
+      return CRBTError(this,
+        `"${from}" is not a valid unit. Please use the autocomplete to select a valid unit.`
+      )
+
     }
     if (allUnits.find(({ abbr }) => abbr === to) === undefined) {
-      return this.reply(
-        CRBTError(
-          `"${to}" is not a valid unit. Please use the autocomplete to select a valid unit.`
-        )
-      );
+      return CRBTError(this,
+        `"${to}" is not a valid unit. Please use the autocomplete to select a valid unit.`
+      )
+
     }
 
     if (
@@ -109,9 +107,7 @@ export default ChatCommand({
       units.find(({ abbr }) => abbr === from).measure !==
       units.find(({ abbr }) => abbr === to).measure
     ) {
-      return this.reply(
-        CRBTError(`Both of the units must be of the same type (e.g. length, mass, etc.)`)
-      );
+      return CRBTError(this, `Both of the units must be of the same type (e.g. length, mass, etc.)`)
     } else {
       try {
         const result = convert(amount)

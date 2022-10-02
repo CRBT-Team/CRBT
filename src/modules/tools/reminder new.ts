@@ -43,23 +43,23 @@ export default ChatCommand({
     try {
       expiration = await resolveToDate(when, this.locale);
     } catch (e) {
-      return this.reply(CRBTError(errors.INVALID_FORMAT));
+      return CRBTError(this, errors.INVALID_FORMAT);
     }
 
     if (expiration.isAfter(now.add(ms('2y')))) {
-      return this.reply(CRBTError(errors.TOO_LONG));
+      return CRBTError(this, errors.TOO_LONG);
     }
 
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
-        return this.reply(CRBTError(errors.INVALID_CHANNEL_TYPE));
+        return CRBTError(this, errors.INVALID_CHANNEL_TYPE);
       } else if (!hasPerms(channel.permissionsFor(this.user), PermissionFlagsBits.SendMessages)) {
-        return this.reply(CRBTError(errors.USER_MISSING_PERMS));
+        return CRBTError(this, errors.USER_MISSING_PERMS);
       } else if (
         !hasPerms(channel.permissionsFor(this.guild.me), PermissionFlagsBits.SendMessages)
       ) {
-        return this.reply(CRBTError(errors.BOT_MISSING_PERMS));
+        return CRBTError(this, errors.BOT_MISSING_PERMS);
       }
     }
     const userReminders = (
@@ -69,7 +69,7 @@ export default ChatCommand({
     ).filter((r) => (r.data as any).userId === this.user.id);
 
     if (userReminders.length >= 10) {
-      return this.reply(CRBTError(errors.REMINDERS_MAX_LIMIT));
+      return CRBTError(this, errors.REMINDERS_MAX_LIMIT);
     }
 
     await this.deferReply();
@@ -107,10 +107,10 @@ export default ChatCommand({
               (destination
                 ? strings.SUCCESS_CHANNEL.replace('<CHANNEL>', `${destination}`)
                 : strings.SUCCESS_DM) +
-                `\n` +
-                (expiration.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                  ? strings.TODAY_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
-                  : expiration.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
+              `\n` +
+              (expiration.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
+                ? strings.TODAY_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
+                : expiration.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
                   ? strings.TOMORROW_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                   : `<t:${expUnix}> • <t:${expUnix}:R>.`)
             )

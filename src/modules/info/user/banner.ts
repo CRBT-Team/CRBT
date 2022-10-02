@@ -1,6 +1,6 @@
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { createCRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -64,7 +64,8 @@ export async function renderBanner(
   const b = banner(await user.fetch(), size ?? 2048, format);
 
   if (!ctx.isButton() && !b)
-    return CRBTError(
+    return createCRBTError(
+      ctx,
       `${user.id === ctx.user.id ? "You don't" : "This user doesn't"} have any profile banner!`
     );
 

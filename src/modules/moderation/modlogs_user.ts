@@ -35,9 +35,7 @@ async function viewModLogs(
     user !== this.user &&
     !hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)
   ) {
-    return this.reply(
-      CRBTError(t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'))
-    );
+    return CRBTError(this, t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'));
   }
 
   const data = await db.moderationStrikes.findMany({

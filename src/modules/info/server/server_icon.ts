@@ -37,11 +37,7 @@ export default ChatCommand({
     }),
   async handle({ id, size, format }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
-      return await this.reply(
-        CRBTError(
-          `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`
-        )
-      );
+      return await CRBTError(this, `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`);
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
@@ -85,9 +81,9 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
           .setLabel(
             !av.includes('embed/avatars')
               ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                  ? 'GIF'
-                  : format ?? 'png'
-                ).toUpperCase()})`
+                ? 'GIF'
+                : format ?? 'png'
+              ).toUpperCase()})`
               : 'Download (256px - PNG)'
           )
           .setURL(av)

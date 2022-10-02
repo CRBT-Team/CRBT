@@ -1,12 +1,14 @@
 import { emojis } from '$lib/db';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { trimURL } from '$lib/functions/trimURL';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageComponentInteraction, MessageEmbed } from 'discord.js';
 import { SafeSearchType, search } from 'duck-duck-scrape';
+import { components, escapeMarkdown, row } from 'purplet';
 import { SearchCmdOpts } from './search';
+import { navbar } from './_navbar';
 
-export async function handleDuckDuckGo(this: CommandInteraction, opts: SearchCmdOpts) {
+export async function handleDuckDuckGo(this: CommandInteraction | MessageComponentInteraction, opts: SearchCmdOpts) {
   const { query } = opts;
 
   try {
@@ -19,24 +21,25 @@ export async function handleDuckDuckGo(this: CommandInteraction, opts: SearchCmd
     });
 
     if (req.noResults) {
-      return this.reply(CRBTError(`No search results found for ${query}!`));
+      return {
+        content: 'no results :pleading_face:'
+      }
     }
 
     const res = req.results;
 
-    await this.reply({
+    return {
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: `DuckDuckGo - Results for "${query}"`,
-            iconURL: `https://duckduckgo.com/favicon.png`,
-            url: 'https://duckduckgo.com',
+            name: `Web results for "${query}"`,
+            url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
           })
           .setFields(
             res.slice(0, 3).map((result) => {
               const name = decodeURI(result.title);
               const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
-                result.url
+                escapeMarkdown(result.url)
               ).replace(/\//g, ' › ')}](${result.url})**`;
               const desc = result.description.replace(/<\/?b>/gi, '**').slice(0, 150);
 
@@ -47,12 +50,17 @@ export async function handleDuckDuckGo(this: CommandInteraction, opts: SearchCmd
             })
           )
           .setFooter({
-            text: `Showing 3 out of ${res.length} Results (Page 1/${res.length})`,
+            text: `Powered by DuckDuckGo • Showing 3 out of ${res.length} Results (Page 1/${Math.round(res.length / 3)})`,
+            iconURL: `https://duckduckgo.com/favicon.png`,
           })
           .setColor(await getColor(this.user)),
       ],
+      components: components(
+        navbar(opts, 'web', this.locale)
+      ),
       ephemeral: opts.anonymous,
-    });
+    };
+
   } catch (e) {
     this.reply(UnknownError(this, e));
   }

@@ -11,7 +11,7 @@ export const ImportJSONModal = ModalComponent({
       const parsed = JSON.parse(input);
 
       if (!parsed || !('content' in parsed && 'embed' in parsed)) {
-        return this.reply(CRBTError('Invalid JSON'));
+        return CRBTError(this, 'Invalid JSON');
       }
 
       const builder = MessageBuilder({
@@ -22,7 +22,7 @@ export const ImportJSONModal = ModalComponent({
 
       await this.update(builder);
     } catch (e) {
-      return this.reply(CRBTError('Invalid JSON'));
+      return CRBTError(this, 'Invalid JSON');
     }
   },
 });

@@ -15,7 +15,7 @@ export default ChatCommand({
   ),
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator, true)) {
-      return this.reply(CRBTError(t(this, 'ERROR_ADMIN_ONLY')));
+      return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
     }
 
     const data = (await db.servers.findFirst({

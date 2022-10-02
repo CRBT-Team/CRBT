@@ -12,10 +12,10 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ message_link }) {
-    const msgUrlRegex = /https:\/\/((canary|ptb)\.)?discord.com\/channels(\/\d{18}){3}/;
+    const msgUrlRegex = /https:\/\/((canary|ptb)\.)?discord.com\/channels(\/\d{17,20}){3}/;
 
     if (!msgUrlRegex.test(message_link)) {
-      return this.reply(CRBTError('The message link provided is invalid.'));
+      return CRBTError(this, 'The message link provided is invalid.');
     }
 
     const guildId = message_link.split('/')[4];
@@ -26,23 +26,19 @@ export default ChatCommand({
       this.client.guilds.cache.get(guildId) ?? (await this.client.guilds.fetch(guildId));
 
     if (!guild) {
-      return this.reply(
-        CRBTError(
-          `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`
-        )
-      );
+      return CRBTError(this, 'The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".')
     }
 
     const channel = await guild.channels.fetch(channelId);
 
     if (!channel.isText()) {
-      return this.reply(CRBTError('The channel ID that you provided is invalid.'));
+      return CRBTError(this, 'The channel ID that you provided is invalid.');
     }
 
     const message = await channel.messages.fetch(messageId);
 
     if (!message) {
-      return this.reply(CRBTError('The message ID that you provided is invalid.'));
+      return CRBTError(this, 'The message ID that you provided is invalid.');
     }
 
     const { JUMP_TO_MSG } = t(this, 'genericButtons');

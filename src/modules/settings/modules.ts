@@ -23,7 +23,7 @@
 //     });
 
 //     if (data[module]) {
-//       return this.reply(CRBTError(`The module "${choices[module]}" is already enabled.`));
+//       return CRBTError(this, `The module "${choices[module]}" is already enabled.`);
 //     }
 
 //     await db.serverModules.upsert({
@@ -65,7 +65,7 @@
 //     });
 
 //     if (!data[module]) {
-//       return this.reply(CRBTError(`The module "${choices[module]}" is already disabled.`));
+//       return CRBTError(this, `The module "${choices[module]}" is already disabled.`);
 //     }
 
 //     await db.serverModules.upsert({

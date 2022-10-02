@@ -14,7 +14,7 @@ export default ChatCommand({
   }),
   async handle({ message }) {
     if (!hasPerms(this.guild.me.permissionsIn(this.channel), PermissionFlagsBits.ManageWebhooks)) {
-      return this.reply(CRBTError('I do not have the "Manage Webhooks" permission.'));
+      return CRBTError(this, 'I do not have the "Manage Webhooks" permission.');
     }
 
     const content = message ? `${message} ( ͡° ͜ʖ ͡°)` : '( ͡° ͜ʖ ͡°)';

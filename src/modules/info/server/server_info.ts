@@ -29,11 +29,7 @@ export default ChatCommand({
   ),
   async handle({ id }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
-      return await this.reply(
-        CRBTError(
-          `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`
-        )
-      );
+      return await CRBTError(this, `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`);
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
@@ -67,8 +63,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
 
     .setAuthor({ name: `${guild.name} - Server info`, iconURL: guild.iconURL({ dynamic: true }) })
     .setDescription(
-      `${guild.partnered ?? guild.verified ? `${emojis.badges.partner}\n` : ''}${
-        guild.description ?? ''
+      `${guild.partnered ?? guild.verified ? `${emojis.badges.partner}\n` : ''}${guild.description ?? ''
       }`
     )
     .setImage(guild.bannerURL())
@@ -82,17 +77,16 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     )
     .addField(
       `Channels • ${channels.size}`,
-      `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${
-        cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
+      `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
       }\n` +
-        `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text channel(s)\n` +
-        `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice channel(s)\n` +
-        (cFilter('GUILD_NEWS') !== 0
-          ? `${emojis.channels.news} ${cFilter('GUILD_NEWS')} annnouncement channel(s)\n`
-          : '') +
-        (cFilter('GUILD_STAGE_VOICE') !== 0
-          ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage channel(s)`
-          : ''),
+      `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text channel(s)\n` +
+      `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice channel(s)\n` +
+      (cFilter('GUILD_NEWS') !== 0
+        ? `${emojis.channels.news} ${cFilter('GUILD_NEWS')} annnouncement channel(s)\n`
+        : '') +
+      (cFilter('GUILD_STAGE_VOICE') !== 0
+        ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage channel(s)`
+        : ''),
       true
     );
 
@@ -103,8 +97,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
 
     e.addField(
       `${emoji.size === 1 ? 'Emoji' : 'Emojis'} • ${emoji.size}`,
-      `${emoji.filter((r) => !r.animated).size} static • ${
-        emoji.filter((r) => r.animated).size
+      `${emoji.filter((r) => !r.animated).size} static • ${emoji.filter((r) => r.animated).size
       } animated\n\n${allEmojis}`,
       true
     );
@@ -126,11 +119,10 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   e.addField(
     `Server Boosting`,
     `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
-      (guild.premiumTier !== 'NONE'
-        ? ` • ${
-            emojis.boosting[guild.premiumTier.replace('TIER_', '')]
-          } Level ${guild.premiumTier.replace('TIER_', '')}`
-        : ''),
+    (guild.premiumTier !== 'NONE'
+      ? ` • ${emojis.boosting[guild.premiumTier.replace('TIER_', '')]
+      } Level ${guild.premiumTier.replace('TIER_', '')}`
+      : ''),
     true
   );
 
@@ -227,8 +219,7 @@ export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx
   if (emojis.size > 0)
     e.addField(
       `Emojis • ${emojis.size}`,
-      `${emojis.filter((r) => !r.animated).size} static • ${
-        emojis.filter((r) => r.animated).size
+      `${emojis.filter((r) => !r.animated).size} static • ${emojis.filter((r) => r.animated).size
       } animated`,
       true
     );

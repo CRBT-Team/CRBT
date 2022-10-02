@@ -19,8 +19,9 @@ export interface APITokenData extends BaseToken {
 
 export interface RedeemTokenData extends BaseToken {
   data: {
-    giftType: 'BetaAccess1Month' | 'BetaAccess12Months' | 'LabsAccess';
+    codeType: 'Subscription1Month' | 'LabsAccess';
     output: string;
+    redeemed: boolean;
   };
   type: TokenTypes.Redeem;
 }

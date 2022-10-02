@@ -20,27 +20,23 @@ export default ChatCommand({
         r.name.toLowerCase().includes('mod')
       )
     ) {
-      return this.reply(
-        CRBTError(
-          'You do not have permission to warn members (Timeout Members permission or Moderator role required).'
-        )
-      );
+      return CRBTError(this, 'You do not have permission to warn members (Timeout Members permission or Moderator role required).');
     }
     if (this.user.id === user.id) {
-      return this.reply(CRBTError('You cannot warn yourself! ┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻'));
+      return CRBTError(this, 'You cannot warn yourself! ┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻');
     }
     if (!this.guild.members.cache.has(user.id)) {
-      return this.reply(CRBTError('The user is not in this server.'));
+      return CRBTError(this, 'The user is not in this server.');
     }
     const member = this.guild.members.cache.get(user.id);
     if (this.guild.ownerId === user.id) {
-      return this.reply(CRBTError('You cannot warn the owner of the server.'));
+      return CRBTError(this, 'You cannot warn the owner of the server.');
     }
     if (
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
-      return this.reply(CRBTError('You cannot warn a user with a higher role than you.'));
+      return CRBTError(this, 'You cannot warn a user with a higher role than you.');
     }
 
     try {
@@ -78,7 +74,7 @@ export default ChatCommand({
             }).setColor(`#${colors.error}`),
           ],
         })
-        .catch((e) => {});
+        .catch((e) => { });
     } catch (e) {
       return this.reply(UnknownError(this, String(e)));
     }

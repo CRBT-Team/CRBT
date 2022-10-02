@@ -13,7 +13,7 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
     const anime = data.data[0];
 
     // if (!anime) {
-    //   return this.reply(CRBTError(`No anime found with the title \`${title}\`.`));
+    //   return CRBTError(this, `No anime found with the title \`${title}\`.`);
     // }
 
     this.reply({
@@ -28,9 +28,9 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
           .setURL(`https://kitsu.io/anime/${anime.id}`)
           .setDescription(
             `**[Open in kitsu.io](https://kitsu.io/anime/${anime.id})**` +
-              (anime.attributes.youtubeVideoId
-                ? ` | **[Watch YouTube trailer](https://www.youtube.com/watch?v=${anime.attributes.youtubeVideoId})**`
-                : '')
+            (anime.attributes.youtubeVideoId
+              ? ` | **[Watch YouTube trailer](https://www.youtube.com/watch?v=${anime.attributes.youtubeVideoId})**`
+              : '')
           )
           .addField(
             'Synopsis',
@@ -40,8 +40,7 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
           )
           .addField(
             'Episodes',
-            `${anime.attributes.episodeCount} (${anime.attributes.episodeLength} mins ${
-              anime.attributes.episodeCount === 1 ? 'long' : 'each'
+            `${anime.attributes.episodeCount} (${anime.attributes.episodeLength} mins ${anime.attributes.episodeCount === 1 ? 'long' : 'each'
             })`,
             true
           )
@@ -49,15 +48,13 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
           .addField(
             'Rated',
             anime.attributes.ageRating +
-              (anime.attributes.ageRatingGuide ? '\n' + anime.attributes.ageRatingGuide : ''),
+            (anime.attributes.ageRatingGuide ? '\n' + anime.attributes.ageRatingGuide : ''),
             true
           )
           .addField(
             'Score',
-            `${anime.attributes.averageRating}/100\nTop ${
-              anime.attributes.ratingRank
-            } on **[kitsu.io](https://kitsu.io)**\n${anime.attributes.favoritesCount} ${
-              anime.attributes.favoritesCount === 1 ? 'favorite' : 'favorites'
+            `${anime.attributes.averageRating}/100\nTop ${anime.attributes.ratingRank
+            } on **[kitsu.io](https://kitsu.io)**\n${anime.attributes.favoritesCount} ${anime.attributes.favoritesCount === 1 ? 'favorite' : 'favorites'
             }`,
             true
           )
@@ -65,8 +62,8 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
             anime.attributes.status === 'finished' ? 'Aired' : 'Airing',
             anime.attributes.status === 'finished'
               ? `From <t:${dayjs(anime.attributes.startDate).unix()}:D> to <t:${dayjs(
-                  anime.attributes.endDate
-                ).unix()}:D>`
+                anime.attributes.endDate
+              ).unix()}:D>`
               : `Since <t:${dayjs(anime.attributes.startDate).unix()}> (ongoing)`,
             true
           )

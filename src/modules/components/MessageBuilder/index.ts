@@ -12,7 +12,7 @@ import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 
 import { components, row } from 'purplet';
 import { ExportJSONButton } from '../../joinLeave/components/ExportJSONButton';
 import { ImportJSONButton } from '../../joinLeave/components/ImportJSONButton';
-import { BackSettingsButton } from '../../settings/settings';
+import { BackSettingsButton } from '../../settings/serverSettings/settings';
 import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';
@@ -28,9 +28,9 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
     type === MessageBuilderTypes.rolePicker
       ? data
       : parseCRBTscriptInMessage(data, {
-          channel: i.channel as GuildTextBasedChannel,
-          member: i.member as GuildMember,
-        });
+        channel: i.channel as GuildTextBasedChannel,
+        member: i.member as GuildMember,
+      });
 
   const { SAVE, IMPORT, EXPORT, SEND } = t(i, 'genericButtons');
 
@@ -89,9 +89,9 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
         row(fieldSelect),
         ...(type !== MessageBuilderTypes.rolePicker
           ? [
-              row(buttons.back, buttons.save, buttons.import, buttons.export),
-              row(buttons.CRBTscript),
-            ]
+            row(buttons.back, buttons.save, buttons.import, buttons.export),
+            row(buttons.CRBTscript),
+          ]
           : [row(buttons.save)]),
       ].filter(Boolean)
     ),

@@ -110,6 +110,10 @@
     }
   },
   "badges": {
+    "developer": {
+      "name": "Developer",
+      "contents": "🧑‍💻"
+    },
     "goodmeal": {
       "name": "Good meal",
       "contents": "<:good_meal:750034917743919256>"

@@ -15,11 +15,11 @@ export const ExportJSONButton = ButtonComponent({
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
-      return this.reply(CRBTError(t('en-US', 'ERROR_ADMIN_ONLY')));
+      return CRBTError(this, t('en-US', 'ERROR_ADMIN_ONLY'));
     }
 
     if (!data) {
-      return this.reply(CRBTError(t(this, 'ERROR_NO_MESSAGE')));
+      return CRBTError(this, t(this, 'ERROR_NO_MESSAGE'));
     }
 
     const buffer = Buffer.from(JSON.stringify(data, null, 2));

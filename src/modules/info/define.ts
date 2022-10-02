@@ -29,12 +29,10 @@ export default ChatCommand({
       );
 
       if (!res.ok) {
-        return await this.reply(
-          CRBTError(
-            `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
-              'urban'
-            )}).`
-          )
+        return await CRBTError(this,
+          `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
+            'urban'
+          )}).`
         );
       }
       const def = (await res.json())[0];
@@ -50,17 +48,17 @@ export default ChatCommand({
         e.addField(
           `*${meaning.partOfSpeech}*`,
           meaning.definitions[0].definition +
-            '\n\n' +
-            (meaning.definitions[0].example
-              ? `*"${meaning.definitions[0].example.replaceAll(def.word, `**${def.word}**`)}"*` +
-                `\n\n`
-              : '') +
-            (meaning.definitions[0].synonyms.length > 0
-              ? `Similar: ${meaning.definitions[0].synonyms
-                  .map((s) => `\`${s}\``)
-                  .slice(0, 3)
-                  .join(',  ')}`
-              : '')
+          '\n\n' +
+          (meaning.definitions[0].example
+            ? `*"${meaning.definitions[0].example.replaceAll(def.word, `**${def.word}**`)}"*` +
+            `\n\n`
+            : '') +
+          (meaning.definitions[0].synonyms.length > 0
+            ? `Similar: ${meaning.definitions[0].synonyms
+              .map((s) => `\`${s}\``)
+              .slice(0, 3)
+              .join(',  ')}`
+            : '')
         );
       }
       await this.reply({
@@ -68,13 +66,13 @@ export default ChatCommand({
         files:
           def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
             ? [
-                new MessageAttachment(
-                  await fetch(`${def.phonetics[0].audio}`)
-                    .then((res) => res.arrayBuffer())
-                    .then((buffer) => Buffer.from(buffer)),
-                  'Pronounciation.mp3'
-                ),
-              ]
+              new MessageAttachment(
+                await fetch(`${def.phonetics[0].audio}`)
+                  .then((res) => res.arrayBuffer())
+                  .then((buffer) => Buffer.from(buffer)),
+                'Pronounciation.mp3'
+              ),
+            ]
             : null,
       });
     } catch (e) {

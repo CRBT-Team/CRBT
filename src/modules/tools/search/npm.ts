@@ -12,7 +12,7 @@ export async function handleNpm(this: CommandInteraction, opts: SearchCmdOpts) {
   const req = await fetch(`https://registry.npmjs.org/${encodeURIComponent(pkg)}`);
 
   if (!req.ok) {
-    return this.reply(CRBTError("Couldn't find a package with that name. Try again."));
+    return CRBTError(this, "Couldn't find a package with that name. Try again.");
   }
 
   const res: any = await req.json();
@@ -49,9 +49,8 @@ export async function handleNpm(this: CommandInteraction, opts: SearchCmdOpts) {
     'Publisher',
     typeof cur._npmUser === 'string'
       ? cur._npmUser
-      : `**[${cur._npmUser.name}](${cur._npmUser.url})**${
-          cur._npmUser.email ? ` - ${cur._npmUser.email}` : ''
-        }`,
+      : `**[${cur._npmUser.name}](${cur._npmUser.url})**${cur._npmUser.email ? ` - ${cur._npmUser.email}` : ''
+      }`,
     true
   ).addField(
     'Maintainers',
@@ -64,9 +63,8 @@ export async function handleNpm(this: CommandInteraction, opts: SearchCmdOpts) {
       'Author',
       typeof cur.author === 'string'
         ? `**${cur.author}**`
-        : `**[${cur.author.name}](${cur.author.url})**${
-            cur.author.email ? ` - ${cur.author.email}` : ''
-          }`,
+        : `**[${cur.author.name}](${cur.author.url})**${cur.author.email ? ` - ${cur.author.email}` : ''
+        }`,
       true
     );
   }

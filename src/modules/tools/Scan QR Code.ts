@@ -11,7 +11,7 @@
 //       !message.attachments.size ??
 //       !message.embeds.some((embed) => embed.image && embed.image.url)
 //     ) {
-//       return this.reply(CRBTError("This message doesn't have any images!"));
+//       return CRBTError(this, "This message doesn't have any images!");
 //     }
 //     await this.deferReply({ ephemeral: true });
 
@@ -19,7 +19,7 @@
 //       `https://api.qrserver.com/v1/read-qr-code/?fileurl=${
 //         message.attachments.size
 //           ? message.attachments.first().url
-//           : message.embeds.filter((e) => e.image)[0].image.url
+//           : message.embeds.find((e) => e.image || e.thumbnail).image.url
 //       }`
 //     );
 

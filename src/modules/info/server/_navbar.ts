@@ -14,7 +14,7 @@ export const ServerInfoBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -27,7 +27,7 @@ export const ServerIconBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -40,7 +40,7 @@ export const ServerMembersBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -53,7 +53,7 @@ export const ServerEmojisBtn = ButtonComponent({
     const { errors } = t(this, 'user_navbar');
 
     if (this.user.id !== opts.userId) {
-      return this.reply(CRBTError(errors.NOT_CMD_USER));
+      return CRBTError(this, errors.NOT_CMD_USER);
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -91,9 +91,9 @@ export function serverNavBar(
       .setDisabled(activeTab === 'server_info'),
     addTabs?.has('icon')
       ? new ServerIconBtn(ctx)
-          .setLabel(strings.ICON)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'icon')
+        .setLabel(strings.ICON)
+        .setStyle('SECONDARY')
+        .setDisabled(activeTab === 'icon')
       : null,
     new ServerMembersBtn(ctx)
       .setLabel(strings.ROLES)
@@ -101,9 +101,9 @@ export function serverNavBar(
       .setDisabled(activeTab === 'roles'),
     addTabs?.has('emojis')
       ? new ServerEmojisBtn(ctx)
-          .setLabel(strings.EMOJIS)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'emojis')
+        .setLabel(strings.EMOJIS)
+        .setStyle('SECONDARY')
+        .setDisabled(activeTab === 'emojis')
       : null
   );
 }

@@ -2,20 +2,22 @@ import { colors, icons, links, misc } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { MessageAttachment, MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
+import { rest } from '$lib/rest';
+import { Routes } from 'discord-api-types/v10';
+import { MessageEmbed, TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
-  description: 'File a new issue on the Discord server.',
+  description: 'File a new bug report on the Discord server.',
   options: new OptionBuilder().attachment('image', 'An image to attach to the report.'),
   async handle({ image }) {
     if (image && !image.contentType.startsWith('image/')) {
-      this.reply(CRBTError('You can only upload images'));
+      CRBTError(this, 'You can only upload images');
     }
 
     const modal = new Modal(image ? `${this.commandId}/${image.id}/${image.name}` : null)
-      .setTitle('New issue')
+      .setTitle('New bug report')
       .setComponents(
         row(
           new TextInputComponent()
@@ -44,51 +46,62 @@ export default ChatCommand({
 
 export const Modal = ModalComponent({
   async handle(image_url?: string) {
-    const reportChannel = this.client.channels.cache.get(
-      misc.channels[this.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
-    ) as TextChannel;
+
     const title = this.fields.getTextInputValue('issue_title');
-    const desc = this.fields.getTextInputValue('issue_description');
+    const description = this.fields.getTextInputValue('issue_description');
 
     await this.reply({
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: 'Issue sent successfully.',
+            name: 'Report sent successfully.',
             iconURL: icons.success,
           })
           .setDescription(
-            `Your issue has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
+            `Your report has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
           )
           .setColor(`#${colors.success}`),
       ],
       ephemeral: true,
     });
 
-    const image = image_url
-      ? new MessageAttachment(
-          `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`
-        ).setName('image.png')
-      : null;
+    // const image = image_url
+    //   ? new MessageAttachment(
+    //   ).setName('image.png')
+    //   : null;
 
     const e = new MessageEmbed()
       .setAuthor({
-        name: `${this.user.tag} filed an issue`,
+        name: `${this.user.tag} filed a bug report`,
         iconURL: avatar(this.user, 64),
       })
       .setTitle(title)
-      .setDescription(desc)
-      .addField('Status', '<:pending:954734893072519198> Pending', true)
+      .setDescription(description)
+      // .addFields({
+      //   name: 'Status',
+      //   value: `${emojis.pending} Pending`,
+      //   inline: true
+      // })
       .setImage(image_url ? 'attachment://image.png' : null)
       .setFooter({ text: `User ID: ${this.user.id} • Last update` })
       .setTimestamp()
       .setColor(`#${colors.yellow}`);
 
-    await AchievementProgress.call(this, 'BUG_HUNTER');
+    await rest.post(Routes.threads(
+      misc.channels[this.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
+    ), {
+      body: {
+        name: title,
+        message: {
+          embeds: [e.toJSON()],
+        }
+      },
+      files: image_url ? [{
+        data: `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`,
+        name: 'image.png'
+      }] : null,
+    })
 
-    reportChannel.send({
-      embeds: [e],
-      files: image ? [image] : null,
-    });
+    await AchievementProgress.call(this, 'BUG_HUNTER');
   },
 });

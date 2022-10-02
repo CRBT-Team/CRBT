@@ -17,15 +17,13 @@ export default ChatCommand({
       const post = ((await req.json()) as any).list[0];
 
       if (!post) {
-        return this.reply(
-          CRBTError(`Couldn't find the definition of \`${word}\`. Try again later.`)
-        );
+        return CRBTError(this, `Couldn't find the definition of \`${word}\`. Try again later.`)
       }
 
       const e = new MessageEmbed()
         .setAuthor({
           name: `${post.word} - Urban Dictionary definition`,
-          iconURL: 'https://cdn.clembs.xyz/VWRSZiW.png',
+          iconURL: 'https://i.imgur.com/VWRSZiW.png',
         })
         .setDescription(`**[Open in Urban Dictionary](${post.permalink})**`)
         .addField(
@@ -42,8 +40,7 @@ export default ChatCommand({
         )
         .addField(
           'Author',
-          `**[${
-            post.author
+          `**[${post.author
           }](https://www.urbandictionary.com/author.pho/author=${encodeURIComponent(
             post.author
           )})**`,

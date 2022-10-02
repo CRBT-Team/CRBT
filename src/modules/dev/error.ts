@@ -1,15 +1,8 @@
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { ChatCommand, OptionBuilder, TextCommand } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
 
-export const text = TextCommand({
-  name: 'error',
-  handle(args) {
-    this.reply(UnknownError(this, args.join(' '), 'INTENTIONAL_ERROR', false));
-  },
-});
-
-export const slash = ChatCommand({
+export default ChatCommand({
   name: 'error',
   description:
     'Send an error message to the developers. For debugging purposes, or to send me a message :)',
@@ -26,10 +19,13 @@ export const slash = ChatCommand({
       required: true,
     })
     .string('details', 'The details of the error message'),
-  async handle({ type, error }) {
+  async handle({ type, error, details }) {
     switch (type) {
       case 'formatted': {
-        await this.reply(CRBTError(error));
+        await CRBTError(this, {
+          title: error,
+          description: details
+        });
         break;
       }
       case 'unknown': {

@@ -45,9 +45,7 @@ export default MessageContextCommand({
           ephemeral: true,
         });
       })
-      .catch(() => {
-        return this.reply(CRBTError(errors.DMS_DISABLED));
-      });
+      .catch(async () => await CRBTError(this, errors.DMS_DISABLED));
 
     await AchievementProgress.call(this, 'BOOKMARKER');
   },

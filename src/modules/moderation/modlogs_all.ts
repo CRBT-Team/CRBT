@@ -16,9 +16,7 @@ export default ChatCommand({
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ModerateMembers)) {
-      return this.reply(
-        CRBTError(t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'))
-      );
+      return CRBTError(this, t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'));
     }
 
     const strikes = await db.moderationStrikes.findMany({
@@ -62,12 +60,10 @@ async function renderModlogs(this: Interaction, index: number) {
               };
             } else {
               return {
-                name: `${t(this.guildLocale, `MODERATION_LOGS_ACTION_${strike.type}`)} ${
-                  strike.expiresAt ? `(Expires ${time(strike.expiresAt, true)})` : ''
-                }- ${time(strike.createdAt, true)}`,
-                value: `${strike.reason ?? '*No reason specified*'}\n<@${
-                  strike.targetId
-                }>, moderated by <@${strike.moderatorId}>`,
+                name: `${t(this.guildLocale, `MODERATION_LOGS_ACTION_${strike.type}`)} ${strike.expiresAt ? `(Expires ${time(strike.expiresAt, true)})` : ''
+                  }- ${time(strike.createdAt, true)}`,
+                value: `${strike.reason ?? '*No reason specified*'}\n<@${strike.targetId
+                  }>, moderated by <@${strike.moderatorId}>`,
               };
             }
           })

@@ -35,13 +35,11 @@ export default ChatCommand({
     }),
   async handle({ prize, end_date, winners }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return this.reply(
-        CRBTError('Only managers ("Manage Server" permission) can create giveaways.')
-      );
+      return CRBTError(this, 'Only managers ("Manage Server" permission) can create giveaways.');
     }
 
     if (!isValidTime(end_date) && ms(end_date) > ms('1M')) {
-      return this.reply(CRBTError('Invalid duration or exceeds 1 month in the future.'));
+      return CRBTError(this, 'Invalid duration or exceeds 1 month in the future.');
     }
 
     winners = winners || 1;
@@ -91,8 +89,7 @@ export default ChatCommand({
               iconURL: icons.success,
             })
             .setDescription(
-              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
-                emojis.menu
+              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${emojis.menu
               } menu. From this menu, you can also cancel it or view the entrants.`
             )
             .setColor(`#${colors.success}`),
@@ -119,9 +116,7 @@ export const GwayOptionsButton = ButtonComponent({
     const { strings } = t(this, 'poll');
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return this.reply(
-        CRBTError('Only managers ("Manage Server" permission) can manage this giveaway.')
-      );
+      return CRBTError(this, 'Only managers ("Manage Server" permission) can manage this giveaway.')
     }
 
     const gwayData = await getGiveawayData(`${this.channelId}/${this.message.id}`);
@@ -214,7 +209,7 @@ export const EnterGwayButton = ButtonComponent({
     const participants = gwayData.data.participants;
 
     if (participants.includes(this.user.id)) {
-      return this.reply(CRBTError('You have already entered this giveaway.'));
+      return CRBTError(this, 'You have already entered this giveaway.');
     }
 
     participants.push(this.user.id);
@@ -269,10 +264,9 @@ export const endGiveaway = async (
           iconURL: icons.giveaway,
         })
         .setDescription(
-          `Ended <t:${dayjs().unix()}> (<t:${dayjs().unix()}:R>)\n${
-            winners.length === 1
-              ? `Winner: <@${winners[0]}>`
-              : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
+          `Ended <t:${dayjs().unix()}> (<t:${dayjs().unix()}:R>)\n${winners.length === 1
+            ? `Winner: <@${winners[0]}>`
+            : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
           }\n${gwayMsg.embeds[0].description.split('\n').at(-1)}`
         )
         .setColor(`#${colors.gray}`),

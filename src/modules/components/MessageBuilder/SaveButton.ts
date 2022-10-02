@@ -42,7 +42,7 @@ export const SaveButton = ButtonComponent({
           .setDescription(
             t(this.locale, `${data.type}_SAVE_DESCRIPTION`).replace(
               '<COMMAND>',
-              slashCmd((type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell') + 'channel')
+              slashCmd((type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell') + ' channel')
             )
           )
           .setColor(`#${colors.success}`),

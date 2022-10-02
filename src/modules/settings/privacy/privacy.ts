@@ -5,6 +5,7 @@ import { AchievementProgress } from '$lib/responses/Achievements';
 import { users } from '@prisma/client';
 import { ButtonInteraction, CommandInteraction, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
+import { ConfirmDataDeletion, ExportAllData } from './manage-data';
 
 export default ChatCommand({
   name: 'privacy',
@@ -50,22 +51,31 @@ async function renderPrivacySettings(
 ) {
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({ name: 'CRBT - Privacy Settings', iconURL: icons.settings })
-        .setDescription(`You can review our **[Privacy Policy on the website](${links.policy})**.`)
-        .addField(
-          `Telemetry`,
-          `Telemetry logs command usage info detailed in CRBT's Privacy Policy. Turning it off will not erase previous logs but only stops them from being sent. Unknown error messages are unaffected by this setting.`
-        )
-        .addField(
-          `Welcome message announcements`,
-          `Turning the setting off will disable CRBT's Welcome messages from being sent when you join any server.`
-        )
-        .addField(
-          `Farewell message announcements`,
-          `Turning the setting off will disable CRBT's Farewell messages from being sent when you leave any server.`
-        )
-        .setColor(await getColor(this.user)),
+      {
+        author: { name: 'CRBT - Privacy Settings', iconURL: icons.settings },
+        description: `You can review our **[Privacy Policy on the website](${links.policy})**.`,
+        fields: [
+          {
+            name: `Anonymous Telemetry`,
+            value: `CRBT logs command usage info detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent. This setting does not affect error messages you get.`
+          },
+          {
+            name:
+              `Welcome message announcements`,
+            value: `Turning the setting off will disable CRBT's Welcome messages from being sent when you join any server.`
+          },
+          {
+            name:
+              `Farewell message announcements`,
+            value: `Turning the setting off will disable CRBT's Farewell messages from being sent when you leave any server.`
+          },
+          {
+            name: 'Your CRBT data',
+            value: 'CRBT collects some data about you, whether you submit that data yourself or some we track to serve you some features. You can now ask to download all that data, or to delete it all. Warning, the latter will completely erase your reminders, polls, settings and you ever did on CRBT too.'
+          }
+        ],
+        color: await getColor(this.user)
+      }
     ],
     components: components(
       row(
@@ -81,6 +91,14 @@ async function renderPrivacySettings(
           .setLabel(`Farewell message announcements`)
           .setStyle('SECONDARY')
           .setEmoji(emojis.toggle[silentLeaves ? 'off' : 'on'])
+      ),
+      row(
+        new ExportAllData()
+          .setStyle('PRIMARY')
+          .setLabel('Download my data'),
+        new ConfirmDataDeletion()
+          .setStyle('DANGER')
+          .setLabel('Delete my data')
       )
     ),
   };

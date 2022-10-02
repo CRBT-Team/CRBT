@@ -1,7 +1,8 @@
-import { colors, icons, links, misc } from '$lib/db';
+import { colors, db, icons, links, misc } from '$lib/db';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
+import dayjs from 'dayjs';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -12,6 +13,14 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
   guild.client.user.setActivity({
     name: `${guild.client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
+  });
+
+  await db.statistics.update({
+    where: { date: dayjs().startOf('day').toDate() },
+    data: {
+      servers: { decrement: 1 },
+      members: { decrement: guild.members.cache.size }
+    }
   });
 });
 
@@ -44,6 +53,14 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
   }
 
   const owner = await guild.fetchOwner();
+
+  await db.statistics.update({
+    where: { date: dayjs().startOf('day').toDate() },
+    data: {
+      servers: { increment: 1 },
+      members: { increment: guild.members.cache.size }
+    }
+  });
 
   await AchievementProgress.call(owner, 'WELCOME_TO_CRBT');
 });

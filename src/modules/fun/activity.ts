@@ -44,15 +44,13 @@ export default ChatCommand({
     const selected = activities.find(([_, id]) => id === activity);
 
     if (selected[0].includes(boostRequired) && this.guild.premiumTier === 'NONE') {
-      return this.reply(
-        CRBTError('This server requires at least level 1 Server Boosting to use this activity!')
-      );
+      return CRBTError(this, 'This server requires at least level 1 Server Boosting to use this activity!')
     }
 
     const vc = (await this.guild.members.fetch(this.user)).voice?.channel;
 
     if (!vc) {
-      return this.reply(CRBTError('You need to be in a voice channel!'));
+      return CRBTError(this, 'You need to be in a voice channel!');
     }
     const invite = (await getRestClient().post(`/channels/${vc.id}/invites`, {
       body: {

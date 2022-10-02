@@ -27,7 +27,7 @@
 //       )[0];
 
 //       if (!manga) {
-//         return this.reply(CRBTError(`No manga found with the title \`${title}\`.`));
+//         return CRBTError(this, `No manga found with the title \`${title}\`.`);
 //       }
 
 //       const attr = manga.attributes;

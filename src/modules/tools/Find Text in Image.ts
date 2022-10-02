@@ -5,52 +5,71 @@ import { ocrSpace } from 'ocr-space-api-wrapper';
 import { MessageContextCommand } from 'purplet';
 
 export default MessageContextCommand({
-  name: 'Scan Message',
+  name: 'Scan Images in Message',
   async handle(message) {
-    if (
-      !message.attachments.size &&
-      !message.embeds.some((embed) => embed.image && embed.image.url)
-    ) {
-      return this.reply(CRBTError("This message doesn't have any images!"));
+    const image = message.attachments.size
+      ? message.attachments.first().url
+      : message.embeds.find((e) => e.image)?.image?.url ?? message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
+
+    if (!image) {
+      return CRBTError(this, { title: "This message doesn't have any images!" });
     }
 
     await this.deferReply({ ephemeral: true });
 
-    const image = message.attachments.size
-      ? message.attachments.first().url
-      : message.embeds.filter((e) => e.image)[0].image.url;
+    try {
+      const start = Date.now();
+      const [text, error] = await useOcrScan(image);
 
-    const req = await ocrSpace(image, {
-      apiKey: process.env.OCR_TOKEN,
-    });
-
-    console.log(req);
-
-    if (
-      !req ||
-      !req.ParsedResults ||
-      req.IsErroredOnProcessing ||
-      !req.ParsedResults.length ||
-      !req.ParsedResults[0].ParsedText ||
-      req.ParsedResults?.ErrorMessage
-    ) {
-      await this.editReply(
-        CRBTError(
-          'No text was recognized off this image. Please try again with a different image, and make sure that the text is legible.'
-        )
-      );
-    }
-
-    await this.editReply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({ name: 'Text found in image' })
-          .setDescription(`\`\`\`\n${req.ParsedResults[0].ParsedText}\`\`\``)
-          .setFooter({
-            text: `Powered by ocr.space • Processed in ${req.ProcessingTimeInMilliseconds}ms`,
+      if (error) {
+        await CRBTError(this,
+          {
+            title: 'No text was recognized from this image.',
+            description: 'Please try again with a different image, and make sure that the text is legible.'
           })
-          .setColor(await getColor(this.user)),
-      ],
-    });
+        return;
+      }
+
+      await this.editReply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({ name: 'Text found in image' })
+            .setDescription(`\`\`\`\n${text}\`\`\``)
+            .setFooter({
+              text: `Powered by ocr.space • Processed in ${Date.now() - start}ms`,
+            })
+            .setColor(await getColor(this.user)),
+        ],
+      });
+
+    } catch (e) {
+      CRBTError(this, {
+        title: 'No text was recognized from this image.',
+        description: 'Please try again with a different image, and make sure that the text is legible.'
+      });
+      return;
+    }
   },
 });
+
+export async function useOcrScan(imageUrl: string, lang: string = 'eng'): Promise<[string, boolean]> {
+  const req = await ocrSpace(imageUrl, {
+    apiKey: process.env.OCR_TOKEN,
+    OCREngine: '3'
+  });
+
+  let error = false;
+
+  if (
+    !req ||
+    !req.ParsedResults ||
+    req.IsErroredOnProcessing ||
+    !req.ParsedResults.length ||
+    !req.ParsedResults[0].ParsedText ||
+    req.ParsedResults?.ErrorMessage
+  ) {
+    error = true
+  }
+
+  return [req.ParsedResults[0].ParsedText, error];
+}

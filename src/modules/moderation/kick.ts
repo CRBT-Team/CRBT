@@ -15,26 +15,26 @@ export default ChatCommand({
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.KickMembers)) {
-      return this.reply(CRBTError('You do not have permission to kick members.'));
+      return CRBTError(this, 'You do not have permission to kick members.');
     }
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.KickMembers)) {
-      return this.reply(CRBTError('I do not have permission to kick members.'));
+      return CRBTError(this, 'I do not have permission to kick members.');
     }
     if (this.user.id === user.id) {
-      return this.reply(CRBTError('You cannot kick yourself! (╯°□°）╯︵ ┻━┻'));
+      return CRBTError(this, 'You cannot kick yourself! (╯°□°）╯︵ ┻━┻');
     }
     if (!this.guild.members.cache.has(user.id)) {
-      return this.reply(CRBTError('The user is not in this server.'));
+      return CRBTError(this, 'The user is not in this server.');
     }
     const member = this.guild.members.cache.get(user.id);
     if (this.guild.ownerId === user.id) {
-      return this.reply(CRBTError('You cannot kick the owner of the server.'));
+      return CRBTError(this, 'You cannot kick the owner of the server.');
     }
     if (
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
-      return this.reply(CRBTError('You cannot kick a user with a higher role than you.'));
+      return CRBTError(this, 'You cannot kick a user with a higher role than you.');
     }
     try {
       await member.kick(reason);
@@ -73,7 +73,7 @@ export default ChatCommand({
             }).setColor(`#${colors.orange}`),
           ],
         })
-        .catch((e) => {});
+        .catch((e) => { });
     } catch (e) {
       return this.reply(UnknownError(this, String(e)));
     }

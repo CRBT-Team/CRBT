@@ -34,11 +34,7 @@ export default ChatCommand({
         ],
       });
     } catch (error) {
-      this.reply(
-        CRBTError(
-          'This player does not exist. Make sure to use a Minecraft: Java Edition username.'
-        )
-      );
+      CRBTError(this, 'This player does not exist. Make sure to use a Minecraft: Java Edition username.');
     }
   },
 });

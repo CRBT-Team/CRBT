@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import { autocomplete } from 'duck-duck-scrape';
+import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleDuckDuckGo } from './DuckDuckGo';
 import { handleKitsu } from './Kitsu';
@@ -8,7 +8,7 @@ import { handleRAWG } from './RAWG';
 import { handleSpotify } from './Spotify';
 
 export interface SearchCmdOpts {
-  site: keyof typeof engines;
+  // engine: keyof typeof engines;
   query: string;
   anonymous: boolean;
 }
@@ -19,11 +19,11 @@ const engines: {
     name: string;
   };
 } = {
-  ddg: {
+  web: {
     handle: handleDuckDuckGo,
     name: '🔎 DuckDuckGo',
   },
-  spotify: {
+  music: {
     handle: handleSpotify,
     name: '🎵 Spotify',
   },
@@ -31,23 +31,23 @@ const engines: {
     handle: handleRAWG,
     name: '🎮 RAWG',
   },
-  kitsu: {
+  anime: {
     handle: handleKitsu,
     name: '🌸 Kitsu',
   },
-  npm: {
-    handle: handleNpm,
-    name: '📦 npm',
-  },
+  // npm: {
+  //   handle: handleNpm,
+  //   name: '📦 npm',
+  // },
 };
 
-const choices = Object.entries(engines).reduce(
-  (acc, [code, { name }]) => ({
-    ...acc,
-    [code]: name,
-  }),
-  {}
-);
+// const choices = Object.entries(engines).reduce(
+//   (acc, [code, { name }]) => ({
+//     ...acc,
+//     [code]: name,
+//   }),
+//   {}
+// );
 
 // console.log(choices);
 
@@ -55,17 +55,17 @@ const choices = Object.entries(engines).reduce(
 ChatCommand({
   name: 'search',
   description:
-    'Search for something on the Internet. Powered by DuckDuckGo. More search engines coming soon!',
+    'Search for anything in one of the provided search engines.',
   options: new OptionBuilder()
-    .string('site', 'What search engine to search for.', {
-      required: true,
-      choices,
-    })
+    // .string('site', 'What search engine to use for your query.', {
+    //   required: true,
+    //   choices,
+    // })
     .string('query', 'What to search for.', {
       required: true,
       async autocomplete({ query }) {
         if (query) {
-          const res = await autocomplete(query);
+          const res = await duckduckAutocomplete(query);
           return res.map((r) => ({
             name: r.phrase,
             value: r.phrase,
@@ -76,7 +76,9 @@ ChatCommand({
       },
     })
     .boolean('anonymous', 'Whether to show the search results as a public message.'),
-  handle(opts) {
-    engines[opts.site].handle.call(this, opts as SearchCmdOpts);
+  async handle(opts) {
+    await this.deferReply();
+
+    await this.editReply(await handleDuckDuckGo.call(this, opts as SearchCmdOpts));
   },
 });

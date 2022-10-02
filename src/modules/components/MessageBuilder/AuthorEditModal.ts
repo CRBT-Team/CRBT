@@ -20,17 +20,17 @@ export const AuthorEditModal = ModalComponent({
       type === MessageBuilderTypes.rolePicker
         ? icon
         : icon
-        ? parseCRBTscript(icon, {
+          ? parseCRBTscript(icon, {
             channel: this.channel,
             member: this.member as GuildMember,
           })
-        : null;
+          : null;
 
     if (parsedIcon && !parsedIcon.match(ImageUrlRegex)) {
-      return this.reply(CRBTError(t(this, 'ERROR_INVALID_URL')));
+      return CRBTError(this, { title: t(this, 'ERROR_INVALID_URL') });
     }
     if (url && !url.match(UrlRegex)) {
-      return this.reply(CRBTError(t(this, 'ERROR_INVALID_URL')));
+      return CRBTError(this, { title: t(this, 'ERROR_INVALID_URL') });
     }
 
     data.embed = {

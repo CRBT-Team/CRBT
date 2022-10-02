@@ -61,7 +61,7 @@ export default ChatCommand({
     const { errors, strings: userStrings } = t(this, 'poll');
 
     if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
-      return this.reply(CRBTError('Invalid duration or exceeds 3 weeks.'));
+      return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
     }
 
     try {
@@ -69,7 +69,7 @@ export default ChatCommand({
 
       for (const choice of pollChoices) {
         if (choice.replace(EmojiRegex, '').trim().length === 0) {
-          return this.reply(CRBTError(errors.CHOICE_EMPTY));
+          return CRBTError(this, errors.CHOICE_EMPTY);
         }
       }
 
@@ -89,12 +89,11 @@ export default ChatCommand({
             .addFields(
               pollChoices.map((choice) => ({
                 name: choice,
-                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
-                  emojis.progress.emptyend
-                }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
-                  '<VOTES>',
-                  '0'
-                )}`,
+                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${emojis.progress.emptyend
+                  }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
+                    '<VOTES>',
+                    '0'
+                  )}`,
               }))
             )
             .setFooter({
@@ -118,8 +117,8 @@ export default ChatCommand({
                     choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
                       ? 'SUCCESS'
                       : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
-                      ? 'DANGER'
-                      : 'PRIMARY'
+                        ? 'DANGER'
+                        : 'PRIMARY'
                   )
                   .setEmoji(choiceEmoji);
               })
@@ -202,7 +201,7 @@ export const PollOptionsButton = ButtonComponent({
       this.user.id !== creatorId &&
       !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)
     ) {
-      return this.reply(CRBTError(errors.POLL_DATA_NOT_ALLOWED));
+      return CRBTError(this, errors.POLL_DATA_NOT_ALLOWED);
     }
 
     const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
@@ -221,9 +220,9 @@ export const PollOptionsButton = ButtonComponent({
               value:
                 choice.length > 0
                   ? trimArray(
-                      choice.map((id) => `<@${id}>`),
-                      15
-                    ).join(', ')
+                    choice.map((id) => `<@${id}>`),
+                    15
+                  ).join(', ')
                   : strings.POLL_DATA_NOVOTES,
             }))
           )
@@ -407,20 +406,20 @@ export const endPoll = async (pollData: PollData['data'], pollMsg: Message, loca
         .setDescription(
           (winners.length > 1
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
-                .replace(
-                  '<OPTION2>',
-                  winners
-                    .slice(1)
-                    .map((winner) => winner.name)
-                    .join(', ')
-                )
-                .replace('<VOTES>', ranking[0].votes.toString())
+              .replace(
+                '<OPTION2>',
+                winners
+                  .slice(1)
+                  .map((winner) => winner.name)
+                  .join(', ')
+              )
+              .replace('<VOTES>', ranking[0].votes.toString())
             : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
-                '<OPTION>',
-                `${ranking[0].name}`
-              ).replace('<VOTES>', ranking[0].votes.toString())) +
-            ' ' +
-            strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
+              '<OPTION>',
+              `${ranking[0].name}`
+            ).replace('<VOTES>', ranking[0].votes.toString())) +
+          ' ' +
+          strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
         )
         .setColor(`#${colors.success}`),
     ],

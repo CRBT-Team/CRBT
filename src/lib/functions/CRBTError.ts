@@ -1,8 +1,9 @@
 import { colors, db, emojis, misc } from '$lib/db';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
+import { isInteractionButton } from 'discord-api-types/utils/v10';
+import { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
 import {
-  EmbedField,
   Interaction,
   InteractionReplyOptions,
   MessageAttachment,
@@ -12,82 +13,119 @@ import {
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
 
-const handleError = (opts: {
-  message: string;
-  detail?: {
-    title?: string;
-    description?: string;
-    fields?: EmbedField[];
-  };
-  error?: {
-    interaction: any;
-    error: any;
-    context: string;
-  };
-}) => {
-  const { message, detail, error } = opts;
+const handleError = (
+  i: Interaction,
+  opts: {
+    message: {
+      title?: string;
+      description?: string;
+      fields?: APIEmbedField[];
+    };
+    error?: {
+      error: any;
+      context: string;
+    };
+  }) => {
+  const { message, error } = opts;
+
+  const embed =
+    new MessageEmbed()
+      .setColor(`#${colors.error}`);
 
   if (error) {
-    (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
-      embeds: [
-        new MessageEmbed()
-          .setDescription(`\`\`\`\n${error.error}\`\`\``)
-          .addField('Context', `\`\`\`\n${error.context}\`\`\``, true)
-          .setColor(`#${colors.error}`),
-      ],
-      files: [
-        new MessageAttachment(
-          Buffer.from(
-            typeof error.interaction === 'object'
-              ? JSON.stringify(
-                  error.interaction,
-                  (key, value) => (typeof value === 'bigint' ? value.toString() : value),
-                  2
-                )
-              : error.interaction
-          ),
-          'interaction.json'
-        ),
-      ],
-    });
+    embed.setDescription(error ? `\`\`\`\n${error.error}\`\`\`` : '')
+      .addFields({ name: 'Context', value: `\`\`\`\n${error.context}\`\`\``, inline: true })
+  } else {
+
+    let interactionName: string;
+
+    if (i.isCommand()) {
+      interactionName = i.toString();
+    } else if (i.isButton()) {
+      interactionName = i.component.label;
+    }
+    else if (i.isContextMenu()) {
+      interactionName = i.commandName
+    } else if (i.isModalSubmit()) {
+      interactionName = `Modal`
+    } else {
+      interactionName = `${i}`;
+    }
+
+    embed.setDescription(`${emojis.error} Error \`${message.title}\` was triggered on command \`${interactionName}\``)
   }
 
+  (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
+    embeds: [embed],
+    files: [
+      new MessageAttachment(
+        Buffer.from(
+          typeof i === 'object'
+            ? JSON.stringify(
+              i,
+              (key, value) => (typeof value === 'bigint' ? value.toString() : value),
+              2
+            )
+            : i
+        ),
+        'interaction.json'
+      ),
+    ],
+  });
+
   return new MessageEmbed()
-    .setTitle(`${emojis.error} ${detail?.title ?? message}`)
-    .setDescription(detail?.title ? detail?.description ?? message : '')
-    .setFields(detail?.fields ?? [])
+    .setTitle(`${emojis.error} ${message.title}`)
+    .setDescription(message.description ?? '')
+    .setFields(message.fields ?? [])
     .setColor(`#${colors.error}`);
 };
 
 export function CRBTError(
-  message: string,
+  i: Interaction,
+  embed: Partial<APIEmbed> | string,
   ephemeral = true,
-  fields?: EmbedField[]
-): InteractionReplyOptions {
-  return {
-    embeds: [
-      handleError({
-        message,
-        detail: { fields },
-      }),
-    ],
-    ephemeral,
-  };
+) {
+  if (!i.isRepliable()) return;
+
+  const errorMessage = createCRBTError(i, embed, ephemeral);
+
+  if (i.replied) {
+    return i.editReply(errorMessage);
+  } else {
+    return i.reply(errorMessage);
+  }
 }
 
-export function UnknownError(i: any, error: any, context?: string, ephemeral = true) {
+export const createCRBTError = (
+  i: Interaction,
+  embed: Partial<APIEmbed> | string,
+  ephemeral = true,
+) => ({
+  embeds: [
+    handleError(i, {
+      message: typeof embed === 'string' ? { title: embed } : embed,
+    }),
+  ],
+  ephemeral,
+})
+
+export function UnknownError(i: any
+  , error: any, context?: string, ephemeral = true) {
   const { strings } = t(i?.locale ?? 'en-US', 'UnknownError');
+
+  if (!i.isRepliable()) return;
 
   console.error(error);
 
-  const embed = handleError({
-    message: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
+  const embed = handleError(i, {
     error: {
-      interaction: i,
       error,
       context: context ?? String(i),
     },
-    detail: { title: strings.TITLE },
+    message: {
+      title: strings.TITLE,
+      description: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
+    },
   });
 
   return {
@@ -116,24 +154,26 @@ export async function CooldownError(
 
   return {
     embeds: [
-      handleError({
-        message: strings.DESCRIPTION.replace(
-          '<TYPE>',
-          context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
-        ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
-        detail: { title: strings.TITLE },
+      handleError(context, {
+        message: {
+          title: strings.TITLE,
+          description: strings.DESCRIPTION.replace(
+            '<TYPE>',
+            context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
+          ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
+        },
       }),
     ],
     components:
       showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
         ? components(
-            row(
-              new RemindButton({ relativetime, userId: context.user.id })
-                .setStyle('SECONDARY')
-                .setLabel(ADD_REMINDER)
-                .setEmoji(emojis.reminder)
-            )
+          row(
+            new RemindButton({ relativetime, userId: context.user.id })
+              .setStyle('SECONDARY')
+              .setLabel(ADD_REMINDER)
+              .setEmoji(emojis.reminder)
           )
+        )
         : null,
     ephemeral: true,
   };
