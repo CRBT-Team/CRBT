@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.9",
+  "version": "11.9.0",
   "build": "1207",
   "scripts": {
     "start": "prisma generate && purplet build && node dist/bot.mjs",
@@ -11,8 +11,8 @@
   },
   "type": "module",
   "engines": {
-    "node": "~16.X",
-    "yarn": "~1.X"
+    "node": ">=16.X",
+    "yarn": ">=1.X"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
