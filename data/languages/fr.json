@@ -3,7 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) <PERMISSIONS> pour utiliser cette commande.",
   "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
   "ERROR_INVALID_HEX": "La couleur HEX que vous avez fournie est invalide.",
-  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
+  "ERROR_INVALID_BIRTHDAY": "The birth date you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
@@ -399,7 +399,7 @@
   "BIRTHDAY_REMINDER_BUTTON": "Rappel pour leur anniversaire",
   "BIRTHDAY_LIST_CONTENT": "L'anniversaire de <USER>",
   "USER_INFO_EMBED_TITLE": "<USER> - Informations utilisateur",
-  "USER_INFO_BIRTHDAY": "Date de naissance",
+  "USER_INFO_BIRTHDAY": "Birth date",
   "USER_INFO_CREATED_AT": "A rejoint Discord",
   "USER_INFO_JOINED_SERVER": "A rejoint le serveur",
   "USER_INFO_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
