@@ -1,4 +1,4 @@
-import { colors, icons, links, misc } from '$lib/db';
+import { channels, colors, clients, icons, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { AchievementProgress } from '$lib/responses/Achievements';
@@ -60,7 +60,7 @@ export const Modal = ModalComponent({
           .setDescription(
             `Your report has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       ephemeral: true,
     });
@@ -85,10 +85,10 @@ export const Modal = ModalComponent({
       .setImage(image_url ? 'attachment://image.png' : null)
       .setFooter({ text: `User ID: ${this.user.id} • Last update` })
       .setTimestamp()
-      .setColor(`#${colors.yellow}`);
+      .setColor(colors.yellow);
 
     await rest.post(Routes.threads(
-      misc.channels[this.client.user.id === misc.CRBTid ? 'report' : 'reportDev']
+      this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
     ), {
       body: {
         name: title,

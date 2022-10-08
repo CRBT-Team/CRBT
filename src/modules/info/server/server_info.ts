@@ -1,4 +1,4 @@
-import { colors, emojis } from '$lib/db';
+import { colors, emojis } from '$lib/env';
 import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
@@ -68,7 +68,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     )
     .setImage(guild.bannerURL())
     .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
-    .setColor(`#${colors.default}`)
+    .setColor(colors.default)
     .addField('ID', guild.id, true)
     .addField(`Owned by`, `<@${guild.ownerId}>`, true)
     .addField(
@@ -149,7 +149,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   const ctx = img.getContext('2d');
   if (!guild.icon) {
     canvas.registerFont('data/misc/whitney.otf', { family: 'Whitney' });
-    ctx.fillStyle = `#${colors.blurple}`;
+    ctx.fillStyle = colors.blurple.toString(16);
     ctx.fillRect(0, 0, img.width, img.height);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'normal 152px Whitney';

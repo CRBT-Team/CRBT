@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { ButtonInteraction, GuildMember, MessageEmbed } from 'discord.js';
@@ -42,7 +42,7 @@ export async function handleRolePickerButton(
               }`,
             iconURL: icons.success,
           })
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       ephemeral: true,
     });
@@ -56,7 +56,7 @@ export async function handleRolePickerButton(
               }`,
             iconURL: icons.success,
           })
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       ephemeral: true,
     });

@@ -1,4 +1,4 @@
-// import { colors, db, links } from '$lib/db';
+// import { colors, links } from '$lib/db';
 // import { CRBTError } from '$lib/functions/CRBTError';
 // import { getColor } from '$lib/functions/getColor';
 // import { AchievementProgress } from '$lib/responses/Achievements';
@@ -20,7 +20,7 @@
 //       ephemeral: true,
 //     });
 
-//     const token: TokenData = (await db.token.findUnique({
+//     const token: TokenData = (await prisma.token.findUnique({
 //       where: { token: tokenString },
 //     })) as any;
 
@@ -55,12 +55,12 @@
 //     }
 //     if (token.type === TokenTypes.Redeem) {
 //       if (token.data.codeType === 'Subscription1Month') {
-//         await db.token.update({
+//         await prisma.token.update({
 //           where: { token: tokenString },
 //           data: { data: { ...token.data, redeemed: true } }
 //         });
 
-//         await db.subscription.upsert({
+//         await prisma.subscription.upsert({
 //           create: {
 //             userId: this.user.id,
 //             enabled: true,
@@ -80,7 +80,7 @@
 //           new MessageEmbed()
 //             .setTitle('CRBT+ Redeemed!')
 //             .setDescription('placeholder text')
-//             .setColor(`#${colors.success}`)
+//             .setColor(colors.success)
 //         ]
 //       });
 //     }

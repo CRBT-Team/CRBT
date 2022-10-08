@@ -1,4 +1,4 @@
-import { links } from '$lib/db';
+import { links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
@@ -16,16 +16,16 @@ export default ChatCommand({
       })
       .setDescription(
         'Type `/` in the chat box and click <:CRBT:860947227887403048> to get a list of commands!\n' +
-          'There are also some commands you can quickly access by right clicking or long-pressing a message or a user.\n' +
-          'Handy commands and powerful feature come with CRBT, including:\n' +
-          `Setting reminders (${slashCmd(
-            'reminder new'
-          )}), announcing new and leaving members (${slashCmd(
-            'welcome message'
-          )}), getting info (${slashCmd('emoji info')}, ${slashCmd('user info')}, ${slashCmd(
-            'server info'
-          )}, etc.)... \n\n` +
-          `...with many more to come! Stay up to date on CRBT news by visiting **[our blog](https://crbt.app/blog)**!`
+        'There are also some commands you can quickly access by right clicking or long-pressing a message or a user.\n' +
+        'Handy commands and powerful feature come with CRBT, including:\n' +
+        `Setting reminders (${slashCmd(
+          'reminder new'
+        )}), announcing new and leaving members (${slashCmd(
+          'welcome message'
+        )}), getting info (${slashCmd('emoji info')}, ${slashCmd('user info')}, ${slashCmd(
+          'server info'
+        )}, etc.)... \n\n` +
+        `...with many more to come! Stay up to date on CRBT news by visiting **[our blog](https://crbt.app/blog)**!`
       )
       .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
       .setColor(await getColor(this.user));
@@ -39,10 +39,10 @@ export default ChatCommand({
       components:
         !this.guild || this.guild.ownerId !== this.user.id
           ? components(
-              row(
-                new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)
-              )
+            row(
+              new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)
             )
+          )
           : null,
     });
   },

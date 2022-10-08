@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { MessageEmbed } from 'discord.js';
 import { readFileSync } from 'fs';
 import { ChatCommand, OptionBuilder } from 'purplet';

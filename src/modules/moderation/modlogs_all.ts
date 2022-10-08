@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
-import { db, emojis } from '$lib/db';
+import { prisma } from '$lib/db';
+import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -19,7 +20,7 @@ export default ChatCommand({
       return CRBTError(this, t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'));
     }
 
-    const strikes = await db.moderationStrikes.findMany({
+    const strikes = await prisma.moderationStrikes.findMany({
       where: { serverId: this.guild.id },
       orderBy: { createdAt: 'desc' },
     });
@@ -34,7 +35,7 @@ export default ChatCommand({
 async function renderModlogs(this: Interaction, index: number) {
   const data =
     cache.get<moderationStrikes[]>(`strikes:${this.guildId}`) ??
-    (await db.moderationStrikes.findMany({
+    (await prisma.moderationStrikes.findMany({
       where: { serverId: this.guild.id },
     }));
 

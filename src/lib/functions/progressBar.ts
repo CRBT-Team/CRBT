@@ -1,4 +1,4 @@
-import { emojis } from '$lib/db';
+import { emojis } from '$lib/env';
 
 export function progressBar(percentage: number) {
   return (

@@ -1,4 +1,4 @@
-import { colors, emojis } from '$lib/db';
+import { colors, emojis } from '$lib/env';
 import { languages, t } from '$lib/language';
 import { AutocompleteInteraction } from 'discord.js';
 
@@ -16,7 +16,7 @@ export const colorsMap = Object.entries(colors).map(([key, hex]) => ({
   key,
   fullName: colorNames[key],
   value: hex,
-  private: !(colorNames[key] || hex === 'profile'),
+  private: !(colorNames[key] || hex === colors.sync),
   emoji: emojis.colors[key] || null,
 }));
 
@@ -32,7 +32,7 @@ export async function colorAutocomplete(
     .filter((colorObj) =>
       localizedColorNames[this.locale][colorObj.key].toLowerCase().includes(color)
     )
-    .filter((colorObj) => (!includeSync ? colorObj.key !== 'sync' : true))
+    .filter((colorObj) => (!includeSync ? colorObj.value !== colors.sync : true))
     .map((colorObj) => ({
       name: localizedColorNames[this.locale][colorObj.key],
       value: colorObj.value,
@@ -41,6 +41,6 @@ export async function colorAutocomplete(
   return presetResults.length > 0
     ? presetResults
     : /#?[0-9a-f]{6}/i.test(color)
-    ? [{ name: `#${color}`, value: color }]
-    : [{ name: 'Error: Invalid color', value: 'error' }];
+      ? [{ name: `#${color}`, value: color }]
+      : [{ name: 'Error: Invalid color', value: 'error' }];
 }

@@ -1,4 +1,4 @@
-import { misc } from '$lib/db';
+import { devs } from '$lib/env';
 import { GuildMember, PermissionResolvable, Permissions } from 'discord.js';
 
 export function hasPerms(
@@ -8,8 +8,7 @@ export function hasPerms(
 ): boolean {
   if (memberOrPerms instanceof GuildMember) {
     const member = memberOrPerms;
-    console.log(misc.devs.includes(member.id));
-    if (misc.devs.includes(member.id)) return true;
+    if (devs.includes(member.id)) return true;
     if (member.id === member.guild.ownerId) return true;
 
     return member.permissions.has(perms, checkAdmin);

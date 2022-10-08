@@ -1,4 +1,4 @@
-import { emojis } from '$lib/db';
+import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
@@ -17,7 +17,7 @@ export const RemindButton = ButtonComponent({
 
     // TODO: redo with the timeouts system
 
-    // const reminder = await db.reminders.findFirst({
+    // const reminder = await prisma.reminders.findFirst({
     //   where: {
     //     userId: userId,
     //     destination: 'dm',

@@ -1,4 +1,4 @@
-import { emojis, icons } from '$lib/db';
+import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { capitalCase } from 'change-case';
 import dayjs from 'dayjs';

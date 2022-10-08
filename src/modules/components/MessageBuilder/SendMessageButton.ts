@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { colors, icons } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { t } from '$lib/language';
 import { MessageBuilderTypes, RolePickerData } from '$lib/types/messageBuilder';
 import { MessageEmbed } from 'discord.js';
@@ -29,7 +29,7 @@ export const SendMessageButton = ButtonComponent({
             iconURL: icons.success,
           })
           .setDescription(strings.SUCCESS_DESCRIPTION)
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       components: [],
     });

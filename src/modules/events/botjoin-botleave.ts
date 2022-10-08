@@ -1,4 +1,5 @@
-import { colors, db, icons, links, misc } from '$lib/db';
+import { prisma } from '$lib/db';
+import { channels, colors, icons, links } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
@@ -7,16 +8,16 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export const botLeave = OnEvent('guildDelete', async (guild) => {
-  (guild.client.channels.cache.get(misc.channels.guildJoinLeave) as TextChannel).send({
-    embeds: [{ title: `Left ${guild.name} - ${guild.id}`, color: `#${colors.error}` }],
+  (guild.client.channels.cache.get(channels.guildJoinLeave) as TextChannel).send({
+    embeds: [{ title: `Left ${guild.name} - ${guild.id}`, color: colors.error }],
   });
   guild.client.user.setActivity({
     name: `${guild.client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
   });
 
-  await db.statistics.update({
-    where: { date: dayjs().startOf('day').toDate() },
+  await prisma.statistics.update({
+    where: { date: dayjs().startOf('day').toISOString() },
     data: {
       servers: { decrement: 1 },
       members: { decrement: guild.members.cache.size }
@@ -25,8 +26,8 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
 });
 
 export const botJoin = OnEvent('guildCreate', async (guild) => {
-  (guild.client.channels.cache.get(misc.channels.guildJoinLeave) as TextChannel).send({
-    embeds: [{ title: `Joined ${guild.name} - ${guild.id}`, color: `#${colors.success}` }],
+  (guild.client.channels.cache.get(channels.guildJoinLeave) as TextChannel).send({
+    embeds: [{ title: `Joined ${guild.name} - ${guild.id}`, color: colors.success }],
   });
 
   guild.client.user.setActivity({
@@ -54,8 +55,8 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
 
   const owner = await guild.fetchOwner();
 
-  await db.statistics.update({
-    where: { date: dayjs().startOf('day').toDate() },
+  await prisma.statistics.update({
+    where: { date: dayjs().startOf('day').toISOString() },
     data: {
       servers: { increment: 1 },
       members: { increment: guild.members.cache.size }

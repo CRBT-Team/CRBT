@@ -1,18 +1,20 @@
-import { colors, db, icons } from "$lib/db";
+import { prisma } from "$lib/db";
+import { colors, icons } from "$lib/env";
 import { ReminderData } from "$lib/types/timeouts";
 import { TimeoutTypes } from "@prisma/client";
 import { MessageFlags } from "discord-api-types/v10";
-import { MessageAttachment, MessageEmbed } from "discord.js";
+import { MessageAttachment } from "discord.js";
 import { ButtonComponent, components, row } from "purplet";
 
 export const ExportAllData = ButtonComponent({
   async handle() {
-    const userData = await db.users.findFirst({ where: { id: this.user.id }, include: { achievements: true } });
-    const reminders = (await db.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
+    const userData = await prisma.user.findFirst({ where: { id: this.user.id } });
+    const achievements = await prisma.achievements.findMany({ where: { userId: this.user.id } });
+    const reminders = (await prisma.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
 
     await this.reply({
       files: [
-        new MessageAttachment(Buffer.from(JSON.stringify({ ...userData, reminders }, null, 2)))
+        new MessageAttachment(Buffer.from(JSON.stringify({ ...userData, achievements, reminders }, null, 2)))
           .setName('data.json')
       ],
       flags: MessageFlags.Ephemeral
@@ -30,7 +32,7 @@ export const ConfirmDataDeletion = ButtonComponent({
           },
           description:
             'This includes the **entirety** of your reminders, your privacy settings, your achievements, your badges, **your CRBT+ subscription info** (__you can\'t recover this!__), and your other settings.\nIt will be gone, **FOREVER**!',
-          color: `#${colors.red}`
+          color: colors.red
         }
       ],
       components: components(
@@ -54,7 +56,7 @@ export const CancelButton = ButtonComponent({
             name: 'Operation cancelled.',
             iconURL: icons.information
           },
-          color: `#${colors.gray}`
+          color: colors.gray
         }
       ],
       components: []
@@ -64,15 +66,12 @@ export const CancelButton = ButtonComponent({
 
 export const DeleteAllData = ButtonComponent({
   async handle() {
-    await db.users.delete({
+    await prisma.user.delete({
       where: { id: this.user.id },
-      include: {
-        achievements: true,
-      }
     });
-    const reminders = (await db.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
+    const reminders = (await prisma.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
 
-    reminders.forEach((r) => db.timeouts.delete({ where: { id: r.id } }));
+    reminders.forEach((r) => prisma.timeouts.delete({ where: { id: r.id } }));
 
     await this.update({
       embeds: [
@@ -81,7 +80,7 @@ export const DeleteAllData = ButtonComponent({
             name: 'All of your CRBT data has successfully been deleted.',
             iconURL: icons.success
           },
-          color: `#${colors.success}`
+          color: colors.success
         }
       ],
       components: []

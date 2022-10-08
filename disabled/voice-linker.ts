@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { db } from '$lib/env';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -28,5 +28,5 @@ export default OnEvent('voiceStateUpdate', async (oldState, newState) => {
         await textChannel.permissionOverwrites.delete(member);
       }
     }
-  } catch (e) {}
+  } catch (e) { }
 });

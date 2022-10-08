@@ -1,5 +1,5 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { colors, db, icons } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
@@ -7,6 +7,7 @@ import { resolveToDate } from '$lib/functions/resolveToDate';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
+import { prisma } from '$lib/db';
 import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
@@ -63,7 +64,7 @@ export default ChatCommand({
       }
     }
     const userReminders = (
-      await db.timeouts.findMany({
+      await prisma.timeouts.findMany({
         where: { type: 'REMINDER' },
       })
     ).filter((r) => (r.data as any).userId === this.user.id);
@@ -115,7 +116,7 @@ export default ChatCommand({
                   : `<t:${expUnix}> • <t:${expUnix}:R>.`)
             )
             .addField(strings.SUBJECT, subject)
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
       });
     } catch (error) {

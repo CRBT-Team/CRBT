@@ -1,6 +1,7 @@
 import { colorAutocomplete } from '$lib/autocomplete/colorAutocomplete';
 import { cache } from '$lib/cache';
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
@@ -24,20 +25,21 @@ export const colorset = ChatCommand({
     const user = await this.user.fetch();
     colorHex = colorHex.toLowerCase().replace(/ |#/g, '');
     const color = colors[colorHex] ?? colorHex;
+    const colorInt = parseInt(color, 16);
 
     if (/^[0-9a-f]{6}$/.test(colorHex) || colors[colorHex]) {
-      if (color === colors.default) {
+      if (colorInt === colors.default) {
         cache.del(`${this.user.id}:color`);
-        await db.users.upsert({
+        await prisma.user.upsert({
           create: { id: this.user.id, accentColor: null },
           update: { accentColor: null },
           where: { id: this.user.id },
         });
       } else {
-        cache.set(`${user.id}:color`, `#${color}`);
-        await db.users.upsert({
-          update: { accentColor: `#${color}` },
-          create: { id: this.user.id, accentColor: `#${color}` },
+        cache.set(`${user.id}:color`, color);
+        await prisma.user.upsert({
+          update: { accentColor: color },
+          create: { id: this.user.id, accentColor: color },
           where: { id: user.id },
         });
       }
@@ -64,9 +66,9 @@ export const colorset = ChatCommand({
         await CRBTError(this, errors.NO_DISCORD_COLOR);
       } else {
         cache.set(`color_${user.id}`, 'profile');
-        await db.users.upsert({
-          update: { accentColor: 'profile' },
-          create: { id: this.user.id, accentColor: 'profile' },
+        await prisma.user.upsert({
+          update: { accentColor: 0 },
+          create: { id: this.user.id, accentColor: 0 },
           where: { id: user.id },
         });
         await this.reply({
@@ -77,7 +79,7 @@ export const colorset = ChatCommand({
                 iconURL: icons.success,
               })
               .setDescription(`${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`)
-              .setColor(user.hexAccentColor),
+              .setColor(user.accentColor),
           ],
           ephemeral: true,
         });

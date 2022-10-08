@@ -1,4 +1,4 @@
-import { db, icons, jobs } from '$lib/db';
+import { db, icons, jobs } from '$lib/env';
 import { row } from '$lib/functions/row';
 import { getStrings } from '$lib/language';
 import { Jobs } from '@prisma/client';

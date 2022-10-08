@@ -1,4 +1,4 @@
-import { colors } from '$lib/db';
+import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -60,7 +60,7 @@ export const useManual = ChatCommand({
         type: MessageBuilderTypes.rolePicker,
         embed: {
           title: strings.GENERIC_SELECTOR_TITLE,
-          color: parseInt(colors.default, 16),
+          color: colors.default,
         },
         components: components(
           rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)

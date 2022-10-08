@@ -1,4 +1,4 @@
-import { colors, emojis, icons } from '$lib/db';
+import { colors, emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
@@ -80,7 +80,7 @@ export default ChatCommand({
           .setThumbnail(
             `https://cdn.discordapp.com/app-icons/${invite.target_application.id}/${invite.target_application.icon}.png?size=128`
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       components: components(
         row(

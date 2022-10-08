@@ -1,4 +1,5 @@
-import { colors, db } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -26,7 +27,7 @@ export function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
         '<TYPE>',
         t(this.guildLocale, type)
       ),
-      color: parseInt(colors.default, 16),
+      color: colors.default,
     },
   };
 }
@@ -39,7 +40,7 @@ export async function renderJoinLeavePrebuilder(
     return CRBTError(this, t(this.locale, 'ERROR_ADMIN_ONLY'));
   }
 
-  const data = ((await db.servers.findFirst({
+  const data = ((await prisma.servers.findFirst({
     where: { id: this.guildId },
     select: { [resolveMsgType[type]]: true },
   })) || {

@@ -1,6 +1,6 @@
 import { cache } from '$lib/cache';
 import { CRBTUser } from '$lib/classes/CRBTUser';
-import { db, emojis } from '$lib/db';
+import { db, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';

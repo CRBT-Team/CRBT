@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { db } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { showModal } from '$lib/functions/showModal';
 import { getStrings } from '$lib/language';

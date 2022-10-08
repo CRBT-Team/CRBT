@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
-import { db, emojis, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -40,7 +41,7 @@ const features: {
 export async function getSettings(guildId: string) {
   const settings =
     cache.get<FullSettings>(`${guildId}:settings`) ??
-    (await db.servers.findFirst({ where: { id: guildId }, include: { modules: true } }));
+    (await prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true } }));
   return settings;
 }
 
@@ -74,13 +75,15 @@ export async function renderSettingsMenu(
   return {
     content: invisibleChar,
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: `${this.guild.name} - CRBT Settings`,
+      {
+        author: {
+          name: `CRBT Settings`,
           iconURL: icons.settings,
-        })
-        .setDescription(`Use the select menu below to configure a feature.`)
-        .setColor(await getColor(this.guild)),
+        },
+        title: `${this.guild.name} / Overview`,
+        description: `Use the select menu below to configure a feature.`,
+        color: await getColor(this.guild),
+      }
     ],
     components: components(
       row(
@@ -154,7 +157,7 @@ export const ToggleFeatureBtn = ButtonComponent({
 
     settings.modules[key] = state;
     cache.set(`${this.guild.id}:settings`, settings);
-    await db.serverModules.update({
+    await prisma.serverModules.update({
       where: { id: this.guild.id },
       data: { [key]: settings.modules[key] },
     });

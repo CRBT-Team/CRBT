@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -18,7 +18,7 @@ export default ChatCommand({
       return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
     }
 
-    const data = (await db.servers.findFirst({
+    const data = (await prisma.servers.findFirst({
       where: { id: this.guild.id },
       select: { leaveChannel: true, leaveMessage: true },
     })) as RawServerLeave;

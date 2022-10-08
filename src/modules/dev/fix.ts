@@ -1,4 +1,4 @@
-import { colors, emojis, icons, links, misc } from '$lib/db';
+import { channels, colors, devs, emojis, icons, links } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { AchievementProgress } from '$lib/responses/Achievements';
@@ -68,7 +68,7 @@ export const issueReply = async (
         .addField(
           'Status',
           type === 'reply'
-            ? '<:pending:954734893072519198> Pending'
+            ? `${emojis.pending} Pending`
             : type === 'fix'
               ? `${emojis.success} ${isSuggestion ? 'Accepted' : 'Fixed'}`
               : `${emojis.error} Denied`
@@ -79,7 +79,7 @@ export const issueReply = async (
   });
 
   if (!target) return;
-  if (target.id === user.id && target.id !== '327690719085068289') return;
+  if (target.id === user.id && target.id !== devs[0]) return;
 
   const issue = V2 ? title : description.split('```\n')[1].split('```')[0].trim();
   const trimmed = issue.length > 30 ? `${issue.slice(0, 30)}...` : issue;
@@ -174,7 +174,7 @@ export const ReplyButton = ButtonComponent({
 
 export const ReplyModal = ModalComponent({
   async handle(issueId: string) {
-    const issueChannel = this.client.channels.cache.get(misc.channels.reportDev) as TextChannel;
+    const issueChannel = this.client.channels.cache.get(channels.reportDev) as TextChannel;
     const issueMsg = await issueChannel.messages.fetch(issueId);
 
     const reply = this.fields.getTextInputValue('replymessage');
@@ -191,7 +191,7 @@ export const ReplyModal = ModalComponent({
           .setDescription(
             `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
     });
   },

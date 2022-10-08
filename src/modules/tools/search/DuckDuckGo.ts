@@ -1,4 +1,4 @@
-import { emojis } from '$lib/db';
+import { emojis } from '$lib/env';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { trimURL } from '$lib/functions/trimURL';

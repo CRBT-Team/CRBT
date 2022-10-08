@@ -1,6 +1,6 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
 import { cache } from '$lib/cache';
-import { colors, emojis } from '$lib/db';
+import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import {
   editableList,

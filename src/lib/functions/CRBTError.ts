@@ -1,7 +1,7 @@
-import { colors, db, emojis, misc } from '$lib/db';
+import { prisma } from '$lib/db';
+import { channels, colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { isInteractionButton } from 'discord-api-types/utils/v10';
 import { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
 import {
   Interaction,
@@ -30,7 +30,7 @@ const handleError = (
 
   const embed =
     new MessageEmbed()
-      .setColor(`#${colors.error}`);
+      .setColor(colors.error);
 
   if (error) {
     embed.setDescription(error ? `\`\`\`\n${error.error}\`\`\`` : '')
@@ -55,7 +55,7 @@ const handleError = (
     embed.setDescription(`${emojis.error} Error \`${message.title}\` was triggered on command \`${interactionName}\``)
   }
 
-  (getDiscordClient().channels.cache.get(misc.channels.errors) as TextChannel).send({
+  (getDiscordClient().channels.cache.get(channels.errors) as TextChannel).send({
     embeds: [embed],
     files: [
       new MessageAttachment(
@@ -77,7 +77,7 @@ const handleError = (
     .setTitle(`${emojis.error} ${message.title}`)
     .setDescription(message.description ?? '')
     .setFields(message.fields ?? [])
-    .setColor(`#${colors.error}`);
+    .setColor(colors.error);
 };
 
 export function CRBTError(
@@ -142,7 +142,7 @@ export async function CooldownError(
   const { strings } = t(context.locale, 'CooldownError');
   const { ADD_REMINDER } = t(context.locale, 'genericButtons');
 
-  const reminder = await db.timeouts.findFirst({
+  const reminder = await prisma.timeouts.findFirst({
     where: {
       type: 'REMINDER',
       id: { startsWith: `${context.user.id}-COMMAND-` },

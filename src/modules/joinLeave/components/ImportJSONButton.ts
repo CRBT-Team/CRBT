@@ -1,6 +1,6 @@
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-import { MessageBuilderTypes } from '../../components/MessageBuilder';
+import { MessageBuilderTypes } from '$lib/types/MessageBuilder';
 import { resolveMsgType } from '../types';
 import { ImportJSONModal } from './ImportJSONModal';
 

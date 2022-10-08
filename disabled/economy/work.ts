@@ -1,5 +1,5 @@
 import { Job, LevelNames, LevelReqs } from '$lib/classes/Job';
-import { colors, db, emojis, icons } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/env';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
@@ -57,8 +57,7 @@ export default ChatCommand({
             `${string.replace(
               '<PURPLETS>',
               `${emojis.purplet} **${income} Purplets**`
-            )}\nYou earned ${expGain} Job XP (${
-              LevelReqs[job.level + 1] - job.exp - expGain
+            )}\nYou earned ${expGain} Job XP (${LevelReqs[job.level + 1] - job.exp - expGain
             } left to become ${LevelNames[job.level + 1]}).`
           )
           .setColor(`#${colors.success}`),

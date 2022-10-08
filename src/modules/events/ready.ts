@@ -1,4 +1,5 @@
-import { db, misc } from '$lib/db';
+import { prisma } from '$lib/db';
+import { clients, servers } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutData } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
@@ -15,21 +16,21 @@ export default OnEvent('ready', async (client) => {
   });
 
   allCommands = await client.application.commands.fetch({
-    guildId: client.user.id !== misc.CRBTid ? '949329353047687189' : undefined,
+    guildId: client.user.id !== clients.crbt.id ? servers.dev : undefined,
   });
 
   console.log(`Loaded ${allCommands.size} commands`);
 
-  const timeouts = (await db.timeouts.findMany()) as TimeoutData[];
+  const timeouts = (await prisma.timeouts.findMany()) as TimeoutData[];
 
   timeouts.forEach(async (timeout) => await dbTimeout(timeout, true));
 
   console.log(`Loaded ${timeouts.length} timeouts`);
 
-  const today = dayjs().startOf('day').toDate();
+  const today = dayjs().startOf('day').toISOString();
   const members = client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0);
 
-  await db.statistics.upsert({
+  await prisma.statistics.upsert({
     where: { date: today },
     update: {
       servers: client.guilds.cache.size,

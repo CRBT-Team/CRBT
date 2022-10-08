@@ -15,7 +15,7 @@
     "yarn": ">=1.X"
   },
   "dependencies": {
-    "@prisma/client": "^4.3.1",
+    "@prisma/client": "^4.4.0",
     "@purplet/polyfill": "^1.1.0",
     "@purplet/serialize": "^2.0.0",
     "@vitalets/google-translate-api": "^7.0.0",
@@ -43,6 +43,6 @@
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",
-    "prisma": "^4.3.1"
+    "prisma": "^4.4.0"
   }
 }

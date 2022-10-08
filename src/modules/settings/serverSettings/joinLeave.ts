@@ -1,5 +1,5 @@
 import { cache } from "$lib/cache";
-import { emojis } from "$lib/db";
+import { emojis } from "$lib/env";
 import { CRBTError } from "$lib/functions/CRBTError";
 import { t } from "$lib/language";
 import { JoinLeaveData, MessageBuilderTypes } from "$lib/types/messageBuilder";

@@ -1,7 +1,6 @@
 import { UnknownError } from "$lib/functions/CRBTError";
 import { getColor } from "$lib/functions/getColor";
 import { CommandInteraction, MessageComponentInteraction, MessageEmbed } from "discord.js";
-import { SafeSearchType, searchImages, searchVideos } from "duck-duck-scrape";
 import { components } from "purplet";
 import ytsr, { Video } from "ytsr";
 import { SearchCmdOpts } from "./search";

@@ -1,4 +1,5 @@
-import { achievements, db, emojis } from '$lib/db';
+import { prisma } from '$lib/db';
+import { achievements, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import type { Achievement } from '$lib/responses/Achievements';
@@ -12,16 +13,15 @@ export default ChatCommand({
   async handle({ user }) {
     const u = user ?? this.user;
 
-    const userAchievements = await db.users.findFirst({
-      where: { id: u.id },
-      select: { achievements: true },
+    const userAchievements = await prisma.achievements.findMany({
+      where: { userId: u.id },
     });
 
     const fields = Object.entries(achievements as { [k: string]: Achievement })
       .map(([id, { howToGet, name, secret, steps, emoji }]) => {
-        const userData = userAchievements?.achievements?.find((a) => a?.achievement === id);
+        const userData = userAchievements?.find((a) => a?.achievement === id);
 
-        if (userAchievements?.achievements && userData) {
+        if (userAchievements && userData) {
           if (u.id !== this.user.id && !userData.achievedAt && secret) return;
 
           const { progression, achievedAt } = userData;

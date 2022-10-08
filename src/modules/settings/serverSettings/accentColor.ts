@@ -1,6 +1,7 @@
 import { colorsMap } from "$lib/autocomplete/colorAutocomplete";
 import { cache } from "$lib/cache";
-import { colors, db, emojis } from "$lib/db";
+import { prisma } from "$lib/db";
+import { colors, emojis } from "$lib/env";
 import { t } from "$lib/language";
 import { EditableFeatures, SettingsMenus } from "$lib/types/settings";
 import { MessageComponentInteraction, ModalSubmitInteraction } from "discord.js";
@@ -12,11 +13,11 @@ export const colorSettings: SettingsMenus = {
   getSelectMenu: ({ settings }) => ({
     label: strings.ACCENT_COLOR,
     value: EditableFeatures.accentColor,
-    description: `Set to ${settings.accentColor ?? `#${colors.default}`}`,
+    description: `Set to ${settings.accentColor ?? colors.default}`,
     emoji: '🎨',
   }),
   getMenuDescription: ({ settings }) => ({
-    description: `The server's accent color is currently shown on the side of this message, and will be shown on new Polls, Giveaways, Role Pickers, the Server Info sheet, and more.\nIt is set to **${settings.accentColor ?? `#${colors.default}`
+    description: `The server's accent color is currently shown on the side of this message, and will be shown on new Polls, Giveaways, Role Pickers, the Server Info sheet, and more.\nIt is set to **${settings.accentColor ?? colors.default
       }**.\nTo edit it, use one of the below presets or manually pick a new HEX color.`,
   }),
   getComponents: ({ i, backBtn, settings }) => components(
@@ -25,10 +26,10 @@ export const colorSettings: SettingsMenus = {
         .setPlaceholder(t(i, 'COLOR_PRESET_SELECT_MENU'))
         .setOptions(
           colorsMap
-            .filter((color) => !color.private && color.value !== 'profile')
+            .filter((color) => !color.private && color.value !== 0)
             .map((colorObj) => ({
               label: colorObj.fullName,
-              value: colorObj.value,
+              value: colorObj.value.toString(16),
               emoji: colorObj.emoji,
             }))
         )
@@ -51,7 +52,7 @@ export async function saveColorSettings(
   color = `#${color}`;
   const settings = await getSettings(this.guild.id);
   settings.accentColor = color;
-  await db.servers.update({
+  await prisma.servers.update({
     where: { id: this.guild.id },
     data: { accentColor: color },
   });

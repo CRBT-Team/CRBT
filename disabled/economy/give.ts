@@ -1,4 +1,4 @@
-import { colors, db, emojis, icons } from '$lib/db';
+import { colors, db, emojis, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -67,15 +67,13 @@ export default ChatCommand({
             )
             .addField(
               'Your balance',
-              `Previous: **${emojis.purplet} ${userPurplets.purplets}**\nNew: **${emojis.purplet} ${
-                userPurplets.purplets - amount
+              `Previous: **${emojis.purplet} ${userPurplets.purplets}**\nNew: **${emojis.purplet} ${userPurplets.purplets - amount
               }**`,
               true
             )
             .addField(
               `Their balance`,
-              `Previous: **${emojis.purplet} ${targetUser.purplets - amount}**\nNew: **${
-                emojis.purplet
+              `Previous: **${emojis.purplet} ${targetUser.purplets - amount}**\nNew: **${emojis.purplet
               } ${targetUser.purplets}**`,
               true
             )

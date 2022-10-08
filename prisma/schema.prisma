@@ -16,16 +16,27 @@ model timeouts {
 }
 
 model servers {
-  id           String         @id
-  joinChannel  String?        @map("join_channel")
-  joinMessage  Json?          @map("join_message")
-  leaveChannel String?        @map("leave_channel")
-  leaveMessage Json?          @map("leave_message")
-  accentColor  String?        @map("accent_color")
+  id           String              @id
+  joinChannel  String?             @map("join_channel")
+  joinMessage  Json?               @map("join_message")
+  leaveChannel String?             @map("leave_channel")
+  leaveMessage Json?               @map("leave_message")
+  accentColor  String?             @map("accent_color")
   economy      Economy?
   modules      serverModules?
   // achievements Achievement[]
-  flags        BigInt?        @default(0)
+  flags        BigInt?             @default(0)
+  permissions  ServerPermissions[]
+}
+
+model ServerPermissions {
+  serverId            String   @id @map("server_id")
+  server              servers  @relation(fields: [serverId], references: [id])
+  moderatorRoles      String[] @map("mod_roles")
+  pollsAllowed        Json[]   @map("polls_allowlist")
+  pollsDisallowed     Json[]   @map("polls_blocklist")
+  giveawaysAllowed    Json[]   @map("gways_allowlist")
+  giveawaysDisallowed Json[]   @map("gways_blocklist")
 }
 
 model serverModules {
@@ -46,6 +57,18 @@ model moderationStrikes {
   type        ModerationStrikeTypes
 }
 
+model User {
+  id                    String    @id
+  guildedId             String?   @unique @map("guilded_id")
+  accentColor           Int?      @map("accent_color")
+  birthday              DateTime? @db.Timestamptz(6)
+  crbtBadges            String[]  @map("crbt_badges")
+  telemetry             Boolean   @default(true)
+  silentJoins           Boolean   @default(false) @map("silent_joins")
+  silentLeaves          Boolean   @default(false) @map("silent_leaves")
+  subscriptionExpiresAt DateTime? @map("sub_expiration")
+}
+
 model users {
   id                    String         @id(map: "misc_pkey")
   guildedId             String?        @map("guilded_id")
@@ -60,7 +83,7 @@ model users {
 }
 
 model Statistics {
-  date         DateTime @unique
+  date         String   @id
   servers      Int
   uniqueUsers  String[]
   commandsUsed String[]

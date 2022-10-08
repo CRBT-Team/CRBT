@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
-import { db, emojis } from '$lib/db';
+import { prisma } from '$lib/db';
+import { emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
@@ -36,7 +37,7 @@ export default ChatCommand({
   async handle() {
     dayjs.locale(this.locale);
     const userReminders = (
-      (await db.timeouts.findMany({ where: { type: 'REMINDER' } })) as ReminderData[]
+      (await prisma.timeouts.findMany({ where: { type: 'REMINDER' } })) as ReminderData[]
     )
       .filter((reminder) => reminder.data.userId === this.user.id)
       .sort((a, b) => a.expiration.getTime() - b.expiration.getTime());
@@ -105,7 +106,7 @@ export const EditModal = ModalComponent({
 
     const expiration = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
 
-    const newTimeout = (await db.timeouts.update({
+    const newTimeout = (await prisma.timeouts.update({
       where: { id: reminder.id },
       data: { data: { ...reminder.data, subject }, expiration },
     })) as ReminderData;
@@ -150,7 +151,7 @@ export const ConfirmDeleteButton = ButtonComponent({
     const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
     const reminder = userReminders[index];
 
-    await db.timeouts.delete({ where: { id: reminder.id } });
+    await prisma.timeouts.delete({ where: { id: reminder.id } });
     timeouts.delete(reminder.id);
 
     userReminders.splice(index, 1);

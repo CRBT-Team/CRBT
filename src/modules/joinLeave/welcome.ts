@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { GuildMember, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
@@ -32,21 +32,21 @@ export const join = OnEvent('guildMemberAdd', (member) => {
 
 async function welcome(member?: GuildMember) {
   const { guild } = member;
-  const preferences = await db.users.findFirst({
+  const preferences = await prisma.user.findFirst({
     where: { id: member.id },
     select: { silentJoins: true },
   });
 
   if (preferences && preferences.silentJoins) return;
 
-  const modules = await db.serverModules.findFirst({
+  const modules = await prisma.serverModules.findFirst({
     where: { id: guild.id },
     select: { joinMessage: true },
   });
 
   if (!modules?.joinMessage) return;
 
-  const serverData = (await db.servers.findFirst({
+  const serverData = (await prisma.servers.findFirst({
     where: { id: guild.id },
     select: { joinChannel: true, joinMessage: true },
   })) as RawServerJoin;

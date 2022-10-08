@@ -1,4 +1,4 @@
-// import { colors, db, icons } from '$lib/db';
+// import { colors, icons } from '$lib/db';
 // import { CRBTError } from '$lib/functions/CRBTError';
 // import { MessageEmbed } from 'discord.js';
 // import { ChatCommand, OptionBuilder } from 'purplet';
@@ -17,7 +17,7 @@
 //     required: true,
 //   }),
 //   async handle({ module }) {
-//     const data = await db.serverModules.findFirst({
+//     const data = await prisma.serverModules.findFirst({
 //       where: { id: this.guild.id },
 //       select: { [module]: true },
 //     });
@@ -26,7 +26,7 @@
 //       return CRBTError(this, `The module "${choices[module]}" is already enabled.`);
 //     }
 
-//     await db.serverModules.upsert({
+//     await prisma.serverModules.upsert({
 //       where: { id: this.guild.id },
 //       create: {
 //         id: this.guild.id,
@@ -44,7 +44,7 @@
 //             name: `CRBT Settings - ${choices[module]} Enabled`,
 //             iconURL: icons.success,
 //           })
-//           .setColor(`#${colors.success}`),
+//           .setColor(colors.success),
 //       ],
 //     });
 //   },
@@ -59,7 +59,7 @@
 //     required: true,
 //   }),
 //   async handle({ module }) {
-//     const data = await db.serverModules.findFirst({
+//     const data = await prisma.serverModules.findFirst({
 //       where: { id: this.guild.id },
 //       select: { [module]: true },
 //     });
@@ -68,7 +68,7 @@
 //       return CRBTError(this, `The module "${choices[module]}" is already disabled.`);
 //     }
 
-//     await db.serverModules.upsert({
+//     await prisma.serverModules.upsert({
 //       where: { id: this.guild.id },
 //       create: {
 //         id: this.guild.id,
@@ -86,7 +86,7 @@
 //             name: `CRBT Settings - ${choices[module]} Disabled`,
 //             iconURL: icons.success,
 //           })
-//           .setColor(`#${colors.success}`),
+//           .setColor(colors.success),
 //       ],
 //     });
 //   },

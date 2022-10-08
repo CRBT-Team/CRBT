@@ -1,4 +1,4 @@
-import { colors, icons } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { GuildMember, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
@@ -62,7 +62,7 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
               }\n\`\`\``
               : ''
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       ephemeral: true,
     });
@@ -78,7 +78,7 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
                 }`,
               iconURL: icons.success,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         ephemeral: true,
       });
@@ -90,7 +90,7 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
               name: strings.SELECT_MENU_ROLES_SUCCESS,
               iconURL: icons.success,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         ephemeral: true,
       });

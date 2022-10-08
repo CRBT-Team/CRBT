@@ -1,4 +1,4 @@
-import { db, emojis } from '$lib/db';
+import { db, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
@@ -47,9 +47,9 @@ export default ChatCommand({
               !req
                 ? strings.LEADERBOARD_NOTPRESENT
                 : `${strings.LEADERBOARD_NOTPRESENT.replace(
-                    '<PLACE>',
-                    `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}**`
-                  ).replace('<TOTAL>', leaderboard.length.toString())} (\`/leaderboard\`)`
+                  '<PLACE>',
+                  `**${ordinal(leaderboard.findIndex((x) => x.id === u.id) + 1)}**`
+                ).replace('<TOTAL>', leaderboard.length.toString())} (\`/leaderboard\`)`
             )
             .addField(DEPRECATION_TITLE, DEPRECATION_NOTICE)
             .setColor(await getColor(u)),

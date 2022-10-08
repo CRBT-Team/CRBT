@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { prisma } from '$lib/db';
 import { TimeoutData, TimeoutTypes } from '$lib/types/timeouts';
 import { randomUUID } from 'crypto';
 import { getDiscordClient } from 'purplet';
@@ -20,7 +20,7 @@ export async function dbTimeout<T extends TimeoutData>(
   timeouts.set(timeout.id, timeout);
 
   setLongerTimeout(async () => {
-    const timeoutData = (await db.timeouts.findFirst({
+    const timeoutData = (await prisma.timeouts.findFirst({
       where: { id: timeout.id },
     })) as TimeoutData;
 
@@ -42,16 +42,16 @@ export async function dbTimeout<T extends TimeoutData>(
       handleReminder(timeoutData, client);
     }
 
-    await db.timeouts
+    await prisma.timeouts
       .delete({
         where: { id: timeout.id },
       })
-      .catch(() => {});
+      .catch(() => { });
   }, timeout.expiration.getTime() - Date.now());
 
   if (loadOnly) return;
 
-  return (await db.timeouts.create({
+  return (await prisma.timeouts.create({
     data: timeout,
   })) as T;
 }

@@ -1,4 +1,4 @@
-import { db, emojis } from '$lib/db';
+import { db, emojis } from '$lib/env';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { getStrings } from '$lib/language';
@@ -55,12 +55,11 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
         .setDescription(
           assignLeaderboardRanks(leaderboard)
             .map((u) => {
-              return `**${u.rank}.** ${
-                u.name
+              return `**${u.rank}.** ${u.name
                   ? `@${u.name}`
                   : ctx.client.users.cache.get(u.id)?.username ??
-                    ctx.client.users.fetch(u.id).then((u) => u.username)
-              } - **${emojis.purplet} ${u.purplets.toLocaleString()} Purplets**`;
+                  ctx.client.users.fetch(u.id).then((u) => u.username)
+                } - **${emojis.purplet} ${u.purplets.toLocaleString()} Purplets**`;
             })
             .slice((page - 1) * 10, page * 10)
             .join('\n')
@@ -69,9 +68,8 @@ const renderLeaderboard = async (ctx: Interaction, page: number) => {
           'Your position',
           !userProfile
             ? 'Not on the leaderboard'
-            : `**${leaderboard.findIndex((x) => x.id === ctx.user.id) + 1}.** ${
-                userProfile.name ? `@${userProfile.name}` : ctx.user.username
-              } - ${emojis.purplet} **${userProfile.purplets.toLocaleString()} Purplets**`
+            : `**${leaderboard.findIndex((x) => x.id === ctx.user.id) + 1}.** ${userProfile.name ? `@${userProfile.name}` : ctx.user.username
+            } - ${emojis.purplet} **${userProfile.purplets.toLocaleString()} Purplets**`
         )
         .addField(DEPRECATION_TITLE, DEPRECATION_NOTICE)
         .setColor(await getColor(ctx.user)),

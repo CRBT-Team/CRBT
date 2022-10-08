@@ -1,4 +1,5 @@
-import { achievements, colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { achievements, colors, icons } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import {
   CommandInteraction,
@@ -25,7 +26,7 @@ export async function AchievementProgress(
   const achievement = achievements[type] as Achievement;
   const uId = 'user' in this ? this.user?.id : this.id;
 
-  const data = await db.achievements.findUnique({
+  const data = await prisma.achievements.findUnique({
     where: {
       id: `${uId}_${type}`,
     },
@@ -33,7 +34,7 @@ export async function AchievementProgress(
 
   if (data && data.progression >= achievement.steps) return;
 
-  const newData = await db.achievements.upsert({
+  const newData = await prisma.achievements.upsert({
     create: {
       id: `${uId}_${type}`,
       achievement: type,

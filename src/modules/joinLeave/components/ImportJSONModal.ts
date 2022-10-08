@@ -1,6 +1,7 @@
 import { CRBTError } from '$lib/functions/CRBTError';
+import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { ModalComponent } from 'purplet';
-import { MessageBuilder, MessageBuilderTypes } from '../../components/MessageBuilder';
+import { MessageBuilder } from '../../components/MessageBuilder';
 
 export const ImportJSONModal = ModalComponent({
   async handle(type: MessageBuilderTypes) {
@@ -15,8 +16,10 @@ export const ImportJSONModal = ModalComponent({
       }
 
       const builder = MessageBuilder({
-        type,
-        message: parsed,
+        data: {
+          type,
+          ...parsed,
+        },
         interaction: this,
       });
 

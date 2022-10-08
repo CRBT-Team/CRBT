@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
@@ -13,21 +13,21 @@ export default OnEvent('guildMemberRemove', async (member) => {
   // channel.send(member.id);
 
   try {
-    const preferences = await db.users.findFirst({
+    const preferences = await prisma.user.findFirst({
       where: { id: member.id },
       select: { silentLeaves: true },
     });
 
     if (preferences && preferences.silentLeaves) return;
 
-    const modules = await db.serverModules.findFirst({
+    const modules = await prisma.serverModules.findFirst({
       where: { id: guild.id },
       select: { leaveMessage: true },
     });
 
     if (!modules?.leaveMessage) return;
 
-    const serverData = (await db.servers.findFirst({
+    const serverData = (await prisma.servers.findFirst({
       where: { id: guild.id },
       select: { leaveChannel: true, leaveMessage: true },
     })) as RawServerLeave;

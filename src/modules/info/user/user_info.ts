@@ -1,4 +1,5 @@
-import { db, emojis, items } from '$lib/db';
+import { prisma } from '$lib/db';
+import { emojis, items } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
@@ -115,9 +116,9 @@ export async function renderUser(
   navCtx: NavBarContext,
   member?: GuildMember
 ) {
-  const crbtUser = await db.users.findFirst({
+  const crbtUser = await prisma.user.findFirst({
     where: { id: user.id },
-    select: { crbtBadges: true, achievements: true },
+    select: { crbtBadges: true },
   });
 
   const userBadges = getBadgeEmojis(user.flags, crbtUser?.crbtBadges);

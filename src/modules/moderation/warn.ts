@@ -1,4 +1,5 @@
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
@@ -40,7 +41,7 @@ export default ChatCommand({
     }
 
     try {
-      await db.moderationStrikes.create({
+      await prisma.moderationStrikes.create({
         data: {
           serverId: this.guild.id,
           moderatorId: this.user.id,
@@ -58,7 +59,7 @@ export default ChatCommand({
               name: `Successfully warned ${user.tag}`,
               iconURL: icons.success,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
       });
 
@@ -71,7 +72,7 @@ export default ChatCommand({
               subject: `Warned in ${this.guild.name}`,
               message: reason,
               guildName: this.guild.name,
-            }).setColor(`#${colors.error}`),
+            }).setColor(colors.error),
           ],
         })
         .catch((e) => { });

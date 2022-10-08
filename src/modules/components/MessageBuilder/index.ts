@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { emojis, links } from '$lib/db';
+import { emojis, links } from '$lib/env';
 import { t } from '$lib/language';
 import {
   editableList,

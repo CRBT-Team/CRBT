@@ -1,4 +1,4 @@
-import { icons, links } from '$lib/db';
+import { icons, links } from '$lib/env';
 import { Dayjs } from 'dayjs';
 import { MessageEmbed, User } from 'discord.js';
 
@@ -23,10 +23,9 @@ export function createCRBTmsg({
       iconURL: icons.information,
     })
     .setDescription(
-      `${
-        type === 'issue'
-          ? `This message was delivered by a verified CRBT developer.`
-          : `This message was delivered by a moderator from **${guildName}**.\nCRBT is not affiliated with this message this moderator and this server.`
+      `${type === 'issue'
+        ? `This message was delivered by a verified CRBT developer.`
+        : `This message was delivered by a moderator from **${guildName}**.\nCRBT is not affiliated with this message this moderator and this server.`
       }\nLearn more about CRBT messages **[here](${links.blog['about-crbt-messages']})**.`
     )
     .addField('Subject', subject)

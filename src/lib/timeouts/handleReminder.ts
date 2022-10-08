@@ -1,4 +1,4 @@
-import { emojis, icons } from '$lib/db';
+import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { ReminderData } from '$lib/types/timeouts';

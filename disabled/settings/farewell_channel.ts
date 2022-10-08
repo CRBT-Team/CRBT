@@ -1,4 +1,4 @@
-import { colors, db, icons } from '$lib/db';
+import { colors, db, icons } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -6,20 +6,19 @@ import { t } from '$lib/language';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { allCommands } from '../../events/ready';
 
 export default ChatCommand({
-  name: 'welcome channel',
+  name: 'farewell channel',
   description: t('en-US', 'JOINLEAVE_CHANNEL_DESCRIPTION').replace(
     '<TYPE>',
-    t('en-US', 'JOIN_MESSAGE').toLowerCase()
+    t('en-US', 'LEAVE_MESSAGE').toLowerCase()
   ),
   allowInDMs: false,
   options: new OptionBuilder().channel(
     'channel',
     t('en-US', 'JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION').replace(
       '<TYPE>',
-      t('en-US', 'JOIN_MESSAGE').toLowerCase()
+      t('en-US', 'LEAVE_MESSAGE').toLowerCase()
     ),
     {
       channelTypes: [ChannelType.GuildText],
@@ -43,16 +42,14 @@ export default ChatCommand({
 
     await db.servers.upsert({
       where: { id: this.guildId },
-      create: { id: this.guildId, joinChannel: channel.id },
-      update: { joinChannel: channel.id },
+      create: { id: this.guildId, leaveChannel: channel.id },
+      update: { leaveChannel: channel.id },
     });
     await db.serverModules.upsert({
       where: { id: this.guildId },
-      create: { id: this.guildId, joinMessage: true },
-      update: { joinMessage: true },
+      create: { id: this.guildId, leaveMessage: true },
+      update: { leaveMessage: true },
     });
-
-    const command = allCommands.find((c) => c.name === 'welcome');
 
     await this.editReply({
       embeds: [
@@ -60,14 +57,13 @@ export default ChatCommand({
           .setAuthor({
             name: t(this, 'JOINLEAVE_CHANNEL_SUCCESS_TITLE').replace(
               '<TYPE>',
-              t('en-US', 'JOIN_CHANNEL')
+              t('en-US', 'LEAVE_CHANNEL')
             ),
             iconURL: icons.success,
           })
           .setDescription(
-            t(this, 'JOIN_CHANNEL_SUCCESS_DESCRIPTION')
-              .replace('<COMMAND>', slashCmd('welcome message'))
-
+            t(this, 'LEAVE_CHANNEL_SUCCESS_DESCRIPTION')
+              .replace('<COMMAND>', slashCmd('farewell message'))
               .replace('<CHANNEL>', channel.toString())
           )
           .setColor(`#${colors.success}`),

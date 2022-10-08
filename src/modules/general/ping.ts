@@ -2,7 +2,6 @@ import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';
 
 const { meta } = t('en-US', 'ping');

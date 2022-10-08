@@ -1,4 +1,5 @@
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
@@ -61,7 +62,7 @@ export default ChatCommand({
     try {
       await member.timeout(ms(duration), reason);
 
-      await db.moderationStrikes.create({
+      await prisma.moderationStrikes.create({
         data: {
           serverId: this.guild.id,
           moderatorId: this.user.id,
@@ -80,7 +81,7 @@ export default ChatCommand({
               name: `Successfully timed out ${user.tag}`,
               iconURL: icons.success,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
       });
 
@@ -93,7 +94,7 @@ export default ChatCommand({
               subject: `Timed out from ${this.guild.name}`,
               message: reason,
               guildName: this.guild.name,
-            }).setColor(`#${colors.yellow}`),
+            }).setColor(colors.yellow),
           ],
         })
         .catch((e) => { });

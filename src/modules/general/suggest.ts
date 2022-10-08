@@ -1,4 +1,4 @@
-import { colors, emojis, icons, links, misc } from '$lib/db';
+import { colors, emojis, icons, links, channels, clients } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent, row } from 'purplet';
@@ -42,7 +42,7 @@ export const Modal = ModalComponent({
     const title = this.fields.getTextInputValue('suggest_title');
     const desc = this.fields.getTextInputValue('suggest_description');
     const channel = (await this.client.channels.fetch(
-      misc.channels[this.client.user.id === misc.CRBTid ? 'suggestions' : 'reportDev']
+      this.client.user.id === clients.crbt.id ? channels.suggestions : channels.reportDev
     )) as TextChannel;
 
     const msg = await channel.send({
@@ -57,7 +57,7 @@ export const Modal = ModalComponent({
           .addField('Status', `${emojis.pending} Pending`, true)
           .setFooter({ text: `User ID: ${this.user.id} • Last update` })
           .setTimestamp()
-          .setColor(`#${colors.yellow}`),
+          .setColor(colors.yellow),
       ],
     });
 
@@ -74,7 +74,7 @@ export const Modal = ModalComponent({
           .setDescription(
             `You can view your suggestion **[here](${msg.url})** ([join CRBT Community](${links.discord})).`
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       ephemeral: true,
     });

@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { prisma } from '$lib/db';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
@@ -38,7 +38,7 @@ async function viewModLogs(
     return CRBTError(this, t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Moderate Members'));
   }
 
-  const data = await db.moderationStrikes.findMany({
+  const data = await prisma.moderationStrikes.findMany({
     where: { targetId: user.id },
     orderBy: { createdAt: 'desc' },
   });

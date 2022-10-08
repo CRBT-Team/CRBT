@@ -1,5 +1,6 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { colors, db, emojis, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, emojis, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -92,7 +93,7 @@ export default ChatCommand({
               `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${emojis.menu
               } menu. From this menu, you can also cancel it or view the entrants.`
             )
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         ephemeral: true,
       });
@@ -105,7 +106,7 @@ export default ChatCommand({
 async function getGiveawayData(id: string) {
   return (
     activeGiveaways.get(id) ??
-    ((await db.timeouts.findFirst({
+    ((await prisma.timeouts.findFirst({
       where: { id },
     })) as GiveawayData)
   );
@@ -156,7 +157,7 @@ export const GwayOptionsButton = ButtonComponent({
 export const CancelGwayButton = ButtonComponent({
   async handle(msgId: string) {
     try {
-      await db.timeouts.delete({
+      await prisma.timeouts.delete({
         where: { id: `${this.channel.id}/${msgId}` },
       });
 
@@ -170,7 +171,7 @@ export const CancelGwayButton = ButtonComponent({
               iconURL: icons.success,
               name: 'Giveaway deleted.',
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         components: [],
       });
@@ -196,7 +197,7 @@ export const EndGwayButton = ButtonComponent({
             name: 'Ended Giveaway',
             iconURL: icons.success,
           })
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       components: [],
     });
@@ -214,7 +215,7 @@ export const EnterGwayButton = ButtonComponent({
 
     participants.push(this.user.id);
 
-    (await db.timeouts.update({
+    (await prisma.timeouts.update({
       where: { id: gwayData.id },
       data: { data: { ...gwayData.data, participants } },
     })) as GiveawayData;
@@ -269,7 +270,7 @@ export const endGiveaway = async (
             : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
           }\n${gwayMsg.embeds[0].description.split('\n').at(-1)}`
         )
-        .setColor(`#${colors.gray}`),
+        .setColor(colors.gray),
     ],
     components: [],
   });
@@ -286,14 +287,14 @@ export const endGiveaway = async (
           iconURL: icons.giveaway,
         })
         .setDescription(`${winners.map((id) => `<@${id}>`).join(', ')} won **${prize}**!`)
-        .setColor(`#${colors.success}`),
+        .setColor(colors.success),
     ],
     components: components(
       row(new MessageButton().setStyle('LINK').setURL(gwayMsg.url).setLabel(JUMP_TO_MSG))
     ),
   });
 
-  await db.timeouts.delete({
+  await prisma.timeouts.delete({
     where: { id: `${gwayMsg.channelId}/${gwayMsg.id}` },
   });
 

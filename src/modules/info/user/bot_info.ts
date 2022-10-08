@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { links, misc } from '$lib/db';
+import { clients, links } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
@@ -127,7 +127,7 @@ export async function renderBotInfo(
         true
       )
       .setFooter({
-        text: `CRBT v${pjson.version} • Build ${pjson.build} ${this.client.user.id === misc.CRBTid ? '' : '(Dev) '
+        text: `CRBT v${pjson.version} • Build ${pjson.build} ${this.client.user.id === clients.crbt.id ? '' : '(Dev) '
           }• Purplet ${pjson.dependencies['purplet'].slice(1)}`,
       });
   }

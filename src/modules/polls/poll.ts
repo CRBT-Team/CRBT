@@ -1,5 +1,6 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { colors, db, emojis, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, emojis, icons } from '$lib/env';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
@@ -157,7 +158,7 @@ export default ChatCommand({
                 `<t:${dayjs().add(ms(end_date)).unix()}:R>`
               ).replace('<ICON>', emojis.menu)
             )
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         ephemeral: true,
       });
@@ -170,7 +171,7 @@ export default ChatCommand({
 async function getPollData(id: string) {
   return (
     activePolls.get(id) ??
-    ((await db.timeouts.findFirst({
+    ((await prisma.timeouts.findFirst({
       where: { id },
     })) as PollData)
   );
@@ -334,7 +335,7 @@ export const CancelPollButton = ButtonComponent({
     const { strings } = t(this, 'poll');
 
     try {
-      await db.timeouts.delete({
+      await prisma.timeouts.delete({
         where: { id: `${this.channel.id}/${msgId}` },
       });
 
@@ -348,7 +349,7 @@ export const CancelPollButton = ButtonComponent({
               iconURL: icons.success,
               name: strings.SUCCESS_POLL_DELETED,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
         components: [],
       });
@@ -376,7 +377,7 @@ export const EndPollButton = ButtonComponent({
             iconURL: icons.success,
             name: strings.SUCCESS_POLL_ENDED,
           })
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       components: [],
     });
@@ -421,7 +422,7 @@ export const endPoll = async (pollData: PollData['data'], pollMsg: Message, loca
           ' ' +
           strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
         )
-        .setColor(`#${colors.success}`),
+        .setColor(colors.success),
     ],
   });
 
@@ -445,14 +446,14 @@ export const endPoll = async (pollData: PollData['data'], pollMsg: Message, loca
             return field;
           })
         )
-        .setColor(`#${colors.gray}`),
+        .setColor(colors.gray),
     ],
     components: [],
   });
 
   activePolls.delete(`${pollMsg.channelId}/${pollMsg.id}`);
 
-  await db.timeouts.delete({
+  await prisma.timeouts.delete({
     where: { id: `${pollMsg.channelId}/${pollMsg.id}` },
   });
 };
@@ -480,7 +481,7 @@ const renderPoll = async (
     choices[newChoiceId]?.push(userId);
   }
 
-  const newData = (await db.timeouts.update({
+  const newData = (await prisma.timeouts.update({
     where: { id: pollData.id },
     data: { data: { ...pollData.data, choices } },
   })) as PollData;

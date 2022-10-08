@@ -1,5 +1,6 @@
 import { cache } from '$lib/cache';
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import { t } from '$lib/language';
 import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
@@ -13,7 +14,7 @@ export const SaveButton = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
     const data = cache.get<JoinLeaveData>(`${type}_BUILDER:${this.guildId}`);
 
-    await db.servers.upsert({
+    await prisma.servers.upsert({
       where: { id: this.guildId },
       update: {
         [resolveMsgType[type]]: data,
@@ -45,7 +46,7 @@ export const SaveButton = ButtonComponent({
               slashCmd((type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell') + ' channel')
             )
           )
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
       components: [],
     });

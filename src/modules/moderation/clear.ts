@@ -1,4 +1,5 @@
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -30,7 +31,7 @@ export default ChatCommand({
         amount
       );
 
-      await db.moderationStrikes.create({
+      await prisma.moderationStrikes.create({
         data: {
           createdAt: new Date(),
           moderatorId: this.user.id,
@@ -47,7 +48,7 @@ export default ChatCommand({
               name: `Successfully deleted ${messagesDeleted} messages`,
               iconURL: icons.success,
             })
-            .setColor(`#${colors.success}`),
+            .setColor(colors.success),
         ],
       });
     } catch (e) {

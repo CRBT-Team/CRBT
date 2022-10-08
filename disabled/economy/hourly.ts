@@ -1,4 +1,4 @@
-import { colors } from '$lib/db';
+import { colors } from '$lib/env';
 import { getStrings } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ChatCommand } from 'purplet';

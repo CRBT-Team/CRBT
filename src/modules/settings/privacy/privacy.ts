@@ -1,9 +1,10 @@
 import { cache } from '$lib/cache';
-import { db, emojis, icons, links } from '$lib/db';
+import { prisma } from '$lib/db';
+import { emojis, icons, links } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { users } from '@prisma/client';
-import { ButtonInteraction, CommandInteraction, MessageEmbed } from 'discord.js';
+import { User } from '@prisma/client';
+import { ButtonInteraction, CommandInteraction } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 import { ConfirmDataDeletion, ExportAllData } from './manage-data';
 
@@ -11,7 +12,7 @@ export default ChatCommand({
   name: 'privacy',
   description: 'Review your CRBT privacy settings and edit them.',
   async handle() {
-    const preferences = (await db.users.findFirst({
+    const preferences = (await prisma.user.findFirst({
       where: { id: this.user.id },
       select: { telemetry: true, silentJoins: true, silentLeaves: true },
     })) || {
@@ -30,8 +31,8 @@ export default ChatCommand({
 });
 
 export const ToggleSettingBtn = ButtonComponent({
-  async handle({ setting, newState }: { setting: keyof users; newState: boolean }) {
-    const newData = await db.users.upsert({
+  async handle({ setting, newState }: { setting: keyof User; newState: boolean }) {
+    const newData = await prisma.user.upsert({
       where: { id: this.user.id },
       create: { [setting]: newState, id: this.user.id },
       update: { [setting]: newState },
@@ -47,7 +48,7 @@ export const ToggleSettingBtn = ButtonComponent({
 
 async function renderPrivacySettings(
   this: CommandInteraction | ButtonInteraction,
-  { telemetry, silentJoins, silentLeaves }: Partial<users>
+  { telemetry, silentJoins, silentLeaves }: Partial<User>
 ) {
   return {
     embeds: [

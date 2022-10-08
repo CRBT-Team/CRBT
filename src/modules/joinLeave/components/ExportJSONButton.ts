@@ -1,5 +1,5 @@
 import { cache } from '$lib/cache';
-import { emojis } from '$lib/db';
+import { emojis } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';

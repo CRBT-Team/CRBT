@@ -1,4 +1,4 @@
-import { emojis, icons } from '$lib/db';
+import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';

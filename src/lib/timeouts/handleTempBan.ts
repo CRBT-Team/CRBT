@@ -1,4 +1,4 @@
-import { colors } from '$lib/db';
+import { colors } from '$lib/env';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { TempBanData } from '$lib/types/timeouts';
 import { Client } from 'discord.js';
@@ -19,10 +19,10 @@ export async function handleTempBan(tempban: TempBanData, client: Client) {
             user,
             guildName: guild.name,
             message: data.reason,
-          }).setColor(`#${colors.success}`),
+          }).setColor(colors.success),
         ],
       })
-      .catch(() => {});
+      .catch(() => { });
   } catch (e) {
     console.error(e);
   }

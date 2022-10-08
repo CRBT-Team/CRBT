@@ -1,4 +1,4 @@
-import { colors } from '$lib/db';
+import { colors } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
@@ -55,7 +55,7 @@ export default ChatCommand({
         .setFooter({
           text: `${guild.name} • #${channel.name}`,
         })
-        .setColor(message.member.displayColor ?? `#${colors.blurple}`)
+        .setColor(message.member.displayColor ?? colors.blurple)
         .setURL(message.url),
       ...message.embeds.slice(0, 4),
     ];

@@ -1,5 +1,6 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { colors, db, icons } from '$lib/db';
+import { prisma } from '$lib/db';
+import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
@@ -135,7 +136,7 @@ async function ban(
       reason,
     });
 
-    await db.moderationStrikes.create({
+    await prisma.moderationStrikes.create({
       data: {
         serverId: this.guild.id,
         moderatorId: this.user.id,
@@ -168,7 +169,7 @@ async function ban(
             name: `Successfully banned ${user.tag}`,
             iconURL: icons.success,
           })
-          .setColor(`#${colors.success}`),
+          .setColor(colors.success),
       ],
     });
 
@@ -182,7 +183,7 @@ async function ban(
             message: reason,
             guildName: this.guild.name,
             expiration: dayjs().add(ms(duration)),
-          }).setColor(`#${colors.error}`),
+          }).setColor(colors.error),
         ],
       })
       .catch((e) => { });
