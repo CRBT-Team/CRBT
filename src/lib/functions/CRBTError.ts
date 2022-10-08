@@ -147,7 +147,7 @@ export async function CooldownError(
       id: { startsWith: `${context.user.id}-COMMAND-` },
     },
     orderBy: {
-      expiration: 'desc',
+      expiresAt: 'desc',
     },
   });
 
@@ -164,7 +164,7 @@ export async function CooldownError(
       }),
     ],
     components:
-      showButton && reminder && Math.abs(reminder.expiration.getTime() - relativetime) < 60000
+      showButton && reminder && Math.abs(reminder.expiresAt.getTime() - relativetime) < 60000
         ? components(
           row(
             new RemindButton({ relativetime, userId: context.user.id })

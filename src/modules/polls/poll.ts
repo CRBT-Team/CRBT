@@ -135,6 +135,7 @@ export default ChatCommand({
         expiresAt: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         creatorId: this.user.id,
+        serverId: this.guild.id,
         choices: pollChoices.map((_) => []),
       } as Poll, TimeoutTypes.Poll);
 

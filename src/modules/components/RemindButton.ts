@@ -69,7 +69,7 @@ export const SnoozeButton = ButtonComponent({
 
     await dbTimeout({
       id: (button as MessageButton).url.replace('https://discord.com/channels/', ''),
-      expiration: new Date(Date.now() + 60 * 1000 * 15),
+      expiresAt: new Date(Date.now() + 60 * 1000 * 15),
       destination: url.includes('@me') ? 'dm' : url.split('/')[1],
       userId: this.user.id,
       subject: this.message.embeds[0].fields[0].value,

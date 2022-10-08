@@ -1,5 +1,6 @@
 import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
+import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
 import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
@@ -18,8 +19,6 @@ export async function handleReminder(reminder: Reminder, client: Client) {
       ? user
       : (await client.channels.fetch(channelId) as GuildTextBasedChannel);
 
-  const unix = Math.floor(reminder.expiration.getTime() / 1000);
-
   const message = {
     embeds: [
       new MessageEmbed()
@@ -28,9 +27,9 @@ export async function handleReminder(reminder: Reminder, client: Client) {
           iconURL: icons.reminder,
         })
         .setDescription(
-          strings.REMINDER_DESCRIPTION.replace('<TIME>', `<t:${unix}>`).replace(
+          strings.REMINDER_DESCRIPTION.replace('<TIME>', time(reminder.expiresAt, 'D')).replace(
             '<RELATIVE_TIME>',
-            `<t:${unix}:R>`
+            time(reminder.expiresAt, 'R')
           )
         )
         .addField(strings.SUBJECT, getReminderSubject(reminder, client, 0))
