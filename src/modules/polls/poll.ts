@@ -132,7 +132,7 @@ export default ChatCommand({
 
       const pollData = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        expiration: new Date(Date.now() + ms(end_date)),
+        expiresAt: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         creatorId: this.user.id,
         choices: pollChoices.map((_) => []),

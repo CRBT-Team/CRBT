@@ -72,7 +72,7 @@ export default ChatCommand({
 
       const data = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        expiration: end.toDate(),
+        expiresAt: end.toDate(),
         serverId: this.guildId,
         locale: this.guildLocale,
         hostId: this.user.id,

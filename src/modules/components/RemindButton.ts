@@ -3,6 +3,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
+import { Reminder } from '@prisma/client';
 import { Message, MessageButton, MessageMentions } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
@@ -67,17 +68,13 @@ export const SnoozeButton = ButtonComponent({
     const url = (this.message as Message).url;
 
     await dbTimeout({
-      id: url,
-      type: TimeoutTypes.Reminder,
+      id: (button as MessageButton).url.replace('https://discord.com/channels/', ''),
       expiration: new Date(Date.now() + 60 * 1000 * 15),
-      data: {
-        destination: url.includes('@me') ? 'dm' : url.split('/')[1],
-        userId: this.user.id,
-        subject: this.message.embeds[0].fields[0].value,
-        url: (button as MessageButton).url.replace('https://discord.com/channels/', ''),
-      },
+      destination: url.includes('@me') ? 'dm' : url.split('/')[1],
+      userId: this.user.id,
+      subject: this.message.embeds[0].fields[0].value,
       locale: this.locale,
-    });
+    } as Reminder, TimeoutTypes.Reminder);
 
     this.update({
       components: components(

@@ -85,7 +85,7 @@ export default ChatCommand({
     try {
       await dbTimeout({
         id: url,
-        expiration: expiration.toDate(),
+        expiresAt: expiration.toDate(),
         destination: destination ? destination.id : 'dm',
         userId: this.user.id,
         subject,

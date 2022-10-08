@@ -5,8 +5,6 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -149,17 +147,18 @@ async function ban(
     });
 
     if (duration) {
-      dbTimeout({
-        type: TimeoutTypes.TempBan,
-        expiration: new Date(Date.now() + ms(duration)),
-        id: this.guildId,
-        locale: this.guildLocale,
-        data: {
-          userId: user.id,
-          guildId: this.guildId,
-          reason,
-        },
-      });
+      // TODO: add that as well
+      // dbTimeout({
+      //   type: TimeoutTypes.TempBan,
+      //   expiration: new Date(Date.now() + ms(duration)),
+      //   id: this.guildId,
+      //   locale: this.guildLocale,
+      //   data: {
+      //     userId: user.id,
+      //     guildId: this.guildId,
+      //     reason,
+      //   },
+      // });
     }
 
     await this.reply({
