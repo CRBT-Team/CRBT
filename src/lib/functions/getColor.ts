@@ -7,8 +7,6 @@ export async function getColor(thing: User | Guild) {
   const isUser = thing instanceof User;
   const fromCache = cache.get<number | 'profile'>(`${thing.id}:color`);
 
-  console.log(fromCache);
-
   if (fromCache) {
     if (fromCache === 'profile' && isUser) {
       return (await thing.fetch()).accentColor ?? colors.default;

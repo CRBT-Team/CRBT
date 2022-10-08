@@ -15,29 +15,61 @@ model timeouts {
   id         String       @id
 }
 
-model servers {
-  id           String              @id
-  joinChannel  String?             @map("join_channel")
-  joinMessage  Json?               @map("join_message")
-  leaveChannel String?             @map("leave_channel")
-  leaveMessage Json?               @map("leave_message")
-  accentColor  String?             @map("accent_color")
-  economy      Economy?
-  modules      serverModules?
-  // achievements Achievement[]
-  flags        BigInt?             @default(0)
-  permissions  ServerPermissions[]
+model Giveaway {
+  id           String   @id
+  hostId       String
+  serverId     String
+  server       servers  @relation(fields: [serverId], references: [id])
+  expiresAt    DateTime @map("expires_at") @db.Timestamptz(6)
+  locale       String
+  participants String[]
 }
 
-model ServerPermissions {
-  serverId            String   @id @map("server_id")
-  server              servers  @relation(fields: [serverId], references: [id])
-  moderatorRoles      String[] @map("mod_roles")
-  pollsAllowed        Json[]   @map("polls_allowlist")
-  pollsDisallowed     Json[]   @map("polls_blocklist")
-  giveawaysAllowed    Json[]   @map("gways_allowlist")
-  giveawaysDisallowed Json[]   @map("gways_blocklist")
+model Poll {
+  id        String   @id
+  creatorId String
+  choices   Json[]
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(6)
+  locale    String
+  serverId  String
+  server    servers  @relation(fields: [serverId], references: [id])
 }
+
+model Reminder {
+  id          String   @id
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  expiresAt   DateTime @map("expires_at") @db.Timestamptz(6)
+  locale      String
+  destination String
+  subject     String
+}
+
+model servers {
+  id           String         @id
+  joinChannel  String?        @map("join_channel")
+  joinMessage  Json?          @map("join_message")
+  leaveChannel String?        @map("leave_channel")
+  leaveMessage Json?          @map("leave_message")
+  accentColor  String?        @map("accent_color")
+  economy      Economy?
+  modules      serverModules?
+  giveaways    Giveaway[]
+  polls        Poll[]
+  flags        BigInt?        @default(0)
+  // achievements Achievement[]
+  // permissions  ServerPermissions[]
+}
+
+// model ServerPermissions {
+//   serverId            String   @id @map("server_id")
+//   server              servers  @relation(fields: [serverId], references: [id])
+//   moderatorRoles      String[] @map("mod_roles")
+//   pollsAllowed        Json[]   @map("polls_allowlist")
+//   pollsDisallowed     Json[]   @map("polls_blocklist")
+//   giveawaysAllowed    Json[]   @map("gways_allowlist")
+//   giveawaysDisallowed Json[]   @map("gways_blocklist")
+// }
 
 model serverModules {
   id           String  @id
@@ -58,15 +90,15 @@ model moderationStrikes {
 }
 
 model User {
-  id                    String    @id
-  guildedId             String?   @unique @map("guilded_id")
-  accentColor           Int?      @map("accent_color")
-  birthday              DateTime? @db.Timestamptz(6)
-  crbtBadges            String[]  @map("crbt_badges")
-  telemetry             Boolean   @default(true)
-  silentJoins           Boolean   @default(false) @map("silent_joins")
-  silentLeaves          Boolean   @default(false) @map("silent_leaves")
-  subscriptionExpiresAt DateTime? @map("sub_expiration")
+  id                    String     @id
+  guildedId             String?    @unique @map("guilded_id")
+  accentColor           Int?       @map("accent_color")
+  crbtBadges            String[]   @map("crbt_badges")
+  telemetry             Boolean    @default(true)
+  silentJoins           Boolean    @default(false) @map("silent_joins")
+  silentLeaves          Boolean    @default(false) @map("silent_leaves")
+  subscriptionExpiresAt DateTime?  @map("sub_expiration")
+  reminders             Reminder[]
 }
 
 model users {

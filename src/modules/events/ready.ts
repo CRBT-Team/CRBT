@@ -1,13 +1,12 @@
 import { prisma } from '$lib/db';
 import { clients, servers } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { TimeoutData } from '$lib/types/timeouts';
+import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { ApplicationCommand, Collection } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export let allCommands: Collection<string, ApplicationCommand>;
-export let timeouts = new Collection<string, TimeoutData>();
 
 export default OnEvent('ready', async (client) => {
   client.user.setActivity({
@@ -21,11 +20,14 @@ export default OnEvent('ready', async (client) => {
 
   console.log(`Loaded ${allCommands.size} commands`);
 
-  const timeouts = (await prisma.timeouts.findMany()) as TimeoutData[];
+  let timeouts = new Map<string, Timeout>();
 
-  timeouts.forEach(async (timeout) => await dbTimeout(timeout, true));
-
-  console.log(`Loaded ${timeouts.length} timeouts`);
+  Object.values(TimeoutTypes).forEach(async (timeoutType) => {
+    (await prisma[timeoutType.toString()].findMany())
+      .forEach(async (t: Timeout) => {
+        timeouts.set(t.id, await dbTimeout(t, timeoutType, true));
+      });
+  });
 
   const today = dayjs().startOf('day').toISOString();
   const members = client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0);

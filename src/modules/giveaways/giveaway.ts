@@ -7,13 +7,14 @@ import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { GiveawayData, TimeoutTypes } from '$lib/types/timeouts';
+import { TimeoutTypes } from '$lib/types/timeouts';
+import { Giveaway } from '@prisma/client';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageButton, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 
-const activeGiveaways = new Map<string, GiveawayData>();
+const activeGiveaways = new Map<string, Giveaway>();
 
 export default ChatCommand({
   name: 'giveaway',
@@ -71,14 +72,12 @@ export default ChatCommand({
 
       const data = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        type: TimeoutTypes.Giveaway,
         expiration: end.toDate(),
+        serverId: this.guildId,
         locale: this.guildLocale,
-        data: {
-          creatorId: this.user.id,
-          participants: [],
-        },
-      });
+        hostId: this.user.id,
+        participants: [],
+      } as Giveaway, TimeoutTypes.Giveaway);
 
       activeGiveaways.set(`${this.channel.id}/${msg.id}`, data);
 
@@ -106,9 +105,9 @@ export default ChatCommand({
 async function getGiveawayData(id: string) {
   return (
     activeGiveaways.get(id) ??
-    ((await prisma.timeouts.findFirst({
+    ((await prisma.giveaway.findFirst({
       where: { id },
-    })) as GiveawayData)
+    })))
   );
 }
 
@@ -129,8 +128,8 @@ export const GwayOptionsButton = ButtonComponent({
             name: 'CRBT Giveaway • Data and Options',
           })
           .addField(
-            `Entrants (${gwayData.data.participants.length})`,
-            gwayData.data.participants.map((id) => `<@${id}>`).join(', ') || 'None'
+            `Entrants (${gwayData.participants.length})`,
+            gwayData.participants.map((id) => `<@${id}>`).join(', ') || 'None'
           )
           .setFooter({
             text: strings.POLL_DATA_FOOTER,
@@ -157,7 +156,7 @@ export const GwayOptionsButton = ButtonComponent({
 export const CancelGwayButton = ButtonComponent({
   async handle(msgId: string) {
     try {
-      await prisma.timeouts.delete({
+      await prisma.giveaway.delete({
         where: { id: `${this.channel.id}/${msgId}` },
       });
 
@@ -187,7 +186,7 @@ export const EndGwayButton = ButtonComponent({
 
     if (gwayData) {
       const msg = await this.channel.messages.fetch(msgId);
-      await endGiveaway(gwayData.data, msg, this.guildLocale);
+      await endGiveaway(gwayData, msg);
     }
 
     await this.update({
@@ -207,7 +206,7 @@ export const EndGwayButton = ButtonComponent({
 export const EnterGwayButton = ButtonComponent({
   async handle() {
     const gwayData = await getGiveawayData(`${this.channelId}/${this.message.id}`);
-    const participants = gwayData.data.participants;
+    const participants = gwayData.participants;
 
     if (participants.includes(this.user.id)) {
       return CRBTError(this, 'You have already entered this giveaway.');
@@ -215,10 +214,10 @@ export const EnterGwayButton = ButtonComponent({
 
     participants.push(this.user.id);
 
-    (await prisma.timeouts.update({
+    (await prisma.giveaway.update({
       where: { id: gwayData.id },
-      data: { data: { ...gwayData.data, participants } },
-    })) as GiveawayData;
+      data: { ...gwayData, participants },
+    }));
 
     this.update({
       embeds: [
@@ -245,14 +244,13 @@ export const EnterGwayButton = ButtonComponent({
 });
 
 export const endGiveaway = async (
-  gwayData: GiveawayData['data'],
+  giveaway: Giveaway,
   gwayMsg: Message,
-  locale: string
 ) => {
-  const { JUMP_TO_MSG } = t(locale, 'genericButtons');
+  const { JUMP_TO_MSG } = t(giveaway.locale, 'genericButtons');
   const winnersAmount = Number(gwayMsg.embeds[0].fields[1].value);
 
-  const winners = gwayData.participants.sort(() => 0.5 - Math.random()).slice(0, winnersAmount);
+  const winners = giveaway.participants.sort(() => 0.5 - Math.random()).slice(0, winnersAmount);
   const prize = gwayMsg.embeds[0].title;
 
   await gwayMsg.edit({
@@ -294,9 +292,9 @@ export const endGiveaway = async (
     ),
   });
 
-  await prisma.timeouts.delete({
-    where: { id: `${gwayMsg.channelId}/${gwayMsg.id}` },
+  await prisma.giveaway.delete({
+    where: { id: giveaway.id },
   });
 
-  activeGiveaways.delete(`${gwayMsg.channelId}/${gwayMsg.id}`);
+  activeGiveaways.delete(giveaway.id);
 };

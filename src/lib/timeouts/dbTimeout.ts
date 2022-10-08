@@ -1,57 +1,43 @@
 import { prisma } from '$lib/db';
-import { TimeoutData, TimeoutTypes } from '$lib/types/timeouts';
+import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import { randomUUID } from 'crypto';
 import { getDiscordClient } from 'purplet';
-import { timeouts } from '../../modules/events/ready';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
 import { handlePoll } from './handlePoll';
 import { handleReminder } from './handleReminder';
 import { handleTempBan } from './handleTempBan';
 
-export async function dbTimeout<T extends TimeoutData>(
+const handle = {
+  poll: handlePoll,
+  reminder: handleReminder,
+  giveaway: handleGiveaway,
+}
+
+export async function dbTimeout<T extends Timeout>(
   timeout: T,
+  type: TimeoutTypes,
   loadOnly: boolean = false
 ): Promise<T> {
   const client = getDiscordClient();
-
-  timeout.id = timeout.id ?? randomUUID();
-
-  timeouts.set(timeout.id, timeout);
+  const { id } = timeout;
 
   setLongerTimeout(async () => {
-    const timeoutData = (await prisma.timeouts.findFirst({
-      where: { id: timeout.id },
-    })) as TimeoutData;
+    if (!timeout) return;
 
-    if (!timeoutData) return;
+    const data = (await prisma[type.toString()].findFirst({
+      where: { id },
+    }));
 
-    if (timeoutData.type === TimeoutTypes.TempBan) {
-      handleTempBan(timeoutData, client);
-    }
+    handle[type](data, client);
 
-    if (timeoutData.type === TimeoutTypes.Poll) {
-      handlePoll(timeoutData, client);
-    }
+    await prisma[type.toString()].delete({ where: { id } });
 
-    if (timeoutData.type === TimeoutTypes.Giveaway) {
-      handleGiveaway(timeoutData, client);
-    }
+  }, timeout.expiresAt.getTime() - Date.now());
 
-    if (timeoutData.type === TimeoutTypes.Reminder) {
-      handleReminder(timeoutData, client);
-    }
+  if (loadOnly) return timeout;
 
-    await prisma.timeouts
-      .delete({
-        where: { id: timeout.id },
-      })
-      .catch(() => { });
-  }, timeout.expiration.getTime() - Date.now());
-
-  if (loadOnly) return;
-
-  return (await prisma.timeouts.create({
+  return (await prisma[type.toString()].create({
     data: timeout,
   })) as T;
 }

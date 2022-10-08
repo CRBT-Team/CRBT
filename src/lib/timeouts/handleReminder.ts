@@ -1,22 +1,22 @@
 import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import { ReminderData } from '$lib/types/timeouts';
+import { Reminder } from '@prisma/client';
 import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getReminderSubject } from '../../modules/tools/reminder list';
 
-export async function handleReminder(reminder: ReminderData, client: Client) {
+export async function handleReminder(reminder: Reminder, client: Client) {
   const { JUMP_TO_MSG } = t(reminder.locale, 'genericButtons');
   const { strings } = t(reminder.locale, 'remind me');
-  const { data } = reminder;
+  const [guildId, channelId, messageId] = reminder.id.split('/');
 
-  const user = await client.users.fetch(data.userId);
+  const user = await client.users.fetch(reminder.userId);
   const dest =
-    data.destination === 'dm'
+    reminder.destination === 'dm'
       ? user
-      : ((await client.channels.fetch(data.url.split('/')[1])) as GuildTextBasedChannel);
+      : (await client.channels.fetch(channelId) as GuildTextBasedChannel);
 
   const unix = Math.floor(reminder.expiration.getTime() / 1000);
 
@@ -41,7 +41,7 @@ export async function handleReminder(reminder: ReminderData, client: Client) {
         new MessageButton()
           .setStyle('LINK')
           .setLabel(JUMP_TO_MSG)
-          .setURL(`https://discord.com/channels/${data.url}`),
+          .setURL(`https://discord.com/channels/${reminder.id}`),
         new SnoozeButton()
           .setStyle('SECONDARY')
           .setEmoji(emojis.reminder)
@@ -55,11 +55,11 @@ export async function handleReminder(reminder: ReminderData, client: Client) {
       allowedMentions: {
         users: [user.id],
       },
-      content: data.destination !== 'dm' ? user.toString() : null,
+      content: reminder.destination !== 'dm' ? user.toString() : null,
       ...message,
     });
   } catch (e) {
-    const dest = (await client.channels.fetch(data.url.split('/')[1])) as GuildTextBasedChannel;
+    const dest = (await client.channels.fetch(channelId) as GuildTextBasedChannel);
 
     await dest.send({
       allowedMentions: {

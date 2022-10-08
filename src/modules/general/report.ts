@@ -65,35 +65,25 @@ export const Modal = ModalComponent({
       ephemeral: true,
     });
 
-    // const image = image_url
-    //   ? new MessageAttachment(
-    //   ).setName('image.png')
-    //   : null;
-
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${this.user.tag} filed a bug report`,
-        iconURL: avatar(this.user, 64),
-      })
-      .setTitle(title)
-      .setDescription(description)
-      // .addFields({
-      //   name: 'Status',
-      //   value: `${emojis.pending} Pending`,
-      //   inline: true
-      // })
-      .setImage(image_url ? 'attachment://image.png' : null)
-      .setFooter({ text: `User ID: ${this.user.id} • Last update` })
-      .setTimestamp()
-      .setColor(colors.yellow);
-
     await rest.post(Routes.threads(
       this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
     ), {
       body: {
         name: title,
         message: {
-          embeds: [e.toJSON()],
+          embeds: [
+            {
+              author: {
+                name: `${this.user.tag} filed a bug report`,
+                icon_url: avatar(this.user, 64),
+              },
+              title,
+              description,
+              image: image_url ? 'attachment://image.png' : null,
+              footer: { text: `User ID: ${this.user.id}` },
+              color: colors.yellow,
+            }
+          ],
         }
       },
       files: image_url ? [{

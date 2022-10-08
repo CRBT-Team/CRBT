@@ -1,6 +1,5 @@
 import { prisma } from "$lib/db";
 import { colors, icons } from "$lib/env";
-import { ReminderData } from "$lib/types/timeouts";
 import { TimeoutTypes } from "@prisma/client";
 import { MessageFlags } from "discord-api-types/v10";
 import { MessageAttachment } from "discord.js";
@@ -8,13 +7,12 @@ import { ButtonComponent, components, row } from "purplet";
 
 export const ExportAllData = ButtonComponent({
   async handle() {
-    const userData = await prisma.user.findFirst({ where: { id: this.user.id } });
+    const userData = await prisma.user.findFirst({ where: { id: this.user.id }, include: { reminders: true } });
     const achievements = await prisma.achievements.findMany({ where: { userId: this.user.id } });
-    const reminders = (await prisma.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
 
     await this.reply({
       files: [
-        new MessageAttachment(Buffer.from(JSON.stringify({ ...userData, achievements, reminders }, null, 2)))
+        new MessageAttachment(Buffer.from(JSON.stringify({ ...userData, achievements }, null, 2)))
           .setName('data.json')
       ],
       flags: MessageFlags.Ephemeral
@@ -68,10 +66,10 @@ export const DeleteAllData = ButtonComponent({
   async handle() {
     await prisma.user.delete({
       where: { id: this.user.id },
+      include: {
+        reminders: true
+      }
     });
-    const reminders = (await prisma.timeouts.findMany({ where: { type: TimeoutTypes.REMINDER, } }) as ReminderData[]).filter((r) => r.data.userId === this.user.id);
-
-    reminders.forEach((r) => prisma.timeouts.delete({ where: { id: r.id } }));
 
     await this.update({
       embeds: [

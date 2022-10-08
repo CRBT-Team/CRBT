@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { Reminder } from '@prisma/client';
 
 const { meta } = t('en-US', 'remind me');
 
@@ -63,11 +64,9 @@ export default ChatCommand({
         return CRBTError(this, errors.BOT_MISSING_PERMS);
       }
     }
-    const userReminders = (
-      await prisma.timeouts.findMany({
-        where: { type: 'REMINDER' },
-      })
-    ).filter((r) => (r.data as any).userId === this.user.id);
+    const userReminders = await prisma.reminder.findMany({
+      where: { userId: this.user.id },
+    });
 
     if (userReminders.length >= 10) {
       return CRBTError(this, errors.REMINDERS_MAX_LIMIT);
@@ -86,16 +85,12 @@ export default ChatCommand({
     try {
       await dbTimeout({
         id: url,
-        type: TimeoutTypes.Reminder,
         expiration: expiration.toDate(),
-        data: {
-          destination: destination ? destination.id : 'dm',
-          userId: this.user.id,
-          subject,
-          url,
-        },
+        destination: destination ? destination.id : 'dm',
+        userId: this.user.id,
+        subject,
         locale: this.locale,
-      });
+      } as Reminder, TimeoutTypes.Reminder);
 
       await this.editReply({
         embeds: [

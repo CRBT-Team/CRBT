@@ -142,9 +142,8 @@ export async function CooldownError(
   const { strings } = t(context.locale, 'CooldownError');
   const { ADD_REMINDER } = t(context.locale, 'genericButtons');
 
-  const reminder = await prisma.timeouts.findFirst({
+  const reminder = await prisma.reminder.findFirst({
     where: {
-      type: 'REMINDER',
       id: { startsWith: `${context.user.id}-COMMAND-` },
     },
     orderBy: {

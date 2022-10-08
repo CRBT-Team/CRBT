@@ -8,7 +8,7 @@ import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { snowStamp } from '$lib/functions/snowStamp';
 import { t } from '$lib/language';
-import { ReminderData } from '$lib/types/timeouts';
+import { Reminder } from '@prisma/client';
 import dayjs from 'dayjs';
 import {
   ButtonInteraction,
@@ -29,18 +29,19 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { timeouts } from '../events/ready';
 
 export default ChatCommand({
   name: 'reminder list',
   description: 'Get a list of all of your reminders.',
   async handle() {
     dayjs.locale(this.locale);
-    const userReminders = (
-      (await prisma.timeouts.findMany({ where: { type: 'REMINDER' } })) as ReminderData[]
-    )
-      .filter((reminder) => reminder.data.userId === this.user.id)
-      .sort((a, b) => a.expiration.getTime() - b.expiration.getTime());
+    const userReminders =
+      (await prisma.reminder.findMany({
+        where: {
+          userId: this.user.id
+        }
+      }))
+        .sort((a, b) => a.expiration.getTime() - b.expiration.getTime());
 
     cache.set(`reminders:${this.user.id}`, userReminders, 60 * 1000 * 15);
 
@@ -54,7 +55,7 @@ export default ChatCommand({
 export const ReminderSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const index = parseInt(this.values[0]);
-    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<Reminder[]>(`reminders:${this.user.id}`);
 
     await this.update(await renderReminder.call(this, userReminders, index));
   },
@@ -62,7 +63,7 @@ export const ReminderSelectMenu = SelectMenuComponent({
 
 export const EditButton = ButtonComponent({
   async handle(index: number) {
-    const r = cache.get<ReminderData[]>(`reminders:${this.user.id}`)[index];
+    const r = cache.get<Reminder[]>(`reminders:${this.user.id}`)[index];
 
     const modal = new EditModal(index)
       .setTitle('Edit Reminder')
@@ -94,7 +95,7 @@ export const EditButton = ButtonComponent({
 
 export const EditModal = ModalComponent({
   async handle(index: number) {
-    const reminderList = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
+    const reminderList = cache.get<Reminder[]>(`reminders:${this.user.id}`);
     const reminder = reminderList[index];
     const subject = this.fields.getTextInputValue('subject');
 
@@ -106,10 +107,10 @@ export const EditModal = ModalComponent({
 
     const expiration = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
 
-    const newTimeout = (await prisma.timeouts.update({
+    const newTimeout = await prisma.reminder.update({
       where: { id: reminder.id },
-      data: { data: { ...reminder.data, subject }, expiration },
-    })) as ReminderData;
+      data: { ...reminder, subject, expiration },
+    });
 
     reminderList.splice(index, 1, newTimeout);
 
@@ -121,7 +122,7 @@ export const EditModal = ModalComponent({
 
 export const BackButton = ButtonComponent({
   async handle() {
-    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<Reminder[]>(`reminders:${this.user.id}`);
 
     return await this.update(await renderList.call(this, userReminders));
   },
@@ -148,11 +149,10 @@ export const DeleteButton = ButtonComponent({
 
 export const ConfirmDeleteButton = ButtonComponent({
   async handle(index: number) {
-    const userReminders = cache.get<ReminderData[]>(`reminders:${this.user.id}`);
+    const userReminders = cache.get<Reminder[]>(`reminders:${this.user.id}`);
     const reminder = userReminders[index];
 
-    await prisma.timeouts.delete({ where: { id: reminder.id } });
-    timeouts.delete(reminder.id);
+    await prisma.reminder.delete({ where: { id: reminder.id } });
 
     userReminders.splice(index, 1);
 
@@ -162,29 +162,29 @@ export const ConfirmDeleteButton = ButtonComponent({
   },
 });
 
-export function getReminderSubject(reminder: ReminderData, client: Client, isListString = 1) {
+export function getReminderSubject(reminder: Reminder, client: Client, isListString = 1) {
   if (reminder.id.endsWith('BIRTHDAY')) {
-    const [userId, username] = reminder.data.subject.split('-');
+    const [userId, username] = reminder.subject.split('-');
     const user = client.users.cache.get(userId);
     return t(
       reminder.locale,
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE'
     ).replace('<USER>', user?.username ?? `${username}`);
   }
-  return reminder.data.subject;
+  return reminder.subject;
 }
 
 async function renderReminder(
   this: SelectMenuInteraction | ModalSubmitInteraction,
-  userReminders: ReminderData[],
+  userReminders: Reminder[],
   index: number
 ) {
-  const { data, expiration, id } = userReminders[index];
-  const [guildId, channelId, messageId] = data.url.split('/');
+  const { expiration, id, destination } = userReminders[index];
+  const [guildId, channelId, messageId] = id.split('/');
   const { JUMP_TO_MSG, BACK, EDIT, DELETE } = t(this, 'genericButtons');
   const { strings } = t(this, 'remind me');
   const channel = this.client.channels.cache.get(channelId) as TextChannel;
-  const url = `https://discordapp.com/channels/${data.url}`;
+  const url = `https://discordapp.com/channels/${id}`;
 
   return {
     embeds: [
@@ -195,7 +195,7 @@ async function renderReminder(
         })
         .setTitle(getReminderSubject(userReminders[index], this.client))
         .setDescription(
-          `Will be sent <t:${dayjs(expiration).unix()}:R> in ${data.destination === 'dm' ? 'your DMs' : `${channel}`
+          `Will be sent <t:${dayjs(expiration).unix()}:R> in ${destination === 'dm' ? 'your DMs' : `${channel}`
           }\nCreated <t:${snowStamp(messageId).unix()}> (<t:${snowStamp(messageId).unix()}:R>)`
         )
         .setColor(this.message.embeds[0].color),
@@ -235,7 +235,7 @@ async function renderReminder(
               dates: `${dayjs(expiration).format('YYYYMMDD')}/${dayjs(expiration)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
-              details: `${strings.GCALENDAR_EVENT} ${data.destination
+              details: `${strings.GCALENDAR_EVENT} ${destination
                 ? strings.GCALENDAR_EVENT_CHANNEL.replace(
                   '<CHANNEL>',
                   `#${channel.name}`
@@ -252,7 +252,7 @@ async function renderReminder(
 
 async function renderList(
   this: CommandInteraction | ButtonInteraction,
-  userReminders: ReminderData[]
+  userReminders: Reminder[]
 ) {
   return {
     embeds: [
@@ -271,7 +271,7 @@ async function renderList(
             .sort((a, b) => a.expiration.getTime() - b.expiration.getTime())
             .map((r) => ({
               name: getReminderSubject(r, this.client),
-              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${r.data.destination === 'dm' ? 'In your DMs' : `<#${r.data.destination}>`
+              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${r.destination === 'dm' ? 'In your DMs' : `<#${r.destination}>`
                 }`,
             }))
         )

@@ -24,37 +24,18 @@ export default OnEvent('interactionCreate', async (i) => {
   //   cmd.handle(i, i.options);
   // }
 
-  // try {
-  //   console.log(cmdName);
-
-  //   let value = cache.get(`tlm_${i.user.id}`);
-
-  //   if (value === undefined) {
-  //     const fromDB = await prisma.user.findFirst({
-  //       where: { id: i.user.id },
-  //       select: { telemetry: true },
-  //     });
-
-  //     cache.set(`tlm_${i.user.id}`, fromDB?.telemetry === undefined ? true : fromDB?.telemetry);
-  //     value = fromDB?.telemetry === undefined ? true : fromDB?.telemetry;
-  //   }
-
-  //   if (value === false) return;
-  // } catch (e) {
-  //   UnknownError(i, e);
-  // }
   const channel = i.client.channels.cache.get(channels.telemetry) as TextChannel;
 
 
-  // if (i.client.user.id === misc.CRBTid) {
-  await prisma.statistics.update({
-    where: { date: dayjs().startOf('day').toISOString() },
-    data: {
-      commandsUsed: { push: commandName },
-      uniqueUsers: { push: i.user.id },
-    }
-  })
-  // }
+  if (i.client.user.id === clients.crbt.id) {
+    await prisma.statistics.update({
+      where: { date: dayjs().startOf('day').toISOString() },
+      data: {
+        commandsUsed: { push: commandName },
+        uniqueUsers: { push: i.user.id },
+      }
+    })
+  }
 
   channel.send({
     embeds: [

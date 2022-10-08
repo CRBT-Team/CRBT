@@ -10,8 +10,9 @@ import { progressBar } from '$lib/functions/progressBar';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { PollData, TimeoutTypes } from '$lib/types/timeouts';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import { EmojiRegex } from '$lib/util/regex';
+import { Poll } from '@prisma/client';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageEmbed, TextInputComponent } from 'discord.js';
@@ -24,7 +25,7 @@ import {
   row,
 } from 'purplet';
 
-const activePolls = new Map<string, PollData>();
+const activePolls = new Map<string, Poll>();
 const usersOnCooldown = new Map();
 
 export default ChatCommand({
@@ -77,9 +78,6 @@ export default ChatCommand({
       const msg = await this.channel.send({
         embeds: [
           new MessageEmbed()
-            // .setAuthor({
-            //   name: `${strings.POLL_HEADER} • ${strings.POLL_HEADER_VOTE}`,
-            // })
             .setTitle(title)
             .setDescription(
               strings.POLL_DESCRIPTION.replace(
@@ -134,14 +132,11 @@ export default ChatCommand({
 
       const pollData = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
-        type: TimeoutTypes.Poll,
         expiration: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
-        data: {
-          creatorId: this.user.id,
-          choices: pollChoices.map((_) => []),
-        },
-      });
+        creatorId: this.user.id,
+        choices: pollChoices.map((_) => []),
+      } as Poll, TimeoutTypes.Poll);
 
       activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 
@@ -171,9 +166,9 @@ export default ChatCommand({
 async function getPollData(id: string) {
   return (
     activePolls.get(id) ??
-    ((await prisma.timeouts.findFirst({
+    (await prisma.poll.findFirst({
       where: { id },
-    })) as PollData)
+    }))
   );
 }
 
@@ -183,10 +178,10 @@ export const PollButton = ButtonComponent({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
     }
 
-    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
-    const poll = this.message.embeds[0] as MessageEmbed;
+    const poll = await getPollData(`${this.channel.id}/${this.message.id}`);
+    const pollEmbed = this.message.embeds[0] as MessageEmbed;
 
-    const e = await renderPoll(choiceId, this.user.id, pollData, poll, this.guildLocale);
+    const e = await renderPoll(choiceId, this.user.id, poll, pollEmbed);
     this.update({
       embeds: [e],
     });
@@ -207,7 +202,7 @@ export const PollOptionsButton = ButtonComponent({
 
     const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
     const choicesNames = this.message.embeds[0].fields.map(({ name }) => name);
-    const choices = pollData.data.choices;
+    const choices = pollData.choices as string[][];
 
     this.reply({
       embeds: [
@@ -335,7 +330,7 @@ export const CancelPollButton = ButtonComponent({
     const { strings } = t(this, 'poll');
 
     try {
-      await prisma.timeouts.delete({
+      await prisma.poll.delete({
         where: { id: `${this.channel.id}/${msgId}` },
       });
 
@@ -367,7 +362,7 @@ export const EndPollButton = ButtonComponent({
 
     if (pollData) {
       const msg = await this.channel.messages.fetch(msgId);
-      await endPoll(pollData.data, msg, this.guildLocale);
+      await endPoll(pollData, msg);
     }
 
     await this.update({
@@ -384,10 +379,10 @@ export const EndPollButton = ButtonComponent({
   },
 });
 
-export const endPoll = async (pollData: PollData['data'], pollMsg: Message, locale: string) => {
-  const { strings } = t(locale, 'poll');
+export const endPoll = async (poll: Poll, pollMsg: Message) => {
+  const { strings } = t(poll.locale, 'poll');
 
-  const choices = pollData.choices;
+  const choices = poll.choices as string[][];
   const totalVotes = choices.flat().length;
   const ranking = choices
     .map((choice, index) => {
@@ -451,23 +446,22 @@ export const endPoll = async (pollData: PollData['data'], pollMsg: Message, loca
     components: [],
   });
 
-  activePolls.delete(`${pollMsg.channelId}/${pollMsg.id}`);
+  activePolls.delete(poll.id);
 
-  await prisma.timeouts.delete({
-    where: { id: `${pollMsg.channelId}/${pollMsg.id}` },
+  await prisma.poll.delete({
+    where: { id: poll.id },
   });
 };
 
 const renderPoll = async (
   choiceId: string,
   userId: string,
-  pollData: PollData,
+  poll: Poll,
   pollEmbed: MessageEmbed,
-  locale: string
 ) => {
-  const { strings } = t(locale, 'poll');
+  const { strings } = t(poll.locale, 'poll');
 
-  const choices = pollData.data.choices;
+  const choices = poll.choices as string[][];
   const newChoiceId = Number(choiceId);
   const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
 
@@ -481,12 +475,12 @@ const renderPoll = async (
     choices[newChoiceId]?.push(userId);
   }
 
-  const newData = (await prisma.timeouts.update({
-    where: { id: pollData.id },
-    data: { data: { ...pollData.data, choices } },
-  })) as PollData;
+  const newData = (await prisma.poll.update({
+    where: { id: poll.id },
+    data: { ...poll, choices },
+  }));
 
-  activePolls.set(pollData.id, newData);
+  activePolls.set(poll.id, newData);
 
   const totalVotes = choices.flat().length;
 
