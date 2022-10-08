@@ -3,7 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Ennek a parancsnak a használatához a <PERMISSIONS> engedély(ek)re van szükséged.",
   "ERROR_INVALID_URL": "A megadott URL érvénytelen.",
   "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
-  "ERROR_INVALID_BIRTHDAY": "The birthday you set is in an invalid format, or is in the future.",
+  "ERROR_INVALID_BIRTHDAY": "The birth date you set is in an invalid format, or is in the future.",
   "globalErrors": {
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
@@ -399,7 +399,7 @@
   "BIRTHDAY_REMINDER_BUTTON": "Set birthday reminder",
   "BIRTHDAY_LIST_CONTENT": "<USER>'s birthday",
   "USER_INFO_EMBED_TITLE": "<USER> - User info",
-  "USER_INFO_BIRTHDAY": "Birthday",
+  "USER_INFO_BIRTHDAY": "Birth date",
   "USER_INFO_CREATED_AT": "Joined Discord",
   "USER_INFO_JOINED_SERVER": "Joined Server",
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
