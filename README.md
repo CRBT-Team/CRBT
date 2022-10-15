@@ -1,6 +1,8 @@
 # CRBT
 The Discord companion made for you. 
 
+This is a private repo, so if you can see this, congrats!
+
 ## Commands
 `/8ball` - Ask a question to 8ball.\
 `/achievements` - View a list of a user's CRBT achievements.\
@@ -26,5 +28,16 @@ The Discord companion made for you.
 `/poll` - Create a poll with the given choices.\
 `/quote` - Quote a message using a link.\
 `/reminder new` - Set a reminder.\
-
-
+`/reminder list` - Get a list of all your reminders.\
+`/report` - File a new bug report on the Discord Server.\
+`/role-picker create` - Manually create a new Role Picker, a menu for members to choose roles themselves.\
+`/roll` - Roll a dice.\
+`/server icon` - Get a chosen server's icon.\
+`/server info` - Get information on a given Discord Server.\
+`/settings` - Configure CRBT settings on your server.\
+`/skin` - Get a Minecraft skin from a username.\
+`/translate` - Translate text to another language.\
+`/urban` - Get the definition of a word from Urban Dictionary.\
+`/user info` - Get a user's Discord information.\
+`/warn` - Warn a chosen user.\
+`/welcome preview` - Preview the welcome message.
