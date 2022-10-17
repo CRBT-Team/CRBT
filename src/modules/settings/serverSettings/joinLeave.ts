@@ -1,15 +1,15 @@
-import { cache } from "$lib/cache";
-import { emojis } from "$lib/env";
-import { CRBTError } from "$lib/functions/CRBTError";
-import { t } from "$lib/language";
-import { JoinLeaveData, MessageBuilderTypes } from "$lib/types/messageBuilder";
-import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from "$lib/types/settings";
-import { SnowflakeRegex } from "$lib/util/regex";
-import { TextInputComponent, Channel } from "discord.js";
-import { ButtonComponent, row, ModalComponent, components } from "purplet";
-import { MessageBuilder } from "../../components/MessageBuilder";
-import { RawServerJoin, RawServerLeave, resolveMsgType } from "../../joinLeave/types";
-import { getSettings, renderFeatureSettings, strings } from "./settings";
+import { cache } from '$lib/cache';
+import { emojis } from '$lib/env';
+import { CRBTError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
+import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { SnowflakeRegex } from '$lib/util/regex';
+import { Channel, TextInputComponent } from 'discord.js';
+import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import { MessageBuilder } from '../../components/MessageBuilder';
+import { RawServerJoin, RawServerLeave, resolveMsgType } from '../../joinLeave/types';
+import { getSettings, renderFeatureSettings, strings } from './settings';
 
 export const joinLeaveSettings: SettingsMenus = {
   getMenuDescription: ({ settings, feature, guild }) => {
@@ -24,17 +24,17 @@ export const joinLeaveSettings: SettingsMenus = {
         (!isEnabled
           ? ''
           : '\n' +
-          (channel
-            ? `Messages currently are sent in ${channel}.`
-            : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please change it in order to receive them.**')) +
-        `\nUse the buttons below to configure the feature or to ${isEnabled ? 'enable' : 'disable'
+            (channel
+              ? `Messages currently are sent in ${channel}.`
+              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please change it in order to receive them.**')) +
+        `\nUse the buttons below to configure the feature or to ${
+          isEnabled ? 'enable' : 'disable'
         } it.`,
     };
   },
   getSelectMenu: ({ settings, feature, i }) => {
-    const channelId = settings[CamelCaseFeatures[feature]];
-
-    console.log(channelId)
+    const channelId =
+      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
     const channel = i.guild.channels.cache.find((c) => c.id === channelId);
 
@@ -45,20 +45,21 @@ export const joinLeaveSettings: SettingsMenus = {
       value: feature,
     };
   },
-  getComponents: ({ feature, toggleBtn, backBtn }) => components(
-    row(backBtn, toggleBtn),
-    row(
-      new EditJoinLeaveMessageBtn(feature as never)
-        .setLabel(`Edit Message`)
-        .setEmoji(emojis.buttons.pencil)
-        .setStyle('PRIMARY'),
-      new EditJoinLeaveChannelBtn(feature as never)
-        .setLabel(`Edit Channel`)
-        .setEmoji(emojis.buttons.pencil)
-        .setStyle('PRIMARY')
-    )
-  )
-}
+  getComponents: ({ feature, toggleBtn, backBtn }) =>
+    components(
+      row(backBtn, toggleBtn),
+      row(
+        new EditJoinLeaveMessageBtn(feature as never)
+          .setLabel(`Edit Message`)
+          .setEmoji(emojis.buttons.pencil)
+          .setStyle('PRIMARY'),
+        new EditJoinLeaveChannelBtn(feature as never)
+          .setLabel(`Edit Channel`)
+          .setEmoji(emojis.buttons.pencil)
+          .setStyle('PRIMARY')
+      )
+    ),
+};
 
 export const EditJoinLeaveChannelBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {

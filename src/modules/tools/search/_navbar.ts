@@ -1,74 +1,55 @@
-import { MessageFlags } from "discord.js";
-import { ButtonComponent, row } from "purplet";
-import { NavBarContext } from "../../info/user/_navbar";
-import { handleDuckDuckGo } from "./DuckDuckGo";
-import { handleImageSearch } from "./images";
-import { SearchCmdOpts } from "./search";
-import { handleVideosSearch } from "./videos";
+import { cache } from '$lib/cache';
+import { chunks } from '$lib/functions/chunks';
+import { MessageFlags } from 'discord.js';
+import { ButtonComponent, row } from 'purplet';
+import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 
-type Tabs = 'featured' | 'web' | 'images' | 'videos' | 'anime';
+export const HandleResultButton = ButtonComponent({
+  async handle({ query, tabId }: { query: string; tabId: string }) {
+    await this.deferUpdate();
 
-export const WebResults = ButtonComponent({
-  async handle(query: string) {
     const opts: SearchCmdOpts = {
       query,
-      anonymous: (new MessageFlags(this.message.flags).has(MessageFlags.FLAGS.EPHEMERAL)),
-    }
-
-    const res = await handleDuckDuckGo.call(this, opts);
-
-    if (res) await this.update(res);
-  }
-});
-
-export const ImageResults = ButtonComponent({
-  async handle(query: string) {
-    const opts: SearchCmdOpts = {
-      query,
-      anonymous: (new MessageFlags(this.message.flags).has(MessageFlags.FLAGS.EPHEMERAL)),
+      site: tabId,
+      anonymous: new MessageFlags(this.message.flags).has(MessageFlags.FLAGS.EPHEMERAL),
     };
 
-    const res = await handleImageSearch.call(this, opts);
+    const res =
+      cache.get(`${this.message.id}:${tabId}`) ??
+      (await searchEngines[tabId].handle.call(this, opts));
 
-    if (res) await this.update(res);
-  }
+    cache.set(`${this.message.id}:${tabId}`, res, 120);
+
+    if (res) await this.editReply(res);
+  },
 });
 
+export function navbar(opts: SearchCmdOpts, locale: string) {
+  const arr = chunks(
+    Object.entries(searchEngines).filter(([v, { show }]) => show),
+    5
+  );
 
+  return arr.map((enginesRow) =>
+    row().addComponents(
+      enginesRow.map(([tabId, { name, emoji, show }]) =>
+        new HandleResultButton({ query: opts.query, tabId })
+          .setLabel(name)
+          .setEmoji(emoji)
+          .setStyle('SECONDARY')
+          .setDisabled(opts.site === tabId)
+      )
+    )
+  );
 
-export const VideoResults = ButtonComponent({
-  async handle(query: string) {
-    const opts: SearchCmdOpts = {
-      query,
-      anonymous: (new MessageFlags(this.message.flags).has(MessageFlags.FLAGS.EPHEMERAL)),
-    };
-
-    const res = await handleVideosSearch.call(this, opts);
-
-    if (res) await this.update(res);
-  }
-});
-
-export function navbar(
-  opts: SearchCmdOpts,
-  currentTab: Tabs,
-  locale: string,
-) {
-  return row(
-    new WebResults(opts.query)
-      .setLabel('Web')
-      .setEmoji('🔍')
-      .setStyle('SECONDARY')
-      .setDisabled(currentTab === 'web'),
-    new ImageResults(opts.query)
-      .setLabel('Images')
-      .setEmoji('🖼️')
-      .setStyle('SECONDARY')
-      .setDisabled(currentTab === 'images'),
-    new VideoResults(opts.query)
-      .setLabel('Videos')
-      .setEmoji('📺')
-      .setStyle('SECONDARY')
-      .setDisabled(currentTab === 'videos'),
-  )
+  // return row().addComponents(
+  //   Object.entries(searchEngines).map(([tabId, { name, emoji }]) =>
+  //     new HandleResultButton({ query: opts.query, tabId })
+  //       .setLabel(name)
+  //       .setEmoji(emoji)
+  //       .setStyle('SECONDARY')
+  //       .setDisabled(currentTab === tabId)
+  //   )
+  // );
 }

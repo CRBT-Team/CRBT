@@ -1,10 +1,10 @@
 import { getColor } from '$lib/functions/getColor';
-import { CommandInteraction, MessageAttachment, MessageButton, MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageAttachment, MessageButton, MessageComponentInteraction, MessageEmbed } from 'discord.js';
 import fetch, { Headers } from 'node-fetch';
 import { components, row } from 'purplet';
 import { SearchCmdOpts } from './search';
 
-export async function handleSpotify(this: CommandInteraction, opts: SearchCmdOpts) {
+export async function handleMusicSearch(this: CommandInteraction | MessageComponentInteraction, opts: SearchCmdOpts) {
   const { query } = opts;
 
   const url = `https://api.spotify.com/v1/search?${new URLSearchParams({
@@ -26,7 +26,7 @@ export async function handleSpotify(this: CommandInteraction, opts: SearchCmdOpt
 
   const track = res.tracks.items[0];
 
-  this.reply({
+  return {
     embeds: [
       new MessageEmbed()
         .setAuthor({
@@ -52,5 +52,5 @@ export async function handleSpotify(this: CommandInteraction, opts: SearchCmdOpt
     ),
     files: [new MessageAttachment(Buffer.from(JSON.stringify(res, null, 2)), 'res.json')],
     ephemeral: opts.anonymous,
-  });
+  };
 }

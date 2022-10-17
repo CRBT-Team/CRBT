@@ -46,19 +46,21 @@ model Reminder {
 }
 
 model servers {
-  id           String         @id
-  joinChannel  String?        @map("join_channel")
-  joinMessage  Json?          @map("join_message")
-  leaveChannel String?        @map("leave_channel")
-  leaveMessage Json?          @map("leave_message")
-  accentColor  String?        @map("accent_color")
-  economy      Economy?
-  modules      serverModules?
-  giveaways    Giveaway[]
-  polls        Poll[]
-  flags        BigInt?        @default(0)
-  // achievements Achievement[]
+  id             String         @id
+  joinChannel    String?        @map("join_channel")
+  joinMessage    Json?          @map("join_message")
+  leaveChannel   String?        @map("leave_channel")
+  leaveMessage   Json?          @map("leave_message")
+  modLogsChannel String?        @map("modlogs_channel")
+  accentColor    Int?           @map("accent_color")
+  economy        Economy?
+  modules        serverModules?
+  giveaways      Giveaway[]
+  polls          Poll[]
+  flags          BigInt?        @default(0)
+  achievements   Achievement[]
   // permissions  ServerPermissions[]
+  members        ServerMember[]
 }
 
 // model ServerPermissions {
@@ -72,10 +74,11 @@ model servers {
 // }
 
 model serverModules {
-  id           String  @id
-  joinMessage  Boolean @default(false) @map("join_message")
-  leaveMessage Boolean @default(false) @map("leave_message")
-  server       servers @relation(fields: [id], references: [id])
+  id             String  @id
+  joinMessage    Boolean @default(false) @map("join_message")
+  leaveMessage   Boolean @default(false) @map("leave_message")
+  moderationLogs Boolean @default(true) @map("modlogs")
+  server         servers @relation(fields: [id], references: [id])
 }
 
 model moderationStrikes {
@@ -90,28 +93,25 @@ model moderationStrikes {
 }
 
 model User {
-  id                    String     @id
-  guildedId             String?    @unique @map("guilded_id")
-  accentColor           Int?       @map("accent_color")
-  crbtBadges            String[]   @map("crbt_badges")
-  telemetry             Boolean    @default(true)
-  silentJoins           Boolean    @default(false) @map("silent_joins")
-  silentLeaves          Boolean    @default(false) @map("silent_leaves")
-  subscriptionExpiresAt DateTime?  @map("sub_expiration")
-  reminders             Reminder[]
-}
-
-model users {
-  id                    String         @id(map: "misc_pkey")
-  guildedId             String?        @map("guilded_id")
-  accentColor           String?        @map("accent_color")
-  achievements          Achievements[]
-  birthday              DateTime?      @db.Timestamptz(6)
+  id                    String         @id
+  guildedId             String?        @unique @map("guilded_id")
+  accentColor           Int?           @map("accent_color")
   crbtBadges            String[]       @map("crbt_badges")
   telemetry             Boolean        @default(true)
   silentJoins           Boolean        @default(false) @map("silent_joins")
   silentLeaves          Boolean        @default(false) @map("silent_leaves")
   subscriptionExpiresAt DateTime?      @map("sub_expiration")
+  reminders             Reminder[]
+  globalAchievements    Achievements[]
+  memberData            ServerMember[]
+}
+
+model ServerMember {
+  userId       String              @unique
+  user         User                @relation(references: [id], fields: [userId])
+  serverId     String              @unique
+  server       servers             @relation(references: [id], fields: [serverId])
+  achievements MemberAchievement[]
 }
 
 model Statistics {
@@ -125,21 +125,31 @@ model Statistics {
 model Achievements {
   id          String    @id
   userId      String    @map("user_id")
-  user        users     @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
   achievement String
   progression Int
-  // totalSteps  Int
   achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
 }
 
-// model Achievement {
-//   id         String   @id
-//   serverId   String   @map("server_id")
-//   userId     String   @map("user_id")
-//   server     servers? @relation(fields: [serverId], references: [id])
-//   users      users[]
-//   totalSteps Int
-// }
+model MemberAchievement {
+  achievementId String        @unique
+  achievement   Achievement   @relation(fields: [achievementId], references: [achievementId])
+  userId        String        @unique
+  user          ServerMember? @relation(fields: [userId], references: [userId])
+  progression   Int
+  achievedAt    DateTime?     @map("achieved_at") @db.Timestamptz(6)
+}
+
+model Achievement {
+  achievementId String              @id @default(uuid())
+  serverId      String              @map("server_id")
+  server        servers?            @relation(fields: [serverId], references: [id])
+  name          String
+  description   String?
+  requirements  Json[]
+  totalSteps    Int
+  members       MemberAchievement[]
+}
 
 model Inventory {
   serverId    String        @id @map("server_id")

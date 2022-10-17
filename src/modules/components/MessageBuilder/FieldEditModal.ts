@@ -19,13 +19,13 @@ export const FieldEditModal = ModalComponent({
     fieldName: string;
     type: MessageBuilderTypes | EditableFeatures.accentColor;
   }) {
-    const value = this.fields.getTextInputValue('VALUE');
+    const value: string = this.fields.getTextInputValue('VALUE').toLowerCase().replace('#', '');
 
     if (type === EditableFeatures.accentColor) {
-      if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
+      if (!value.match(/^[0-9a-f]{6}$/)) {
         return CRBTError(this, { title: t(this, 'ERROR_INVALID_HEX') });
       }
-      return await saveColorSettings.call(this, value.toLowerCase().replace('#', ''));
+      return await saveColorSettings.call(this, parseInt(value, 16));
     }
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
@@ -39,9 +39,9 @@ export const FieldEditModal = ModalComponent({
       type === MessageBuilderTypes.rolePicker
         ? value
         : parseCRBTscript(value, {
-          channel: this.channel as TextChannel,
-          member: this.member as GuildMember,
-        });
+            channel: this.channel as TextChannel,
+            member: this.member as GuildMember,
+          });
 
     switch (fieldName) {
       case 'content':

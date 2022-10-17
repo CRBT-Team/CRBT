@@ -1,5 +1,6 @@
 export default {
   success: 4906087,
+  // error: 16753664,
   error: 16722474,
 
   default: 15888775,
@@ -29,9 +30,9 @@ export default {
   gold: 15702081,
 
   clembs: 8548325,
-  'aïlath': 210968,
+  aïlath: 210968,
   navy: 19370,
   tomato: 16729949,
   trubiso: 16762368,
-  crbt: 15888775
-}
+  crbt: 15888775,
+};
