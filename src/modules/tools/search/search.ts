@@ -1,22 +1,29 @@
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { handleFeaturedSearch } from './featured';
 import { searchEngines } from './_engines';
 
 export interface SearchCmdOpts {
-  site: keyof typeof searchEngines;
+  site: string;
   query: string;
   anonymous?: boolean;
+  page: number;
 }
 
-const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, show }]) => {
-  if (show)
-    return {
-      ...acc,
-      [id]: `${emoji} ${name}`,
-    };
+const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, hide }]) => {
+  console.log(acc);
+  console.log(id, name, emoji, hide);
+  return {
+    ...acc,
+    [id]: `${emoji} ${name}`,
+    // ...(hide ? { [id]: `${emoji} ${name}` } : {}),
+  };
 }, {});
 
-export default ChatCommand({
+console.log(choices);
+
+// export default
+ChatCommand({
   name: 'search',
   description: 'Search for anything in one of the provided search engines.',
   options: new OptionBuilder()
@@ -41,17 +48,19 @@ export default ChatCommand({
   async handle(opts) {
     await this.deferReply();
 
-    const searchEngine = opts.site ?? opts.query.split(':').at(1).trim();
-    opts.query = opts.query.match(/.*:.*/) ? opts.query.split(':').at(2) : opts.query;
+    const fullOpts: SearchCmdOpts = {
+      page: 1,
+      query: opts.query.match(/.*:.*/) ? opts.query.split(':').at(2) : opts.query,
+      anonymous: opts.anonymous || false,
+      site: opts.site ?? opts.query?.split(':')?.at(1)?.trim(),
+    };
 
-    if (searchEngine && Object.keys(searchEngines).includes(searchEngine)) {
-      const res = await searchEngines[opts.site].handle.call(this, opts as SearchCmdOpts);
+    if (fullOpts.site && Object.keys(searchEngines).includes(fullOpts.site)) {
+      const res = await searchEngines[opts.site].handle.call(this, fullOpts);
 
       return await this.editReply(res);
     }
 
-    opts.site = 'featured';
-
-    return this.editReply(await searchEngines.featured.handle.call(this, opts as SearchCmdOpts));
+    return this.editReply(await handleFeaturedSearch.call(this, fullOpts));
   },
 });

@@ -9,8 +9,9 @@
     ".prettierignore": true,
     ".eslintignore": true,
     "yarn.lock": true,
-    "node_modules": false,
-    "dist": false
+    "node_modules": true,
+    "dist": true
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "workspace.isHidden": true
 }

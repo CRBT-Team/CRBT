@@ -13,6 +13,8 @@ export async function handleDuckDuckGo(
 ) {
   const { query } = opts;
 
+  console.log(opts);
+
   try {
     const req = await search(query, {
       locale: this.locale,
@@ -29,33 +31,37 @@ export async function handleDuckDuckGo(
     }
 
     const res = req.results;
+    const pages = Math.ceil(res.length / 3);
 
-    return createSearchResponse(this, opts, {
-      embeds: [
-        {
-          title: `Web results for "${query}"`,
-          url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
-          fields: res.slice(0, 3).map((result) => {
-            const name = result.title;
-            const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
-              escapeMarkdown(result.url)
-            ).replace(/\//g, ' › ')}](${result.url})**`;
-            const desc = result.description.replace(/<\/?b>/gi, '**').slice(0, 150);
+    return createSearchResponse(
+      this,
+      opts,
+      {
+        embeds: [
+          {
+            title: `Web results for "${query}"`,
+            url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
+            fields: res.slice(opts.page * 3, opts.page * 3 + 3).map((result) => {
+              const name = result.title;
+              const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
+                escapeMarkdown(result.url)
+              ).replace(/\//g, ' › ')}](${result.url})**`;
+              const desc = result.description.replace(/<\/?b>/gi, '**').slice(0, 150);
 
-            return {
-              name,
-              value: `${url}\n${desc}...`,
-            };
-          }),
-          footer: {
-            text: `Powered by DuckDuckGo • Showing 3 out of ${
-              res.length
-            } Results (Page 1/${Math.round(res.length / 3)})`,
-            iconURL: `https://duckduckgo.com/favicon.png`,
+              return {
+                name,
+                value: `${url}\n${desc}...`,
+              };
+            }),
+            footer: {
+              text: `Powered by DuckDuckGo • Showing 3 out of ${res.length} Results (Page ${opts.page}/${pages})`,
+              iconURL: `https://duckduckgo.com/favicon.png`,
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+      { pages }
+    );
   } catch (e) {
     this.reply(UnknownError(this, e));
   }

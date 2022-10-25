@@ -27,6 +27,7 @@ export default ChatCommand({
       anonymous: false,
       query: word,
       site: 'dictionary',
+      page: 1,
     });
 
     if (res) {

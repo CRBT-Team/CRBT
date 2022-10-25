@@ -1,4 +1,5 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
+import { prisma } from '$lib/db';
 import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -7,12 +8,10 @@ import { resolveToDate } from '$lib/functions/resolveToDate';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { prisma } from '$lib/db';
 import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
-import { GuildTextBasedChannel, Message, MessageEmbed } from 'discord.js';
+import { GuildTextBasedChannel, Message } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { Reminder } from '@prisma/client';
 
 const { meta } = t('en-US', 'remind me');
 
@@ -83,23 +82,23 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await dbTimeout({
-        id: url,
-        expiresAt: expiresAt.toDate(),
-        destination: destination ? destination.id : 'dm',
-        userId: this.user.id,
-        subject,
-        locale: this.locale,
-      } as Reminder, TimeoutTypes.Reminder);
+      await dbTimeout(
+        {
+          id: url,
+          expiresAt: expiresAt.toDate(),
+          destination: destination ? destination.id : 'dm',
+          userId: this.user.id,
+          subject,
+          locale: this.locale,
+        },
+        TimeoutTypes.Reminder
+      );
 
       await this.editReply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: strings.SUCCESS_TITLE,
-              iconURL: icons.success,
-            })
-            .setDescription(
+          {
+            title: `${icons.success} ${strings.SUCCESS_TITLE}`,
+            description:
               (destination
                 ? strings.SUCCESS_CHANNEL.replace('<CHANNEL>', `${destination}`)
                 : strings.SUCCESS_DM) +
@@ -107,11 +106,16 @@ export default ChatCommand({
               (expiresAt.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
                 ? strings.TODAY_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                 : expiresAt.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                  ? strings.TOMORROW_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
-                  : `<t:${expUnix}> • <t:${expUnix}:R>.`)
-            )
-            .addField(strings.SUBJECT, subject)
-            .setColor(colors.success),
+                ? strings.TOMORROW_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
+                : `<t:${expUnix}> • <t:${expUnix}:R>.`),
+            fields: [
+              {
+                name: strings.SUBJECT,
+                value: subject,
+              },
+            ],
+            color: colors.success,
+          },
         ],
       });
     } catch (error) {

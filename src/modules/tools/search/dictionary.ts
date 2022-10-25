@@ -3,7 +3,6 @@ import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
 import { SearchCmdOpts } from './search';
-import { createSearchResponse } from './_response';
 
 export async function handleDictionary(
   this: CommandInteraction | MessageComponentInteraction,
@@ -24,7 +23,8 @@ export async function handleDictionary(
     }
     const def = (await res.json())[0];
 
-    return createSearchResponse(this, opts, {
+    // createSearchResponse(this, opts,
+    return {
       embeds: [
         {
           author: {
@@ -66,7 +66,8 @@ export async function handleDictionary(
               ),
             ]
           : null,
-    });
+    };
+    // );
   } catch (e) {
     return UnknownError(this, String(e));
   }

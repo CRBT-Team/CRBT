@@ -1,4 +1,4 @@
-import { Giveaway, Poll, Reminder } from "@prisma/client";
+import { Giveaway, Poll, Reminder } from '@prisma/client';
 
 export enum TimeoutTypes {
   Giveaway = 'giveaway',
@@ -6,4 +6,8 @@ export enum TimeoutTypes {
   Reminder = 'reminder',
 }
 
-export type Timeout = Reminder | Poll | Giveaway;
+export type Timeout<T extends TimeoutTypes> = T extends TimeoutTypes.Giveaway
+  ? Giveaway
+  : T extends TimeoutTypes.Reminder
+  ? Reminder
+  : Poll;

@@ -4,8 +4,8 @@ import {
   InteractionUpdateOptions,
   MessageComponentInteraction,
 } from 'discord.js';
+import { handleDictionary } from './dictionary';
 import { handleDuckDuckGo } from './DuckDuckGo';
-import { handleFeaturedSearch } from './featured';
 import { handleImageSearch } from './images';
 import { handleKitsu } from './Kitsu';
 import { handleMusicSearch } from './music';
@@ -21,53 +21,60 @@ export interface SearchEngine {
   emoji: string;
   provider: string;
   name: string;
-  show: boolean;
+  hide?: boolean;
+  noPagination?: boolean;
 }
 
 export const searchEngines: {
   [k: string]: SearchEngine;
 } = {
-  featured: {
-    handle: handleFeaturedSearch,
-    emoji: '🌟',
-    provider: null,
-    name: 'Featured',
-    show: true,
-  },
+  // featured: {
+  //   handle: handleFeaturedSearch,
+  //   emoji: '🌟',
+  //   provider: null,
+  //   name: 'Featured',
+  //   show: true,
+  // },
   web: {
     handle: handleDuckDuckGo,
     emoji: '🔎',
     provider: 'DuckDuckGo',
     name: 'Web',
-    show: true,
   },
   images: {
     handle: handleImageSearch,
     emoji: '🖼️',
     provider: 'DuckDuckGo',
     name: 'Images',
-    show: true,
   },
   videos: {
     handle: handleVideosSearch,
     emoji: '🎥',
     provider: 'YouTube',
     name: 'Videos',
-    show: true,
   },
   music: {
     handle: handleMusicSearch,
     emoji: '🎵',
     provider: 'Spotify',
     name: 'Music',
-    show: false,
+    hide: true,
   },
   weather: {
     handle: handleWeather,
     emoji: '☀️',
     provider: 'Open-Meteo.com & OpenStreetMap',
     name: 'Weather',
-    show: false,
+    hide: true,
+    noPagination: true,
+  },
+  dictionary: {
+    handle: handleDictionary,
+    emoji: '📖',
+    provider: 'Google Dictionary',
+    name: 'Dictionary',
+    hide: true,
+    noPagination: true,
   },
   // rawg: {
   //   handle: handleRAWG,
@@ -78,7 +85,7 @@ export const searchEngines: {
     emoji: '🌸',
     provider: 'Kitsu',
     name: 'Anime & Mangas',
-    show: false,
+    hide: true,
   },
   // npm: {
   //   handle: handleNpm,

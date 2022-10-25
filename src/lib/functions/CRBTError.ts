@@ -109,8 +109,6 @@ export const createCRBTError = (
 export function UnknownError(i: any, error: any, context?: string, ephemeral = true) {
   const { strings } = t(i?.locale ?? 'en-US', 'UnknownError');
 
-  if (!i.isRepliable()) return;
-
   console.error(error);
 
   const embed = handleError(i, {
@@ -123,6 +121,8 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
       description: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
     },
   });
+
+  if (i instanceof Interaction && !i.isRepliable()) return;
 
   return {
     embeds: [embed],

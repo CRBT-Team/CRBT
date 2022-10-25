@@ -5,24 +5,33 @@ import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
 import { handleWeather } from './weather';
 
-export async function handleFeaturedSearch(
+export function returnFeaturedItem(opts: SearchCmdOpts) {
+  const query = opts.query.toLowerCase();
+  let item = opts.site;
+
+  if (englishDictionary.find((word) => word === query)) {
+    item = 'dictionary';
+  }
+  if (query.startsWith('weather')) {
+    item = 'weather';
+  }
+
+  return item;
+}
+
+export function handleFeaturedSearch(
   this: CommandInteraction | MessageComponentInteraction,
   opts: SearchCmdOpts
 ) {
-  const query = opts.query.toLowerCase();
+  const featured = returnFeaturedItem(opts);
 
-  console.log(
-    query,
-    englishDictionary.find((w) => w.toLowerCase() === query)
-  );
-
-  if (englishDictionary.find((word) => word === query)) {
-    return await handleDictionary.call(this, opts);
+  if (featured === 'dictionary') {
+    return handleDictionary.call(this, { ...opts, site: 'dictionary' });
   }
 
-  if (query.startsWith('weather')) {
-    return await handleWeather.call(this, opts);
+  if (featured === 'weather') {
+    return handleWeather.call(this, { ...opts, site: 'weather' });
   }
 
-  return await handleDuckDuckGo.call(this, opts);
+  return handleDuckDuckGo.call(this, { ...opts, site: 'web' });
 }

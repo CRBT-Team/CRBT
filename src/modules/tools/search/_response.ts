@@ -2,12 +2,13 @@ import { getColor } from '$lib/functions/getColor';
 import { Interaction, InteractionReplyOptions, InteractionUpdateOptions } from 'discord.js';
 import { components } from 'purplet';
 import { SearchCmdOpts } from './search';
-import { navbar } from './_navbar';
+import { navbar, NavBarProps } from './_navbar';
 
 export async function createSearchResponse(
   i: Interaction,
   opts: SearchCmdOpts,
-  baseResponse: InteractionReplyOptions | InteractionUpdateOptions
+  baseResponse: InteractionReplyOptions | InteractionUpdateOptions,
+  props?: Pick<NavBarProps, 'pages'>
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
   return {
     ...baseResponse,
@@ -17,7 +18,7 @@ export async function createSearchResponse(
         color: await getColor(i.user),
       }))
     ),
-    components: components(...navbar(opts, i.locale)),
+    components: components(...navbar(opts, { locale: i.locale, ...props })),
     ephemeral: opts.anonymous,
   };
 }
