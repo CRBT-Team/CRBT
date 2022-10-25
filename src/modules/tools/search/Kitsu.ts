@@ -1,11 +1,11 @@
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import dayjs from 'dayjs';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageComponentInteraction, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { SearchCmdOpts } from './search';
 
-export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts) {
+export async function handleKitsu(this: CommandInteraction | MessageComponentInteraction, opts: SearchCmdOpts) {
   try {
     const res = await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${opts.query}`);
 
@@ -16,7 +16,7 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
     //   return CRBTError(this, `No anime found with the title \`${title}\`.`);
     // }
 
-    this.reply({
+    return {
       embeds: [
         new MessageEmbed()
           .setAuthor({
@@ -70,7 +70,7 @@ export async function handleKitsu(this: CommandInteraction, opts: SearchCmdOpts)
           .setThumbnail(anime.attributes.posterImage.medium)
           .setColor(await getColor(this.user)),
       ],
-    });
+    };
   } catch (error) {
     await this.reply(UnknownError(this, String(error)));
   }

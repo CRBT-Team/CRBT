@@ -1,3 +1,4 @@
+import { servers } from '$lib/env';
 import { Intents } from 'discord.js';
 import {
   ChatCommandHandler,
@@ -8,7 +9,6 @@ import {
 
 const intents = new Intents([
   Intents.FLAGS.GUILDS,
-  Intents.FLAGS.GUILD_VOICE_STATES,
   Intents.FLAGS.GUILD_WEBHOOKS,
   Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
   Intents.FLAGS.GUILD_MEMBERS,
@@ -32,11 +32,7 @@ export default defineConfig({
   },
   discord: {
     commandGuilds: process.argv.includes('--dev')
-      ? [
-          '949329353047687189', // CRBT Development
-          // '843530687260524585', // Clembs Emoji
-          // '832924281519341638', // CRBT Demo
-        ]
+      ? [servers.dev] // CRBT Labs
       : [],
     //@ts-ignore
     clientOptions: {

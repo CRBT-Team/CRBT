@@ -50,3 +50,36 @@
 //     }, 5000);
 //   },
 // });
+
+import { rest } from '$lib/rest';
+import { InteractionResponseType, Routes } from 'discord-api-types/v10';
+import { ChatCommand } from 'purplet';
+
+export default ChatCommand({
+  name: 'test',
+  description: 'a select menu',
+  async handle() {
+    await rest.post(Routes.interactionCallback(this.id, this.token), {
+      body: {
+        type: InteractionResponseType.ChannelMessageWithSource,
+        data: {
+          content: 'hi',
+          components: [
+            {
+              type: 1,
+              components: [
+                {
+                  type: 5,
+                  custom_id: 'idk',
+                  placeholder: 'Choose a user',
+                  min_values: 1,
+                  max_values: 3,
+                },
+              ],
+            },
+          ],
+        },
+      },
+    });
+  },
+});

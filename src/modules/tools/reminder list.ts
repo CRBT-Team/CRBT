@@ -7,6 +7,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { snowStamp } from '$lib/functions/snowStamp';
+import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
 import dayjs from 'dayjs';
@@ -41,7 +42,7 @@ export default ChatCommand({
           userId: this.user.id
         }
       }))
-        .sort((a, b) => a.expiration.getTime() - b.expiration.getTime());
+        .sort((a, b) => a.expiresAt.getTime() - b.expiresAt.getTime());
 
     cache.set(`reminders:${this.user.id}`, userReminders, 60 * 1000 * 15);
 
@@ -80,7 +81,7 @@ export const EditButton = ButtonComponent({
         row(
           new TextInputComponent()
             .setLabel('When to send')
-            .setValue(dayjs(r.expiration).format('YYYY-MM-DD HH:mm'))
+            .setValue(dayjs(r.expiresAt).format('YYYY-MM-DD HH:mm'))
             .setCustomId('date')
             .setMaxLength(16)
             .setMinLength(16)
@@ -105,11 +106,11 @@ export const EditModal = ModalComponent({
       return CRBTError(this, 'Invalid date format');
     }
 
-    const expiration = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
+    const expiresAt = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
 
     const newTimeout = await prisma.reminder.update({
       where: { id: reminder.id },
-      data: { ...reminder, subject, expiration },
+      data: { ...reminder, subject, expiresAt },
     });
 
     reminderList.splice(index, 1, newTimeout);
@@ -179,7 +180,7 @@ async function renderReminder(
   userReminders: Reminder[],
   index: number
 ) {
-  const { expiration, id, destination } = userReminders[index];
+  const { expiresAt, id, destination } = userReminders[index];
   const [guildId, channelId, messageId] = id.split('/');
   const { JUMP_TO_MSG, BACK, EDIT, DELETE } = t(this, 'genericButtons');
   const { strings } = t(this, 'remind me');
@@ -195,8 +196,8 @@ async function renderReminder(
         })
         .setTitle(getReminderSubject(userReminders[index], this.client))
         .setDescription(
-          `Will be sent <t:${dayjs(expiration).unix()}:R> in ${destination === 'dm' ? 'your DMs' : `${channel}`
-          }\nCreated <t:${snowStamp(messageId).unix()}> (<t:${snowStamp(messageId).unix()}:R>)`
+          `Will be sent ${time(expiresAt, 'R')} in ${destination === 'dm' ? 'your DMs' : `${channel}`
+          }\nCreated ${time(snowStamp(messageId), 'R')} (${time(snowStamp(messageId), 'R')})`
         )
         .setColor(this.message.embeds[0].color),
     ],
@@ -208,7 +209,7 @@ async function renderReminder(
           .addOptions(
             userReminders.map((r, index) => ({
               label: getReminderSubject(r, this.client),
-              description: `${dayjs(r.expiration).fromNow()}`,
+              description: `${dayjs(r.expiresAt).fromNow()}`,
               value: index.toString(),
             }))
           )
@@ -232,7 +233,7 @@ async function renderReminder(
             `https://calendar.google.com/calendar/render?${new URLSearchParams({
               action: 'TEMPLATE',
               text: getReminderSubject(userReminders[index], this.client),
-              dates: `${dayjs(expiration).format('YYYYMMDD')}/${dayjs(expiration)
+              dates: `${dayjs(expiresAt).format('YYYYMMDD')}/${dayjs(expiresAt)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
               details: `${strings.GCALENDAR_EVENT} ${destination
@@ -268,10 +269,10 @@ async function renderList(
         )
         .setFields(
           userReminders
-            .sort((a, b) => a.expiration.getTime() - b.expiration.getTime())
+            .sort((a, b) => a.expiresAt.getTime() - b.expiresAt.getTime())
             .map((r) => ({
               name: getReminderSubject(r, this.client),
-              value: `<t:${dayjs(r.expiration).unix()}:R>\nDestination: ${r.destination === 'dm' ? 'In your DMs' : `<#${r.destination}>`
+              value: `<t:${dayjs(r.expiresAt).unix()}:R>\nDestination: ${r.destination === 'dm' ? 'In your DMs' : `<#${r.destination}>`
                 }`,
             }))
         )
@@ -292,7 +293,7 @@ async function renderList(
               .addOptions(
                 userReminders.map((r, index) => ({
                   label: getReminderSubject(r, this.client),
-                  description: `${dayjs(r.expiration).fromNow()}`,
+                  description: `${dayjs(r.expiresAt).fromNow()}`,
                   value: index.toString(),
                 }))
               )

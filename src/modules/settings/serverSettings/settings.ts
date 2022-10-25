@@ -11,16 +11,9 @@ import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
   MessageComponentInteraction,
-  MessageEmbed,
   ModalSubmitInteraction,
 } from 'discord.js';
-import {
-  ButtonComponent,
-  ChatCommand,
-  components,
-  row,
-  SelectMenuComponent,
-} from 'purplet';
+import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
 import { colorSettings } from './accentColor';
 import { joinLeaveSettings } from './joinLeave';
 
@@ -31,12 +24,12 @@ export const strings = {
 };
 
 const features: {
-  [k: string]: SettingsMenus,
+  [k: string]: SettingsMenus;
 } = {
   [EditableFeatures.joinMessage]: joinLeaveSettings,
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.accentColor]: colorSettings,
-}
+};
 
 export async function getSettings(guildId: string) {
   const settings =
@@ -63,14 +56,16 @@ export async function renderSettingsMenu(
 ) {
   const settings = await getSettings(this.guild.id);
 
-  const options = Object.entries(EditableFeatures).map(([key, snake_key]) => {
-    return features[snake_key].getSelectMenu({
-      i: this,
-      feature: snake_key,
-      guild: this.guild,
-      settings
+  const options = Object.entries(EditableFeatures)
+    .map(([key, snake_key]) => {
+      return features[snake_key].getSelectMenu({
+        i: this,
+        feature: snake_key,
+        guild: this.guild,
+        settings,
+      });
     })
-  }).filter(Boolean);
+    .filter(Boolean);
 
   return {
     content: invisibleChar,
@@ -83,7 +78,7 @@ export async function renderSettingsMenu(
         title: `${this.guild.name} / Overview`,
         description: `Use the select menu below to configure a feature.`,
         color: await getColor(this.guild),
-      }
+      },
     ],
     components: components(
       row(
@@ -119,23 +114,33 @@ export async function renderFeatureSettings(
     .setEmoji(isEnabled ? emojis.toggle.on : emojis.toggle.off)
     .setStyle('SECONDARY');
 
-  const components = features[feature].getComponents({ backBtn, toggleBtn, feature: snake_key, guild: this.guild, i: this, settings });
+  const components = features[feature].getComponents({
+    backBtn,
+    toggleBtn,
+    feature: snake_key,
+    guild: this.guild,
+    i: this,
+    settings,
+  });
   const embed = features[feature].getMenuDescription({
     feature: snake_key,
     i: this,
     guild: this.guild,
-    settings
-  })
+    settings,
+  });
 
   return {
     content: invisibleChar,
     embeds: [
-      new MessageEmbed(embed)
-        .setAuthor({
-          name: `${this.guild.name} - ${strings[snake_key]} Settings`,
+      {
+        ...embed,
+        title: `${this.guild.name} / ${strings[snake_key]}`,
+        author: {
+          name: 'CRBT Settings',
           iconURL: icons.settings,
-        })
-        .setColor(await getColor(this.guild)),
+        },
+        color: await getColor(this.guild),
+      },
     ],
     components,
   };
@@ -165,4 +170,3 @@ export const ToggleFeatureBtn = ButtonComponent({
     this.update(await renderFeatureSettings.call(this, feature));
   },
 });
-
