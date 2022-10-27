@@ -1,37 +1,64 @@
 import { emojis } from '$lib/env';
-import { UnknownError } from '$lib/functions/CRBTError';
+import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { trimURL } from '$lib/functions/trimURL';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { SafeSearchType, search } from 'duck-duck-scrape';
+import { decode } from 'html-entities';
+import fetch from 'node-fetch';
 import { escapeMarkdown } from 'purplet';
 import { SearchCmdOpts } from './search';
-import { createSearchResponse } from './_response';
+import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDuckDuckGo(
   this: CommandInteraction | MessageComponentInteraction,
   opts: SearchCmdOpts
 ) {
-  const { query } = opts;
-
-  console.log(opts);
+  const { query, page } = opts;
 
   try {
-    const req = await search(query, {
-      locale: this.locale,
-      safeSearch:
-        this.channel.type === 'GUILD_TEXT' && this.channel.nsfw
-          ? SafeSearchType.OFF
-          : SafeSearchType.STRICT,
-    });
+    const req = await fetchResults(this, opts, () =>
+      search(query, {
+        locale: this.locale,
+        safeSearch:
+          this.channel.type === 'GUILD_TEXT' && this.channel.nsfw
+            ? SafeSearchType.OFF
+            : SafeSearchType.STRICT,
+      })
+    );
 
-    if (req.noResults) {
-      return {
-        content: 'no results :pleading_face:',
-      };
+    let instantResultData: any;
+    const res = req.results;
+
+    const pages = Math.ceil(res.length / 3) - 1;
+
+    if (page === 1) {
+      try {
+        instantResultData = await fetchResults<any>(this, { ...opts, site: 'featured' }, () =>
+          fetch(
+            `https://api.duckduckgo.com/?${new URLSearchParams({
+              q: query,
+              format: 'json',
+            })}`
+          ).then((r) => r.json())
+        );
+
+        if (instantResultData && instantResultData.Abstract && instantResultData.meta?.status) {
+          return handleDDGInstant.call(this, opts, instantResultData, pages);
+        } else {
+          instantResultData = null;
+        }
+      } catch (e) {}
     }
 
-    const res = req.results;
-    const pages = Math.ceil(res.length / 3);
+    const realPage = instantResultData ? opts.page + 1 : opts.page;
+
+    if (req.noResults || res.length === 0) {
+      return createCRBTError(this, {
+        title: 'Uh-oh, there are no results for your query.',
+        description:
+          'Try checking for spelling, or something more broad.\nNote that NSFW results are disabled outside of NSFW channels.',
+      });
+    }
 
     return createSearchResponse(
       this,
@@ -41,8 +68,8 @@ export async function handleDuckDuckGo(
           {
             title: `Web results for "${query}"`,
             url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
-            fields: res.slice(opts.page * 3, opts.page * 3 + 3).map((result) => {
-              const name = result.title;
+            fields: res.slice(realPage * 3, realPage * 3 + 3).map((result) => {
+              const name = escapeMarkdown(decode(result.title));
               const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
                 escapeMarkdown(result.url)
               ).replace(/\//g, ' › ')}](${result.url})**`;
@@ -54,7 +81,9 @@ export async function handleDuckDuckGo(
               };
             }),
             footer: {
-              text: `Powered by DuckDuckGo • Showing 3 out of ${res.length} Results (Page ${opts.page}/${pages})`,
+              text: `Powered by DuckDuckGo • Showing 3 out of ${res.length} Results (Page ${
+                opts.page
+              }/${instantResultData ? pages + 1 : pages})`,
               iconURL: `https://duckduckgo.com/favicon.png`,
             },
           },
@@ -63,6 +92,52 @@ export async function handleDuckDuckGo(
       { pages }
     );
   } catch (e) {
-    this.reply(UnknownError(this, e));
+    return UnknownError(this, e);
   }
+}
+
+export async function handleDDGInstant(
+  this: CommandInteraction | MessageComponentInteraction,
+  opts: SearchCmdOpts,
+  data: any,
+  pages: number
+) {
+  const { query } = opts;
+
+  return createSearchResponse(
+    this,
+    opts,
+    {
+      embeds: [
+        {
+          author: {
+            name: `Instant result for "${query}"`,
+            url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
+          },
+          title: data.Heading,
+          url: data.AbstractURL,
+          description:
+            data.AbstractText.length > 250
+              ? `${data.AbstractText.slice(0, 250)}...`
+              : data.AbstractText,
+          thumbnail: {
+            url: data.Image ? `https://duckduckgo.com${data.Image}` : null,
+          },
+          fields: data.Infobox?.content
+            ?.filter((field) => field && typeof field.value === 'string')
+            ?.slice(0, 3)
+            ?.map((field) => ({
+              name: field.label,
+              value: field.value,
+              inline: true,
+            })),
+          footer: {
+            text: `Source: ${data.AbstractSource}\nPowered by DuckDuckGo • Showing Instant Result (Page 1/${pages})`,
+            iconURL: `https://duckduckgo.com/favicon.png`,
+          },
+        },
+      ],
+    },
+    { pages }
+  );
 }

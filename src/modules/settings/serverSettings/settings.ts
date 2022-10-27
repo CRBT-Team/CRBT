@@ -105,7 +105,7 @@ export async function renderFeatureSettings(
   const isModule = Object.keys(settings.modules).includes(key);
   const isEnabled = isModule ? settings.modules[key] : settings[key];
 
-  const backBtn = new BackSettingsButton()
+  const backBtn = new BackSettingsButton(null)
     .setLabel(t(this, 'SETTINGS'))
     .setEmoji(emojis.buttons.left_arrow)
     .setStyle('SECONDARY');
@@ -147,7 +147,7 @@ export async function renderFeatureSettings(
 }
 
 export const BackSettingsButton = ButtonComponent({
-  async handle(feature?: string) {
+  async handle(feature: string | null) {
     if (feature) {
       return this.update(await renderFeatureSettings.call(this, feature));
     }

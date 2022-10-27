@@ -1,6 +1,6 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { prisma } from '$lib/db';
-import { colors, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
@@ -82,22 +82,20 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await dbTimeout(
-        {
-          id: url,
-          expiresAt: expiresAt.toDate(),
-          destination: destination ? destination.id : 'dm',
-          userId: this.user.id,
-          subject,
-          locale: this.locale,
-        },
-        TimeoutTypes.Reminder
-      );
+      await dbTimeout({
+        id: url,
+        expiresAt: expiresAt.toDate(),
+        destination: destination ? destination.id : 'dm',
+        userId: this.user.id,
+        subject,
+        locale: this.locale,
+        type: TimeoutTypes.Reminder,
+      });
 
       await this.editReply({
         embeds: [
           {
-            title: `${icons.success} ${strings.SUCCESS_TITLE}`,
+            title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
             description:
               (destination
                 ? strings.SUCCESS_CHANNEL.replace('<CHANNEL>', `${destination}`)

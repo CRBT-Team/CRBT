@@ -1,6 +1,6 @@
-import { EmojiRegex } from '../util/regex';
+import { CustomEmojiRegex } from '@purplet/utils';
 
 export function findEmojis(str: string) {
-  const customMatches = str.match(EmojiRegex) || [];
+  const customMatches = str.match(CustomEmojiRegex) || [];
   return customMatches;
 }

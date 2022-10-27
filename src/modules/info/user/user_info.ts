@@ -17,12 +17,7 @@ import {
   UserContextMenuInteraction,
   UserFlags,
 } from 'discord.js';
-import {
-  ChatCommand,
-  components,
-  OptionBuilder,
-  UserContextCommand,
-} from 'purplet';
+import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -141,37 +136,43 @@ export async function renderUser(
 
     if (member.nickname) e.addField(t(ctx.locale, 'USER_INFO_NICKNAME'), member.nickname);
 
-    e.addFields({
-      name: `${t(ctx.locale, 'USER_INFO_ROLES')} • ${roles.size}`,
-      value: roles.size > 0
-        ? roles.map((r) => r.toString()).join(' ')
-        : t(ctx.locale, 'USER_INFO_NO_ROLES')
-    }, {
-      name: t(ctx.locale, 'USER_INFO_PERMS'),
-      value: hasPerms(member, PermissionFlagsBits.Administrator) ||
-        member.permissions.toArray().length === 0
-        ? 'Administrator (all permissions)'
-        : keyPerms(member.permissions).join(', ')
-    }, {
-      name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-      value: `${time(user.createdAt)}\n${time(user.createdAt, true)}`,
-      inline: true
-    }, {
-      name: t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
-      value: `${time(member.joinedAt)}\n${time(member.joinedAt, true)}`,
-      inline: true
-    });
-
+    e.addFields(
+      {
+        name: `${t(ctx.locale, 'USER_INFO_ROLES')} • ${roles.size}`,
+        value:
+          roles.size > 0
+            ? roles.map((r) => r.toString()).join(' ')
+            : t(ctx.locale, 'USER_INFO_NO_ROLES'),
+      },
+      {
+        name: t(ctx.locale, 'USER_INFO_PERMS'),
+        value:
+          hasPerms(member, PermissionFlagsBits.Administrator) ||
+          member.permissions.toArray().length === 0
+            ? 'Administrator (all permissions)'
+            : keyPerms(member.permissions).join(', '),
+      },
+      {
+        name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
+        value: `${time(user.createdAt)}\n${time(user.createdAt, true)}`,
+        inline: true,
+      },
+      {
+        name: t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
+        value: `${time(member.joinedAt)}\n${time(member.joinedAt, true)}`,
+        inline: true,
+      }
+    );
   } else {
     e.addFields({
       name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-      value: `${time(user.createdAt)} • ${time(user.createdAt, true)}`
+      value: `${time(user.createdAt)} • ${time(user.createdAt, true)}`,
     });
   }
   return {
     embeds: [e],
     components: components(
-      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member)),
+      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
     ),
   };
 }

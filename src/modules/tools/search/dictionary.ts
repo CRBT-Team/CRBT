@@ -2,38 +2,41 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
+import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
+import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDictionary(
   this: CommandInteraction | MessageComponentInteraction,
   opts: SearchCmdOpts
 ) {
   try {
-    const res = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`
+    const res = await fetchResults(this, opts, () =>
+      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`)
     );
 
     if (!res.ok) {
-      return createCRBTError(
-        this,
-        `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
-          'urban'
-        )}).`
-      );
+      if (opts.page === -1) {
+        return createCRBTError(
+          this,
+          `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
+            'urban'
+          )}).`
+        );
+      } else {
+        return handleDuckDuckGo.call(this, opts);
+      }
     }
     const def = (await res.json())[0];
 
-    // createSearchResponse(this, opts,
-    return {
+    return createSearchResponse(this, opts, {
       embeds: [
         {
-          author: {
-            name: `${def.word} - ${def.meanings.length === 1 ? 'Definition' : 'Definitions'}`,
-          },
+          title: `${def.meanings.length === 1 ? 'Definition' : 'Definitions'} for "${def.word}"`,
           fields: [
             { name: 'Phonetics', value: def.phonetic ?? '*None available*', inline: true },
-            def.meanings.map((meaning) => ({
-              name: `*${meaning.partOfSpeech}*`,
+            def.meanings.map((meaning, i) => ({
+              name: `**${i + 1}. *${meaning.partOfSpeech}***`,
               value:
                 meaning.definitions[0].definition +
                 '\n\n' +
@@ -56,7 +59,7 @@ export async function handleDictionary(
         },
       ],
       files:
-        def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
+        opts.page === -1 && def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
           ? [
               new MessageAttachment(
                 await fetch(`${def.phonetics[0].audio}`)
@@ -66,8 +69,7 @@ export async function handleDictionary(
               ),
             ]
           : null,
-    };
-    // );
+    });
   } catch (e) {
     return UnknownError(this, String(e));
   }

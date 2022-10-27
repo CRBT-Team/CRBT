@@ -1,7 +1,8 @@
-import { ChatCommand, OptionBuilder } from 'purplet';
-import { MessageEmbed } from 'discord.js';
-import { Parser } from 'expr-eval';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { AchievementProgress } from '$lib/responses/Achievements';
+import { Parser } from 'expr-eval';
+import { ChatCommand, OptionBuilder } from 'purplet';
 const math = new Parser();
 
 export default ChatCommand({
@@ -13,35 +14,52 @@ export default ChatCommand({
   async handle({ dice, comment }) {
     const diceRegex = /(\d+)?d(\d+)/g;
     const rolls = [];
+    let achievement = false;
 
-    const parsedDice = dice.replaceAll(diceRegex, (_, dice = '1', diceSides) => {
-
+    const parsedDice = dice.toLowerCase().replaceAll(diceRegex, (_, dice = '1', diceSides) => {
       const randDice = () => Math.floor(Math.random() * diceSides) + 1;
 
-      const diceArr = new Array(parseInt(dice)).fill(null).map(randDice)
+      const diceArr = new Array(parseInt(dice)).fill(null).map(randDice);
 
       diceArr.forEach((roll) => rolls.push(roll));
 
+      if (diceSides === '20' && diceArr.includes(20)) {
+        achievement = true;
+      }
+
       return diceArr.join('+');
     });
+
+    if (rolls.length > 100) {
+      return CRBTError(this, {
+        title: 'You cannot roll more than 100 dice at once.',
+        footer: {
+          text: 'For space reasons, but also why would you do that lol',
+        },
+      });
+    }
 
     const result = math.evaluate(parsedDice);
 
     this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor(comment ? {
-            name: `"${comment}"`
-          } : null)
-          .setTitle(`Your rolls result to ${result}`)
-          .setFooter({
-            text: `Your rolls: ${rolls.join(', ')}`
-          })
-          .setColor(await getColor(this.user))
-      ]
-    })
+        {
+          ...(comment ? { author: { name: `"${comment}"` } } : {}),
+          title: `Your rolls result to ${result}`,
+          footer: {
+            text: `Your rolls: ${
+              rolls.join(',').length > 2000
+                ? `${rolls.join(',').slice(0, 2000)}...`
+                : rolls.join(',')
+            }`,
+          },
+          color: await getColor(this.user),
+        },
+      ],
+    });
 
-    console.log(parsedDice);
-
+    if (achievement) {
+      AchievementProgress.call(this, 'DND_PRO');
+    }
   },
 });

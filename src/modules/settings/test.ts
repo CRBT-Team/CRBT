@@ -51,15 +51,14 @@
 //   },
 // });
 
-import { rest } from '$lib/rest';
 import { InteractionResponseType, Routes } from 'discord-api-types/v10';
-import { ChatCommand } from 'purplet';
+import { ChatCommand, getRestClient } from 'purplet';
 
 export default ChatCommand({
   name: 'test',
   description: 'a select menu',
   async handle() {
-    await rest.post(Routes.interactionCallback(this.id, this.token), {
+    await getRestClient().post(Routes.interactionCallback(this.id, this.token), {
       body: {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {

@@ -1,7 +1,7 @@
 import { prisma } from '$lib/db';
 import { clients, servers } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
+import { RawTimeout, Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import dayjs from 'dayjs';
 import { ApplicationCommand, Collection } from 'discord.js';
 import { OnEvent } from 'purplet';
@@ -22,11 +22,10 @@ export default OnEvent('ready', async (client) => {
 
   let timeouts = new Map<string, Timeout>();
 
-  Object.values(TimeoutTypes).forEach(async (timeoutType) => {
-    (await prisma[timeoutType.toString()].findMany())
-      .forEach(async (t: Timeout) => {
-        timeouts.set(t.id, await dbTimeout(t, timeoutType, true));
-      });
+  Object.values(TimeoutTypes).forEach(async (type) => {
+    (await prisma[type.toString()].findMany()).forEach(async (t: RawTimeout) => {
+      timeouts.set(t.id, await dbTimeout({ ...t, type } as Timeout, true));
+    });
   });
 
   const today = dayjs().startOf('day').toISOString();
@@ -41,7 +40,7 @@ export default OnEvent('ready', async (client) => {
     create: {
       date: today,
       servers: client.guilds.cache.size,
-      members
-    }
-  })
+      members,
+    },
+  });
 });

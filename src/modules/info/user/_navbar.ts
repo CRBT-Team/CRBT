@@ -1,6 +1,7 @@
 import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
+import { CDNImageFormat, CDNImageSize } from '@purplet/utils';
 import { GuildMember, Integration, User } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 import { renderPfp } from './avatar';
@@ -10,13 +11,17 @@ import { renderUser } from './user_info';
 
 type DefaultTabs = 'avatar' | 'userinfo' | 'botinfo';
 type Tabs = DefaultTabs | 'banner' | 'user_avatar' | 'user_banner';
-export const AvatarSizes = {
+export const AvatarSizes: {
+  [k: string]: CDNImageSize;
+} = {
   '1': 128,
   '2': 512,
   '3': 2048,
   '4': 4096,
 };
-export const AvatarFormats = {
+export const AvatarFormats: {
+  [k: string]: CDNImageFormat;
+} = {
   '1': 'png',
   '2': 'jpg',
   '3': 'webp',
@@ -144,32 +149,32 @@ export function navBar(
       .setDisabled(activeTab === 'userinfo'),
     addTabs?.has('botinfo')
       ? new BotInfoBtn(ctx)
-        .setLabel(strings.BOTINFO)
-        .setStyle('SECONDARY')
-        .setDisabled(activeTab === 'botinfo')
+          .setLabel(strings.BOTINFO)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'botinfo')
       : null,
     ...(addTabs?.has('user_avatar')
       ? [
-        new PfpBtn(ctx)
-          .setLabel(strings.SERVER_AVATAR)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'avatar'),
-        new UserPfpBtn(ctx)
-          .setLabel(strings.USER_AVATAR)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'user_avatar'),
-      ]
+          new PfpBtn(ctx)
+            .setLabel(strings.SERVER_AVATAR)
+            .setStyle('SECONDARY')
+            .setDisabled(activeTab === 'avatar'),
+          new UserPfpBtn(ctx)
+            .setLabel(strings.USER_AVATAR)
+            .setStyle('SECONDARY')
+            .setDisabled(activeTab === 'user_avatar'),
+        ]
       : [
-        new PfpBtn(ctx)
-          .setLabel(strings.AVATAR)
-          .setStyle('SECONDARY')
-          .setDisabled(activeTab === 'avatar'),
-      ]),
+          new PfpBtn(ctx)
+            .setLabel(strings.AVATAR)
+            .setStyle('SECONDARY')
+            .setDisabled(activeTab === 'avatar'),
+        ]),
     addTabs?.has('user_banner')
       ? new UserBannerBtn(ctx)
-        .setLabel(strings.USER_BANNER)
-        .setStyle('SECONDARY')
-        .setDisabled(activeTab === 'user_banner')
+          .setLabel(strings.USER_BANNER)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'user_banner')
       : null
   );
 }

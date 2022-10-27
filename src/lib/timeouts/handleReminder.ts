@@ -1,46 +1,56 @@
-import { emojis, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
+import { avatar } from '$lib/functions/avatar';
+import { ExtractedReminder, extractReminder } from '$lib/functions/extractReminder';
 import { getColor } from '$lib/functions/getColor';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
-import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
+import { timestampMention } from '@purplet/utils';
+import { APIEmbedAuthor } from 'discord-api-types/v10';
+import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getReminderSubject } from '../../modules/tools/reminder list';
 
-export async function handleReminder(reminder: Reminder, client: Client) {
-  const { JUMP_TO_MSG } = t(reminder.locale, 'genericButtons');
-  const { strings } = t(reminder.locale, 'remind me');
-  const [guildId, channelId, messageId] = reminder.id.split('/');
+export interface LowBudgetMessage {
+  authorId: string;
+  content?: string;
+  firstEmbed?: {
+    author?: APIEmbedAuthor;
+    title?: string;
+    description?: string;
+    color?: number;
+  };
+}
 
-  const user = await client.users.fetch(reminder.userId);
-  const dest =
-    reminder.destination === 'dm'
-      ? user
-      : (await client.channels.fetch(channelId) as GuildTextBasedChannel);
+export async function handleReminder(reminder: Reminder, client: Client) {
+  console.log(reminder);
+
+  const { JUMP_TO_MSG } = t(reminder?.locale, 'genericButtons');
+  const { strings } = t(reminder.locale, 'remind me');
+
+  const data = await extractReminder(reminder, client);
 
   const message = {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: strings.REMINDER_TITLE,
-          iconURL: icons.reminder,
-        })
-        .setDescription(
-          strings.REMINDER_DESCRIPTION.replace('<TIME>', time(reminder.expiresAt, 'D')).replace(
-            '<RELATIVE_TIME>',
-            time(reminder.expiresAt, 'R')
-          )
-        )
-        .addField(strings.SUBJECT, getReminderSubject(reminder, client, 0))
-        .setColor(await getColor(user)),
+      {
+        title: `${emojis.reminder} ${strings.REMINDER_TITLE}`,
+        description: strings.REMINDER_DESCRIPTION.replace(
+          '<TIME>',
+          timestampMention(reminder.expiresAt, 'D')
+        ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R')),
+        fields: [
+          {
+            name: strings.SUBJECT,
+            value: getReminderSubject(reminder, client, 0),
+          },
+        ],
+        color: await getColor(data.user),
+      },
+      ...renderLowBudgetMessage(data),
     ],
     components: components(
       row(
-        new MessageButton()
-          .setStyle('LINK')
-          .setLabel(JUMP_TO_MSG)
-          .setURL(`https://discord.com/channels/${reminder.id}`),
+        new MessageButton().setStyle('LINK').setLabel(JUMP_TO_MSG).setURL(data.url),
         new SnoozeButton()
           .setStyle('SECONDARY')
           .setEmoji(emojis.reminder)
@@ -50,22 +60,44 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   };
 
   try {
-    await dest.send({
+    await data.destination.send({
       allowedMentions: {
-        users: [user.id],
+        users: [data.user.id],
       },
-      content: reminder.destination !== 'dm' ? user.toString() : null,
+      content: reminder.destination !== 'dm' ? data.user.toString() : null,
       ...message,
     });
   } catch (e) {
-    const dest = (await client.channels.fetch(channelId) as GuildTextBasedChannel);
-
-    await dest.send({
+    await data.channel.send({
       allowedMentions: {
-        users: [user.id],
+        users: [data.user.id],
       },
-      content: user.toString(),
+      content: data.user.toString(),
       ...message,
     });
   }
+}
+
+export function renderLowBudgetMessage({
+  author,
+  details,
+  guild,
+  channel,
+}: Pick<ExtractedReminder, 'author' | 'details' | 'guild' | 'channel'>) {
+  if (!details) return [];
+
+  return [
+    {
+      author: {
+        name: author.tag,
+        icon_url: avatar(author),
+      },
+      description: details.content,
+      footer: {
+        text: `${guild.name} • #${channel.name}`,
+      },
+      color: author.accentColor ?? colors.blurple,
+    },
+    details.firstEmbed,
+  ].filter(Boolean);
 }

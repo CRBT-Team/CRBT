@@ -38,6 +38,8 @@ export default {
     right_arrow: '<:right_arrow_white:987721488557801552>',
     preview: '<:preview_white:987721487467302982>',
     add: '<:add_white:1000780051370999839>',
+    skip_first: '<:skip_first:1034898718689873991>',
+    skip_last: '<:skip_last:1034898716613677086>',
   },
   channels: {
     text: '<:text_channel:970653903681114182>',

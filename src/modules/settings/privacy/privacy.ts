@@ -8,17 +8,41 @@ import { ButtonInteraction, CommandInteraction } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
 import { ConfirmDataDeletion, ExportAllData } from './manage-data';
 
+const privacyPreferences = [
+  [
+    'telemetry',
+    'Anonymous Telemetry',
+    'CRBT logs command usage as detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent, and will not affect error messages.',
+  ],
+  [
+    'silentJoins',
+    'Silent joining',
+    'Turning this setting on will stop CRBT from welcoming you when joining a server.',
+  ],
+  [
+    'silentLeaves',
+    'Silent leaving',
+    'Turning this setting on will stop CRBT from announcing your departure when leaving a server.',
+  ],
+  [
+    'enableAchievements',
+    'Achievements',
+    'CRBT tracks some of your usage in order to serve Achievements both globally and for each server. Server owners cannot access your individual data. Turning this off will freeze your achievements.',
+  ],
+];
+
 export default ChatCommand({
   name: 'privacy',
   description: 'Review your CRBT privacy settings and edit them.',
   async handle() {
     const preferences = (await prisma.user.findFirst({
       where: { id: this.user.id },
-      select: { telemetry: true, silentJoins: true, silentLeaves: true },
+      select: { telemetry: true, silentJoins: true, silentLeaves: true, enableAchievements: true },
     })) || {
       telemetry: true,
       silentJoins: false,
       silentLeaves: false,
+      enableAchievements: true,
     };
 
     await this.reply({
@@ -31,7 +55,7 @@ export default ChatCommand({
 });
 
 export const ToggleSettingBtn = ButtonComponent({
-  async handle({ setting, newState }: { setting: keyof User; newState: boolean }) {
+  async handle({ setting, newState }: { setting: string; newState: boolean }) {
     const newData = await prisma.user.upsert({
       where: { id: this.user.id },
       create: { [setting]: newState, id: this.user.id },
@@ -48,7 +72,7 @@ export const ToggleSettingBtn = ButtonComponent({
 
 async function renderPrivacySettings(
   this: CommandInteraction | ButtonInteraction,
-  { telemetry, silentJoins, silentLeaves }: Partial<User>
+  preferences: Partial<User>
 ) {
   return {
     embeds: [
@@ -56,50 +80,31 @@ async function renderPrivacySettings(
         author: { name: 'CRBT - Privacy Settings', iconURL: icons.settings },
         description: `You can review our **[Privacy Policy on the website](${links.policy})**.`,
         fields: [
-          {
-            name: `Anonymous Telemetry`,
-            value: `CRBT logs command usage info detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent. This setting does not affect error messages you get.`
-          },
-          {
-            name:
-              `Welcome message announcements`,
-            value: `Turning the setting off will disable CRBT's Welcome messages from being sent when you join any server.`
-          },
-          {
-            name:
-              `Farewell message announcements`,
-            value: `Turning the setting off will disable CRBT's Farewell messages from being sent when you leave any server.`
-          },
+          ...privacyPreferences.map(([id, name, desc]) => ({
+            name: name,
+            value: desc,
+          })),
           {
             name: 'Your CRBT data',
-            value: 'CRBT collects some data about you, whether you submit that data yourself or some we track to serve you some features. You can now ask to download all that data, or to delete it all. Warning, the latter will completely erase your reminders, polls, settings and you ever did on CRBT too.'
-          }
+            value:
+              'CRBT collects some data about you, whether you submit that data yourself or some we track to serve you some features. You can now ask to download all that data, or to delete it all. Warning, the latter will completely erase your reminders, polls, settings and you ever did on CRBT too.',
+          },
         ],
-        color: await getColor(this.user)
-      }
+        color: await getColor(this.user),
+      },
     ],
     components: components(
       row(
-        new ToggleSettingBtn({ setting: 'telemetry', newState: !telemetry })
-          .setLabel(`Telemetry`)
-          .setStyle('SECONDARY')
-          .setEmoji(emojis.toggle[telemetry ? 'on' : 'off']),
-        new ToggleSettingBtn({ setting: 'silentJoins', newState: !silentJoins })
-          .setLabel(`Welcome message announcements`)
-          .setStyle('SECONDARY')
-          .setEmoji(emojis.toggle[silentJoins ? 'off' : 'on']),
-        new ToggleSettingBtn({ setting: 'silentLeaves', newState: !silentLeaves })
-          .setLabel(`Farewell message announcements`)
-          .setStyle('SECONDARY')
-          .setEmoji(emojis.toggle[silentLeaves ? 'off' : 'on'])
+        ...privacyPreferences.map(([id, name, desc]) =>
+          new ToggleSettingBtn({ setting: id, newState: !preferences[id] })
+            .setLabel(name)
+            .setStyle('SECONDARY')
+            .setEmoji(emojis.toggle[preferences[id] ? 'on' : 'off'])
+        )
       ),
       row(
-        new ExportAllData()
-          .setStyle('PRIMARY')
-          .setLabel('Download my data'),
-        new ConfirmDataDeletion()
-          .setStyle('DANGER')
-          .setLabel('Delete my data')
+        new ExportAllData().setStyle('PRIMARY').setLabel('Download my data'),
+        new ConfirmDataDeletion().setStyle('DANGER').setLabel('Delete my data')
       )
     ),
   };

@@ -11,8 +11,8 @@ import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { EmojiRegex } from '$lib/util/regex';
 import { Poll } from '@prisma/client';
+import { CustomEmojiRegex } from '@purplet/utils';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageEmbed, TextInputComponent } from 'discord.js';
@@ -70,7 +70,7 @@ export default ChatCommand({
       const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
       for (const choice of pollChoices) {
-        if (choice.replace(EmojiRegex, '').trim().length === 0) {
+        if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
           return CRBTError(this, errors.CHOICE_EMPTY);
         }
       }
@@ -88,11 +88,12 @@ export default ChatCommand({
             .addFields(
               pollChoices.map((choice) => ({
                 name: choice,
-                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${emojis.progress.emptyend
-                  }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
-                    '<VOTES>',
-                    '0'
-                  )}`,
+                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
+                  emojis.progress.emptyend
+                }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
+                  '<VOTES>',
+                  '0'
+                )}`,
               }))
             )
             .setFooter({
@@ -108,7 +109,7 @@ export default ChatCommand({
             .addComponents(
               pollChoices.map((choice, index) => {
                 const choiceEmoji = findEmojis(choice)[0] || null;
-                const choiceText = choice.replace(EmojiRegex, '');
+                const choiceText = choice.replace(CustomEmojiRegex, '');
 
                 return new PollButton({ choiceId: index.toString() })
                   .setLabel(choiceText)
@@ -116,8 +117,8 @@ export default ChatCommand({
                     choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
                       ? 'SUCCESS'
                       : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
-                        ? 'DANGER'
-                        : 'PRIMARY'
+                      ? 'DANGER'
+                      : 'PRIMARY'
                   )
                   .setEmoji(choiceEmoji);
               })
@@ -137,7 +138,8 @@ export default ChatCommand({
         creatorId: this.user.id,
         serverId: this.guild.id,
         choices: pollChoices.map((_) => []),
-      } as Poll, TimeoutTypes.Poll);
+        type: TimeoutTypes.Poll,
+      });
 
       activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 
@@ -217,9 +219,9 @@ export const PollOptionsButton = ButtonComponent({
               value:
                 choice.length > 0
                   ? trimArray(
-                    choice.map((id) => `<@${id}>`),
-                    15
-                  ).join(', ')
+                      choice.map((id) => `<@${id}>`),
+                      15
+                    ).join(', ')
                   : strings.POLL_DATA_NOVOTES,
             }))
           )
@@ -403,20 +405,20 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
         .setDescription(
           (winners.length > 1
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
-              .replace(
-                '<OPTION2>',
-                winners
-                  .slice(1)
-                  .map((winner) => winner.name)
-                  .join(', ')
-              )
-              .replace('<VOTES>', ranking[0].votes.toString())
+                .replace(
+                  '<OPTION2>',
+                  winners
+                    .slice(1)
+                    .map((winner) => winner.name)
+                    .join(', ')
+                )
+                .replace('<VOTES>', ranking[0].votes.toString())
             : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
-              '<OPTION>',
-              `${ranking[0].name}`
-            ).replace('<VOTES>', ranking[0].votes.toString())) +
-          ' ' +
-          strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
+                '<OPTION>',
+                `${ranking[0].name}`
+              ).replace('<VOTES>', ranking[0].votes.toString())) +
+            ' ' +
+            strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString())
         )
         .setColor(colors.success),
     ],
@@ -458,7 +460,7 @@ const renderPoll = async (
   choiceId: string,
   userId: string,
   poll: Poll,
-  pollEmbed: MessageEmbed,
+  pollEmbed: MessageEmbed
 ) => {
   const { strings } = t(poll.locale, 'poll');
 
@@ -476,10 +478,10 @@ const renderPoll = async (
     choices[newChoiceId]?.push(userId);
   }
 
-  const newData = (await prisma.poll.update({
+  const newData = await prisma.poll.update({
     where: { id: poll.id },
     data: { ...poll, choices },
-  }));
+  });
 
   activePolls.set(poll.id, newData);
 

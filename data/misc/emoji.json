@@ -441,6 +441,15 @@
     "subgroup": "face-neutral-skeptical"
   },
   {
+    "codes": "1FAE8",
+    "unicode": "15.0",
+    "char": "🫨",
+    "name": "shaking face",
+    "category": "Smileys & Emotion (face-neutral-skeptical)",
+    "group": "Smileys & Emotion",
+    "subgroup": "face-neutral-skeptical"
+  },
+  {
     "codes": "1F60C",
     "unicode": "0.6",
     "char": "😌",
@@ -894,7 +903,7 @@
     "codes": "1F621",
     "unicode": "0.6",
     "char": "😡",
-    "name": "pouting face",
+    "name": "enraged face",
     "category": "Smileys & Emotion (face-negative)",
     "group": "Smileys & Emotion",
     "subgroup": "face-negative"
@@ -1134,208 +1143,235 @@
     "subgroup": "monkey-face"
   },
   {
-    "codes": "1F48B",
-    "unicode": "0.6",
-    "char": "💋",
-    "name": "kiss mark",
-    "category": "Smileys & Emotion (emotion)",
-    "group": "Smileys & Emotion",
-    "subgroup": "emotion"
-  },
-  {
     "codes": "1F48C",
     "unicode": "0.6",
     "char": "💌",
     "name": "love letter",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F498",
     "unicode": "0.6",
     "char": "💘",
     "name": "heart with arrow",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F49D",
     "unicode": "0.6",
     "char": "💝",
     "name": "heart with ribbon",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F496",
     "unicode": "0.6",
     "char": "💖",
     "name": "sparkling heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F497",
     "unicode": "0.6",
     "char": "💗",
     "name": "growing heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F493",
     "unicode": "0.6",
     "char": "💓",
     "name": "beating heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F49E",
     "unicode": "0.6",
     "char": "💞",
     "name": "revolving hearts",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F495",
     "unicode": "0.6",
     "char": "💕",
     "name": "two hearts",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F49F",
     "unicode": "0.6",
     "char": "💟",
     "name": "heart decoration",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "2763 FE0F",
     "unicode": "1.0",
     "char": "❣️",
     "name": "heart exclamation",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F494",
     "unicode": "0.6",
     "char": "💔",
     "name": "broken heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "2764 FE0F 200D 1F525",
     "unicode": "13.1",
     "char": "❤️‍🔥",
     "name": "heart on fire",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "2764 FE0F 200D 1FA79",
     "unicode": "13.1",
     "char": "❤️‍🩹",
     "name": "mending heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "2764 FE0F",
     "unicode": "0.6",
     "char": "❤️",
     "name": "red heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
+  },
+  {
+    "codes": "1FA77",
+    "unicode": "15.0",
+    "char": "🩷",
+    "name": "pink heart",
+    "category": "Smileys & Emotion (heart)",
+    "group": "Smileys & Emotion",
+    "subgroup": "heart"
   },
   {
     "codes": "1F9E1",
     "unicode": "5.0",
     "char": "🧡",
     "name": "orange heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F49B",
     "unicode": "0.6",
     "char": "💛",
     "name": "yellow heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F49A",
     "unicode": "0.6",
     "char": "💚",
     "name": "green heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F499",
     "unicode": "0.6",
     "char": "💙",
     "name": "blue heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
+  },
+  {
+    "codes": "1FA75",
+    "unicode": "15.0",
+    "char": "🩵",
+    "name": "light blue heart",
+    "category": "Smileys & Emotion (heart)",
+    "group": "Smileys & Emotion",
+    "subgroup": "heart"
   },
   {
     "codes": "1F49C",
     "unicode": "0.6",
     "char": "💜",
     "name": "purple heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F90E",
     "unicode": "12.0",
     "char": "🤎",
     "name": "brown heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
   },
   {
     "codes": "1F5A4",
     "unicode": "3.0",
     "char": "🖤",
     "name": "black heart",
-    "category": "Smileys & Emotion (emotion)",
+    "category": "Smileys & Emotion (heart)",
     "group": "Smileys & Emotion",
-    "subgroup": "emotion"
+    "subgroup": "heart"
+  },
+  {
+    "codes": "1FA76",
+    "unicode": "15.0",
+    "char": "🩶",
+    "name": "grey heart",
+    "category": "Smileys & Emotion (heart)",
+    "group": "Smileys & Emotion",
+    "subgroup": "heart"
   },
   {
     "codes": "1F90D",
     "unicode": "12.0",
     "char": "🤍",
     "name": "white heart",
+    "category": "Smileys & Emotion (heart)",
+    "group": "Smileys & Emotion",
+    "subgroup": "heart"
+  },
+  {
+    "codes": "1F48B",
+    "unicode": "0.6",
+    "char": "💋",
+    "name": "kiss mark",
     "category": "Smileys & Emotion (emotion)",
     "group": "Smileys & Emotion",
     "subgroup": "emotion"
@@ -1404,15 +1440,6 @@
     "subgroup": "emotion"
   },
   {
-    "codes": "1F4A3",
-    "unicode": "0.6",
-    "char": "💣",
-    "name": "bomb",
-    "category": "Smileys & Emotion (emotion)",
-    "group": "Smileys & Emotion",
-    "subgroup": "emotion"
-  },
-  {
     "codes": "1F4AC",
     "unicode": "0.6",
     "char": "💬",
@@ -1461,7 +1488,7 @@
     "codes": "1F4A4",
     "unicode": "0.6",
     "char": "💤",
-    "name": "zzz",
+    "name": "ZZZ",
     "category": "Smileys & Emotion (emotion)",
     "group": "Smileys & Emotion",
     "subgroup": "emotion"
@@ -1948,6 +1975,114 @@
     "unicode": "14.0",
     "char": "🫴🏿",
     "name": "palm up hand: dark skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7",
+    "unicode": "15.0",
+    "char": "🫷",
+    "name": "leftwards pushing hand",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7 1F3FB",
+    "unicode": "15.0",
+    "char": "🫷🏻",
+    "name": "leftwards pushing hand: light skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7 1F3FC",
+    "unicode": "15.0",
+    "char": "🫷🏼",
+    "name": "leftwards pushing hand: medium-light skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7 1F3FD",
+    "unicode": "15.0",
+    "char": "🫷🏽",
+    "name": "leftwards pushing hand: medium skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7 1F3FE",
+    "unicode": "15.0",
+    "char": "🫷🏾",
+    "name": "leftwards pushing hand: medium-dark skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF7 1F3FF",
+    "unicode": "15.0",
+    "char": "🫷🏿",
+    "name": "leftwards pushing hand: dark skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8",
+    "unicode": "15.0",
+    "char": "🫸",
+    "name": "rightwards pushing hand",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8 1F3FB",
+    "unicode": "15.0",
+    "char": "🫸🏻",
+    "name": "rightwards pushing hand: light skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8 1F3FC",
+    "unicode": "15.0",
+    "char": "🫸🏼",
+    "name": "rightwards pushing hand: medium-light skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8 1F3FD",
+    "unicode": "15.0",
+    "char": "🫸🏽",
+    "name": "rightwards pushing hand: medium skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8 1F3FE",
+    "unicode": "15.0",
+    "char": "🫸🏾",
+    "name": "rightwards pushing hand: medium-dark skin tone",
+    "category": "People & Body (hand-fingers-open)",
+    "group": "People & Body",
+    "subgroup": "hand-fingers-open"
+  },
+  {
+    "codes": "1FAF8 1F3FF",
+    "unicode": "15.0",
+    "char": "🫸🏿",
+    "name": "rightwards pushing hand: dark skin tone",
     "category": "People & Body (hand-fingers-open)",
     "group": "People & Body",
     "subgroup": "hand-fingers-open"
@@ -3421,7 +3556,7 @@
   },
   {
     "codes": "1F91D 1F3FB",
-    "unicode": "3.0",
+    "unicode": "14.0",
     "char": "🤝🏻",
     "name": "handshake: light skin tone",
     "category": "People & Body (hands)",
@@ -3430,7 +3565,7 @@
   },
   {
     "codes": "1F91D 1F3FC",
-    "unicode": "3.0",
+    "unicode": "14.0",
     "char": "🤝🏼",
     "name": "handshake: medium-light skin tone",
     "category": "People & Body (hands)",
@@ -3439,7 +3574,7 @@
   },
   {
     "codes": "1F91D 1F3FD",
-    "unicode": "3.0",
+    "unicode": "14.0",
     "char": "🤝🏽",
     "name": "handshake: medium skin tone",
     "category": "People & Body (hands)",
@@ -3448,7 +3583,7 @@
   },
   {
     "codes": "1F91D 1F3FE",
-    "unicode": "3.0",
+    "unicode": "14.0",
     "char": "🤝🏾",
     "name": "handshake: medium-dark skin tone",
     "category": "People & Body (hands)",
@@ -3457,7 +3592,7 @@
   },
   {
     "codes": "1F91D 1F3FF",
-    "unicode": "3.0",
+    "unicode": "14.0",
     "char": "🤝🏿",
     "name": "handshake: dark skin tone",
     "category": "People & Body (hands)",
@@ -20871,6 +21006,24 @@
     "subgroup": "animal-mammal"
   },
   {
+    "codes": "1FACE",
+    "unicode": "15.0",
+    "char": "🫎",
+    "name": "moose",
+    "category": "Animals & Nature (animal-mammal)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-mammal"
+  },
+  {
+    "codes": "1FACF",
+    "unicode": "15.0",
+    "char": "🫏",
+    "name": "donkey",
+    "category": "Animals & Nature (animal-mammal)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-mammal"
+  },
+  {
     "codes": "1F40E",
     "unicode": "0.6",
     "char": "🐎",
@@ -21429,6 +21582,33 @@
     "subgroup": "animal-bird"
   },
   {
+    "codes": "1FABD",
+    "unicode": "15.0",
+    "char": "🪽",
+    "name": "wing",
+    "category": "Animals & Nature (animal-bird)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-bird"
+  },
+  {
+    "codes": "1F426 200D 2B1B",
+    "unicode": "15.0",
+    "char": "🐦‍⬛",
+    "name": "black bird",
+    "category": "Animals & Nature (animal-bird)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-bird"
+  },
+  {
+    "codes": "1FABF",
+    "unicode": "15.0",
+    "char": "🪿",
+    "name": "goose",
+    "category": "Animals & Nature (animal-bird)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-bird"
+  },
+  {
     "codes": "1F438",
     "unicode": "0.6",
     "char": "🐸",
@@ -21604,6 +21784,15 @@
     "unicode": "14.0",
     "char": "🪸",
     "name": "coral",
+    "category": "Animals & Nature (animal-marine)",
+    "group": "Animals & Nature",
+    "subgroup": "animal-marine"
+  },
+  {
+    "codes": "1FABC",
+    "unicode": "15.0",
+    "char": "🪼",
+    "name": "jellyfish",
     "category": "Animals & Nature (animal-marine)",
     "group": "Animals & Nature",
     "subgroup": "animal-marine"
@@ -21852,6 +22041,15 @@
     "subgroup": "plant-flower"
   },
   {
+    "codes": "1FABB",
+    "unicode": "15.0",
+    "char": "🪻",
+    "name": "hyacinth",
+    "category": "Animals & Nature (plant-flower)",
+    "group": "Animals & Nature",
+    "subgroup": "plant-flower"
+  },
+  {
     "codes": "1F331",
     "unicode": "0.6",
     "char": "🌱",
@@ -21982,6 +22180,15 @@
     "unicode": "14.0",
     "char": "🪺",
     "name": "nest with eggs",
+    "category": "Animals & Nature (plant-other)",
+    "group": "Animals & Nature",
+    "subgroup": "plant-other"
+  },
+  {
+    "codes": "1F344",
+    "unicode": "0.6",
+    "char": "🍄",
+    "name": "mushroom",
     "category": "Animals & Nature (plant-other)",
     "group": "Animals & Nature",
     "subgroup": "plant-other"
@@ -22266,15 +22473,6 @@
     "subgroup": "food-vegetable"
   },
   {
-    "codes": "1F344",
-    "unicode": "0.6",
-    "char": "🍄",
-    "name": "mushroom",
-    "category": "Food & Drink (food-vegetable)",
-    "group": "Food & Drink",
-    "subgroup": "food-vegetable"
-  },
-  {
     "codes": "1F95C",
     "unicode": "3.0",
     "char": "🥜",
@@ -22297,6 +22495,24 @@
     "unicode": "0.6",
     "char": "🌰",
     "name": "chestnut",
+    "category": "Food & Drink (food-vegetable)",
+    "group": "Food & Drink",
+    "subgroup": "food-vegetable"
+  },
+  {
+    "codes": "1FADA",
+    "unicode": "15.0",
+    "char": "🫚",
+    "name": "ginger root",
+    "category": "Food & Drink (food-vegetable)",
+    "group": "Food & Drink",
+    "subgroup": "food-vegetable"
+  },
+  {
+    "codes": "1FADB",
+    "unicode": "15.0",
+    "char": "🫛",
+    "name": "pea pod",
     "category": "Food & Drink (food-vegetable)",
     "group": "Food & Drink",
     "subgroup": "food-vegetable"
@@ -25650,6 +25866,15 @@
     "subgroup": "game"
   },
   {
+    "codes": "1F52B",
+    "unicode": "0.6",
+    "char": "🔫",
+    "name": "water pistol",
+    "category": "Activities (game)",
+    "group": "Activities",
+    "subgroup": "game"
+  },
+  {
     "codes": "1F3B1",
     "unicode": "0.6",
     "char": "🎱",
@@ -25672,24 +25897,6 @@
     "unicode": "13.0",
     "char": "🪄",
     "name": "magic wand",
-    "category": "Activities (game)",
-    "group": "Activities",
-    "subgroup": "game"
-  },
-  {
-    "codes": "1F9FF",
-    "unicode": "11.0",
-    "char": "🧿",
-    "name": "nazar amulet",
-    "category": "Activities (game)",
-    "group": "Activities",
-    "subgroup": "game"
-  },
-  {
-    "codes": "1FAAC",
-    "unicode": "14.0",
-    "char": "🪬",
-    "name": "hamsa",
     "category": "Activities (game)",
     "group": "Activities",
     "subgroup": "game"
@@ -26091,6 +26298,15 @@
     "subgroup": "clothing"
   },
   {
+    "codes": "1FAAD",
+    "unicode": "15.0",
+    "char": "🪭",
+    "name": "folding hand fan",
+    "category": "Objects (clothing)",
+    "group": "Objects",
+    "subgroup": "clothing"
+  },
+  {
     "codes": "1F45B",
     "unicode": "0.6",
     "char": "👛",
@@ -26212,6 +26428,15 @@
     "unicode": "0.6",
     "char": "👢",
     "name": "woman’s boot",
+    "category": "Objects (clothing)",
+    "group": "Objects",
+    "subgroup": "clothing"
+  },
+  {
+    "codes": "1FAAE",
+    "unicode": "15.0",
+    "char": "🪮",
+    "name": "hair pick",
     "category": "Objects (clothing)",
     "group": "Objects",
     "subgroup": "clothing"
@@ -26554,6 +26779,24 @@
     "unicode": "13.0",
     "char": "🪘",
     "name": "long drum",
+    "category": "Objects (musical-instrument)",
+    "group": "Objects",
+    "subgroup": "musical-instrument"
+  },
+  {
+    "codes": "1FA87",
+    "unicode": "15.0",
+    "char": "🪇",
+    "name": "maracas",
+    "category": "Objects (musical-instrument)",
+    "group": "Objects",
+    "subgroup": "musical-instrument"
+  },
+  {
+    "codes": "1FA88",
+    "unicode": "15.0",
+    "char": "🪈",
+    "name": "flute",
     "category": "Objects (musical-instrument)",
     "group": "Objects",
     "subgroup": "musical-instrument"
@@ -27630,10 +27873,10 @@
     "subgroup": "tool"
   },
   {
-    "codes": "1F52B",
+    "codes": "1F4A3",
     "unicode": "0.6",
-    "char": "🔫",
-    "name": "water pistol",
+    "char": "💣",
+    "name": "bomb",
     "category": "Objects (tool)",
     "group": "Objects",
     "subgroup": "tool"
@@ -28174,6 +28417,24 @@
     "unicode": "1.0",
     "char": "⚱️",
     "name": "funeral urn",
+    "category": "Objects (other-object)",
+    "group": "Objects",
+    "subgroup": "other-object"
+  },
+  {
+    "codes": "1F9FF",
+    "unicode": "11.0",
+    "char": "🧿",
+    "name": "nazar amulet",
+    "category": "Objects (other-object)",
+    "group": "Objects",
+    "subgroup": "other-object"
+  },
+  {
+    "codes": "1FAAC",
+    "unicode": "14.0",
+    "char": "🪬",
+    "name": "hamsa",
     "category": "Objects (other-object)",
     "group": "Objects",
     "subgroup": "other-object"
@@ -28737,6 +28998,15 @@
     "subgroup": "religion"
   },
   {
+    "codes": "1FAAF",
+    "unicode": "15.0",
+    "char": "🪯",
+    "name": "khanda",
+    "category": "Symbols (religion)",
+    "group": "Symbols",
+    "subgroup": "religion"
+  },
+  {
     "codes": "2648",
     "unicode": "0.6",
     "char": "♈",
@@ -29047,6 +29317,15 @@
     "unicode": "0.6",
     "char": "📶",
     "name": "antenna bars",
+    "category": "Symbols (av-symbol)",
+    "group": "Symbols",
+    "subgroup": "av-symbol"
+  },
+  {
+    "codes": "1F6DC",
+    "unicode": "15.0",
+    "char": "🛜",
+    "name": "wireless",
     "category": "Symbols (av-symbol)",
     "group": "Symbols",
     "subgroup": "av-symbol"

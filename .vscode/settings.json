@@ -8,9 +8,7 @@
     "**/Thumbs.db": true,
     ".prettierignore": true,
     ".eslintignore": true,
-    "yarn.lock": true,
-    "node_modules": true,
-    "dist": true
+    "yarn.lock": true
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "workspace.isHidden": true

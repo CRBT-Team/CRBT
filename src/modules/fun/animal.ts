@@ -1,46 +1,18 @@
-import { getColor } from '$lib/functions/getColor';
-import { ButtonInteraction, Interaction, MessageEmbed } from 'discord.js';
-import fs from 'fs';
-import path from 'path';
-import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { ChatCommand, OptionBuilder } from 'purplet';
+import { handleImageSearch } from '../tools/search/images';
 
-const animalsPath = path.resolve('data/misc/animals');
-const animalsDir = fs.readdirSync(animalsPath);
+// const animalsPath = path.resolve('data/misc/animals');
+// const animalsDir = fs.readdirSync(animalsPath);
 
-const results: { [k: string]: Results[] } = animalsDir.reduce(
-  (acc: { [k: string]: Results[] }, animal: string) => {
-    const r = fs.readFileSync(`${animalsPath}/${animal}`, 'utf8');
-    const results = JSON.parse(r);
-    acc[animal.replace('.json', '')] = results;
-    return acc;
-  },
-  {}
-);
-
-interface Results {
-  id: number;
-  pageURL: string;
-  type: string;
-  tags: string;
-  previewURL: string;
-  previewWidth: number;
-  previewHeight: number;
-  webformatURL: string;
-  webformatWidth: number;
-  webformatHeight: number;
-  largeImageURL: string;
-  imageWidth: number;
-  imageHeight: number;
-  imageSize: number;
-  views: number;
-  downloads: number;
-  collections: number;
-  likes: number;
-  comments: number;
-  user_id: number;
-  user: string;
-  userImageURL: string;
-}
+// const results: { [k: string]: Results[] } = animalsDir.reduce(
+//   (acc: { [k: string]: Results[] }, animal: string) => {
+//     const r = fs.readFileSync(`${animalsPath}/${animal}`, 'utf8');
+//     const results = JSON.parse(r);
+//     acc[animal.replace('.json', '')] = results;
+//     return acc;
+//   },
+//   {}
+// );
 
 const animals: [string, string[]][] = [
   ['Dog', ['🐶']],
@@ -57,7 +29,7 @@ const animals: [string, string[]][] = [
 
 export default ChatCommand({
   name: 'animal',
-  description: 'Get a random animal image and fact.',
+  description: 'Search for animal pics on Google Images.',
   options: new OptionBuilder().string('type', 'The animal to display.', {
     choices: animals.reduce(
       (cur, [name, emojis]) => ({
@@ -69,43 +41,51 @@ export default ChatCommand({
     required: true,
   }),
   async handle({ type }) {
-    await this.reply(await renderAnimal.call(this, type));
+    await this.deferReply();
+
+    await this.editReply(
+      await handleImageSearch.call(this, {
+        page: 1,
+        query: `${type} images`,
+        site: 'images',
+      })
+    );
   },
 });
 
-export const Refresh = ButtonComponent({
-  async handle(animal: string) {
-    this.update(await renderAnimal.call(this, animal));
-  },
-});
+// export const Refresh = ButtonComponent({
+//   async handle(animal: string) {
+//     this.update(await renderAnimal.call(this, animal));
+//   },
+// });
 
-async function renderAnimal(this: Interaction, animal: string) {
-  const [_, emojis] = animals.find(([name]) => name.toLowerCase() === animal);
-  // const baseUrl = 'https://some-random-api.ml/';
+// async function renderAnimal(this: Interaction, animal: string) {
+//   const [_, emojis] = animals.find(([name]) => name.toLowerCase() === animal);
+//   // const baseUrl = 'https://some-random-api.ml/';
 
-  const result = results[animal].at(Math.floor(Math.random() * results[animal].length));
+//   const result = results[animal].at(Math.floor(Math.random() * results[animal].length));
 
-  const color =
-    this instanceof ButtonInteraction ? this.message.embeds[0].color : await getColor(this.user);
+//   const color =
+//     this instanceof ButtonInteraction ? this.message.embeds[0].color : await getColor(this.user);
 
-  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+//   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-  return {
-    embeds: [
-      new MessageEmbed()
-        .setTitle(`${emoji} Random ${animal}!`)
-        .setDescription(
-          `**[View on Pixabay](${result.pageURL})**\n**Tags:** ${result.tags
-            .split(', ')
-            .map((tag) => `\`${tag}\``)
-            .join(', ')}`
-        )
-        .setImage(result.previewURL)
-        .setColor(color)
-        .setFooter({
-          text: 'Powered by Pixabay • pixabay.com',
-        }),
-    ],
-    components: components(row(new Refresh(animal).setStyle('SECONDARY').setLabel('Another one!'))),
-  };
-}
+//   return {
+//     embeds: [
+//       new MessageEmbed()
+//         .setTitle(`${emoji} Random ${animal}!`)
+//         .setDescription(
+//           `**[View on Pixabay](${result.pageURL})**\n**Tags:** ${result.tags
+//             .split(', ')
+//             .map((tag) => `\`${tag}\``)
+//             .join(', ')}`
+//         )
+//         .setImage(result.previewURL)
+//         .setColor(color)
+//         .setFooter({
+//           text: 'Powered by Pixabay • pixabay.com',
+//         }),
+//     ],
+//     components: components(row(new Refresh(animal).setStyle('SECONDARY').setLabel('Another one!'))),
+//   };
+// }

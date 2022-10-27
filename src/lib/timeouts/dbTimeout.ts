@@ -1,5 +1,6 @@
 import { prisma } from '$lib/db';
-import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
+import { Timeout } from '$lib/types/timeouts';
+import { TimeoutTypes } from '@prisma/client';
 import { getDiscordClient } from 'purplet';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
@@ -12,29 +13,32 @@ const handle = {
   giveaway: handleGiveaway,
 };
 
-export async function dbTimeout<K extends TimeoutTypes, T extends Timeout<K>>(
+export async function dbTimeout<T extends Timeout>(
   timeout: T,
-  type: K,
   loadOnly: boolean = false
 ): Promise<T> {
   const client = getDiscordClient();
   const { id } = timeout;
+  const type = timeout.type.toString() as TimeoutTypes;
+  const rawTimeout = (({ type, ...o }) => o)(timeout) as Omit<Timeout, 'type'>;
 
   setLongerTimeout(async () => {
     if (!timeout) return;
 
-    const data = await prisma[type.toString()].findFirst({
-      where: { id },
-    });
+    try {
+      const data = await prisma[type].findFirst({
+        where: { id },
+      });
 
-    handle[type](data, client);
+      handle[type](data, client);
+    } catch (e) {}
 
-    await prisma[type.toString()].delete({ where: { id } });
-  }, timeout.expiresAt.getTime() - Date.now());
+    await prisma[type].delete({ where: { id } });
+  }, rawTimeout.expiresAt.getTime() - Date.now());
 
   if (loadOnly) return timeout;
 
-  return (await prisma[type.toString()].create({
-    data: timeout,
+  return (await prisma[type].create({
+    data: rawTimeout,
   })) as T;
 }
