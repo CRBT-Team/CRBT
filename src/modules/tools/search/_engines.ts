@@ -7,8 +7,8 @@ import {
 import { handleDictionary } from './dictionary';
 import { handleDuckDuckGo } from './DuckDuckGo';
 import { handleImageSearch } from './images';
-import { handleKitsu } from './Kitsu';
-import { handleMusicSearch } from './music';
+// import { handleKitsu } from './Kitsu';
+// import { handleMusicSearch } from './music';
 import { SearchCmdOpts } from './search';
 import { handleVideosSearch } from './videos';
 import { handleWeather } from './weather';
@@ -44,7 +44,7 @@ export const searchEngines: {
   images: {
     handle: handleImageSearch,
     emoji: '🖼️',
-    provider: 'DuckDuckGo',
+    provider: 'Google Images',
     name: 'Images',
   },
   videos: {
@@ -53,13 +53,13 @@ export const searchEngines: {
     provider: 'YouTube',
     name: 'Videos',
   },
-  music: {
-    handle: handleMusicSearch,
-    emoji: '🎵',
-    provider: 'Spotify',
-    name: 'Music',
-    hide: true,
-  },
+  // music: {
+  //   handle: handleMusicSearch,
+  //   emoji: '🎵',
+  //   provider: 'Spotify',
+  //   name: 'Music',
+  //   hide: true,
+  // },
   weather: {
     handle: handleWeather,
     emoji: '☀️',
@@ -80,13 +80,13 @@ export const searchEngines: {
   //   handle: handleRAWG,
   //   name: '🎮 RAWG',
   // },
-  anime: {
-    handle: handleKitsu,
-    emoji: '🌸',
-    provider: 'Kitsu',
-    name: 'Anime & Mangas',
-    hide: true,
-  },
+  // anime: {
+  //   handle: handleKitsu,
+  //   emoji: '🌸',
+  //   provider: 'Kitsu',
+  //   name: 'Anime & Mangas',
+  //   hide: true,
+  // },
   // npm: {
   //   handle: handleNpm,
   //   name: '📦 npm',

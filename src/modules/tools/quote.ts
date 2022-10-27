@@ -26,7 +26,10 @@ export default ChatCommand({
       this.client.guilds.cache.get(guildId) ?? (await this.client.guilds.fetch(guildId));
 
     if (!guild) {
-      return CRBTError(this, 'The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".')
+      return CRBTError(
+        this,
+        'The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".'
+      );
     }
 
     const channel = await guild.channels.fetch(channelId);
@@ -59,8 +62,6 @@ export default ChatCommand({
         .setURL(message.url),
       ...message.embeds.slice(0, 4),
     ];
-
-    console.log(message.embeds.length);
 
     if (message.embeds.length <= 4) {
       await this.reply({

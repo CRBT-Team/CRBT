@@ -16,7 +16,7 @@ import { RemindButton } from '../../modules/components/RemindButton';
 const handleError = (
   i: Interaction,
   opts: {
-    message: {
+    embed: {
       title?: string;
       description?: string;
       fields?: APIEmbedField[];
@@ -27,12 +27,12 @@ const handleError = (
     };
   }
 ) => {
-  const { message, error } = opts;
+  const { embed, error } = opts;
 
-  const embed = new MessageEmbed().setColor(colors.error);
+  const devEmbed = new MessageEmbed().setColor(colors.error);
 
   if (error) {
-    embed
+    devEmbed
       .setDescription(error ? `\`\`\`\n${error.error}\`\`\`` : '')
       .addFields({ name: 'Context', value: `\`\`\`\n${error.context}\`\`\``, inline: true });
   } else {
@@ -50,13 +50,13 @@ const handleError = (
       interactionName = `${i}`;
     }
 
-    embed.setDescription(
-      `${emojis.error} Error \`${message.title}\` was triggered on command \`${interactionName}\``
+    devEmbed.setDescription(
+      `${emojis.error} Error \`${embed.title}\` was triggered on command \`${interactionName}\``
     );
   }
 
   (getDiscordClient().channels.cache.get(channels.errors) as TextChannel).send({
-    embeds: [embed],
+    embeds: [devEmbed],
     files: [
       new MessageAttachment(
         Buffer.from(
@@ -74,9 +74,9 @@ const handleError = (
   });
 
   return {
-    title: `${emojis.error} ${message.title}`,
-    description: message.description ?? '',
-    fields: message.fields ?? [],
+    title: `${emojis.error} ${embed.title}`,
+    description: embed.description ?? '',
+    fields: embed.fields ?? [],
     color: colors.error,
   };
 };
@@ -100,10 +100,11 @@ export const createCRBTError = (
 ) => ({
   embeds: [
     handleError(i, {
-      message: typeof embed === 'string' ? { title: embed } : embed,
+      embed: typeof embed === 'string' ? { title: embed } : embed,
     }),
   ],
   ephemeral,
+  components: [],
 });
 
 export function UnknownError(i: any, error: any, context?: string, ephemeral = true) {
@@ -116,7 +117,7 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
       error,
       context: context ?? String(i),
     },
-    message: {
+    embed: {
       title: strings.TITLE,
       description: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
     },
@@ -127,6 +128,7 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
   return {
     embeds: [embed],
     ephemeral,
+    components: [],
   };
 }
 
@@ -150,7 +152,7 @@ export async function CooldownError(
   return {
     embeds: [
       handleError(context, {
-        message: {
+        embed: {
           title: strings.TITLE,
           description: strings.DESCRIPTION.replace(
             '<TYPE>',

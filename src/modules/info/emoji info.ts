@@ -3,7 +3,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { snowStamp } from '$lib/functions/snowStamp';
-import { EmojiRegex } from '$lib/util/regex';
+import { CustomEmojiRegex } from '@purplet/utils';
 import { capitalCase } from 'change-case';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { MessageButton, MessageEmbed } from 'discord.js';
@@ -36,13 +36,14 @@ export default ChatCommand({
     { required: true }
   ),
   async handle({ emoji }) {
-    if (EmojiRegex.test(emoji)) {
+    if (CustomEmojiRegex.test(emoji)) {
       const emojiData = {
         animated: emoji.split(':')[0] === '<a',
         name: emoji.split(':')[1],
         id: emoji.split(':')[2].replace('>', ''),
-        url: `https://cdn.discordapp.com/emojis/${emoji.split(':')[2].replace('>', '')}.${emoji.split(':')[0] === '<a' ? 'gif' : 'png'
-          }`,
+        url: `https://cdn.discordapp.com/emojis/${emoji.split(':')[2].replace('>', '')}.${
+          emoji.split(':')[0] === '<a' ? 'gif' : 'png'
+        }`,
         createdAt: snowStamp(emoji.split(':')[2].replace('>', '')),
       };
 
@@ -64,13 +65,13 @@ export default ChatCommand({
         components: isEmojiInServer
           ? []
           : components(
-            row(
-              new AddEmojiButton(emoji)
-                .setStyle('SECONDARY')
-                .setLabel('Clone to this server')
-                .setEmoji(emojis.buttons.add)
-            )
-          ),
+              row(
+                new AddEmojiButton(emoji)
+                  .setStyle('SECONDARY')
+                  .setLabel('Clone to this server')
+                  .setEmoji(emojis.buttons.add)
+              )
+            ),
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
       const emojiData = emojiJSON.find((e) => e.char === emoji);
@@ -102,7 +103,10 @@ export default ChatCommand({
         components: components(renderSelect(emojipediaCode)),
       });
     } else {
-      await CRBTError(this, 'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃')
+      await CRBTError(
+        this,
+        'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃'
+      );
     }
   },
 });
@@ -144,8 +148,9 @@ export const AddEmojiButton = ButtonComponent({
       animated: emojiString.split(':')[0] === '<a',
       name: emojiString.split(':')[1],
       id: emojiString.split(':')[2].replace('>', ''),
-      url: `https://cdn.discordapp.com/emojis/${emojiString.split(':')[2].replace('>', '')}.${emojiString.split(':')[0] === '<a' ? 'gif' : 'png'
-        }`,
+      url: `https://cdn.discordapp.com/emojis/${emojiString.split(':')[2].replace('>', '')}.${
+        emojiString.split(':')[0] === '<a' ? 'gif' : 'png'
+      }`,
     };
 
     await this.guild.emojis.create(emojiData.url, emojiData.name);

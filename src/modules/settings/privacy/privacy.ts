@@ -58,25 +58,24 @@ async function renderPrivacySettings(
         fields: [
           {
             name: `Anonymous Telemetry`,
-            value: `CRBT logs command usage info detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent. This setting does not affect error messages you get.`
+            value: `CRBT logs command usage info detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent. This setting does not affect error messages you get.`,
           },
           {
-            name:
-              `Welcome message announcements`,
-            value: `Turning the setting off will disable CRBT's Welcome messages from being sent when you join any server.`
+            name: `Welcome message announcements`,
+            value: `Turning the setting off will disable CRBT's Welcome messages from being sent when you join any server.`,
           },
           {
-            name:
-              `Farewell message announcements`,
-            value: `Turning the setting off will disable CRBT's Farewell messages from being sent when you leave any server.`
+            name: `Farewell message announcements`,
+            value: `Turning the setting off will disable CRBT's Farewell messages from being sent when you leave any server.`,
           },
           {
             name: 'Your CRBT data',
-            value: 'CRBT collects some data about you, whether you submit that data yourself or some we track to serve you some features. You can now ask to download all that data, or to delete it all. Warning, the latter will completely erase your reminders, polls, settings and you ever did on CRBT too.'
-          }
+            value:
+              'CRBT collects some data about you, whether you submit that data yourself or some we track to serve you some features. You can now ask to download all that data, or to delete it all. Warning, the latter will completely erase your reminders, polls, settings and you ever did on CRBT too.',
+          },
         ],
-        color: await getColor(this.user)
-      }
+        color: await getColor(this.user),
+      },
     ],
     components: components(
       row(
@@ -94,12 +93,8 @@ async function renderPrivacySettings(
           .setEmoji(emojis.toggle[silentLeaves ? 'off' : 'on'])
       ),
       row(
-        new ExportAllData()
-          .setStyle('PRIMARY')
-          .setLabel('Download my data'),
-        new ConfirmDataDeletion()
-          .setStyle('DANGER')
-          .setLabel('Delete my data')
+        new ExportAllData().setStyle('PRIMARY').setLabel('Download my data'),
+        new ConfirmDataDeletion().setStyle('DANGER').setLabel('Delete my data')
       )
     ),
   };

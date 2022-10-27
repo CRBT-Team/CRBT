@@ -47,7 +47,7 @@ export default ChatCommand({
     .string('to', 'The unit to convert to.', {
       autocomplete({ from, to }) {
         const fromType = allUnits.find(({ abbr }) => abbr === from)?.measure;
-        console.log(fromType);
+
         to = to?.toLowerCase();
         const filtered = allUnits
           .filter(({ abbr, measure }) => (from ? measure === fromType && abbr !== from : true))
@@ -55,7 +55,7 @@ export default ChatCommand({
             ({ singular, plural }) =>
               singular.toLowerCase().includes(to) || plural.toLowerCase().includes(to)
           );
-        console.log(filtered.length);
+
         return filtered.map(({ measure, singular: name, abbr }) => ({
           name: `${capitalCase(measure)} - ${name}`,
           value: abbr,
@@ -65,16 +65,16 @@ export default ChatCommand({
     }),
   async handle({ amount, from, to }) {
     if (allUnits.find(({ abbr }) => abbr === from) === undefined) {
-      return CRBTError(this,
+      return CRBTError(
+        this,
         `"${from}" is not a valid unit. Please use the autocomplete to select a valid unit.`
-      )
-
+      );
     }
     if (allUnits.find(({ abbr }) => abbr === to) === undefined) {
-      return CRBTError(this,
+      return CRBTError(
+        this,
         `"${to}" is not a valid unit. Please use the autocomplete to select a valid unit.`
-      )
-
+      );
     }
 
     if (
@@ -107,7 +107,10 @@ export default ChatCommand({
       units.find(({ abbr }) => abbr === from).measure !==
       units.find(({ abbr }) => abbr === to).measure
     ) {
-      return CRBTError(this, `Both of the units must be of the same type (e.g. length, mass, etc.)`)
+      return CRBTError(
+        this,
+        `Both of the units must be of the same type (e.g. length, mass, etc.)`
+      );
     } else {
       try {
         const result = convert(amount)

@@ -1,11 +1,10 @@
-import { channels, colors, clients, icons, links } from '$lib/env';
+import { channels, clients, colors, icons, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { rest } from '$lib/rest';
 import { Routes } from 'discord-api-types/v10';
 import { MessageEmbed, TextInputComponent } from 'discord.js';
-import { ChatCommand, ModalComponent, OptionBuilder, row } from 'purplet';
+import { ChatCommand, getRestClient, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'report',
@@ -46,7 +45,6 @@ export default ChatCommand({
 
 export const Modal = ModalComponent({
   async handle(image_url?: string) {
-
     const title = this.fields.getTextInputValue('issue_title');
     const description = this.fields.getTextInputValue('issue_description');
 
@@ -65,32 +63,39 @@ export const Modal = ModalComponent({
       ephemeral: true,
     });
 
-    await rest.post(Routes.threads(
-      this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
-    ), {
-      body: {
-        name: title,
-        message: {
-          embeds: [
-            {
-              author: {
-                name: `${this.user.tag} filed a bug report`,
-                icon_url: avatar(this.user, 64),
+    await getRestClient().post(
+      Routes.threads(
+        this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
+      ),
+      {
+        body: {
+          name: title,
+          message: {
+            embeds: [
+              {
+                author: {
+                  name: `${this.user.tag} filed a bug report`,
+                  icon_url: avatar(this.user, 64),
+                },
+                title,
+                description,
+                image: image_url ? 'attachment://image.png' : null,
+                footer: { text: `User ID: ${this.user.id}` },
+                color: colors.yellow,
               },
-              title,
-              description,
-              image: image_url ? 'attachment://image.png' : null,
-              footer: { text: `User ID: ${this.user.id}` },
-              color: colors.yellow,
-            }
-          ],
-        }
-      },
-      files: image_url ? [{
-        data: `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`,
-        name: 'image.png'
-      }] : null,
-    })
+            ],
+          },
+        },
+        files: image_url
+          ? [
+              {
+                data: `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`,
+                name: 'image.png',
+              },
+            ]
+          : null,
+      }
+    );
 
     await AchievementProgress.call(this, 'BUG_HUNTER');
   },

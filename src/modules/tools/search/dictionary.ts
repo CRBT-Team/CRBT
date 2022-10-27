@@ -2,7 +2,9 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
+import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
+import { createSearchResponse } from './_response';
 
 export async function handleDictionary(
   this: CommandInteraction | MessageComponentInteraction,
@@ -14,17 +16,20 @@ export async function handleDictionary(
     );
 
     if (!res.ok) {
-      return createCRBTError(
-        this,
-        `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
-          'urban'
-        )}).`
-      );
+      if (opts.page === -1) {
+        return createCRBTError(
+          this,
+          `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
+            'urban'
+          )}).`
+        );
+      } else {
+        return handleDuckDuckGo.call(this, opts);
+      }
     }
     const def = (await res.json())[0];
 
-    // createSearchResponse(this, opts,
-    return {
+    return createSearchResponse(this, opts, {
       embeds: [
         {
           author: {
@@ -56,7 +61,7 @@ export async function handleDictionary(
         },
       ],
       files:
-        def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
+        opts.page === -1 && def.phonetics && def.phonetics.length > 0 && def.phonetics[0].audio
           ? [
               new MessageAttachment(
                 await fetch(`${def.phonetics[0].audio}`)
@@ -66,8 +71,7 @@ export async function handleDictionary(
               ),
             ]
           : null,
-    };
-    // );
+    });
   } catch (e) {
     return UnknownError(this, String(e));
   }

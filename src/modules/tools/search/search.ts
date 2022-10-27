@@ -1,3 +1,4 @@
+import { cache } from '$lib/cache';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleFeaturedSearch } from './featured';
@@ -10,20 +11,15 @@ export interface SearchCmdOpts {
   page: number;
 }
 
-const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, hide }]) => {
-  console.log(acc);
-  console.log(id, name, emoji, hide);
+const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, provider }]) => {
   return {
     ...acc,
-    [id]: `${emoji} ${name}`,
+    [id]: `${emoji} ${name} - Powered by ${provider}`,
     // ...(hide ? { [id]: `${emoji} ${name}` } : {}),
   };
 }, {});
 
-console.log(choices);
-
-// export default
-ChatCommand({
+export default ChatCommand({
   name: 'search',
   description: 'Search for anything in one of the provided search engines.',
   options: new OptionBuilder()
@@ -46,17 +42,29 @@ ChatCommand({
     })
     .boolean('anonymous', 'Whether to show the search results as a public message.'),
   async handle(opts) {
-    await this.deferReply();
+    await this.deferReply({
+      ephemeral: opts.anonymous,
+    });
 
     const fullOpts: SearchCmdOpts = {
       page: 1,
-      query: opts.query.match(/.*:.*/) ? opts.query.split(':').at(2) : opts.query,
+      query: opts.query, //.match(/\w*:.*/) ? opts.query.split(':').at(1) : opts.query,
       anonymous: opts.anonymous || false,
-      site: opts.site ?? opts.query?.split(':')?.at(1)?.trim(),
+      site:
+        opts.site ??
+        // opts.query
+        //   .match(/(\w*):.*/)
+        //   ?.at(1)
+        //   ?.trim() ??
+        null,
     };
 
-    if (fullOpts.site && Object.keys(searchEngines).includes(fullOpts.site)) {
-      const res = await searchEngines[opts.site].handle.call(this, fullOpts);
+    const reply = await this.fetchReply();
+
+    cache.set(`search:${reply.id}`, fullOpts);
+
+    if (fullOpts.site) {
+      const res = await searchEngines[fullOpts.site].handle.call(this, fullOpts);
 
       return await this.editReply(res);
     }

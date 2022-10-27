@@ -54,7 +54,8 @@ export const ctxCommand = MessageContextCommand({
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
-      : message.embeds.find((e) => e.image)?.image?.url ?? message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
+      : message.embeds.find((e) => e.image)?.image?.url ??
+        message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
 
     if (!message.content && !image) {
       return CRBTError(
@@ -76,7 +77,7 @@ export const ctxCommand = MessageContextCommand({
         const result = await translate.call(this, content);
         if (result) await this.editReply(result);
       } else if (image) {
-        const [content, error] = (await useOcrScan(image));
+        const [content, error] = await useOcrScan(image);
 
         if (error)
           await CRBTError(
@@ -118,8 +119,6 @@ async function translate(
   } = await googleTranslateApi(text, { to: target, from });
 
   const color = await getColor(this.user);
-
-  console.log(color);
 
   return {
     embeds: [

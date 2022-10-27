@@ -4,7 +4,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
-import { SnowflakeRegex } from '$lib/util/regex';
+import { SnowflakeRegex } from '@purplet/utils';
 import { Channel, TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';

@@ -6,7 +6,6 @@ import { OnEvent } from 'purplet';
 // import { customCmds } from '../customCommands/commands';
 
 export default OnEvent('interactionCreate', async (i) => {
-
   if (!i.isCommand() && !i.isContextMenu()) return;
 
   if (![clients.dev.id, clients.crbt.id].includes(i.client.user.id)) return;
@@ -26,17 +25,6 @@ export default OnEvent('interactionCreate', async (i) => {
 
   const channel = i.client.channels.cache.get(channels.telemetry) as TextChannel;
 
-
-  if (i.client.user.id === clients.crbt.id) {
-    await prisma.statistics.update({
-      where: { date: dayjs().startOf('day').toISOString() },
-      data: {
-        commandsUsed: { push: commandName },
-        uniqueUsers: { push: i.user.id },
-      }
-    })
-  }
-
   channel.send({
     embeds: [
       {
@@ -44,10 +32,20 @@ export default OnEvent('interactionCreate', async (i) => {
         fields: [
           {
             name: 'Platform',
-            value: i.guild ? 'Guild' : 'DM'
-          }
-        ]
-      }
+            value: i.guild ? 'Guild' : 'DM',
+          },
+        ],
+      },
     ],
   });
+
+  if (i.client.user.id === clients.crbt.id) {
+    await prisma.statistics.update({
+      where: { date: dayjs().startOf('day').toISOString() },
+      data: {
+        commandsUsed: { push: commandName },
+        uniqueUsers: { push: i.user.id },
+      },
+    });
+  }
 });

@@ -12,7 +12,7 @@ export function returnFeaturedItem(opts: SearchCmdOpts) {
   if (englishDictionary.find((word) => word === query)) {
     item = 'dictionary';
   }
-  if (query.startsWith('weather')) {
+  if (query.startsWith('weather') && !!query.replace('weather', '').replace('in', '').trim()) {
     item = 'weather';
   }
 
@@ -25,13 +25,15 @@ export function handleFeaturedSearch(
 ) {
   const featured = returnFeaturedItem(opts);
 
+  opts.site = featured ?? 'web';
+
   if (featured === 'dictionary') {
-    return handleDictionary.call(this, { ...opts, site: 'dictionary' });
+    return handleDictionary.call(this, opts);
   }
 
   if (featured === 'weather') {
-    return handleWeather.call(this, { ...opts, site: 'weather' });
+    return handleWeather.call(this, opts);
   }
 
-  return handleDuckDuckGo.call(this, { ...opts, site: 'web' });
+  return handleDuckDuckGo.call(this, opts);
 }
