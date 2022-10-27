@@ -93,16 +93,17 @@ model moderationStrikes {
 }
 
 model User {
-  id                    String         @id
-  guildedId             String?        @unique @map("guilded_id")
-  accentColor           Int?           @map("accent_color")
-  crbtBadges            String[]       @map("crbt_badges")
-  telemetry             Boolean        @default(true)
-  silentJoins           Boolean        @default(false) @map("silent_joins")
-  silentLeaves          Boolean        @default(false) @map("silent_leaves")
-  subscriptionExpiresAt DateTime?      @map("sub_expiration")
+  id                    String               @id
+  guildedId             String?              @unique @map("guilded_id")
+  accentColor           Int?                 @map("accent_color")
+  crbtBadges            String[]             @map("crbt_badges")
+  telemetry             Boolean              @default(true)
+  silentJoins           Boolean              @default(false) @map("silent_joins")
+  silentLeaves          Boolean              @default(false) @map("silent_leaves")
+  enableAchievements    Boolean              @default(true) @map("achievements_enabled")
+  subscriptionExpiresAt DateTime?            @map("sub_expiration")
   reminders             Reminder[]
-  globalAchievements    Achievements[]
+  globalAchievements    GlobalAchievements[]
   memberData            ServerMember[]
 }
 
@@ -123,6 +124,14 @@ model Statistics {
 }
 
 model Achievements {
+  id          String    @id
+  userId      String    @map("user_id")
+  achievement String
+  progression Int
+  achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
+}
+
+model GlobalAchievements {
   id          String    @id
   userId      String    @map("user_id")
   user        User      @relation(fields: [userId], references: [id])

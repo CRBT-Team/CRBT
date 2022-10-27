@@ -41,7 +41,8 @@ export async function handleWeather(
                 weatherRes.current_weather.temperature
               )
                 .from('C')
-                .to('F')}°F`,
+                .to('F')
+                .toFixed(1)}°F`,
               inline: true,
             },
             {
@@ -50,7 +51,8 @@ export async function handleWeather(
                 weatherRes.current_weather.windspeed
               )
                 .from('km/h')
-                .to('m/h')} mph`,
+                .to('m/h')
+                .toFixed(1)} mph`,
               inline: true,
             },
             {

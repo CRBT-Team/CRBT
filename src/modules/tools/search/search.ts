@@ -59,16 +59,20 @@ export default ChatCommand({
         null,
     };
 
-    const reply = await this.fetchReply();
+    await this.fetchReply();
 
     await AchievementProgress.call(this, 'SEEKER');
 
     if (fullOpts.site) {
       const res = await searchEngines[fullOpts.site].handle.call(this, fullOpts);
 
-      return await this.editReply(res);
+      await this.editReply(res);
+      return;
     }
 
-    return this.editReply(await handleFeaturedSearch.call(this, fullOpts));
+    const res = await handleFeaturedSearch.call(this, fullOpts);
+
+    await this.editReply(res);
+    return;
   },
 });

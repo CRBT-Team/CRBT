@@ -2,6 +2,7 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { achievements, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
+import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { progressBar } from '$lib/functions/progressBar';
 import type { Achievement } from '$lib/responses/Achievements';
@@ -13,7 +14,7 @@ import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'pu
 
 export default ChatCommand({
   name: 'achievements',
-  description: "View a list of a user's CRBT achievements.",
+  description: "View a list of a user's CRBT Achievements.",
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to see yours.'),
   async handle({ user }) {
     const u = user ?? this.user;
@@ -25,14 +26,17 @@ export default ChatCommand({
 async function renderAchievementsPage(this: Interaction, user: User | string, page: number) {
   const u = typeof user === 'string' ? this.client.users.cache.get(user) : user;
 
-  const userAchievements = await fetchWithCache(
+  const data = await fetchWithCache(
     `achievements:${u.id}`,
     () =>
-      prisma.achievements.findMany({
-        where: { userId: u.id },
+      prisma.user.findFirst({
+        where: { id: u.id },
+        select: { enableAchievements: true, globalAchievements: true },
       }),
     this instanceof CommandInteraction
   );
+
+  const userAchievements = data.globalAchievements;
 
   const allAchievements = Object.entries(achievements as { [k: string]: Achievement }).sort(
     ([a, aa], [b, ab]) => {
@@ -102,13 +106,18 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
     embeds: [
       {
         author: {
-          name: `${u.tag} - Achievements`,
+          name: `${u.tag} - CRBT Achievements`,
           icon_url: avatar(u),
         },
-        description: dedent`
+        description:
+          this.user.id === u.id && !data.enableAchievements
+            ? `${emojis.error} **Achievements are currently disabled for you. Check ${slashCmd(
+                'privacy'
+              )} to enable the feature.**`
+            : dedent`
         **${this.user.id === u.id ? "You've" : `${u.username} has`} unlocked ${
-          userAchievements.filter((a) => a.achievedAt).length
-        }/${allAchievements.length}** (${overallProgress.toPrecision(2)}%)
+                userAchievements.filter((a) => a.achievedAt).length
+              }/${allAchievements.length}** (${overallProgress.toFixed(1)}%)
         ${progressBar(overallProgress)}
         `,
         fields,

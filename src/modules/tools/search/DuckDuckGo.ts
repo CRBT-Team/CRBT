@@ -3,6 +3,7 @@ import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { trimURL } from '$lib/functions/trimURL';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { SafeSearchType, search } from 'duck-duck-scrape';
+import { decode } from 'html-entities';
 import fetch from 'node-fetch';
 import { escapeMarkdown } from 'purplet';
 import { SearchCmdOpts } from './search';
@@ -74,7 +75,7 @@ export async function handleDuckDuckGo(
             title: `Web results for "${query}"`,
             url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
             fields: res.slice(realPage * 3, realPage * 3 + 3).map((result) => {
-              const name = result.title;
+              const name = escapeMarkdown(decode(result.title));
               const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
                 escapeMarkdown(result.url)
               ).replace(/\//g, ' › ')}](${result.url})**`;
@@ -128,11 +129,14 @@ export async function handleDDGInstant(
           thumbnail: {
             url: data.Image ? `https://duckduckgo.com${data.Image}` : null,
           },
-          fields: data.Infobox?.content?.slice(0, 3)?.map((field) => ({
-            name: field.label,
-            value: field.value,
-            inline: true,
-          })),
+          fields: data.Infobox?.content
+            ?.filter((field) => field && typeof field.value === 'string')
+            ?.slice(0, 3)
+            ?.map((field) => ({
+              name: field.label,
+              value: field.value,
+              inline: true,
+            })),
           footer: {
             text: `Source: ${data.AbstractSource}\nPowered by DuckDuckGo • Showing Instant Result (Page 1/${pages})`,
             iconURL: `https://duckduckgo.com/favicon.png`,

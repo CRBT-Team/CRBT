@@ -155,7 +155,12 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
                 ]),
             ...(opts.anonymous
               ? []
-              : [new DeleteSearchButton().setEmoji(emojis.buttons.trash_bin).setStyle('DANGER')])
+              : [
+                  new DeleteSearchButton()
+                    .setLabel(searchEngines[currentSite].noPagination ? 'Delete Search' : '')
+                    .setEmoji(emojis.buttons.trash_bin)
+                    .setStyle('DANGER'),
+                ])
           ),
         ])
   );

@@ -8,6 +8,7 @@ import {
   InteractionUpdateOptions,
   MessageComponentInteraction,
 } from 'discord.js';
+import { escapeMarkdown } from 'purplet';
 import ytsr, { Video } from 'ytsr';
 import { SearchCmdOpts } from './search';
 import { createSearchResponse, fetchResults } from './_response';
@@ -33,8 +34,6 @@ export async function handleVideosSearch(
     const res = req.items.filter((i) => i.type === 'video') as Video[];
     const video = res[page - 1];
     const pages = res.length;
-    console.log(res);
-    console.log(query);
 
     return createSearchResponse(
       this,
@@ -45,7 +44,7 @@ export async function handleVideosSearch(
             author: {
               name: `Video results for "${query}"`,
             },
-            title: video.title,
+            title: escapeMarkdown(video.title),
             url: video.url,
             description:
               video.description?.length > 150

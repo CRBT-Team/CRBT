@@ -32,13 +32,11 @@ export async function handleDictionary(
     return createSearchResponse(this, opts, {
       embeds: [
         {
-          author: {
-            name: `${def.word} - ${def.meanings.length === 1 ? 'Definition' : 'Definitions'}`,
-          },
+          title: `${def.meanings.length === 1 ? 'Definition' : 'Definitions'} for "${def.word}"`,
           fields: [
             { name: 'Phonetics', value: def.phonetic ?? '*None available*', inline: true },
-            def.meanings.map((meaning) => ({
-              name: `*${meaning.partOfSpeech}*`,
+            def.meanings.map((meaning, i) => ({
+              name: `**${i + 1}. *${meaning.partOfSpeech}***`,
               value:
                 meaning.definitions[0].definition +
                 '\n\n' +

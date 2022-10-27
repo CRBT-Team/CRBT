@@ -26,7 +26,13 @@ export async function AchievementProgress(
   const achievement = achievements[type] as Achievement;
   const uId = 'user' in this ? this.user?.id : this.id;
 
-  const data = await prisma.achievements.findUnique({
+  const preferences =
+    (await prisma.user.findFirst({ where: { id: uId }, select: { enableAchievements: true } }))
+      ?.enableAchievements ?? true;
+
+  if (!preferences) return;
+
+  const data = await prisma.globalAchievements.findUnique({
     where: {
       id: `${uId}_${type}`,
     },
@@ -34,7 +40,7 @@ export async function AchievementProgress(
 
   if (data && data.progression >= achievement.steps) return;
 
-  const newData = await prisma.achievements.upsert({
+  const newData = await prisma.globalAchievements.upsert({
     create: {
       id: `${uId}_${type}`,
       achievement: type,
@@ -78,11 +84,11 @@ export async function AchievementProgress(
         `${achievement.howToGet}\nCheck your achievements with ${slashCmd('achievements')}.`
       )
       .setThumbnail(icon)
-      .setColor(`#${colors[achievement.secret ? 'gold' : 'success']}`),
+      .setColor(achievement.secret ? colors.gold : colors.success),
   ];
 
   if (this instanceof Interaction) {
-    await this[this.replied ? 'followUp' : 'reply']({
+    await this[this.replied || this.deferred ? 'followUp' : 'reply']({
       embeds,
       ephemeral: true,
     });
