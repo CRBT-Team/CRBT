@@ -28,9 +28,9 @@ export default ChatCommand({
             iconURL: avatar(this.client.user),
             url: links.baseURL,
           },
-          description: `Running v${pjson.version} • Build ${
-            pjson.build
-          } • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${links.purplet})**`,
+          description: `Running v${pjson.version} • **[Purplet ${pjson.dependencies[
+            'purplet'
+          ].slice(1)}](${links.purplet})**`,
           fields: [
             {
               name: strings.MEMBER_COUNT,
