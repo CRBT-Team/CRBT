@@ -41,7 +41,7 @@
     "@discordjs/rest": "^0.4.1",
     "@types/convert-units": "^2.3.5",
     "@types/dedent": "^0.7.0",
-    "discord-api-types": "^0.33.0",
+    "discord-api-types": "^0.37.15",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",
