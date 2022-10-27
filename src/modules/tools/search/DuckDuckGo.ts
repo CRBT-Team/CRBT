@@ -15,7 +15,7 @@ export async function handleDuckDuckGo(
   const { query, page } = opts;
 
   try {
-    const req = await fetchResults(opts, () =>
+    const req = await fetchResults(this, opts, () =>
       search(query, {
         locale: this.locale,
         safeSearch:
@@ -34,7 +34,7 @@ export async function handleDuckDuckGo(
 
     if (page === 1) {
       try {
-        instantResultData = await fetchResults<any>({ ...opts, site: 'featured' }, () =>
+        instantResultData = await fetchResults<any>(this, { ...opts, site: 'featured' }, () =>
           fetch(
             `https://api.duckduckgo.com/?${new URLSearchParams({
               q: query,

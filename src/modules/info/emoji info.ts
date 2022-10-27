@@ -2,11 +2,15 @@ import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { snowStamp } from '$lib/functions/snowStamp';
-import { CustomEmojiRegex } from '@purplet/utils';
+import {
+  CustomEmojiRegex,
+  formatEmojiURL,
+  snowflakeToDate,
+  timestampMention,
+} from '@purplet/utils';
 import { capitalCase } from 'change-case';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { MessageButton, MessageEmbed } from 'discord.js';
+import { ButtonInteraction, Interaction, MessageButton, MessageEmbed } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -19,11 +23,12 @@ import emojiJSON from '../../../data/misc/emoji.json';
 
 const emojiImg = (emojipediaCode: string, size = '120') => ({
   Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
-  'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/313/${emojipediaCode}.png`,
-  Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/304/${emojipediaCode}.png`,
+  'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
+  Samsung: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
+  Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
+  WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
+  Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
   Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
-  Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/310/${emojipediaCode}.png`,
-  WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/312/${emojipediaCode}.png`,
   'Microsoft Teams': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
 });
 
@@ -39,28 +44,47 @@ export default ChatCommand({
     if (CustomEmojiRegex.test(emoji)) {
       const emojiData = {
         animated: emoji.split(':')[0] === '<a',
-        name: emoji.split(':')[1],
-        id: emoji.split(':')[2].replace('>', ''),
-        url: `https://cdn.discordapp.com/emojis/${emoji.split(':')[2].replace('>', '')}.${
-          emoji.split(':')[0] === '<a' ? 'gif' : 'png'
-        }`,
-        createdAt: snowStamp(emoji.split(':')[2].replace('>', '')),
+        name: emoji.replace(CustomEmojiRegex, '$1'),
+        id: emoji.replace(CustomEmojiRegex, '$2'),
+        url: formatEmojiURL(emoji.replace(CustomEmojiRegex, '$2'), {
+          format: emoji.split(':')[0] === '<a' ? 'gif' : 'png',
+        }),
+        createdAt: snowflakeToDate(emoji.split(':')[2].replace('>', '')),
       };
 
       const isEmojiInServer = this.guild.emojis.cache.has(emojiData.id);
 
       await this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({ name: `${emojiData.name} - Emoji info`, iconURL: emojiData.url })
-            .addField('ID', emojiData.id, true)
-            .addField('Animated', emojiData.animated ? 'Yes' : 'No', true)
-            .addField(
-              'Added',
-              `<t:${emojiData.createdAt.unix()}> • <t:${emojiData.createdAt.unix()}:R>`
-            )
-            .setImage(emojiData.url)
-            .setColor(await getColor(this.user)),
+          {
+            author: {
+              name: `${emojiData.name} - Emoji info`,
+              iconURL: emojiData.url,
+            },
+            fields: [
+              {
+                name: 'ID',
+                value: emojiData.id,
+                inline: true,
+              },
+              {
+                name: 'Animated',
+                value: emojiData.animated ? 'Yes' : 'No',
+                inline: true,
+              },
+              {
+                name: 'Added',
+                value: `${timestampMention(emojiData.createdAt)} • ${timestampMention(
+                  emojiData.createdAt,
+                  'R'
+                )}`,
+              },
+            ],
+            image: {
+              url: emojiData.url,
+            },
+            color: await getColor(this.user),
+          },
         ],
         components: isEmojiInServer
           ? []
@@ -75,62 +99,84 @@ export default ChatCommand({
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
       const emojiData = emojiJSON.find((e) => e.char === emoji);
-      const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
-        .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/:/g, '')}`;
 
-      const emojiURL = emojiImg(emojipediaCode).Twemoji;
-
-      await this.reply({
-        embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: `${capitalCase(emojiData.name)} - Emoji info`,
-              iconURL: emojiURL,
-            })
-            .setDescription(`**[View on Emojipedia](https://emojipedia.org/${emoji})**`)
-            .addField('Unicode', emojiData.codes, true)
-            .addField(
-              'Available since',
-              `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
-              true
-            )
-            .addField('Category', emojiData.category, true)
-            .setImage(emojiURL)
-            .setColor(await getColor(this.user)),
-        ],
-        components: components(renderSelect(emojipediaCode)),
-      });
+      return this.reply(await renderUnicodeEmoji.call(this, emojiData.codes));
     } else {
-      await CRBTError(
-        this,
-        'Looks like that emoji does not exist! Try using a default Unicode emoji, or a custom emoji. 😃'
-      );
+      await CRBTError(this, {
+        title: 'Could not find that emoji',
+        description: `Try using a default Unicode emoji 😀, or a custom emoji. ${emojis.emotiguy.coolwoah}`,
+      });
     }
   },
 });
 
-function renderSelect(emojipediaCode: string, current = 'Twemoji') {
-  return row(
-    new EmojiDesignSelect(emojipediaCode).setOptions(
-      Object.entries(emojiImg(emojipediaCode)).map(([brand, url]) => ({
-        label: brand === current ? `Viewing design: ${capitalCase(brand)}` : brand,
-        value: brand,
-        default: brand === current,
-      }))
-    )
-  );
+async function renderUnicodeEmoji(
+  this: Interaction,
+  emojiCodes: string,
+  vendor: string = 'Twemoji'
+) {
+  const emojiData = emojiJSON.find((e) => e.codes === emojiCodes);
+
+  const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/:/g, '')}`;
+
+  const emojiURL = emojiImg(emojipediaCode)[vendor];
+
+  return {
+    embeds: [
+      {
+        author: {
+          name: `${capitalCase(emojiData.name)} - Emoji info`,
+          icon_url: emojiURL,
+        },
+        description: `**[View on Emojipedia](https://emojipedia.org/${emojiData.char})**`,
+        fields: [
+          {
+            name: 'Unicode',
+            value: emojiData.codes,
+            inline: true,
+          },
+          {
+            name: 'Available since',
+            value: `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
+            inline: true,
+          },
+          {
+            name: 'Category',
+            value: emojiData.category,
+            inline: true,
+          },
+        ],
+        image: {
+          url: emojiURL,
+        },
+        color:
+          this instanceof ButtonInteraction
+            ? this.message.embeds[0].color
+            : await getColor(this.user),
+      },
+    ],
+    components: components(
+      row(
+        new EmojiDesignSelect(emojiCodes).setOptions(
+          Object.entries(emojiImg(emojipediaCode)).map(([brand, url]) => ({
+            label: brand === vendor ? `Viewing design: ${capitalCase(brand)}` : brand,
+            value: brand,
+            default: brand === vendor,
+          }))
+        )
+      )
+    ),
+  };
 }
 
 export const EmojiDesignSelect = SelectMenuComponent({
-  async handle(emojiCode: string) {
-    const brand = this.values[0];
+  async handle(emojiCodes: string) {
+    const vendor = this.values[0];
 
-    await this.update({
-      embeds: [new MessageEmbed(this.message.embeds[0]).setImage(emojiImg(emojiCode)[brand])],
-      components: components(renderSelect(emojiCode, brand)),
-    });
+    await this.update(await renderUnicodeEmoji.call(this, emojiCodes, vendor));
   },
 });
 

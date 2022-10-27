@@ -39,7 +39,7 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<Sear
     ...newOpts,
   };
 
-  if (fromCache.site !== newOpts.site) {
+  if (fromCache?.site !== newOpts.site) {
     await this.editReply({
       embeds: [
         {

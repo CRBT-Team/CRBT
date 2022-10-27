@@ -21,7 +21,7 @@ export async function handleVideosSearch(
   console.log('videos', opts);
 
   try {
-    const req = await fetchResults(opts, () =>
+    const req = await fetchResults(this, opts, () =>
       ytsr(query, {
         hl: this.locale.split('-')[0],
         gl: this.locale.split('-')[1] ?? null,

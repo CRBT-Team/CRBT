@@ -3,9 +3,9 @@ import { clients, links } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { timestampMention } from '@purplet/utils';
 import {
   ButtonInteraction,
   ClientApplication,
@@ -28,11 +28,12 @@ export default ChatCommand({
     bot = bot || this.client.user;
 
     if (!bot.bot) {
-      return CRBTError(this,
+      return CRBTError(
+        this,
         `This command only works on bot users. To get a regular user's info, run ${slashCmd(
           'user info'
         )}.`
-      )
+      );
     }
 
     const isSelf = bot.id === this.client.user.id;
@@ -40,7 +41,7 @@ export default ChatCommand({
     const bots = !this.guild
       ? null
       : cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
-      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
+        (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
 
     if (bots) {
       cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
@@ -51,7 +52,10 @@ export default ChatCommand({
       : bots.find(({ application }) => application.bot.id === bot.id);
 
     if (!botInfo) {
-      await CRBTError(this, "Couldn't find that bot on the server. Make sure that it is on the server.");
+      await CRBTError(
+        this,
+        "Couldn't find that bot on the server. Make sure that it is on the server."
+      );
     }
 
     await this.reply(
@@ -101,7 +105,10 @@ export async function renderBotInfo(
     e.addField('Added by', integration.user.toString(), true);
   }
 
-  e.addField(strings.CREATED, `${time(app.createdAt)} • ${time(app.createdAt, 'R')}`);
+  e.addField(
+    strings.CREATED,
+    `${timestampMention(app.createdAt)} • ${timestampMention(app.createdAt, 'R')}`
+  );
 
   if (isSelf) {
     e.addField(strings.UPTIME, `<t:${uptime}> • <t:${uptime}:R>`);
@@ -127,8 +134,9 @@ export async function renderBotInfo(
         true
       )
       .setFooter({
-        text: `CRBT v${pjson.version} • Build ${pjson.build} ${this.client.user.id === clients.crbt.id ? '' : '(Dev) '
-          }• Purplet ${pjson.dependencies['purplet'].slice(1)}`,
+        text: `CRBT v${pjson.version} • Build ${pjson.build} ${
+          this.client.user.id === clients.crbt.id ? '' : '(Dev) '
+        }• Purplet ${pjson.dependencies['purplet'].slice(1)}`,
       });
   }
 
@@ -138,39 +146,39 @@ export async function renderBotInfo(
       row(
         ...(!isSelf
           ? [
-            new MessageButton()
-              .setStyle('LINK')
-              .setLabel(strings.BUTTON_INVITE)
-              .setURL(
-                `https://discord.com/api/oauth2/authorize?client_id=${bot.id}&scope=applications.commands%20bot&permissions=0`
-              ),
-            // isSelf
-            //   ? new MessageButton()
-            //       .setStyle('LINK')
-            //       .setLabel('Terms of Service')
-            //       .setURL(app.termsOfServiceURL)
-            //   : null,
-            isSelf
-              ? new MessageButton()
+              new MessageButton()
                 .setStyle('LINK')
-                .setLabel('Privacy Policy')
-                .setURL(links.policy)
-              : null,
-          ]
+                .setLabel(strings.BUTTON_INVITE)
+                .setURL(
+                  `https://discord.com/api/oauth2/authorize?client_id=${bot.id}&scope=applications.commands%20bot&permissions=0`
+                ),
+              // isSelf
+              //   ? new MessageButton()
+              //       .setStyle('LINK')
+              //       .setLabel('Terms of Service')
+              //       .setURL(app.termsOfServiceURL)
+              //   : null,
+              isSelf
+                ? new MessageButton()
+                    .setStyle('LINK')
+                    .setLabel('Privacy Policy')
+                    .setURL(links.policy)
+                : null,
+            ]
           : [
-            new MessageButton()
-              .setStyle('LINK')
-              .setLabel(strings.BUTTON_INVITE)
-              .setURL(links.invite),
-            new MessageButton()
-              .setStyle('LINK')
-              .setLabel(strings.BUTTON_DONATE)
-              .setURL(links.donate),
-            new MessageButton()
-              .setStyle('LINK')
-              .setLabel(strings.BUTTON_DISCORD)
-              .setURL(links.discord),
-          ])
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(strings.BUTTON_INVITE)
+                .setURL(links.invite),
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(strings.BUTTON_DONATE)
+                .setURL(links.donate),
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(strings.BUTTON_DISCORD)
+                .setURL(links.discord),
+            ])
       ),
       navBar(navCtx, this.locale, 'botinfo', getTabs('botinfo', bot, true as any))
     ),

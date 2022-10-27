@@ -1,4 +1,4 @@
-import { cache } from '$lib/cache';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleFeaturedSearch } from './featured';
@@ -61,7 +61,7 @@ export default ChatCommand({
 
     const reply = await this.fetchReply();
 
-    cache.set(`search:${reply.id}`, fullOpts);
+    await AchievementProgress.call(this, 'SEEKER');
 
     if (fullOpts.site) {
       const res = await searchEngines[fullOpts.site].handle.call(this, fullOpts);

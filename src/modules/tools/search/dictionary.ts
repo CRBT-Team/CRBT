@@ -4,15 +4,15 @@ import { CommandInteraction, MessageAttachment, MessageComponentInteraction } fr
 import fetch from 'node-fetch';
 import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
-import { createSearchResponse } from './_response';
+import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDictionary(
   this: CommandInteraction | MessageComponentInteraction,
   opts: SearchCmdOpts
 ) {
   try {
-    const res = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`
+    const res = await fetchResults(this, opts, () =>
+      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`)
     );
 
     if (!res.ok) {

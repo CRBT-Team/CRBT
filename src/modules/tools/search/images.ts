@@ -11,7 +11,7 @@ export async function handleImageSearch(
   const { query } = opts;
 
   try {
-    const res = await fetchResults(opts, () =>
+    const res = await fetchResults(this, opts, () =>
       imageSearch(query, {
         additional_params: {},
         safe: !(this.channel.type === 'GUILD_TEXT' && this.channel.nsfw),

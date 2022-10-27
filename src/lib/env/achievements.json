@@ -24,6 +24,12 @@
     "secret": false,
     "steps": 1
   },
+  "SEEKER": {
+    "name": "Seeker",
+    "howToGet": "Search 10 things with CRBT Search.",
+    "secret": false,
+    "steps": 10
+  },
   "BOOKMARKER": {
     "name": "Bookmarker",
     "howToGet": "Bookmark 5 messages.",

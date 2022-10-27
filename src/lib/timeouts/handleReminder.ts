@@ -1,8 +1,8 @@
 import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
+import { timestampMention } from '@purplet/utils';
 import { Client, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
@@ -17,7 +17,7 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   const dest =
     reminder.destination === 'dm'
       ? user
-      : (await client.channels.fetch(channelId) as GuildTextBasedChannel);
+      : ((await client.channels.fetch(channelId)) as GuildTextBasedChannel);
 
   const message = {
     embeds: [
@@ -27,10 +27,10 @@ export async function handleReminder(reminder: Reminder, client: Client) {
           iconURL: icons.reminder,
         })
         .setDescription(
-          strings.REMINDER_DESCRIPTION.replace('<TIME>', time(reminder.expiresAt, 'D')).replace(
-            '<RELATIVE_TIME>',
-            time(reminder.expiresAt, 'R')
-          )
+          strings.REMINDER_DESCRIPTION.replace(
+            '<TIME>',
+            timestampMention(reminder.expiresAt, 'D')
+          ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R'))
         )
         .addField(strings.SUBJECT, getReminderSubject(reminder, client, 0))
         .setColor(await getColor(user)),
@@ -58,7 +58,7 @@ export async function handleReminder(reminder: Reminder, client: Client) {
       ...message,
     });
   } catch (e) {
-    const dest = (await client.channels.fetch(channelId) as GuildTextBasedChannel);
+    const dest = (await client.channels.fetch(channelId)) as GuildTextBasedChannel;
 
     await dest.send({
       allowedMentions: {

@@ -6,10 +6,10 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
-import { snowStamp } from '$lib/functions/snowStamp';
 import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
+import { snowflakeToDate } from '@purplet/utils';
 import dayjs from 'dayjs';
 import {
   ButtonInteraction,
@@ -36,13 +36,13 @@ export default ChatCommand({
   description: 'Get a list of all of your reminders.',
   async handle() {
     dayjs.locale(this.locale);
-    const userReminders =
-      (await prisma.reminder.findMany({
+    const userReminders = (
+      await prisma.reminder.findMany({
         where: {
-          userId: this.user.id
-        }
-      }))
-        .sort((a, b) => a.expiresAt.getTime() - b.expiresAt.getTime());
+          userId: this.user.id,
+        },
+      })
+    ).sort((a, b) => a.expiresAt.getTime() - b.expiresAt.getTime());
 
     cache.set(`reminders:${this.user.id}`, userReminders, 60 * 1000 * 15);
 
@@ -196,8 +196,12 @@ async function renderReminder(
         })
         .setTitle(getReminderSubject(userReminders[index], this.client))
         .setDescription(
-          `Will be sent ${time(expiresAt, 'R')} in ${destination === 'dm' ? 'your DMs' : `${channel}`
-          }\nCreated ${time(snowStamp(messageId), 'R')} (${time(snowStamp(messageId), 'R')})`
+          `Will be sent ${time(expiresAt, 'R')} in ${
+            destination === 'dm' ? 'your DMs' : `${channel}`
+          }\nCreated ${time(snowflakeToDate(messageId), 'R')} (${time(
+            snowflakeToDate(messageId),
+            'R'
+          )})`
         )
         .setColor(this.message.embeds[0].color),
     ],
@@ -236,13 +240,14 @@ async function renderReminder(
               dates: `${dayjs(expiresAt).format('YYYYMMDD')}/${dayjs(expiresAt)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
-              details: `${strings.GCALENDAR_EVENT} ${destination
-                ? strings.GCALENDAR_EVENT_CHANNEL.replace(
-                  '<CHANNEL>',
-                  `#${channel.name}`
-                ).replace('<SERVER>', channel.guild.name)
-                : strings.GCALENDAR_EVENT_DM
-                }`,
+              details: `${strings.GCALENDAR_EVENT} ${
+                destination
+                  ? strings.GCALENDAR_EVENT_CHANNEL.replace(
+                      '<CHANNEL>',
+                      `#${channel.name}`
+                    ).replace('<SERVER>', channel.guild.name)
+                  : strings.GCALENDAR_EVENT_DM
+              }`,
               location: url,
             })}`
           )
@@ -251,10 +256,7 @@ async function renderReminder(
   };
 }
 
-async function renderList(
-  this: CommandInteraction | ButtonInteraction,
-  userReminders: Reminder[]
-) {
+async function renderList(this: CommandInteraction | ButtonInteraction, userReminders: Reminder[]) {
   return {
     embeds: [
       new MessageEmbed()
@@ -272,8 +274,9 @@ async function renderList(
             .sort((a, b) => a.expiresAt.getTime() - b.expiresAt.getTime())
             .map((r) => ({
               name: getReminderSubject(r, this.client),
-              value: `<t:${dayjs(r.expiresAt).unix()}:R>\nDestination: ${r.destination === 'dm' ? 'In your DMs' : `<#${r.destination}>`
-                }`,
+              value: `<t:${dayjs(r.expiresAt).unix()}:R>\nDestination: ${
+                r.destination === 'dm' ? 'In your DMs' : `<#${r.destination}>`
+              }`,
             }))
         )
         .setColor(
@@ -286,19 +289,19 @@ async function renderList(
       userReminders.length === 0
         ? []
         : components(
-          row(
-            new ReminderSelectMenu()
-              .setPlaceholder('Select a reminder to edit or delete.')
-              .setMaxValues(1)
-              .addOptions(
-                userReminders.map((r, index) => ({
-                  label: getReminderSubject(r, this.client),
-                  description: `${dayjs(r.expiresAt).fromNow()}`,
-                  value: index.toString(),
-                }))
-              )
-          )
-        ),
+            row(
+              new ReminderSelectMenu()
+                .setPlaceholder('Select a reminder to edit or delete.')
+                .setMaxValues(1)
+                .addOptions(
+                  userReminders.map((r, index) => ({
+                    label: getReminderSubject(r, this.client),
+                    description: `${dayjs(r.expiresAt).fromNow()}`,
+                    value: index.toString(),
+                  }))
+                )
+            )
+          ),
   };
 }
 

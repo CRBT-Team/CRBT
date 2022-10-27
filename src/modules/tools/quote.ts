@@ -5,7 +5,8 @@ import { t } from '$lib/language';
 import { MessageButton, MessageEmbed } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
-export default ChatCommand({
+// export default
+ChatCommand({
   name: 'quote',
   description: 'Quote a message using a link.',
   options: new OptionBuilder().string('message_link', 'A link to the message to quote.', {

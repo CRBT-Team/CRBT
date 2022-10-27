@@ -1,4 +1,4 @@
-import { cache } from '$lib/cache';
+import { cache, fetchWithCache } from '$lib/cache';
 import { getColor } from '$lib/functions/getColor';
 import { Interaction, InteractionReplyOptions, InteractionUpdateOptions } from 'discord.js';
 import { SearchCmdOpts } from './search';
@@ -25,12 +25,11 @@ export async function createSearchResponse(
 }
 
 export async function fetchResults<T>(
+  i: { fetchReply: () => Promise<{ id: string }> },
   opts: SearchCmdOpts,
   getResults: () => Promise<T>
 ): Promise<T> {
-  const result = cache.get<T>(`${opts.site}:${opts.query}`) ?? (await getResults());
+  cache.set(`search:${(await i.fetchReply()).id}`, opts);
 
-  cache.set(`${opts.site}:${opts.query}`, result, 60 * 3);
-
-  return result;
+  return fetchWithCache(`${opts.site}:${opts.query}`, getResults);
 }

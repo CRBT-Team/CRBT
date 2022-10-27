@@ -52,7 +52,7 @@ export async function AchievementProgress(
       },
     },
     update: {
-      achievedAt: data?.progression || 0 + 1 === achievement.steps ? new Date() : undefined,
+      achievedAt: (data?.progression || 0) + 1 === achievement.steps ? new Date() : undefined,
       progression: {
         increment: 1,
       },
