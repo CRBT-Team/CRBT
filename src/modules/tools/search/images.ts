@@ -21,8 +21,6 @@ export async function handleImageSearch(
     const image = res[opts.page - 1];
     const pages = res.length;
 
-    console.log('images', opts);
-
     return createSearchResponse(
       this,
       opts,

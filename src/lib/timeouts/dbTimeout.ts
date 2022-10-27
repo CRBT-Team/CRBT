@@ -22,8 +22,6 @@ export async function dbTimeout<T extends Timeout>(
   const type = timeout.type.toString() as TimeoutTypes;
   const rawTimeout = (({ type, ...o }) => o)(timeout) as Omit<Timeout, 'type'>;
 
-  console.log(type, timeout);
-
   setLongerTimeout(async () => {
     if (!timeout) return;
 

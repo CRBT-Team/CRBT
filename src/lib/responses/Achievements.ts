@@ -6,6 +6,7 @@ import {
   ContextMenuInteraction,
   GuildMember,
   Interaction,
+  MessageComponentInteraction,
   MessageEmbed,
   ModalSubmitInteraction,
   User,
@@ -20,7 +21,13 @@ export interface Achievement {
 }
 
 export async function AchievementProgress(
-  this: CommandInteraction | ContextMenuInteraction | ModalSubmitInteraction | GuildMember | User,
+  this:
+    | CommandInteraction
+    | ContextMenuInteraction
+    | ModalSubmitInteraction
+    | MessageComponentInteraction
+    | GuildMember
+    | User,
   type: keyof typeof achievements
 ) {
   const achievement = achievements[type] as Achievement;

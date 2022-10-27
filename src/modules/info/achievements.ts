@@ -43,20 +43,16 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
       const ua = userAchievements.find((ua) => ua.achievement === a);
       const ub = userAchievements.find((ua) => ua.achievement === b);
 
-      if (ua?.achievedAt) return 1;
       if (!ua?.progression && aa.secret) return 1;
 
       const pa = (ua?.progression ?? 1) / aa.steps;
       const pb = (ub?.progression ?? 1) / ab.steps;
-      console.log(`${a}=${pa}    ${b}=${pb}     ${pa > pb}`);
 
       return (pa > pb ? 1 : -1) ?? 1;
     }
   );
 
-  const pages = Math.round(allAchievements.length / 3);
-
-  console.log(page, pages);
+  const pages = Math.ceil(allAchievements.length / 3);
 
   const fields = allAchievements
     .slice(page * 3, page * 3 + 3)
@@ -115,7 +111,7 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
                 'privacy'
               )} to enable the feature.**`
             : dedent`
-        **${this.user.id === u.id ? "You've" : `${u.username} has`} unlocked ${
+        **${this.user.id === u.id ? "You've" : `${u.username} has`} achieved ${
                 userAchievements.filter((a) => a.achievedAt).length
               }/${allAchievements.length}** (${overallProgress.toFixed(1)}%)
         ${progressBar(overallProgress)}

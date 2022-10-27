@@ -8,13 +8,16 @@ import { TimeoutTypes } from '$lib/types/timeouts';
 import { Reminder } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
-import { MessageFlags } from 'discord-api-types/v10';
 import { randomBytes } from 'node:crypto';
 import { MessageContextCommand } from 'purplet';
 
 export default MessageContextCommand({
   name: 'Remind me about this',
   async handle(message) {
+    await this.deferReply({
+      ephemeral: true,
+    });
+
     const url = message.url.replace(/https:\/\/((canary|ptb)\.)?discord\.com\/channels\//, '');
 
     const { strings, errors } = t(this, 'remind me');
@@ -29,13 +32,13 @@ export default MessageContextCommand({
 
     const embed = message.embeds.find((e) => e.title || e.description || e.fields[0].name);
 
-    console.log(embed);
     const subject = `${(
       message.content ||
       embed?.title ||
       embed?.description ||
-      embed?.fields[0].name
-    ).slice(0, 50)}...`;
+      embed?.fields[0].name ||
+      ''
+    )?.slice(0, 60)}...`;
 
     const now = dayjs();
     const expiresAt = dayjs().add(15, 'm');
@@ -51,7 +54,7 @@ export default MessageContextCommand({
                   : message.content,
             }
           : {}),
-        ...(!message.content && message.embeds
+        ...(!message.content && message.embeds[0]
           ? {
               firstEmbed: {
                 author: message.embeds[0].author,
@@ -80,7 +83,7 @@ export default MessageContextCommand({
         'R'
       )}`;
 
-      this.reply({
+      await this.editReply({
         embeds: [
           {
             title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
@@ -106,7 +109,6 @@ export default MessageContextCommand({
             author: message.author,
           }),
         ],
-        flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
       await this.editReply(UnknownError(this, String(error)));

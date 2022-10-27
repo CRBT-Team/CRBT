@@ -96,7 +96,7 @@ async function renderPrivacySettings(
     components: components(
       row(
         ...privacyPreferences.map(([id, name, desc]) =>
-          new ToggleSettingBtn({ setting: id, newState: ![id] })
+          new ToggleSettingBtn({ setting: id, newState: !preferences[id] })
             .setLabel(name)
             .setStyle('SECONDARY')
             .setEmoji(emojis.toggle[preferences[id] ? 'on' : 'off'])

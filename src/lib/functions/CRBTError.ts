@@ -2,7 +2,7 @@ import { prisma } from '$lib/db';
 import { channels, colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
+import { APIEmbed } from 'discord-api-types/v10';
 import {
   Interaction,
   InteractionReplyOptions,
@@ -16,11 +16,7 @@ import { RemindButton } from '../../modules/components/RemindButton';
 const handleError = (
   i: Interaction,
   opts: {
-    embed: {
-      title?: string;
-      description?: string;
-      fields?: APIEmbedField[];
-    };
+    embed: Partial<APIEmbed>;
     error?: {
       error: any;
       context: string;
@@ -74,9 +70,8 @@ const handleError = (
   });
 
   return {
+    ...embed,
     title: `${emojis.error} ${embed.title}`,
-    description: embed.description ?? '',
-    fields: embed.fields ?? [],
     color: colors.error,
   };
 };

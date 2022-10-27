@@ -55,9 +55,6 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<Sear
     });
   }
 
-  console.log('handlebtn', opts);
-  console.log('handlebtn__cache', fromCache);
-
   cache.set(`search:${this.message.id}`, opts);
 
   const res = await searchEngines[opts.site].handle.call(this, opts);
@@ -104,8 +101,6 @@ export const DeleteSearchButton = ButtonComponent({
 export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
   const featured = returnFeaturedItem(opts);
   const { page, site: currentSite } = opts;
-
-  console.log('navbar', opts);
 
   const arr = chunks(
     [

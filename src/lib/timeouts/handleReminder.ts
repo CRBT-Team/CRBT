@@ -1,4 +1,4 @@
-import { colors, emojis, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { ExtractedReminder, extractReminder } from '$lib/functions/extractReminder';
 import { getColor } from '$lib/functions/getColor';
@@ -6,7 +6,7 @@ import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
-import { Client, MessageButton, MessageEmbed } from 'discord.js';
+import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
 import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getReminderSubject } from '../../modules/tools/reminder list';
@@ -32,19 +32,20 @@ export async function handleReminder(reminder: Reminder, client: Client) {
 
   const message = {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: strings.REMINDER_TITLE,
-          iconURL: icons.reminder,
-        })
-        .setDescription(
-          strings.REMINDER_DESCRIPTION.replace(
-            '<TIME>',
-            timestampMention(reminder.expiresAt, 'D')
-          ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R'))
-        )
-        .addField(strings.SUBJECT, getReminderSubject(reminder, client, 0))
-        .setColor(await getColor(data.user)),
+      {
+        title: `${emojis.reminder} ${strings.REMINDER_TITLE}`,
+        description: strings.REMINDER_DESCRIPTION.replace(
+          '<TIME>',
+          timestampMention(reminder.expiresAt, 'D')
+        ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R')),
+        fields: [
+          {
+            name: strings.SUBJECT,
+            value: getReminderSubject(reminder, client, 0),
+          },
+        ],
+        color: await getColor(data.user),
+      },
       ...renderLowBudgetMessage(data),
     ],
     components: components(

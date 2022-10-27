@@ -26,8 +26,6 @@ export async function handleDuckDuckGo(
       })
     );
 
-    console.log('ddg', opts);
-
     let instantResultData: any;
     const res = req.results;
 
@@ -45,8 +43,6 @@ export async function handleDuckDuckGo(
         );
 
         if (instantResultData && instantResultData.Abstract && instantResultData.meta?.status) {
-          console.log(instantResultData);
-
           return handleDDGInstant.call(this, opts, instantResultData, pages);
         } else {
           instantResultData = null;
@@ -55,8 +51,6 @@ export async function handleDuckDuckGo(
     }
 
     const realPage = instantResultData ? opts.page + 1 : opts.page;
-
-    console.log('realPage', realPage);
 
     if (req.noResults || res.length === 0) {
       return createCRBTError(this, {

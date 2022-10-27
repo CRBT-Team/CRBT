@@ -19,8 +19,6 @@ export async function handleVideosSearch(
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
   const { query, page } = opts;
 
-  console.log('videos', opts);
-
   try {
     const req = await fetchResults(this, opts, () =>
       ytsr(query, {

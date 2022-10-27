@@ -5,7 +5,7 @@ import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-// export default 
+// export default
 ChatCommand({
   name: 'github',
   description: "Get a user's GitHub profile, or view a repository from them.",
@@ -22,7 +22,6 @@ ChatCommand({
         },
       }).then((r) => r.json())) as any;
 
-      console.log(user);
       const joined = dayjs(user.created_at).unix();
       const updated = dayjs(user.updated_at).unix();
 
@@ -35,9 +34,10 @@ ChatCommand({
               url: user.html_url,
             })
             .setDescription(
-              `**[Open in GitHub](${user.html_url})**${user.twittter_username
-                ? ` | **[Twitter](https://twitter.com/${user.twitter_username})**`
-                : ''
+              `**[Open in GitHub](${user.html_url})**${
+                user.twittter_username
+                  ? ` | **[Twitter](https://twitter.com/${user.twitter_username})**`
+                  : ''
               } ${user.blog ? ` | **[${trimURL(user.blog)}](${user.blog})**` : ''}`
             )
             .addField('Bio', user.bio ?? 'None')
@@ -47,10 +47,14 @@ ChatCommand({
             .addField(
               'Stats',
               `
-**[${user.followers ?? '0'} ${user.followers === 1 ? 'follower' : 'followers'}](${user.html_url
-              }?tab=followers)** | **[${user.following ?? '0'} following](${user.html_url
-              }?tab=following)** | **[${user.public_repos ?? '0'} public ${user.public_repos === 1 ? 'repository' : 'repositories'
-              }](${user.html_url}?tab=repositories)** | **[${user.public_gists ?? '0'} public ${user.public_gists === 1 ? 'gist' : 'gists'
+**[${user.followers ?? '0'} ${user.followers === 1 ? 'follower' : 'followers'}](${
+                user.html_url
+              }?tab=followers)** | **[${user.following ?? '0'} following](${
+                user.html_url
+              }?tab=following)** | **[${user.public_repos ?? '0'} public ${
+                user.public_repos === 1 ? 'repository' : 'repositories'
+              }](${user.html_url}?tab=repositories)** | **[${user.public_gists ?? '0'} public ${
+                user.public_gists === 1 ? 'gist' : 'gists'
               }](https://gist.github.com/${user.login})**`
             )
             .addField('Joined', `<t:${joined}>\n<t:${joined}:R>`, true)
