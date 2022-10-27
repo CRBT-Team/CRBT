@@ -9,7 +9,7 @@ import { GuildMember, User } from 'discord.js';
 export function avatar(
   user: GuildMember | User,
   size: CDNImageSize = 2048,
-  format?: CDNImageFormat,
+  format: CDNImageFormat = 'png',
   dynamic: boolean = true
 ) {
   if (user instanceof GuildMember) {

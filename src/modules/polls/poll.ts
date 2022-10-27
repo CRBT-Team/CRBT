@@ -131,17 +131,15 @@ export default ChatCommand({
         ),
       });
 
-      const pollData = await dbTimeout(
-        {
-          id: `${this.channel.id}/${msg.id}`,
-          expiresAt: new Date(Date.now() + ms(end_date)),
-          locale: this.guildLocale,
-          creatorId: this.user.id,
-          serverId: this.guild.id,
-          choices: pollChoices.map((_) => []),
-        } as Poll,
-        TimeoutTypes.Poll
-      );
+      const pollData = await dbTimeout({
+        id: `${this.channel.id}/${msg.id}`,
+        expiresAt: new Date(Date.now() + ms(end_date)),
+        locale: this.guildLocale,
+        creatorId: this.user.id,
+        serverId: this.guild.id,
+        choices: pollChoices.map((_) => []),
+        type: TimeoutTypes.Poll,
+      });
 
       activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 

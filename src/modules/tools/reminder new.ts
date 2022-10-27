@@ -82,17 +82,15 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await dbTimeout(
-        {
-          id: url,
-          expiresAt: expiresAt.toDate(),
-          destination: destination ? destination.id : 'dm',
-          userId: this.user.id,
-          subject,
-          locale: this.locale,
-        },
-        TimeoutTypes.Reminder
-      );
+      await dbTimeout({
+        id: url,
+        expiresAt: expiresAt.toDate(),
+        destination: destination ? destination.id : 'dm',
+        userId: this.user.id,
+        subject,
+        locale: this.locale,
+        type: TimeoutTypes.Reminder,
+      });
 
       await this.editReply({
         embeds: [

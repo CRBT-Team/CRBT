@@ -72,12 +72,13 @@ export default ChatCommand({
 
       const data = await dbTimeout({
         id: `${this.channel.id}/${msg.id}`,
+        type: TimeoutTypes.Giveaway,
         expiresAt: end.toDate(),
         serverId: this.guildId,
         locale: this.guildLocale,
         hostId: this.user.id,
         participants: [],
-      } as Giveaway, TimeoutTypes.Giveaway);
+      });
 
       activeGiveaways.set(`${this.channel.id}/${msg.id}`, data);
 
@@ -89,7 +90,8 @@ export default ChatCommand({
               iconURL: icons.success,
             })
             .setDescription(
-              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${emojis.menu
+              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
+                emojis.menu
               } menu. From this menu, you can also cancel it or view the entrants.`
             )
             .setColor(colors.success),
@@ -105,9 +107,9 @@ export default ChatCommand({
 async function getGiveawayData(id: string) {
   return (
     activeGiveaways.get(id) ??
-    ((await prisma.giveaway.findFirst({
+    (await prisma.giveaway.findFirst({
       where: { id },
-    })))
+    }))
   );
 }
 
@@ -116,7 +118,10 @@ export const GwayOptionsButton = ButtonComponent({
     const { strings } = t(this, 'poll');
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return CRBTError(this, 'Only managers ("Manage Server" permission) can manage this giveaway.')
+      return CRBTError(
+        this,
+        'Only managers ("Manage Server" permission) can manage this giveaway.'
+      );
     }
 
     const gwayData = await getGiveawayData(`${this.channelId}/${this.message.id}`);
@@ -214,10 +219,10 @@ export const EnterGwayButton = ButtonComponent({
 
     participants.push(this.user.id);
 
-    (await prisma.giveaway.update({
+    await prisma.giveaway.update({
       where: { id: gwayData.id },
       data: { ...gwayData, participants },
-    }));
+    });
 
     this.update({
       embeds: [
@@ -243,10 +248,7 @@ export const EnterGwayButton = ButtonComponent({
   },
 });
 
-export const endGiveaway = async (
-  giveaway: Giveaway,
-  gwayMsg: Message,
-) => {
+export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
   const { JUMP_TO_MSG } = t(giveaway.locale, 'genericButtons');
   const winnersAmount = Number(gwayMsg.embeds[0].fields[1].value);
 
@@ -263,9 +265,10 @@ export const endGiveaway = async (
           iconURL: icons.giveaway,
         })
         .setDescription(
-          `Ended <t:${dayjs().unix()}> (<t:${dayjs().unix()}:R>)\n${winners.length === 1
-            ? `Winner: <@${winners[0]}>`
-            : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
+          `Ended <t:${dayjs().unix()}> (<t:${dayjs().unix()}:R>)\n${
+            winners.length === 1
+              ? `Winner: <@${winners[0]}>`
+              : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
           }\n${gwayMsg.embeds[0].description.split('\n').at(-1)}`
         )
         .setColor(colors.gray),

@@ -4,10 +4,12 @@ import { emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { extractReminder } from '$lib/functions/extractReminder';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
+import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { Reminder } from '@prisma/client';
 import { snowflakeToDate } from '@purplet/utils';
 import dayjs from 'dayjs';
@@ -19,7 +21,6 @@ import {
   MessageEmbed,
   ModalSubmitInteraction,
   SelectMenuInteraction,
-  TextChannel,
   TextInputComponent,
 } from 'discord.js';
 import {
@@ -172,6 +173,11 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE'
     ).replace('<USER>', user?.username ?? `${username}`);
   }
+  if (reminder.id.includes('MESSAGEREMINDER')) {
+    const [username, ...subject] = reminder.subject.split('--');
+
+    return `[Message from ${username}]` + (isListString ? `\n${subject.join('--')}` : '');
+  }
   return reminder.subject;
 }
 
@@ -180,12 +186,11 @@ async function renderReminder(
   userReminders: Reminder[],
   index: number
 ) {
-  const { expiresAt, id, destination } = userReminders[index];
-  const [guildId, channelId, messageId] = id.split('/');
+  const reminder = userReminders[index];
   const { JUMP_TO_MSG, BACK, EDIT, DELETE } = t(this, 'genericButtons');
   const { strings } = t(this, 'remind me');
-  const channel = this.client.channels.cache.get(channelId) as TextChannel;
-  const url = `https://discordapp.com/channels/${id}`;
+
+  const data = await extractReminder(reminder, this.client);
 
   return {
     embeds: [
@@ -194,16 +199,17 @@ async function renderReminder(
           name: `${this.user.tag} - Reminders (${userReminders.length})`,
           iconURL: avatar(this.user, 64),
         })
-        .setTitle(getReminderSubject(userReminders[index], this.client))
+        .setTitle(getReminderSubject(reminder, this.client))
         .setDescription(
-          `Will be sent ${time(expiresAt, 'R')} in ${
-            destination === 'dm' ? 'your DMs' : `${channel}`
-          }\nCreated ${time(snowflakeToDate(messageId), 'R')} (${time(
-            snowflakeToDate(messageId),
+          `Will be sent ${time(data.expiresAt, 'R')} in ${
+            data.raw.destination === 'dm' ? 'your DMs' : `${data.channel}`
+          }\nCreated ${time(snowflakeToDate(data.messageId), 'R')} (${time(
+            snowflakeToDate(data.messageId),
             'R'
           )})`
         )
         .setColor(this.message.embeds[0].color),
+      ...renderLowBudgetMessage(data),
     ],
     components: components(
       row(
@@ -227,9 +233,9 @@ async function renderReminder(
           .setStyle('DANGER')
       ),
       row(
-        id.endsWith('BIRTHDAY')
+        data.id.endsWith('BIRTHDAY')
           ? null
-          : new MessageButton().setStyle('LINK').setURL(url).setLabel(JUMP_TO_MSG),
+          : new MessageButton().setStyle('LINK').setURL(data.url).setLabel(JUMP_TO_MSG),
         new MessageButton()
           .setStyle('LINK')
           .setLabel(strings.BUTTON_GCALENDAR)
@@ -237,18 +243,18 @@ async function renderReminder(
             `https://calendar.google.com/calendar/render?${new URLSearchParams({
               action: 'TEMPLATE',
               text: getReminderSubject(userReminders[index], this.client),
-              dates: `${dayjs(expiresAt).format('YYYYMMDD')}/${dayjs(expiresAt)
+              dates: `${dayjs(data.expiresAt).format('YYYYMMDD')}/${dayjs(data.expiresAt)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
               details: `${strings.GCALENDAR_EVENT} ${
-                destination
+                data.raw.destination
                   ? strings.GCALENDAR_EVENT_CHANNEL.replace(
                       '<CHANNEL>',
-                      `#${channel.name}`
-                    ).replace('<SERVER>', channel.guild.name)
+                      `#${data.channel.name}`
+                    ).replace('<SERVER>', data.channel.guild.name)
                   : strings.GCALENDAR_EVENT_DM
               }`,
-              location: url,
+              location: data.url,
             })}`
           )
       )

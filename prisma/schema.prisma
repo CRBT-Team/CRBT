@@ -43,6 +43,7 @@ model Reminder {
   locale      String
   destination String
   subject     String
+  details     String?
 }
 
 model servers {
