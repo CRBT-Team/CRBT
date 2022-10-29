@@ -119,40 +119,47 @@ export async function renderModlogs(
         footer: {
           text: `${data.length} entries total • Page ${page + 1}/${pages}`,
         },
-        color: await getColor(this.guild),
+        color: await getColor(user ?? this.guild),
       },
     ],
     components: components(
       row(
-        new StrikeSelectMenu().setPlaceholder('View, edit or delete a strike').setOptions(
-          results.map((s, i) => ({
-            label: `Strike #${data.indexOf(s) + 1}`,
-            description: `${dayjs(s.createdAt).format('YYYY-MM-DD')} • ${t(
-              this.guildLocale,
-              s.type === 'CLEAR' ? 'MODERATION_LOGS_CLEAR' : `MODERATION_LOGS_ACTION_${s.type}`
-            )}`,
-            value: s.id,
-          }))
-        )
+        new StrikeSelectMenu({ page, userId: filters.userId })
+          .setPlaceholder('View, edit or delete a strike')
+          .setOptions(
+            !data || data.length === 0
+              ? [{ label: 'h', value: 'h' }]
+              : results.map((s, i) => ({
+                  label: `Strike #${data.indexOf(s) + 1}`,
+                  description: `${dayjs(s.createdAt).format('YYYY-MM-DD')} • ${t(
+                    this.guildLocale,
+                    s.type === 'CLEAR'
+                      ? 'MODERATION_LOGS_CLEAR'
+                      : `MODERATION_LOGS_ACTION_${s.type}`
+                  )}`,
+                  value: s.id,
+                }))
+          )
+          .setDisabled(data.length === 0)
       ),
       row(
         // new ShowFiltersBtn().setStyle('SECONDARY').setLabel('Show Filters'),
         new GoToPage({ page: 0, userId: user?.id, s: false })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_first)
-          .setDisabled(page === 0),
+          .setDisabled(page <= 0),
         new GoToPage({ page: page - 1, userId: user?.id })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.left_arrow)
-          .setDisabled(page === 0),
+          .setDisabled(page <= 0),
         new GoToPage({ page: page + 1, userId: user?.id })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.right_arrow)
-          .setDisabled(page === pages - 1),
+          .setDisabled(page >= pages - 1),
         new GoToPage({ page: pages - 1, userId: user?.id, s: true })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_last)
-          .setDisabled(page === pages - 1)
+          .setDisabled(page >= pages - 1)
       )
     ),
     flags:
@@ -169,14 +176,15 @@ export const GoToPage = ButtonComponent({
 });
 
 export const StrikeSelectMenu = SelectMenuComponent({
-  async handle(ctx: null) {
-    return this.update(await renderStrikePage.call(this, this.values[0]));
+  async handle({ page, userId }: PageBtnProps) {
+    return this.update(await renderStrikePage.call(this, this.values[0], { page, userId }));
   },
 });
 
 async function renderStrikePage(
   this: SelectMenuInteraction | ModalSubmitInteraction,
-  strikeId: string
+  sId: string,
+  { page, userId }: PageBtnProps
 ) {
   const strikes = await fetchWithCache(
     `strikes:${this.guildId}`,
@@ -187,7 +195,7 @@ async function renderStrikePage(
     this instanceof ModalSubmitInteraction
   );
 
-  const strike = strikes.find(({ id }) => id === strikeId);
+  const strike: moderationStrikes = strikes.find(({ id }) => id === sId);
 
   return {
     embeds: [
@@ -244,15 +252,15 @@ async function renderStrikePage(
     ],
     components: components(
       row(
-        new GoToPage({ page: 0 })
+        new GoToPage({ page, userId })
           .setEmoji(emojis.buttons.left_arrow)
           .setLabel('Back')
           .setStyle('SECONDARY'),
-        new EditButton({ strikeId, index: strikes.indexOf(strike) + 1 })
+        new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
           .setEmoji(emojis.buttons.pencil)
           .setLabel('Edit Reason')
           .setStyle('PRIMARY'),
-        new DeleteButton(strikeId)
+        new DeleteButton({ sId, page, userId })
           .setEmoji(emojis.buttons.trash_bin)
           .setLabel('Delete Strike')
           .setStyle('DANGER')
@@ -262,17 +270,17 @@ async function renderStrikePage(
 }
 
 export const EditButton = ButtonComponent({
-  async handle({ strikeId, index }) {
+  async handle({ sId, userId, i, page }: PageBtnProps & { sId: string; i: number }) {
     const strike = (
       await fetchWithCache(`strikes:${this.guildId}`, () =>
         prisma.moderationStrikes.findMany({
           where: { serverId: this.guild.id },
         })
       )
-    ).find(({ id }) => id === strikeId);
+    ).find(({ id }) => id === sId);
 
     await this.showModal(
-      new EditModal(strikeId).setTitle(`Edit Strike #${index}`).setComponents(
+      new EditModal({ page, userId, sId }).setTitle(`Edit Strike #${i}`).setComponents(
         row(
           new TextInputComponent()
             .setLabel('Reason')
@@ -288,21 +296,22 @@ export const EditButton = ButtonComponent({
 });
 
 export const EditModal = ModalComponent({
-  async handle(strikeId: string) {
+  async handle({ sId, userId, page }: PageBtnProps & { sId: string }) {
     const reason = this.fields.getTextInputValue('reason');
 
     await prisma.moderationStrikes.update({
-      where: { id: strikeId },
+      where: { id: sId },
       data: { reason },
     });
 
-    await this.update(await renderStrikePage.call(this, strikeId));
+    await this.update(await renderStrikePage.call(this, sId, { userId, page }));
   },
 });
 
 export const DeleteButton = ButtonComponent({
-  async handle(strikeId: string) {
+  async handle({ sId, userId }: PageBtnProps & { sId: string }) {
     const embed = this.message.embeds[0];
+
     await this.update({
       embeds: [
         {
@@ -314,8 +323,8 @@ export const DeleteButton = ButtonComponent({
       ],
       components: components(
         row(
-          new ConfirmDeleteButton(strikeId).setLabel('Yes').setStyle('DANGER'),
-          new GoToPage({ page: 0 }).setLabel('Cancel').setStyle('SECONDARY')
+          new ConfirmDeleteButton(sId).setLabel('Yes').setStyle('DANGER'),
+          new GoToPage({ page: 0, userId }).setLabel('Cancel').setStyle('SECONDARY')
         )
       ),
     });
@@ -323,8 +332,8 @@ export const DeleteButton = ButtonComponent({
 });
 
 export const ConfirmDeleteButton = ButtonComponent({
-  async handle(strikeId: string) {
-    await prisma.moderationStrikes.delete({ where: { id: strikeId } });
+  async handle(sId: string) {
+    await prisma.moderationStrikes.delete({ where: { id: sId } });
 
     const newData = await fetchWithCache(
       `strikes:${this.guildId}`,

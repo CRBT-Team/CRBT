@@ -8,7 +8,6 @@ import { timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
 import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
-import { SnoozeButton } from '../../modules/components/RemindButton';
 import { getReminderSubject } from '../../modules/tools/reminder list';
 
 export interface LowBudgetMessage {
@@ -50,11 +49,11 @@ export async function handleReminder(reminder: Reminder, client: Client) {
     ],
     components: components(
       row(
-        new MessageButton().setStyle('LINK').setLabel(JUMP_TO_MSG).setURL(data.url),
-        new SnoozeButton()
-          .setStyle('SECONDARY')
-          .setEmoji(emojis.reminder)
-          .setLabel(strings.BUTTON_SNOOZE)
+        new MessageButton().setStyle('LINK').setLabel(JUMP_TO_MSG).setURL(data.url)
+        // new SnoozeButton()
+        //   .setStyle('SECONDARY')
+        //   .setEmoji(emojis.reminder)
+        //   .setLabel(strings.BUTTON_SNOOZE)
       )
     ),
   };
