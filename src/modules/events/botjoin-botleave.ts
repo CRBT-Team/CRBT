@@ -20,8 +20,8 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
     where: { date: dayjs().startOf('day').toISOString() },
     data: {
       servers: { decrement: 1 },
-      members: { decrement: guild.members.cache.size }
-    }
+      members: { decrement: guild.members.cache.size },
+    },
   });
 });
 
@@ -59,8 +59,8 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
     where: { date: dayjs().startOf('day').toISOString() },
     data: {
       servers: { increment: 1 },
-      members: { increment: guild.members.cache.size }
-    }
+      members: { increment: guild.members.cache.size },
+    },
   });
 
   await AchievementProgress.call(owner, 'WELCOME_TO_CRBT');

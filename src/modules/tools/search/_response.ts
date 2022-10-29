@@ -21,7 +21,7 @@ export async function createSearchResponse(
     components: navbar(opts, { locale: i.locale, ...props }),
     ephemeral: opts.anonymous,
     files: baseResponse.files || [],
-  };
+  } as InteractionReplyOptions | InteractionUpdateOptions;
 }
 
 export async function fetchResults<T>(

@@ -16,11 +16,13 @@ import {
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
 import { colorSettings } from './accentColor';
 import { joinLeaveSettings } from './joinLeave';
+import { modlogsSettings } from './modlogs';
 
 export const strings = {
-  ACCENT_COLOR: 'Server Accent Color',
-  JOIN_MESSAGE: 'Welcome Message',
-  LEAVE_MESSAGE: 'Farewell Message',
+  [EditableFeatures.joinMessage]: 'Welcome Message',
+  [EditableFeatures.leaveMessage]: 'Farewell Message',
+  [EditableFeatures.accentColor]: 'Server Accent Color',
+  [EditableFeatures.moderationLogs]: `Moderation Logs ${emojis.new}`,
 };
 
 const features: {
@@ -29,6 +31,7 @@ const features: {
   [EditableFeatures.joinMessage]: joinLeaveSettings,
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.accentColor]: colorSettings,
+  [EditableFeatures.moderationLogs]: modlogsSettings,
 };
 
 export async function getSettings(guildId: string) {
@@ -92,6 +95,7 @@ export async function renderSettingsMenu(
 export const FeatureSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const featureId = this.values[0];
+
     this.update(await renderFeatureSettings.call(this, featureId));
   },
 });
@@ -99,7 +103,7 @@ export const FeatureSelectMenu = SelectMenuComponent({
 export async function renderFeatureSettings(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
   feature: string
-) {
+): Promise<any> {
   const [key, snake_key] = Object.entries(EditableFeatures).find(([_, value]) => value === feature);
   const settings = await getSettings(this.guild.id);
   const isModule = Object.keys(settings.modules).includes(key);
@@ -137,7 +141,7 @@ export async function renderFeatureSettings(
         title: `${this.guild.name} / ${strings[snake_key]}`,
         author: {
           name: 'CRBT Settings',
-          iconURL: icons.settings,
+          icon_url: icons.settings,
         },
         color: await getColor(this.guild),
       },

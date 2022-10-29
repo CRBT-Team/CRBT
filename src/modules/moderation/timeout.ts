@@ -1,12 +1,10 @@
-import { prisma } from '$lib/db';
-import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
-import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'timeout',
@@ -43,12 +41,12 @@ export default ChatCommand({
     }
     const member =
       this.guild.members.cache.get(user.id) ?? (await this.guild.members.fetch(user.id));
-    if (!member.moderatable) {
-      return CRBTError(this, 'You cannot timeout this user.');
-    }
-    // if (member.isCommunicationDisabled()) {
-    //   return CRBTError(this, 'This user is already timed out.');
+    // if (!member.moderatable) {
+    //   return CRBTError(this, 'You cannot timeout this user.');
     // }
+    if (member.communicationDisabledUntil) {
+      return CRBTError(this, 'This user is already timed out.');
+    }
     if (this.guild.ownerId === user.id) {
       return CRBTError(this, 'You cannot timeout the owner of the server.');
     }
@@ -56,48 +54,26 @@ export default ChatCommand({
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
-      return CRBTError(this, 'You cannot timeout a user with a higher role than you.');
+      return CRBTError(this, 'You cannot timeout a user with roles above yours.');
+    }
+    if (
+      this.client.user.id !== this.guild.ownerId &&
+      this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
+    ) {
+      return CRBTError(this, 'I cannot timeout a user with roles above mine.');
     }
 
     try {
       await member.timeout(ms(duration), reason);
 
-      await prisma.moderationStrikes.create({
-        data: {
-          serverId: this.guild.id,
-          moderatorId: this.user.id,
-          targetId: user.id,
-          createdAt: new Date(),
-          reason,
-          expiresAt: new Date(Date.now() + ms(duration)),
-          type: 'TIMEOUT',
-        },
+      await handleModerationAction.call(this, {
+        guild: this.guild,
+        moderator: this.user,
+        target: user,
+        type: 'TIMEOUT',
+        expiresAt: new Date(Date.now() + ms(duration)),
+        reason,
       });
-
-      await this.reply({
-        embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: `Successfully timed out ${user.tag}`,
-              iconURL: icons.success,
-            })
-            .setColor(colors.success),
-        ],
-      });
-
-      await user
-        .send({
-          embeds: [
-            createCRBTmsg({
-              type: 'moderation',
-              user: this.user,
-              subject: `Timed out from ${this.guild.name}`,
-              message: reason,
-              guildName: this.guild.name,
-            }).setColor(colors.yellow),
-          ],
-        })
-        .catch((e) => { });
     } catch (e) {
       return this.reply(UnknownError(this, String(e)));
     }

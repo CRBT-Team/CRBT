@@ -90,6 +90,7 @@ export default ChatCommand({
         subject,
         locale: this.locale,
         type: TimeoutTypes.Reminder,
+        details: null,
       });
 
       await this.editReply({

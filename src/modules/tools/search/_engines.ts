@@ -10,6 +10,7 @@ import { handleImageSearch } from './images';
 // import { handleKitsu } from './Kitsu';
 // import { handleMusicSearch } from './music';
 import { SearchCmdOpts } from './search';
+import { handleUrbanDictionary } from './urban';
 import { handleVideosSearch } from './videos';
 import { handleWeather } from './weather';
 
@@ -28,13 +29,6 @@ export interface SearchEngine {
 export const searchEngines: {
   [k: string]: SearchEngine;
 } = {
-  // featured: {
-  //   handle: handleFeaturedSearch,
-  //   emoji: '🌟',
-  //   provider: null,
-  //   name: 'Featured',
-  //   show: true,
-  // },
   web: {
     handle: handleDuckDuckGo,
     emoji: '🔎',
@@ -75,6 +69,13 @@ export const searchEngines: {
     name: 'Dictionary',
     hide: true,
     noPagination: true,
+  },
+  urban: {
+    handle: handleUrbanDictionary,
+    emoji: '🧱',
+    provider: 'Urban Dictionary',
+    name: 'Urban Dictionary',
+    hide: true,
   },
   // rawg: {
   //   handle: handleRAWG,

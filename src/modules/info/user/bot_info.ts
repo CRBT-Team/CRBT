@@ -20,7 +20,8 @@ import pjson from '../../../../package.json';
 import { getBadgeEmojis } from './user_info';
 import { getTabs, navBar, NavBarContext } from './_navbar';
 
-export default ChatCommand({
+// export default
+ChatCommand({
   name: 'bot info',
   description: 'Get info on a given Discord bot, or stats about CRBT if no bot is given.',
   options: new OptionBuilder().user('bot', 'What bot to get info on. Defaults to CRBT.'),

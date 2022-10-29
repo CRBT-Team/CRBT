@@ -67,13 +67,15 @@ export async function renderJoinLeavePrebuilder(
   await this.reply(builder);
 }
 
-export async function renderJoinLeavePreview(this: CommandInteraction, type: 'JOIN_MESSAGE' | 'LEAVE_MESSAGE', data: RawServerJoin | RawServerLeave) {
+export async function renderJoinLeavePreview(
+  this: CommandInteraction,
+  type: 'JOIN_MESSAGE' | 'LEAVE_MESSAGE',
+  data: RawServerJoin | RawServerLeave
+) {
   const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
   const message: JoinLeaveData =
-    data && type === MessageBuilderTypes.joinMessage
-      ? data['joinMessage']
-      : data['leaveMessage'];
+    data && type === MessageBuilderTypes.joinMessage ? data['joinMessage'] : data['leaveMessage'];
 
   if (!data || !message) {
     return CRBTError(this, t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, type)));
@@ -82,7 +84,8 @@ export async function renderJoinLeavePreview(this: CommandInteraction, type: 'JO
     type === MessageBuilderTypes.joinMessage ? data['joinChannel'] : data['leaveChannel'];
 
   if (!channelId) {
-    return CRBTError(this,
+    return CRBTError(
+      this,
       t(
         this,
         type === MessageBuilderTypes.joinMessage
@@ -139,6 +142,9 @@ export async function renderJoinLeavePreview(this: CommandInteraction, type: 'JO
     });
   } catch (e) {
     console.error(e);
-    return CRBTError(this, t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, type)));
+    return CRBTError(
+      this,
+      t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, type))
+    );
   }
 }

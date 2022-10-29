@@ -91,19 +91,19 @@ export function serverNavBar(
       .setDisabled(activeTab === 'server_info'),
     addTabs?.has('icon')
       ? new ServerIconBtn(ctx)
-        .setLabel(strings.ICON)
-        .setStyle('SECONDARY')
-        .setDisabled(activeTab === 'icon')
-      : null,
-    new ServerMembersBtn(ctx)
-      .setLabel(strings.ROLES)
-      .setStyle('SECONDARY')
-      .setDisabled(activeTab === 'roles'),
-    addTabs?.has('emojis')
-      ? new ServerEmojisBtn(ctx)
-        .setLabel(strings.EMOJIS)
-        .setStyle('SECONDARY')
-        .setDisabled(activeTab === 'emojis')
+          .setLabel(strings.ICON)
+          .setStyle('SECONDARY')
+          .setDisabled(activeTab === 'icon')
       : null
+    // new ServerMembersBtn(ctx)
+    //   .setLabel(strings.ROLES)
+    //   .setStyle('SECONDARY')
+    //   .setDisabled(activeTab === 'roles'),
+    // addTabs?.has('emojis')
+    //   ? new ServerEmojisBtn(ctx)
+    //     .setLabel(strings.EMOJIS)
+    //     .setStyle('SECONDARY')
+    //     .setDisabled(activeTab === 'emojis')
+    //   : null
   );
 }

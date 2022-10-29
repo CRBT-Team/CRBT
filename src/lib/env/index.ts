@@ -1,4 +1,4 @@
-import achievements from './achievements.json';
+import achievements from './achievements';
 import colors from './colors';
 import emojis from './emojis';
 import icons from './icons';

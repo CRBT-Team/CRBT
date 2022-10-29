@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleDictionary } from './search/dictionary';
+import { searchEngines } from './search/_engines';
 
 export const englishDictionary = readFileSync('./src/lib/util/words-en-US.txt', 'utf8').split(
   '\r\n'
@@ -23,7 +23,7 @@ export default ChatCommand({
   async handle({ word }) {
     await this.deferReply();
 
-    const res = await handleDictionary.call(this, {
+    const res = await searchEngines.dictionary.handle.call(this, {
       anonymous: false,
       query: word,
       site: 'dictionary',

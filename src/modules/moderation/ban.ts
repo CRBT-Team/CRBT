@@ -1,21 +1,17 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { prisma } from '$lib/db';
-import { colors, icons } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
-import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
   GuildMember,
-  MessageEmbed,
   ModalSubmitInteraction,
   TextInputComponent,
   User,
 } from 'discord.js';
 import { ChatCommand, ModalComponent, OptionBuilder, row, UserContextCommand } from 'purplet';
+import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'ban',
@@ -122,8 +118,15 @@ async function ban(
     this.user.id !== this.guild.ownerId &&
     (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
   ) {
-    return CRBTError(this, 'You cannot ban a user with a higher role than you.');
+    return CRBTError(this, 'You cannot ban a user with a roles above yours.');
   }
+  if (
+    this.client.user.id !== this.guild.ownerId &&
+    this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
+  ) {
+    return CRBTError(this, 'I cannot ban a user with roles above mine.');
+  }
+
   if (!isValidTime(duration)) {
     return CRBTError(this, 'Invalid duration.');
   }
@@ -134,16 +137,13 @@ async function ban(
       reason,
     });
 
-    await prisma.moderationStrikes.create({
-      data: {
-        serverId: this.guild.id,
-        moderatorId: this.user.id,
-        targetId: user.id,
-        createdAt: new Date(),
-        expiresAt: duration ? new Date(Date.now() + ms(duration)) : null,
-        reason,
-        type: duration ? 'BAN' : 'TEMPBAN',
-      },
+    await handleModerationAction.call(this, {
+      guild: this.guild,
+      moderator: this.user,
+      target: opts.user,
+      type: duration ? 'BAN' : 'TEMPBAN',
+      expiresAt: duration ? new Date(Date.now() + ms(duration)) : null,
+      reason,
     });
 
     if (duration) {
@@ -160,33 +160,7 @@ async function ban(
       //   },
       // });
     }
-
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: `Successfully banned ${user.tag}`,
-            iconURL: icons.success,
-          })
-          .setColor(colors.success),
-      ],
-    });
-
-    await user
-      .send({
-        embeds: [
-          createCRBTmsg({
-            type: 'moderation',
-            user: this.user,
-            subject: `Banned from ${this.guild.name}`,
-            message: reason,
-            guildName: this.guild.name,
-            expiration: dayjs().add(ms(duration)),
-          }).setColor(colors.error),
-        ],
-      })
-      .catch((e) => { });
   } catch (e) {
-    return this.reply(UnknownError(this, String(e)));
+    return this.reply(UnknownError(this, e));
   }
 }

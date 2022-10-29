@@ -19,7 +19,9 @@ export async function getColor(thing: User | Guild) {
     select: { accentColor: true },
   };
 
-  const preferences = isUser ? await prisma.user.findFirst(query) : await prisma.servers.findFirst(query);
+  const preferences = isUser
+    ? await prisma.user.findFirst(query)
+    : await prisma.servers.findFirst(query);
 
   if (preferences && preferences.accentColor) {
     const color = preferences.accentColor;

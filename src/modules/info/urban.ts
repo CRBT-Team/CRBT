@@ -1,67 +1,22 @@
-import { emojis } from '$lib/env';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { getColor } from '$lib/functions/getColor';
-import dayjs from 'dayjs';
-import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { searchEngines } from '../tools/search/_engines';
 
 export default ChatCommand({
   name: 'urban',
   description: 'Get the definition of a word from Urban Dictionary.',
   options: new OptionBuilder().string('word', 'The word to define.', { required: true }),
   async handle({ word }) {
-    try {
-      const req = await fetch(`https://api.urbandictionary.com/v0/define?term=${word}`);
+    await this.deferReply();
 
-      const post = ((await req.json()) as any).list[0];
+    const res = await searchEngines.urban.handle.call(this, {
+      anonymous: false,
+      query: word,
+      site: 'dictionary',
+      page: -1,
+    });
 
-      if (!post) {
-        return CRBTError(this, `Couldn't find the definition of \`${word}\`. Try again later.`)
-      }
-
-      const e = new MessageEmbed()
-        .setAuthor({
-          name: `${post.word} - Urban Dictionary definition`,
-          iconURL: 'https://i.imgur.com/VWRSZiW.png',
-        })
-        .setDescription(`**[Open in Urban Dictionary](${post.permalink})**`)
-        .addField(
-          'Definition',
-          post.definition.length > 300
-            ? `${post.definition.replaceAll(/\[|\]/g, '').slice(0, 300)}...`
-            : post.definition.replaceAll(/\[|\]/g, '')
-        )
-        .addField(
-          'Example',
-          post.example.length > 300
-            ? `${post.example.replaceAll(/\[|\]/g, '').slice(0, 300)}...`
-            : post.example.replaceAll(/\[|\]/g, '')
-        )
-        .addField(
-          'Author',
-          `**[${post.author
-          }](https://www.urbandictionary.com/author.pho/author=${encodeURIComponent(
-            post.author
-          )})**`,
-          true
-        )
-        .addField(
-          'Written',
-          `<t:${dayjs(post.written_on).unix()}>\n(<t:${dayjs(post.written_on).unix()}:R>)`,
-          true
-        )
-        .addField(
-          'Votes',
-          `${emojis.thumbsup} **${post.thumbs_up}** | ${emojis.thumbsdown} **${post.thumbs_down}**`,
-          true
-        )
-        .setColor(await getColor(this.user))
-        .setFooter({ text: 'Powered by Urban Dictionary' });
-
-      await this.reply({ embeds: [e] });
-    } catch (error) {
-      await this.reply(UnknownError(this, String(error)));
+    if (res) {
+      await this.editReply(res);
     }
   },
 });

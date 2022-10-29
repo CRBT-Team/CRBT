@@ -1,9 +1,7 @@
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { englishDictionary } from '../define';
-import { handleDictionary } from './dictionary';
-import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
-import { handleWeather } from './weather';
+import { searchEngines } from './_engines';
 
 export function returnFeaturedItem(opts: SearchCmdOpts) {
   const query = opts.query.toLowerCase();
@@ -27,13 +25,5 @@ export function handleFeaturedSearch(
 
   opts.site = featured ?? 'web';
 
-  if (featured === 'dictionary') {
-    return handleDictionary.call(this, opts);
-  }
-
-  if (featured === 'weather') {
-    return handleWeather.call(this, opts);
-  }
-
-  return handleDuckDuckGo.call(this, opts);
+  return searchEngines[opts.site].handle.call(this, opts);
 }

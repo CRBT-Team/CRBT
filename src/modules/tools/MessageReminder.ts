@@ -1,5 +1,6 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
@@ -8,15 +9,55 @@ import { TimeoutTypes } from '$lib/types/timeouts';
 import { Reminder } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
+import { Message } from 'discord.js';
 import { randomBytes } from 'node:crypto';
-import { MessageContextCommand } from 'purplet';
+import { components, MessageContextCommand, row, SelectMenuComponent } from 'purplet';
+
+export const messageCache = new Map<string, Message>();
 
 export default MessageContextCommand({
   name: 'Remind me about this',
   async handle(message) {
-    await this.deferReply({
+    messageCache.set(message.id, message);
+
+    await this.reply({
+      embeds: [
+        {
+          title: `${emojis.pending} Select when to be remind of that message`,
+          description: `You can edit this later with ${slashCmd('reminder list')}`,
+          color: colors.yellow,
+        },
+      ],
       ephemeral: true,
+      components: components(
+        row(
+          new SelectTimeMenu(message.id).setOptions(
+            [
+              '10-minutes',
+              '30-minutes',
+              '1-hour',
+              '3-hours',
+              '6-hours',
+              '12-hours',
+              '1-day',
+              '3-days',
+              '1-week',
+            ].map((h) => ({
+              label: h.replace('-', ' '),
+              value: h,
+            }))
+          )
+        )
+      ),
     });
+  },
+});
+
+export const SelectTimeMenu = SelectMenuComponent({
+  async handle(mId: string) {
+    const message = messageCache.get(mId);
+
+    await this.deferUpdate();
 
     const url = message.url.replace(/https:\/\/((canary|ptb)\.)?discord\.com\/channels\//, '');
 
@@ -41,31 +82,32 @@ export default MessageContextCommand({
     )?.slice(0, 60)}...`;
 
     const now = dayjs();
-    const expiresAt = dayjs().add(15, 'm');
+    const [length, unit] = this.values[0].split('-');
+    const expiresAt = dayjs().add(Number(length), unit);
+
+    const details: LowBudgetMessage = {
+      authorId: message.author.id,
+      ...(message.content
+        ? {
+            content:
+              message.content.length > 150
+                ? `${message.content.slice(0, 150)}...`
+                : message.content,
+          }
+        : {}),
+      ...(!message.content && message.embeds[0]
+        ? {
+            firstEmbed: {
+              author: message.embeds[0].author,
+              title: message.embeds[0].title,
+              description: message.embeds[0].description,
+              color: message.embeds[0].color,
+            },
+          }
+        : {}),
+    };
 
     try {
-      const details: LowBudgetMessage = {
-        authorId: message.author.id,
-        ...(message.content
-          ? {
-              content:
-                message.content.length > 150
-                  ? `${message.content.slice(0, 150)}...`
-                  : message.content,
-            }
-          : {}),
-        ...(!message.content && message.embeds[0]
-          ? {
-              firstEmbed: {
-                author: message.embeds[0].author,
-                title: message.embeds[0].title,
-                description: message.embeds[0].description,
-                color: message.embeds[0].color,
-              },
-            }
-          : {}),
-      };
-
       const timeout: Reminder = {
         userId: this.user.id,
         destination: 'dm',
@@ -109,6 +151,7 @@ export default MessageContextCommand({
             author: message.author,
           }),
         ],
+        components: [],
       });
     } catch (error) {
       await this.editReply(UnknownError(this, String(error)));

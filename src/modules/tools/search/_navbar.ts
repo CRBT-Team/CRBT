@@ -104,6 +104,9 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
 
   const arr = chunks(
     [
+      Object.entries(searchEngines).find(
+        ([v, { hide }]) => v === currentSite && v !== featured && hide
+      ),
       searchEngines[featured].hide
         ? Object.entries(searchEngines).find(([v]) => v === featured)
         : null,
@@ -111,6 +114,8 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
     ].filter(Boolean),
     5
   );
+
+  console.log(arr);
 
   const result = components(
     ...arr.map((enginesRow) =>

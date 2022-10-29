@@ -1,7 +1,8 @@
 export default {
-  success: 4906087,
-  // error: 16753664,
-  error: 16722474,
+  success: 5305201,
+  // success: 4906087,
+  error: 16741492,
+  // error: 16722474,
 
   default: 15888775,
   sync: 0,

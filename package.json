@@ -1,6 +1,6 @@
 {
   "name": "crbt",
-  "version": "11.10.0",
+  "version": "11.10.2",
   "scripts": {
     "start": "prisma generate && purplet build && node dist/bot.mjs",
     "dev": "purplet build && node dist/bot.mjs --dev",

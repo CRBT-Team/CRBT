@@ -2,27 +2,27 @@ import { prisma } from '$lib/db';
 import { channels, colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import dayjs from 'dayjs';
-import { APIEmbed } from 'discord-api-types/v10';
 import {
   Interaction,
   InteractionReplyOptions,
   MessageAttachment,
   MessageEmbed,
+  MessageEmbedOptions,
   TextChannel,
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
 
-const handleError = (
+function handleError(
   i: Interaction,
   opts: {
-    embed: Partial<APIEmbed>;
+    embed: Partial<MessageEmbedOptions>;
     error?: {
       error: any;
       context: string;
     };
   }
-) => {
+): MessageEmbedOptions {
   const { embed, error } = opts;
 
   const devEmbed = new MessageEmbed().setColor(colors.error);
@@ -74,9 +74,9 @@ const handleError = (
     title: `${emojis.error} ${embed.title}`,
     color: colors.error,
   };
-};
+}
 
-export function CRBTError(i: Interaction, embed: Partial<APIEmbed> | string, ephemeral = true) {
+export function CRBTError(i: Interaction, embed: MessageEmbedOptions | string, ephemeral = true) {
   if (!i.isRepliable()) return;
 
   const errorMessage = createCRBTError(i, embed, ephemeral);
@@ -88,19 +88,21 @@ export function CRBTError(i: Interaction, embed: Partial<APIEmbed> | string, eph
   }
 }
 
-export const createCRBTError = (
+export function createCRBTError(
   i: Interaction,
-  embed: Partial<APIEmbed> | string,
+  embed: Partial<MessageEmbedOptions> | string,
   ephemeral = true
-) => ({
-  embeds: [
-    handleError(i, {
-      embed: typeof embed === 'string' ? { title: embed } : embed,
-    }),
-  ],
-  ephemeral,
-  components: [],
-});
+): InteractionReplyOptions {
+  return {
+    embeds: [
+      handleError(i, {
+        embed: typeof embed === 'string' ? { title: embed } : embed,
+      }),
+    ],
+    ephemeral,
+    components: [],
+  };
+}
 
 export function UnknownError(i: any, error: any, context?: string, ephemeral = true) {
   const { strings } = t(i?.locale ?? 'en-US', 'UnknownError');

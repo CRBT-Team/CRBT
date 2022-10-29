@@ -117,6 +117,9 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
         ${progressBar(overallProgress)}
         `,
         fields,
+        footer: {
+          text: `Page ${page + 1}/${pages}`,
+        },
         color: this instanceof ButtonInteraction ? this.message.embeds[0].color : await getColor(u),
       },
     ],
@@ -136,9 +139,10 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
   };
 }
 
-interface PageBtnProps {
+export interface PageBtnProps {
   page: number;
-  userId: string;
+  userId?: string;
+  s?: boolean;
 }
 
 export const GoToPage = ButtonComponent({

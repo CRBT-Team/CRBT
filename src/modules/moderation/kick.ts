@@ -1,11 +1,9 @@
-import { colors, icons } from '$lib/env';
-import { prisma } from '$lib/db';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'kick',
@@ -35,46 +33,25 @@ export default ChatCommand({
       this.user.id !== this.guild.ownerId &&
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
-      return CRBTError(this, 'You cannot kick a user with a higher role than you.');
+      return CRBTError(this, 'You cannot kick a user with roles above yours.');
     }
+    if (
+      this.client.user.id !== this.guild.ownerId &&
+      this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
+    ) {
+      return CRBTError(this, 'I cannot kick a user with roles above mine.');
+    }
+
     try {
       await member.kick(reason);
 
-      await prisma.moderationStrikes.create({
-        data: {
-          serverId: this.guild.id,
-          moderatorId: this.user.id,
-          targetId: user.id,
-          createdAt: new Date(),
-          reason,
-          type: 'KICK',
-        },
+      await handleModerationAction.call(this, {
+        guild: this.guild,
+        moderator: this.user,
+        target: user,
+        type: 'KICK',
+        reason,
       });
-
-      await this.reply({
-        embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: `Successfully kicked ${user.tag}`,
-              iconURL: icons.success,
-            })
-            .setColor(colors.success),
-        ],
-      });
-
-      await user
-        .send({
-          embeds: [
-            createCRBTmsg({
-              type: 'moderation',
-              user: this.user,
-              subject: `Kicked from ${this.guild.name}`,
-              message: reason,
-              guildName: this.guild.name,
-            }).setColor(colors.orange),
-          ],
-        })
-        .catch((e) => { });
     } catch (e) {
       return this.reply(UnknownError(this, String(e)));
     }

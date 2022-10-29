@@ -1,4 +1,5 @@
 import { cache } from '$lib/cache';
+import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
@@ -25,8 +26,8 @@ export const joinLeaveSettings: SettingsMenus = {
           ? ''
           : '\n' +
             (channel
-              ? `Messages currently are sent in ${channel}.`
-              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please change it in order to receive them.**')) +
+              ? `Messages are currently sent in ${channel}.`
+              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please edit it in order to receive them.**')) +
         `\nUse the buttons below to configure the feature or to ${
           isEnabled ? 'enable' : 'disable'
         } it.`,
@@ -111,6 +112,17 @@ export const EditJoinLeaveChannelModal = ModalComponent({
     const data = await getSettings(this.guild.id);
     data[type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel'] = channel.id;
     cache.set(`${this.guild.id}:settings`, data);
+
+    await prisma.servers.upsert({
+      create: {
+        id: this.guildId,
+        [type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel']: channel.id,
+      },
+      update: {
+        [type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel']: channel.id,
+      },
+      where: { id: this.guildId },
+    });
 
     this.update(await renderFeatureSettings.call(this, type));
   },
