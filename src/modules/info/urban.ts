@@ -11,8 +11,8 @@ export default ChatCommand({
     const res = await searchEngines.urban.handle.call(this, {
       anonymous: false,
       query: word,
-      site: 'dictionary',
-      page: -1,
+      site: 'urban',
+      page: 1,
     });
 
     if (res) {

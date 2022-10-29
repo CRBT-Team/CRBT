@@ -25,7 +25,7 @@ export async function handleUrbanDictionary(
     const pages = list?.length;
     const post = list[page - 1];
 
-    if (!list || !post || !pages) {
+    if (!list || !post) {
       return createCRBTError(
         this,
         `Couldn't find the definition of \`${query}\`. Try again later.`
@@ -43,7 +43,6 @@ export async function handleUrbanDictionary(
             },
             title: post.word,
             url: post.permalink,
-            description: `**[Open in Urban Dictionary](${post.permalink})**`,
             fields: [
               {
                 name: 'Definition',
@@ -88,7 +87,7 @@ export async function handleUrbanDictionary(
             ],
             color: await getColor(this.user),
             footer: {
-              text: `Powered by Urban Dictionary • Page ${page}/${pages} results`,
+              text: `Powered by Urban Dictionary • Page ${page} out of ${pages} results`,
               icon_url: 'https://i.imgur.com/VWRSZiW.png',
             },
           },
