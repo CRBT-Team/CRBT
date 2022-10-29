@@ -22,7 +22,7 @@ export const strings = {
   [EditableFeatures.joinMessage]: 'Welcome Message',
   [EditableFeatures.leaveMessage]: 'Farewell Message',
   [EditableFeatures.accentColor]: 'Server Accent Color',
-  [EditableFeatures.moderationLogs]: `Moderation Logs ${emojis.new}`,
+  [EditableFeatures.moderationLogs]: `Moderation Logs`,
 };
 
 const features: {
