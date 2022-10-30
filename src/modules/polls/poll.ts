@@ -12,7 +12,7 @@ import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
-import { CustomEmojiRegex } from '@purplet/utils';
+import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageEmbed, TextInputComponent } from 'discord.js';
@@ -145,18 +145,14 @@ export default ChatCommand({
 
       await this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              iconURL: icons.success,
-              name: userStrings.SUCCESS_TITLE,
-            })
-            .setDescription(
-              userStrings.SUCCESS_DESCRIPTION.replace(
-                '<TIME>',
-                `<t:${dayjs().add(ms(end_date)).unix()}:R>`
-              ).replace('<ICON>', emojis.menu)
-            )
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} ${userStrings.SUCCESS_TITLE}`,
+            description: userStrings.SUCCESS_DESCRIPTION.replace(
+              '<TIME>',
+              timestampMention(Date.now() + ms(end_date), 'R')
+            ).replace('<ICON>', emojis.menu),
+            color: colors.success,
+          },
         ],
         ephemeral: true,
       });
@@ -342,12 +338,10 @@ export const CancelPollButton = ButtonComponent({
 
       await this.update({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              iconURL: icons.success,
-              name: strings.SUCCESS_POLL_DELETED,
-            })
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} ${strings.SUCCESS_POLL_DELETED}`,
+            color: colors.success,
+          },
         ],
         components: [],
       });
@@ -370,12 +364,10 @@ export const EndPollButton = ButtonComponent({
 
     await this.update({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            iconURL: icons.success,
-            name: strings.SUCCESS_POLL_ENDED,
-          })
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} ${strings.SUCCESS_POLL_ENDED}`,
+          color: colors.success,
+        },
       ],
       components: [],
     });

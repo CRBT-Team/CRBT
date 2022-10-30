@@ -1,8 +1,7 @@
 import { cache } from '$lib/cache';
-import { colors, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { MessageBuilderTypes, RolePickerData } from '$lib/types/messageBuilder';
-import { MessageEmbed } from 'discord.js';
 import { ButtonComponent } from 'purplet';
 
 export const SendMessageButton = ButtonComponent({
@@ -23,13 +22,11 @@ export const SendMessageButton = ButtonComponent({
 
     await this.update({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: strings.SUCCESS_TITLE,
-            iconURL: icons.success,
-          })
-          .setDescription(strings.SUCCESS_DESCRIPTION)
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
+          description: strings.SUCCESS_DESCRIPTION,
+          color: colors.success,
+        },
       ],
       components: [],
     });

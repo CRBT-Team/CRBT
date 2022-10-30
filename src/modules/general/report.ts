@@ -1,9 +1,11 @@
-import { channels, clients, colors, icons, links } from '$lib/env';
+import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { Routes } from 'discord-api-types/v10';
-import { MessageEmbed, TextInputComponent } from 'discord.js';
+import { MessageFlags, Routes } from 'discord-api-types/v10';
+import { TextInputComponent } from 'discord.js';
+import fetch from 'node-fetch';
+import { writeFileSync } from 'node:fs';
 import { ChatCommand, getRestClient, ModalComponent, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
@@ -48,38 +50,38 @@ export const Modal = ModalComponent({
     const title = this.fields.getTextInputValue('issue_title');
     const description = this.fields.getTextInputValue('issue_description');
 
-    await this.reply({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Report sent successfully.',
-            iconURL: icons.success,
-          })
-          .setDescription(
-            `Your report has been sent to the **[CRBT Community](${links.discord})**.\nWe will review it, and you'll get notified on developer messages through your DMs.`
+    const imageBuffer = image_url
+      ? Buffer.from(
+          await fetch(`https://cdn.discordapp.com/ephemeral-attachments/${image_url}`).then((r) =>
+            r.arrayBuffer()
           )
-          .setColor(colors.success),
-      ],
-      ephemeral: true,
-    });
+        )
+      : null;
+
+    writeFileSync('image.png', imageBuffer);
 
     await getRestClient().post(
       Routes.threads(
         this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
       ),
       {
+        passThroughBody: true,
         body: {
+          applied_tags:
+            this.client.user.id === clients.crbt.id
+              ? ['1019657549554913360', '1019657874181468190']
+              : null,
           name: title,
           message: {
             embeds: [
               {
                 author: {
                   name: `${this.user.tag} filed a bug report`,
-                  icon_url: avatar(this.user, 64),
+                  icon_url: avatar(this.user),
                 },
                 title,
                 description,
-                image: image_url ? 'attachment://image.png' : null,
+                // image: image_url ? 'attachment://image.png' : null,
                 footer: { text: `User ID: ${this.user.id}` },
                 color: colors.yellow,
               },
@@ -89,13 +91,25 @@ export const Modal = ModalComponent({
         files: image_url
           ? [
               {
-                data: `https://cdn.discordapp.com/ephemeral-attachments/${image_url}`,
+                data: imageBuffer,
+                key: 'files[0]',
                 name: 'image.png',
               },
             ]
           : null,
       }
     );
+
+    await this.reply({
+      embeds: [
+        {
+          title: `${emojis.success} Report sent successfully.`,
+          description: `It was sent to the **[CRBT Community](${links.discord})** where other members can discuss the issue.\nWe will review it, and you'll get notified on developer messages through your DMs.`,
+          color: colors.success,
+        },
+      ],
+      flags: MessageFlags.Ephemeral,
+    });
 
     await AchievementProgress.call(this, 'BUG_HUNTER');
   },

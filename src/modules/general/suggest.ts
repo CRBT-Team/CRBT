@@ -1,7 +1,9 @@
-import { colors, emojis, icons, links, channels, clients } from '$lib/env';
+import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
-import { MessageEmbed, TextChannel, TextInputComponent } from 'discord.js';
-import { ChatCommand, ModalComponent, row } from 'purplet';
+import { CustomEmojiRegex } from '@purplet/utils';
+import { APIGuildForumChannel, APIMessage, MessageFlags, Routes } from 'discord-api-types/v10';
+import { TextInputComponent } from 'discord.js';
+import { ChatCommand, getRestClient, ModalComponent, row } from 'purplet';
 
 export default ChatCommand({
   name: 'suggest',
@@ -40,43 +42,52 @@ export default ChatCommand({
 export const Modal = ModalComponent({
   async handle(ctx: null) {
     const title = this.fields.getTextInputValue('suggest_title');
-    const desc = this.fields.getTextInputValue('suggest_description');
-    const channel = (await this.client.channels.fetch(
-      this.client.user.id === clients.crbt.id ? channels.suggestions : channels.reportDev
-    )) as TextChannel;
+    const description = this.fields.getTextInputValue('suggest_description');
 
-    const msg = await channel.send({
-      embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: `${this.user.tag} suggested`,
-            iconURL: avatar(this.user, 64),
-          })
-          .setTitle(title)
-          .setDescription(desc)
-          .addField('Status', `${emojis.pending} Pending`, true)
-          .setFooter({ text: `User ID: ${this.user.id} • Last update` })
-          .setTimestamp()
-          .setColor(colors.yellow),
-      ],
-    });
+    const post = (await getRestClient().post(
+      Routes.threads(
+        this.client.user.id === clients.crbt.id ? channels.suggestions : channels.reportDev
+      ),
+      {
+        body: {
+          applied_tags: this.client.user.id === clients.crbt.id ? ['1025146933993553951'] : null,
+          name: title,
+          message: {
+            embeds: [
+              {
+                author: {
+                  name: `${this.user.tag} suggested`,
+                  icon_url: avatar(this.user),
+                },
+                title,
+                description,
+                footer: { text: `User ID: ${this.user.id}` },
+                color: colors.yellow,
+              },
+            ],
+          },
+        },
+      }
+    )) as APIGuildForumChannel & { message: APIMessage };
 
-    await msg.react(emojis.thumbsup);
-    await msg.react(emojis.thumbsdown);
+    await getRestClient().put(
+      Routes.channelMessageOwnReaction(
+        post.id,
+        post.message.id,
+        encodeURI(emojis.thumbsup.replace(CustomEmojiRegex, '$1:$2'))
+      )
+    );
 
     await this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Suggestion sent successfully.',
-            iconURL: icons.success,
-          })
-          .setDescription(
-            `You can view your suggestion **[here](${msg.url})** ([join CRBT Community](${links.discord})).`
-          )
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} Suggestion sent successfully.`,
+
+          description: `It was sent on the [CRBT Community](${links.discord}) where other members can discuss it.\nJoin the server now to engage in the discussion!`,
+          color: colors.success,
+        },
       ],
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
   },
 });

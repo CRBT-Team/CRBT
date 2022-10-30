@@ -84,17 +84,13 @@ export default ChatCommand({
 
       await this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: 'Giveaway started!',
-              iconURL: icons.success,
-            })
-            .setDescription(
-              `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
-                emojis.menu
-              } menu. From this menu, you can also cancel it or view the entrants.`
-            )
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} Giveaway started!`,
+            description: `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
+              emojis.menu
+            } menu. From this menu, you can also cancel it or view the entrants.`,
+            color: colors.success,
+          },
         ],
         ephemeral: true,
       });
@@ -170,12 +166,10 @@ export const CancelGwayButton = ButtonComponent({
 
       await this.update({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              iconURL: icons.success,
-              name: 'Giveaway deleted.',
-            })
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} Giveaway deleted.`,
+            color: colors.success,
+          },
         ],
         components: [],
       });
@@ -196,12 +190,10 @@ export const EndGwayButton = ButtonComponent({
 
     await this.update({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Ended Giveaway',
-            iconURL: icons.success,
-          })
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} Ended giveaway`,
+          color: colors.success,
+        },
       ],
       components: [],
     });

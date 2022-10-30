@@ -57,12 +57,12 @@ export const issueReply = async (
         .addFields(
           message
             ? [
-              ...fields.slice(0, fields.length - 1),
-              {
-                name: `${user.id === target.id ? '[OP]' : '[DEV]'} ${user.tag} replied`,
-                value: message,
-              },
-            ]
+                ...fields.slice(0, fields.length - 1),
+                {
+                  name: `${user.id === target.id ? '[OP]' : '[DEV]'} ${user.tag} replied`,
+                  value: message,
+                },
+              ]
             : fields.slice(0, fields.length - 1)
         )
         .addField(
@@ -70,8 +70,8 @@ export const issueReply = async (
           type === 'reply'
             ? `${emojis.pending} Pending`
             : type === 'fix'
-              ? `${emojis.success} ${isSuggestion ? 'Accepted' : 'Fixed'}`
-              : `${emojis.error} Denied`
+            ? `${emojis.success} ${isSuggestion ? 'Accepted' : 'Fixed'}`
+            : `${emojis.error} Denied`
         )
         .setTimestamp()
         .setColor(`#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`),
@@ -93,7 +93,8 @@ export const issueReply = async (
             iconURL: icons.information,
           })
           .setDescription(
-            `As ${user.tag} ${type === 'fix' ? 'accepted' : 'denied'
+            `As ${user.tag} ${
+              type === 'fix' ? 'accepted' : 'denied'
             } this suggestion, this thread will be closed.`
           )
           .setColor(`#${colors[type === 'fix' ? 'success' : 'error']}`),
@@ -110,28 +111,30 @@ export const issueReply = async (
   await target
     .send({
       embeds: [
-        createCRBTmsg({
-          type: 'issue',
-          user,
-          subject:
-            type === 'reply'
-              ? `A CRBT developer has replied to your ${isSuggestion} "${trimmed}"`
-              : type === 'fix'
-                ? `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been ${isSuggestion ? 'accepted' : 'fixed'
-                }`
+        {
+          ...createCRBTmsg({
+            type: 'issue',
+            user,
+            subject:
+              type === 'reply'
+                ? `A CRBT developer has replied to your ${isSuggestion} "${trimmed}"`
+                : type === 'fix'
+                ? `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been ${
+                    isSuggestion ? 'accepted' : 'fixed'
+                  }`
                 : `Your ${isSuggestion ? 'suggestion' : 'issue'} "${trimmed}" has been denied`,
-          message,
-        }).setColor(
-          `#${colors[type === 'reply' ? 'yellow' : type === 'fix' ? 'success' : 'error']}`
-        ),
+            message,
+          }),
+          color: type === 'reply' ? colors.yellow : type === 'fix' ? colors.success : colors.error,
+        },
       ],
       components: components(
         row(
           type === 'reply'
             ? new ReplyButton({ state: type })
-              .setLabel('Reply')
-              .setEmoji(emojis.buttons.reply)
-              .setStyle('PRIMARY')
+                .setLabel('Reply')
+                .setEmoji(emojis.buttons.reply)
+                .setStyle('PRIMARY')
             : null,
           new MessageButton()
             .setStyle('LINK')
@@ -140,7 +143,7 @@ export const issueReply = async (
         )
       ),
     })
-    .catch(() => { });
+    .catch(() => {});
 };
 
 export const ReplyButton = ButtonComponent({
@@ -183,15 +186,11 @@ export const ReplyModal = ModalComponent({
 
     await this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'Reply sent successfully.',
-            iconURL: icons.success,
-          })
-          .setDescription(
-            `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`
-          )
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} Reply sent successfully.`,
+          description: `Your reply has been added to the issue that you can view **[here](${issueMsg.url})** (join the **[CRBT Community](${links.discord})** first if you haven't).\nAs always, you should recieve updates from CRBT developers through your DMs.`,
+          color: colors.success,
+        },
       ],
     });
   },

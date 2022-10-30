@@ -1,5 +1,5 @@
 import { prisma } from '$lib/db';
-import { colors, icons } from '$lib/env';
+import { colors, emojis, icons } from '$lib/env';
 import { MessageFlags } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
@@ -78,10 +78,7 @@ export const DeleteAllData = ButtonComponent({
     await this.update({
       embeds: [
         {
-          author: {
-            name: 'All of your CRBT data has successfully been deleted.',
-            iconURL: icons.success,
-          },
+          title: `${emojis.success} All of your CRBT data has successfully been deleted.`,
           color: colors.success,
         },
       ],

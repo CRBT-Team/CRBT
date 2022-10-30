@@ -1,14 +1,14 @@
-import { APIEmbed } from 'discord-api-types/v10';
 import {
   CommandInteraction,
   MessageActionRow,
   MessageComponentInteraction,
+  MessageEmbedOptions,
   ModalSubmitInteraction,
 } from 'discord.js';
 
 export interface BaseMessageData {
   content?: string;
-  embed?: Partial<APIEmbed>;
+  embed?: Partial<MessageEmbedOptions>;
 }
 
 export enum MessageBuilderTypes {

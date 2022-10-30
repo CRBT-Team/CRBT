@@ -1,11 +1,10 @@
 import { colorAutocomplete } from '$lib/autocomplete/colorAutocomplete';
 import { cache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { colors, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
-import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 const { meta } = t('en-US', 'color set');
@@ -45,13 +44,11 @@ export const colorset = ChatCommand({
       }
       await this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: strings.EMBED_TITLE,
-              iconURL: icons.success,
-            })
-            .setDescription(strings.EMBED_DESCRIPTION)
-            .setColor(color),
+          {
+            title: `${emojis.success} ${strings.EMBED_TITLE}.`,
+            color: color,
+            description: strings.EMBED_DESCRIPTION,
+          },
         ],
         ephemeral: true,
       });
@@ -73,13 +70,11 @@ export const colorset = ChatCommand({
         });
         await this.reply({
           embeds: [
-            new MessageEmbed()
-              .setAuthor({
-                name: strings.EMBED_TITLE,
-                iconURL: icons.success,
-              })
-              .setDescription(`${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`)
-              .setColor(user.accentColor),
+            {
+              title: `${emojis.success} ${strings.EMBED_TITLE}.`,
+              color: user.accentColor,
+              description: `${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`,
+            },
           ],
           ephemeral: true,
         });

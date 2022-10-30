@@ -1,4 +1,4 @@
-import { emojis, icons } from '$lib/env';
+import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -10,7 +10,7 @@ import {
 } from '@purplet/utils';
 import { capitalCase } from 'change-case';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { ButtonInteraction, Interaction, MessageButton, MessageEmbed } from 'discord.js';
+import { ButtonInteraction, Interaction, MessageButton } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -215,10 +215,9 @@ export const AddEmojiButton = ButtonComponent({
 
     await this.reply({
       embeds: [
-        new MessageEmbed().setAuthor({
-          iconURL: icons.success,
-          name: `Successfully added :${emojiData.name}: to this server!`,
-        }),
+        {
+          title: `${emojis.success} Successfully added :${emojiData.name}: to this server!`,
+        },
       ],
     });
   },

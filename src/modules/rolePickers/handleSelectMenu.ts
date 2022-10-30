@@ -1,7 +1,7 @@
-import { colors, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { GuildMember, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
+import { GuildMember, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
 import { usersOnCooldown } from './rolePickers';
 
 export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
@@ -51,18 +51,16 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
   if ((this.component as MessageSelectMenu).maxValues !== 1) {
     this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: strings.SELECT_MENU_ROLES_SUCCESS,
-            iconURL: icons.success,
-          })
-          .setDescription(
+        {
+          title: `${emojis.success} ${strings.SELECT_MENU_ROLES_SUCCESS}.`,
+          color: colors.success,
+          description:
             added.length > 0 || removed.length > 0
-              ? `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
-              }\n\`\`\``
-              : ''
-          )
-          .setColor(colors.success),
+              ? `\`\`\`diff\n${added.length > 0 ? `+ ${added.join(', ')}\n` : ''}${
+                  removed.length > 0 ? `- ${removed.join(', ')}\n` : ''
+                }\n\`\`\``
+              : '',
+        },
       ],
       ephemeral: true,
     });
@@ -72,25 +70,22 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
     if (role && !member.roles.cache.has(role.id)) {
       this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
-                }`,
-              iconURL: icons.success,
-            })
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+              role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+            }`,
+            color: colors.success,
+          },
         ],
         ephemeral: true,
       });
     } else {
       this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: strings.SELECT_MENU_ROLES_SUCCESS,
-              iconURL: icons.success,
-            })
-            .setColor(colors.success),
+          {
+            title: `${emojis.success} ${strings.SELECT_MENU_ROLES_SUCCESS}.`,
+            color: colors.success,
+          },
         ],
         ephemeral: true,
       });

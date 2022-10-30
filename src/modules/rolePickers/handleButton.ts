@@ -1,14 +1,14 @@
-import { colors, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { ButtonInteraction, GuildMember, MessageEmbed } from 'discord.js';
+import { ButtonInteraction, GuildMember } from 'discord.js';
 import { usersOnCooldown } from './rolePickers';
 
 export async function handleRolePickerButton(
   this: ButtonInteraction,
   data: { id: string; behavior: string }
 ) {
-  const role = this.guild.roles.cache.find((r) => r.id === data.id);
+  const role = await this.guild.roles.fetch(data.id);
 
   if (
     usersOnCooldown.has(`${this.guild.id}/${this.user.id}`) &&
@@ -36,13 +36,12 @@ export async function handleRolePickerButton(
     member.roles.add(data.id);
     this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: `${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${data.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
-              }`,
-            iconURL: icons.success,
-          })
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+            data.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
+          }.`,
+          color: colors.success,
+        },
       ],
       ephemeral: true,
     });
@@ -50,13 +49,12 @@ export async function handleRolePickerButton(
     member.roles.remove(data.id);
     this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: `${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${data.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
-              }`,
-            iconURL: icons.success,
-          })
-          .setColor(colors.success),
+        {
+          title: `${emojis.success} ${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
+            data.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
+          }.`,
+          color: colors.success,
+        },
       ],
       ephemeral: true,
     });
