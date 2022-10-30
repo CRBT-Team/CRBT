@@ -5,7 +5,6 @@ import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { progressBar } from '$lib/functions/progressBar';
-import type { Achievement } from '$lib/responses/Achievements';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -38,25 +37,23 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
 
   const userAchievements = data.globalAchievements;
 
-  const allAchievements = Object.entries(achievements as { [k: string]: Achievement }).sort(
-    ([a, aa], [b, ab]) => {
-      const ua = userAchievements.find((ua) => ua.achievement === a);
-      const ub = userAchievements.find((ua) => ua.achievement === b);
+  const allAchievements = achievements.sort((a, b) => {
+    const ua = userAchievements.find((ua) => ua.achievement === a.id);
+    const ub = userAchievements.find((ua) => ua.achievement === b.id);
 
-      if (!ua?.progression && aa.secret) return 1;
+    if (!ua?.progression && a.secret) return 1;
 
-      const pa = (ua?.progression ?? 1) / aa.steps;
-      const pb = (ub?.progression ?? 1) / ab.steps;
+    const pa = (ua?.progression ?? 1) / a.steps;
+    const pb = (ub?.progression ?? 1) / b.steps;
 
-      return (pa > pb ? 1 : -1) ?? 1;
-    }
-  );
+    return (pa > pb ? 1 : -1) ?? 1;
+  });
 
   const pages = Math.ceil(allAchievements.length / 3);
 
   const fields = allAchievements
     .slice(page * 3, page * 3 + 3)
-    .map(([id, { howToGet, name, secret, steps, emoji }]) => {
+    .map(({ id, howToGet, name, secret, steps, emoji }) => {
       const userData = userAchievements?.find((a) => a?.achievement === id);
 
       if (userAchievements && userData) {
@@ -88,8 +85,8 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
     .filter(Boolean);
 
   const overallProgress =
-    allAchievements.reduce((acc, [id, ach]) => {
-      const userData = userAchievements?.find((a) => a?.achievement === id);
+    allAchievements.reduce((acc, ach) => {
+      const userData = userAchievements?.find((a) => a?.achievement === ach.id);
 
       if (userData?.progression) {
         return acc + (userData.progression / ach.steps) * 100;

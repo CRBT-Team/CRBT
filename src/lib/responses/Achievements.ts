@@ -7,12 +7,12 @@ import {
   GuildMember,
   Interaction,
   MessageComponentInteraction,
-  MessageEmbed,
   ModalSubmitInteraction,
   User,
 } from 'discord.js';
 
 export interface Achievement {
+  id: string;
   name: string;
   howToGet: string;
   emoji?: string;
@@ -28,9 +28,9 @@ export async function AchievementProgress(
     | MessageComponentInteraction
     | GuildMember
     | User,
-  type: keyof typeof achievements
+  achievementId: string
 ) {
-  const achievement = achievements[type] as Achievement;
+  const achievement = achievements.find(({ id }) => id === achievementId);
   const uId = 'user' in this ? this.user?.id : this.id;
 
   const preferences =
@@ -40,27 +40,21 @@ export async function AchievementProgress(
   if (!preferences) return;
 
   const data = await prisma.globalAchievements.findUnique({
-    where: {
-      id: `${uId}_${type}`,
-    },
+    where: { id: `${uId}_${achievementId}` },
   });
 
   if (data && data.progression >= achievement.steps) return;
 
   const newData = await prisma.globalAchievements.upsert({
     create: {
-      id: `${uId}_${type}`,
-      achievement: type,
+      id: `${uId}_${achievementId}`,
+      achievement: achievementId,
       progression: 1,
       achievedAt: 1 === achievement.steps ? new Date() : undefined,
       user: {
         connectOrCreate: {
-          create: {
-            id: uId,
-          },
-          where: {
-            id: uId,
-          },
+          create: { id: uId },
+          where: { id: uId },
         },
       },
     },
@@ -71,7 +65,7 @@ export async function AchievementProgress(
       },
     },
     where: {
-      id: `${uId}_${type}`,
+      id: `${uId}_${achievementId}`,
     },
   });
 
@@ -82,16 +76,20 @@ export async function AchievementProgress(
     : icons.giveaway;
 
   const embeds = [
-    new MessageEmbed()
-      .setAuthor({
-        name: `${achievement.name} - ${achievement.secret ? 'Secret ' : ''}Achievement Unlocked!`,
-        iconURL: icons.giveaway,
-      })
-      .setDescription(
-        `${achievement.howToGet}\nCheck your achievements with ${slashCmd('achievements')}.`
-      )
-      .setThumbnail(icon)
-      .setColor(achievement.secret ? colors.gold : colors.success),
+    {
+      author: {
+        name: `${achievement.secret ? 'Secret ' : ''}Achievement Unlocked!`,
+        icon_url: icons.giveaway,
+      },
+      title: achievement.name,
+      description: `${achievement.howToGet}\nCheck your achievements with ${slashCmd(
+        'achievements'
+      )}.`,
+      thumbnail: {
+        url: icon,
+      },
+      color: achievement.secret ? colors.gold : colors.success,
+    },
   ];
 
   if (this instanceof Interaction) {
