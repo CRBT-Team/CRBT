@@ -1,6 +1,5 @@
 import { prisma } from '$lib/db';
-import { Timeout } from '$lib/types/timeouts';
-import { TimeoutTypes } from '@prisma/client';
+import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import { getDiscordClient } from 'purplet';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
@@ -19,11 +18,7 @@ export async function dbTimeout<T extends Timeout>(
 ): Promise<T> {
   const client = getDiscordClient();
   const { id } = timeout;
-  const type = timeout.type.toString() as TimeoutTypes;
-  const rawTimeout = (({ type, ...o }) => o)(timeout) as Omit<Timeout, 'type'>;
-
-  console.log(JSON.stringify(rawTimeout, null, 2));
-  console.log(rawTimeout.expiresAt.getTime() - Date.now());
+  const type = timeout.type.toString();
 
   setLongerTimeout(async () => {
     if (!timeout) return;
@@ -37,11 +32,41 @@ export async function dbTimeout<T extends Timeout>(
     } catch (e) {}
 
     await prisma[type].delete({ where: { id } });
-  }, rawTimeout.expiresAt.getTime() - Date.now());
+  }, timeout.expiresAt.getTime() - Date.now());
 
   if (loadOnly) return timeout;
 
+  let query: {};
+
+  switch (timeout.type) {
+    case TimeoutTypes.Giveaway:
+    case TimeoutTypes.Poll: {
+      query = {
+        ...(({ type, serverId, ...o }) => o)(timeout),
+        server: {
+          connectOrCreate: {
+            create: { id: timeout.serverId },
+            where: { id: timeout.serverId },
+          },
+        },
+      };
+      break;
+    }
+    case TimeoutTypes.Reminder: {
+      query = {
+        ...(({ type, userId, ...o }) => o)(timeout),
+        user: {
+          connectOrCreate: {
+            create: { id: timeout.userId },
+            where: { id: timeout.userId },
+          },
+        },
+      };
+      break;
+    }
+  }
+
   return (await prisma[type].create({
-    data: rawTimeout,
+    data: query,
   })) as T;
 }

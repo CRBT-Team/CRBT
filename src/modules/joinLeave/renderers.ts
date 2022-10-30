@@ -1,5 +1,4 @@
 import { prisma } from '$lib/db';
-import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -19,7 +18,7 @@ import { MessageBuilder } from '../components/MessageBuilder';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerJoin, RawServerLeave, resolveMsgType } from './types';
 
-export function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
+export async function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
   return {
     embed: {
       title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
@@ -27,7 +26,7 @@ export function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
         '<TYPE>',
         t(this.guildLocale, type)
       ),
-      color: colors.default,
+      color: await getColor(this.guild),
     },
   };
 }
@@ -44,16 +43,7 @@ export async function renderJoinLeavePrebuilder(
     where: { id: this.guildId },
     select: { [resolveMsgType[type]]: true },
   })) || {
-    joinMessage: {
-      embed: {
-        title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
-        description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION').replace(
-          '<TYPE>',
-          t(this.guildLocale, type)
-        ),
-        color: await getColor(this.guild),
-      },
-    },
+    [resolveMsgType[type]]: await defaultMessage.call(this, type),
   }) as typeof type extends MessageBuilderTypes.joinMessage ? RawServerJoin : RawServerLeave;
 
   const builder = MessageBuilder({
@@ -74,8 +64,7 @@ export async function renderJoinLeavePreview(
 ) {
   const { JUMP_TO_MSG } = t(this, 'genericButtons');
 
-  const message: JoinLeaveData =
-    data && type === MessageBuilderTypes.joinMessage ? data['joinMessage'] : data['leaveMessage'];
+  const message: JoinLeaveData = data?.[resolveMsgType[type]];
 
   if (!data || !message) {
     return CRBTError(this, t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, type)));

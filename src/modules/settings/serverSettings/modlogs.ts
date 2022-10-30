@@ -1,10 +1,10 @@
-import { cache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
-import { Channel, TextInputComponent } from 'discord.js';
+import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { getSettings, renderFeatureSettings, strings } from './settings';
 
@@ -30,16 +30,19 @@ export const modlogsSettings: SettingsMenus = {
     };
   },
   getSelectMenu: ({ settings, feature, guild }) => {
+    const isEnabled = settings.modules.moderationLogs;
     const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
 
     return {
       label: strings.MODERATION_LOGS,
-      emoji: emojis.toggle[settings.modules.moderationLogs ? 'on' : 'off'],
-      description: `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`,
+      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
+      description: isEnabled
+        ? `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`
+        : 'Disabled',
       value: feature,
     };
   },
-  getComponents: ({ feature, backBtn, toggleBtn }) =>
+  getComponents: ({ backBtn, toggleBtn }) =>
     components(
       row(
         backBtn,
@@ -56,7 +59,6 @@ export const EditModLogsChannelBtn = ButtonComponent({
   async handle() {
     const settings = await getSettings(this.guild.id);
     const channelId = settings.modLogsChannel;
-
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
@@ -81,31 +83,28 @@ export const EditModLogsChannelBtn = ButtonComponent({
 export const EditModLogsChannelModal = ModalComponent({
   async handle() {
     const channelInput = this.fields.getTextInputValue('channel');
-    let channel: Channel;
 
-    if (SnowflakeRegex.test(channelInput)) {
-      channel = this.guild.channels.cache.get(channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
-    } else {
-      channel = this.guild.channels.cache.find((c) => c.name === channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
+    const channel = SnowflakeRegex.test(channelInput)
+      ? await this.guild.channels.fetch(channelInput)
+      : (await this.guild.channels.fetch())?.find((c) => c.name === channelInput);
+
+    if (!channel || channel.type !== 'GUILD_TEXT') {
+      return CRBTError(this, 'This channel does not exist or is not a text channel.');
     }
-    const data = await getSettings(this.guild.id);
-    data.modLogsChannel = channel.id;
-    cache.set(`${this.guild.id}:settings`, data);
 
-    await prisma.servers.upsert({
-      create: {
-        id: this.guildId,
-        modLogsChannel: data.modLogsChannel,
-      },
-      update: { modLogsChannel: data.modLogsChannel },
-      where: { id: this.guildId },
-    });
+    await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          create: {
+            id: this.guildId,
+            modLogsChannel: channel.id,
+          },
+          update: { modLogsChannel: channel.id },
+          where: { id: this.guildId },
+        }),
+      true
+    );
 
     this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationLogs));
   },

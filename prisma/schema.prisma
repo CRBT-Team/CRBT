@@ -7,14 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model timeouts {
-  expiration DateTime     @db.Timestamptz(6)
-  locale     String
-  type       TimeoutTypes
-  data       Json         @db.Json
-  id         String       @id
-}
-
 model Giveaway {
   id           String   @id
   hostId       String
@@ -78,7 +70,7 @@ model serverModules {
   id             String  @id
   joinMessage    Boolean @default(false) @map("join_message")
   leaveMessage   Boolean @default(false) @map("leave_message")
-  moderationLogs Boolean @default(true) @map("modlogs")
+  moderationLogs Boolean @default(false) @map("modlogs")
   server         servers @relation(fields: [id], references: [id])
 }
 
@@ -211,13 +203,6 @@ model Token {
   token String     @id
   data  Json       @db.Json
   type  TokenTypes
-}
-
-enum TimeoutTypes {
-  REMINDER
-  POLL
-  TEMPBAN
-  GIVEAWAY
 }
 
 enum ModerationStrikeTypes {

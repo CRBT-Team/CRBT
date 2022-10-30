@@ -1,22 +1,21 @@
-import { cache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
-import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { CamelCaseFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
-import { Channel, TextInputComponent } from 'discord.js';
+import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { RawServerJoin, RawServerLeave, resolveMsgType } from '../../joinLeave/types';
+import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
 import { getSettings, renderFeatureSettings, strings } from './settings';
 
 export const joinLeaveSettings: SettingsMenus = {
   getMenuDescription: ({ settings, feature, guild }) => {
-    const isEnabled = settings.modules[resolveMsgType[feature]];
-    const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+    const channelId = settings[CamelCaseFeatures[feature]] as string;
+    const isEnabled = settings.modules[CamelCaseFeatures[feature]] as boolean;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
     return {
@@ -34,15 +33,16 @@ export const joinLeaveSettings: SettingsMenus = {
     };
   },
   getSelectMenu: ({ settings, feature, i }) => {
-    const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
-
+    const channelId = settings[CamelCaseFeatures[feature]] as string;
+    const isEnabled = settings.modules[CamelCaseFeatures[feature]] as boolean;
     const channel = i.guild.channels.cache.find((c) => c.id === channelId);
 
     return {
       label: strings[feature],
-      emoji: emojis.toggle[settings.modules[CamelCaseFeatures[feature]] ? 'on' : 'off'],
-      description: `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`,
+      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
+      description: isEnabled
+        ? `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`
+        : 'Disabled',
       value: feature,
     };
   },
@@ -65,8 +65,7 @@ export const joinLeaveSettings: SettingsMenus = {
 export const EditJoinLeaveChannelBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
     const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
-    const channelId =
-      data[type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel'];
+    const channelId = data[CamelCaseFeatures[type]];
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
@@ -96,33 +95,30 @@ export const EditJoinLeaveChannelBtn = ButtonComponent({
 export const EditJoinLeaveChannelModal = ModalComponent({
   async handle(type: JoinLeaveData['type']) {
     const channelInput = this.fields.getTextInputValue('channel');
-    let channel: Channel;
 
-    if (SnowflakeRegex.test(channelInput)) {
-      channel = this.guild.channels.cache.get(channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
-    } else {
-      channel = this.guild.channels.cache.find((c) => c.name === channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
+    const channel = SnowflakeRegex.test(channelInput)
+      ? await this.guild.channels.fetch(channelInput)
+      : (await this.guild.channels.fetch()).find((c) => c.name === channelInput);
+
+    if (!channel || channel.type !== 'GUILD_TEXT') {
+      return CRBTError(this, 'This channel does not exist or is not a text channel.');
     }
-    const data = await getSettings(this.guild.id);
-    data[type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel'] = channel.id;
-    cache.set(`${this.guild.id}:settings`, data);
 
-    await prisma.servers.upsert({
-      create: {
-        id: this.guildId,
-        [type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel']: channel.id,
-      },
-      update: {
-        [type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel']: channel.id,
-      },
-      where: { id: this.guildId },
-    });
+    await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          create: {
+            id: this.guildId,
+            [CamelCaseFeatures[type]]: channel.id,
+          },
+          update: {
+            [CamelCaseFeatures[type]]: channel.id,
+          },
+          where: { id: this.guildId },
+        }),
+      true
+    );
 
     this.update(await renderFeatureSettings.call(this, type));
   },
@@ -135,7 +131,7 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
     const builder = MessageBuilder({
       data: {
         type,
-        ...data[resolveMsgType[type]],
+        ...data[CamelCaseFeatures[type]],
       },
       interaction: this,
     });

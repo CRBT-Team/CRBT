@@ -1,11 +1,16 @@
-import { cache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
-import { EditableFeatures, FullSettings, SettingsMenus } from '$lib/types/settings';
+import {
+  CamelCaseFeatures,
+  EditableFeatures,
+  FullSettings,
+  SettingsMenus,
+} from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -35,10 +40,23 @@ const features: {
 };
 
 export async function getSettings(guildId: string) {
-  const settings =
-    cache.get<FullSettings>(`${guildId}:settings`) ??
-    (await prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true } }));
-  return settings;
+  const settings: FullSettings = {
+    id: guildId,
+    flags: 0n,
+    modules: {
+      id: guildId,
+      joinMessage: false,
+      leaveMessage: false,
+      moderationLogs: false,
+    },
+    ...(await fetchWithCache(`${guildId}:settings`, () =>
+      prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true } })
+    )),
+  };
+
+  console.log(settings);
+
+  return settings as FullSettings;
 }
 
 export default ChatCommand({
@@ -161,15 +179,36 @@ export const BackSettingsButton = ButtonComponent({
 
 export const ToggleFeatureBtn = ButtonComponent({
   async handle({ feature, state }: { feature: string; state: boolean }) {
-    const settings = await getSettings(this.guild.id);
-    const [key] = Object.entries(EditableFeatures).find(([_, value]) => value === feature);
+    const key = CamelCaseFeatures[feature];
 
-    settings.modules[key] = state;
-    cache.set(`${this.guild.id}:settings`, settings);
-    await prisma.serverModules.update({
-      where: { id: this.guild.id },
-      data: { [key]: settings.modules[key] },
-    });
+    console.log(feature, state);
+
+    await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guildId },
+          include: { modules: true },
+          create: {
+            id: this.guildId,
+            modules: {
+              connectOrCreate: {
+                create: { [key]: state },
+                where: { id: this.guildId },
+              },
+            },
+          },
+          update: {
+            modules: {
+              upsert: {
+                create: { [key]: state },
+                update: { [key]: state },
+              },
+            },
+          },
+        }),
+      true
+    );
 
     this.update(await renderFeatureSettings.call(this, feature));
   },
