@@ -3,7 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "Ai nevoie de permisiunea(ile) <PERMISSIONS> pentru a folosi această comandă.",
   "ERROR_INVALID_URL": "URL-ul furnizat este invalid.",
   "ERROR_INVALID_HEX": "Culoarea HEX furnizată este invalidă.",
-  "ERROR_INVALID_BIRTHDAY": "The birth date you set is in an invalid format, or is in the future.",
+  "ERROR_INVALID_BIRTHDAY": "Data de naștere a fost setată într-un format invalid, sau este în viitor. Dacă ai fost născut în viitor, ne pare rău.",
   "globalErrors": {
     "GUILD_ONLY": "Această comandă nu poate fi utilizată în DM-uri."
   },
@@ -399,7 +399,7 @@
   "BIRTHDAY_REMINDER_BUTTON": "Setează memento zi de naștere",
   "BIRTHDAY_LIST_CONTENT": "Ziua de naștere a lui <USER>",
   "USER_INFO_EMBED_TITLE": "<USER> - Informații utilizator",
-  "USER_INFO_BIRTHDAY": "Birth date",
+  "USER_INFO_BIRTHDAY": "Data de naștere",
   "USER_INFO_CREATED_AT": "S-a alăturat comunității Discord",
   "USER_INFO_JOINED_SERVER": "S-a alăturat serverului",
   "USER_INFO_NO_ROLES": "*Acest utilizator nu are roluri...*",
