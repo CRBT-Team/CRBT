@@ -34,7 +34,7 @@
   "CooldownError": {
     "strings": {
       "TITLE": "Khoan đã!",
-      "DESCRIPTION": "You will be able to use this <TYPE> in <TIME>...",
+      "DESCRIPTION": "Bạn có thể sử dụng <TYPE> trong vòng <TIME>...",
       "COMMAND": "câu lệnh",
       "COMPONENT": "thành phần"
     }
@@ -102,7 +102,7 @@
       ]
     },
     "errors": {
-      "PAST": "You cannot set a reminder in the past.",
+      "PAST": "Bạn không thể đặt lời nhắc trong quá khứ.",
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
@@ -122,7 +122,7 @@
       "GCALENDAR_EVENT_DM": "Bạn sẽ được nhắc nhở trong tin nhắn trực tiếp của bạn.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in <CHANNEL>, in <SERVER>.",
       "REMINDER_TITLE": "Nhắc nhở",
-      "REMINDER_DESCRIPTION": "Set on <TIME> (<RELATIVE_TIME>)",
+      "REMINDER_DESCRIPTION": "Đặt vào <TIME> (<RELATIVE_TIME>)",
       "BUTTON_SNOOZE": "Giấc ngũ ngắn",
       "BUTTON_SNOOZE_SUCCESS": "Báo thức lại trong vòng 15 phút"
     },
@@ -189,7 +189,7 @@
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "Tạo một cuộc thăm dò với các lựa chọn nhất định.",
       "options": [
         {
           "description": "Some choice a user can choose. Make it short, preferably."
@@ -198,16 +198,16 @@
           "description": "An other choice a user can choose."
         },
         {
-          "description": "Same as choice 1 and 2, but not required."
+          "description": "Tương tự như lựa chọn 1 và 2, nhưng không bắt buộc."
         },
         {
-          "description": "And that's how far choices can go."
+          "description": "Và đó là cách các lựa chọn có thể đi xa."
         }
       ]
     },
     "errors": {
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
+      "CHOICE_TOO_LONG": "Lựa chọn không được dài hơn 40 ký tự (không bao gồm emoji).",
+      "CHOICE_EMPTY": "Không được để trống lựa chọn (không bao gồm emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
@@ -220,7 +220,7 @@
       "KEYWORD_YES__KEEP_LOWERCASE": "có",
       "KEYWORD_NO__KEEP_LOWERCASE": "không",
       "SUCCESS_TITLE": "Đã tạo cuộc thăm dò ý kiến!",
-      "SUCCESS_DESCRIPTION": "The poll will end <TIME>, but you can prematurely end it by using the <ICON> menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "SUCCESS_DESCRIPTION": "Cuộc thăm dò ý kiến sẽ kết thúc vào <TIME> nhưng bạn có thể kết thúc sớm cuộc thăm dò bằng cách sử dụng menu <ICON>. Từ menu này, bạn cũng có thể chỉnh sửa cuộc thăm dò ý kiến, xóa nó hoặc xem cử tri.",
       "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
       "POLL_DATA_NOVOTES": "Chưa có phiếu bầu",
       "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
@@ -268,7 +268,7 @@
   "crbt_introduction": {
     "strings": {
       "EMBED_TITLE": "Thanks for inviting <CRBT> to your server!",
-      "EMBED_DESCRIPTION": "<CRBT> is now in <SERVERS> servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server](<DISCORD>)**."
+      "EMBED_DESCRIPTION": "<CRBT> hiện đã có trong máy chủ <SERVERS>!\nĐể bắt đầu với CRBT, chỉ cần gõ `/` và chọn vào hình đại diện của nó!\nĐể được trợ giúp và biết thêm thông tin, hãy truy cập **[máy chủ hỗ trợ](<DISCORD>)**."
     }
   },
   "bookmark": {
@@ -334,11 +334,11 @@
       "CHOOSE_ROLES": "Chọn vai trò",
       "OPTION_LABEL_GET_ROLE": "Nhận vai trò <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added <ROLE> to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed <ROLE> from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
+      "SELECT_MENU_ROLES_SUCCESS": "Cập nhật vai trò của bạn thành công.",
+      "BUTTON_ROLES_ADD": "Đã thêm <ROLE> vào vai trò của bạn.",
+      "BUTTON_ROLES_ADD_AGAIN": "Chọn một lần nữa để loại bỏ nó.",
+      "BUTTON_ROLES_REMOVE": "Đã xóa <ROLE> khỏi vai trò của bạn.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Chọn một lần nữa để thêm nó.",
       "SUCCESS_TITLE": "Đã tạo Bộ chọn vại trò!",
       "SUCCESS_DESCRIPTION": "Giờ đây, các thành viên sẽ có thể lựa chọn các vai trò từ thực đơn này. Để vô hiệu hóa nó, chỉ cần xóa thông báo Bộ chọn vai trò."
     }
@@ -350,8 +350,8 @@
   "MODERATION_LOGS_ACTION_TIMEOUT": "Thời gian chờ",
   "MODERATION_LOGS_ACTION_TEMPBAN": "Cấm tạm thời",
   "MODERATION_LOGS_CLEAR": "Channel message clear",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by <MODERATOR>",
+  "MODERATION_LOGS_VIEW_TITLE": "Lịch sử kiểm duyệt trong <SERVER>",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Được kiểm duyệt bởi <MODERATOR>",
   "JOIN_MESSAGE": "Lời chào mừng",
   "LEAVE_MESSAGE": "Lời tạm biệt",
   "JOIN_CHANNEL": "Kênh chào mời",
@@ -375,9 +375,9 @@
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /welcome channel to set one.",
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in <CHANNEL>. To change the message that gets sent, you may use the <COMMAND> command.",
   "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the <COMMAND> command.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
+  "LEAVE_MESSAGE_DESCRIPTION": "Tạo hoặc chỉnh sửa tin nhắn để gửi khi người dùng rời khỏi máy chủ.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> đã rời khỏi máy chủ này.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the <TYPE> first. Use /farewell channel to set one.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Trước tiên, bạn phải đặt kênh để gửi <TYPE>. Sử dụng kênh /farewell để đặt một kênh.",
   "FIELD_SELECT_MENU": "Chọn một dòng để chỉnh sửa",
   "COLOR_PRESET_SELECT_MENU": "Chọn một cài đặt trước màu",
   "MANUAL_COLOR_EDIT_BUTTON": "Sử dụng mã màu HEX",
@@ -395,14 +395,14 @@
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
   "FIELDS_URL": "Embed Title URL",
   "SETTINGS": "Cài đặt",
-  "BIRTHDAY_REMINDER_MESSAGE": "Wish <USER> a happy birthday!",
-  "BIRTHDAY_REMINDER_BUTTON": "Set birthday reminder",
-  "BIRTHDAY_LIST_CONTENT": "<USER>'s birthday",
+  "BIRTHDAY_REMINDER_MESSAGE": "Chúc <USER> sinh nhật vui vẻ!",
+  "BIRTHDAY_REMINDER_BUTTON": "Đặt lời nhắc sinh nhật",
+  "BIRTHDAY_LIST_CONTENT": "Sinh nhật của <USER>",
   "USER_INFO_EMBED_TITLE": "<USER> - User info",
   "USER_INFO_BIRTHDAY": "Ngày sinh",
   "USER_INFO_CREATED_AT": "Đã tham gia Discord",
   "USER_INFO_JOINED_SERVER": "Đã tham gia máy chủ",
-  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
+  "USER_INFO_NO_ROLES": "*Người dùng này không có bất kỳ vai trò nào…*",
   "USER_INFO_NICKNAME": "Biệt danh trong máy chủ",
   "USER_INFO_ROLES": "(Những) vai trò",
   "USER_INFO_PERMS": "Các quyền chính trong máy chủ này",
