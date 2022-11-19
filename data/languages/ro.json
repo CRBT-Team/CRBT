@@ -1,6 +1,6 @@
 {
   "ERROR_ADMIN_ONLY": "Trebuie să fii un administrator ca să folosești această comandă.",
-  "ERROR_MISSING_PERMISSIONS": "Ai nevoie de permisiunea(ile) <PERMISSIONS> pentru a folosi această comandă.",
+  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "URL-ul furnizat este invalid.",
   "ERROR_INVALID_HEX": "Culoarea HEX furnizată este invalidă.",
   "ERROR_INVALID_BIRTHDAY": "Data de naștere a fost setată într-un format invalid, sau este în viitor. Dacă ai fost născut în viitor, ne pare rău.",
@@ -28,13 +28,13 @@
   "UnknownError": {
     "strings": {
       "TITLE": "A apărut o eroare necunoscută.",
-      "DESCRIPTION": "N-avem nicio idee ce problemă asta-r putea fi. Aici este mesajul de eroare pe care l-am primit:\n<MESSAGE>\nAcest lucru ne-a fost raportat automat, și ne vom asigura că o vom repara cât mai curând posibil. Ne cerem mii de scuze."
+      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Stai un pic!",
-      "DESCRIPTION": "Vei putea folosi acest/această <TYPE> în <TIME>...",
+      "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
       "COMMAND": "comandă",
       "COMPONENT": "componentă"
     }
@@ -112,19 +112,17 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Memento setat!",
-      "SUCCESS_CHANNEL": "Ți se va reaminti în <CHANNEL>",
+      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
       "SUCCESS_DM": "Ți se va reaminti în DM-uri",
       "SUBJECT": "Subiect",
-      "TOMORROW_AT": "Mâine la <TIME>",
-      "TODAY_AT": "Azi la <TIME>",
+      "TOMORROW_AT": "Tomorrow at {TIME}",
+      "TODAY_AT": "Today at {TIME}",
       "BUTTON_GCALENDAR": "Adaugă ca eveniment Google Calendar",
       "GCALENDAR_EVENT": "Setat de CRBT Memento.",
       "GCALENDAR_EVENT_DM": "Ți se va reaminti și-n DM-uri.",
-      "GCALENDAR_EVENT_CHANNEL": "Ți se va reaminti și-n <CHANNEL>, în <SERVER>.",
+      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
       "REMINDER_TITLE": "Memento",
-      "REMINDER_DESCRIPTION": "Setat pe <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Amână",
-      "BUTTON_SNOOZE_SUCCESS": "Amânat pentru 15 minute"
+      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "și",
@@ -140,11 +138,11 @@
       "description": "Ping la CRBT. Returnează latenția și informațiile de conexiune."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Ping",
-      "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interacțiune",
+      "EMBED_TITLE": "{CRBT} - Ping",
+      "WEBSOCKET": "WebSocket latency",
+      "INTERACTION": "Interaction latency",
       "UPTIME": "Online din",
-      "FORMAT_MS": "<NUMBER>ms"
+      "FORMAT_MS": "{NUMBER}ms"
     }
   },
   "crbt info": {
@@ -155,18 +153,18 @@
       "MEMBER_COUNT": "Număr de membri",
       "SERVER_COUNT": "Rang server",
       "PING": "Bipuire",
-      "PING_RESULT": "≈<PING> milisecunde",
+      "PING_RESULT": "≈{PING} milliseconds",
       "CREATED": "Creat pe",
       "UPTIME": "Online din",
       "BUTTON_WEBSITE": "Site Web",
       "BUTTON_INVITE": "Adaugă la Server",
-      "BUTTON_DISCORD": "Alătură-te comunității",
+      "BUTTON_DISCORD": "Discord Server",
       "BUTTON_DONATE": "Donează"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Numai persoana ce a folosit această comandă poate utiliza acest buton."
+      "NOT_CMD_USER": "Only the person using this command can use this component."
     },
     "strings": {
       "AVATAR": "Avatar",
@@ -212,15 +210,15 @@
     },
     "strings": {
       "CHOICE": "Variantă",
-      "POLL_DESCRIPTION": "Sondajul se va termina <TIME>.\nSondajul creatorului poate vizualiza opțiuni și alte date făcând clic pe butonul <ICON> de mai jos.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vot(ări)",
-      "POLL_FOOTER_VOTES": "Voturi totale: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Sondaj început de <USER>",
+      "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
+      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
+      "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
+      "POLL_FOOTER_CREATOR": "Poll started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Votează",
       "KEYWORD_YES__KEEP_LOWERCASE": "da",
       "KEYWORD_NO__KEEP_LOWERCASE": "nu",
       "SUCCESS_TITLE": "Sondaj creat!",
-      "SUCCESS_DESCRIPTION": "Sondajul se va termina <TIME>, dar îl poți termina prematur folosind meniul <ICON>. Din acest meniu, poți și să editezi sondajul, să îl ștergi sau să vezi alegătorii.",
+      "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
       "POLL_DATA_OPTIONS": "Sondaj CRBT • Date și opțiuni",
       "POLL_DATA_NOVOTES": "Nici un vot încă",
       "POLL_DATA_FOOTER": "Un apropo: aceste date nu vor fi actualizate live. Utilizează butonul din nou pentru a actualiza datele.",
@@ -233,9 +231,9 @@
       "POLL_HEADER_ENDED": "Încheiat",
       "POLL_DESCRIPTION_ENDED": "Sondajul s-a încheiat. Nu mai poți vota asupra acestuia.",
       "POLL_RESULTS_TITLE": "Rezultatele-au fost trimise!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "«<OPTION1>» și «<OPTION2>» au legat <VOTES> vot(uri)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "«<OPTION>» a câştigat cu <VOTES> vot(uri)",
-      "POLL_RESULTS_DESCRIPTION_REST": "din <TOTAL>!\nFă clic pe butonul de mai jos pentru a vizualiza rezultatele complete.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
       "BUTTON_JUMP_TO_POLL": "Sari la sondaj"
     }
   },
@@ -261,14 +259,14 @@
       "name": "Obține avatar/banner"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Descarcă (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "{USER} - Avatar",
+      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Ura! Îți mulțumim c-ai invitat <CRBT> la server!",
-      "EMBED_DESCRIPTION": "<CRBT> este acum în <SERVERS> servere!\nPentru a începe cu CRBT, pur și simplu tastează `/` și fă clic pe avatarul său!\nPentru mai mult ajutor și informații, vizitează **[serverul de asistență](<DISCORD>)**."
+      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
+      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -279,7 +277,7 @@
       "DMS_DISABLED": "Trebuie să activezi DM-urile sau să deblochezi CRBT pentru a marca mesajele."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Mesaj marcat)",
+      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
       "SUCCESS_MESSAGE": "Mesaj trimis prin DM-uri!"
     }
   },
@@ -297,7 +295,7 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Creează manual un selector nou de roluri, un meniu pentru membri pentru a alege ei înșiși roluri.",
+        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
         "options": [
           {
             "name": "descriere",
@@ -325,19 +323,18 @@
     "errors": {
       "USER_MISSING_PERMS": "Doar administratorii de server pot crea selectori de roluri.",
       "BOT_MISSING_PERMS": "Am nevoie de permisiunea de \"Gestionare roluri\" pentru a crea un selector de roluri.",
-      "ROLE_DOES_NOT_EXIST": "Rolul <ROLE> nu există sau a fost eliminat. Contactează un administrator pentru a rezolva problema.",
+      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
       "ROLES_DO_NOT_EXIST": "Unul sau mai multe dintre rolurile specificate nu există sau au fost eliminate. Contactează un administrator pentru a rezolva problema.",
       "BUTTON_ROLES_ONCE": "Poți selecta doar acest rol o singură dată, și nu-l poți elimina."
     },
     "strings": {
       "CHOOSE_ROLE": "Alege un rol",
       "CHOOSE_ROLES": "Alege roluri",
-      "OPTION_LABEL_GET_ROLE": "Obține rolul <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Selectează unul sau mai multe roluri alegându-le mai jos.",
       "SELECT_MENU_ROLES_SUCCESS": "Rolurile au fost actualizate cu succes.",
-      "BUTTON_ROLES_ADD": "<ROLE> adăugat la rolurile tale.",
+      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Selectează-l din nou pentru a-l elimina.",
-      "BUTTON_ROLES_REMOVE": "<ROLE> eliminat din rolurile tale.",
+      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Selectează-l din nou pentru a-l adăuga.",
       "SUCCESS_TITLE": "Selector de roluri creat!",
       "SUCCESS_DESCRIPTION": "Membrii vor avea acum posibilitatea de a selecta roluri din acest meniu. Pentru a-l dezactiva, pur și simplu șterge mesajul cu selectorul de roluri."
@@ -350,34 +347,24 @@
   "MODERATION_LOGS_ACTION_TIMEOUT": "Pauză de scris",
   "MODERATION_LOGS_ACTION_TEMPBAN": "Interzicere temporară",
   "MODERATION_LOGS_CLEAR": "Curăță mesajele canalului",
-  "MODERATION_LOGS_VIEW_TITLE": "Istoricul moderării în <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderat de <MODERATOR>",
+  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
   "JOIN_MESSAGE": "Mesaj de întâmpinare",
   "LEAVE_MESSAGE": "Mesaj de la revedere",
   "JOIN_CHANNEL": "Canal de întâmpinare",
   "LEAVE_CHANNEL": "Canal de la revedere",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Setează un canal unde <TYPE> se va trimite.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Unde <TYPE> se va trimite.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> setat!",
   "CRBTSCRIPT_GUIDE": "Deschide Ghidul CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Editează acest mesaj pentru a personaliza <TYPE> folosind meniul selectat de mai jos.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Mesajul tău nu poate fi gol!",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> salvat.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Previzualizează <TYPE>ul(a).",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Previzualizare",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Așa va arăta <TYPE> când va fi trimis la <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Am întâmpinat o eroare în timp ce se previzualiza <TYPE>. Este posibil canalul să nu mai existe sau nu am permisiunea de a trimite mesaje acolo.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Acum, noii membri vor fi întâmpinați în <CHANNEL>. Pentru a schimba mesajul ce e trimis, poți utiliza comanda <COMMAND>.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Acum, noii membri vor vedea acest mesaj când se vor alătura serverului. Pentru a schimba unde e trimis, poți folosi comanda <COMMAND>.",
-  "JOIN_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator se alătură serverului.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bun venit <user.name> la <server.name>!",
-  "ERROR_NO_MESSAGE": "Trebuie să setezi un mesaj mai întâi. Utilizează <COMMAND> pentru a seta unul.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Trebuie să setezi un canal pentru a trimite <TYPE> primul. Folosește /welcome channel pentru a seta unul.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Un mesaj de la revedere va fi trimis când membrii ies în <CHANNEL>. Ca să schimbi mesajul trimis, poți folosi comanda <COMMAND>.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Acest mesaj va fi trimis atunci când membrii decid să părăsească serverul. Pentru a schimba canalul în care e trimis, poți utiliza comanda <COMMAND>.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Creează sau editează mesajul pentru a-l trimite atunci când un utilizator părăsește serverul.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a părăsit serverul.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Prima oară, trebuie să setezi un canal în care <TYPE> se trimite. Folosește /farewell channel pentru a seta unul.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Selectează un câmp pentru a edita",
   "COLOR_PRESET_SELECT_MENU": "Selectează o presetare de culoare",
   "MANUAL_COLOR_EDIT_BUTTON": "Folosește o culoare HEX",
@@ -395,17 +382,13 @@
   "FIELDS_THUMBNAIL": "Încorporează miniatură",
   "FIELDS_URL": "Încorporează titlu URL",
   "SETTINGS": "Setări",
-  "BIRTHDAY_REMINDER_MESSAGE": "Dorește-i lui <USER> o zi de naștere fericită!",
-  "BIRTHDAY_REMINDER_BUTTON": "Setează memento zi de naștere",
-  "BIRTHDAY_LIST_CONTENT": "Ziua de naștere a lui <USER>",
-  "USER_INFO_EMBED_TITLE": "<USER> - Informații utilizator",
-  "USER_INFO_BIRTHDAY": "Data de naștere",
+  "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
+  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "USER_INFO_EMBED_TITLE": "{USER} - User info",
   "USER_INFO_CREATED_AT": "S-a alăturat comunității Discord",
   "USER_INFO_JOINED_SERVER": "S-a alăturat serverului",
   "USER_INFO_NO_ROLES": "*Acest utilizator nu are roluri...*",
   "USER_INFO_NICKNAME": "Porecla serverului",
   "USER_INFO_ROLES": "Rol(uri)",
-  "USER_INFO_PERMS": "Permisiuni principale pe acest server",
-  "EDIT_CRBT_PROFILE_BUTTON": "Editează Setările Profilului",
-  "CRBT_ACCENT_COLOR": "Culoare de accent CRBT"
+  "USER_INFO_PERMS": "Permisiuni principale pe acest server"
 }
