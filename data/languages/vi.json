@@ -3,7 +3,7 @@
   "ERROR_MISSING_PERMISSIONS": "You need the <PERMISSIONS> permission(s) to use this command.",
   "ERROR_INVALID_URL": "URL bạn đã cung cấp không hợp lệ.",
   "ERROR_INVALID_HEX": "Mã màu HEX bạn đã cung cấp không hợp lệ.",
-  "ERROR_INVALID_BIRTHDAY": "The birth date you set is in an invalid format, or is in the future.",
+  "ERROR_INVALID_BIRTHDAY": "Ngày sinh bạn đặt có định dạng không hợp lệ hoặc trong tương lai.",
   "globalErrors": {
     "GUILD_ONLY": "Câu lệnh này không thể sử dụng được trong tin nhắn trực tiếp."
   },
@@ -172,18 +172,18 @@
       "AVATAR": "Ảnh đại diện",
       "INFO": "Thông tin của người",
       "BOTINFO": "Thông tin của người máy",
-      "SERVER_AVATAR": "Server Avatar",
-      "USER_AVATAR": "User Avatar",
-      "USER_BANNER": "User Banner"
+      "SERVER_AVATAR": "Hình đại diện máy chủ",
+      "USER_AVATAR": "Hình đại diện người dùng",
+      "USER_BANNER": "Ảnh bìa người dùng"
     }
   },
   "server_navbar": {
     "strings": {
-      "INFO": "Server info",
+      "INFO": "Thông tin máy chủ",
       "ICON": "Biểu tượng",
-      "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
+      "BANNER": "Ảnh bìa",
+      "ROLES": "Vai trò & thành viên",
+      "EMOJIS": "Emoji & Sticker",
       "EXTRA": "Thêm"
     }
   },
@@ -214,8 +214,8 @@
       "CHOICE": "Lựa chọn",
       "POLL_DESCRIPTION": "The poll will end <TIME>.\nThe poll creator can view options & other data by clicking the <ICON> button below.",
       "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Poll started by <USER>",
+      "POLL_FOOTER_VOTES": "Tổng số phiếu bầu: <VOTES>",
+      "POLL_FOOTER_CREATOR": "Cuộc thăm dò bắt đầu bởi <USER>",
       "POLL_SELECT_MENU_VOTE": "Bình chọn",
       "KEYWORD_YES__KEEP_LOWERCASE": "có",
       "KEYWORD_NO__KEEP_LOWERCASE": "không",
@@ -258,7 +258,7 @@
       ]
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Lấy hình đại diện/biểu ngữ"
     },
     "strings": {
       "EMBED_TITLE": "<USER> - Hình đại diện",
@@ -399,13 +399,13 @@
   "BIRTHDAY_REMINDER_BUTTON": "Set birthday reminder",
   "BIRTHDAY_LIST_CONTENT": "<USER>'s birthday",
   "USER_INFO_EMBED_TITLE": "<USER> - User info",
-  "USER_INFO_BIRTHDAY": "Birth date",
+  "USER_INFO_BIRTHDAY": "Ngày sinh",
   "USER_INFO_CREATED_AT": "Đã tham gia Discord",
-  "USER_INFO_JOINED_SERVER": "Joined Server",
+  "USER_INFO_JOINED_SERVER": "Đã tham gia máy chủ",
   "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
   "USER_INFO_NICKNAME": "Biệt danh trong máy chủ",
   "USER_INFO_ROLES": "(Những) vai trò",
-  "USER_INFO_PERMS": "Major permissions in this server",
+  "USER_INFO_PERMS": "Các quyền chính trong máy chủ này",
   "EDIT_CRBT_PROFILE_BUTTON": "Cài đặt hồ sơ",
-  "CRBT_ACCENT_COLOR": "CRBT Accent Color"
+  "CRBT_ACCENT_COLOR": "Màu nhấn CRBT"
 }
