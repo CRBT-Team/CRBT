@@ -32,10 +32,10 @@ export const FieldSelectMenu = SelectMenuComponent({
               .setPlaceholder(t(this, 'COLOR_PRESET_SELECT_MENU'))
               .setOptions(
                 colorsMap
-                  .filter((color) => !color.private && color.value !== 'profile')
+                  .filter((color) => !color.private && color.value)
                   .map((colorObj) => ({
                     label: colorObj.fullName,
-                    value: colorObj.value,
+                    value: colorObj.value.toString(16),
                     emoji: colorObj.emoji,
                   }))
               )
@@ -47,7 +47,7 @@ export const FieldSelectMenu = SelectMenuComponent({
               .setStyle('SECONDARY'),
             new ManualColorEditButton({
               type,
-              value: messageData.embed?.color?.toString(16) || colors.default,
+              value: (messageData.embed?.color || colors.default) as number,
             })
               .setLabel(t(this, 'MANUAL_COLOR_EDIT_BUTTON'))
               .setEmoji(emojis.buttons.pencil)

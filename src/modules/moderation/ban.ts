@@ -161,6 +161,6 @@ async function ban(
       // });
     }
   } catch (e) {
-    return this.reply(UnknownError(this, e));
+    return this['replied' ? 'editReply' : 'reply'](UnknownError(this, e));
   }
 }

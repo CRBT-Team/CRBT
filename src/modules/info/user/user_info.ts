@@ -5,9 +5,9 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { timestampMention } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildMember,
@@ -122,7 +122,7 @@ export async function renderUser(
 
   const e = new MessageEmbed()
     .setAuthor({
-      name: t(ctx.locale, 'USER_INFO_EMBED_TITLE').replace('<USER>', user.tag),
+      name: t(ctx.locale, 'USER_INFO_EMBED_TITLE').replace('{USER}', user.tag),
       iconURL: avatar(member ?? user, 64),
     })
     .setDescription(userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '')
@@ -154,19 +154,19 @@ export async function renderUser(
       },
       {
         name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-        value: `${time(user.createdAt)}\n${time(user.createdAt, true)}`,
+        value: `${timestampMention(user.createdAt)}\n${timestampMention(user.createdAt, 'R')}`,
         inline: true,
       },
       {
         name: t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
-        value: `${time(member.joinedAt)}\n${time(member.joinedAt, true)}`,
+        value: `${timestampMention(member.joinedAt)}\n${timestampMention(member.joinedAt, 'R')}`,
         inline: true,
       }
     );
   } else {
     e.addFields({
       name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-      value: `${time(user.createdAt)} • ${time(user.createdAt, true)}`,
+      value: `${timestampMention(user.createdAt)} • ${timestampMention(user.createdAt, 'R')}`,
     });
   }
   return {

@@ -3,7 +3,7 @@ import { colors, emojis } from '$lib/env';
 import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { Routes } from 'discord-api-types/v10';
+import { MessageFlags, Routes } from 'discord-api-types/v10';
 import { ButtonInteraction } from 'discord.js';
 import { ButtonComponent, components, getRestClient, row } from 'purplet';
 import { returnFeaturedItem } from './featured';
@@ -26,21 +26,23 @@ export interface NavBarProps {
 async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<SearchCmdOpts>) {
   const { errors } = t(this, 'user_navbar');
 
-  if (this.user.id !== this.message.interaction.user.id) {
-    return CRBTError(this, errors.NOT_CMD_USER);
-  }
+  const h = await this.deferUpdate();
 
-  await this.deferUpdate();
+  console.log(JSON.stringify(this.message.interaction, null, 2));
+  const isOriginalUser = this.user.id === this.message.interaction?.user?.id || true;
 
   const fromCache = cache.get<SearchCmdOpts>(`search:${this.message.id}`);
 
   const opts: SearchCmdOpts = {
+    anonymous: !isOriginalUser,
     ...fromCache,
     ...newOpts,
   };
 
+  console.log(isOriginalUser, opts);
+
   if (fromCache?.site !== newOpts.site) {
-    await this.editReply({
+    await this[!isOriginalUser ? 'reply' : 'editReply']({
       embeds: [
         {
           title: `${emojis.pending} Loading (this may take a while)...`,
@@ -52,6 +54,7 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<Sear
           row().addComponents(r.components.map((b) => ({ ...b, disabled: true })))
         )
       ),
+      flags: opts.anonymous ? MessageFlags.Ephemeral : 0,
     });
   }
 

@@ -1,6 +1,5 @@
 import { cache } from '$lib/cache';
 import { emojis } from '$lib/env';
-import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -26,9 +25,7 @@ export const ExportJSONButton = ButtonComponent({
     const { BACK } = t(this, 'genericButtons');
 
     return this.update({
-      content: `JSON file generated! You can now reuse this welcome message elsewhere by clicking Import in ${slashCmd(
-        (type === 'JOIN_MESSAGE' ? 'welcome' : 'farewell') + 'message'
-      )}.`,
+      content: `JSON file generated! You can now reuse this message elsewhere by clicking the Import button when setting it up.`,
       embeds: [],
       files: [new MessageAttachment(buffer).setName(`${type}.json`)],
       components: components(

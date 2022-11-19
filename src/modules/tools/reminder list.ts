@@ -7,11 +7,10 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { extractReminder } from '$lib/functions/extractReminder';
 import { getColor } from '$lib/functions/getColor';
 import { resolveToDate } from '$lib/functions/resolveToDate';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { Reminder } from '@prisma/client';
-import { snowflakeToDate } from '@purplet/utils';
+import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import {
   ButtonInteraction,
@@ -171,7 +170,7 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
     return t(
       reminder.locale,
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE'
-    ).replace('<USER>', user?.username ?? `${username}`);
+    ).replace('{USER}', user?.username ?? `${username}`);
   }
   if (reminder.id.includes('MESSAGEREMINDER')) {
     const [username, ...subject] = reminder.subject.split('--');
@@ -191,6 +190,7 @@ async function renderReminder(
   const { strings } = t(this, 'remind me');
 
   const data = await extractReminder(reminder, this.client);
+  const created = snowflakeToDate(data.messageId);
 
   return {
     embeds: [
@@ -201,12 +201,9 @@ async function renderReminder(
         })
         .setTitle(getReminderSubject(reminder, this.client))
         .setDescription(
-          `Will be sent ${time(data.expiresAt, 'R')} in ${
+          `Will be sent ${timestampMention(data.expiresAt, 'R')} in ${
             data.raw.destination === 'dm' ? 'your DMs' : `${data.channel}`
-          }\nCreated ${time(snowflakeToDate(data.messageId), 'R')} (${time(
-            snowflakeToDate(data.messageId),
-            'R'
-          )})`
+          }\nCreated ${timestampMention(created, 'R')} (${timestampMention(created, 'R')})`
         )
         .setColor(this.message.embeds[0].color),
       ...renderLowBudgetMessage(data),
@@ -219,7 +216,7 @@ async function renderReminder(
           .addOptions(
             userReminders.map((r, index) => ({
               label: getReminderSubject(r, this.client),
-              description: `${dayjs(r.expiresAt).fromNow()}`,
+              description: dayjs(r.expiresAt).fromNow(),
               value: index.toString(),
             }))
           )
@@ -249,9 +246,9 @@ async function renderReminder(
               details: `${strings.GCALENDAR_EVENT} ${
                 data.raw.destination
                   ? strings.GCALENDAR_EVENT_CHANNEL.replace(
-                      '<CHANNEL>',
+                      '{CHANNEL}',
                       `#${data.channel.name}`
-                    ).replace('<SERVER>', data.channel.guild.name)
+                    ).replace('{SERVER}', data.channel.guild.name)
                   : strings.GCALENDAR_EVENT_DM
               }`,
               location: data.url,

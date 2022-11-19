@@ -1,4 +1,4 @@
-import { colors, links } from '$lib/env';
+import { colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
@@ -17,8 +17,9 @@ export default ChatCommand({
     const { strings } = t(this, 'crbt info');
 
     const { user } = this.client;
-    const uptime = this.client.uptime;
+    const onlineSince = new Date(Date.now() - this.client.uptime);
     const created = user.createdAt;
+    const i18n = new Intl.NumberFormat(this.locale);
 
     await this.editReply({
       embeds: [
@@ -34,7 +35,7 @@ export default ChatCommand({
           fields: [
             {
               name: strings.MEMBER_COUNT,
-              value: this.client.users.cache.size.toLocaleString(this.locale),
+              value: i18n.format(this.client.users.cache.size),
               inline: true,
             },
             {
@@ -45,7 +46,7 @@ export default ChatCommand({
             {
               name: strings.PING,
               value: `${strings.PING_RESULT.replace(
-                '<PING>',
+                '{PING}',
                 `${Date.now() - this.createdTimestamp}`
               )} (\`/ping\`)`,
               inline: true,
@@ -57,7 +58,7 @@ export default ChatCommand({
             },
             {
               name: strings.UPTIME,
-              value: `${timestampMention(uptime)} • ${timestampMention(uptime, 'R')}`,
+              value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
               inline: true,
             },
           ],
@@ -71,14 +72,14 @@ export default ChatCommand({
         row(
           new MessageButton()
             .setStyle('LINK')
-            .setEmoji('❤️')
-            .setLabel(strings.BUTTON_DONATE)
-            .setURL(links.donate),
+            .setLabel(strings.BUTTON_INVITE)
+            .setURL(links.invite)
+            .setEmoji(emojis.buttons.add),
           new MessageButton()
             .setStyle('LINK')
             .setLabel(strings.BUTTON_WEBSITE)
-            .setURL('https://crbt.app'),
-          new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_INVITE).setURL(links.invite),
+            .setURL(links.baseURL),
+          new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_DONATE).setURL(links.donate),
           new MessageButton()
             .setStyle('LINK')
             .setLabel(strings.BUTTON_DISCORD)

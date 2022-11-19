@@ -116,7 +116,7 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
     },
     embed: {
       title: strings.TITLE,
-      description: strings.DESCRIPTION.replace('<MESSAGE>', `\`\`\`\n${error}\`\`\``),
+      description: strings.DESCRIPTION.replace('{MESSAGE}', `\`\`\`\n${error}\`\`\``),
     },
   });
 
@@ -152,9 +152,9 @@ export async function CooldownError(
         embed: {
           title: strings.TITLE,
           description: strings.DESCRIPTION.replace(
-            '<TYPE>',
+            '{TYPE}',
             context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
-          ).replace('<TIME>', `<t:${dayjs(relativetime).unix()}:R>...`),
+          ).replace('{TIME}', `<t:${dayjs(relativetime).unix()}:R>...`),
         },
       }),
     ],

@@ -37,11 +37,15 @@ export default ChatCommand({
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
-        t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Manage Server')
+        t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')
       );
     }
 
-    await this.reply(await renderModlogs.call(this));
+    await this.deferReply();
+
+    const res = await renderModlogs.call(this);
+
+    await this.editReply(res);
   },
 });
 
@@ -111,7 +115,7 @@ export async function renderModlogs(
               iconURL: avatar(user),
             }
           : {
-              name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('<SERVER>', this.guild.name),
+              name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('{SERVER}', this.guild.name),
               iconURL: this.guild.iconURL(),
             },
         description: !data || data.length === 0 ? '*No moderation history found.*' : '',
@@ -201,7 +205,7 @@ async function renderStrikePage(
     embeds: [
       {
         author: {
-          name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('<SERVER>', this.guild.name),
+          name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('{SERVER}', this.guild.name),
           icon_url: this.guild.iconURL(),
         },
         title: `Strike #${strikes.indexOf(strike) + 1} • ${t(

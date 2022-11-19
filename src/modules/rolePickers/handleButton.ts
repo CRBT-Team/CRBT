@@ -23,7 +23,7 @@ export async function handleRolePickerButton(
   const { strings, errors } = t(this, 'role-selectors');
 
   if (!this.guild.roles.cache.has(data.id)) {
-    return CRBTError(this, errors.ROLE_DOES_NOT_EXIST.replace('<ROLE>', role.name));
+    return CRBTError(this, errors.ROLE_DOES_NOT_EXIST.replace('{ROLE}', role.name));
   }
 
   const member = this.member as GuildMember;
@@ -37,7 +37,7 @@ export async function handleRolePickerButton(
     this.reply({
       embeds: [
         {
-          title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+          title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('{ROLE}', role.name)} ${
             data.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
           }.`,
           color: colors.success,
@@ -50,7 +50,7 @@ export async function handleRolePickerButton(
     this.reply({
       embeds: [
         {
-          title: `${emojis.success} ${strings.BUTTON_ROLES_REMOVE.replace('<ROLE>', role.name)} ${
+          title: `${emojis.success} ${strings.BUTTON_ROLES_REMOVE.replace('{ROLE}', role.name)} ${
             data.behavior === 'toggle' ? strings.BUTTON_ROLES_REMOVE_AGAIN : ''
           }.`,
           color: colors.success,

@@ -46,6 +46,8 @@ export async function handleModerationAction(
   this: CommandInteraction | ModalSubmitInteraction,
   { guild, moderator, target, expiresAt, reason, type, messagesDeleted }: ModerationContext
 ) {
+  await this.deferReply();
+
   await prisma.moderationStrikes.create({
     data: {
       serverId: guild.id,
@@ -78,7 +80,7 @@ export async function handleModerationAction(
       })
       .catch((e) => {});
 
-    await this.reply({
+    await this.editReply({
       embeds: [
         {
           title: `${emojis.success} Successfully ${ModerationStrikeVerbs[type].toLowerCase()} ${

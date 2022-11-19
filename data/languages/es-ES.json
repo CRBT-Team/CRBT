@@ -1,6 +1,6 @@
 {
   "ERROR_ADMIN_ONLY": "Debe ser un administrador para utilizar este comando.",
-  "ERROR_MISSING_PERMISSIONS": "Necesita el/los permiso(s) <PERMISSIONS> para usar este comando.",
+  "ERROR_MISSING_PERMISSIONS": "Necesita el/los permiso(s) {PERMISSIONS} para usar este comando.",
   "ERROR_INVALID_URL": "La URL proporcionada es inválida.",
   "ERROR_INVALID_HEX": "El código hexadecimal proporcionado es inválido.",
   "globalErrors": {
@@ -26,13 +26,13 @@
   "UnknownError": {
     "strings": {
       "TITLE": "Ha ocurrido un error desconocido.",
-      "DESCRIPTION": "No tenemos ni idea de qué podría ser este error. Este es el mensaje que recibimos:\n<MESSAGE>\nEste problema nos ha sido reportado automáticamente y nos aseguraremos de arreglarlo lo antes posible. Pedimos disculpas por el inconveniente."
+      "DESCRIPTION": "No tenemos ni idea de qué podría ser este error. Este es el mensaje que recibimos:\n{MESSAGE}\nEste problema nos ha sido reportado automáticamente y nos aseguraremos de arreglarlo lo antes posible. Pedimos disculpas por el inconveniente."
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "¡Un momento!",
-      "DESCRIPTION": "Podrás usar este <TYPE> en <TIME>...",
+      "DESCRIPTION": "Podrás usar este {TYPE} en {TIME}...",
       "COMMAND": "comando",
       "COMPONENT": "componente"
     }
@@ -111,17 +111,17 @@
     },
     "strings": {
       "SUCCESS_TITLE": "¡Recordatorio establecido!",
-      "SUCCESS_CHANNEL": "CRBT se lo recordará en <CHANNEL>",
+      "SUCCESS_CHANNEL": "CRBT se lo recordará en {CHANNEL}",
       "SUCCESS_DM": "CRBT se lo recordará por MD",
       "SUBJECT": "Asunto",
-      "TOMORROW_AT": "Mañana a las <TIME>",
-      "TODAY_AT": "Hoy a las <TIME>",
+      "TOMORROW_AT": "Mañana a las {TIME}",
+      "TODAY_AT": "Hoy a las {TIME}",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar",
       "GCALENDAR_EVENT": "Establecido por un Recordatorio CRBT.",
       "GCALENDAR_EVENT_DM": "También se le será recordado por MD.",
-      "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en <CHANNEL>, en <SERVER>.",
+      "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en {CHANNEL}, en {SERVER}.",
       "REMINDER_TITLE": "Recordatorio",
-      "REMINDER_DESCRIPTION": "Establecido el <TIME> (<RELATIVE_TIME>)",
+      "REMINDER_DESCRIPTION": "Establecido el {TIME} ({RELATIVE_TIME})",
       "BUTTON_SNOOZE": "Posponer",
       "BUTTON_SNOOZE_SUCCESS": "Pospuesto por 15 minutos"
     },
@@ -139,11 +139,11 @@
       "description": "Obtener la latencia e información de conexión de CRBT."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Latencia",
+      "EMBED_TITLE": "{CRBT} - Latencia",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interacción",
       "UPTIME": "Conectado desde",
-      "FORMAT_MS": "<NUMBER>ms"
+      "FORMAT_MS": "{NUMBER}ms"
     }
   },
   "crbt info": {
@@ -151,12 +151,12 @@
       "description": "Obtener información sobre CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Información",
-      "VERSION": "Versión <VERSION> sobre <PURPLET>",
+      "EMBED_TITLE": "{CRBT} - Información",
+      "VERSION": "Versión {VERSION} sobre {PURPLET}",
       "MEMBER_COUNT": "Número de miembros",
       "SERVER_COUNT": "Número de servidores",
       "PING": "Latencia",
-      "PING_RESULT": "≈<PING> milisegundos",
+      "PING_RESULT": "≈{PING} milisegundos",
       "CREATED": "Fecha de creación",
       "UPTIME": "Conectado desde",
       "BUTTON_WEBSITE": "Página web",
@@ -212,15 +212,15 @@
     },
     "strings": {
       "CHOICE": "Opción",
-      "POLL_DESCRIPTION": "La encuesta terminará <TIME>.\nEl creador de la encuesta puede ver las opciones y otros datos haciendo clic en el botón <ICON> debajo.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> voto(s)",
-      "POLL_FOOTER_VOTES": "Votos totales: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Encuesta iniciada por <USER>",
+      "POLL_DESCRIPTION": "La encuesta terminará {TIME}.\nEl creador de la encuesta puede ver las opciones y otros datos haciendo clic en el botón {ICON} debajo.",
+      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} voto(s)",
+      "POLL_FOOTER_VOTES": "Votos totales: {VOTES}",
+      "POLL_FOOTER_CREATOR": "Encuesta iniciada por {USER}",
       "POLL_SELECT_MENU_VOTE": "Votar",
       "KEYWORD_YES__KEEP_LOWERCASE": "sí",
       "KEYWORD_NO__KEEP_LOWERCASE": "no",
       "SUCCESS_TITLE": "¡Encuesta creada!",
-      "SUCCESS_DESCRIPTION": "La encuesta terminará <TIME>, pero puede terminarla antes utilizando el menú <ICON>. Desde este menú, también puede editar la encuesta, eliminarla o ver los votantes.",
+      "SUCCESS_DESCRIPTION": "La encuesta terminará {TIME}, pero puede terminarla antes utilizando el menú {ICON}. Desde este menú, también puede editar la encuesta, eliminarla o ver los votantes.",
       "POLL_DATA_OPTIONS": "Encuesta CRBT • Datos y opciones",
       "POLL_DATA_NOVOTES": "Aún no hay votos",
       "POLL_DATA_FOOTER": "Nota: Estos datos no se actualizan en directo. Utilice el botón de nuevo para actualizar los datos.",
@@ -233,9 +233,9 @@
       "POLL_HEADER_ENDED": "Finalizada",
       "POLL_DESCRIPTION_ENDED": "La encuesta ya ha terminado. Ya no puede votar.",
       "POLL_RESULTS_TITLE": "¡Tenemos los resultados!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "¡\"<OPTION1>\" y \"<OPTION2>\" han empatado con <VOTES> voto(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "¡\"<OPTION>\" ha ganado con <VOTES> voto(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "de <TOTAL>!\nHaga clic en el botón de abajo para ver los resultados completos.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "¡\"<OPTION1>\" y \"<OPTION2>\" han empatado con {VOTES} voto(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "¡\"{OPTION}\" ha ganado con {VOTES} voto(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "de {TOTAL}!\nHaga clic en el botón de abajo para ver los resultados completos.",
       "BUTTON_JUMP_TO_POLL": "Ir a la encuesta"
     }
   },
@@ -261,14 +261,14 @@
       "name": "Obtener avatar"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Descargar (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "{USER} - Avatar",
+      "DOWNLOAD": "Descargar ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "¡Gracias por invitar a <CRBT> a su servidor!",
-      "EMBED_DESCRIPTION": "¡<CRBT> ahora está en <SERVERS> servidores!\n¡Para empezar con CRBT, simplemente escriba `/` y haga clic en su avatar!\nPara obtener más ayuda e información, visite el **[servidor de soporte](<DISCORD>)**."
+      "EMBED_TITLE": "¡Gracias por invitar a {CRBT} a su servidor!",
+      "EMBED_DESCRIPTION": "¡{CRBT} ahora está en {SERVERS} servidores!\n¡Para empezar con CRBT, simplemente escriba `/` y haga clic en su avatar!\nPara obtener más ayuda e información, visite el **[servidor de soporte]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -279,7 +279,7 @@
       "DMS_DISABLED": "Debe habilitar sus MD o desbloquear CRBT para poder marcar mensajes como favoritos."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (Mensaje marcado)",
+      "BOOKMARK_AUTHOR": "{USER} (Mensaje marcado)",
       "SUCCESS_MESSAGE": "¡Se le ha enviado este mensaje por MD!"
     }
   },
@@ -354,19 +354,19 @@
     "errors": {
       "USER_MISSING_PERMS": "Sólo los administradores del servidor pueden crear Selectores de Roles.",
       "BOT_MISSING_PERMS": "Necesito el permiso \"Gestionar roles\" para poder crear un Selector de Roles.",
-      "ROLE_DOES_NOT_EXIST": "El rol <ROLE> no existe o ha sido eliminado. Contacte a un administrador para solucionar el problema.",
+      "ROLE_DOES_NOT_EXIST": "El rol {ROLE} no existe o ha sido eliminado. Contacte a un administrador para solucionar el problema.",
       "ROLES_DO_NOT_EXIST": "Uno o más de los roles que ha especificado no existen o han sido eliminados. Contacte a un administrador para solucionar el problema.",
       "BUTTON_ROLES_ONCE": "Sólo puede seleccionar este rol una vez, y no puede quitárselo."
     },
     "strings": {
       "CHOOSE_ROLE": "Escoja un rol",
       "CHOOSE_ROLES": "Escoja roles",
-      "OPTION_LABEL_GET_ROLE": "Obtener el rol <ROLE>.",
+      "OPTION_LABEL_GET_ROLE": "Obtener el rol {ROLE}.",
       "GENERIC_SELECTOR_TITLE": "Seleccione uno o varios roles escogiéndolos a continuación.",
       "SELECT_MENU_ROLES_SUCCESS": "Se actualizaron correctamente sus roles.",
-      "BUTTON_ROLES_ADD": "Se ha añadido <ROLE> a tus roles.",
+      "BUTTON_ROLES_ADD": "Se ha añadido {ROLE} a tus roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Selecciónelo de nuevo para eliminarlo.",
-      "BUTTON_ROLES_REMOVE": "Se ha eliminado <ROLE> de tus roles.",
+      "BUTTON_ROLES_REMOVE": "Se ha eliminado {ROLE} de tus roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Selecciónelo de nuevo para añadirlo.",
       "SUCCESS_TITLE": "¡Selector de Roles creado!",
       "SUCCESS_DESCRIPTION": "Los miembros del servidor ahora podrán seleccionar roles de este menú. Para deshabilitarlo, simplemente elimine el mensaje del Selector de Roles."
@@ -378,34 +378,34 @@
   "MODERATION_LOGS_ACTION_UNBAN": "Desbaneo",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Aislamiento temporal",
   "MODERATION_LOGS_CLEAR": "Eliminación de mensajes",
-  "MODERATION_LOGS_VIEW_TITLE": "Historial de moderación en <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderado por <MODERATOR>",
+  "MODERATION_LOGS_VIEW_TITLE": "Historial de moderación en {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderado por {MODERATOR}",
   "JOIN_MESSAGE": "Mensaje de bienvenida",
   "LEAVE_MESSAGE": "Mensaje de despedida",
   "JOIN_CHANNEL": "Canal de bienvenida",
   "LEAVE_CHANNEL": "Canal de despedida",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Establecer un canal donde enviar el <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Dónde enviar el <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "¡<TYPE> establecido!",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Establecer un canal donde enviar el {TYPE}.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Dónde enviar el {TYPE}.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "¡{TYPE} establecido!",
   "CRBTSCRIPT_GUIDE": "Abrir la guía de CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edite este mensaje para personalizar el <TYPE> utilizando el menú de selección a continuación.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edite este mensaje para personalizar el {TYPE} utilizando el menú de selección a continuación.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "¡Su mensaje no debe estar vacío!",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> guardado.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Vista previa del <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Vista previa",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Así se verá el <TYPE> cuando se envíe a <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Ocurrió un error mientras se trataba de previsualizar el <TYPE>. Es posible que el canal ya no exista o que no tenga yo permiso para enviar mensajes allí.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Se dará la bienvenida a miembros nuevos en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando <COMMAND>.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Los miembros nuevos ahora verán este mensaje cuando se unan al servidor. Para cambiar el canal donde se envía, puede utilizar el comando <COMMAND>.",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "{TYPE} guardado.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Vista previa del {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Vista previa",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Así se verá el {TYPE} cuando se envíe a {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Ocurrió un error mientras se trataba de previsualizar el {TYPE}. Es posible que el canal ya no exista o que no tenga yo permiso para enviar mensajes allí.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Se dará la bienvenida a miembros nuevos en {CHANNEL}. Para cambiar el mensaje que se envía, puede utilizar el comando {COMMAND}.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Los miembros nuevos ahora verán este mensaje cuando se unan al servidor. Para cambiar el canal donde se envía, puede utilizar el comando {COMMAND}.",
   "JOIN_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario se una al servidor.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "¡Bienvenido <user.name> a <server.name>!",
-  "ERROR_NO_MESSAGE": "Debe establecer un message primero. Utilice <COMMAND> para establecerlo.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /welcome channel para establecerlo.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Se enviará un mensaje de despedida cuando salgan miembros en <CHANNEL>. Para cambiar el mensaje que se envía, puede utilizar el comando <COMMAND>.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Este mensaje se enviará cuando un miembro abandone el servidor. Para cambiar el canal donde se envía, puede utilizar el comando <COMMAND>.",
+  "ERROR_NO_MESSAGE": "Debe establecer un message primero. Utilice {COMMAND} para establecerlo.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el {TYPE} primero. Use /welcome channel para establecerlo.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Se enviará un mensaje de despedida cuando salgan miembros en {CHANNEL}. Para cambiar el mensaje que se envía, puede utilizar el comando {COMMAND}.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Este mensaje se enviará cuando un miembro abandone el servidor. Para cambiar el canal donde se envía, puede utilizar el comando {COMMAND}.",
   "LEAVE_MESSAGE_DESCRIPTION": "Crear o editar el mensaje que enviar cuando un usuario abandone el servidor.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ha salido del servidor.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el <TYPE> primero. Use /farewell channel para establecerlo.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Debe establecer un canal para enviar el {TYPE} primero. Use /farewell channel para establecerlo.",
   "FIELD_SELECT_MENU": "Seleccione un campo a editar",
   "COLOR_PRESET_SELECT_MENU": "Escoja uno de los colores predeterminados",
   "MANUAL_COLOR_EDIT_BUTTON": "Usar un color hexadecimal",

@@ -34,9 +34,9 @@ export async function handleReminder(reminder: Reminder, client: Client) {
       {
         title: `${emojis.reminder} ${strings.REMINDER_TITLE}`,
         description: strings.REMINDER_DESCRIPTION.replace(
-          '<TIME>',
+          '{TIME}',
           timestampMention(reminder.expiresAt, 'D')
-        ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R')),
+        ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
         fields: [
           {
             name: strings.SUBJECT,

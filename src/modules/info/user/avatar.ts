@@ -102,7 +102,7 @@ export async function renderPfp(
     embeds: [
       new MessageEmbed()
         .setAuthor({
-          name: strings.EMBED_TITLE.replace('<USER>', user.tag),
+          name: strings.EMBED_TITLE.replace('{USER}', user.tag),
           iconURL: av,
         })
         .setImage(av)
@@ -119,11 +119,11 @@ export async function renderPfp(
         new MessageButton()
           .setLabel(
             !av.includes('embed/avatars')
-              ? strings.DOWNLOAD.replace('<SIZE>', `${size ?? 2048}`).replace(
-                  '<FORMAT>',
+              ? strings.DOWNLOAD.replace('{SIZE}', `${size ?? 2048}`).replace(
+                  '{FORMAT}',
                   av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG'
                 )
-              : strings.DOWNLOAD.replace('<SIZE>', `256`).replace('<FORMAT>', 'PNG')
+              : strings.DOWNLOAD.replace('{SIZE}', `256`).replace('{FORMAT}', 'PNG')
           )
           .setStyle('LINK')
           .setURL(av)

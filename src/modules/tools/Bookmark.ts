@@ -19,7 +19,7 @@ export default MessageContextCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: strings.BOOKMARK_AUTHOR.replace('<USER>', message.author.tag),
+              name: strings.BOOKMARK_AUTHOR.replace('{USER}', message.author.tag),
               iconURL: avatar(message.author, 64),
             })
             .setDescription(message.content)

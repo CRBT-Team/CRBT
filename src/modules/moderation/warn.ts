@@ -56,7 +56,7 @@ export default ChatCommand({
         reason,
       });
     } catch (e) {
-      return this.reply(UnknownError(this, String(e)));
+      return this['replied' ? 'editReply' : 'reply'](UnknownError(this, e));
     }
   },
 });

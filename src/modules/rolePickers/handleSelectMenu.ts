@@ -71,7 +71,7 @@ export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
       this.reply({
         embeds: [
           {
-            title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('<ROLE>', role.name)} ${
+            title: `${emojis.success} ${strings.BUTTON_ROLES_ADD.replace('{ROLE}', role.name)} ${
               role.behavior === 'toggle' ? strings.BUTTON_ROLES_ADD_AGAIN : ''
             }`,
             color: colors.success,

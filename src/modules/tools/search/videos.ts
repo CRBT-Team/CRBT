@@ -1,6 +1,6 @@
 import { UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
-import { time } from '$lib/functions/time';
+import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import {
   CommandInteraction,
@@ -59,7 +59,10 @@ export async function handleVideosSearch(
                 name: 'Uploaded',
                 value: `${
                   video.uploadedAt
-                    ? time(dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))), true)
+                    ? timestampMention(
+                        dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))),
+                        'R'
+                      )
                     : 'At an unknown date'
                 } by **[${video.author.name}](${video.author.url})**`,
               },

@@ -1,6 +1,6 @@
 {
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
-  "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права <PERMISSIONS>.",
+  "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
   "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
   "ERROR_INVALID_HEX": "Предоставленный цвет HEX недействителен.",
   "globalErrors": {
@@ -26,13 +26,13 @@
   "UnknownError": {
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
-      "DESCRIPTION": "Мы не знаем, в чём проблема. Вот сообщение об ошибке которое мы получили:\n<MESSAGE>\nОб этом нам автоматически сообщили, и мы постараемся исправить это как можно скорее. Извините за неудобства."
+      "DESCRIPTION": "Мы не знаем, в чём проблема. Вот сообщение об ошибке которое мы получили:\n{MESSAGE}\nОб этом нам автоматически сообщили, и мы постараемся исправить это как можно скорее. Извините за неудобства."
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Подождите!",
-      "DESCRIPTION": "Вы сможете использовать эту <TYPE> через <TIME>...",
+      "DESCRIPTION": "Вы сможете использовать эту {TYPE} через {TIME}...",
       "COMMAND": "команду",
       "COMPONENT": "компонент"
     }
@@ -111,17 +111,17 @@
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "Вы получите напонминание в <CHANNEL>",
+      "SUCCESS_CHANNEL": "Вы получите напонминание в {CHANNEL}",
       "SUCCESS_DM": "Вы получите уведомление в ЛС",
       "SUBJECT": "Тема",
-      "TOMORROW_AT": "Завтра в <TIME>",
-      "TODAY_AT": "Сегодня в <TIME>",
+      "TOMORROW_AT": "Завтра в {TIME}",
+      "TODAY_AT": "Сегодня в {TIME}",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
       "GCALENDAR_EVENT": "Установка напоминания CRBT.",
       "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будете отправлено в <CHANNEL> на <SERVER>.",
+      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будете отправлено в {CHANNEL} на {SERVER}.",
       "REMINDER_TITLE": "Напоминание",
-      "REMINDER_DESCRIPTION": "Установлено на <TIME> (<RELATIVE_TIME>)",
+      "REMINDER_DESCRIPTION": "Установлено на {TIME} ({RELATIVE_TIME})",
       "BUTTON_SNOOZE": "Отложить",
       "BUTTON_SNOOZE_SUCCESS": "Будильник отложен на 15 минут"
     },
@@ -139,11 +139,11 @@
       "description": "Пинг CRBT. Информация о соединении и времени ожидания."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - пинг",
+      "EMBED_TITLE": "{CRBT} - пинг",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Взаимодействие",
       "UPTIME": "В сети с",
-      "FORMAT_MS": "<NUMBER>мс"
+      "FORMAT_MS": "{NUMBER}мс"
     }
   },
   "crbt info": {
@@ -151,12 +151,12 @@
       "description": "Получить информацию о CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Информация",
-      "VERSION": "Версия <VERSION> на <PURPLET>",
+      "EMBED_TITLE": "{CRBT} - Информация",
+      "VERSION": "Версия {VERSION} на {PURPLET}",
       "MEMBER_COUNT": "Количество участников",
       "SERVER_COUNT": "Количество серверов",
       "PING": "Пинг",
-      "PING_RESULT": "≈<PING> миллисекунд",
+      "PING_RESULT": "≈{PING} миллисекунд",
       "CREATED": "Создано",
       "UPTIME": "В сети с",
       "BUTTON_WEBSITE": "Сайт",
@@ -212,15 +212,15 @@
     },
     "strings": {
       "CHOICE": "Выбор",
-      "POLL_DESCRIPTION": "Опрос закончится через <TIME>.\nСоздатель опроса может просматривать его параметры и другие данные, нажав кнопку <ICON> ниже.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> голос(ов)",
-      "POLL_FOOTER_VOTES": "Всего голосов: <VOTES>",
-      "POLL_FOOTER_CREATOR": "Опрос начат <USER>",
+      "POLL_DESCRIPTION": "Опрос закончится через {TIME}.\nСоздатель опроса может просматривать его параметры и другие данные, нажав кнопку {ICON} ниже.",
+      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
+      "POLL_FOOTER_VOTES": "Всего голосов: {VOTES}",
+      "POLL_FOOTER_CREATOR": "Опрос начат {USER}",
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "KEYWORD_YES__KEEP_LOWERCASE": "да",
       "KEYWORD_NO__KEEP_LOWERCASE": "нет",
       "SUCCESS_TITLE": "Опрос создан!",
-      "SUCCESS_DESCRIPTION": "Опрос закончится через <TIME>, но вы можете преждевременно завершить его с помощью меню <ICON>. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
+      "SUCCESS_DESCRIPTION": "Опрос закончится через {TIME}, но вы можете преждевременно завершить его с помощью меню {ICON}. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
       "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
       "POLL_DATA_NOVOTES": "Пока нет голосов",
       "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться в реальном времени. Используйте кнопку снова, чтобы обновить данные.",
@@ -233,9 +233,9 @@
       "POLL_HEADER_ENDED": "Завершено",
       "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
       "POLL_RESULTS_TITLE": "Результаты опроса!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" имеют равное число голосов: <VOTES>",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"<OPTION>\" выиграл с количеством голосов: <VOTES>",
-      "POLL_RESULTS_DESCRIPTION_REST": "из <TOTAL>!\nНажмите кнопку ниже, чтобы просмотреть все результаты.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" имеют равное число голосов: {VOTES}",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" выиграл с количеством голосов: {VOTES}",
+      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите кнопку ниже, чтобы просмотреть все результаты.",
       "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
     }
   },
@@ -261,14 +261,14 @@
       "name": "Получить аватар"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Аватар",
-      "DOWNLOAD": "Скачать (<SIZE>px - <FORMAT>)"
+      "EMBED_TITLE": "{USER} - Аватар",
+      "DOWNLOAD": "Скачать ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Спасибо, что пригласили <CRBT> на ваш сервер!",
-      "EMBED_DESCRIPTION": "<CRBT> теперь на <SERVERS> серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки](<DISCORD>)**."
+      "EMBED_TITLE": "Спасибо, что пригласили {CRBT} на ваш сервер!",
+      "EMBED_DESCRIPTION": "{CRBT} теперь на {SERVERS} серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -279,7 +279,7 @@
       "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (сохранил сообщение)",
+      "BOOKMARK_AUTHOR": "{USER} (сохранил сообщение)",
       "SUCCESS_MESSAGE": "Это сообщение отправлено в ЛС!"
     }
   },
@@ -354,19 +354,19 @@
     "errors": {
       "USER_MISSING_PERMS": "Только администраторы сервера могут создавать выборщики ролей.",
       "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
-      "ROLE_DOES_NOT_EXIST": "Роль <ROLE> не существует или была удалена. Свяжитесь с администратором для решения проблемы.",
+      "ROLE_DOES_NOT_EXIST": "Роль {ROLE} не существует или была удалена. Свяжитесь с администратором для решения проблемы.",
       "ROLES_DO_NOT_EXIST": "Одна или несколько ролей, которые вы указали, не существуют или были удалены. Свяжитесь с администратором для решения проблемы.",
       "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить ее."
     },
     "strings": {
       "CHOOSE_ROLE": "Выберите роль",
       "CHOOSE_ROLES": "Выберите роли",
-      "OPTION_LABEL_GET_ROLE": "Получить роль <ROLE>.",
+      "OPTION_LABEL_GET_ROLE": "Получить роль {ROLE}.",
       "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, из списка ниже.",
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
-      "BUTTON_ROLES_ADD": "<ROLE> добавлена к вашим ролям.",
+      "BUTTON_ROLES_ADD": "{ROLE} добавлена к вашим ролям.",
       "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
-      "BUTTON_ROLES_REMOVE": "<ROLE> удалена из ваших ролей.",
+      "BUTTON_ROLES_REMOVE": "{ROLE} удалена из ваших ролей.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
       "SUCCESS_TITLE": "Выборщик ролей создан!",
       "SUCCESS_DESCRIPTION": "Участники смогут выбрать роли из этого меню. Чтобы отключить его, просто удалите сообщение выборщика ролей."
@@ -378,34 +378,34 @@
   "MODERATION_LOGS_ACTION_UNBAN": "Разбан",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Истечение времени ожидания",
   "MODERATION_LOGS_CLEAR": "Удаление сообщений в канале",
-  "MODERATION_LOGS_VIEW_TITLE": "История действий на <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: <MODERATOR>",
+  "MODERATION_LOGS_VIEW_TITLE": "История действий на {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: {MODERATOR}",
   "JOIN_MESSAGE": "Приветствие",
   "LEAVE_MESSAGE": "Прощание",
   "JOIN_CHANNEL": "Канал приветствий",
   "LEAVE_CHANNEL": "Канал прощаний",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> установлено!",
+  "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить {TYPE}.",
+  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить {TYPE}.",
+  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "{TYPE} установлено!",
   "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить <TYPE>.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> сохранено.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Предпросмотр",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть <TYPE> при отправке в <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра <TYPE>. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в <CHANNEL>. Используйте <COMMAND>, чтобы изменить содержание отправляемого сообщения.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте <COMMAND>, чтобы изменить канал для приветствий.",
+  "JOINLEAVE_MESSAGE_SAVE_TITLE": "{TYPE} сохранено.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра {TYPE}. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
+  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в {CHANNEL}. Используйте {COMMAND}, чтобы изменить содержание отправляемого сообщения.",
+  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте {COMMAND}, чтобы изменить канал для приветствий.",
   "JOIN_MESSAGE_DESCRIPTION": "Создать или изменить сообщение-приветствие.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use <COMMAND> to set one.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/welcome channel' для выбора.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправляться в <CHANNEL>, когда участники будут покидать сервер. Чтобы изменить сообщение прощание, используйте команду <COMMAND>.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, когда участник покинеть сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду <COMMAND>.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте '/welcome channel' для выбора.",
+  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправляться в {CHANNEL}, когда участники будут покидать сервер. Чтобы изменить сообщение прощание, используйте команду {COMMAND}.",
+  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, когда участник покинеть сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду {COMMAND}.",
   "LEAVE_MESSAGE_DESCRIPTION": "Создать или редактировать сообщение-прощание.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки <TYPE>. Используйте '/farewell channel' для выбора.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте '/farewell channel' для выбора.",
   "FIELD_SELECT_MENU": "Выберите поле для редактирования",
   "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
   "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",

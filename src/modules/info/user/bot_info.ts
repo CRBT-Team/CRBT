@@ -129,7 +129,7 @@ export async function renderBotInfo(
       .addField(
         strings.PING,
         `${strings.PING_RESULT.replace(
-          '<PING>',
+          '{PING}',
           `${Date.now() - this.createdTimestamp}`
         )} • ${slashCmd('ping')}`,
         true

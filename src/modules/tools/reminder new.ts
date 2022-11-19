@@ -99,13 +99,13 @@ export default ChatCommand({
             title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
             description:
               (destination
-                ? strings.SUCCESS_CHANNEL.replace('<CHANNEL>', `${destination}`)
+                ? strings.SUCCESS_CHANNEL.replace('{CHANNEL}', `${destination}`)
                 : strings.SUCCESS_DM) +
               `\n` +
               (expiresAt.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                ? strings.TODAY_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
+                ? strings.TODAY_AT.replace('{TIME}', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                 : expiresAt.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                ? strings.TOMORROW_AT.replace('<TIME>', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
+                ? strings.TOMORROW_AT.replace('{TIME}', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
                 : `<t:${expUnix}> • <t:${expUnix}:R>.`),
             fields: [
               {

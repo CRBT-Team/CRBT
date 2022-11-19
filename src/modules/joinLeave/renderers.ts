@@ -24,7 +24,7 @@ export function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
     embed: {
       title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
       description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION').replace(
-        '<TYPE>',
+        '{TYPE}',
         t(this.guildLocale, type)
       ),
       color: colors.default,
@@ -48,7 +48,7 @@ export async function renderJoinLeavePrebuilder(
       embed: {
         title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
         description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION').replace(
-          '<TYPE>',
+          '{TYPE}',
           t(this.guildLocale, type)
         ),
         color: await getColor(this.guild),
@@ -78,7 +78,12 @@ export async function renderJoinLeavePreview(
     data && type === MessageBuilderTypes.joinMessage ? data['joinMessage'] : data['leaveMessage'];
 
   if (!data || !message) {
-    return CRBTError(this, t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, type)));
+    return CRBTError(
+      this,
+      t(this, 'ERROR_NO_MESSAGE', {
+        COMMAND: t(this, type),
+      })
+    );
   }
   const channelId: string =
     type === MessageBuilderTypes.joinMessage ? data['joinChannel'] : data['leaveChannel'];
@@ -90,8 +95,11 @@ export async function renderJoinLeavePreview(
         this,
         type === MessageBuilderTypes.joinMessage
           ? 'JOIN_PREVIEW_ERROR_NO_CHANNEL'
-          : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL'
-      ).replace('<TYPE>', t(this, type))
+          : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL',
+        {
+          TYPE: t(this, type),
+        }
+      )
     );
   }
 
@@ -112,7 +120,7 @@ export async function renderJoinLeavePreview(
         new MessageEmbed()
           .setAuthor({
             name: t(this.guildLocale, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
-              '<TYPE>',
+              '{TYPE}',
               t(this.guildLocale, type)
             ),
           })
@@ -125,13 +133,13 @@ export async function renderJoinLeavePreview(
       embeds: [
         new MessageEmbed()
           .setAuthor({
-            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace('<TYPE>', t(this, type)),
+            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace('{TYPE}', t(this, type)),
             iconURL: this.guild.iconURL(),
           })
           .setDescription(
             t(this, 'JOINLEAVE_PREVIEW_EMBED_DESCRIPTION')
-              .replace('<TYPE>', t(this, type))
-              .replace('<CHANNEL>', channel.toString())
+              .replace('{TYPE}', t(this, type))
+              .replace('{CHANNEL}', channel.toString())
           )
           .setColor(await getColor(this.guild)),
       ],
@@ -144,7 +152,7 @@ export async function renderJoinLeavePreview(
     console.error(e);
     return CRBTError(
       this,
-      t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, type))
+      t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('{TYPE}', t(this, type))
     );
   }
 }

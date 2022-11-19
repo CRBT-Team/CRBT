@@ -6,6 +6,8 @@ import { ChatCommand } from 'purplet';
 
 const { meta } = t('en-US', 'ping');
 
+console.log(meta);
+
 export default ChatCommand({
   name: 'ping',
   description: meta.description,
@@ -20,7 +22,7 @@ export default ChatCommand({
         embeds: [
           {
             author: {
-              name: strings.EMBED_TITLE.replace('<CRBT>', this.client.user.username),
+              name: strings.EMBED_TITLE.replace('{CRBT}', this.client.user.username),
               iconURL: avatar(this.client.user, 64),
             },
             fields: [
@@ -39,8 +41,8 @@ export default ChatCommand({
                 value: `<t:${uptime}> (<t:${uptime}:R>)`,
               },
             ],
-            color: await getColor(this.user)
-          }
+            color: await getColor(this.user),
+          },
         ],
       });
     }, 300);

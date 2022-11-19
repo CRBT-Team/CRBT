@@ -115,7 +115,7 @@ export default {
     angry_pink: '<:angry_pink:753969564408086600>',
     sad3: '<:sad3:729374854104612934>',
     coolwoah: '<:coolwoah:717684437508161546>',
-    goodmeal: '<:good_meal:750034917743919256>',
+    goodmeal: '<:good_meal:768948885162295326>',
   },
   progress: {
     fill: '<:progressfill:971334221450862642>',
