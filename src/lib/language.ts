@@ -66,20 +66,46 @@ export const languages = {
 
 type StringsStructure = typeof en_US;
 
-export function t<K extends keyof StringsStructure>(
+function accessObjectValue<T extends any>(keysDotAccess: string, obj: T) {
+  return keysDotAccess.split('.').reduce((o, i) => o?.[i], obj) as T | string;
+}
+
+// props to https://stackoverflow.com/a/47058976 for this wonderful type thing
+type PathsToStringProps<T> = T extends string
+  ? []
+  : {
+      [K in Extract<keyof T, string>]: [K, ...PathsToStringProps<T[K]>];
+    }[Extract<keyof T, string>];
+
+type Join<T extends string[], D extends string> = T extends []
+  ? never
+  : T extends [infer F]
+  ? F
+  : T extends [infer F, ...infer R]
+  ? F extends string
+    ? `${F}${D}${Join<Extract<R, string[]>, D>}`
+    : never
+  : string;
+
+type TopLevelKeys = keyof StringsStructure;
+type DottedLanguageObjectStringPaths = Join<PathsToStringProps<StringsStructure>, '.'>;
+
+type StringArgument = TopLevelKeys | DottedLanguageObjectStringPaths;
+
+export function t<K extends StringArgument>(
   i: Interaction | string,
   stringKey: K,
-  interpolations?: { [k: string]: any }
-): StringsStructure[K] {
+  interpolations?: K extends DottedLanguageObjectStringPaths ? { [k: string]: any } : undefined
+): K extends TopLevelKeys ? StringsStructure[K] : string {
   const locale = typeof i === 'string' ? i : i.locale;
-  const defaultData = languages['en-US'][stringKey];
-  const localizedData = languages[locale][stringKey];
+  const defaultData = accessObjectValue(stringKey, languages['en-US']);
+  const localizedData = accessObjectValue(stringKey, languages[locale]);
 
   if (!locale || !languages[locale]) {
-    return defaultData;
+    return defaultData as any;
   }
 
-  const string =
+  const string: string | StringsStructure =
     typeof defaultData === 'string'
       ? localizedData || defaultData
       : deepMerge(defaultData, localizedData);
@@ -89,8 +115,22 @@ export function t<K extends keyof StringsStructure>(
       (interpolated, key) =>
         interpolated.replace(new RegExp(`{\s*${key}\s*}`, 'g'), interpolations[key]),
       string
-    ) as StringsStructure[K];
+    ) as any;
   } else {
-    return string;
+    return string as any;
   }
+}
+
+export function getAllLanguages<K extends StringArgument>(
+  stringKey: K
+): {
+  [k: string]: K extends TopLevelKeys ? StringsStructure[K] : string;
+} {
+  return Object.keys(languages).reduce(
+    (acc, lang) => ({
+      ...acc,
+      [lang]: t(lang, stringKey),
+    }),
+    {}
+  );
 }

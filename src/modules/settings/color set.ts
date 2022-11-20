@@ -3,19 +3,37 @@ import { cache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta } = t('en-US', 'color set');
+const meta = {
+  descriptions: getAllLanguages('color set.meta.description'),
+  options: getAllLanguages('color set.meta.options' as any),
+};
 
 export const colorset = ChatCommand({
   name: 'color set',
-  description: meta.description,
-  options: new OptionBuilder().string('color', meta.options[0].description, {
+  description: meta.descriptions['en-US'],
+  descriptionLocalizations: meta.descriptions,
+  options: new OptionBuilder().string('color', meta.options['en-US'][0].name, {
     autocomplete({ color }) {
       return colorAutocomplete.call(this, color);
     },
+    nameLocalizations: Object.entries(meta.options).reduce((acc, [lang, obj]) => {
+      console.log(lang, obj);
+      return {
+        ...acc,
+        [lang]: obj[0].name.replaceAll(' ', '-'),
+      };
+    }, {}),
+    // descriptionLocalizations: Object.entries(meta.options).reduce(
+    //   (acc, [lang, obj]) => ({
+    //     ...acc,
+    //     [lang]: obj[0].description,
+    //   }),
+    //   {}
+    // ),
     required: true,
   }),
   async handle({ color: colorHex }) {

@@ -1,34 +1,4 @@
 {
-<<<<<<< HEAD
-  "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
-  "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
-  "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
-  "ERROR_INVALID_HEX": "Предоставленный цвет HEX недействителен.",
-  "globalErrors": {
-    "GUILD_ONLY": "Эта команда не может быть использована в ЛС."
-  },
-  "genericButtons": {
-    "BACK": "Назад",
-    "JUMP_TO_MSG": "Перейти к сообщению",
-    "CANCEL": "Отменить",
-    "CONFIRM": "Подтвердить",
-    "DELETE": "Удалить",
-    "EDIT": "Изменить",
-    "PREVIOUS": "Предыдущий",
-    "NEXT": "Следующий",
-    "SAVE": "Сохранить изменения",
-    "DONE": "Готово",
-    "ADD_REMINDER": "Добавить напоминание",
-    "OPEN_DMS": "Открыть ЛС",
-    "PREVIEW": "Предпросмотр",
-    "EXPORT": "Экспортировать",
-    "IMPORT": "Импортировать"
-  },
-  "UnknownError": {
-    "strings": {
-      "TITLE": "Произошла неизвестная ошибка.",
-      "DESCRIPTION": "Мы не знаем, в чём проблема. Вот сообщение об ошибке которое мы получили:\n{MESSAGE}\nОб этом нам автоматически сообщили, и мы постараемся исправить это как можно скорее. Извините за неудобства."
-=======
   "ID": "ID",
   "CREATED_ON": "Created on",
   "MEMBER_COUNT": "Количество участников",
@@ -66,17 +36,12 @@
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
       "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
->>>>>>> origin/l10n_dev
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Подождите!",
-<<<<<<< HEAD
-      "DESCRIPTION": "Вы сможете использовать эту {TYPE} через {TIME}...",
-=======
       "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
->>>>>>> origin/l10n_dev
       "COMMAND": "команду",
       "COMPONENT": "компонент"
     }
@@ -144,35 +109,12 @@
       ]
     },
     "errors": {
-<<<<<<< HEAD
-      "SUBJECT_MAX_LENGTH": "Тема должна быть не более 120 символов.",
-=======
->>>>>>> origin/l10n_dev
       "PAST": "Нельзя установить напоминание в прошлом.",
       "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
       "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
       "INVALID_CHANNEL_TYPE": "Указанный вами текстовый канал некорректен.",
       "BOT_MISSING_PERMS": "У меня недостаточно прав, чтобы отправлять сообщения в этом канале.",
       "USER_MISSING_PERMS": "У вас недостаточно прав, чтобы отправлять сообщения в этом канале.",
-<<<<<<< HEAD
-      "REMINDERS_MAX_LIMIT": "Вы не можете установить более 10 напоминаний одновременно."
-    },
-    "strings": {
-      "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "Вы получите напонминание в {CHANNEL}",
-      "SUCCESS_DM": "Вы получите уведомление в ЛС",
-      "SUBJECT": "Тема",
-      "TOMORROW_AT": "Завтра в {TIME}",
-      "TODAY_AT": "Сегодня в {TIME}",
-      "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
-      "GCALENDAR_EVENT": "Установка напоминания CRBT.",
-      "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будете отправлено в {CHANNEL} на {SERVER}.",
-      "REMINDER_TITLE": "Напоминание",
-      "REMINDER_DESCRIPTION": "Установлено на {TIME} ({RELATIVE_TIME})",
-      "BUTTON_SNOOZE": "Отложить",
-      "BUTTON_SNOOZE_SUCCESS": "Будильник отложен на 15 минут"
-=======
       "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
@@ -188,7 +130,6 @@
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
       "REMINDER_TITLE": "Напоминание",
       "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
->>>>>>> origin/l10n_dev
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -204,19 +145,11 @@
       "description": "Пинг CRBT. Информация о соединении и времени ожидания."
     },
     "strings": {
-<<<<<<< HEAD
-      "EMBED_TITLE": "{CRBT} - пинг",
-      "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Взаимодействие",
-      "UPTIME": "В сети с",
-      "FORMAT_MS": "{NUMBER}мс"
-=======
       "EMBED_TITLE": "{CRBT} - Ping",
       "WEBSOCKET": "WebSocket latency",
       "INTERACTION": "Interaction latency",
       "UPTIME": "В сети с",
       "FORMAT_MS": "{NUMBER}ms"
->>>>>>> origin/l10n_dev
     }
   },
   "crbt info": {
@@ -224,55 +157,24 @@
       "description": "Получить информацию о CRBT"
     },
     "strings": {
-<<<<<<< HEAD
-      "EMBED_TITLE": "{CRBT} - Информация",
-      "VERSION": "Версия {VERSION} на {PURPLET}",
-      "MEMBER_COUNT": "Количество участников",
-      "SERVER_COUNT": "Количество серверов",
-      "PING": "Пинг",
-      "PING_RESULT": "≈{PING} миллисекунд",
-      "CREATED": "Создано",
-      "UPTIME": "В сети с",
-      "BUTTON_WEBSITE": "Сайт",
-      "BUTTON_INVITE": "Добавить на сервер",
-      "BUTTON_DISCORD": "Присоединиться к Сообществу",
-      "BUTTON_DONATE": "Поддержать"
-=======
       "MEMBER_COUNT": "Количество участников",
       "SERVER_COUNT": "Количество серверов",
       "PING_RESULT": "≈{PING} milliseconds"
->>>>>>> origin/l10n_dev
     }
   },
   "user_navbar": {
     "errors": {
-<<<<<<< HEAD
-      "NOT_CMD_USER": "Только пользователь, который использовал эту команду, может использовать эту кнопку."
-=======
       "NOT_CMD_USER": "Only the person using this command can use this component."
->>>>>>> origin/l10n_dev
     },
     "strings": {
       "AVATAR": "Аватар",
       "INFO": "Информация о пользователе",
-<<<<<<< HEAD
-=======
       "BOTINFO": "Информация о боте",
->>>>>>> origin/l10n_dev
       "SERVER_AVATAR": "Аватар сервера",
       "USER_AVATAR": "Аватар пользователя",
       "USER_BANNER": "Баннер пользователя"
     }
   },
-<<<<<<< HEAD
-  "profile": {
-    "pronouns": {
-      "hh": "Он/Его",
-      "sh": "Она/Ее",
-      "tt": "Они/Их",
-      "other": "Другое",
-      "ask": "Спрашивать"
-=======
   "server_navbar": {
     "strings": {
       "INFO": "Информация о сервере",
@@ -281,7 +183,6 @@
       "ROLES": "Роли и участники",
       "EMOJIS": "Эмодзи и стикеры",
       "EXTRA": "Дополнительно"
->>>>>>> origin/l10n_dev
     }
   },
   "poll": {
@@ -303,36 +204,21 @@
       ]
     },
     "errors": {
-<<<<<<< HEAD
-      "TITLE_TOO_LONG": "Заголовок вашего опроса должен быть не более 100 символов.",
-=======
->>>>>>> origin/l10n_dev
       "CHOICE_TOO_LONG": "Вариант голосования не может содержать в себе более 40 символов (за исключением эмодзи).",
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
       "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
     },
     "strings": {
       "CHOICE": "Выбор",
-<<<<<<< HEAD
-      "POLL_DESCRIPTION": "Опрос закончится через {TIME}.\nСоздатель опроса может просматривать его параметры и другие данные, нажав кнопку {ICON} ниже.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
-      "POLL_FOOTER_VOTES": "Всего голосов: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Опрос начат {USER}",
-=======
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
       "POLL_FOOTER_CREATOR": "Poll started by {USER}",
->>>>>>> origin/l10n_dev
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "KEYWORD_YES__KEEP_LOWERCASE": "да",
       "KEYWORD_NO__KEEP_LOWERCASE": "нет",
       "SUCCESS_TITLE": "Опрос создан!",
-<<<<<<< HEAD
-      "SUCCESS_DESCRIPTION": "Опрос закончится через {TIME}, но вы можете преждевременно завершить его с помощью меню {ICON}. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
-=======
       "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
->>>>>>> origin/l10n_dev
       "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
       "POLL_DATA_NOVOTES": "Пока нет голосов",
       "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться в реальном времени. Используйте кнопку снова, чтобы обновить данные.",
@@ -345,15 +231,9 @@
       "POLL_HEADER_ENDED": "Завершено",
       "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
       "POLL_RESULTS_TITLE": "Результаты опроса!",
-<<<<<<< HEAD
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" и \"<OPTION2>\" имеют равное число голосов: {VOTES}",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" выиграл с количеством голосов: {VOTES}",
-      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите кнопку ниже, чтобы просмотреть все результаты.",
-=======
       "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
       "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
       "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
->>>>>>> origin/l10n_dev
       "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
     }
   },
@@ -376,30 +256,17 @@
       ]
     },
     "ctxMeta": {
-<<<<<<< HEAD
-      "name": "Получить аватар"
-    },
-    "strings": {
-      "EMBED_TITLE": "{USER} - Аватар",
-      "DOWNLOAD": "Скачать ({SIZE}px - {FORMAT})"
-=======
       "name": "Get Avatar/Banner"
     },
     "strings": {
       "EMBED_TITLE": "{USER} - Avatar",
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
->>>>>>> origin/l10n_dev
     }
   },
   "crbt_introduction": {
     "strings": {
-<<<<<<< HEAD
-      "EMBED_TITLE": "Спасибо, что пригласили {CRBT} на ваш сервер!",
-      "EMBED_DESCRIPTION": "{CRBT} теперь на {SERVERS} серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки]({DISCORD})**."
-=======
       "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
       "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
->>>>>>> origin/l10n_dev
     }
   },
   "bookmark": {
@@ -410,11 +277,7 @@
       "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
     },
     "strings": {
-<<<<<<< HEAD
-      "BOOKMARK_AUTHOR": "{USER} (сохранил сообщение)",
-=======
       "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
->>>>>>> origin/l10n_dev
       "SUCCESS_MESSAGE": "Это сообщение отправлено в ЛС!"
     }
   },
@@ -432,11 +295,7 @@
   "role-selectors": {
     "manual": {
       "meta": {
-<<<<<<< HEAD
-        "description": "Создать новый выборщик ролей — меню, в котором участники сами выбирают роли.",
-=======
         "description": "Create a new Role Picker, a menu for members to give themselves roles.",
->>>>>>> origin/l10n_dev
         "options": [
           {
             "name": "описание",
@@ -461,66 +320,21 @@
         ]
       }
     },
-<<<<<<< HEAD
-    "preset": {
-      "meta": {
-        "description": "Создать новый выборщик ролей, используя шаблон.",
-        "options": [
-          {
-            "name": "шаблон",
-            "description": "Выбор шаблона. CRBT сам создаст роли по шаблону и оформит красивую рамочку."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Цвета",
-          "message": "Выберите цвет для вашего отображаемого имени."
-        },
-        "pronouns": {
-          "name": "Обращение",
-          "message": "Как к вам обращаться?"
-        },
-        "zodiacSigns": {
-          "name": "Знаки зодиака",
-          "message": "Какой ваш знак зодиака?"
-        },
-        "verification": {
-          "name": "Проверка на человека",
-          "message": "Нажмите на кнопку, чтобы подтвердить свой аккаунт."
-        }
-      }
-    },
-    "errors": {
-      "USER_MISSING_PERMS": "Только администраторы сервера могут создавать выборщики ролей.",
-      "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
-      "ROLE_DOES_NOT_EXIST": "Роль {ROLE} не существует или была удалена. Свяжитесь с администратором для решения проблемы.",
-=======
     "errors": {
       "USER_MISSING_PERMS": "Только администраторы сервера могут создавать выборщики ролей.",
       "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
       "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
->>>>>>> origin/l10n_dev
       "ROLES_DO_NOT_EXIST": "Одна или несколько ролей, которые вы указали, не существуют или были удалены. Свяжитесь с администратором для решения проблемы.",
       "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить ее."
     },
     "strings": {
       "CHOOSE_ROLE": "Выберите роль",
       "CHOOSE_ROLES": "Выберите роли",
-<<<<<<< HEAD
-      "OPTION_LABEL_GET_ROLE": "Получить роль {ROLE}.",
-      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, из списка ниже.",
-      "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
-      "BUTTON_ROLES_ADD": "{ROLE} добавлена к вашим ролям.",
-      "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
-      "BUTTON_ROLES_REMOVE": "{ROLE} удалена из ваших ролей.",
-=======
       "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, из списка ниже.",
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
->>>>>>> origin/l10n_dev
       "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
       "SUCCESS_TITLE": "Выборщик ролей создан!",
       "SUCCESS_DESCRIPTION": "Участники смогут выбрать роли из этого меню. Чтобы отключить его, просто удалите сообщение выборщика ролей."
@@ -531,44 +345,14 @@
   "MODERATION_LOGS_ACTION_BAN": "Бан",
   "MODERATION_LOGS_ACTION_UNBAN": "Разбан",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Истечение времени ожидания",
-<<<<<<< HEAD
-  "MODERATION_LOGS_CLEAR": "Удаление сообщений в канале",
-  "MODERATION_LOGS_VIEW_TITLE": "История действий на {SERVER}",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: {MODERATOR}",
-=======
   "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
   "MODERATION_LOGS_CLEAR": "Удаление сообщений в канале",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
->>>>>>> origin/l10n_dev
   "JOIN_MESSAGE": "Приветствие",
   "LEAVE_MESSAGE": "Прощание",
   "JOIN_CHANNEL": "Канал приветствий",
   "LEAVE_CHANNEL": "Канал прощаний",
-<<<<<<< HEAD
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Укажите канал, куда отправить {TYPE}.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Куда отправить {TYPE}.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "{TYPE} установлено!",
-  "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "{TYPE} сохранено.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр {TYPE}.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра {TYPE}. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Новые участники теперь будут приветствоваться в {CHANNEL}. Используйте {COMMAND}, чтобы изменить содержание отправляемого сообщения.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Новые пользователи теперь будут видеть это сообщение при входе на сервер. Используйте {COMMAND}, чтобы изменить канал для приветствий.",
-  "JOIN_MESSAGE_DESCRIPTION": "Создать или изменить сообщение-приветствие.",
-  "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте '/welcome channel' для выбора.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Сообщение-прощание будет отправляться в {CHANNEL}, когда участники будут покидать сервер. Чтобы изменить сообщение прощание, используйте команду {COMMAND}.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Это сообщение будет отправлено, когда участник покинеть сервер. Чтобы изменить канал отправления сообщения-прощания, используйте команду {COMMAND}.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Создать или редактировать сообщение-прощание.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте '/farewell channel' для выбора.",
-=======
   "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
@@ -581,7 +365,6 @@
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
->>>>>>> origin/l10n_dev
   "FIELD_SELECT_MENU": "Выберите поле для редактирования",
   "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
   "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",
@@ -597,9 +380,6 @@
   "FIELDS_COLOR": "Вставить цвет",
   "FIELDS_IMAGE": "Вставить изображение",
   "FIELDS_THUMBNAIL": "Вставить предпросматриваемое изображение",
-<<<<<<< HEAD
-  "FIELDS_URL": "Вставить URL название"
-=======
   "FIELDS_URL": "Вставить URL название",
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
@@ -637,5 +417,4 @@
   "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
->>>>>>> origin/l10n_dev
 }

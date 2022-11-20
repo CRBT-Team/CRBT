@@ -1,18 +1,26 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import dayjs from 'dayjs';
 import { ChatCommand } from 'purplet';
 
-const { meta } = t('en-US', 'ping');
+const names = Object.entries(getAllLanguages('PING')).reduce(
+  (acc, [lang, value]) => ({
+    ...acc,
+    [lang]: value.toLocaleLowerCase(lang),
+  }),
+  {}
+);
+
+const descriptions = getAllLanguages('ping.meta.description');
 
 export default ChatCommand({
-  name: 'ping',
-  description: meta.description,
+  name: names['en-US'],
+  nameLocalizations: names,
+  descriptionLocalizations: descriptions,
+  description: descriptions['en-US'],
   async handle() {
     await this.deferReply();
-
-    const { strings } = t(this, 'ping');
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime).unix();
@@ -20,22 +28,24 @@ export default ChatCommand({
         embeds: [
           {
             author: {
-              name: strings.EMBED_TITLE.replace('{CRBT}', this.client.user.username),
+              name: t(this, 'ping.strings.EMBED_TITLE', {
+                CRBT: this.client.user.username,
+              }),
               iconURL: avatar(this.client.user, 64),
             },
             fields: [
               {
-                name: strings.WEBSOCKET,
+                name: t(this, 'ping.strings.WEBSOCKET'),
                 value: `${this.client.ws.ping}ms`,
                 inline: true,
               },
               {
-                name: strings.INTERACTION,
+                name: t(this, 'ping.strings.INTERACTION'),
                 value: `${Date.now() - this.createdTimestamp}ms`,
                 inline: true,
               },
               {
-                name: strings.UPTIME,
+                name: t(this, 'ping.strings.UPTIME'),
                 value: `<t:${uptime}> (<t:${uptime}:R>)`,
               },
             ],
