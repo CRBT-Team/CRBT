@@ -1,5 +1,4 @@
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -15,13 +14,14 @@ export default ChatCommand({
 
     const num = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
 
-    const e = new MessageEmbed()
-      .setTitle(`From ${minNum} to ${maxNum}: __${num}__`)
-      .setColor(await getColor(this.user));
-    if (comment) e.setAuthor({ name: `Comment: "${comment}"` });
-
     await this.reply({
-      embeds: [e],
+      embeds: [
+        {
+          ...(comment ? { author: { name: `"${comment}"` } } : {}),
+          title: `From ${minNum} to ${maxNum}: __${num}__`,
+          color: await getColor(this.user),
+        },
+      ],
     });
   },
 });

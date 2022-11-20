@@ -1,20 +1,22 @@
 import { prisma } from '$lib/db';
 import { achievements, colors, icons } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
+import { t } from '$lib/language';
+import { CustomEmojiRegex, formatEmojiURL } from '@purplet/utils';
 import {
   CommandInteraction,
   ContextMenuInteraction,
   GuildMember,
   Interaction,
   MessageComponentInteraction,
-  MessageEmbed,
   ModalSubmitInteraction,
   User,
 } from 'discord.js';
+import emojiJSON from '../../../data/misc/emoji.json';
+import { emojiImg } from '../../modules/info/emoji info';
 
 export interface Achievement {
-  name: string;
-  howToGet: string;
+  suggestedCommand?: string;
   emoji?: string;
   secret: boolean;
   steps: number;
@@ -28,9 +30,9 @@ export async function AchievementProgress(
     | MessageComponentInteraction
     | GuildMember
     | User,
-  type: keyof typeof achievements
+  type: string
 ) {
-  const achievement = achievements[type] as Achievement;
+  const { steps, secret, emoji, suggestedCommand } = achievements[type] as Achievement;
   const uId = 'user' in this ? this.user?.id : this.id;
 
   const preferences =
@@ -38,60 +40,55 @@ export async function AchievementProgress(
       ?.enableAchievements ?? true;
 
   if (!preferences) return;
+  const id = `${uId}_${type}`;
 
   const data = await prisma.globalAchievements.findUnique({
-    where: {
-      id: `${uId}_${type}`,
-    },
+    where: { id },
   });
 
-  if (data && data.progression >= achievement.steps) return;
+  if (data && data.progression >= steps) return;
 
   const newData = await prisma.globalAchievements.upsert({
     create: {
-      id: `${uId}_${type}`,
+      id,
       achievement: type,
       progression: 1,
-      achievedAt: 1 === achievement.steps ? new Date() : undefined,
+      achievedAt: 1 === steps ? new Date() : undefined,
       user: {
         connectOrCreate: {
-          create: {
-            id: uId,
-          },
-          where: {
-            id: uId,
-          },
+          create: { id: uId },
+          where: { id: uId },
         },
       },
     },
     update: {
-      achievedAt: (data?.progression || 0) + 1 === achievement.steps ? new Date() : undefined,
+      achievedAt: (data?.progression || 0) + 1 === steps ? new Date() : undefined,
       progression: {
         increment: 1,
       },
     },
-    where: {
-      id: `${uId}_${type}`,
-    },
+    where: { id },
   });
 
-  if (newData.progression !== achievement.steps) return;
+  if (newData.progression !== steps) return;
 
-  const icon = achievement?.emoji
-    ? `https://cdn.discordapp.com/emojis/${achievement.emoji}.png`
-    : icons.giveaway;
+  const icon = emoji.match(CustomEmojiRegex)
+    ? formatEmojiURL(emoji.match(CustomEmojiRegex)[0])
+    : emojiImg(emojiJSON.find((e) => e.char === emoji)).Twemoji;
 
   const embeds = [
-    new MessageEmbed()
-      .setAuthor({
-        name: `${achievement.name} - ${achievement.secret ? 'Secret ' : ''}Achievement Unlocked!`,
+    {
+      author: {
+        name: `${secret ? 'Secret ' : ''}Achievement Unlocked!`,
         iconURL: icons.giveaway,
-      })
-      .setDescription(
-        `${achievement.howToGet}\nCheck your achievements with ${slashCmd('achievements')}.`
-      )
-      .setThumbnail(icon)
-      .setColor(achievement.secret ? colors.gold : colors.success),
+      },
+      title: t('locale' in this ? this.locale : 'en-US', `ACHIEVEMENT_${id}_TITLE` as any),
+      description: `${t('locale' in this ? this.locale : 'en-US', `ACHIEVEMENT_${id}_DESC` as any, {
+        command: suggestedCommand ? slashCmd(suggestedCommand) : null,
+      })}\nCheck your achievements with ${slashCmd('achievements')}.`,
+      thumbnail: { url: icon },
+      color: secret ? colors.gold : colors.success,
+    },
   ];
 
   if (this instanceof Interaction) {

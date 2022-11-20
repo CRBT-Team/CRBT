@@ -47,7 +47,7 @@ export default ChatCommand({
       return CRBTError(this, errors.INVALID_FORMAT);
     }
 
-    if (expiresAt.isAfter(now.add(ms('2y')))) {
+    if (expiresAt.isAfter(now.add(ms('2y1s')))) {
       return CRBTError(this, errors.TOO_LONG);
     }
 

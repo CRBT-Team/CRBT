@@ -12,7 +12,6 @@ export default MessageContextCommand({
   ...ctxMeta,
   async handle(message) {
     const { strings, errors } = t(this, 'bookmark');
-    const { JUMP_TO_MSG, OPEN_DMS } = t(this, 'genericButtons');
 
     await this.user
       .send({
@@ -33,14 +32,19 @@ export default MessageContextCommand({
           ...message.embeds,
         ],
         components: components(
-          row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
+          row(
+            new MessageButton()
+              .setLabel(t(this, 'JUMP_TO_MSG'))
+              .setStyle('LINK')
+              .setURL(message.url)
+          )
         ),
       })
       .then((msg) => {
         this.reply({
           content: strings.SUCCESS_MESSAGE,
           components: components(
-            row(new MessageButton().setLabel(OPEN_DMS).setStyle('LINK').setURL(msg.url))
+            row(new MessageButton().setLabel(t(this, 'OPEN_DMS')).setStyle('LINK').setURL(msg.url))
           ),
           ephemeral: true,
         });

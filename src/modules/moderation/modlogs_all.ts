@@ -260,14 +260,18 @@ async function renderStrikePage(
           .setEmoji(emojis.buttons.left_arrow)
           .setLabel('Back')
           .setStyle('SECONDARY'),
-        new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
-          .setEmoji(emojis.buttons.pencil)
-          .setLabel('Edit Reason')
-          .setStyle('PRIMARY'),
-        new DeleteButton({ sId, page, userId })
-          .setEmoji(emojis.buttons.trash_bin)
-          .setLabel('Delete Strike')
-          .setStyle('DANGER')
+        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
+          ? [
+              new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
+                .setEmoji(emojis.buttons.pencil)
+                .setLabel('Edit Reason')
+                .setStyle('PRIMARY'),
+              new DeleteButton({ sId, page, userId })
+                .setEmoji(emojis.buttons.trash_bin)
+                .setLabel('Delete Strike')
+                .setStyle('DANGER'),
+            ]
+          : [])
       )
     ),
   };

@@ -45,8 +45,6 @@ ChatCommand({
       return CRBTError(this, 'The message ID that you provided is invalid.');
     }
 
-    const { JUMP_TO_MSG } = t(this, 'genericButtons');
-
     const firstEmbeds = [
       new MessageEmbed()
         .setAuthor({
@@ -68,7 +66,12 @@ ChatCommand({
       await this.reply({
         embeds: firstEmbeds,
         components: components(
-          row(new MessageButton().setLabel(JUMP_TO_MSG).setStyle('LINK').setURL(message.url))
+          row(
+            new MessageButton()
+              .setLabel(t(this, 'JUMP_TO_MSG'))
+              .setStyle('LINK')
+              .setURL(message.url)
+          )
         ),
       });
     } else {

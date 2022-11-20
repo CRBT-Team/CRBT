@@ -61,7 +61,10 @@ export const BotInfoBtn = ButtonComponent({
       cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
       (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
 
-    const bot = bots.find(({ application }) => application.bot.id === opts.targetId);
+    const bot =
+      opts.targetId === this.client.user.id
+        ? await this.client.application.fetch()
+        : bots.find(({ application }) => application.bot.id === opts.targetId);
 
     cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
 

@@ -35,12 +35,12 @@ export async function colorAutocomplete(
     .filter((colorObj) => (!includeSync ? colorObj.value !== colors.sync : true))
     .map((colorObj) => ({
       name: localizedColorNames[this.locale][colorObj.key],
-      value: colorObj.value,
+      value: colorObj.value.toString(16),
     }));
 
   return presetResults.length > 0
     ? presetResults
     : /#?[0-9a-f]{6}/i.test(color)
-      ? [{ name: `#${color}`, value: color }]
-      : [{ name: 'Error: Invalid color', value: 'error' }];
+    ? [{ name: `#${color}`, value: color }]
+    : [{ name: 'Error: Invalid color', value: 'error' }];
 }

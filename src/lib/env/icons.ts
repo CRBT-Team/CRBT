@@ -6,16 +6,23 @@ export default {
   eightball: 'https://cdn.discordapp.com/emojis/1030989514145021993.png?size=96&quality=lossless',
   channels: {
     category:
-      'https://cdn.discordapp.com/attachments/945417344656752712/989879443231232020/unknown.png',
-    text: 'https://cdn.discordapp.com/attachments/945417344656752712/989879443545800764/unknown.png',
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571231263301632/category.png',
+    text: 'https://cdn.discordapp.com/attachments/1043571204558159912/1043571229640114266/text.png',
     voice:
-      'https://cdn.discordapp.com/attachments/945417344656752712/989879443805863936/unknown.png',
-    nsfw: 'https://cdn.discordapp.com/attachments/945417344656752712/989879444065906688/unknown.png',
-    news: 'https://cdn.discordapp.com/attachments/945417344656752712/989879444283994142/unknown.png',
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571230378303559/voice.png',
+    nsfw: 'https://cdn.discordapp.com/attachments/1043571204558159912/1043571228599918733/nsfw_text.png',
+    announcement:
+      'https://cdn.discordapp.com/attachments/945417344656752712/989879444283994142/unknown.png',
     rules:
-      'https://cdn.discordapp.com/attachments/945417344656752712/989879444686655579/unknown.png',
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571228994175078/rules.png',
     text_thread:
-      'https://cdn.discordapp.com/attachments/945417344656752712/989887232318001243/unknown.png',
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571230017585222/text_thread.png',
+    stage:
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571229325533315/stage.png',
+    forum:
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571228151119964/forum.png',
+    voice_chat:
+      'https://cdn.discordapp.com/attachments/1043571204558159912/1043571231636586506/chat.png',
   },
   placeholder: 'https://m.clembs.com/placeholder-image.png',
   information: 'https://cdn.discordapp.com/emojis/1030989515654975488.png?size=96&quality=lossless',

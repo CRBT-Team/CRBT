@@ -1,6 +1,5 @@
 import { prisma } from '$lib/db';
 import { Timeout } from '$lib/types/timeouts';
-import { TimeoutTypes } from '@prisma/client';
 import { getDiscordClient } from 'purplet';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
@@ -19,11 +18,8 @@ export async function dbTimeout<T extends Timeout>(
 ): Promise<T> {
   const client = getDiscordClient();
   const { id } = timeout;
-  const type = timeout.type.toString() as TimeoutTypes;
+  const type = timeout.type.toString() as string;
   const rawTimeout = (({ type, ...o }) => o)(timeout) as Omit<Timeout, 'type'>;
-
-  console.log(JSON.stringify(rawTimeout, null, 2));
-  console.log(rawTimeout.expiresAt.getTime() - Date.now());
 
   setLongerTimeout(async () => {
     if (!timeout) return;

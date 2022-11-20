@@ -1,5 +1,7 @@
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { channels, clients } from '$lib/env';
+import { AchievementProgress } from '$lib/responses/Achievements';
 import dayjs from 'dayjs';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
@@ -22,6 +24,17 @@ export default OnEvent('interactionCreate', async (i) => {
   //   const cmd = customCmds.get(i.commandName);
   //   cmd.handle(i, i.options);
   // }
+
+  await AchievementProgress.call(i.user, 'CRBT_ADDICT');
+
+  const isTelemetryEnabled =
+    (await fetchWithCache(`tlm:${i.user.id}`, () =>
+      prisma.user
+        .findFirst({ where: { id: i.user.id }, select: { telemetry: true } })
+        .then((u) => u.telemetry)
+    )) ?? true;
+
+  if (!isTelemetryEnabled) return;
 
   const channel = i.client.channels.cache.get(channels.telemetry) as TextChannel;
 

@@ -135,7 +135,6 @@ export async function CooldownError(
   showButton = true
 ): Promise<InteractionReplyOptions> {
   const { strings } = t(context.locale, 'CooldownError');
-  const { ADD_REMINDER } = t(context.locale, 'genericButtons');
 
   const reminder = await prisma.reminder.findFirst({
     where: {
@@ -164,7 +163,7 @@ export async function CooldownError(
             row(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
-                .setLabel(ADD_REMINDER)
+                .setLabel(t(context, 'ADD_REMINDER'))
                 .setEmoji(emojis.reminder)
             )
           )

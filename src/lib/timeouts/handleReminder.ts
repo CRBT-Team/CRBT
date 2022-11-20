@@ -22,9 +22,6 @@ export interface LowBudgetMessage {
 }
 
 export async function handleReminder(reminder: Reminder, client: Client) {
-  console.log(reminder);
-
-  const { JUMP_TO_MSG } = t(reminder?.locale, 'genericButtons');
   const { strings } = t(reminder.locale, 'remind me');
 
   const data = await extractReminder(reminder, client);
@@ -49,7 +46,10 @@ export async function handleReminder(reminder: Reminder, client: Client) {
     ],
     components: components(
       row(
-        new MessageButton().setStyle('LINK').setLabel(JUMP_TO_MSG).setURL(data.url)
+        new MessageButton()
+          .setStyle('LINK')
+          .setLabel(t(reminder?.locale, 'JUMP_TO_MSG'))
+          .setURL(data.url)
         // new SnoozeButton()
         //   .setStyle('SECONDARY')
         //   .setEmoji(emojis.reminder)

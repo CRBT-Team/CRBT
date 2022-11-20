@@ -6,7 +6,7 @@ import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purp
 
 const notice = {
   free: '(Free)',
-  boosting: '(💎 May require Boosting)',
+  boosting: '(🚀 May require Boosting)',
   premium: '(💎 Nitro required)',
   limited: '(May be free)',
 };
@@ -19,9 +19,9 @@ const activities = [
   [`😂 Know What I Meme ${notice.limited}`, '950505761862189096'],
   [`🔠 Word Snacks ${notice.limited}`, '879863976006127627'],
 
-  [`🚘 Bash Out ${notice.boosting}`, '1006584476094177371'],
-  [`⚽ Bobble League ${notice.boosting}`, '947957217959759964'],
-  [`🔮 SpellCast ${notice.boosting}`, '852509694341283871'],
+  [`🚘 Bash Out ${notice.premium}`, '1006584476094177371'],
+  [`⚽ Bobble League ${notice.premium}`, '947957217959759964'],
+  [`🔮 SpellCast ${notice.premium}`, '852509694341283871'],
 
   [`🃏 Poker Night ${notice.premium}`, '755827207812677713'],
   [`🖌️ Sketch Heads ${notice.premium}`, '902271654783242291'],

@@ -21,16 +21,23 @@ import {
 } from 'purplet';
 import emojiJSON from '../../../data/misc/emoji.json';
 
-const emojiImg = (emojipediaCode: string, size = '120') => ({
-  Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
-  'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
-  Samsung: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
-  Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
-  WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
-  Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
-  Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
-  'Microsoft Teams': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
-});
+export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
+  const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/:/g, '')}`;
+
+  return {
+    Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
+    'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
+    Samsung: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
+    Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
+    WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
+    Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
+    Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
+    'Microsoft Teams': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
+  };
+}
 
 export default ChatCommand({
   name: 'emoji info',
@@ -117,12 +124,7 @@ async function renderUnicodeEmoji(
 ) {
   const emojiData = emojiJSON.find((e) => e.codes === emojiCodes);
 
-  const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/:/g, '')}`;
-
-  const emojiURL = emojiImg(emojipediaCode)[vendor];
+  const emojiURL = emojiImg(emojiData)[vendor];
 
   return {
     embeds: [
@@ -161,7 +163,7 @@ async function renderUnicodeEmoji(
     components: components(
       row(
         new EmojiDesignSelect(emojiCodes).setOptions(
-          Object.entries(emojiImg(emojipediaCode)).map(([brand, url]) => ({
+          Object.entries(emojiImg(emojiData)).map(([brand, url]) => ({
             label: brand === vendor ? `Viewing design: ${capitalCase(brand)}` : brand,
             value: brand,
             default: brand === vendor,

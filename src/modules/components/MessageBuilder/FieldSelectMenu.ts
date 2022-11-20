@@ -20,7 +20,6 @@ import { ManualColorEditButton } from './ManualColorEditButton';
 export const FieldSelectMenu = SelectMenuComponent({
   handle(type: MessageBuilderTypes) {
     const fieldName = this.values[0] as editableNames;
-    const { BACK } = t(this, 'genericButtons');
 
     const messageData = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
@@ -42,7 +41,7 @@ export const FieldSelectMenu = SelectMenuComponent({
           ),
           row(
             new BackButton(type as never)
-              .setLabel(BACK)
+              .setLabel(t(this, 'BACK'))
               .setEmoji(emojis.buttons.left_arrow)
               .setStyle('SECONDARY'),
             new ManualColorEditButton({

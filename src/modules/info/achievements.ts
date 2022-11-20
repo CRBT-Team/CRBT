@@ -5,6 +5,7 @@ import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { progressBar } from '$lib/functions/progressBar';
+import { t } from '$lib/language';
 import type { Achievement } from '$lib/responses/Achievements';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
@@ -56,8 +57,16 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
 
   const fields = allAchievements
     .slice(page * 3, page * 3 + 3)
-    .map(([id, { howToGet, name, secret, steps, emoji }]) => {
+    .map(([id, { secret, steps, emoji, suggestedCommand }]) => {
       const userData = userAchievements?.find((a) => a?.achievement === id);
+
+      const title = t(this, `ACHIEVEMENT_${id}_TITLE` as any);
+      const desc =
+        u.id !== this.user.id && secret
+          ? '?????'
+          : t(this, `ACHIEVEMENT_${id}_DESC` as any, {
+              command: suggestedCommand ? slashCmd(suggestedCommand) : null,
+            });
 
       if (userAchievements && userData) {
         if (u.id !== this.user.id && !userData.achievedAt && secret) return;
@@ -65,23 +74,21 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
         const { progression, achievedAt } = userData;
         const percentage = (progression / steps) * 100;
 
-        howToGet = u.id !== this.user.id && secret ? '?????' : howToGet;
-
         if (userData.achievedAt) {
           return {
-            name: `${emoji ? `<:a:${emoji}>` : '🔓'} ${name}`,
-            value: `${howToGet} (Achieved ${timestampMention(achievedAt, 'R')})`,
+            name: `${emoji ?? '🔓'} ${title}`,
+            value: `${desc} (Achieved ${timestampMention(achievedAt, 'R')})`,
           };
         } else {
           return {
-            name: `${emojis.lock} ${name} (${percentage}% completed)`,
-            value: howToGet,
+            name: `${emojis.lock} ${title} (${percentage}% completed)`,
+            value: desc,
           };
         }
       } else {
         return {
-          name: `${emojis.lock} ${name}`,
-          value: secret ? '?????' : howToGet,
+          name: `${emojis.lock} ${title}`,
+          value: secret ? '?????' : desc,
         };
       }
     })

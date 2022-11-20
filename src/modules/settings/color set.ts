@@ -23,11 +23,11 @@ export const colorset = ChatCommand({
 
     const user = await this.user.fetch();
     colorHex = colorHex.toLowerCase().replace(/ |#/g, '');
-    const color = colors[colorHex] ?? colorHex;
-    const colorInt = parseInt(color, 16);
+
+    const color = colors[colorHex] ?? parseInt(colorHex, 16);
 
     if (/^[0-9a-f]{6}$/.test(colorHex) || colors[colorHex]) {
-      if (colorInt === colors.default) {
+      if (color === colors.default) {
         cache.del(`${this.user.id}:color`);
         await prisma.user.upsert({
           create: { id: this.user.id, accentColor: null },
@@ -45,9 +45,9 @@ export const colorset = ChatCommand({
       await this.reply({
         embeds: [
           {
-            title: `${emojis.success} ${strings.EMBED_TITLE}.`,
-            color: color,
+            title: `${emojis.success} ${strings.EMBED_TITLE}`,
             description: strings.EMBED_DESCRIPTION,
+            color,
           },
         ],
         ephemeral: true,
@@ -58,20 +58,20 @@ export const colorset = ChatCommand({
       if (colorHex.toLowerCase().trim() === 'clembs') {
         await AchievementProgress.call(this, 'IMITATING_THE_CREATOR');
       }
-    } else if (colorHex === 'profile') {
+    } else if (color === 0) {
       if (!user.hexAccentColor) {
         await CRBTError(this, errors.NO_DISCORD_COLOR);
       } else {
         cache.set(`color_${user.id}`, 'profile');
         await prisma.user.upsert({
-          update: { accentColor: 0 },
-          create: { id: this.user.id, accentColor: 0 },
+          update: { accentColor: color },
+          create: { id: this.user.id, accentColor: color },
           where: { id: user.id },
         });
         await this.reply({
           embeds: [
             {
-              title: `${emojis.success} ${strings.EMBED_TITLE}.`,
+              title: `${emojis.success} ${strings.EMBED_TITLE}`,
               color: user.accentColor,
               description: `${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`,
             },

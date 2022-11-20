@@ -22,7 +22,6 @@ export const ExportJSONButton = ButtonComponent({
     }
 
     const buffer = Buffer.from(JSON.stringify(data, null, 2));
-    const { BACK } = t(this, 'genericButtons');
 
     return this.update({
       content: `JSON file generated! You can now reuse this message elsewhere by clicking the Import button when setting it up.`,
@@ -31,7 +30,7 @@ export const ExportJSONButton = ButtonComponent({
       components: components(
         row(
           new BackButton(type as never)
-            .setLabel(BACK)
+            .setLabel(t(this, 'BACK'))
             .setStyle('SECONDARY')
             .setEmoji(emojis.buttons.left_arrow)
         )

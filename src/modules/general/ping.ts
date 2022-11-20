@@ -6,8 +6,6 @@ import { ChatCommand } from 'purplet';
 
 const { meta } = t('en-US', 'ping');
 
-console.log(meta);
-
 export default ChatCommand({
   name: 'ping',
   description: meta.description,

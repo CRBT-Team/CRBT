@@ -1,7 +1,9 @@
 import { slashCmd } from '$lib/functions/commandMention';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
+import { readFileSync } from 'fs';
 import fetch from 'node-fetch';
+import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
 import { createSearchResponse, fetchResults } from './_response';
@@ -74,3 +76,37 @@ export async function handleDictionary(
     return UnknownError(this, String(e));
   }
 }
+
+export const englishDictionary = readFileSync('./src/lib/util/words-en-US.txt', 'utf8').split(
+  '\r\n'
+);
+
+export default ChatCommand({
+  name: 'define',
+  description: 'Look up the definition of a given word on an English dictionary.',
+  options: new OptionBuilder().string('word', 'The word to define.', {
+    autocomplete({ word }) {
+      return englishDictionary
+        .filter((w) => w.toLowerCase() === word || w.toLowerCase().startsWith(word))
+        .map((word) => ({
+          name: word,
+          value: word,
+        }));
+    },
+    required: true,
+  }),
+  async handle({ word }) {
+    await this.deferReply();
+
+    const res = await handleDictionary.call(this, {
+      anonymous: false,
+      query: word,
+      site: 'dictionary',
+      page: -1,
+    });
+
+    if (res) {
+      await this.editReply(res);
+    }
+  },
+});

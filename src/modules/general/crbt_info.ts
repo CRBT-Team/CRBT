@@ -44,7 +44,7 @@ export default ChatCommand({
               inline: true,
             },
             {
-              name: strings.PING,
+              name: t(this, 'PING'),
               value: `${strings.PING_RESULT.replace(
                 '{PING}',
                 `${Date.now() - this.createdTimestamp}`
@@ -52,12 +52,12 @@ export default ChatCommand({
               inline: true,
             },
             {
-              name: strings.CREATED,
+              name: t(this, 'CREATED_ON'),
               value: `${timestampMention(created)} • ${timestampMention(created, 'R')}`,
               inline: true,
             },
             {
-              name: strings.UPTIME,
+              name: t(this, 'UPTIME'),
               value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
               inline: true,
             },
@@ -72,17 +72,14 @@ export default ChatCommand({
         row(
           new MessageButton()
             .setStyle('LINK')
-            .setLabel(strings.BUTTON_INVITE)
+            .setLabel(t(this, 'ADD_TO_SERVER'))
             .setURL(links.invite)
             .setEmoji(emojis.buttons.add),
+          new MessageButton().setStyle('LINK').setLabel(t(this, 'WEBSITE')).setURL(links.baseURL),
+          new MessageButton().setStyle('LINK').setLabel(t(this, 'DONATE')).setURL(links.donate),
           new MessageButton()
             .setStyle('LINK')
-            .setLabel(strings.BUTTON_WEBSITE)
-            .setURL(links.baseURL),
-          new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_DONATE).setURL(links.donate),
-          new MessageButton()
-            .setStyle('LINK')
-            .setLabel(strings.BUTTON_DISCORD)
+            .setLabel(t(this, 'DISCORD_SERVER'))
             .setURL(links.discord)
         )
       ),

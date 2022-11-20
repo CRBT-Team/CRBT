@@ -186,7 +186,6 @@ async function renderReminder(
   index: number
 ) {
   const reminder = userReminders[index];
-  const { JUMP_TO_MSG, BACK, EDIT, DELETE } = t(this, 'genericButtons');
   const { strings } = t(this, 'remind me');
 
   const data = await extractReminder(reminder, this.client);
@@ -222,17 +221,23 @@ async function renderReminder(
           )
       ),
       row(
-        new BackButton().setLabel(BACK).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
-        new EditButton(index).setLabel(EDIT).setEmoji(emojis.buttons.pencil).setStyle('PRIMARY'),
+        new BackButton()
+          .setLabel(t(this, 'BACK'))
+          .setEmoji(emojis.buttons.left_arrow)
+          .setStyle('SECONDARY'),
+        new EditButton(index)
+          .setLabel(t(this, 'EDIT'))
+          .setEmoji(emojis.buttons.pencil)
+          .setStyle('PRIMARY'),
         new DeleteButton(index)
-          .setLabel(DELETE)
+          .setLabel(t(this, 'DELETE'))
           .setEmoji(emojis.buttons.trash_bin)
           .setStyle('DANGER')
       ),
       row(
         data.id.endsWith('BIRTHDAY')
           ? null
-          : new MessageButton().setStyle('LINK').setURL(data.url).setLabel(JUMP_TO_MSG),
+          : new MessageButton().setStyle('LINK').setURL(data.url).setLabel(t(this, 'JUMP_TO_MSG')),
         new MessageButton()
           .setStyle('LINK')
           .setLabel(strings.BUTTON_GCALENDAR)

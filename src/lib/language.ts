@@ -71,26 +71,26 @@ export function t<K extends keyof StringsStructure>(
   stringKey: K,
   interpolations?: { [k: string]: any }
 ): StringsStructure[K] {
-  const dataDefault = languages['en-US'];
-  const data = languages[typeof i === 'string' ? i : i.locale];
-  if (!data) {
-    return dataDefault[stringKey];
+  const locale = typeof i === 'string' ? i : i.locale;
+  const defaultData = languages['en-US'][stringKey];
+  const localizedData = languages[locale][stringKey];
+
+  if (!locale || !languages[locale]) {
+    return defaultData;
   }
 
   const string =
-    typeof dataDefault[stringKey] === 'string'
-      ? data[stringKey] || dataDefault[stringKey]
-      : deepMerge<StringsStructure[K]>(dataDefault[stringKey], data[stringKey]);
+    typeof defaultData === 'string'
+      ? localizedData || defaultData
+      : deepMerge(defaultData, localizedData);
 
   if (interpolations && typeof string === 'string') {
     return Object.keys(interpolations).reduce(
       (interpolated, key) =>
         interpolated.replace(new RegExp(`{\s*${key}\s*}`, 'g'), interpolations[key]),
       string
-    ) as string as any;
-  } else return string;
+    ) as StringsStructure[K];
+  } else {
+    return string;
+  }
 }
-
-const h = t('', 'ping', {
-  ping: 'pong',
-});

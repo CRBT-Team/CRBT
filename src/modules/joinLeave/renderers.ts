@@ -72,8 +72,6 @@ export async function renderJoinLeavePreview(
   type: 'JOIN_MESSAGE' | 'LEAVE_MESSAGE',
   data: RawServerJoin | RawServerLeave
 ) {
-  const { JUMP_TO_MSG } = t(this, 'genericButtons');
-
   const message: JoinLeaveData =
     data && type === MessageBuilderTypes.joinMessage ? data['joinMessage'] : data['leaveMessage'];
 
@@ -144,7 +142,7 @@ export async function renderJoinLeavePreview(
           .setColor(await getColor(this.guild)),
       ],
       components: components(
-        row(new MessageButton().setLabel(JUMP_TO_MSG).setURL(url).setStyle('LINK'))
+        row(new MessageButton().setLabel(t(this, 'JUMP_TO_MSG')).setURL(url).setStyle('LINK'))
       ),
       ephemeral: true,
     });

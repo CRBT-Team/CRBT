@@ -1,5 +1,4 @@
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -13,13 +12,14 @@ export default ChatCommand({
     const randomIndex = Math.floor(Math.random() * valuesArray.length);
     const randomValue = valuesArray[randomIndex];
 
-    const e = new MessageEmbed()
-      .setTitle(`"${randomValue.trim()}" was picked from the ${valuesArray.length} values.`)
-      .setColor(await getColor(this.user));
-    if (comment) e.setAuthor({ name: `Comment: "${comment}"` });
-
     await this.reply({
-      embeds: [e],
+      embeds: [
+        {
+          ...(comment ? { author: { name: `"${comment}"` } } : {}),
+          title: `"${randomValue.trim()}" was picked from the ${valuesArray.length} values.`,
+          color: await getColor(this.user),
+        },
+      ],
     });
   },
 });
