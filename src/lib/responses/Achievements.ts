@@ -72,9 +72,9 @@ export async function AchievementProgress(
 
   if (newData.progression !== steps) return;
 
-  const icon = emoji.match(CustomEmojiRegex)
-    ? formatEmojiURL(emoji.match(CustomEmojiRegex)[0])
-    : emojiImg(emojiJSON.find((e) => e.char === emoji)).Twemoji;
+  const icon = emojiJSON.find((e) => e.char === emoji)
+    ? emojiImg(emojiJSON.find((e) => e.char === emoji)).Twemoji
+    : formatEmojiURL(emoji.match(CustomEmojiRegex)[0]);
 
   const embeds = [
     {

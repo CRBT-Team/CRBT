@@ -85,6 +85,7 @@ export default {
     bugHunter2: '<:goldbughunter:853274684337946648>',
     hypesquad: '<:hypesquad_events:585765895939424258>',
     server_owner: '<:server_owner:970653903676899398>',
+    activeDeveloper: '<:active_developer:1043712541018292304>',
   },
   colors: {
     black: '<:black:855497337333088266>',

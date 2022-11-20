@@ -60,7 +60,7 @@ export default {
   },
   CRBT_ADDICT: {
     secret: true,
-    steps: 1,
+    steps: 100,
     emoji: '`/`',
   },
   ERROR_MASTER: {

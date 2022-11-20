@@ -13,7 +13,7 @@ const flags = {
 
 export function resolveFlags(bitField: number, namespace: keyof typeof flags) {
   return Object.entries(flags[namespace]).reduce((acc, [key, value]) => {
-    if (bitField & value) {
+    if ((bitField & value) === value) {
       acc.push(key);
     }
     return acc;

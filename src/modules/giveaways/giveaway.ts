@@ -345,7 +345,12 @@ export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
         .setColor(colors.success),
     ],
     components: components(
-      row(new MessageButton().setStyle('LINK').setURL(gwayMsg.url).setLabel(t(this, 'JUMP_TO_MSG')))
+      row(
+        new MessageButton()
+          .setStyle('LINK')
+          .setURL(gwayMsg.url)
+          .setLabel(t(giveaway.locale, 'JUMP_TO_MSG'))
+      )
     ),
   });
 

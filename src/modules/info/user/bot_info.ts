@@ -79,7 +79,12 @@ export async function renderBotInfo(
   const app = isSelf ? (integration as ClientApplication) : integration.application;
   const bot = app instanceof IntegrationApplication ? app.bot : this.client.user;
 
-  const userBadges = getBadgeEmojis(bot.flags);
+  console.log(integration);
+
+  const userBadges = [
+    ...getBadgeEmojis(bot.flags.bitfield),
+    (integration as Integration).application,
+  ];
   const uptime = new Date(Date.now() - this.client.uptime);
   const i18n = new Intl.NumberFormat(this.locale);
 
@@ -189,7 +194,7 @@ export async function renderBotInfo(
                 .setURL(links.discord),
             ])
       ),
-      navBar(navCtx, this.locale, 'botinfo', getTabs('botinfo', bot, true as any))
+      navBar(navCtx, this.locale, 'botinfo', getTabs('botinfo', bot.toJSON(), true as any))
     ),
   };
 }

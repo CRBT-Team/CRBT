@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
-import { englishDictionary } from '../define';
+import { englishDictionary } from './dictionary';
 import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 

@@ -1,16 +1,26 @@
-import { AllowedImageSize, DynamicImageFormat, User } from 'discord.js';
+import { CDNImageFormat, CDNImageSize, formatUserBannerURL } from '@purplet/utils';
+
+export interface UserOrMemberWithBannerLike {
+  id?: string;
+  discriminator?: string;
+  user?: {
+    id?: string;
+    discriminator?: string;
+    banner?: string;
+  };
+  banner?: string;
+}
 
 export function banner(
-  user: User,
-  size: string | number | AllowedImageSize = 2048,
-  format: string | DynamicImageFormat = 'png'
+  user: UserOrMemberWithBannerLike,
+  size: CDNImageSize = 2048,
+  format: CDNImageFormat = 'png'
 ) {
   if (!user.banner) {
     return null;
   }
-  return user.bannerURL({
-    format: format as DynamicImageFormat,
-    size: (typeof size === 'string' ? parseInt(size) : size) as AllowedImageSize,
-    dynamic: true,
+  return formatUserBannerURL(user.id, user.banner, {
+    format,
+    size,
   });
 }

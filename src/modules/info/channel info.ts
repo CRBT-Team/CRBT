@@ -168,7 +168,10 @@ export default ChatCommand({
           name: 'Tags',
           value:
             channel.available_tags
-              .map((tag) => `${tag.emoji_id ? `<:a:${tag.emoji_id}>` : tag.emoji_name} ${tag.name}`)
+              .map(
+                (tag) =>
+                  `${tag.emoji_id ? `<:a:${tag.emoji_id}>` : tag.emoji_name ?? ''} ${tag.name}`
+              )
               .join(', ') || '*None*',
         },
         {

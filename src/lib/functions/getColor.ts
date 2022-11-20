@@ -1,10 +1,11 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
+import { APIUser } from 'discord-api-types/v10';
 import { Guild, User } from 'discord.js';
 
-export async function getColor(thing: User | Guild) {
-  const isUser = thing instanceof User;
+export async function getColor(thing: User | Guild | APIUser) {
+  const isUser = 'username' in thing;
 
   const query = {
     where: { id: thing.id },
@@ -18,7 +19,9 @@ export async function getColor(thing: User | Guild) {
   );
 
   if (accentColor === 0 && isUser) {
-    return (await thing.fetch()).accentColor ?? colors.default;
+    return (
+      ('fetch' in thing ? (await thing.fetch()).accentColor : thing.accent_color) ?? colors.default
+    );
   }
 
   return accentColor ?? colors.default;

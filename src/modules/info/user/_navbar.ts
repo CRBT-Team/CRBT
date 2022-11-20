@@ -2,8 +2,9 @@ import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { CDNImageFormat, CDNImageSize } from '@purplet/utils';
-import { GuildMember, Integration, User } from 'discord.js';
-import { ButtonComponent, row } from 'purplet';
+import { APIUser, Routes } from 'discord-api-types/v10';
+import { GuildMember, Integration } from 'discord.js';
+import { ButtonComponent, getRestClient, row } from 'purplet';
 import { renderPfp } from './avatar';
 import { renderBanner } from './banner';
 import { renderBotInfo } from './bot_info';
@@ -42,9 +43,11 @@ export const UserInfoBtn = ButtonComponent({
     if (this.user.id !== opts.userId) {
       return CRBTError(this, errors.NOT_CMD_USER);
     }
-    const u = await this.client.users.fetch(opts.targetId);
+    const u = (await getRestClient().get(Routes.user(opts.userId))) as APIUser;
     const m =
-      this.guild && this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u) : null;
+      this.guild && this.guild.members.cache.has(u.id)
+        ? await this.guild.members.fetch(u.id)
+        : null;
 
     this.update(await renderUser(this, u, opts, m));
   },
@@ -118,7 +121,7 @@ export const UserBannerBtn = ButtonComponent({
   },
 });
 
-export function getTabs(activeTab: Tabs, user: User, member?: GuildMember) {
+export function getTabs(activeTab: Tabs, user: Partial<APIUser>, member?: GuildMember) {
   const tabs = new Set<Tabs>();
   tabs.add(activeTab);
 
