@@ -1,5 +1,5 @@
 {
-  "ID": "ID",
+  "ID": "Identifiant",
   "CREATED_ON": "Créé le",
   "MEMBER_COUNT": "Nombre de membres",
   "SERVER_COUNT": "Nombre de membres",
@@ -10,7 +10,7 @@
   "DISCORD_SERVER": "Serveur Discord",
   "DONATE": "Faire un don",
   "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
-  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
   "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
   "ERROR_INVALID_HEX": "La couleur HEX que vous avez fournie est invalide.",
   "BACK": "Retour",
@@ -115,11 +115,11 @@
       "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
       "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
       "USER_MISSING_PERMS": "Vous n'avez pas la permission d'envoyer des messages dans ce salon.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
+      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas définir plus de 10 rappels à la fois."
     },
     "strings": {
       "SUCCESS_TITLE": "Rappel créé !",
-      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
+      "SUCCESS_CHANNEL": "Vous recevrez votre rappel dans {CHANNEL}",
       "SUCCESS_DM": "Vous recevrez votre rappel par MP",
       "SUBJECT": "Sujet",
       "TOMORROW_AT": "Demain à {TIME}",
@@ -129,7 +129,7 @@
       "GCALENDAR_EVENT_DM": "Vous en serez aussi rappelé par MP.",
       "GCALENDAR_EVENT_CHANNEL": "Vous en serez également rappelé dans {CHANNEL}, dans {SERVER}.",
       "REMINDER_TITLE": "Rappel",
-      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+      "REMINDER_DESCRIPTION": "Réglé le {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "et",
@@ -210,7 +210,7 @@
     },
     "strings": {
       "CHOICE": "Choix",
-      "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
+      "POLL_DESCRIPTION": "Le sondage se terminera {TIME}.\nLe créateur de sondage peut afficher les options et autres données en cliquant sur le bouton {ICON} ci-dessous.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
       "POLL_FOOTER_CREATOR": "Poll started by {USER}",
