@@ -1,8 +1,22 @@
 {
+<<<<<<< HEAD
+=======
+  "ID": "ID",
+  "CREATED_ON": "Created on",
+  "MEMBER_COUNT": "Số lượng thành viên",
+  "SERVER_COUNT": "Số lượng máy chủ",
+  "PING": "Ping",
+  "UPTIME": "Trực tuyến kể từ",
+  "WEBSITE": "Website",
+  "ADD_TO_SERVER": "Add to Server",
+  "DISCORD_SERVER": "Discord Server",
+  "DONATE": "Donate",
+>>>>>>> origin/l10n_dev
   "ERROR_ADMIN_ONLY": "Bạn phải là quản trị viên để sử dụng lệnh này.",
   "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "URL bạn đã cung cấp không hợp lệ.",
   "ERROR_INVALID_HEX": "Mã màu HEX bạn đã cung cấp không hợp lệ.",
+<<<<<<< HEAD
   "globalErrors": {
     "GUILD_ONLY": "Câu lệnh này không thể sử dụng được trong tin nhắn trực tiếp."
   },
@@ -27,6 +41,31 @@
     "strings": {
       "TITLE": "Một lỗi không xác định đã xảy ra.",
       "DESCRIPTION": "Chúng tôi không có manh mối nào về vấn đề này. Đây là thông báo lỗi mà chúng tôi nhận được:\n{MESSAGE}\nĐiều này đã được tự động báo cáo cho chúng tôi và chúng tôi đảm bảo sẽ khắc phục sự cố này sớm nhất có thể. Xin lỗi vì sự bất tiện."
+=======
+  "BACK": "Back",
+  "JUMP_TO_MSG": "Jump to message",
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
+  "DELETE": "Delete",
+  "EDIT": "Edit",
+  "PREVIOUS": "Previous",
+  "NEXT": "Next",
+  "SAVE": "Save Changes",
+  "SEND": "Send",
+  "DONE": "Done",
+  "ADD_REMINDER": "Add Reminder",
+  "OPEN_DMS": "Open DMs",
+  "PREVIEW": "Preview",
+  "EXPORT": "Export",
+  "IMPORT": "Import",
+  "globalErrors": {
+    "GUILD_ONLY": "Câu lệnh này không thể sử dụng được trong tin nhắn trực tiếp."
+  },
+  "UnknownError": {
+    "strings": {
+      "TITLE": "Một lỗi không xác định đã xảy ra.",
+      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+>>>>>>> origin/l10n_dev
     }
   },
   "CooldownError": {
@@ -87,7 +126,11 @@
       "options": [
         {
           "name": "khi nào",
+<<<<<<< HEAD
           "description": "Khi nào cần nhắc bạn (ví dụ: 2 giờ, 3w2d (3 tuần và 2 ngày), 20:30)."
+=======
+          "description": "Khi nào cần nhắc bạn (ví dụ: 2 giờ, 3w2d [3 tuần (w) và 2 ngày (d)], 20:30)."
+>>>>>>> origin/l10n_dev
         },
         {
           "name": "đối tượng",
@@ -100,8 +143,12 @@
       ]
     },
     "errors": {
+<<<<<<< HEAD
       "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
       "PAST": "You cannot set a reminder in the past.",
+=======
+      "PAST": "Bạn không thể đặt lời nhắc trong quá khứ.",
+>>>>>>> origin/l10n_dev
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
       "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
@@ -114,16 +161,25 @@
       "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
       "SUCCESS_DM": "Bạn sẽ được nhắc nhở trong tin nhắn trực tiếp của bạn",
       "SUBJECT": "Tiêu đề",
+<<<<<<< HEAD
       "TOMORROW_AT": "Ngày mai lúc {TIME}",
       "TODAY_AT": "Hôm nay lúc {TIME}",
+=======
+      "TOMORROW_AT": "Tomorrow at {TIME}",
+      "TODAY_AT": "Today at {TIME}",
+>>>>>>> origin/l10n_dev
       "BUTTON_GCALENDAR": "Thêm sự kiện vào Google Lịch",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "Bạn sẽ được nhắc nhở trong tin nhắn trực tiếp của bạn.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
       "REMINDER_TITLE": "Nhắc nhở",
+<<<<<<< HEAD
       "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})",
       "BUTTON_SNOOZE": "Giấc ngũ ngắn",
       "BUTTON_SNOOZE_SUCCESS": "Báo thức lại trong vòng 15 phút"
+=======
+      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+>>>>>>> origin/l10n_dev
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "và",
@@ -139,11 +195,19 @@
       "description": "Trả về độ trễ và thông tin kết nối của CRBT."
     },
     "strings": {
+<<<<<<< HEAD
       "EMBED_TITLE": "{CRBT} - Ping (Đỗ trễ công nghệ)",
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Sự tương tác",
       "UPTIME": "Trực tuyến kể từ",
       "FORMAT_MS": "{NUMBER}ms (Mili giây)"
+=======
+      "EMBED_TITLE": "{CRBT} - Ping",
+      "WEBSOCKET": "WebSocket latency",
+      "INTERACTION": "Interaction latency",
+      "UPTIME": "Trực tuyến kể từ",
+      "FORMAT_MS": "{NUMBER}ms"
+>>>>>>> origin/l10n_dev
     }
   },
   "crbt info": {
@@ -151,6 +215,7 @@
       "description": "Nhận thông tin về CRBT"
     },
     "strings": {
+<<<<<<< HEAD
       "EMBED_TITLE": "{CRBT} - Thông tin",
       "VERSION": "Phiên bản {VERSION} trên nền tảng {PURPLET}",
       "MEMBER_COUNT": "Số lượng thành viên",
@@ -163,10 +228,16 @@
       "BUTTON_INVITE": "Thêm vào Máy chủ",
       "BUTTON_DISCORD": "Tham gia vào cộng đồng của chúng tôi",
       "BUTTON_DONATE": "Ủng hộ"
+=======
+      "MEMBER_COUNT": "Số lượng thành viên",
+      "SERVER_COUNT": "Số lượng máy chủ",
+      "PING_RESULT": "≈{PING} milliseconds"
+>>>>>>> origin/l10n_dev
     }
   },
   "user_navbar": {
     "errors": {
+<<<<<<< HEAD
       "NOT_CMD_USER": "Chỉ có người đã sử dụng lệnh này mới có thể sử dụng nút này."
     },
     "strings": {
@@ -184,11 +255,36 @@
       "tt": "Họ",
       "other": "Khác",
       "ask": "Hỏi tôi"
+=======
+      "NOT_CMD_USER": "Only the person using this command can use this component."
+    },
+    "strings": {
+      "AVATAR": "Ảnh đại diện",
+      "INFO": "Thông tin của người",
+      "BOTINFO": "Thông tin của người máy",
+      "SERVER_AVATAR": "Hình đại diện máy chủ",
+      "USER_AVATAR": "Hình đại diện người dùng",
+      "USER_BANNER": "Ảnh bìa người dùng"
+    }
+  },
+  "server_navbar": {
+    "strings": {
+      "INFO": "Thông tin máy chủ",
+      "ICON": "Biểu tượng",
+      "BANNER": "Ảnh bìa",
+      "ROLES": "Vai trò & thành viên",
+      "EMOJIS": "Emoji & Sticker",
+      "EXTRA": "Thêm"
+>>>>>>> origin/l10n_dev
     }
   },
   "poll": {
     "meta": {
+<<<<<<< HEAD
       "description": "Create a poll with the given choices.",
+=======
+      "description": "Tạo một cuộc thăm dò với các lựa chọn nhất định.",
+>>>>>>> origin/l10n_dev
       "options": [
         {
           "description": "Some choice a user can choose. Make it short, preferably."
@@ -197,17 +293,29 @@
           "description": "An other choice a user can choose."
         },
         {
+<<<<<<< HEAD
           "description": "Same as choice 1 and 2, but not required."
         },
         {
           "description": "And that's how far choices can go."
+=======
+          "description": "Tương tự như lựa chọn 1 và 2, nhưng không bắt buộc."
+        },
+        {
+          "description": "Và đó là cách các lựa chọn có thể đi xa."
+>>>>>>> origin/l10n_dev
         }
       ]
     },
     "errors": {
+<<<<<<< HEAD
       "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
       "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
+=======
+      "CHOICE_TOO_LONG": "Lựa chọn không được dài hơn 40 ký tự (không bao gồm emoji).",
+      "CHOICE_EMPTY": "Không được để trống lựa chọn (không bao gồm emoji).",
+>>>>>>> origin/l10n_dev
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
@@ -233,7 +341,11 @@
       "POLL_HEADER_ENDED": "Đã kết thúc",
       "POLL_DESCRIPTION_ENDED": "Cuộc thăm dò ý kiến đã kết thúc. Bạn không thể bỏ phiếu cho nó nữa.",
       "POLL_RESULTS_TITLE": "Đã có kết qua!",
+<<<<<<< HEAD
       "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with {VOTES} vote(s)",
+=======
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
+>>>>>>> origin/l10n_dev
       "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
       "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
       "BUTTON_JUMP_TO_POLL": "Nhảy đến cuộc thăm dò ý kiến"
@@ -258,11 +370,19 @@
       ]
     },
     "ctxMeta": {
+<<<<<<< HEAD
       "name": "Lấy ảnh đại diện"
     },
     "strings": {
       "EMBED_TITLE": "{USER} - Hình đại diện",
       "DOWNLOAD": "Tải về ({SIZE}px - {FORMAT})"
+=======
+      "name": "Lấy hình đại diện/biểu ngữ"
+    },
+    "strings": {
+      "EMBED_TITLE": "{USER} - Avatar",
+      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+>>>>>>> origin/l10n_dev
     }
   },
   "crbt_introduction": {
@@ -279,7 +399,11 @@
       "DMS_DISABLED": "You must enable your DMs or unblock CRBT in order to bookmark messages."
     },
     "strings": {
+<<<<<<< HEAD
       "BOOKMARK_AUTHOR": "{USER} (Tin nhắn đã đánh dấu)",
+=======
+      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
+>>>>>>> origin/l10n_dev
       "SUCCESS_MESSAGE": "Đã gửi tin nhắn này qua tin nhắn trực tiếp!"
     }
   },
@@ -297,7 +421,11 @@
   "role-selectors": {
     "manual": {
       "meta": {
+<<<<<<< HEAD
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+=======
+        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
+>>>>>>> origin/l10n_dev
         "options": [
           {
             "name": "mô tả",
@@ -322,6 +450,7 @@
         ]
       }
     },
+<<<<<<< HEAD
     "preset": {
       "meta": {
         "description": "Create a new Role Picker using one of the presets.",
@@ -355,12 +484,19 @@
       "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
       "ROLE_DOES_NOT_EXIST": "Vai trò {ROLE} không tồn tại hoặc đã bị xóa. Liên hệ với quản trị viên để giải quyết vấn đề này.",
+=======
+    "errors": {
+      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
+      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
+      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
+>>>>>>> origin/l10n_dev
       "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
       "CHOOSE_ROLE": "Chọn một vai trò",
       "CHOOSE_ROLES": "Chọn vai trò",
+<<<<<<< HEAD
       "OPTION_LABEL_GET_ROLE": "Get the {ROLE} role.",
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
@@ -368,6 +504,14 @@
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
+=======
+      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
+      "SELECT_MENU_ROLES_SUCCESS": "Cập nhật vai trò của bạn thành công.",
+      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
+      "BUTTON_ROLES_ADD_AGAIN": "Chọn một lần nữa để loại bỏ nó.",
+      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
+      "BUTTON_ROLES_REMOVE_AGAIN": "Chọn một lần nữa để thêm nó.",
+>>>>>>> origin/l10n_dev
       "SUCCESS_TITLE": "Đã tạo Bộ chọn vại trò!",
       "SUCCESS_DESCRIPTION": "Giờ đây, các thành viên sẽ có thể lựa chọn các vai trò từ thực đơn này. Để vô hiệu hóa nó, chỉ cần xóa thông báo Bộ chọn vai trò."
     }
@@ -377,6 +521,10 @@
   "MODERATION_LOGS_ACTION_BAN": "Cấm",
   "MODERATION_LOGS_ACTION_UNBAN": "Bỏ cấm",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Thời gian chờ",
+<<<<<<< HEAD
+=======
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Cấm tạm thời",
+>>>>>>> origin/l10n_dev
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
@@ -384,6 +532,7 @@
   "LEAVE_MESSAGE": "Lời tạm biệt",
   "JOIN_CHANNEL": "Kênh chào mời",
   "LEAVE_CHANNEL": "Kênh tạm biệt",
+<<<<<<< HEAD
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the {TYPE}.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the {TYPE}.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "{TYPE} đã đặt!",
@@ -404,6 +553,18 @@
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in {CHANNEL}. To change the message that gets sent, you may use the {COMMAND} command.",
   "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the {COMMAND} command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
+=======
+  "CRBTSCRIPT_GUIDE": "Mở hướng dẫn về CRBTscript",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Chào mừng <user.name> đã đến với <server.name>!",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
+>>>>>>> origin/l10n_dev
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> đã rời khỏi máy chủ này.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Chọn một dòng để chỉnh sửa",
@@ -421,5 +582,45 @@
   "FIELDS_COLOR": "Embed Color",
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
+<<<<<<< HEAD
   "FIELDS_URL": "Embed Title URL"
+=======
+  "FIELDS_URL": "Embed Title URL",
+  "SETTINGS": "Cài đặt",
+  "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
+  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "USER_INFO_EMBED_TITLE": "{USER} - User info",
+  "USER_INFO_CREATED_AT": "Đã tham gia Discord",
+  "USER_INFO_JOINED_SERVER": "Đã tham gia máy chủ",
+  "USER_INFO_NO_ROLES": "*Người dùng này không có bất kỳ vai trò nào…*",
+  "USER_INFO_NICKNAME": "Biệt danh trong máy chủ",
+  "USER_INFO_ROLES": "(Những) vai trò",
+  "USER_INFO_PERMS": "Các quyền chính trong máy chủ này",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
+  "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
+  "ACHIEVEMENT_BUG_HUNTER_DESC": "Report a bug with {command}",
+  "ACHIEVEMENT_ARTIST_TITLE": "Artist",
+  "ACHIEVEMENT_ARTIST_DESC": "Change your accent color using {command}",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_TITLE": "Nice n' Cozy",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_DESC": "Change the server's accent color with {command}.",
+  "ACHIEVEMENT_DND_PRO_TITLE": "DnD Pro",
+  "ACHIEVEMENT_DND_PRO_DESC": "Roll a perfect d20 in {command}.",
+  "ACHIEVEMENT_BUG_NINJA_TITLE": "Bug Ninja",
+  "ACHIEVEMENT_BUG_NINJA_DESC": "Get 5 of your bug reports resolved.",
+  "ACHIEVEMENT_SEEKER_TITLE": "Info Seeker",
+  "ACHIEVEMENT_SEEKER_DESC": "Search 10 times with {command}.",
+  "ACHIEVEMENT_BOOKMARKER_TITLE": "Message Afficionado",
+  "ACHIEVEMENT_BOOKMARKER_DESC": "Bookmark 5 messages.",
+  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "Safety First!",
+  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Check CRBT's privacy settings with {command}.",
+  "ACHIEVEMENT_BREWING_APPS_TITLE": "Brewing apps",
+  "ACHIEVEMENT_BREWING_APPS_DESC": "Create and redeem your CRBT API token.",
+  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "CRBT Addict",
+  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Use 100 commands.",
+  "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
+  "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
+>>>>>>> origin/l10n_dev
 }

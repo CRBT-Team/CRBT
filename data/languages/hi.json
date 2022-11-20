@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
   "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको {PERMISSIONS} अनुमति(यां) की आवश्यकता है |",
   "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
@@ -23,6 +24,41 @@
     "EXPORT": "निर्यात",
     "IMPORT": "इम्पोर्ट"
   },
+=======
+  "ID": "ID",
+  "CREATED_ON": "Created on",
+  "MEMBER_COUNT": "Member count",
+  "SERVER_COUNT": "Server count",
+  "PING": "Ping",
+  "UPTIME": "Online since",
+  "WEBSITE": "Website",
+  "ADD_TO_SERVER": "Add to Server",
+  "DISCORD_SERVER": "Discord Server",
+  "DONATE": "Donate",
+  "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
+  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
+  "ERROR_INVALID_HEX": "आपका दिया गया HEX कलर गलत है|",
+  "BACK": "Back",
+  "JUMP_TO_MSG": "Jump to message",
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
+  "DELETE": "Delete",
+  "EDIT": "Edit",
+  "PREVIOUS": "Previous",
+  "NEXT": "Next",
+  "SAVE": "Save Changes",
+  "SEND": "Send",
+  "DONE": "Done",
+  "ADD_REMINDER": "Add Reminder",
+  "OPEN_DMS": "Open DMs",
+  "PREVIEW": "Preview",
+  "EXPORT": "Export",
+  "IMPORT": "Import",
+  "globalErrors": {
+    "GUILD_ONLY": "यह कमांड DMs में इस्तेमाल नहीं हो सकता |"
+  },
+>>>>>>> origin/l10n_dev
   "UnknownError": {
     "strings": {
       "TITLE": "An unknown error has occured.",
@@ -100,7 +136,10 @@
       ]
     },
     "errors": {
+<<<<<<< HEAD
       "SUBJECT_MAX_LENGTH": "Subject must be 120 characters or less.",
+=======
+>>>>>>> origin/l10n_dev
       "PAST": "You cannot set a reminder in the past.",
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
@@ -121,9 +160,13 @@
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
       "REMINDER_TITLE": "Reminder",
+<<<<<<< HEAD
       "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})",
       "BUTTON_SNOOZE": "Snooze",
       "BUTTON_SNOOZE_SUCCESS": "Snoozed for 15 minutes"
+=======
+      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+>>>>>>> origin/l10n_dev
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "and",
@@ -140,8 +183,13 @@
     },
     "strings": {
       "EMBED_TITLE": "{CRBT} - Ping",
+<<<<<<< HEAD
       "WEBSOCKET": "WebSocket",
       "INTERACTION": "Interaction",
+=======
+      "WEBSOCKET": "WebSocket latency",
+      "INTERACTION": "Interaction latency",
+>>>>>>> origin/l10n_dev
       "UPTIME": "Online since",
       "FORMAT_MS": "{NUMBER}ms"
     }
@@ -151,6 +199,7 @@
       "description": "Get information about CRBT"
     },
     "strings": {
+<<<<<<< HEAD
       "EMBED_TITLE": "{CRBT} - Information",
       "VERSION": "Version {VERSION} on {PURPLET}",
       "MEMBER_COUNT": "Member count",
@@ -163,20 +212,34 @@
       "BUTTON_INVITE": "Add to Server",
       "BUTTON_DISCORD": "Join the Community",
       "BUTTON_DONATE": "Donate"
+=======
+      "MEMBER_COUNT": "Member count",
+      "SERVER_COUNT": "Server count",
+      "PING_RESULT": "≈{PING} milliseconds"
+>>>>>>> origin/l10n_dev
     }
   },
   "user_navbar": {
     "errors": {
+<<<<<<< HEAD
       "NOT_CMD_USER": "Only the person who used this command can use this button."
+=======
+      "NOT_CMD_USER": "Only the person using this command can use this component."
+>>>>>>> origin/l10n_dev
     },
     "strings": {
       "AVATAR": "Avatar",
       "INFO": "User Info",
+<<<<<<< HEAD
+=======
+      "BOTINFO": "Bot Info",
+>>>>>>> origin/l10n_dev
       "SERVER_AVATAR": "Server Avatar",
       "USER_AVATAR": "User Avatar",
       "USER_BANNER": "User Banner"
     }
   },
+<<<<<<< HEAD
   "profile": {
     "pronouns": {
       "hh": "He/Him",
@@ -184,6 +247,16 @@
       "tt": "They/Them",
       "other": "Other",
       "ask": "Ask me"
+=======
+  "server_navbar": {
+    "strings": {
+      "INFO": "Server info",
+      "ICON": "Icon",
+      "BANNER": "Banner",
+      "ROLES": "Roles & Members",
+      "EMOJIS": "Emojis & Stickers",
+      "EXTRA": "More"
+>>>>>>> origin/l10n_dev
     }
   },
   "poll": {
@@ -205,7 +278,10 @@
       ]
     },
     "errors": {
+<<<<<<< HEAD
       "TITLE_TOO_LONG": "The title of your poll must be 100 characters or less.",
+=======
+>>>>>>> origin/l10n_dev
       "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
@@ -233,7 +309,11 @@
       "POLL_HEADER_ENDED": "Ended",
       "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
       "POLL_RESULTS_TITLE": "The results are in!",
+<<<<<<< HEAD
       "POLL_RESULTS_DESCRIPTION_TIE": "\"<OPTION1>\" and \"<OPTION2>\" have tied with {VOTES} vote(s)",
+=======
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
+>>>>>>> origin/l10n_dev
       "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
       "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
       "BUTTON_JUMP_TO_POLL": "Jump to Poll"
@@ -258,7 +338,11 @@
       ]
     },
     "ctxMeta": {
+<<<<<<< HEAD
       "name": "Get Avatar"
+=======
+      "name": "Get Avatar/Banner"
+>>>>>>> origin/l10n_dev
     },
     "strings": {
       "EMBED_TITLE": "{USER} - Avatar",
@@ -297,7 +381,11 @@
   "role-selectors": {
     "manual": {
       "meta": {
+<<<<<<< HEAD
         "description": "Manually create a new Role Picker, a menu for members to choose roles themselves.",
+=======
+        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
+>>>>>>> origin/l10n_dev
         "options": [
           {
             "name": "description",
@@ -322,6 +410,7 @@
         ]
       }
     },
+<<<<<<< HEAD
     "preset": {
       "meta": {
         "description": "Create a new Role Picker using one of the presets.",
@@ -351,6 +440,8 @@
         }
       }
     },
+=======
+>>>>>>> origin/l10n_dev
     "errors": {
       "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
@@ -361,7 +452,10 @@
     "strings": {
       "CHOOSE_ROLE": "Choose a role",
       "CHOOSE_ROLES": "Choose roles",
+<<<<<<< HEAD
       "OPTION_LABEL_GET_ROLE": "Get the {ROLE} role.",
+=======
+>>>>>>> origin/l10n_dev
       "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
@@ -377,6 +471,10 @@
   "MODERATION_LOGS_ACTION_BAN": "Ban",
   "MODERATION_LOGS_ACTION_UNBAN": "Unban",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
+<<<<<<< HEAD
+=======
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
+>>>>>>> origin/l10n_dev
   "MODERATION_LOGS_CLEAR": "Channel message clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
@@ -384,6 +482,7 @@
   "LEAVE_MESSAGE": "Farewell message",
   "JOIN_CHANNEL": "Welcome channel",
   "LEAVE_CHANNEL": "Farewell channel",
+<<<<<<< HEAD
   "JOINLEAVE_CHANNEL_DESCRIPTION": "Set a channel where to send the {TYPE}.",
   "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Where to send the {TYPE}.",
   "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "{TYPE} set!",
@@ -391,10 +490,16 @@
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_MESSAGE_SAVE_TITLE": "{TYPE} saved.",
+=======
+  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+>>>>>>> origin/l10n_dev
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
+<<<<<<< HEAD
   "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "New members will now be welcomed in {CHANNEL}. To change the message that gets sent, you may use the {COMMAND} command.",
   "JOIN_MESSAGE_SAVE_DESCRIPTION": "New members will now see this message when they join the server. To change the channel where it gets sent, you may use the {COMMAND} command.",
   "JOIN_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user joins the server.",
@@ -404,6 +509,11 @@
   "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "A farewell message with be sent when members leave in {CHANNEL}. To change the message that gets sent, you may use the {COMMAND} command.",
   "LEAVE_MESSAGE_SAVE_DESCRIPTION": "This message will be sent when a member leaves the server. To change the channel where it gets sent, you may use the {COMMAND} command.",
   "LEAVE_MESSAGE_DESCRIPTION": "Create or edit the message to send when a user leaves the server.",
+=======
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
+>>>>>>> origin/l10n_dev
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Select a field to edit",
@@ -421,5 +531,45 @@
   "FIELDS_COLOR": "Embed Color",
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
+<<<<<<< HEAD
   "FIELDS_URL": "Embed Title URL"
+=======
+  "FIELDS_URL": "Embed Title URL",
+  "SETTINGS": "Settings",
+  "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
+  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "USER_INFO_EMBED_TITLE": "{USER} - User info",
+  "USER_INFO_CREATED_AT": "Joined Discord",
+  "USER_INFO_JOINED_SERVER": "Joined Server",
+  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
+  "USER_INFO_NICKNAME": "Server nickname",
+  "USER_INFO_ROLES": "Role(s)",
+  "USER_INFO_PERMS": "Major permissions in this server",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
+  "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
+  "ACHIEVEMENT_BUG_HUNTER_DESC": "Report a bug with {command}",
+  "ACHIEVEMENT_ARTIST_TITLE": "Artist",
+  "ACHIEVEMENT_ARTIST_DESC": "Change your accent color using {command}",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_TITLE": "Nice n' Cozy",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_DESC": "Change the server's accent color with {command}.",
+  "ACHIEVEMENT_DND_PRO_TITLE": "DnD Pro",
+  "ACHIEVEMENT_DND_PRO_DESC": "Roll a perfect d20 in {command}.",
+  "ACHIEVEMENT_BUG_NINJA_TITLE": "Bug Ninja",
+  "ACHIEVEMENT_BUG_NINJA_DESC": "Get 5 of your bug reports resolved.",
+  "ACHIEVEMENT_SEEKER_TITLE": "Info Seeker",
+  "ACHIEVEMENT_SEEKER_DESC": "Search 10 times with {command}.",
+  "ACHIEVEMENT_BOOKMARKER_TITLE": "Message Afficionado",
+  "ACHIEVEMENT_BOOKMARKER_DESC": "Bookmark 5 messages.",
+  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "Safety First!",
+  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Check CRBT's privacy settings with {command}.",
+  "ACHIEVEMENT_BREWING_APPS_TITLE": "Brewing apps",
+  "ACHIEVEMENT_BREWING_APPS_DESC": "Create and redeem your CRBT API token.",
+  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "CRBT Addict",
+  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Use 100 commands.",
+  "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
+  "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
+>>>>>>> origin/l10n_dev
 }
