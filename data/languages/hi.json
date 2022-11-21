@@ -7,51 +7,51 @@
   "UPTIME": "Online since",
   "WEBSITE": "वेबसाइट ",
   "ADD_TO_SERVER": "सर्वर को ऐड करे ",
-  "DISCORD_SERVER": "Discord Server",
-  "DONATE": "Donate",
+  "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
+  "DONATE": "दान करे",
   "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
-  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
   "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
   "ERROR_INVALID_HEX": "आपका दिया गया HEX कलर गलत है|",
-  "BACK": "Back",
-  "JUMP_TO_MSG": "Jump to message",
-  "CANCEL": "Cancel",
-  "CONFIRM": "Confirm",
-  "DELETE": "Delete",
-  "EDIT": "Edit",
-  "PREVIOUS": "Previous",
-  "NEXT": "Next",
+  "BACK": "वापस जाएं",
+  "JUMP_TO_MSG": "मेसेज पर जाएं",
+  "CANCEL": "रद्द करें",
+  "CONFIRM": "सहमत करे",
+  "DELETE": "डिलीट करें",
+  "EDIT": "बदले",
+  "PREVIOUS": "पिछला",
+  "NEXT": "अगला",
   "SAVE": "Save Changes",
-  "SEND": "Send",
-  "DONE": "Done",
-  "ADD_REMINDER": "Add Reminder",
-  "OPEN_DMS": "Open DMs",
-  "PREVIEW": "Preview",
-  "EXPORT": "Export",
-  "IMPORT": "Import",
+  "SEND": "भेजें",
+  "DONE": "समाप्त",
+  "ADD_REMINDER": "रिमाइंडर सेट करे",
+  "OPEN_DMS": "DMs खोले |",
+  "PREVIEW": "प्रीव्यू",
+  "EXPORT": "एक्सपोर्ट",
+  "IMPORT": "इम्पोर्ट",
   "globalErrors": {
     "GUILD_ONLY": "यह कमांड DMs में इस्तेमाल नहीं हो सकता |"
   },
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error has occured.",
+      "TITLE": "कोई अजीब सी एरर हुई है |",
       "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
     }
   },
   "CooldownError": {
     "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
-      "COMMAND": "command",
+      "TITLE": "होल्ड करो! ",
+      "DESCRIPTION": "आप इसे {TYPE} को {TIME} के बाद इस्तेमाल करेंगे... ",
+      "COMMAND": "कमांड ",
       "COMPONENT": "component"
     }
   },
   "color set": {
     "meta": {
-      "description": "Change your CRBT accent color.",
+      "description": "CRBT का रंग बदले ",
       "options": [
         {
-          "name": "color",
+          "name": "रंग ",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
@@ -59,26 +59,26 @@
     "colorNames": {
       "sync": "Sync Discord Profile Color",
       "lightred": "Light Red",
-      "red": "Red",
+      "red": "लाल ",
       "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
+      "orange": "संतरा ",
+      "yellow": "पीला",
       "lightgreen": "Light Green",
-      "green": "Green",
+      "green": "हरा ",
       "darkgreen": "Dark Green",
       "cyan": "Cyan",
       "lightblue": "Light Blue",
-      "blue": "Blue",
+      "blue": "नीला",
       "darkblue": "Dark Blue",
       "blurple": "Blurple",
       "lightpurple": "Light Purple",
-      "purple": "Purple",
+      "purple": "बैंगनी",
       "darkpurple": "Dark Purple",
-      "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Gray",
-      "white": "White"
+      "pink": "गुलाबी",
+      "brown": "भूरा",
+      "black": "काला",
+      "gray": "ग्रे",
+      "white": "सफेद"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
@@ -92,19 +92,19 @@
   },
   "remind me": {
     "meta": {
-      "description": "Set a reminder.",
+      "description": "रिमाइंडर सेट करे ",
       "options": [
         {
-          "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "name": "कब",
+          "description": "कब आपको याद दिलाए (उदारहण: 2 घंटा, 3 हफ्ता 2 दिन, 20:30)"
         },
         {
-          "name": "subject",
-          "description": "What to remind you of."
+          "name": "विषय",
+          "description": "आपको किस प्रकार के लिए याद दिलाए? "
         },
         {
-          "name": "destination",
-          "description": "Where to send the reminder (leave blank to send it by DM)."
+          "name": "जगह ",
+          "description": "कहा से रिमाइंडर भेजे? "
         }
       ]
     },
