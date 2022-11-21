@@ -1,23 +1,23 @@
 {
   "ID": "ID",
-  "CREATED_ON": "Created on",
+  "CREATED_ON": "Creat pe",
   "MEMBER_COUNT": "Număr de membri",
   "SERVER_COUNT": "Rang server",
   "PING": "Ping",
   "UPTIME": "Online din",
-  "WEBSITE": "Website",
-  "ADD_TO_SERVER": "Add to Server",
-  "DISCORD_SERVER": "Discord Server",
-  "DONATE": "Donate",
+  "WEBSITE": "Site Web",
+  "ADD_TO_SERVER": "Adaugă la Server",
+  "DISCORD_SERVER": "Server-ul de Discord",
+  "DONATE": "Donează",
   "ERROR_ADMIN_ONLY": "Trebuie să fii un administrator ca să folosești această comandă.",
-  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "ERROR_MISSING_PERMISSIONS": "Ai nevoie de permisiunea(ile) {PERMISSIONS} pentru a folosi această comandă.",
   "ERROR_INVALID_URL": "URL-ul furnizat este invalid.",
   "ERROR_INVALID_HEX": "Culoarea HEX furnizată este invalidă.",
-  "BACK": "Back",
-  "JUMP_TO_MSG": "Jump to message",
-  "CANCEL": "Cancel",
-  "CONFIRM": "Confirm",
-  "DELETE": "Delete",
+  "BACK": "Înapoi",
+  "JUMP_TO_MSG": "Sari la mesaj",
+  "CANCEL": "Anulează",
+  "CONFIRM": "Confirmă",
+  "DELETE": "Șterge",
   "EDIT": "Edit",
   "PREVIOUS": "Previous",
   "NEXT": "Next",
@@ -52,7 +52,7 @@
       "options": [
         {
           "name": "culoare",
-          "description": "Culoarea ce-ți va înlocui culoarea de accent. Folosește una dintre sugestii sau o culoare hexazecimală."
+          "description": "Selectarea culorii de accent. Folosește una dintre sugestii sau o culoare HEX."
         }
       ]
     },
