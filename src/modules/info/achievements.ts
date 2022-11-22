@@ -20,7 +20,13 @@ export default ChatCommand({
   async handle({ user }) {
     const u = user ?? this.user;
 
-    await this.reply(await renderAchievementsPage.call(this, u, 0));
+    await this.deferReply({
+      ephemeral: true,
+    })
+
+    const res = await renderAchievementsPage.call(this, u, 0);
+
+    await this.reply(res);
   },
 });
 

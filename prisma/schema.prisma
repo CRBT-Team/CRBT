@@ -47,21 +47,22 @@ model Reminder {
 }
 
 model servers {
-  id             String         @id
-  joinChannel    String?        @map("join_channel")
-  joinMessage    Json?          @map("join_message")
-  leaveChannel   String?        @map("leave_channel")
-  leaveMessage   Json?          @map("leave_message")
-  modLogsChannel String?        @map("modlogs_channel")
-  accentColor    Int?           @map("accent_color")
-  economy        Economy?
-  modules        serverModules?
-  giveaways      Giveaway[]
-  polls          Poll[]
-  flags          BigInt?        @default(0)
-  achievements   Achievement[]
+  id                String              @id
+  joinChannel       String?             @map("join_channel")
+  joinMessage       Json?               @map("join_message")
+  leaveChannel      String?             @map("leave_channel")
+  leaveMessage      Json?               @map("leave_message")
+  modLogsChannel    String?             @map("modlogs_channel")
+  accentColor       Int?                @map("accent_color")
+  economy           Economy?
+  modules           serverModules?
+  giveaways         Giveaway[]
+  polls             Poll[]
+  flags             BigInt?             @default(0)
+  achievements      Achievement[]
   // permissions  ServerPermissions[]
-  members        ServerMember[]
+  members           ServerMember[]
+  moderationStrikes moderationStrikes[]
 }
 
 // model ServerPermissions {
@@ -91,6 +92,7 @@ model moderationStrikes {
   createdAt   DateTime              @map("created_at") @db.Timestamptz(6)
   expiresAt   DateTime?             @map("expires_at") @db.Timestamptz(6)
   type        ModerationStrikeTypes
+  server      servers               @relation(fields: [serverId], references: [id])
 }
 
 model User {
@@ -109,11 +111,16 @@ model User {
 }
 
 model ServerMember {
-  userId       String              @unique
+  id           String              @id
+  userId       String
   user         User                @relation(references: [id], fields: [userId])
-  serverId     String              @unique
+  serverId     String
   server       servers             @relation(references: [id], fields: [serverId])
   achievements MemberAchievement[]
+  dailyStreak  Int                 @default(0) @map("daily_streak") @db.SmallInt
+  money        Int                 @default(0) @db.Integer
+  activeItems  EconomyItem[]       @relation("active_items")
+  items        EconomyItem[]       @relation("items")
 }
 
 model Statistics {
@@ -122,14 +129,6 @@ model Statistics {
   uniqueUsers  String[]
   commandsUsed String[]
   members      Int
-}
-
-model Achievements {
-  id          String    @id
-  userId      String    @map("user_id")
-  achievement String
-  progression Int
-  achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
 }
 
 model GlobalAchievements {
@@ -145,8 +144,8 @@ model MemberAchievement {
   achievementId String        @unique
   achievement   Achievement   @relation(fields: [achievementId], references: [achievementId])
   userId        String        @unique
-  user          ServerMember? @relation(fields: [userId], references: [userId])
-  progression   Int
+  user          ServerMember? @relation(fields: [userId], references: [id])
+  progression   Json[]
   achievedAt    DateTime?     @map("achieved_at") @db.Timestamptz(6)
 }
 
@@ -161,50 +160,48 @@ model Achievement {
   members       MemberAchievement[]
 }
 
-model Inventory {
-  serverId    String        @id @map("server_id")
-  userId      String        @map("user_id")
-  dailyStreak Int           @default(0) @map("daily_streak") @db.SmallInt
-  activeItems EconomyItem[] @relation("ActiveInventory")
-  items       EconomyItem[] @relation("Inventory")
-}
-
 model Economy {
-  serverId             String  @id
-  currencyNameSingular String  @map("currency_name_singular")
-  currencyNamePlural   String  @map("currency_name_plural")
-  currencySymbol       String  @map("currency_symbol")
-  server               servers @relation(fields: [serverId], references: [id])
+  serverId             String           @id
+  currencyNameSingular String           @map("currency_name_singular")
+  currencyNamePlural   String           @map("currency_name_plural")
+  currencySymbol       String           @map("currency_symbol")
+  commands             EconomyCommand[]
+  server               servers          @relation(fields: [serverId], references: [id])
+  items                EconomyItem[]
 }
 
 model EconomyCommand {
-  serverId String          @id @map("server_id")
-  type     EconomyCommands
-  enabled  Boolean         @default(true)
+  id       Int                 @id @default(autoincrement())
+  serverId String              @map("server_id")
+  type     EconomyCommandTypes
+  enabled  Boolean             @default(true)
   strings  String[]
-  cooldown Int             @default(20000)
-  minGain  Int             @default(50) @map("min_gain")
-  maxGain  Int             @default(100) @map("max_gain")
+  cooldown Int                 @default(20000)
+  minGain  Int                 @default(50) @map("min_gain")
+  maxGain  Int                 @default(100) @map("max_gain")
+  economy  Economy?            @relation(fields: [serverId], references: [serverId])
 }
 
 model EconomyItem {
-  id                        BigInt     @id @default(autoincrement())
-  serverId                  String     @map("server_id")
-  name                      String
-  icon                      String?
-  description               String?
-  price                     Int
-  category                  String
-  type                      ItemTypes
-  stock                     Int
+  id             Int            @id @default(autoincrement())
+  serverId       String         @map("server_id")
+  name           String
+  icon           String?
+  description    String?
+  price          Int
+  category       String
+  type           ItemTypes
+  stock          Int
   // for items limited in time
-  availableUntil            DateTime?  @map("available_until") @db.Timestamptz(6)
+  availableUntil DateTime?      @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
-  value                     String?
-  inventoriesServerId       String?    @map("inventories_server_id")
-  activeInventoriesServerId String?    @map("active_inventories_server_id")
-  activeInventories         Inventory? @relation("ActiveInventory", fields: [activeInventoriesServerId], references: [serverId])
-  inventories               Inventory? @relation("Inventory", fields: [inventoriesServerId], references: [serverId])
+  value          String?
+  // who's currently using the item
+  activeMembers  ServerMember[] @relation("active_items")
+  // who has the item
+  owners         ServerMember[] @relation("items")
+  // which economy does the item belong to
+  economy        Economy        @relation(fields: [serverId], references: [serverId])
 }
 
 model Token {
@@ -229,7 +226,7 @@ enum ModerationStrikeTypes {
   WARN
 }
 
-enum EconomyCommands {
+enum EconomyCommandTypes {
   work
   hourly
   crime

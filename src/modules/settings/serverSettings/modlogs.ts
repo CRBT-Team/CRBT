@@ -1,4 +1,4 @@
-import { cache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
@@ -6,40 +6,53 @@ import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { Channel, TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
-import { getSettings, renderFeatureSettings, strings } from './settings';
+import { getSettings, renderFeatureSettings } from './settings';
 
 export const modlogsSettings: SettingsMenus = {
-  getMenuDescription: ({ settings, guild }) => {
-    const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
-    const isEnabled = settings.modules.moderationLogs;
+  getErrors({ guild, settings, isEnabled }) {
+    const channelId = settings.modLogsChannel;
+    const channel = guild.channels.cache.find((c) => c.id === channelId);
 
+    const errors: string[] = [];
+
+    if (isEnabled && channelId && !channel) {
+      errors.push('Channel not found. Edit it for CRBT to send new moderation logs.');
+    }
+    if (isEnabled && !channelId) {
+      errors.push(
+        'No channel was set. Set it using the {button_label} button below to continue setup.'
+      );
+    }
+
+    return errors;
+  },
+  getMenuDescription({ settings, isEnabled }) {
     return {
       description:
-        `Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!\nThis feature is currently ${
-          isEnabled ? 'enabled' : 'disabled'
-        } in this server.` +
-        (!isEnabled
-          ? ''
-          : '\n' +
-            (channel
-              ? `Moderation logs are currently sent in ${channel}.`
-              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please edit it in order to receive them.**')) +
-        `\nUse the buttons below to configure the feature or to ${
-          isEnabled ? 'enable' : 'disable'
-        } it.`,
+        'Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!',
+      fields: [
+        {
+          name: 'Status',
+          value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
+          inline: true,
+        },
+        {
+          name: 'Channel',
+          value: `#${settings.modLogsChannel}`,
+          inline: true,
+        },
+      ],
     };
   },
-  getSelectMenu: ({ settings, feature, guild }) => {
+  getSelectMenu({ settings, guild }) {
     const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
 
     return {
-      label: strings.MODERATION_LOGS,
       emoji: emojis.toggle[settings.modules.moderationLogs ? 'on' : 'off'],
-      description: `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`,
-      value: feature,
+      description: settings.modules.moderationLogs ? `Sending in #${channel.name}` : null,
     };
   },
-  getComponents: ({ feature, backBtn, toggleBtn }) =>
+  getComponents: ({ backBtn, toggleBtn }) =>
     components(
       row(
         backBtn,
@@ -94,18 +107,14 @@ export const EditModLogsChannelModal = ModalComponent({
         return CRBTError(this, 'This channel does not exist or is not a text channel.');
       }
     }
-    const data = await getSettings(this.guild.id);
-    data.modLogsChannel = channel.id;
-    cache.set(`${this.guild.id}:settings`, data);
 
-    await prisma.servers.upsert({
-      create: {
-        id: this.guildId,
-        modLogsChannel: data.modLogsChannel,
-      },
-      update: { modLogsChannel: data.modLogsChannel },
-      where: { id: this.guildId },
-    });
+    await fetchWithCache(`${this.guild.id}:settings`, () =>
+      prisma.servers.upsert({
+        where: { id: this.guild.id },
+        update: { modLogsChannel: channel.id },
+        create: { id: this.guildId, modLogsChannel: channel.id },
+      })
+    );
 
     this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationLogs));
   },

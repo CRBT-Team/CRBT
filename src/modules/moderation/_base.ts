@@ -50,13 +50,18 @@ export async function handleModerationAction(
 
   await prisma.moderationStrikes.create({
     data: {
-      serverId: guild.id,
       createdAt: new Date(),
       moderatorId: moderator.id,
       targetId: target.id,
       type,
       expiresAt,
       reason,
+      server: {
+        connectOrCreate: {
+          create: { id: guild.id },
+          where: { id: guild.id },
+        },
+      },
     },
   });
 

@@ -59,7 +59,7 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
 
   const buttons = {
     back: new BackSettingsButton(type)
-      .setLabel(t(i, 'SETTINGS'))
+      // .setLabel(t(i, 'SETTINGS'))
       .setEmoji(emojis.buttons.left_arrow)
       .setStyle('SECONDARY'),
     save:
