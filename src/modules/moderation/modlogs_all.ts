@@ -294,7 +294,7 @@ export const EditButton = ButtonComponent({
             .setLabel('Reason')
             .setValue(strike.reason ?? '')
             .setCustomId('reason')
-            .setMaxLength(100)
+            .setMaxLength(256)
             .setStyle('PARAGRAPH')
             .setRequired(true)
         )

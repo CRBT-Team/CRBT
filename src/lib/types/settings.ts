@@ -1,4 +1,4 @@
-import { Economy, EconomyCommand, serverModules, servers } from '@prisma/client';
+import { Economy, EconomyCommand, EconomyItem, serverModules, servers } from '@prisma/client';
 import { APIEmbed } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
 
@@ -29,10 +29,11 @@ export interface FeatureSettingsProps {
 
 export type FullSettings = Partial<
   servers & {
-    modules?: Partial<serverModules>;
+    modules?: serverModules;
     economy?: Partial<
       Economy & {
-        commands: Partial<EconomyCommand>;
+        commands: EconomyCommand[];
+        items: EconomyItem[];
       }
     >;
   }

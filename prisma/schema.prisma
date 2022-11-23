@@ -7,14 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model timeouts {
-  expiration DateTime     @db.Timestamptz(6)
-  locale     String
-  type       TimeoutTypes
-  data       Json         @db.Json
-  id         String       @id
-}
-
 model Giveaway {
   id           String   @id
   hostId       String
@@ -47,22 +39,21 @@ model Reminder {
 }
 
 model servers {
-  id                String              @id
-  joinChannel       String?             @map("join_channel")
-  joinMessage       Json?               @map("join_message")
-  leaveChannel      String?             @map("leave_channel")
-  leaveMessage      Json?               @map("leave_message")
-  modLogsChannel    String?             @map("modlogs_channel")
-  accentColor       Int?                @map("accent_color")
-  economy           Economy?
-  modules           serverModules?
-  giveaways         Giveaway[]
-  polls             Poll[]
-  flags             BigInt?             @default(0)
-  achievements      Achievement[]
+  id             String         @id
+  joinChannel    String?        @map("join_channel")
+  joinMessage    Json?          @map("join_message")
+  leaveChannel   String?        @map("leave_channel")
+  leaveMessage   Json?          @map("leave_message")
+  modLogsChannel String?        @map("modlogs_channel")
+  accentColor    Int?           @map("accent_color")
+  economy        Economy?
+  modules        serverModules?
+  giveaways      Giveaway[]
+  polls          Poll[]
+  flags          Int?           @default(0)
+  achievements   Achievement[]
   // permissions  ServerPermissions[]
-  members           ServerMember[]
-  moderationStrikes moderationStrikes[]
+  members        ServerMember[]
 }
 
 // model ServerPermissions {
@@ -77,9 +68,10 @@ model servers {
 
 model serverModules {
   id             String  @id
+  economy        Boolean @default(false)
   joinMessage    Boolean @default(false) @map("join_message")
   leaveMessage   Boolean @default(false) @map("leave_message")
-  moderationLogs Boolean @default(true) @map("modlogs")
+  moderationLogs Boolean @default(false) @map("modlogs")
   server         servers @relation(fields: [id], references: [id])
 }
 
@@ -92,7 +84,6 @@ model moderationStrikes {
   createdAt   DateTime              @map("created_at") @db.Timestamptz(6)
   expiresAt   DateTime?             @map("expires_at") @db.Timestamptz(6)
   type        ModerationStrikeTypes
-  server      servers               @relation(fields: [serverId], references: [id])
 }
 
 model User {

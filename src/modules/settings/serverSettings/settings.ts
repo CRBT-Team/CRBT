@@ -48,9 +48,16 @@ const defaultSettings: FullSettings = {
   accentColor: colors.default,
   flags: 0n,
   modules: {
+    id: null,
+    economy: false,
     joinMessage: false,
     leaveMessage: false,
     moderationLogs: false,
+  },
+  economy: {
+    currencyNamePlural: 'Coins',
+    currencyNameSingular: 'Coin',
+    currencySymbol: '🪙',
   },
 };
 
@@ -89,7 +96,7 @@ export default ChatCommand({
   description: 'Configure CRBT settings on this server.',
   allowInDMs: false,
   async handle() {
-    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(this, t(this.locale, 'ERROR_ADMIN_ONLY'));
     }
 
@@ -130,18 +137,16 @@ export async function renderSettingsMenu(
     embeds: [
       {
         author: {
-          name: `CRBT Settings`,
+          name: `CRBT Server Settings`,
           iconURL: icons.settings,
         },
         title: `${this.guild.name} / Overview`,
-        description: `Use the select menu below to configure a feature.`,
+        description: `Use the select menu below to update the settings for this server.`,
         color: await getColor(this.guild),
       },
     ],
     components: components(
-      row(
-        new FeatureSelectMenu().setPlaceholder('Select a feature to configure.').setOptions(options)
-      )
+      row(new FeatureSelectMenu().setPlaceholder('Choose a setting.').setOptions(options))
     ),
     ephemeral: true,
   };
@@ -186,15 +191,17 @@ export async function renderFeatureSettings(
         title: `${this.guild.name} / ${strings[feature]}`,
         color: await getColor(this.guild),
         ...embed,
-        fields:
-          errors.length > 0
+        fields: [
+          ...(errors.length > 0
             ? [
                 {
                   name: `Status • ${errors.length} errors found`,
                   value: errors.map((error) => `⚠️ **${error}**`).join('\n'),
                 },
               ]
-            : embed.fields,
+            : []),
+          ...embed.fields,
+        ],
       },
     ],
     components: getComponents({

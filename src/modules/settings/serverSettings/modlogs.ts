@@ -34,7 +34,6 @@ export const modlogsSettings: SettingsMenus = {
         {
           name: 'Status',
           value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
-          inline: true,
         },
         {
           name: 'Channel',
