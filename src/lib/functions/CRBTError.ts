@@ -1,7 +1,8 @@
 import { prisma } from '$lib/db';
 import { channels, colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
-import dayjs from 'dayjs';
+import { ReminderTypes } from '@prisma/client';
+import { timestampMention } from '@purplet/utils';
 import {
   Interaction,
   InteractionReplyOptions,
@@ -134,11 +135,12 @@ export async function CooldownError(
   relativetime: number,
   showButton = true
 ): Promise<InteractionReplyOptions> {
-  const { strings } = t(context.locale, 'CooldownError');
-
   const reminder = await prisma.reminder.findFirst({
     where: {
-      id: { startsWith: `${context.user.id}-COMMAND-` },
+      AND: {
+        userId: `${context.user.id}`,
+        type: ReminderTypes.COMMAND,
+      },
     },
     orderBy: {
       expiresAt: 'desc',
@@ -149,11 +151,14 @@ export async function CooldownError(
     embeds: [
       handleError(context, {
         embed: {
-          title: strings.TITLE,
-          description: strings.DESCRIPTION.replace(
-            '{TYPE}',
-            context.type === 'APPLICATION_COMMAND' ? strings.COMMAND : strings.COMPONENT
-          ).replace('{TIME}', `<t:${dayjs(relativetime).unix()}:R>...`),
+          title: t(context.locale, 'CooldownError.strings.TITLE'),
+          description: t(context.locale, 'CooldownError.strings.DESCRIPTION', {
+            TYPE:
+              context.type === 'APPLICATION_COMMAND'
+                ? t(context.locale, 'CooldownError.strings.COMMAND')
+                : t(context.locale, 'CooldownError.strings.COMPONENT'),
+            TIME: `${timestampMention(relativetime, 'R')}...`,
+          }),
         },
       }),
     ],

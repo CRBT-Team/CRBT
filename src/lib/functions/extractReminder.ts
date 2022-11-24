@@ -1,5 +1,4 @@
 import { LowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { TimeoutTypes } from '$lib/types/timeouts';
 import { Reminder } from '@prisma/client';
 import { Client, GuildTextBasedChannel } from 'discord.js';
 import { getReminderSubject } from '../../modules/tools/reminder list';
@@ -42,6 +41,5 @@ export async function extractReminder(reminder: Reminder, client: Client) {
     user,
     author,
     url,
-    type: TimeoutTypes.Reminder,
   };
 }

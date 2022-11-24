@@ -11,7 +11,7 @@ export function deepMerge<T>(...objects: T[]): T {
       } else if (isObject(pVal) && isObject(oVal)) {
         prev[key] = deepMerge(pVal, oVal);
       } else {
-        prev[key] = oVal;
+        prev[key] = oVal === null || oVal === undefined ? pVal : oVal;
       }
     });
 

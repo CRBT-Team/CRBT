@@ -1,5 +1,9 @@
+import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { TimeoutTypes } from '$lib/types/timeouts';
+import { ReminderTypes } from '@prisma/client';
 import { MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
@@ -15,36 +19,33 @@ export const RemindButton = ButtonComponent({
       );
     }
 
-    // TODO: redo with the timeouts system
+    const reminder = await prisma.reminder.findFirst({
+      where: {
+        userId: userId,
+        destination: 'dm',
+        type: ReminderTypes.COMMAND,
+      },
+      orderBy: { expiresAt: 'desc' },
+    });
 
-    // const reminder = await prisma.reminders.findFirst({
-    //   where: {
-    //     userId: userId,
-    //     destination: 'dm',
-    //     reminder: 'Command reminder from CRBT.',
-    //   },
-    //   orderBy: { expiration: 'desc' },
-    // });
+    if (!reminder || Math.abs(reminder.expiresAt.getTime() - relativetime) > 60000) {
+      await dbTimeout(TimeoutTypes.Reminder, {
+        userId: this.user.id,
+        destination: 'dm',
+        expiresAt: new Date(relativetime),
+        locale: this.locale,
+        id: `${this.guildId ?? '@me'}/${this.channelId}/${this.message.id}`,
+        subject: 'Command reminder from CRBT.',
+        details: null,
+        type: ReminderTypes.COMMAND,
+      });
+    }
 
-    // if (!reminder || Math.abs(reminder.expiration.getTime() - relativetime) > 60000) {
-    //   await setReminder({
-    //     reminder: 'Command reminder from CRBT.',
-    //     locale,
-    //     expiration: dayjs(relativetime).toDate(),
-    //     userId: this.user.id,
-    //     destination: 'dm',
-    //     url:
-    //       this.message instanceof Message
-    //         ? this.message.url.replace('https://discord.com/channels/', '')
-    //         : `@me/${this.user.dmChannel}/${this.message.id}`,
-    //     id: 0n,
-    //   });
-    // }
     await this.update({
       components: components(
         row(
           new MessageButton()
-            .setCustomId('none')
+            .setCustomId('null')
             .setStyle('SECONDARY')
             .setLabel('Reminder set!')
             .setEmoji(emojis.success)

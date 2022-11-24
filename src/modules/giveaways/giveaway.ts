@@ -81,9 +81,8 @@ export default ChatCommand({
         ),
       });
 
-      const data = await dbTimeout({
+      const data = await dbTimeout(TimeoutTypes.Giveaway, {
         id: `${this.channel.id}/${msg.id}`,
-        type: TimeoutTypes.Giveaway,
         expiresAt: end.toDate(),
         serverId: this.guildId,
         locale: this.guildLocale,

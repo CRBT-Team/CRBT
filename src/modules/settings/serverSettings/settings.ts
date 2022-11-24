@@ -2,6 +2,7 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { deepMerge } from '$lib/functions/deepMerge';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -46,7 +47,7 @@ const features: {
 
 const defaultSettings: FullSettings = {
   accentColor: colors.default,
-  flags: 0n,
+  flags: 0,
   modules: {
     id: null,
     economy: false,
@@ -85,10 +86,10 @@ function resolveSettingsProps(
 
 export async function getSettings(guildId: string) {
   const data = await fetchWithCache(`${guildId}:settings`, () =>
-    prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true } })
+    prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true, economy: true } })
   );
 
-  return { ...defaultSettings, ...data };
+  return deepMerge(defaultSettings, data);
 }
 
 export default ChatCommand({
@@ -97,7 +98,12 @@ export default ChatCommand({
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return CRBTError(this, t(this.locale, 'ERROR_ADMIN_ONLY'));
+      return CRBTError(
+        this,
+        t(this.locale, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Server',
+        })
+      );
     }
 
     this.reply(await renderSettingsMenu.call(this));
@@ -224,7 +230,6 @@ export const BackSettingsButton = ButtonComponent({
 export const ToggleFeatureBtn = ButtonComponent({
   async handle({ feature, state }: { feature: string; state: boolean }) {
     const Feature = CamelCaseFeatures[feature];
-
     const newState = { [Feature]: state };
 
     const h = await fetchWithCache(

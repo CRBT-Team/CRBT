@@ -22,11 +22,11 @@ export default ChatCommand({
 
     await this.deferReply({
       ephemeral: true,
-    })
+    });
 
     const res = await renderAchievementsPage.call(this, u, 0);
 
-    await this.reply(res);
+    await this.editReply(res);
   },
 });
 

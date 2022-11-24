@@ -8,6 +8,7 @@ import { resolveToDate } from '$lib/functions/resolveToDate';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
+import { ReminderTypes } from '@prisma/client';
 import dayjs from 'dayjs';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message } from 'discord.js';
@@ -82,14 +83,14 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await dbTimeout({
+      await dbTimeout(TimeoutTypes.Reminder, {
         id: url,
         expiresAt: expiresAt.toDate(),
         destination: destination ? destination.id : 'dm',
         userId: this.user.id,
         subject,
         locale: this.locale,
-        type: TimeoutTypes.Reminder,
+        type: ReminderTypes.NORMAL,
         details: null,
       });
 

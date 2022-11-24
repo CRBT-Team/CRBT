@@ -9,16 +9,16 @@ export default ChatCommand({
     .number('min', 'The minimum number to pick. Defaults to 1.')
     .string('comment', 'The comment to display when picking.'),
   async handle({ min, max, comment }) {
-    const minNum = min ?? 1;
-    const maxNum = max ?? 100;
+    min ??= 1;
+    max ??= 100;
 
-    const num = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+    const num = Math.floor(Math.random() * (max - min + 1)) + min;
 
     await this.reply({
       embeds: [
         {
           ...(comment ? { author: { name: `"${comment}"` } } : {}),
-          title: `From ${minNum} to ${maxNum}: __${num}__`,
+          title: `From ${min} to ${max}: __${num}__`,
           color: await getColor(this.user),
         },
       ],

@@ -28,14 +28,15 @@ model Poll {
 }
 
 model Reminder {
-  id          String   @id
+  id          String         @id
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  expiresAt   DateTime @map("expires_at") @db.Timestamptz(6)
+  user        User           @relation(fields: [userId], references: [id])
+  expiresAt   DateTime       @map("expires_at") @db.Timestamptz(6)
   locale      String
   destination String
   subject     String
   details     String?
+  type        ReminderTypes?
 }
 
 model servers {
@@ -234,4 +235,15 @@ enum ItemTypes {
 enum TokenTypes {
   API
   REDEEM
+}
+
+enum ReminderTypes {
+  // basic user-set reminder (e.g. /reminder new)
+  NORMAL
+  // found on commands with a cooldown (e.g. economy commands)
+  COMMAND
+  // reminder with an attached message
+  MESSAGE
+  // reminder set for someone's birthday (deprecated feature)
+  BIRTHDAY
 }

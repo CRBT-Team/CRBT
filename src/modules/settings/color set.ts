@@ -21,19 +21,18 @@ export const colorset = ChatCommand({
       return colorAutocomplete.call(this, color);
     },
     nameLocalizations: Object.entries(meta.options).reduce((acc, [lang, obj]) => {
-      console.log(lang, obj);
       return {
         ...acc,
         [lang]: obj[0].name.replaceAll(' ', '-'),
       };
     }, {}),
-    // descriptionLocalizations: Object.entries(meta.options).reduce(
-    //   (acc, [lang, obj]) => ({
-    //     ...acc,
-    //     [lang]: obj[0].description,
-    //   }),
-    //   {}
-    // ),
+    descriptionLocalizations: Object.entries(meta.options).reduce(
+      (acc, [lang, obj]) => ({
+        ...acc,
+        [lang]: obj[0].description,
+      }),
+      {}
+    ),
     required: true,
   }),
   async handle({ color: colorHex }) {

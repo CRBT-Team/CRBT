@@ -1,5 +1,5 @@
 import { prisma } from '$lib/db';
-import { Timeout } from '$lib/types/timeouts';
+import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import { getDiscordClient } from 'purplet';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
@@ -12,14 +12,14 @@ const handle = {
   giveaway: handleGiveaway,
 };
 
-export async function dbTimeout<T extends Timeout>(
-  timeout: T,
-  loadOnly: boolean = false
-): Promise<T> {
+export async function dbTimeout<T extends TimeoutTypes>(
+  t: T,
+  timeout: Timeout[T],
+  loadOnly = false
+): Promise<Timeout[T]> {
   const client = getDiscordClient();
   const { id } = timeout;
-  const type = timeout.type.toString() as string;
-  const rawTimeout = (({ type, ...o }) => o)(timeout) as Omit<Timeout, 'type'>;
+  const type = t as string;
 
   setLongerTimeout(async () => {
     if (!timeout) return;
@@ -33,11 +33,11 @@ export async function dbTimeout<T extends Timeout>(
     } catch (e) {}
 
     await prisma[type].delete({ where: { id } });
-  }, rawTimeout.expiresAt.getTime() - Date.now());
+  }, timeout.expiresAt.getTime() - Date.now());
 
   if (loadOnly) return timeout;
 
-  return (await prisma[type].create({
-    data: rawTimeout,
-  })) as T;
+  return await prisma[type].create({
+    data: timeout,
+  });
 }
