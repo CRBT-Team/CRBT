@@ -109,7 +109,9 @@ model ServerMember {
   serverId     String
   server       servers             @relation(references: [id], fields: [serverId])
   achievements MemberAchievement[]
-  dailyStreak  Int                 @default(0) @map("daily_streak") @db.SmallInt
+  lastWork     DateTime?           @map("last_work") @db.Timestamptz(6)
+  lastHourly   DateTime?           @map("last_hourly") @db.Timestamptz(6)
+  workExp      Int                 @default(0) @db.Integer
   money        Int                 @default(0) @db.Integer
   activeItems  EconomyItem[]       @relation("active_items")
   items        EconomyItem[]       @relation("items")

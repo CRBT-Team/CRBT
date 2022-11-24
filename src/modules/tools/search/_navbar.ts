@@ -118,8 +118,6 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
     5
   );
 
-  console.log(arr);
-
   const result = components(
     ...arr.map((enginesRow) =>
       row().addComponents(

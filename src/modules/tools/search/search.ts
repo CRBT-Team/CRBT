@@ -14,7 +14,7 @@ export interface SearchCmdOpts {
 const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, provider }]) => {
   return {
     ...acc,
-    [id]: `${emoji} ${name} - Powered by ${provider}`,
+    [id]: `${emoji} ${name}`,
     // ...(hide ? { [id]: `${emoji} ${name}` } : {}),
   };
 }, {});

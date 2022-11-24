@@ -26,23 +26,21 @@ export default OnEvent('ready', async (client) => {
     )
   );
 
-  const today = dayjs().startOf('day').toISOString();
-  const members = client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0);
+  const date = dayjs().startOf('day').toISOString();
+
+  const guilds = await Promise.all(client.guilds.cache.map((guild) => guild.fetch()));
 
   const stats = {
-    guilds: (await client.guilds.fetch()).size,
+    servers: guilds.length,
+    members: guilds.reduce((acc, g) => acc + g.memberCount, 0),
   };
 
   await prisma.statistics.upsert({
-    where: { date: today },
-    update: {
-      servers: client.guilds.cache.size,
-      members,
-    },
+    where: { date },
+    update: stats,
     create: {
-      date: today,
-      servers: client.guilds.cache.size,
-      members,
+      date,
+      ...stats,
     },
   });
 });

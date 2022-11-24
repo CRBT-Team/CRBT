@@ -1,6 +1,7 @@
 import { cache, fetchWithCache } from '$lib/cache';
 import { getColor } from '$lib/functions/getColor';
 import { Interaction, InteractionReplyOptions, InteractionUpdateOptions } from 'discord.js';
+import { components } from 'purplet';
 import { SearchCmdOpts } from './search';
 import { navbar, NavBarProps } from './_navbar';
 
@@ -10,15 +11,17 @@ export async function createSearchResponse(
   baseResponse: InteractionReplyOptions | InteractionUpdateOptions,
   props: Pick<NavBarProps, 'pages'> = { pages: 1 }
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
+  const nav = navbar(opts, { locale: i.locale, ...props });
+
   return {
     ...baseResponse,
     embeds: await Promise.all(
       baseResponse.embeds.map(async (e) => ({
         ...e,
-        color: await getColor(i.user),
+        color: e.color ?? (await getColor(i.user)),
       }))
     ),
-    components: navbar(opts, { locale: i.locale, ...props }),
+    components: baseResponse.components ? components(...baseResponse.components, ...nav) : nav,
     ephemeral: opts.anonymous,
     files: baseResponse.files || [],
   } as InteractionReplyOptions | InteractionUpdateOptions;

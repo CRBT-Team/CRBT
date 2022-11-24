@@ -1,6 +1,7 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { CooldownError } from '$lib/functions/CRBTError';
+import dedent from 'dedent';
 import { ChatCommand, components, row } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
 import { getSettings } from '../settings/serverSettings/settings';
@@ -11,16 +12,26 @@ export default ChatCommand({
   name: 'work',
   description: 'Get Purplets from working at your job.',
   async handle() {
-    const cooldown = 60 * 1000 * 5;
-    const cmdTime = lastCmdTime.get(this.user.id)?.getTime() ?? Date.now() - cooldown;
-    const timeDiff = Date.now() - cmdTime;
+    const userData = await prisma.serverMember.findFirst({
+      where: {
+        AND: {
+          userId: this.user.id,
+          serverId: this.guildId,
+        },
+      },
+      select: { workExp: true, lastWork: true },
+    });
+
+    const level = 10;
+    const cooldown = 60 * 1000 * 5 + level * 0.1;
+    const lastWork = userData.lastWork?.getTime() ?? Date.now() - cooldown;
+    const timeDiff = Date.now() - lastWork;
 
     if (timeDiff && timeDiff < cooldown) {
       return this.reply(await CooldownError(this, Date.now() + cooldown, true));
     }
 
     function economyGain() {
-      const level = 10;
       const multiplier = 0.7,
         minAdd = 60,
         maxAdd = 80,
@@ -37,7 +48,7 @@ export default ChatCommand({
         l,
         timeInDays,
         timeDiff,
-        cmdTime,
+        cmdTime: lastWork,
         formula,
       });
 
@@ -50,11 +61,13 @@ export default ChatCommand({
     // const possibleStrings = jobStrings[job.type].strings;
     // const string = possibleStrings[Math.floor(Math.random() * possibleStrings.length)];
 
-    await prisma.serverMember.upsert({
+    const newData = await prisma.serverMember.upsert({
       where: { id: `${this.user.id}_${this.guildId}` },
       create: {
         id: `${this.user.id}_${this.guildId}`,
         money: income,
+        workExp: expGain,
+        lastWork: new Date(),
         user: {
           connectOrCreate: {
             create: { id: this.user.id },
@@ -69,9 +82,9 @@ export default ChatCommand({
         },
       },
       update: {
-        money: {
-          increment: income,
-        },
+        workExp: { increment: expGain },
+        money: { increment: income },
+        lastWork: new Date(),
       },
     });
 
@@ -79,7 +92,8 @@ export default ChatCommand({
       embeds: [
         {
           title: `${emojis.success} You worked...`,
-          description: `You gained ${economy.currencySymbol} **${income} ${economy.currencyNamePlural}**`,
+          description: dedent`You gained ${economy.currencySymbol} **${income} ${economy.currencyNamePlural}**
+          You gained ${expGain} exp (${newData.workExp} total exp)`,
           color: colors.success,
         },
       ],
@@ -95,7 +109,5 @@ export default ChatCommand({
         )
       ),
     });
-
-    lastCmdTime.set(this.user.id, new Date());
   },
 });

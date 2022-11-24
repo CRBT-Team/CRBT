@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import { handleDictionary } from './dictionary';
 import { handleDuckDuckGo } from './DuckDuckGo';
+import { handleAnimeMangas } from './handleAnimeMangas';
 import { handleImageSearch } from './images';
 // import { handleKitsu } from './Kitsu';
 // import { handleMusicSearch } from './music';
@@ -81,13 +82,13 @@ export const searchEngines: {
   //   handle: handleRAWG,
   //   name: '🎮 RAWG',
   // },
-  // anime: {
-  //   handle: handleKitsu,
-  //   emoji: '🌸',
-  //   provider: 'Kitsu',
-  //   name: 'Anime & Mangas',
-  //   hide: true,
-  // },
+  anime: {
+    handle: handleAnimeMangas,
+    emoji: '🌸',
+    provider: 'AniList',
+    name: 'Anime & Mangas',
+    hide: true,
+  },
   // npm: {
   //   handle: handleNpm,
   //   name: '📦 npm',

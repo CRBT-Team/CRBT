@@ -36,7 +36,7 @@ export async function handleImageSearch(
               url: image.url,
             },
             footer: {
-              text: `Powered by Google Images • Page ${opts.page} out of ${pages} Results`,
+              text: `Powered by Google Images • Page ${opts.page} out of ${pages} results`,
               iconURL: `https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png`,
             },
           },
