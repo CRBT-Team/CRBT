@@ -11,7 +11,8 @@ import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave, resolveMsgType } from '../../joinLeave/types';
-import { getSettings, renderFeatureSettings } from './settings';
+import { renderFeatureSettings } from './settings';
+import { getSettings, include } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
   getErrors({ guild, settings, feature }) {
@@ -134,12 +135,16 @@ export const EditJoinLeaveChannelModal = ModalComponent({
       }
     }
 
-    const res = await fetchWithCache(`${this.guild.id}:settings`, () =>
-      prisma.servers.upsert({
-        where: { id: this.guild.id },
-        update: { [CamelCaseFeatures[type]]: channel.id },
-        create: { id: this.guildId, [CamelCaseFeatures[type]]: channel.id },
-      })
+    const res = await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guild.id },
+          update: { [CamelCaseFeatures[type]]: channel.id },
+          create: { id: this.guildId, [CamelCaseFeatures[type]]: channel.id },
+          include,
+        }),
+      true
     );
 
     console.log(res);

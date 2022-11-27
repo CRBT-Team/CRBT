@@ -1,8 +1,8 @@
 import { prisma } from '$lib/db';
-import { emojis } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { getSettings } from '../settings/serverSettings/settings';
+import { getSettings } from '../settings/serverSettings/_helpers';
 import { currencyFormat } from './_helpers';
 
 export default ChatCommand({
@@ -72,7 +72,7 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           {
-            title: `${emojis.success} Transfer successful!`,
+            title: `${emojis.success} Transaction successful!`,
             description: `You successfully gave **${currencyFormat(
               { money: amount },
               economy
@@ -80,21 +80,22 @@ export default ChatCommand({
             fields: [
               {
                 name: 'Your balance',
-                value: `${economy.currencySymbol} ~~${userData.money}~~ **${newData.money}** ${
+                value: `${economy.currencySymbol} ~~${userData.money}~~ **${newData.money} ${
                   newData.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-                }`,
+                }**`,
                 inline: true,
               },
               {
                 name: `${target.username}'s balance`,
                 value: `${economy.currencySymbol} ~~${targetData.money - amount}~~ **${
                   targetData.money
-                }** ${
+                } ${
                   targetData.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-                }`,
+                }**`,
                 inline: true,
               },
             ],
+            color: colors.success,
           },
         ],
       });

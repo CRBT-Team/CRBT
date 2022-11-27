@@ -6,7 +6,8 @@ import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { Channel, TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
-import { getSettings, renderFeatureSettings } from './settings';
+import { renderFeatureSettings } from './settings';
+import { getSettings, include } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
   getErrors({ guild, settings, isEnabled }) {
@@ -107,12 +108,16 @@ export const EditModLogsChannelModal = ModalComponent({
       }
     }
 
-    await fetchWithCache(`${this.guild.id}:settings`, () =>
-      prisma.servers.upsert({
-        where: { id: this.guild.id },
-        update: { modLogsChannel: channel.id },
-        create: { id: this.guildId, modLogsChannel: channel.id },
-      })
+    await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guild.id },
+          update: { modLogsChannel: channel.id },
+          create: { id: this.guildId, modLogsChannel: channel.id },
+          include,
+        }),
+      true
     );
 
     this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationLogs));

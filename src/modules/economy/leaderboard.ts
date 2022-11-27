@@ -1,11 +1,12 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
+import { emojis } from '$lib/env';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
 import { CommandInteraction, Interaction } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
-import { getSettings } from '../settings/serverSettings/settings';
+import { getSettings } from '../settings/serverSettings/_helpers';
+import { currencyFormat } from './_helpers';
 
 export default ChatCommand({
   name: 'leaderboard',
@@ -20,11 +21,10 @@ export default ChatCommand({
   },
 });
 
-const assignLeaderboardRanks = (leaderboard: any[]) => {
+const assignLeaderboardRanks = (leaderboard: { money: number; userId: string }[]) => {
   let rank = 1;
   return leaderboard.map((u, i) => {
-    const { purplets } = u;
-    if (i > 0 && purplets < leaderboard[i - 1].purplets) {
+    if (i > 0 && u.money < leaderboard[i - 1].money) {
       rank = i + 1;
     }
     return { ...u, rank };
@@ -48,12 +48,12 @@ async function renderLeaderboard(this: Interaction, page: number) {
   const members = await this.guild.members.fetch();
   const self = this;
 
-  function renderUser(user: typeof userData, rank: number) {
-    return `**${rank}.** ${members.get(user.userId).displayName} - **${
-      economy.currencySymbol
-    } ${user.money.toLocaleString(self.locale)} ${
-      user.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-    }**`;
+  function renderUser(user: { money: number; userId: string }, rank: number) {
+    return `**${rank}.** ${members.get(user.userId).displayName} - **${currencyFormat(
+      user,
+      economy,
+      self.locale
+    )}`;
   }
 
   return {
@@ -84,12 +84,12 @@ async function renderLeaderboard(this: Interaction, page: number) {
     components: components(
       row(
         new GotoPageBtn(page - 1)
-          .setLabel(t(this, 'PREVIOUS'))
-          .setStyle('SECONDARY')
+          .setEmoji(emojis.buttons.left_arrow)
+          .setStyle('PRIMARY')
           .setDisabled(page === 1),
         new GotoPageBtn(page + 1)
-          .setLabel(t(this, 'NEXT'))
-          .setStyle('SECONDARY')
+          .setEmoji(emojis.buttons.right_arrow)
+          .setStyle('PRIMARY')
           .setDisabled(page === Math.ceil(leaderboard.length / 10))
       )
     ),

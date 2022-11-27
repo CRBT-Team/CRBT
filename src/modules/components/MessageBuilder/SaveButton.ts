@@ -3,7 +3,8 @@ import { prisma } from '$lib/db';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, FullSettings } from '$lib/types/settings';
 import { ButtonComponent } from 'purplet';
-import { getSettings, renderFeatureSettings } from '../../settings/serverSettings/settings';
+import { renderFeatureSettings } from '../../settings/serverSettings/settings';
+import { getSettings } from '../../settings/serverSettings/_helpers';
 
 export const SaveButton = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {

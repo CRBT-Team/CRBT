@@ -12,7 +12,7 @@ import {
   TextChannel,
   User,
 } from 'discord.js';
-import { getSettings } from '../settings/serverSettings/settings';
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 export interface ModerationContext {
   target: User | GuildTextBasedChannel;
@@ -56,12 +56,7 @@ export async function handleModerationAction(
       type,
       expiresAt,
       reason,
-      server: {
-        connectOrCreate: {
-          create: { id: guild.id },
-          where: { id: guild.id },
-        },
-      },
+      serverId: guild.id,
     },
   });
 

@@ -3,7 +3,7 @@ import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { getSettings } from '../settings/serverSettings/settings';
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 export default ChatCommand({
   name: 'balance',

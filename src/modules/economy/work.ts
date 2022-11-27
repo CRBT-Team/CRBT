@@ -4,13 +4,11 @@ import { CooldownError } from '$lib/functions/CRBTError';
 import dedent from 'dedent';
 import { ChatCommand, components, row } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
-import { getSettings } from '../settings/serverSettings/settings';
-
-const lastCmdTime = new Map<string, Date>();
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 export default ChatCommand({
   name: 'work',
-  description: 'Get Purplets from working at your job.',
+  description: 'Earn money from working at your job.',
   async handle() {
     const userData = await prisma.serverMember.findFirst({
       where: {
@@ -22,7 +20,7 @@ export default ChatCommand({
       select: { workExp: true, lastWork: true },
     });
 
-    const level = 10;
+    const level = Math.round(Math.log((userData.workExp || 0) / 100));
     const cooldown = 60 * 1000 * 5 + level * 0.1;
     const lastWork = userData.lastWork?.getTime() ?? Date.now() - cooldown;
     const timeDiff = Date.now() - lastWork;
@@ -88,12 +86,21 @@ export default ChatCommand({
       },
     });
 
+    const newLevel = Math.round(Math.log(newData.workExp / 100));
+
     await this.reply({
       embeds: [
         {
           title: `${emojis.success} You worked...`,
-          description: dedent`You gained ${economy.currencySymbol} **${income} ${economy.currencyNamePlural}**
-          You gained ${expGain} exp (${newData.workExp} total exp)`,
+          description: dedent`
+          You gained ${economy.currencySymbol} **${income} ${economy.currencyNamePlural}**
+          `,
+          fields: [
+            {
+              name: 'EXP',
+              value: `+${expGain} (${newData.workExp} total, level ${newLevel})`,
+            },
+          ],
           color: colors.success,
         },
       ],

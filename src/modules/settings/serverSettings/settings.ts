@@ -1,18 +1,11 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { colors, emojis, icons } from '$lib/env';
+import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { deepMerge } from '$lib/functions/deepMerge';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
-import {
-  CamelCaseFeatures,
-  EditableFeatures,
-  FeatureSettingsProps,
-  FullSettings,
-  SettingsMenus,
-} from '$lib/types/settings';
+import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ServerFlags } from '$lib/util/serverFlags';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -22,75 +15,13 @@ import {
   ModalSubmitInteraction,
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import { colorSettings } from './accentColor';
-import { economySettings } from './economy';
-import { joinLeaveSettings } from './joinLeave';
-import { modlogsSettings } from './modlogs';
-
-export const strings = {
-  [EditableFeatures.joinMessage]: 'Welcome Message',
-  [EditableFeatures.leaveMessage]: 'Farewell Message',
-  [EditableFeatures.accentColor]: 'Server Accent Color',
-  [EditableFeatures.moderationLogs]: `Moderation Logs`,
-  [EditableFeatures.economy]: 'Economy',
-};
-
-const features: {
-  [k: string]: SettingsMenus;
-} = {
-  [EditableFeatures.joinMessage]: joinLeaveSettings,
-  [EditableFeatures.leaveMessage]: joinLeaveSettings,
-  [EditableFeatures.accentColor]: colorSettings,
-  [EditableFeatures.moderationLogs]: modlogsSettings,
-  [EditableFeatures.economy]: economySettings,
-};
-
-const defaultSettings: FullSettings = {
-  accentColor: colors.default,
-  flags: 0,
-  modules: {
-    id: null,
-    economy: false,
-    joinMessage: false,
-    leaveMessage: false,
-    moderationLogs: false,
-  },
-  economy: {
-    currencyNamePlural: 'Coins',
-    currencyNameSingular: 'Coin',
-    currencySymbol: '🪙',
-  },
-};
-
-function resolveSettingsProps(
-  i: FeatureSettingsProps['i'],
-  feature: EditableFeatures,
-  settings: FullSettings
-): FeatureSettingsProps {
-  const camelCasedKey = CamelCaseFeatures[feature];
-  const guild = i.guild;
-  const isEnabled = Object.keys(settings.modules).includes(camelCasedKey)
-    ? settings.modules[camelCasedKey]
-    : settings[camelCasedKey];
-  const errors = features[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) || [];
-
-  return {
-    feature,
-    settings,
-    guild,
-    errors,
-    i,
-    isEnabled,
-  };
-}
-
-export async function getSettings(guildId: string) {
-  const data = await fetchWithCache(`${guildId}:settings`, () =>
-    prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true, economy: true } })
-  );
-
-  return deepMerge(defaultSettings, data);
-}
+import {
+  featureSettingsMenus,
+  getSettings,
+  include,
+  resolveSettingsProps,
+  strings,
+} from './_helpers';
 
 export default ChatCommand({
   name: 'settings',
@@ -133,7 +64,7 @@ export async function renderSettingsMenu(
               emoji: '⚠️',
               description: 'Attention Required',
             }
-          : features[feature].getSelectMenu(props)),
+          : featureSettingsMenus[feature].getSelectMenu(props)),
       };
     })
     .filter(Boolean);
@@ -170,7 +101,7 @@ export async function renderFeatureSettings(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
   feature: EditableFeatures
 ): Promise<any> {
-  const { getComponents, getMenuDescription } = features[feature];
+  const { getComponents, getMenuDescription } = featureSettingsMenus[feature];
   const props = resolveSettingsProps(this, feature, await getSettings(this.guildId));
   const { isEnabled, errors } = props;
 
@@ -197,17 +128,15 @@ export async function renderFeatureSettings(
         title: `${this.guild.name} / ${strings[feature]}`,
         color: await getColor(this.guild),
         ...embed,
-        fields: [
-          ...(errors.length > 0
+        fields:
+          errors.length > 0
             ? [
                 {
                   name: `Status • ${errors.length} errors found`,
                   value: errors.map((error) => `⚠️ **${error}**`).join('\n'),
                 },
               ]
-            : []),
-          ...embed.fields,
-        ],
+            : embed?.fields,
       },
     ],
     components: getComponents({
@@ -244,7 +173,7 @@ export const ToggleFeatureBtn = ButtonComponent({
               connectOrCreate: { create: newState, where: { id: this.guildId } },
             },
           },
-          include: { modules: true },
+          include,
         }),
       true
     );

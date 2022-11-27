@@ -150,52 +150,62 @@ model Achievement {
   name          String
   description   String?
   requirements  Json[]
-  totalSteps    Int
+  totalSteps    Int                 @map("total_steps")
   members       MemberAchievement[]
 }
 
 model Economy {
-  serverId             String           @id
-  currencyNameSingular String           @map("currency_name_singular")
-  currencyNamePlural   String           @map("currency_name_plural")
-  currencySymbol       String           @map("currency_symbol")
-  commands             EconomyCommand[]
-  server               servers          @relation(fields: [serverId], references: [id])
-  items                EconomyItem[]
+  serverId               String                @id
+  currencyNameSingular   String?               @map("currency_name_singular")
+  currencyNamePlural     String?               @map("currency_name_plural")
+  currencySymbol         String?               @map("currency_symbol")
+  transactionLogsChannel String?               @map("logs_channel")
+  commands               EconomyCommands?
+  server                 servers?              @relation(fields: [serverId], references: [id])
+  items                  EconomyItem[]
+  categories             EconomyItemCategory[]
 }
 
-model EconomyCommand {
-  id       Int                 @id @default(autoincrement())
-  serverId String              @map("server_id")
-  type     EconomyCommandTypes
-  enabled  Boolean             @default(true)
-  strings  String[]
-  cooldown Int                 @default(20000)
-  minGain  Int                 @default(50) @map("min_gain")
-  maxGain  Int                 @default(100) @map("max_gain")
-  economy  Economy?            @relation(fields: [serverId], references: [serverId])
+model EconomyCommands {
+  serverId      String   @id
+  workCooldown  Int
+  workStrings   String[]
+  workReward    String
+  dailyReward   String
+  weeklyRewards String[]
+  Economy       Economy? @relation(fields: [serverId], references: [serverId])
 }
 
 model EconomyItem {
-  id             Int            @id @default(autoincrement())
-  serverId       String         @map("server_id")
+  id             Int                 @id @default(autoincrement())
+  serverId       String              @map("server_id")
   name           String
   icon           String?
   description    String?
   price          Int
-  category       String
+  categoryId     Int
+  category       EconomyItemCategory @relation(fields: [categoryId], references: [id])
   type           ItemTypes
   stock          Int
   // for items limited in time
-  availableUntil DateTime?      @map("available_until") @db.Timestamptz(6)
+  availableUntil DateTime?           @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
   value          String?
   // who's currently using the item
-  activeMembers  ServerMember[] @relation("active_items")
+  activeMembers  ServerMember[]      @relation("active_items")
   // who has the item
-  owners         ServerMember[] @relation("items")
+  owners         ServerMember[]      @relation("items")
   // which economy does the item belong to
-  economy        Economy        @relation(fields: [serverId], references: [serverId])
+  economy        Economy             @relation(fields: [serverId], references: [serverId])
+}
+
+model EconomyItemCategory {
+  id       Int           @id @default(autoincrement())
+  serverId String
+  items    EconomyItem[]
+  label    String
+  emoji    String?
+  economy  Economy       @relation(fields: [serverId], references: [serverId])
 }
 
 model Token {
