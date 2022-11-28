@@ -3,7 +3,7 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { Channel, TextInputComponent } from 'discord.js';
@@ -39,8 +39,7 @@ export const joinLeaveSettings: SettingsMenus = {
 
     return errors;
   },
-  getMenuDescription: ({ settings, feature }) => {
-    const isEnabled = settings.modules[resolveMsgType[feature]];
+  getMenuDescription: ({ settings, feature, isEnabled }) => {
     const channelId =
       settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
@@ -50,11 +49,15 @@ export const joinLeaveSettings: SettingsMenus = {
           name: 'Status',
           value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
         },
-        {
-          name: 'Channel',
-          value: `#${channelId}`,
-          inline: true,
-        },
+        ...(channelId
+          ? [
+              {
+                name: 'Channel',
+                value: `<#${channelId}>`,
+                inline: true,
+              },
+            ]
+          : []),
       ],
     };
   },
@@ -70,19 +73,20 @@ export const joinLeaveSettings: SettingsMenus = {
       description: isEnabled ? `Sending in #${channel.name}` : '',
     };
   },
-  getComponents: ({ feature, toggleBtn, backBtn }) =>
+  getComponents: ({ feature, toggleBtn, backBtn, isEnabled }) =>
     components(
       row(backBtn, toggleBtn),
       row(
         new EditJoinLeaveMessageBtn(feature as never)
           .setLabel(`Edit Message`)
           .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY'),
+          .setStyle('PRIMARY')
+          .setDisabled(!isEnabled),
         new EditJoinLeaveChannelBtn(feature as never)
           .setLabel(`Edit Channel`)
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
-          .setDisabled()
+          .setDisabled(!isEnabled)
       )
     ),
 };
@@ -90,8 +94,7 @@ export const joinLeaveSettings: SettingsMenus = {
 export const EditJoinLeaveChannelBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
     const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
-    const channelId =
-      data[type === MessageBuilderTypes.joinMessage ? 'joinChannel' : 'leaveChannel'];
+    const channelId = data[type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
@@ -99,7 +102,7 @@ export const EditJoinLeaveChannelBtn = ButtonComponent({
         .setTitle(
           `Edit ${t(
             this.locale,
-            type === MessageBuilderTypes.joinMessage ? 'JOIN_CHANNEL' : 'LEAVE_CHANNEL'
+            type === EditableFeatures.joinMessage ? 'JOIN_CHANNEL' : 'LEAVE_CHANNEL'
           )}`
         )
         .setComponents(
@@ -134,14 +137,15 @@ export const EditJoinLeaveChannelModal = ModalComponent({
         return CRBTError(this, 'This channel does not exist or is not a text channel.');
       }
     }
+    const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
     const res = await fetchWithCache(
       `${this.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
           where: { id: this.guild.id },
-          update: { [CamelCaseFeatures[type]]: channel.id },
-          create: { id: this.guildId, [CamelCaseFeatures[type]]: channel.id },
+          update: { [propName]: channel.id },
+          create: { id: this.guildId, [propName]: channel.id },
           include,
         }),
       true

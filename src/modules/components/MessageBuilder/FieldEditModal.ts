@@ -30,7 +30,7 @@ export const FieldEditModal = ModalComponent({
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const embed = data.embed || new MessageEmbed().toJSON();
+    const embed = data.embed || new MessageEmbed();
     let content = data.content;
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');

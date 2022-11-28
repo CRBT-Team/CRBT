@@ -163,7 +163,7 @@ export const ToggleFeatureBtn = ButtonComponent({
 
     const h = await fetchWithCache(
       `${this.guildId}:settings`,
-      async () =>
+      () =>
         prisma.servers.upsert({
           where: { id: this.guildId },
           update: { modules: { upsert: { create: newState, update: newState } } },

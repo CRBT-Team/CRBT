@@ -1,10 +1,10 @@
-import { cache } from '$lib/cache';
+import { cache, fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
-import { CamelCaseFeatures, FullSettings } from '$lib/types/settings';
+import { CamelCaseFeatures } from '$lib/types/settings';
 import { ButtonComponent } from 'purplet';
 import { renderFeatureSettings } from '../../settings/serverSettings/settings';
-import { getSettings } from '../../settings/serverSettings/_helpers';
+import { getSettings, include } from '../../settings/serverSettings/_helpers';
 
 export const SaveButton = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
@@ -13,19 +13,22 @@ export const SaveButton = ButtonComponent({
 
     settings[CamelCaseFeatures[type]] = data as any;
 
-    (await prisma.servers.upsert({
-      where: { id: this.guildId },
-      update: {
-        [CamelCaseFeatures[type]]: data,
-      },
-      create: {
-        id: this.guildId,
-        [CamelCaseFeatures[type]]: data,
-      },
-      include: { modules: true },
-    })) as FullSettings;
-
-    cache.set<FullSettings>(`${this.guildId}:settings`, settings);
+    await fetchWithCache(
+      `${this.guildId}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guildId },
+          update: {
+            [CamelCaseFeatures[type]]: data,
+          },
+          create: {
+            id: this.guildId,
+            [CamelCaseFeatures[type]]: data,
+          },
+          include,
+        }),
+      true
+    );
 
     await this.update(await renderFeatureSettings.call(this, type));
     // {

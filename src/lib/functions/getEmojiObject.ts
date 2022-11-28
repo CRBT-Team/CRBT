@@ -5,8 +5,9 @@ import emojiJSON from '../../../data/misc/emoji.json';
 export function getEmojiObject(emoji: string): Partial<APIPartialEmoji> {
   if (!emoji.match(CustomEmojiRegex)) {
     return {
-      name: emojiJSON.find(({ char }) => char === emoji).name,
+      name: emojiJSON.find(({ char }) => char === emoji)?.name?.replaceAll(' ', '_'),
       id: emoji,
+      animated: undefined,
     };
   }
 

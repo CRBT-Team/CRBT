@@ -24,7 +24,7 @@ export interface RolePickerData extends BaseMessageData {
 }
 
 export interface JoinLeaveData extends BaseMessageData {
-  type: MessageBuilderTypes.joinMessage | MessageBuilderTypes.leaveMessage;
+  type: EditableFeatures.joinMessage | EditableFeatures.leaveMessage;
   script?: string;
 }
 

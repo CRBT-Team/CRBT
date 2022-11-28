@@ -1,3 +1,4 @@
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis, links } from '$lib/env';
 import { slashCmd } from '$lib/functions/commandMention';
@@ -5,11 +6,12 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
-import { SnowflakeRegex } from '@purplet/utils';
+import { CustomEmojiRegex, emojiMention, SnowflakeRegex } from '@purplet/utils';
 import dayjs from 'dayjs';
 import dedent from 'dedent';
 import { Channel, MessageButton } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import emojiJSON from '../../../../data/misc/emoji.json';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
@@ -37,9 +39,11 @@ export const economySettings: SettingsMenus = {
         },
         {
           name: 'Currency',
-          value: dedent`${economy.currencySymbol} \`:${
-            getEmojiObject(economy.currencySymbol).name
-          }:\`
+          value: dedent`${economy.currencySymbol} \`${
+            economy.currencySymbol.match(CustomEmojiRegex)
+              ? `:${getEmojiObject(economy.currencySymbol).name}:`
+              : economy.currencySymbol
+          }\`
           ${economy.currencyNameSingular} (${economy.currencyNamePlural})`,
           inline: true,
         },
@@ -128,12 +132,14 @@ export const EditCurrencyBtn = ButtonComponent({
           style: 'SHORT',
           label: 'Symbol',
           required: true,
-          value: `:${getEmojiObject(economy.currencySymbol).name}:`,
-          minLength: 5,
+          value: economy.currencySymbol.match(CustomEmojiRegex)
+            ? `:${getEmojiObject(economy.currencySymbol).name}:`
+            : economy.currencySymbol,
+          minLength: 1,
           maxLength: 40,
           placeholder: "You may use an emoji's name, ID, or full ID.",
           type: 'TEXT_INPUT',
-          customId: 'symbol',
+          customId: 'currencySymbol',
         })
       )
     );
@@ -141,7 +147,71 @@ export const EditCurrencyBtn = ButtonComponent({
 });
 
 export const EditCurrencyModal = ModalComponent({
-  async handle(h: null) {},
+  async handle(h: null) {
+    const { economy } = await getSettings(this.guildId);
+    let currencySymbol = this.fields.getTextInputValue('currencySymbol');
+
+    if (currencySymbol) {
+      const emojiObj = getEmojiObject(currencySymbol);
+      const fromJSON = emojiJSON.find(
+        ({ name }) =>
+          name.toLowerCase().replaceAll(' ', '_') ===
+          currencySymbol.toLowerCase().replaceAll(' ', '_').replaceAll(':', '')
+      );
+      const fromEmojis = (await this.guild.emojis.fetch()).find(
+        (e) => e.name === currencySymbol.replaceAll(':', '')
+      );
+      if (emojiObj && emojiObj.name && emojiObj.animated === undefined) {
+        currencySymbol = currencySymbol;
+      } else if (fromJSON) {
+        currencySymbol = fromJSON.char;
+      } else if (currencySymbol.match(CustomEmojiRegex)) {
+        currencySymbol = currencySymbol;
+      } else if (fromEmojis) {
+        currencySymbol = emojiMention(fromEmojis);
+      } else {
+        currencySymbol = null;
+      }
+    } else {
+      currencySymbol = economy.currencyNameSingular;
+    }
+
+    if (!currencySymbol) {
+      return CRBTError(
+        this,
+        'The emoji used for the symbol is invalid! Please use a unicode emoji or an emoji in the server using its name or full ID.'
+      );
+    }
+
+    const newEconomy = {
+      currencySymbol,
+      currencyNameSingular:
+        this.fields.getTextInputValue('currencyNameSingular') ?? economy.currencyNameSingular,
+      currencyNamePlural:
+        this.fields.getTextInputValue('currencyNamePlural') ?? economy.currencyNamePlural,
+    };
+
+    await fetchWithCache(
+      `${this.guildId}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guildId },
+          create: {
+            id: this.guildId,
+            economy: { create: newEconomy },
+          },
+          update: {
+            economy: {
+              upsert: { create: newEconomy, update: newEconomy },
+            },
+          },
+          include,
+        }),
+      true
+    );
+
+    this.update(await renderFeatureSettings.call(this, EditableFeatures.economy));
+  },
 });
 
 export const EditEconomyLogsBtn = ButtonComponent({
@@ -185,30 +255,29 @@ export const EditEconomyLogsModal = ModalComponent({
       }
     }
 
-    await // fetchWithCache(
-    //   `${this.guild.id}:settings`,
-    //   () =>
-    prisma.servers.upsert({
-      where: { id: this.guild.id },
-      update: {
-        economy: {
-          upsert: {
-            create: { transactionLogsChannel: channel.id },
-            update: { transactionLogsChannel: channel.id },
+    await fetchWithCache(
+      `${this.guild.id}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guild.id },
+          update: {
+            economy: {
+              upsert: {
+                create: { transactionLogsChannel: channel.id },
+                update: { transactionLogsChannel: channel.id },
+              },
+            },
           },
-        },
-      },
-      create: {
-        id: this.guildId,
-        economy: {
-          create: { transactionLogsChannel: channel.id },
-        },
-      },
-      include,
-    });
-    // ,
-    //   true
-    // );
+          create: {
+            id: this.guildId,
+            economy: {
+              create: { transactionLogsChannel: channel.id },
+            },
+          },
+          include,
+        }),
+      true
+    );
 
     this.update(await renderFeatureSettings.call(this, EditableFeatures.economy));
   },

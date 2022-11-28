@@ -9,6 +9,7 @@ import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js'
 import { components, row, SelectMenuComponent } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
 import { renderFeatureSettings } from './settings';
+import { include } from './_helpers';
 
 export const colorSettings: SettingsMenus = {
   getSelectMenu: ({ settings }) => ({
@@ -50,11 +51,15 @@ export async function saveColorSettings(
   this: MessageComponentInteraction | ModalSubmitInteraction,
   color: number
 ) {
-  await fetchWithCache(`${this.guildId}:settings`, () =>
-    prisma.servers.update({
-      where: { id: this.guild.id },
-      data: { accentColor: color },
-    })
+  await fetchWithCache(
+    `${this.guildId}:settings`,
+    () =>
+      prisma.servers.update({
+        where: { id: this.guild.id },
+        data: { accentColor: color },
+        include,
+      }),
+    true
   );
   cache.set(`${this.guildId}:color`, color);
 
