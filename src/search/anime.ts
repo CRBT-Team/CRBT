@@ -1,6 +1,6 @@
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { createLinkButton, timestampMention } from '@purplet/utils';
-import { capitalCase } from 'change-case';
+import { capitalCase } from 'change-case-all';
 import {
   CommandInteraction,
   EmbedFieldData,

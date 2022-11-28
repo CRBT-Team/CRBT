@@ -8,7 +8,7 @@ import {
   snowflakeToDate,
   timestampMention,
 } from '@purplet/utils';
-import { capitalCase } from 'change-case';
+import { capitalCase } from 'change-case-all';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ButtonInteraction, Interaction, MessageButton } from 'discord.js';
 import {

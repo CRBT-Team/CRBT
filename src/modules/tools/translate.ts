@@ -4,11 +4,11 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import googleTranslateApi from '@vitalets/google-translate-api';
+import { upperCaseFirst } from 'change-case-all';
 import {
   CommandInteraction,
   ContextMenuInteraction,
   MessageComponentInteraction,
-  MessageEmbed,
 } from 'discord.js';
 import {
   ChatCommand,
@@ -18,8 +18,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import langCodes from '../../../data/misc/langCodes.json';
-import languages from '../../../data/misc/languages.json';
+import languages from '../../../data/misc/langs.json';
 import { useOcrScan } from './Find Text in Image';
 
 export default ChatCommand({
@@ -102,11 +101,11 @@ async function translate(
   const target = opts?.to ?? this.locale.split('-')[0];
   const from = opts?.from ?? 'auto';
 
-  if (!languages[from]) {
+  if (!languages.all.find((code) => code === from)) {
     CRBTError(this, `"${from}" is not a valid source language.`);
     return;
   }
-  if (!languages[target]) {
+  if (!languages.all.find((code) => code === target)) {
     CRBTError(this, `"${target}" is not a valid target language.`);
     return;
   }
@@ -119,25 +118,40 @@ async function translate(
   } = await googleTranslateApi(text, { to: target, from });
 
   const color = await getColor(this.user);
+  const intl = new Intl.DisplayNames(this.locale, {
+    languageDisplay: 'standard',
+    style: 'long',
+    type: 'language',
+    fallback: 'code',
+  });
 
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: `Translated from ${languages[source]} to ${languages[target]}`,
-        })
-        .addField(languages[source], text)
-        .addField(languages[target], translated)
-        .setColor(color),
+      {
+        author: {
+          name: `Translated from ${intl.of(source)} to ${intl.of(target)}`,
+        },
+        fields: [
+          {
+            name: upperCaseFirst(intl.of(source)),
+            value: text,
+          },
+          {
+            name: upperCaseFirst(intl.of(target)),
+            value: translated,
+          },
+        ],
+        color,
+      },
     ],
     components: components(
       row(
         new TargetLangSelectMenu(source)
           .setPlaceholder('Select a target language to translate to.')
           .setOptions(
-            Object.entries(langCodes).map(([code, lang]) => {
+            languages.limited.map((code) => {
               return {
-                label: lang,
+                label: upperCaseFirst(intl.of(code)),
                 value: code,
                 default: code === target,
               };

@@ -5,11 +5,12 @@ import { ocrSpace } from 'ocr-space-api-wrapper';
 import { MessageContextCommand } from 'purplet';
 
 export default MessageContextCommand({
-  name: 'Scan Images in Message',
+  name: 'Find Text in Image',
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
-      : message.embeds.find((e) => e.image)?.image?.url ?? message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
+      : message.embeds.find((e) => e.image)?.image?.url ??
+        message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
 
     if (!image) {
       return CRBTError(this, { title: "This message doesn't have any images!" });
@@ -22,11 +23,11 @@ export default MessageContextCommand({
       const [text, error] = await useOcrScan(image);
 
       if (error) {
-        await CRBTError(this,
-          {
-            title: 'No text was recognized from this image.',
-            description: 'Please try again with a different image, and make sure that the text is legible.'
-          })
+        await CRBTError(this, {
+          title: 'No text was recognized from this image.',
+          description:
+            'Please try again with a different image, and make sure that the text is legible.',
+        });
         return;
       }
 
@@ -41,21 +42,24 @@ export default MessageContextCommand({
             .setColor(await getColor(this.user)),
         ],
       });
-
     } catch (e) {
       CRBTError(this, {
         title: 'No text was recognized from this image.',
-        description: 'Please try again with a different image, and make sure that the text is legible.'
+        description:
+          'Please try again with a different image, and make sure that the text is legible.',
       });
       return;
     }
   },
 });
 
-export async function useOcrScan(imageUrl: string, lang: string = 'eng'): Promise<[string, boolean]> {
+export async function useOcrScan(
+  imageUrl: string,
+  lang: string = 'eng'
+): Promise<[string, boolean]> {
   const req = await ocrSpace(imageUrl, {
     apiKey: process.env.OCR_TOKEN,
-    OCREngine: '3'
+    OCREngine: '3',
   });
 
   let error = false;
@@ -68,7 +72,7 @@ export async function useOcrScan(imageUrl: string, lang: string = 'eng'): Promis
     !req.ParsedResults[0].ParsedText ||
     req.ParsedResults?.ErrorMessage
   ) {
-    error = true
+    error = true;
   }
 
   return [req.ParsedResults[0].ParsedText, error];

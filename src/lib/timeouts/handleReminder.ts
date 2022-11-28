@@ -8,7 +8,7 @@ import { timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
 import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
-import { getReminderSubject } from '../../modules/tools/reminder list';
+import { getReminderSubject } from '../../modules/tools/reminder_list';
 
 export interface LowBudgetMessage {
   authorId: string;

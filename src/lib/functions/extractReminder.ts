@@ -1,7 +1,7 @@
 import { LowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { Reminder } from '@prisma/client';
 import { Client, GuildTextBasedChannel } from 'discord.js';
-import { getReminderSubject } from '../../modules/tools/reminder list';
+import { getReminderSubject } from '../../modules/tools/reminder_list';
 import { UnknownError } from './CRBTError';
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;

@@ -4,8 +4,8 @@ import { CommandInteraction, MessageAttachment, MessageComponentInteraction } fr
 import { readFileSync } from 'fs';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleDuckDuckGo } from './DuckDuckGo';
 import { SearchCmdOpts } from './search';
+import { handleDuckDuckGo } from './web';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDictionary(

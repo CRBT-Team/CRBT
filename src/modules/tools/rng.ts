@@ -18,7 +18,8 @@ export default ChatCommand({
       embeds: [
         {
           ...(comment ? { author: { name: `"${comment}"` } } : {}),
-          title: `From ${min} to ${max}: __${num}__`,
+          title: `${num}`,
+          footer: { text: `Random number between ${min} to ${max}` },
           color: await getColor(this.user),
         },
       ],

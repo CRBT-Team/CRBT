@@ -4,9 +4,8 @@ import {
   InteractionUpdateOptions,
   MessageComponentInteraction,
 } from 'discord.js';
+import { handleAnimeMangas } from './anime';
 import { handleDictionary } from './dictionary';
-import { handleDuckDuckGo } from './DuckDuckGo';
-import { handleAnimeMangas } from './handleAnimeMangas';
 import { handleImageSearch } from './images';
 // import { handleKitsu } from './Kitsu';
 // import { handleMusicSearch } from './music';
@@ -14,6 +13,7 @@ import { SearchCmdOpts } from './search';
 import { handleUrbanDictionary } from './urban';
 import { handleVideosSearch } from './videos';
 import { handleWeather } from './weather';
+import { handleDuckDuckGo } from './web';
 
 export interface SearchEngine {
   handle: (

@@ -1,6 +1,6 @@
 // import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 // import { getColor } from '$lib/functions/getColor';
-// import { capitalCase } from 'change-case';
+// import { capitalCase } from 'change-case-all';
 // import dayjs from 'dayjs';
 // import { MessageEmbed } from 'discord.js';
 // import fetch from 'node-fetch';

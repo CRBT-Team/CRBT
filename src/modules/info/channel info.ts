@@ -1,7 +1,7 @@
 import { icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
-import { capitalCase } from 'change-case';
+import { capitalCase } from 'change-case-all';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
 import {
