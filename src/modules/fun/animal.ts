@@ -1,5 +1,5 @@
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleImageSearch } from '../../search/images';
+import { handleImageSearch } from '../search/images';
 
 const animals: [string, string[]][] = [
   ['Dog', ['🐶']],

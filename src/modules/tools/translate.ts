@@ -49,7 +49,7 @@ export default ChatCommand({
 });
 
 export const ctxCommand = MessageContextCommand({
-  name: 'Translate with Scan',
+  name: 'Translate (with Images)',
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
