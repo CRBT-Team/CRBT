@@ -212,13 +212,13 @@
       "CHOICE": "Choix",
       "POLL_DESCRIPTION": "Le sondage se terminera {TIME}.\nLe créateur de sondage peut afficher les options et autres données en cliquant sur le bouton {ICON} ci-dessous.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Poll started by {USER}",
+      "POLL_FOOTER_VOTES": "Total des votes : {VOTES}",
+      "POLL_FOOTER_CREATOR": "Sondage lancé par {USER}",
       "POLL_SELECT_MENU_VOTE": "Voter",
       "KEYWORD_YES__KEEP_LOWERCASE": "oui",
       "KEYWORD_NO__KEEP_LOWERCASE": "non",
       "SUCCESS_TITLE": "Sondage créé !",
-      "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "SUCCESS_DESCRIPTION": "Le sondage se terminera {TIME}, mais vous pouvez le terminer prématurément en utilisant le menu {ICON}. À partir de ce menu, vous pouvez également modifier le sondage, le supprimer ou afficher les personnes ayant voté.",
       "POLL_DATA_OPTIONS": "Sondage CRBT • Données et options",
       "POLL_DATA_NOVOTES": "Aucun vote pour l'instant",
       "POLL_DATA_FOOTER": "Note : Ces données ne sont pas mises à jour en direct. Utilisez le bouton à nouveau pour les actualiser.",
@@ -231,9 +231,9 @@
       "POLL_HEADER_ENDED": "Terminé",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "Les choix \"{OPTION1}\" et \"{OPTION2}\" ont fini à égalité avec {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "Le choix \"{OPTION}\" a gagné avec {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "sur {TOTAL} !\nCliquez sur le bouton ci-dessous pour afficher les résultats.",
       "BUTTON_JUMP_TO_POLL": "Aller au sondage"
     }
   },
@@ -260,12 +260,12 @@
     },
     "strings": {
       "EMBED_TITLE": "{USER} - Avatar",
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "Télécharger ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
+      "EMBED_TITLE": "Merci d'avoir invité {CRBT} sur votre serveur !",
       "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
     }
   },
@@ -277,7 +277,7 @@
       "DMS_DISABLED": "Vous devez activer vos MP ou débloquer CRBT pour pouvoir sauvegarder des messages."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
+      "BOOKMARK_AUTHOR": "{USER} (message sauvegardé)",
       "SUCCESS_MESSAGE": "Ce message vous a été sauvegardé par MP !"
     }
   },
@@ -319,7 +319,7 @@
     "errors": {
       "USER_MISSING_PERMS": "Seuls les administrateurs du serveur peuvent créer des Sélecteurs de rôles.",
       "BOT_MISSING_PERMS": "J'ai besoin de la permission \"Gérer les rôles\" pour créer un Sélecteur de rôles.",
-      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
+      "ROLE_DOES_NOT_EXIST": "Le rôle {ROLE} n'existe pas ou a été supprimé. Contactez un administrateur pour résoudre le problème.",
       "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles que vous avez spécifiés n'existent pas ou ont été supprimés. Contactez un administrateur pour résoudre le problème.",
       "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
     },
@@ -328,9 +328,9 @@
       "CHOOSE_ROLES": "Choississez des rôles",
       "GENERIC_SELECTOR_TITLE": "Sélectionnez un ou plusieurs rôles en les choisissant ci-dessous.",
       "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
+      "BUTTON_ROLES_ADD": "Le rôle {ROLE} vous a été ajouté.",
       "BUTTON_ROLES_ADD_AGAIN": "Sélectionnez-le à nouveau pour le retirer.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
+      "BUTTON_ROLES_REMOVE": "{ROLE} a été retiré de vos rôles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Sélectionnez-le à nouveau pour l'ajouter.",
       "SUCCESS_TITLE": "Sélecteur de rôles créé !",
       "SUCCESS_DESCRIPTION": "Les membres pourront désormais choisir des rôles depuis ce menu. Pour le désactiver, supprimez le message du Sélecteur de rôles."
@@ -343,21 +343,21 @@
   "MODERATION_LOGS_ACTION_TIMEOUT": "Exclusion",
   "MODERATION_LOGS_ACTION_TEMPBAN": "Bannissement temporaire",
   "MODERATION_LOGS_CLEAR": "Suppression de messages",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
+  "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Modéré par {MODERATOR}",
   "JOIN_MESSAGE": "Message de bienvenue",
   "LEAVE_MESSAGE": "Message de départ",
   "JOIN_CHANNEL": "Salon de bienvenue",
   "LEAVE_CHANNEL": "Salon de départ",
   "CRBTSCRIPT_GUIDE": "Ouvrir le guide CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifier ce message pour personnaliser le {TYPE} en utilisant le menu de sélection ci-dessous.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Aperçu du {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Aperçu",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message. Utilisez {COMMAND} pour en définir un.",
   "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a quitté le serveur.",
   "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
@@ -379,8 +379,8 @@
   "FIELDS_URL": "Lien sur Titre de l'Embed",
   "SETTINGS": "Réglages",
   "BIRTHDAY_REMINDER_MESSAGE": "Souhaitez un joyeux anniversaire à {USER} !",
-  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-  "USER_INFO_EMBED_TITLE": "{USER} - User info",
+  "BIRTHDAY_LIST_CONTENT": "Anniversaire de {USER}",
+  "USER_INFO_EMBED_TITLE": "{USER} - Infos utilisateur",
   "USER_INFO_CREATED_AT": "A rejoint Discord",
   "USER_INFO_JOINED_SERVER": "A rejoint le serveur",
   "USER_INFO_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
@@ -414,70 +414,70 @@
   "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "tu me recopies ?",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Trouvez la couleur d'accentuation CRBT cachée.",
   "help": {
-    "name": "help",
-    "description": "Returns a quick help guide for CRBT."
+    "name": "aide",
+    "description": "Donne un guide d'utilisation rapide de CRBT."
   },
-  "HELP_TITLE": "{botName} - Quick Guide",
-  "HELP_DESCRIPTION": "Type {prefix} in the chat box and click {botIcon} to get a list of commands.\nYou can also right click or press and hold on a message or a user for some quick actions.\n\nCRBT comes with handy and powerful features, like creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with many more to come! Stay up to date on CRBT by joining [our server]({link}).",
-  "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "HELP_TITLE": "{botName} - Guide",
+  "HELP_DESCRIPTION": "Tapez {prefix} dans la boîte de chat et cliquez sur {botIcon} pour obtenir la liste des commandes.\nVous pouvez aussi faire un clic droit ou appuyer de manière prolongée sur un message ou un utilisateur pour des actions rapides.\n\nCRBT intégre des fonctionnalités pratiques et puissantes, tels que la création de rappels ({reminder}), faire l'annonce de nouveaux membres et ceux partant ({settings}), obtenir des informations sur Discord et sur le web ({infoCommands}), etc. ...\n\n...avec tant d'autres à venir ! Restez à jour sur l'actu de CRBT en rejoignant [notre serveur]({link}).",
+  "HELP_AD_TITLE": "Vous aimez CRBT ?",
+  "HELP_AD_DESCRIPTION": "Soutenez-nous en l'ajoutant à votre serveur !",
   "giveaway": {
-    "name": "giveaway",
-    "description": "Create a giveaway.",
+    "name": "concours",
+    "description": "Créez un concours.",
     "options": {
       "prize": {
-        "name": "prize",
-        "description": "What to give away."
+        "name": "prix",
+        "description": "Quoi donner au concours."
       },
       "end_date": {
-        "name": "end_date",
-        "description": "When to end the giveaway."
+        "name": "date_de_fin",
+        "description": "Quand mettre fin au concours."
       },
       "winners": {
-        "name": "winners",
-        "description": "How many people can win the giveaway."
+        "name": "nombre_de_gagnants",
+        "description": "Combien de personnes peuvent gagner."
       }
     }
   },
   "8ball": {
-    "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "name": "boule_de_cristal",
+    "description": "Posez une question à la boule de cristal.",
     "options": {
       "question": {
         "name": "question",
-        "description": "What to ask."
+        "description": "Quoi demander."
       }
     }
   },
-  "8BALL": "8-Ball",
-  "ANSWER": "Answer",
+  "8BALL": "Boule de cristal",
+  "ANSWER": "Réponse",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
-    "It is decidedly so.",
-    "Without a doubt.",
-    "Yes, definitely.",
-    "You may rely on it.",
-    "As I see it, yes.",
-    "Most likely.",
-    "Outlook good.",
-    "Yes.",
-    "Signs point to yes."
+    "C'est certain.",
+    "C'est décidément ainsi.",
+    "Sans aucun doute.",
+    "Oui, absolument.",
+    "Vous pouvez y compter.",
+    "À mon avis, oui.",
+    "Très probablement.",
+    "Ça semble correct.",
+    "Oui.",
+    "Tout semble l'indiquer."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "Réponse floue, réessayez.",
+    "Demandez-moi plus tard.",
+    "Mieux vaut ne pas vous le dire maintenant.",
+    "Impossible de prédire pour le moment.",
+    "Concentrez vous et réessayez."
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
-    "My sources say no.",
-    "Outlook not so good.",
-    "Very doubtful."
+    "N'y comptez point.",
+    "Je répondrai non.",
+    "Mes sources disent que non.",
+    "Ça s'annonce plutôt mal.",
+    "J'en doute fort."
   ],
-  "COMMENT": "comment",
+  "COMMENT": "commentaire",
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
   "roll": {
     "name": "roll",
