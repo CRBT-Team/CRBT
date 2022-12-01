@@ -29,8 +29,8 @@
   "PREVIEW": "Aperçu",
   "EXPORT": "Exporter",
   "IMPORT": "Importer",
-  "YES": "Yes",
-  "NO": "No",
+  "YES": "Oui",
+  "NO": "Non",
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
   },
@@ -480,31 +480,31 @@
     "J'en doute fort."
   ],
   "COMMENT": "commentaire",
-  "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
+  "COMMENT_DESCRIPTION": "Un commentaire à afficher pour fournir plus de contexte.",
   "roll": {
-    "name": "roll",
-    "description": "Roll a dice. Supports RPG dice notation.",
+    "name": "dés",
+    "description": "Lancez un ou plusieurs dés. Supporte la notation RPG.",
     "options": {
       "dice": {
-        "name": "dice",
-        "description": "What dice to roll. Use 'd6' for a 6-sided die."
+        "name": "dés",
+        "description": "Quels dés lancer. Tapez 'd6' pour un dé à 6 côtés."
       }
     }
   },
-  "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
-  "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
-  "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
-  "TRANSLATE": "translate",
+  "ROLL_ERROR_TOO_MANY_DICE": "Vous ne pouvez pas lancer plus de 100 dés à la fois.",
+  "ROLL_RESULTS_TITLE": "Vos dés donnent un résultat de {result}.",
+  "ROLL_RESULTS_FOOTER": "Vos lancers : {results}.",
+  "TRANSLATE": "traduire",
   "translate": {
-    "description": "Translate text to another language.",
+    "description": "Traduisez du texte dans une autre langue.",
     "options": {
       "text": {
-        "name": "text",
-        "description": "The text to translate."
+        "name": "texte",
+        "description": "Le texte à traduire."
       },
       "target": {
-        "name": "target",
-        "description": "The language to translate to."
+        "name": "cible",
+        "description": "La langue dans laquelle traduire."
       },
       "source": {
         "name": "source",
