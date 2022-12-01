@@ -76,16 +76,22 @@ export async function AchievementProgress(
     ? emojiImg(emojiJSON.find((e) => e.char === emoji)).Twemoji
     : formatEmojiURL(emoji.match(CustomEmojiRegex)[0]);
 
+  const locale = 'locale' in this ? this.locale : 'en-US';
+
   const embeds = [
     {
       author: {
-        name: `${secret ? 'Secret ' : ''}Achievement Unlocked!`,
-        iconURL: icons.giveaway,
+        name: secret
+          ? t(locale, 'ACHIEVEMENT_UNLOCKED_TITLE_SECRET')
+          : t(locale, 'ACHIEVEMENT_UNLOCKED_TITLE'),
+        icon_url: icons.giveaway,
       },
-      title: t('locale' in this ? this.locale : 'en-US', `ACHIEVEMENT_${id}_TITLE` as any),
-      description: `${t('locale' in this ? this.locale : 'en-US', `ACHIEVEMENT_${id}_DESC` as any, {
+      title: t(locale, `ACHIEVEMENT_${id}_TITLE` as any),
+      description: `${t(locale, `ACHIEVEMENT_${id}_DESC` as any, {
         command: suggestedCommand ? slashCmd(suggestedCommand) : null,
-      })}\nCheck your achievements with ${slashCmd('achievements')}.`,
+      })}\n${t(locale, 'ACHIEVEMENT_UNLOCKED_DESCRIPTION', {
+        command: slashCmd('achievements'),
+      })}`,
       thumbnail: { url: icon },
       color: secret ? colors.gold : colors.success,
     },

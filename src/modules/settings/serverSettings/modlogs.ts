@@ -2,6 +2,7 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { Channel, TextInputComponent } from 'discord.js';
@@ -27,13 +28,13 @@ export const modlogsSettings: SettingsMenus = {
 
     return errors;
   },
-  getMenuDescription({ settings, isEnabled }) {
+  getMenuDescription({ settings, isEnabled, i }) {
     return {
       description:
         'Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!',
       fields: [
         {
-          name: 'Status',
+          name: t(i, 'STATUS'),
           value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
         },
         {
@@ -52,13 +53,13 @@ export const modlogsSettings: SettingsMenus = {
       description: settings.modules.moderationLogs ? `Sending in #${channel.name}` : null,
     };
   },
-  getComponents: ({ backBtn, toggleBtn }) =>
+  getComponents: ({ backBtn, toggleBtn, i }) =>
     components(
       row(
         backBtn,
         toggleBtn,
         new EditModLogsChannelBtn()
-          .setLabel(`Edit Channel`)
+          .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
       )
@@ -79,8 +80,8 @@ export const EditModLogsChannelBtn = ButtonComponent({
           row(
             new TextInputComponent()
               .setCustomId('channel')
-              .setPlaceholder("You may use a Text Channel's exact name or its ID.")
-              .setLabel('Channel')
+              .setPlaceholder(t(this, "EDIT_CHANNEL_MODAL_PLACEHOLDER"))
+              .setLabel(t(this, "CHANNEL"))
               .setValue(channelName)
               .setRequired(true)
               .setStyle('SHORT')

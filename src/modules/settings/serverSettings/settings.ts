@@ -4,7 +4,7 @@ import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ServerFlags } from '$lib/util/serverFlags';
@@ -15,17 +15,13 @@ import {
   ModalSubmitInteraction,
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import {
-  featureSettingsMenus,
-  getSettings,
-  include,
-  resolveSettingsProps,
-  strings,
-} from './_helpers';
+import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from './_helpers';
 
 export default ChatCommand({
   name: 'settings',
-  description: 'Configure CRBT settings on this server.',
+  description: t('en-US', 'settings.description'),
+  nameLocalizations: getAllLanguages('settings.name'),
+  descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
@@ -57,12 +53,12 @@ export async function renderSettingsMenu(
       const props = resolveSettingsProps(this, feature, settings);
 
       return {
-        label: strings[feature],
+        label: t(this, feature),
         value: feature,
         ...(props.errors.length > 0
           ? {
               emoji: '⚠️',
-              description: 'Attention Required',
+              description: t(this, 'ATTENTION_REQUIRED'),
             }
           : featureSettingsMenus[feature].getSelectMenu(props)),
       };
@@ -74,11 +70,11 @@ export async function renderSettingsMenu(
     embeds: [
       {
         author: {
-          name: `CRBT Server Settings`,
+          name: t(this, 'SETTINGS_TITLE'),
           iconURL: icons.settings,
         },
-        title: `${this.guild.name} / Overview`,
-        description: `Use the select menu below to update the settings for this server.`,
+        title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
+        description: t(this, 'SETTINGS_DESCRIPTION'),
         color: await getColor(this.guild),
       },
     ],
@@ -111,7 +107,7 @@ export async function renderFeatureSettings(
     .setStyle('SECONDARY');
 
   const toggleBtn = new ToggleFeatureBtn({ feature, state: !isEnabled })
-    .setLabel(`${isEnabled ? 'Disable' : 'Enable'} ${strings[feature]}`)
+    .setLabel(`${isEnabled ? t(this, 'DISABLE') : t(this, 'ENABLE')} ${t(this, feature)}`)
     // .setEmoji(isEnabled ? emojis.toggle.on : emojis.toggle.off)
     .setStyle(isEnabled ? 'DANGER' : 'SUCCESS');
 
@@ -122,17 +118,19 @@ export async function renderFeatureSettings(
     embeds: [
       {
         author: {
-          name: 'CRBT Settings',
+          name: t(this, 'SETTINGS_TITLE'),
           icon_url: icons.settings,
         },
-        title: `${this.guild.name} / ${strings[feature]}`,
+        title: `${this.guild.name} / ${t(this, feature)}`,
         color: await getColor(this.guild),
         ...embed,
         fields:
           errors.length > 0
             ? [
                 {
-                  name: `Status • ${errors.length} errors found`,
+                  name: `${t(this, 'STATUS')} • ${t(this, 'SETTINGS_ERRORS_FOUND', {
+                    number: errors.length.toLocaleString(this.locale),
+                  })}`,
                   value: errors.map((error) => `⚠️ **${error}**`).join('\n'),
                 },
               ]

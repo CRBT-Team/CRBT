@@ -13,13 +13,15 @@ import { include } from './_helpers';
 
 export const colorSettings: SettingsMenus = {
   getSelectMenu: ({ settings }) => ({
-    description: `Set to #${(settings.accentColor ?? colors.default).toString(16)}`,
+    description: t(this, 'SETTINGS_COLOR_SET_TO', {
+      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+    }),
     emoji: '🎨',
   }),
   getMenuDescription: ({ settings }) => ({
-    description: `The server's accent color is currently shown on the side of this message, and will be shown on new Polls, Giveaways, Role Pickers, the Server Info sheet, and more.\nIt is set to **#${(
-      settings.accentColor ?? colors.default
-    ).toString(16)}**.\nTo edit it, use one of the below presets or manually pick a new HEX color.`,
+    description: t(this, 'SETTINGS_COLOR_DESCRIPTION', {
+      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+    }),
   }),
   getComponents: ({ i, backBtn, settings }) =>
     components(

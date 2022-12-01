@@ -15,14 +15,6 @@ import { economySettings } from './economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
 
-export const strings = {
-  [EditableFeatures.joinMessage]: 'Welcome Message',
-  [EditableFeatures.leaveMessage]: 'Farewell Message',
-  [EditableFeatures.accentColor]: 'Server Accent Color',
-  [EditableFeatures.moderationLogs]: `Moderation Logs`,
-  [EditableFeatures.economy]: 'Economy',
-};
-
 export const featureSettingsMenus: {
   [k: string]: SettingsMenus;
 } = {

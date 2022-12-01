@@ -10,13 +10,13 @@ import { Channel, TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage } from '../../joinLeave/renderers';
-import { RawServerJoin, RawServerLeave, resolveMsgType } from '../../joinLeave/types';
+import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
   getErrors({ guild, settings, feature }) {
-    const isEnabled = settings.modules[resolveMsgType[feature]];
+    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
     const channelId =
       settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channel = guild.channels.cache.find((c) => c.id === channelId);
@@ -39,15 +39,17 @@ export const joinLeaveSettings: SettingsMenus = {
 
     return errors;
   },
-  getMenuDescription: ({ settings, feature, isEnabled }) => {
+  getMenuDescription({ settings, feature, isEnabled, i }) {
     const channelId =
       settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
     return {
       fields: [
         {
-          name: 'Status',
-          value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
+          name: t(i, 'STATUS'),
+          value: isEnabled
+            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
         },
         ...(channelId
           ? [
@@ -70,20 +72,24 @@ export const joinLeaveSettings: SettingsMenus = {
 
     return {
       emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
-      description: isEnabled ? `Sending in #${channel.name}` : '',
+      description: isEnabled
+        ? t(i, 'SETTINGS_SENDING_IN', {
+            channel: `#${channel.name}`,
+          })
+        : '',
     };
   },
-  getComponents: ({ feature, toggleBtn, backBtn, isEnabled }) =>
+  getComponents: ({ feature, toggleBtn, backBtn, isEnabled, i }) =>
     components(
       row(backBtn, toggleBtn),
       row(
         new EditJoinLeaveMessageBtn(feature as never)
-          .setLabel(`Edit Message`)
+          .setLabel(t(i, 'EDIT_MESSAGE'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
           .setDisabled(!isEnabled),
         new EditJoinLeaveChannelBtn(feature as never)
-          .setLabel(`Edit Channel`)
+          .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
           .setDisabled(!isEnabled)
@@ -100,17 +106,16 @@ export const EditJoinLeaveChannelBtn = ButtonComponent({
     this.showModal(
       new EditJoinLeaveChannelModal(type as never)
         .setTitle(
-          `Edit ${t(
-            this.locale,
-            type === EditableFeatures.joinMessage ? 'JOIN_CHANNEL' : 'LEAVE_CHANNEL'
-          )}`
+          t(this, 'EDIT_SOMETHING', {
+            feature: t(this, type),
+          })
         )
         .setComponents(
           row(
             new TextInputComponent()
               .setCustomId('channel')
-              .setPlaceholder("You may use a Text Channel's exact name or its ID.")
-              .setLabel('Channel')
+              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
+              .setLabel(t(this, 'CHANNEL'))
               .setValue(channelName)
               .setRequired(true)
               .setStyle('SHORT')
