@@ -1,4 +1,5 @@
 import { getColor } from '$lib/functions/getColor';
+import { getAllLanguages, t } from '$lib/language';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -7,7 +8,10 @@ export default ChatCommand({
   options: new OptionBuilder()
     .number('max', 'The maximum number to pick. Defaults to 100.')
     .number('min', 'The minimum number to pick. Defaults to 1.')
-    .string('comment', 'The comment to display when picking.'),
+    .string('comment', t('en-US', 'COMMENT_DESCRIPTION'), {
+      nameLocalizations: getAllLanguages('COMMENT'),
+      descriptionLocalizations: getAllLanguages('COMMENT_DESCRIPTION'),
+    }),
   async handle({ min, max, comment }) {
     min ??= 1;
     max ??= 100;

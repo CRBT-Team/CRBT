@@ -29,6 +29,8 @@
   "PREVIEW": "Preview",
   "EXPORT": "Export",
   "IMPORT": "Import",
+  "YES": "Yes",
+  "NO": "No",
   "globalErrors": {
     "GUILD_ONLY": "This command cannot be used in DMs."
   },
@@ -512,5 +514,45 @@
   },
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
-  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to."
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to.",
+  "REMINDER_LIST_TITLE": "{user} - CRBT Reminders ({number})",
+  "REMINDER_LIST_NO_REMINDERS": "Uh oh, you don't have any reminders set. Use {command} to set one!",
+  "REMINDER_LIST_DESCRIPTION": "You can set a new reminder using {command}.",
+  "REMINDER_DESTINATION": "Destination:",
+  "IN_YOUR_DMS": "In your DMs",
+  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Select a reminder to edit or delete.",
+  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
+  "SUBJECT": "Subject",
+  "WHEN_TO_SEND": "When to send",
+  "REMINDER_DELETE_CONFIRMATION_TITLE": "Hold on! Are you sure you want to delete this reminder, forever?!",
+  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "reminder_list": {
+    "description": "Get a list of all of your reminders."
+  },
+  "pick": {
+    "name": "pick",
+    "description": "Pick an item at random from a given list.",
+    "options": {
+      "values": {
+        "name": "values",
+        "description": "The values to pick from, separated by commas."
+      }
+    }
+  },
+  "PICK_RESULT": "\"{value}\" was picked out of the {number} given choices.",
+  "privacy": {
+    "name": "privacy",
+    "description": "Review your CRBT privacy settings and edit them."
+  },
+  "ACHIEVEMENTS": "Achievements",
+  "SILENT_LEAVES": "Silent leaving",
+  "SILENT_JOINS": "Silent joining",
+  "TELEMETRY": "Command Telemetry",
+  "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "CRBT tracks some of your usage in order to serve Achievements both globally and for each server. Server owners cannot access your individual data. Turning this off will freeze your achievements.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this setting on will stop CRBT from welcoming you when joining a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this setting on will stop CRBT from announcing your departure when leaving a server.",
+  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent, and will not affect error messages.",
+  "YOUR_CRBT_DATA": "Your CRBT data",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects data about your usage, whether you submit it yourself, or some that we track to provide features. You can download all of your data, or delete it all. But beware, the latter will completely erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
+  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings"
 }

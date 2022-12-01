@@ -25,8 +25,6 @@ export default OnEvent('interactionCreate', async (i) => {
   //   cmd.handle(i, i.options);
   // }
 
-  await AchievementProgress.call(i.user, 'CRBT_ADDICT');
-
   const isTelemetryEnabled =
     (await fetchWithCache(`tlm:${i.user.id}`, () =>
       prisma.user
@@ -37,6 +35,8 @@ export default OnEvent('interactionCreate', async (i) => {
   if (!isTelemetryEnabled) return;
 
   const channel = i.client.channels.cache.get(channels.telemetry) as TextChannel;
+
+  await AchievementProgress.call(i.user, 'CRBT_ADDICT');
 
   channel.send({
     embeds: [

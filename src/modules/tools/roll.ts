@@ -12,7 +12,7 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('roll.name'),
   descriptionLocalizations: getAllLanguages('roll.description'),
   options: new OptionBuilder()
-    .string('dice', "What dice to roll. Use 'd6' for a 6-sided die.", {
+    .string('dice', t('en-US', 'roll.options.dice.name'), {
       nameLocalizations: getAllLanguages('roll.options.dice.name'),
       descriptionLocalizations: getAllLanguages('roll.options.dice.description'),
       required: true,
