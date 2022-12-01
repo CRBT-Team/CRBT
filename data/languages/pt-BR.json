@@ -298,24 +298,20 @@
         "description": "Create a new Role Picker, a menu for members to give themselves roles.",
         "options": [
           {
-            "name": "descrição",
-            "description": "Descreva aos seus membros para que serve o seu Seletor de Cargos."
-          },
-          {
-            "name": "comportamento",
-            "description": "Como o Seletor de Cargos deve se comportar.",
+            "name": "behavior",
+            "description": "How the Role Picker should behave.",
             "choices": [
-              "Alternar dar/remover cargo(s)",
-              "Dar o(s) cargo(s) apenas uma vez"
+              "Toggle giving/removing role(s)",
+              "Only give the role(s) once"
             ]
           },
           {
-            "name": "limite",
-            "description": "Quantos cargos podem ser selecionados. Defina como 0 para ilimitado."
+            "name": "limit",
+            "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "cargo",
-            "description": "Um cargo a ser atribuído ao membro quando selecionado."
+            "name": "role",
+            "description": "A role to assign to the member when selected."
           }
         ]
       }
@@ -416,5 +412,105 @@
   "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
   "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color.",
+  "help": {
+    "name": "help",
+    "description": "Returns a quick help guide for CRBT."
+  },
+  "HELP_TITLE": "{botName} - Quick Guide",
+  "HELP_DESCRIPTION": "Type {prefix} in the chat box and click {botIcon} to get a list of commands.\nYou can also right click or press and hold on a message or a user for some quick actions.\n\nCRBT comes with handy and powerful features, like creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with many more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_AD_TITLE": "Like CRBT?",
+  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "giveaway": {
+    "name": "giveaway",
+    "description": "Create a giveaway.",
+    "options": {
+      "prize": {
+        "name": "prize",
+        "description": "What to give away."
+      },
+      "end_date": {
+        "name": "end_date",
+        "description": "When to end the giveaway."
+      },
+      "winners": {
+        "name": "winners",
+        "description": "How many people can win the giveaway."
+      }
+    }
+  },
+  "8ball": {
+    "name": "8ball",
+    "description": "Ask a question to 8-Ball.",
+    "options": {
+      "question": {
+        "name": "question",
+        "description": "What to ask."
+      }
+    }
+  },
+  "8BALL": "8-Ball",
+  "ANSWER": "Answer",
+  "8BALL_ANSWERS_POSITIVE": [
+    "It is certain.",
+    "It is decidedly so.",
+    "Without a doubt.",
+    "Yes, definitely.",
+    "You may rely on it.",
+    "As I see it, yes.",
+    "Most likely.",
+    "Outlook good.",
+    "Yes.",
+    "Signs point to yes."
+  ],
+  "8BALL_ANSWERS_NEUTRAL": [
+    "Reply hazy, try again.",
+    "Ask again later.",
+    "Better not tell you now.",
+    "Cannot predict now.",
+    "Concentrate and ask again."
+  ],
+  "8BALL_ANSWERS_NEGATIVE": [
+    "Don't count on it.",
+    "My reply is no.",
+    "My sources say no.",
+    "Outlook not so good.",
+    "Very doubtful."
+  ],
+  "COMMENT": "comment",
+  "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
+  "roll": {
+    "name": "roll",
+    "description": "Roll a dice. Supports RPG dice notation.",
+    "options": {
+      "dice": {
+        "name": "dice",
+        "description": "What dice to roll. Use 'd6' for a 6-sided die."
+      }
+    }
+  },
+  "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
+  "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
+  "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
+  "TRANSLATE": "translate",
+  "translate": {
+    "description": "Translate text to another language.",
+    "options": {
+      "text": {
+        "name": "text",
+        "description": "The text to translate."
+      },
+      "target": {
+        "name": "target",
+        "description": "The language to translate to."
+      },
+      "source": {
+        "name": "source",
+        "description": "The source language to translate from."
+      }
+    }
+  },
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
+  "TRANSLATE_RESULT": "Translated from {source} to {target}",
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to."
 }
