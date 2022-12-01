@@ -507,56 +507,56 @@
         "description": "La langue dans laquelle traduire."
       },
       "source": {
-        "name": "source",
-        "description": "The source language to translate from."
+        "name": "origine",
+        "description": "La langue d'origine du texte à traduire."
       }
     }
   },
-  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
-  "TRANSLATE_RESULT": "Translated from {source} to {target}",
-  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to.",
-  "REMINDER_LIST_TITLE": "{user} - CRBT Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Uh oh, you don't have any reminders set. Use {command} to set one!",
-  "REMINDER_LIST_DESCRIPTION": "You can set a new reminder using {command}.",
-  "REMINDER_DESTINATION": "Destination:",
-  "IN_YOUR_DMS": "In your DMs",
-  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Select a reminder to edit or delete.",
-  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} n'est pas une langue valide.",
+  "TRANSLATE_RESULT": "Traduction {source} vers {target}",
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Sélectionnez une langue vers laquelle traduire.",
+  "REMINDER_LIST_TITLE": "{user} - Rappels CRBT ({number})",
+  "REMINDER_LIST_NO_REMINDERS": "Zut alors, vous n'avez pas défini de rappels. Utilisez {command} pour en définir un !",
+  "REMINDER_LIST_DESCRIPTION": "Vous pouvez définir un nouveau rappel en utilisant {command}.",
+  "REMINDER_DESTINATION": "Destination :",
+  "IN_YOUR_DMS": "Dans vos MP",
+  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Sélectionnez un rappel à modifier ou à supprimer.",
+  "REMINDER_EDIT_MODAL_TITLE": "Modifier le rappel",
   "SUBJECT": "Sujet",
-  "WHEN_TO_SEND": "When to send",
-  "REMINDER_DELETE_CONFIRMATION_TITLE": "Hold on! Are you sure you want to delete this reminder, forever?!",
-  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "WHEN_TO_SEND": "Quand l'envoyer",
+  "REMINDER_DELETE_CONFIRMATION_TITLE": "Attendez ! Êtes-vous sûr de vouloir supprimer ce rappel, pour toujours ?!",
+  "REMINDER_MESSAGE_TITLE": "[Message de {user}]",
   "reminder_list": {
-    "description": "Get a list of all of your reminders."
+    "description": "Obtenez une liste de tous vos rappels."
   },
   "pick": {
-    "name": "pick",
-    "description": "Pick an item at random from a given list.",
+    "name": "choisir",
+    "description": "Choisissez un objet au hasard dans une liste donnée.",
     "options": {
       "values": {
-        "name": "values",
-        "description": "The values to pick from, separated by commas."
+        "name": "valeurs",
+        "description": "Les valeurs à choisir, séparées par des virgules."
       }
     }
   },
-  "PICK_RESULT": "\"{value}\" was picked out of the {number} given choices.",
+  "PICK_RESULT": "\"{value}\" a été sélectionné parmi les {number} choix donnés.",
   "privacy": {
-    "name": "privacy",
-    "description": "Review your CRBT privacy settings and edit them."
+    "name": "confidentialité",
+    "description": "Vérifiez vos paramètres de confidentialité du CRBT et modifiez-les."
   },
-  "ACHIEVEMENTS": "Achievements",
-  "SILENT_LEAVES": "Silent leaving",
-  "SILENT_JOINS": "Silent joining",
-  "TELEMETRY": "Command Telemetry",
+  "ACHIEVEMENTS": "Succès",
+  "SILENT_LEAVES": "Quitter en mode silencieux",
+  "SILENT_JOINS": "Rejoindre en mode silencieux",
+  "TELEMETRY": "Télémétrie de commandes",
   "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "CRBT tracks some of your usage in order to serve Achievements both globally and for each server. Server owners cannot access your individual data. Turning this off will freeze your achievements.",
   "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this setting on will stop CRBT from welcoming you when joining a server.",
   "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this setting on will stop CRBT from announcing your departure when leaving a server.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will not erase previous logs but stops them from being sent, and will not affect error messages.",
-  "YOUR_CRBT_DATA": "Your CRBT data",
+  "YOUR_CRBT_DATA": "Vos données CRBT",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects data about your usage, whether you submit it yourself, or some that we track to provide features. You can download all of your data, or delete it all. But beware, the latter will completely erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
   "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
   "settings": {
-    "name": "settings",
+    "name": "réglages",
     "description": "Configure CRBT settings on this server."
   },
   "ATTENTION_REQUIRED": "Attention Required",
