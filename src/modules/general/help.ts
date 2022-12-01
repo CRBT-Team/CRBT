@@ -2,13 +2,15 @@ import { links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
-import dedent from 'dedent';
+import { getAllLanguages, t } from '$lib/language';
 import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 
 export default ChatCommand({
   name: 'help',
   description: 'Returns a quick help guide for CRBT.',
+  nameLocalizations: getAllLanguages('help.name'),
+  descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
     const showAdButton = !this.guild || this.guild.ownerId !== this.user.id;
     const introImage = 'https://i.imgur.com/rUHqMcy.gif';
@@ -17,32 +19,28 @@ export default ChatCommand({
       embeds: [
         {
           author: {
-            name: `${this.client.user.username} - Quick Guide`,
+            name: t(this, 'HELP_TITLE', {
+              botName: this.client.user.username,
+            }),
             iconURL: avatar(this.client.user, 64),
           },
-          description: dedent`
-          Type \`/\` in the chat box and click <:CRBT:860947227887403048> to get a list of commands.
-          You can also right click or long-press a message or a user for some quick actions!
-
-          CRBT comes with handy commands and powerful features, like creating reminders (${slashCmd(
-            'reminder new'
-          )}), announcing new and leaving members (${slashCmd(
-            'settings'
-          )}), exploiting Discord and web info (${slashCmd('search')}, ${slashCmd(
-            'user info'
-          )}, ${slashCmd('define')}, etc.)...
-
-          ...with many more to come! Stay up to date on CRBT news by joining **[our server](${
-            links.discord
-          })**!
-          `,
+          description: t(this, 'HELP_DESCRIPTION', {
+            prefix: '`/`',
+            botIcon: '<:CRBT:860947227887403048>',
+            reminder: slashCmd('reminder new'),
+            settings: slashCmd('settings'),
+            infoCommands: [slashCmd('search'), slashCmd('user info'), slashCmd('define')].join(
+              ', '
+            ),
+            link: links.discord,
+          }),
           image: { url: introImage },
           color: await getColor(this.user),
           fields: showAdButton
             ? [
                 {
-                  name: 'Like CRBT?',
-                  value: 'Support us by adding it to your server!',
+                  name: t(this, 'HELP_AD_TITLE'),
+                  value: t(this, 'HELP_AD_DESCRIPTION'),
                 },
               ]
             : [],
@@ -50,7 +48,12 @@ export default ChatCommand({
       ],
       components: showAdButton
         ? components(
-            row(new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite))
+            row(
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(t(this, 'ADD_TO_SERVER'))
+                .setURL(links.invite)
+            )
           )
         : null,
     });

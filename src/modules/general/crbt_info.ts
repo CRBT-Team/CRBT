@@ -1,20 +1,18 @@
 import { colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
-import { t } from '$lib/language';
+import { slashCmd } from '$lib/functions/commandMention';
+import { getAllLanguages, t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
-const { meta } = t('en-US', 'crbt info');
-
 export default ChatCommand({
   name: 'crbt info',
-  description: meta.description,
+  description: t('en-US', 'crbt info.meta.description'),
+  descriptionLocalizations: getAllLanguages('crbt info.meta.description'),
   async handle() {
     await this.deferReply();
-
-    const { strings } = t(this, 'crbt info');
 
     const { user } = this.client;
     const onlineSince = new Date(Date.now() - this.client.uptime);
@@ -29,26 +27,25 @@ export default ChatCommand({
             iconURL: avatar(this.client.user),
             url: links.baseURL,
           },
-          description: `Running v${pjson.version} • **[Purplet ${pjson.dependencies[
-            'purplet'
-          ].slice(1)}](${links.purplet})**`,
+          description: `v${pjson.version} • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${
+            links.purplet
+          })**`,
           fields: [
             {
-              name: strings.MEMBER_COUNT,
+              name: t(this, 'crbt info.strings.MEMBER_COUNT'),
               value: i18n.format(this.client.users.cache.size),
               inline: true,
             },
             {
-              name: strings.SERVER_COUNT,
-              value: this.client.guilds.cache.size.toLocaleString(this.locale),
+              name: t(this, 'crbt info.strings.SERVER_COUNT'),
+              value: i18n.format(this.client.guilds.cache.size),
               inline: true,
             },
             {
               name: t(this, 'PING'),
-              value: `${strings.PING_RESULT.replace(
-                '{PING}',
-                `${Date.now() - this.createdTimestamp}`
-              )} (\`/ping\`)`,
+              value: `${t(this, 'crbt info.strings.PING_RESULT', {
+                PING: `${Date.now() - this.createdTimestamp}`,
+              })} (${slashCmd('ping')})`,
               inline: true,
             },
             {

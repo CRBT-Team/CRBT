@@ -1,37 +1,35 @@
 import { colors, icons } from '$lib/env';
-import dedent from 'dedent';
+import { getAllLanguages, t } from '$lib/language';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: '8ball',
-  description: 'Ask a question to 8-Ball.',
+  description: t('en-US', '8ball.description'),
+  nameLocalizations: getAllLanguages('8ball.name'),
+  descriptionLocalizations: getAllLanguages('8ball.description'),
   options: new OptionBuilder().string('question', 'A question to ask.', {
+    nameLocalizations: getAllLanguages('8ball.options.question.name'),
+    descriptionLocalizations: getAllLanguages('8ball.options.question.description'),
     required: true,
     maxLength: 1024,
   }),
   async handle({ question }) {
-    const answers = dedent`🟢 It is certain.
-      🟢 It is decidedly so.
-      🟢 Without a doubt.
-      🟢 Yes definitely.
-      🟢 You may rely on it.
-      🟢 As I see it, yes.
-      🟢 Most likely.
-      🟢 Outlook good.
-      🟢 Yes.
-      🟢 Signs point to yes.
-      🟠 Reply hazy, try again.
-      🟠 Ask again later.
-      🟠 Better not tell you now.
-      🟠 Cannot predict now.
-      🟠 Concentrate and ask again.
-      🔴 Don't count on it.
-      🔴 My reply is no.
-      🔴 My sources say no.
-      🔴 Outlook not so good.
-      🔴 Very doubtful.`.split('\n');
+    const answers = [
+      ...t(this, '8BALL_ANSWERS_POSITIVE').map((answer) => ({
+        answer: answer,
+        type: '🟢',
+      })),
+      ...t(this, '8BALL_ANSWERS_NEUTRAL').map((answer) => ({
+        answer: answer,
+        type: '🟠',
+      })),
+      ...t(this, '8BALL_ANSWERS_NEGATIVE').map((answer) => ({
+        answer: answer,
+        type: '🔴',
+      })),
+    ];
 
-    const answer = answers[Math.floor(Math.random() * answers.length)].split(' ');
+    const answer = answers[Math.floor(Math.random() * answers.length)];
 
     const answerType = {
       '🟢': colors.green,
@@ -46,20 +44,20 @@ export default ChatCommand({
         embeds: [
           {
             author: {
-              name: '8-Ball',
+              name: t(this, '8BALL'),
               icon_url: icons.eightball,
             },
             fields: [
               {
-                name: 'Question',
+                name: t(this, '8ball.options.question.name'),
                 value: question,
               },
               {
-                name: 'Answer',
-                value: answer.slice(1).join(' '),
+                name: t(this, 'ANSWER'),
+                value: `${answer.type} ${answer.answer}`,
               },
             ],
-            color: answerType[answer[0]],
+            color: answerType[answer.type],
           },
         ],
       });
