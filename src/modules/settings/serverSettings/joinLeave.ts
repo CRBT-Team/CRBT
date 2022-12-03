@@ -63,11 +63,9 @@ export const joinLeaveSettings: SettingsMenus = {
       ],
     };
   },
-  getSelectMenu: ({ settings, feature, i }) => {
+  getSelectMenu: ({ settings, feature, i, isEnabled }) => {
     const channelId = settings[CamelCaseFeatures[feature]] as string;
-    const isEnabled = settings.modules[CamelCaseFeatures[feature]] as boolean;
     const channel = i.guild.channels.cache.find((c) => c.id === channelId);
-    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
 
     return {
       emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
