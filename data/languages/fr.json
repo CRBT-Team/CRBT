@@ -1,5 +1,5 @@
 {
-  "ID": "Identifiant",
+  "ID": "ID",
   "CREATED_ON": "Créé le",
   "MEMBER_COUNT": "Nombre de membres",
   "SERVER_COUNT": "Nombre de membres",
@@ -12,7 +12,7 @@
   "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
   "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
   "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
-  "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
+  "ERROR_INVALID_COLOR": "La couleur que vous avez fournie n'est pas valide. Utilisez une couleur HEX valide ou l'un des préréglages.",
   "BACK": "Retour",
   "JUMP_TO_MSG": "Aller au message",
   "CANCEL": "Annuler",
@@ -31,22 +31,22 @@
   "IMPORT": "Importer",
   "YES": "Oui",
   "NO": "Non",
-  "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
-  "TEXT_CHANNEL": "Text Channel",
-  "VOICE_CHANNEL": "Voice Channel",
-  "STAGE_CHANNEL": "Stage Channel",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "WEBSOCKET": "Websocket",
+  "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur qui utilisait cette commande peut utiliser ce composant.",
+  "TEXT_CHANNEL": "Salon textuel",
+  "VOICE_CHANNEL": "Salon vocal",
+  "STAGE_CHANNEL": "Salon de conférence",
+  "ANNOUNCEMENT_CHANNEL": "Salon d'annonce",
+  "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
-  "SERVERS": "Servers",
-  "NONE": "None",
-  "ADDED": "Added",
+  "MEMBERS": "Membres",
+  "SERVERS": "Serveurs",
+  "NONE": "Aucun(e)",
+  "ADDED": "Ajouté(e)",
   "UnknownError": {
     "strings": {
       "TITLE": "Une erreur inconnue est survenue.",
-      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "Ceci nous a été automatiquement signalé. Voici ce que l'erreur dit :\n{MESSAGE}"
     }
   },
   "CooldownError": {
@@ -97,7 +97,7 @@
     "strings": {
       "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
       "EMBED_SYNC_INFO": "Votre couleur d'accentuation CRBT sera synchronisée avec votre couleur de profil Discord.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
+      "EMBED_DESCRIPTION": "Cette couleur sera utilisée pour la plupart des réponses de CRBT, ainsi que sur les commandes affichant des infos vous concernant."
     }
   },
   "remind me": {
@@ -106,11 +106,11 @@
       "options": [
         {
           "name": "quand",
-          "description": "When to remind you."
+          "description": "Quand vous rappeler."
         },
         {
           "name": "sujet",
-          "description": "What to be reminded about."
+          "description": "Ce dont vous voulez être rappelé."
         },
         {
           "name": "destination",
@@ -150,7 +150,7 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT."
+      "description": "Obtenir des informations sur CRBT."
     }
   },
   "poll": {
@@ -230,7 +230,7 @@
   "crbt_introduction": {
     "strings": {
       "EMBED_TITLE": "Merci d'avoir invité {CRBT} sur votre serveur !",
-      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
+      "EMBED_DESCRIPTION": "{CRBT} est maintenant dans {SERVERS} serveurs !\nPour commencer avec CRBT, tapez simplement `/` et cliquez sur son avatar !\nPour plus d'aide et d'informations, visitez le **[serveur de support]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -259,7 +259,7 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
+        "description": "Créer un nouveau Sélecteur de rôles, un menu où vos membres peuvent se donner des rôles.",
         "options": [
           {
             "name": "behavior",
@@ -295,28 +295,28 @@
       "BUTTON_ROLES_REMOVE": "{ROLE} a été retiré de vos rôles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Sélectionnez-le à nouveau pour l'ajouter.",
       "SUCCESS_TITLE": "Sélecteur de rôles créé !",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "SUCCESS_DESCRIPTION": "Pour le désactiver, il suffit de supprimer le message du Sélecteur de rôle."
     }
   },
   "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
-  "BOT_INFO": "Bot Info",
-  "SERVER_AVATAR": "Server Avatar",
-  "USER_AVATAR": "User Avatar",
-  "USER_BANNER": "User Banner",
-  "SERVER_INFO": "Server info",
-  "ICON": "Icon",
-  "BANNER": "Banner",
-  "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS": "Emojis & Stickers",
-  "EXTRA": "More",
-  "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
-  "CLEAR": "Clear",
+  "USER_INFO": "Infos utilisateur",
+  "BOT_INFO": "Infos du bot",
+  "SERVER_AVATAR": "Avatar de serveur",
+  "USER_AVATAR": "Avatar utilisateur",
+  "USER_BANNER": "Bannière utilisateur",
+  "SERVER_INFO": "Infos sur le serveur",
+  "ICON": "Icône",
+  "BANNER": "Bannière",
+  "ROLES_AND_MEMBERS": "Rôles & Membres",
+  "EMOJIS": "Émojis & Stickers",
+  "EXTRA": "Plus",
+  "WARN": "Avertissement",
+  "KICK": "Expulsion",
+  "BAN": "Bannissement",
+  "UNBAN": "Débannissement",
+  "TIMEOUT": "Exclusion",
+  "TEMPBAN": "Bannissement temporaire",
+  "CLEAR": "Nettoyage",
   "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Modéré par {MODERATOR}",
   "JOIN_MESSAGE": "Message de bienvenue",
@@ -328,11 +328,11 @@
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Aperçu du {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Aperçu",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le {TYPE} lorsqu'il sera envoyé dans {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Une erreur s'est produite en essayant de prévisualiser le {TYPE}. Le salon n'existe peut-être plus, ou je n'ai pas la permission d'y envoyer des messages.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
   "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message. Utilisez {COMMAND} pour en définir un.",
-  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
+  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "Vous devez d'abord définir un salon pour envoyer le {TYPE} . Utilisez {command} pour en définir un.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a quitté le serveur.",
   "FIELD_SELECT_MENU": "Choisissez un champ à éditer",
   "COLOR_PRESET_SELECT_MENU": "Choisissez une couleur préréglée",
@@ -353,13 +353,13 @@
   "SETTINGS": "Réglages",
   "BIRTHDAY_REMINDER_MESSAGE": "Souhaitez un joyeux anniversaire à {USER} !",
   "BIRTHDAY_LIST_CONTENT": "Anniversaire de {USER}",
-  "USER_INFO_TITLE": "{USER} - User info",
-  "JOINED_DISCORD": "Joined Discord",
-  "JOINED_SERVER": "Joined Server",
-  "USER_NO_ROLES": "*This user doesn't any have roles...*",
-  "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
-  "MAJOR_PERMS": "Major permissions in this server",
+  "USER_INFO_TITLE": "{USER} - Infos utilisateur",
+  "JOINED_DISCORD": "A rejoint Discord",
+  "JOINED_SERVER": "A rejoint le serveur",
+  "USER_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
+  "SERVER_NICKNAME": "Pseudo du serveur",
+  "ROLES": "Rôle(s)",
+  "MAJOR_PERMS": "Permissions principales sur ce serveur",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Bienvenue sur CRBT !",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Ajouter CRBT à un serveur (merci !)",
   "ACHIEVEMENT_BUG_HUNTER_TITLE": "Chasseur de bugs",
@@ -391,7 +391,7 @@
     "description": "Donne un guide d'utilisation rapide de CRBT."
   },
   "HELP_TITLE": "{botName} - Guide",
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_DESCRIPTION": "Tapez {prefix} dans la saisie des messages et cliquez sur {botIcon} pour obtenir la liste des commandes.\nVous pouvez aussi faire un clic droit ou appuyer de manière prolongée sur un message ou un utilisateur pour des actions rapides.\n\nCRBT intégre des fonctionnalités pratiques et puissantes, tels que la création de rappels ({reminder}), faire l'annonce de nouveaux membres et ceux partant ({settings}), obtenir des informations sur Discord et sur le web ({infoCommands}), etc. ...\n\n...et plus à venir ! Restez à jour sur CRBT en rejoignant [notre serveur]({link}).",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
   "HELP_AD_DESCRIPTION": "Soutenez-nous en l'ajoutant à votre serveur !",
   "giveaway": {
@@ -492,7 +492,7 @@
   "REMINDER_DESTINATION": "Destination :",
   "IN_YOUR_DMS": "Dans vos MP",
   "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Sélectionnez un rappel à modifier ou à supprimer.",
-  "REMINDER": "Reminder",
+  "REMINDER": "Rappel",
   "REMINDER_EDIT_MODAL_TITLE": "Modifier le rappel",
   "SUBJECT": "Sujet",
   "WHEN_TO_SEND": "Quand l'envoyer",
@@ -520,48 +520,48 @@
   "SILENT_LEAVES": "Quitter en mode silencieux",
   "SILENT_JOINS": "Rejoindre en mode silencieux",
   "TELEMETRY": "Télémétrie de commandes",
-  "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "CRBT keeps track of Achievements by logging some command usage data. Turning this off will freeze your achievements.",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this on will stop CRBT from announcing when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this on will stop CRBT from announcing when you leave a server.",
-  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will only stop those from being sent.",
+  "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "Le CRBT garde une trace des succès en enregistrant des données d'utilisation des commandes. Désactiver ceci bloquera d'avancée de vos succès.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Activer cette option empêchera CRBT d'annoncer quand vous rejoindrez un serveur.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Activer cette option empêchera CRBT d'annoncer quand vous quitterez un serveur.",
+  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT envoie d'utilisation des commandes comme décrit dans notre politique de confidentialité. Désactiver cette option ne fera qu'arrêter des futurs envois.",
   "YOUR_CRBT_DATA": "Vos données CRBT",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collecte des données d'utilisation, dont celles que vous enregistrez ou celles que nous surveillons pour fournir des fonctionnalités. Vous pouvez télécharger ou supprimer toutes vos données. Attention, la suppression effacera tout ce que vous avez défini sur CRBT (ce qui inclut les rappels, les succès et bien plus encore !!).",
+  "PRIVACY_SETTINGS_TITLE": "CRBT - Paramètres de confidentialité",
   "settings": {
     "name": "réglages",
-    "description": "Configure CRBT settings on this server."
+    "description": "Configurez les paramètres de CRBT sur ce serveur."
   },
-  "ATTENTION_REQUIRED": "Attention Required",
-  "OVERVIEW": "Overview",
-  "SETTINGS_TITLE": "CRBT Server Settings",
-  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choose a setting.",
-  "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
-  "ENABLE": "Enable",
-  "DISABLE": "Disable",
-  "ACCENT_COLOR": "Accent Color",
-  "MODERATION_LOGS": "Moderation logs",
-  "ECONOMY": "Economy",
-  "STATUS": "Status",
-  "SETTINGS_ERRORS_FOUND": "{number} errors found",
-  "ENABLED": "Enabled",
-  "DISABLED": "Disabled",
-  "SETTINGS_SENDING_IN": "Sending in {channel}",
-  "EDIT_MESSAGE": "Edit Message",
-  "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
-  "CHANNEL": "Channel",
-  "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages including Polls, Giveaways, Role Pickers, the Server Info sheet among other features.\nIt's currently set to **{color}**.",
-  "ACHIEVEMENT_UNLOCKED_TITLE": "Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Secret Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Check your achievements with {command}.",
+  "ATTENTION_REQUIRED": "Attention requise",
+  "OVERVIEW": "Vue d'ensemble",
+  "SETTINGS_TITLE": "Paramètres du serveur",
+  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choisissez un paramètre.",
+  "SETTINGS_DESCRIPTION": "Utilisez le menu déroulant ci-dessous pour mettre à jour les paramètres de ce serveur.",
+  "ENABLE": "Activer",
+  "DISABLE": "Désactiver",
+  "ACCENT_COLOR": "Couleur d’accentuation",
+  "MODERATION_LOGS": "Logs de modération",
+  "ECONOMY": "Économie",
+  "STATUS": "État",
+  "SETTINGS_ERRORS_FOUND": "{number} erreurs détectées",
+  "ENABLED": "Activé",
+  "DISABLED": "Désactivé",
+  "SETTINGS_SENDING_IN": "Envois dans {channel}",
+  "EDIT_MESSAGE": "Modifier le message",
+  "EDIT_CHANNEL": "Modifier le salon",
+  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "Vous pouvez utiliser le nom exact d'un salon textuel ou son identifiant.",
+  "CHANNEL": "Salon",
+  "EDIT_SOMETHING": "Modifier {feature}",
+  "SETTINGS_COLOR_SET_TO": "Couleur réglée sur {color}",
+  "SETTINGS_COLOR_DESCRIPTION": "La couleur d'accentuation du serveur est affichée sur les messages, y compris les Sondages, les Concours, les Sélecteurs de rôles, les infos du serveur, parmi d'autres.\nElle est actuellement réglé sur **{color}**.",
+  "ACHIEVEMENT_UNLOCKED_TITLE": "Succès débloqué !",
+  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Succès secret débloqué !",
+  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Vérifiez vos succès avec {command}.",
   "search": {
-    "name": "search",
-    "description": "Search for anything in one of the provided search engines.",
+    "name": "rechercher",
+    "description": "Recherchez quelque chose dans l'un des moteurs de recherche.",
     "options": {
       "query": {
-        "name": "query",
+        "name": "requête",
         "description": "What to search for."
       },
       "site": {
@@ -583,8 +583,8 @@
     "urban": "Urban Dictionary",
     "anime": "Anime & Manga"
   },
-  "POWERED_BY": "Powered by {provider}",
-  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
+  "POWERED_BY": "Propulsé par {provider}",
+  "PAGINATION_MULTIPLE_RESULTS": "Affichage de {resultsPerPage} résultats sur {results}.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
-  "SEARCH_TITLE": "{engine} results for \"{query}\""
+  "SEARCH_TITLE": "Résultats {engine} pour \"{query}\""
 }
