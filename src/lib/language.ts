@@ -66,16 +66,83 @@ export const languages = {
 
 type StringsStructure = typeof en_US;
 
-export function t<K extends keyof StringsStructure>(
+function accessObjectValue<T extends any>(keysDotAccess: string, obj: T) {
+  return keysDotAccess.split('.').reduce((o, i) => o?.[i], obj) as T | string;
+}
+
+// props to https://stackoverflow.com/a/47058976 for this wonderful type thing
+type PathsToStringProps<T> = T extends string
+  ? []
+  : {
+      [K in Extract<keyof T, string>]: [K, ...PathsToStringProps<T[K]>];
+    }[Extract<keyof T, string>];
+
+type Join<T extends string[], D extends string> = T extends []
+  ? never
+  : T extends [infer F]
+  ? F
+  : T extends [infer F, ...infer R]
+  ? F extends string
+    ? `${F}${D}${Join<Extract<R, string[]>, D>}`
+    : never
+  : string;
+
+type TopLevelKeys = keyof StringsStructure;
+type DottedLanguageObjectStringPaths = Join<PathsToStringProps<StringsStructure>, '.'>;
+
+type StringArgument = TopLevelKeys | DottedLanguageObjectStringPaths;
+
+export function t<K extends StringArgument>(
   i: Interaction | string,
-  topLevel: K
-): StringsStructure[K] {
-  const dataDefault = languages['en-US'];
-  const data = languages[typeof i === 'string' ? i : i.locale];
-  if (!data) {
-    return dataDefault[topLevel];
+  stringKey: K,
+  interpolations?: K extends DottedLanguageObjectStringPaths
+    ? Record<string, { toString: () => string }>
+    : never
+): K extends TopLevelKeys ? StringsStructure[K] : string {
+  const locale = typeof i === 'string' ? i : i.locale;
+  const defaultData = accessObjectValue(stringKey, languages['en-US']);
+  const localizedData = accessObjectValue(stringKey, languages[locale]);
+
+  if (!locale || !languages[locale]) {
+    return defaultData as any;
   }
-  return typeof dataDefault[topLevel] === 'string'
-    ? data[topLevel] || dataDefault[topLevel]
-    : deepMerge<StringsStructure[K]>(dataDefault[topLevel], data[topLevel]);
+
+  const string: string | StringsStructure =
+    typeof defaultData === 'string'
+      ? localizedData || defaultData
+      : deepMerge(defaultData, localizedData);
+
+  if (interpolations && typeof string === 'string') {
+    return Object.keys(interpolations).reduce(
+      (interpolated, key) =>
+        interpolated.replace(new RegExp(`{${key}}`, 'g'), `${interpolations[key]}`),
+      string
+    ) as any;
+  } else {
+    return string as any;
+  }
+}
+
+export function getAllLanguages<K extends StringArgument>(
+  stringKey: K,
+  changeString?: K extends DottedLanguageObjectStringPaths
+    ? (str: string, lang: string) => string
+    : never
+): {
+  [k: string]: K extends TopLevelKeys ? StringsStructure[K] : string;
+} {
+  return Object.keys(languages).reduce((acc, lang) => {
+    const translation = t(lang, stringKey);
+    if (changeString && typeof translation === 'string') {
+      return {
+        ...acc,
+        [lang]: changeString(translation, lang),
+      };
+    } else {
+      return {
+        ...acc,
+        [lang]: translation,
+      };
+    }
+  }, {});
 }

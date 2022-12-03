@@ -85,26 +85,26 @@ export default ChatCommand({
             .setTitle(title)
             .setDescription(
               strings.POLL_DESCRIPTION.replace(
-                '<TIME>',
+                '{TIME}',
                 `<t:${dayjs().add(ms(end_date)).unix()}:R>`
-              ).replace('<ICON>', emojis.menu)
+              ).replace('{ICON}', emojis.menu)
             )
             .addFields(
               pollChoices.map((choice) => ({
                 name: choice,
                 value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
                   emojis.progress.emptyend
-                }\n${strings.POLL_OPTION_RESULT.replace('<PERCENTAGE>', '0').replace(
-                  '<VOTES>',
+                }\n${strings.POLL_OPTION_RESULT.replace('{PERCENTAGE}', '0').replace(
+                  '{VOTES}',
                   '0'
                 )}`,
               }))
             )
             .setFooter({
               text: `${strings.POLL_FOOTER_VOTES.replace(
-                '<VOTES>',
+                '{VOTES}',
                 '0'
-              )} • ${strings.POLL_FOOTER_CREATOR.replace('<USER>', this.user.tag)}`,
+              )} • ${strings.POLL_FOOTER_CREATOR.replace('{USER}', this.user.tag)}`,
             })
             .setColor(await getColor(this.guild)),
         ],
@@ -118,9 +118,9 @@ export default ChatCommand({
                 return new PollButton({ choiceId: index.toString() })
                   .setLabel(choiceText)
                   .setStyle(
-                    choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
+                    choiceText.toLowerCase() === t(this, 'YES').toLocaleLowerCase(this.locale)
                       ? 'SUCCESS'
-                      : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
+                      : choiceText.toLowerCase() === t(this, 'NO').toLocaleLowerCase(this.locale)
                       ? 'DANGER'
                       : 'PRIMARY'
                   )
@@ -135,14 +135,13 @@ export default ChatCommand({
         ),
       });
 
-      const pollData = await dbTimeout({
+      const pollData = await dbTimeout(TimeoutTypes.Poll, {
         id: `${this.channel.id}/${msg.id}`,
         expiresAt: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         creatorId: this.user.id,
         serverId: this.guild.id,
         choices: pollChoices.map((_) => []),
-        type: TimeoutTypes.Poll,
       });
 
       activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
@@ -152,9 +151,9 @@ export default ChatCommand({
           {
             title: `${emojis.success} ${userStrings.SUCCESS_TITLE}`,
             description: userStrings.SUCCESS_DESCRIPTION.replace(
-              '<TIME>',
+              '{TIME}',
               timestampMention(Date.now() + ms(end_date), 'R')
-            ).replace('<ICON>', emojis.menu),
+            ).replace('{ICON}', emojis.menu),
             color: colors.success,
           },
         ],
@@ -401,13 +400,13 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
                     .map((winner) => winner.name)
                     .join(', ')
                 )
-                .replace('<VOTES>', ranking[0].votes.toString())
+                .replace('{VOTES}', ranking[0].votes.toString())
             : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
-                '<OPTION>',
+                '{OPTION}',
                 `${ranking[0].name}`
-              ).replace('<VOTES>', ranking[0].votes.toString())) +
+              ).replace('{VOTES}', ranking[0].votes.toString())) +
           ' ' +
-          strings.POLL_RESULTS_DESCRIPTION_REST.replace('<TOTAL>', totalVotes.toString()),
+          strings.POLL_RESULTS_DESCRIPTION_REST.replace('{TOTAL}', totalVotes.toString()),
         color: colors.success,
       },
     ],
@@ -482,12 +481,12 @@ const renderPoll = async (
     if (percentage === Infinity) percentage = 100;
 
     choice.value = `${progressBar(percentage)}\n${strings.POLL_OPTION_RESULT.replace(
-      '<PERCENTAGE>',
+      '{PERCENTAGE}',
       percentage.toString()
-    ).replace('<VOTES>', votes.toString())}`;
+    ).replace('{VOTES}', votes.toString())}`;
   });
   pollEmbed.footer.text = `${strings.POLL_FOOTER_VOTES.replace(
-    '<VOTES>',
+    '{VOTES}',
     totalVotes.toString()
   )} • ${pollEmbed.footer.text.split(' • ').slice(1).join(' • ')}`;
 

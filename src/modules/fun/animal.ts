@@ -1,18 +1,5 @@
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleImageSearch } from '../tools/search/images';
-
-// const animalsPath = path.resolve('data/misc/animals');
-// const animalsDir = fs.readdirSync(animalsPath);
-
-// const results: { [k: string]: Results[] } = animalsDir.reduce(
-//   (acc: { [k: string]: Results[] }, animal: string) => {
-//     const r = fs.readFileSync(`${animalsPath}/${animal}`, 'utf8');
-//     const results = JSON.parse(r);
-//     acc[animal.replace('.json', '')] = results;
-//     return acc;
-//   },
-//   {}
-// );
+import { handleImageSearch } from '../search/images';
 
 const animals: [string, string[]][] = [
   ['Dog', ['🐶']],

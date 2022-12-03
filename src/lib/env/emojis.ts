@@ -85,6 +85,7 @@ export default {
     bugHunter2: '<:goldbughunter:853274684337946648>',
     hypesquad: '<:hypesquad_events:585765895939424258>',
     server_owner: '<:server_owner:970653903676899398>',
+    activeDeveloper: '<:active_developer:1043712541018292304>',
   },
   colors: {
     black: '<:black:855497337333088266>',
@@ -115,7 +116,7 @@ export default {
     angry_pink: '<:angry_pink:753969564408086600>',
     sad3: '<:sad3:729374854104612934>',
     coolwoah: '<:coolwoah:717684437508161546>',
-    goodmeal: '<:good_meal:750034917743919256>',
+    goodmeal: '<:good_meal:768948885162295326>',
   },
   progress: {
     fill: '<:progressfill:971334221450862642>',

@@ -1,104 +1,78 @@
 import { Achievement } from '$lib/responses/Achievements';
+import emojis from './emojis';
 
-export const achievements: Achievement[] = [
-  {
-    id: 'WELCOME_TO_CRBT',
-    name: 'Welcome to CRBT!',
-    howToGet: 'Add CRBT to a server (thanks!).',
+export default {
+  WELCOME_TO_CRBT: {
     secret: false,
     steps: 1,
-    emoji: '1003337586598756563',
+    emoji: '👋',
   },
-  {
-    id: 'BUG_HUNTER',
-    name: 'Bug Hunter',
-    howToGet: 'Report a bug with `/report`.',
+  BUG_HUNTER: {
+    suggestedCommand: 'report',
     secret: false,
     steps: 1,
-    emoji: '1035896477823795240',
+    emoji: '🐛',
   },
-  {
-    id: 'ARTIST',
-    name: 'Self Relooking',
-    howToGet: 'Change your accent color using `/color set`.',
+  ARTIST: {
+    suggestedCommand: 'color set',
     secret: false,
     steps: 1,
-    emoji: '1035896475575652452',
+    emoji: '🖌️',
   },
-  {
-    id: 'REPAINTING_THE_COMMUNITY',
-    name: "Nice n' Cozy",
-    howToGet: "Change the server's accent color with `/settings`.",
+  REPAINTING_THE_COMMUNITY: {
+    suggestedCommand: 'settings',
     secret: false,
     steps: 1,
+    emoji: '🎨',
   },
-  {
-    id: 'DND_PRO',
-    name: 'DnD Professional',
-    howToGet: 'Roll a perfect d20 in `/roll`.',
+  DND_PRO: {
+    suggestedCommand: 'roll',
     secret: false,
     steps: 1,
-    emoji: '1035896471230365738',
+    emoji: '🎲',
   },
-  {
-    id: 'BUG_NINJA',
-    name: 'Bug Ninja',
-    howToGet: 'Get 5 of your bug reports solved.',
+  BUG_NINJA: {
     secret: false,
     steps: 1,
-    emoji: '1035896674058510386',
+    emoji: '🥷',
   },
-  {
-    id: 'SEEKER',
-    name: 'Seeker',
-    howToGet: 'Search 10 times with `/search`.',
+  SEEKER: {
+    suggestedCommand: 'search',
     secret: false,
     steps: 10,
+    emoji: '🔍',
   },
-  {
-    id: 'BOOKMARKER',
-    name: 'Message Afficionado',
-    howToGet: 'Bookmark 5 messages.',
+  BOOKMARKER: {
     secret: false,
     steps: 5,
+    emoji: '🔖',
   },
-  {
-    id: 'SAFETY_FIRST',
-    name: 'Safety First!',
-    howToGet: "Check CRBT's privacy settings with `/privacy`.",
+  SAFETY_FIRST: {
+    suggestedCommand: 'privacy',
     secret: false,
     steps: 1,
-    emoji: '1003351340073885737',
+    emoji: '🕵️',
   },
-  {
-    id: 'BREWING_APPS',
-    name: 'Brewing apps',
-    howToGet: 'Create and redeem your CRBT API token.',
+  BREWING_APPS: {
     secret: true,
     steps: 1,
+    emoji: '🧪',
   },
-  {
-    id: 'CRBT_ADDICT',
-    name: 'CRBT Addict',
-    howToGet: 'Use 100 commands.',
+  CRBT_ADDICT: {
+    secret: true,
+    steps: 100,
+    emoji: '`/`',
+  },
+  ERROR_MASTER: {
     secret: true,
     steps: 1,
-    emoji: '1003337596518268938',
+    emoji: emojis.error,
   },
-  {
-    id: 'ERROR_MASTER',
-    name: 'On the lookout for more errors!',
-    howToGet: 'Find the secret error command.',
-    secret: true,
-    steps: 1,
-    emoji: '1035896473453338695',
-  },
-  {
-    id: 'IMITATING_THE_CREATOR',
-    name: 'you impersonatin me?',
-    howToGet: 'Find the hidden CRBT accent color.',
+  IMITATING_THE_CREATOR: {
     secret: false,
     steps: 1,
-    emoji: '1003348080814477333',
+    emoji: '🎭',
   },
-];
+} as {
+  [k: string]: Achievement;
+};

@@ -12,13 +12,14 @@ const handle = {
   giveaway: handleGiveaway,
 };
 
-export async function dbTimeout<T extends Timeout>(
-  timeout: T,
-  loadOnly: boolean = false
-): Promise<T> {
+export async function dbTimeout<T extends TimeoutTypes>(
+  t: T,
+  timeout: Timeout[T],
+  loadOnly = false
+): Promise<Timeout[T]> {
   const client = getDiscordClient();
   const { id } = timeout;
-  const type = timeout.type.toString();
+  const type = t as string;
 
   setLongerTimeout(async () => {
     if (!timeout) return;
@@ -36,37 +37,7 @@ export async function dbTimeout<T extends Timeout>(
 
   if (loadOnly) return timeout;
 
-  let query: {};
-
-  switch (timeout.type) {
-    case TimeoutTypes.Giveaway:
-    case TimeoutTypes.Poll: {
-      query = {
-        ...(({ type, serverId, ...o }) => o)(timeout),
-        server: {
-          connectOrCreate: {
-            create: { id: timeout.serverId },
-            where: { id: timeout.serverId },
-          },
-        },
-      };
-      break;
-    }
-    case TimeoutTypes.Reminder: {
-      query = {
-        ...(({ type, userId, ...o }) => o)(timeout),
-        user: {
-          connectOrCreate: {
-            create: { id: timeout.userId },
-            where: { id: timeout.userId },
-          },
-        },
-      };
-      break;
-    }
-  }
-
-  return (await prisma[type].create({
-    data: query,
-  })) as T;
+  return await prisma[type].create({
+    data: timeout,
+  });
 }

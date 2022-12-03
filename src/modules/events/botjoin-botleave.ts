@@ -41,11 +41,11 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
     guild.systemChannel.send({
       embeds: [
         new MessageEmbed()
-          .setTitle(strings.EMBED_TITLE.replace('<CRBT>', guild.client.user.username))
+          .setTitle(strings.EMBED_TITLE.replace('{CRBT}', guild.client.user.username))
           .setDescription(
-            strings.EMBED_DESCRIPTION.replace('<CRBT>', guild.client.user.username)
-              .replace('<SERVERS>', guild.client.guilds.cache.size.toString())
-              .replace('<DISCORD>', links.discord)
+            strings.EMBED_DESCRIPTION.replace('{CRBT}', guild.client.user.username)
+              .replace('{SERVERS}', guild.client.guilds.cache.size.toString())
+              .replace('{DISCORD}', links.discord)
           )
           .setImage(icons.welcome)
           .setColor(await getColor(guild)),

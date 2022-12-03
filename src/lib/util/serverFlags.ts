@@ -1,16 +1,23 @@
-const ServerFlags = {
-  HAS_ECONOMY: 1 << 0,
-  HAS_LEVELING: 1 << 1,
-  HAS_SHOP: 1 << 2,
-  HAS_CHAT_MONEY: 1 << 3,
+const flags = {
+  ServerFlags: {
+    HasEconomy: 1 << 0,
+    HasLeveling: 1 << 1,
+    HasShop: 1 << 2,
+    HasChatMoney: 1 << 3,
+  },
+  UserFlags: {
+    Developer: 1 << 0,
+    VeteranEconomist: 1 << 1,
+  },
 };
 
-function resolveServerFlags(bitField: number) {
-  const flags = Object.entries(ServerFlags).reduce((acc, [key, value]) => {
-    if (bitField & value) {
+export function resolveFlags(bitField: number, namespace: keyof typeof flags) {
+  return Object.entries(flags[namespace]).reduce((acc, [key, value]) => {
+    if ((bitField & value) === value) {
       acc.push(key);
     }
     return acc;
   }, []);
-  return flags;
 }
+
+export const { ServerFlags, UserFlags } = flags;

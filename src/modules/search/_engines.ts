@@ -4,8 +4,8 @@ import {
   InteractionUpdateOptions,
   MessageComponentInteraction,
 } from 'discord.js';
+import { handleAnimeMangas } from './anime';
 import { handleDictionary } from './dictionary';
-import { handleDuckDuckGo } from './DuckDuckGo';
 import { handleImageSearch } from './images';
 // import { handleKitsu } from './Kitsu';
 // import { handleMusicSearch } from './music';
@@ -13,6 +13,7 @@ import { SearchCmdOpts } from './search';
 import { handleUrbanDictionary } from './urban';
 import { handleVideosSearch } from './videos';
 import { handleWeather } from './weather';
+import { handleDuckDuckGo } from './web';
 
 export interface SearchEngine {
   handle: (
@@ -21,7 +22,6 @@ export interface SearchEngine {
   ) => Promise<InteractionReplyOptions | InteractionUpdateOptions>;
   emoji: string;
   provider: string;
-  name: string;
   hide?: boolean;
   noPagination?: boolean;
 }
@@ -33,19 +33,16 @@ export const searchEngines: {
     handle: handleDuckDuckGo,
     emoji: '🔎',
     provider: 'DuckDuckGo',
-    name: 'Web',
   },
   images: {
     handle: handleImageSearch,
     emoji: '🖼️',
     provider: 'Google Images',
-    name: 'Images',
   },
   videos: {
     handle: handleVideosSearch,
     emoji: '🎥',
     provider: 'YouTube',
-    name: 'Videos',
   },
   // music: {
   //   handle: handleMusicSearch,
@@ -58,7 +55,6 @@ export const searchEngines: {
     handle: handleWeather,
     emoji: '☀️',
     provider: 'Open-Meteo.com & OpenStreetMap',
-    name: 'Weather',
     hide: true,
     noPagination: true,
   },
@@ -66,7 +62,6 @@ export const searchEngines: {
     handle: handleDictionary,
     emoji: '📖',
     provider: 'Google Dictionary',
-    name: 'Dictionary',
     hide: true,
     noPagination: true,
   },
@@ -74,20 +69,18 @@ export const searchEngines: {
     handle: handleUrbanDictionary,
     emoji: '🧱',
     provider: 'Urban Dictionary',
-    name: 'Urban Dictionary',
     hide: true,
   },
   // rawg: {
   //   handle: handleRAWG,
   //   name: '🎮 RAWG',
   // },
-  // anime: {
-  //   handle: handleKitsu,
-  //   emoji: '🌸',
-  //   provider: 'Kitsu',
-  //   name: 'Anime & Mangas',
-  //   hide: true,
-  // },
+  anime: {
+    handle: handleAnimeMangas,
+    emoji: '🌸',
+    provider: 'AniList',
+    hide: true,
+  },
   // npm: {
   //   handle: handleNpm,
   //   name: '📦 npm',

@@ -1,13 +1,23 @@
+import { upperCaseFirst } from 'change-case-all';
 import { AutocompleteInteraction } from 'discord.js';
-import languages from '../../../data/misc/languages.json';
+import languages from '../../../data/misc/langs.json';
 
-export async function languagesAutocomplete(this: AutocompleteInteraction, text: string) {
-  const filterLangs = Object.entries(languages).filter(
-    ([code, name]) =>
-      name.toLowerCase().startsWith(text.toLowerCase()) || code.toLowerCase() === text.toLowerCase()
-  );
-  return filterLangs.map(([code, name]) => ({
-    name: `${name}`,
-    value: `${code}`,
+export function languagesAutocomplete(this: AutocompleteInteraction, text: string) {
+  const intl = new Intl.DisplayNames(this.locale, {
+    type: 'language',
+    fallback: 'code',
+    style: 'long',
+    languageDisplay: 'standard',
+  });
+
+  const languageNames = languages.all.map((code) => ({
+    name: upperCaseFirst(intl.of(code)),
+    value: code,
   }));
+
+  return languageNames.filter(
+    ({ name, value }) =>
+      name.toLowerCase().startsWith(text.toLowerCase()) ||
+      value.toLowerCase() === text.toLowerCase()
+  );
 }

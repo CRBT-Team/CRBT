@@ -53,7 +53,3 @@ interface server {
   created: Date;
   roles: role[];
 }
-
-let u: user;
-
-`${u}`;

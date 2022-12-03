@@ -1,6 +1,7 @@
 import { UnknownError } from '$lib/functions/CRBTError';
 import { ms } from '$lib/functions/ms';
-import { time } from '$lib/functions/time';
+import { t } from '$lib/language';
+import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import {
   CommandInteraction,
@@ -11,6 +12,7 @@ import {
 import { escapeMarkdown } from 'purplet';
 import ytsr, { Video } from 'ytsr';
 import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleVideosSearch(
@@ -40,7 +42,10 @@ export async function handleVideosSearch(
         embeds: [
           {
             author: {
-              name: `Video results for "${query}"`,
+              name: t(this, 'SEARCH_TITLE', {
+                engine: t(this, `SEARCH_ENGINES.${opts.site}` as any),
+                query,
+              }),
             },
             title: escapeMarkdown(video.title),
             url: video.url,
@@ -59,7 +64,10 @@ export async function handleVideosSearch(
                 name: 'Uploaded',
                 value: `${
                   video.uploadedAt
-                    ? time(dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))), true)
+                    ? timestampMention(
+                        dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))),
+                        'R'
+                      )
                     : 'At an unknown date'
                 } by **[${video.author.name}](${video.author.url})**`,
               },
@@ -75,7 +83,12 @@ export async function handleVideosSearch(
               },
             ],
             footer: {
-              text: `Powered by YouTube • Page ${opts.page} out of ${pages} Results`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: searchEngines[opts.site].provider,
+              })} • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+                page: opts.page.toLocaleString(this.locale),
+                pages: pages.toLocaleString(this.locale),
+              })}`,
               icon_url: `https://www.gstatic.com/youtube/img/branding/favicon/favicon_48x48.png`,
             },
           },

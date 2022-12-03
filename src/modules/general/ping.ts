@@ -1,46 +1,45 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
+import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import { ChatCommand } from 'purplet';
 
-const { meta } = t('en-US', 'ping');
-
 export default ChatCommand({
   name: 'ping',
-  description: meta.description,
+  description: t('en-US', 'ping.meta.description'),
+  nameLocalizations: getAllLanguages('PING', (str, lang) => str.toLocaleLowerCase(lang)),
+  descriptionLocalizations: getAllLanguages('ping.meta.description'),
   async handle() {
     await this.deferReply();
 
-    const { strings } = t(this, 'ping');
-
     setTimeout(async () => {
-      const uptime = dayjs().subtract(this.client.uptime).unix();
+      const uptime = dayjs().subtract(this.client.uptime);
       await this.editReply({
         embeds: [
           {
             author: {
-              name: strings.EMBED_TITLE.replace('<CRBT>', this.client.user.username),
+              name: `${this.client.user.username} - ${t(this, 'PING')}`,
               iconURL: avatar(this.client.user, 64),
             },
             fields: [
               {
-                name: strings.WEBSOCKET,
+                name: t(this, 'WEBSOCKET'),
                 value: `${this.client.ws.ping}ms`,
                 inline: true,
               },
               {
-                name: strings.INTERACTION,
+                name: t(this, 'INTERACTION'),
                 value: `${Date.now() - this.createdTimestamp}ms`,
                 inline: true,
               },
               {
-                name: strings.UPTIME,
-                value: `<t:${uptime}> (<t:${uptime}:R>)`,
+                name: t(this, 'UPTIME'),
+                value: `${timestampMention(uptime)} • ${timestampMention(uptime, 'R')}`,
               },
             ],
-            color: await getColor(this.user)
-          }
+            color: await getColor(this.user),
+          },
         ],
       });
     }, 300);

@@ -1,23 +1,22 @@
-import { colors, links } from '$lib/env';
+import { colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
-import { t } from '$lib/language';
+import { slashCmd } from '$lib/functions/commandMention';
+import { getAllLanguages, t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 import pjson from '../../../package.json';
 
-const { meta } = t('en-US', 'crbt info');
-
 export default ChatCommand({
   name: 'crbt info',
-  description: meta.description,
+  description: t('en-US', 'crbt info.meta.description'),
+  descriptionLocalizations: getAllLanguages('crbt info.meta.description'),
   async handle() {
     await this.deferReply();
 
-    const { strings } = t(this, 'crbt info');
-
     const { user } = this.client;
-    const uptime = this.client.uptime;
+    const ping = Date.now() - this.createdTimestamp;
+    const onlineSince = new Date(Date.now() - this.client.uptime);
     const created = user.createdAt;
 
     await this.editReply({
@@ -25,39 +24,36 @@ export default ChatCommand({
         {
           author: {
             name: `${user.username} - Bot info`,
-            iconURL: avatar(this.client.user),
+            iconURL: avatar(user),
             url: links.baseURL,
           },
-          description: `Running v${pjson.version} • **[Purplet ${pjson.dependencies[
-            'purplet'
-          ].slice(1)}](${links.purplet})**`,
+          description: `v${pjson.version} • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${
+            links.purplet
+          })**`,
           fields: [
             {
-              name: strings.MEMBER_COUNT,
+              name: t(this, 'MEMBERS'),
               value: this.client.users.cache.size.toLocaleString(this.locale),
               inline: true,
             },
             {
-              name: strings.SERVER_COUNT,
+              name: t(this, 'SERVERS'),
               value: this.client.guilds.cache.size.toLocaleString(this.locale),
               inline: true,
             },
             {
-              name: strings.PING,
-              value: `${strings.PING_RESULT.replace(
-                '<PING>',
-                `${Date.now() - this.createdTimestamp}`
-              )} (\`/ping\`)`,
+              name: t(this, 'PING'),
+              value: `≈${ping.toLocaleString(this.locale)}ms (${slashCmd('ping')})`,
               inline: true,
             },
             {
-              name: strings.CREATED,
+              name: t(this, 'UPTIME'),
+              value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
+              inline: true,
+            },
+            {
+              name: t(this, 'CREATED_ON'),
               value: `${timestampMention(created)} • ${timestampMention(created, 'R')}`,
-              inline: true,
-            },
-            {
-              name: strings.UPTIME,
-              value: `${timestampMention(uptime)} • ${timestampMention(uptime, 'R')}`,
               inline: true,
             },
           ],
@@ -71,17 +67,14 @@ export default ChatCommand({
         row(
           new MessageButton()
             .setStyle('LINK')
-            .setEmoji('❤️')
-            .setLabel(strings.BUTTON_DONATE)
-            .setURL(links.donate),
+            .setLabel(t(this, 'ADD_TO_SERVER'))
+            .setURL(links.invite)
+            .setEmoji(emojis.buttons.add),
+          new MessageButton().setStyle('LINK').setLabel(t(this, 'WEBSITE')).setURL(links.baseURL),
+          new MessageButton().setStyle('LINK').setLabel(t(this, 'DONATE')).setURL(links.donate),
           new MessageButton()
             .setStyle('LINK')
-            .setLabel(strings.BUTTON_WEBSITE)
-            .setURL('https://crbt.app'),
-          new MessageButton().setStyle('LINK').setLabel(strings.BUTTON_INVITE).setURL(links.invite),
-          new MessageButton()
-            .setStyle('LINK')
-            .setLabel(strings.BUTTON_DISCORD)
+            .setLabel(t(this, 'DISCORD_SERVER'))
             .setURL(links.discord)
         )
       ),

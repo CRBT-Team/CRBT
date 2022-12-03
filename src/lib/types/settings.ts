@@ -1,4 +1,11 @@
-import { serverModules, servers } from '@prisma/client';
+import {
+  Economy,
+  EconomyCommands,
+  EconomyItem,
+  EconomyItemCategory,
+  serverModules,
+  servers,
+} from '@prisma/client';
 import { APIEmbed } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
 
@@ -7,6 +14,7 @@ export enum EditableFeatures {
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
+  economy = 'ECONOMY',
 }
 
 export enum CamelCaseFeatures {
@@ -14,6 +22,7 @@ export enum CamelCaseFeatures {
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
+  ECONOMY = 'economy',
 }
 
 export interface FeatureSettingsProps {
@@ -21,12 +30,26 @@ export interface FeatureSettingsProps {
   settings: FullSettings;
   feature: EditableFeatures;
   i?: Interaction;
+  errors?: string[];
+  isEnabled: boolean;
 }
 
-export type FullSettings = servers & { modules: serverModules };
+export type FullSettings = Partial<
+  servers & {
+    modules?: serverModules;
+    economy?: Partial<
+      Economy & {
+        commands: EconomyCommands;
+        items: EconomyItem[];
+        categories: EconomyItemCategory[];
+      }
+    >;
+  }
+>;
 
 export interface SettingsMenus {
-  getSelectMenu(props: FeatureSettingsProps): MessageSelectOptionData;
+  getErrors?(props: Omit<FeatureSettingsProps, 'errors'>): string[];
+  getSelectMenu(props: FeatureSettingsProps): Partial<MessageSelectOptionData>;
   getMenuDescription(props: FeatureSettingsProps): Partial<APIEmbed>;
   getComponents(
     props: FeatureSettingsProps & { backBtn: MessageButton; toggleBtn: MessageButton }

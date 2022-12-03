@@ -1,5 +1,5 @@
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
+import { getAllLanguages, t } from '$lib/language';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -8,20 +8,25 @@ export default ChatCommand({
   options: new OptionBuilder()
     .number('max', 'The maximum number to pick. Defaults to 100.')
     .number('min', 'The minimum number to pick. Defaults to 1.')
-    .string('comment', 'The comment to display when picking.'),
+    .string('comment', t('en-US', 'COMMENT_DESCRIPTION'), {
+      nameLocalizations: getAllLanguages('COMMENT'),
+      descriptionLocalizations: getAllLanguages('COMMENT_DESCRIPTION'),
+    }),
   async handle({ min, max, comment }) {
-    const minNum = min ?? 1;
-    const maxNum = max ?? 100;
+    min ??= 1;
+    max ??= 100;
 
-    const num = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
-
-    const e = new MessageEmbed()
-      .setTitle(`From ${minNum} to ${maxNum}: __${num}__`)
-      .setColor(await getColor(this.user));
-    if (comment) e.setAuthor({ name: `Comment: "${comment}"` });
+    const num = Math.floor(Math.random() * (max - min + 1)) + min;
 
     await this.reply({
-      embeds: [e],
+      embeds: [
+        {
+          ...(comment ? { author: { name: `"${comment}"` } } : {}),
+          title: `${num}`,
+          footer: { text: `Random number between ${min} to ${max}` },
+          color: await getColor(this.user),
+        },
+      ],
     });
   },
 });

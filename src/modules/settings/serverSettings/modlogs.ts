@@ -2,53 +2,64 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
-import { getSettings, renderFeatureSettings, strings } from './settings';
+import { renderFeatureSettings } from './settings';
+import { getSettings, include } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
-  getMenuDescription: ({ settings, guild }) => {
-    const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
-    const isEnabled = settings.modules.moderationLogs;
+  getErrors({ guild, settings, isEnabled }) {
+    const channelId = settings.modLogsChannel;
+    const channel = guild.channels.cache.find((c) => c.id === channelId);
 
+    const errors: string[] = [];
+
+    if (isEnabled && channelId && !channel) {
+      errors.push('Channel not found. Edit it for CRBT to send new moderation logs.');
+    }
+    if (isEnabled && !channelId) {
+      errors.push(
+        'No channel was set. Set it using the {button_label} button below to continue setup.'
+      );
+    }
+
+    return errors;
+  },
+  getMenuDescription({ settings, isEnabled, i }) {
     return {
       description:
-        `Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!\nThis feature is currently ${
-          isEnabled ? 'enabled' : 'disabled'
-        } in this server.` +
-        (!isEnabled
-          ? ''
-          : '\n' +
-            (channel
-              ? `Moderation logs are currently sent in ${channel}.`
-              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please edit it in order to receive them.**')) +
-        `\nUse the buttons below to configure the feature or to ${
-          isEnabled ? 'enable' : 'disable'
-        } it.`,
+        'Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!',
+      fields: [
+        {
+          name: t(i, 'STATUS'),
+          value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
+        },
+        {
+          name: 'Channel',
+          value: `#${settings.modLogsChannel}`,
+          inline: true,
+        },
+      ],
     };
   },
-  getSelectMenu: ({ settings, feature, guild }) => {
-    const isEnabled = settings.modules.moderationLogs;
+  getSelectMenu({ settings, guild }) {
     const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
 
     return {
-      label: strings.MODERATION_LOGS,
-      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
-      description: isEnabled
-        ? `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`
-        : 'Disabled',
-      value: feature,
+      emoji: emojis.toggle[settings.modules.moderationLogs ? 'on' : 'off'],
+      description: settings.modules.moderationLogs ? `Sending in #${channel.name}` : null,
     };
   },
-  getComponents: ({ backBtn, toggleBtn }) =>
+  getComponents: ({ backBtn, toggleBtn, i }) =>
     components(
       row(
         backBtn,
         toggleBtn,
         new EditModLogsChannelBtn()
-          .setLabel(`Edit Channel`)
+          .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
       )
@@ -68,8 +79,8 @@ export const EditModLogsChannelBtn = ButtonComponent({
           row(
             new TextInputComponent()
               .setCustomId('channel')
-              .setPlaceholder("You may use a Text Channel's exact name or its ID.")
-              .setLabel('Channel')
+              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
+              .setLabel(t(this, 'CHANNEL'))
               .setValue(channelName)
               .setRequired(true)
               .setStyle('SHORT')
@@ -96,12 +107,10 @@ export const EditModLogsChannelModal = ModalComponent({
       `${this.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
-          create: {
-            id: this.guildId,
-            modLogsChannel: channel.id,
-          },
+          where: { id: this.guild.id },
           update: { modLogsChannel: channel.id },
-          where: { id: this.guildId },
+          create: { id: this.guildId, modLogsChannel: channel.id },
+          include,
         }),
       true
     );

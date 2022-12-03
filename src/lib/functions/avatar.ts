@@ -3,11 +3,12 @@ import {
   CDNImageSize,
   resolveMemberAvatarURL,
   resolveUserAvatarURL,
+  UserOrMemberWithAvatarLike,
 } from '@purplet/utils';
-import { GuildMember, User } from 'discord.js';
+import { GuildMember } from 'discord.js';
 
 export function avatar(
-  user: GuildMember | User,
+  user: UserOrMemberWithAvatarLike | GuildMember,
   size: CDNImageSize = 2048,
   format: CDNImageFormat = 'png',
   dynamic: boolean = true

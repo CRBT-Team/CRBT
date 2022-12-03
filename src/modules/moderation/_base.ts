@@ -12,7 +12,7 @@ import {
   TextChannel,
   User,
 } from 'discord.js';
-import { getSettings } from '../settings/serverSettings/settings';
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 export interface ModerationContext {
   target: User | GuildTextBasedChannel;
@@ -46,15 +46,17 @@ export async function handleModerationAction(
   this: CommandInteraction | ModalSubmitInteraction,
   { guild, moderator, target, expiresAt, reason, type, messagesDeleted }: ModerationContext
 ) {
+  await this.deferReply();
+
   await prisma.moderationStrikes.create({
     data: {
-      serverId: guild.id,
       createdAt: new Date(),
       moderatorId: moderator.id,
       targetId: target.id,
       type,
       expiresAt,
       reason,
+      serverId: guild.id,
     },
   });
 
@@ -78,7 +80,7 @@ export async function handleModerationAction(
       })
       .catch((e) => {});
 
-    await this.reply({
+    await this.editReply({
       embeds: [
         {
           title: `${emojis.success} Successfully ${ModerationStrikeVerbs[type].toLowerCase()} ${

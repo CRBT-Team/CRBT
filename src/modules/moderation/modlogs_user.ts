@@ -12,14 +12,22 @@ export default ChatCommand({
   allowInDMs: false,
   options: new OptionBuilder().user('user', 'The user to view the history of.'),
   async handle({ user }) {
-    return this.reply(await viewModLogs.call(this, user));
+    await this.deferReply();
+
+    const res = await viewModLogs.call(this, user);
+
+    return await this.editReply(res);
   },
 });
 
 export const viewModLogsCtxCommand = UserContextCommand({
   name: 'View Moderation History',
   async handle(user) {
-    return this.reply(await viewModLogs.call(this, user));
+    await this.deferReply();
+
+    const res = await viewModLogs.call(this, user);
+
+    return await this.editReply(res);
   },
 });
 
@@ -30,7 +38,7 @@ async function viewModLogs(
   if (user !== this.user && !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
     return createCRBTError(
       this,
-      t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Manage Server')
+      t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')
     );
   }
 

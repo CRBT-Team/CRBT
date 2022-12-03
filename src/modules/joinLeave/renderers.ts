@@ -1,4 +1,6 @@
 import { prisma } from '$lib/db';
+import { colors } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -22,11 +24,10 @@ export async function defaultMessage(this: Interaction, type: JoinLeaveData['typ
   return {
     embed: {
       title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
-      description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION').replace(
-        '<TYPE>',
-        t(this.guildLocale, type)
-      ),
-      color: await getColor(this.guild),
+      description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION', {
+        TYPE: t(this.guildLocale, type),
+      }),
+      color: colors.default,
     },
   };
 }
@@ -43,7 +44,15 @@ export async function renderJoinLeavePrebuilder(
     where: { id: this.guildId },
     select: { [resolveMsgType[type]]: true },
   })) || {
-    [resolveMsgType[type]]: await defaultMessage.call(this, type),
+    joinMessage: {
+      embed: {
+        title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
+        description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION', {
+          TYPE: t(this.guildLocale, type),
+        }),
+        color: await getColor(this.guild),
+      },
+    },
   }) as typeof type extends MessageBuilderTypes.joinMessage ? RawServerJoin : RawServerLeave;
 
   const builder = MessageBuilder({
@@ -62,12 +71,16 @@ export async function renderJoinLeavePreview(
   type: 'JOIN_MESSAGE' | 'LEAVE_MESSAGE',
   data: RawServerJoin | RawServerLeave
 ) {
-  const { JUMP_TO_MSG } = t(this, 'genericButtons');
-
-  const message: JoinLeaveData = data?.[resolveMsgType[type]];
+  const message: JoinLeaveData =
+    data && type === MessageBuilderTypes.joinMessage ? data['joinMessage'] : data['leaveMessage'];
 
   if (!data || !message) {
-    return CRBTError(this, t(this, 'ERROR_NO_MESSAGE').replace('<COMMAND>', t(this, type)));
+    return CRBTError(
+      this,
+      t(this, 'ERROR_NO_MESSAGE', {
+        COMMAND: slashCmd('settings'),
+      })
+    );
   }
   const channelId: string =
     type === MessageBuilderTypes.joinMessage ? data['joinChannel'] : data['leaveChannel'];
@@ -75,12 +88,10 @@ export async function renderJoinLeavePreview(
   if (!channelId) {
     return CRBTError(
       this,
-      t(
-        this,
-        type === MessageBuilderTypes.joinMessage
-          ? 'JOIN_PREVIEW_ERROR_NO_CHANNEL'
-          : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL'
-      ).replace('<TYPE>', t(this, type))
+      t(this, 'JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL', {
+        command: slashCmd('settings'),
+        TYPE: t(this, type),
+      })
     );
   }
 
@@ -98,34 +109,31 @@ export async function renderJoinLeavePreview(
       },
       ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: t(this.guildLocale, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace(
-              '<TYPE>',
-              t(this.guildLocale, type)
-            ),
-          })
-          .setColor(await getColor(this.guild)),
+        {
+          title: t(this.guildLocale, 'JOINLEAVE_PREVIEW_EMBED_TITLE', {
+            TYPE: t(this.guildLocale, type),
+          }),
+          color: await getColor(this.guild),
+        },
         ...(message.embed ? [new MessageEmbed(parsedMessage.embed)] : []),
       ],
     });
 
     await this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE').replace('<TYPE>', t(this, type)),
-            iconURL: this.guild.iconURL(),
-          })
-          .setDescription(
-            t(this, 'JOINLEAVE_PREVIEW_EMBED_DESCRIPTION')
-              .replace('<TYPE>', t(this, type))
-              .replace('<CHANNEL>', channel.toString())
-          )
-          .setColor(await getColor(this.guild)),
+        {
+          title: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE', {
+            TYPE: t(this, type),
+          }),
+          description: t(this, 'JOINLEAVE_PREVIEW_EMBED_DESCRIPTION', {
+            TYPE: t(this, type).toLocaleLowerCase(this.locale),
+            CHANNEL: channel.toString(),
+          }),
+          color: await getColor(this.guild),
+        },
       ],
       components: components(
-        row(new MessageButton().setLabel(JUMP_TO_MSG).setURL(url).setStyle('LINK'))
+        row(new MessageButton().setLabel(t(this, 'JUMP_TO_MSG')).setURL(url).setStyle('LINK'))
       ),
       ephemeral: true,
     });
@@ -133,7 +141,9 @@ export async function renderJoinLeavePreview(
     console.error(e);
     return CRBTError(
       this,
-      t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN').replace('<TYPE>', t(this, type))
+      t(this, 'JOINLEAVE_PREVIEW_ERROR_UNKNOWN', {
+        TYPE: t(this, type),
+      })
     );
   }
 }

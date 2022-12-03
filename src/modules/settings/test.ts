@@ -54,7 +54,8 @@
 import { InteractionResponseType, Routes } from 'discord-api-types/v10';
 import { ChatCommand, getRestClient } from 'purplet';
 
-export default ChatCommand({
+// export default
+ChatCommand({
   name: 'test',
   description: 'a select menu',
   async handle() {

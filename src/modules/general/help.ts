@@ -2,48 +2,60 @@ import { links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
-import { MessageButton, MessageEmbed } from 'discord.js';
+import { getAllLanguages, t } from '$lib/language';
+import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 
 export default ChatCommand({
   name: 'help',
   description: 'Returns a quick help guide for CRBT.',
+  nameLocalizations: getAllLanguages('help.name'),
+  descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${this.client.user.username} - Quick Guide`,
-        iconURL: avatar(this.client.user, 64),
-      })
-      .setDescription(
-        'Type `/` in the chat box and click <:CRBT:860947227887403048> to get a list of commands!\n' +
-        'There are also some commands you can quickly access by right clicking or long-pressing a message or a user.\n' +
-        'Handy commands and powerful feature come with CRBT, including:\n' +
-        `Setting reminders (${slashCmd(
-          'reminder new'
-        )}), announcing new and leaving members (${slashCmd(
-          'welcome message'
-        )}), getting info (${slashCmd('emoji info')}, ${slashCmd('user info')}, ${slashCmd(
-          'server info'
-        )}, etc.)... \n\n` +
-        `...with many more to come! Stay up to date on CRBT news by visiting **[our blog](https://crbt.app/blog)**!`
-      )
-      .setImage('https://cdn.clembs.xyz/rUHqMcy.gif')
-      .setColor(await getColor(this.user));
-
-    if (!this.guild || this.guild.ownerId !== this.user.id) {
-      e.addField('Like CRBT?', 'Support us by adding it to your server!');
-    }
+    const showAdButton = !this.guild || this.guild.ownerId !== this.user.id;
+    const introImage = 'https://i.imgur.com/rUHqMcy.gif';
 
     await this.reply({
-      embeds: [e],
-      components:
-        !this.guild || this.guild.ownerId !== this.user.id
-          ? components(
+      embeds: [
+        {
+          author: {
+            name: t(this, 'HELP_TITLE', {
+              botName: this.client.user.username,
+            }),
+            iconURL: avatar(this.client.user, 64),
+          },
+          description: t(this, 'HELP_DESCRIPTION', {
+            prefix: '`/`',
+            botIcon: '<:CRBT:860947227887403048>',
+            reminder: slashCmd('reminder new'),
+            settings: slashCmd('settings'),
+            infoCommands: [slashCmd('search'), slashCmd('user info'), slashCmd('define')].join(
+              ', '
+            ),
+            link: links.discord,
+          }),
+          image: { url: introImage },
+          color: await getColor(this.user),
+          fields: showAdButton
+            ? [
+                {
+                  name: t(this, 'HELP_AD_TITLE'),
+                  value: t(this, 'HELP_AD_DESCRIPTION'),
+                },
+              ]
+            : [],
+        },
+      ],
+      components: showAdButton
+        ? components(
             row(
-              new MessageButton().setStyle('LINK').setLabel('Add to Server').setURL(links.invite)
+              new MessageButton()
+                .setStyle('LINK')
+                .setLabel(t(this, 'ADD_TO_SERVER'))
+                .setURL(links.invite)
             )
           )
-          : null,
+        : null,
     });
   },
 });

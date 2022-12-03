@@ -1,4 +1,4 @@
-import { Giveaway as RawGiveaway, Poll as RawPoll, Reminder as RawReminder } from '@prisma/client';
+import { Giveaway, Poll, Reminder } from '@prisma/client';
 
 export enum TimeoutTypes {
   Giveaway = 'giveaway',
@@ -6,17 +6,10 @@ export enum TimeoutTypes {
   Reminder = 'reminder',
 }
 
-interface Reminder extends RawReminder {
-  type: TimeoutTypes.Reminder;
-}
+export type Timeout = {
+  [TimeoutTypes.Poll]: Poll;
+  [TimeoutTypes.Reminder]: Reminder;
+  [TimeoutTypes.Giveaway]: Giveaway;
+};
 
-interface Giveaway extends RawGiveaway {
-  type: TimeoutTypes.Giveaway;
-}
-
-interface Poll extends RawPoll {
-  type: TimeoutTypes.Poll;
-}
-
-export type RawTimeout = RawReminder | RawGiveaway | RawPoll;
-export type Timeout = Reminder | Giveaway | Poll;
+export type AnyTimeout = Timeout[keyof Timeout];

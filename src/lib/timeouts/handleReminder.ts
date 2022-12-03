@@ -8,7 +8,7 @@ import { timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
 import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
-import { getReminderSubject } from '../../modules/tools/reminder list';
+import { getReminderSubject } from '../../modules/tools/reminder_list';
 
 export interface LowBudgetMessage {
   authorId: string;
@@ -22,9 +22,6 @@ export interface LowBudgetMessage {
 }
 
 export async function handleReminder(reminder: Reminder, client: Client) {
-  console.log(reminder);
-
-  const { JUMP_TO_MSG } = t(reminder?.locale, 'genericButtons');
   const { strings } = t(reminder.locale, 'remind me');
 
   const data = await extractReminder(reminder, client);
@@ -32,14 +29,14 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   const message = {
     embeds: [
       {
-        title: `${emojis.reminder} ${strings.REMINDER_TITLE}`,
+        title: `${emojis.reminder} ${t(reminder.locale, 'REMINDER')}}`,
         description: strings.REMINDER_DESCRIPTION.replace(
-          '<TIME>',
+          '{TIME}',
           timestampMention(reminder.expiresAt, 'D')
-        ).replace('<RELATIVE_TIME>', timestampMention(reminder.expiresAt, 'R')),
+        ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
         fields: [
           {
-            name: strings.SUBJECT,
+            name: t(reminder.locale, 'SUBJECT'),
             value: getReminderSubject(reminder, client, 0),
           },
         ],
@@ -49,7 +46,10 @@ export async function handleReminder(reminder: Reminder, client: Client) {
     ],
     components: components(
       row(
-        new MessageButton().setStyle('LINK').setLabel(JUMP_TO_MSG).setURL(data.url)
+        new MessageButton()
+          .setStyle('LINK')
+          .setLabel(t(reminder?.locale, 'JUMP_TO_MSG'))
+          .setURL(data.url)
         // new SnoozeButton()
         //   .setStyle('SECONDARY')
         //   .setEmoji(emojis.reminder)

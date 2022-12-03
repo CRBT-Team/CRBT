@@ -23,14 +23,14 @@ export const FieldEditModal = ModalComponent({
 
     if (type === EditableFeatures.accentColor) {
       if (!value.match(/^[0-9a-f]{6}$/)) {
-        return CRBTError(this, { title: t(this, 'ERROR_INVALID_HEX') });
+        return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
       }
       return await saveColorSettings.call(this, parseInt(value, 16));
     }
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const embed = data.embed || new MessageEmbed().toJSON();
+    const embed = data.embed || new MessageEmbed();
     let content = data.content;
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');
@@ -71,7 +71,7 @@ export const FieldEditModal = ModalComponent({
         break;
       case 'color':
         if (!value.match(/^#?[0-9a-fA-F]{6}$/)) {
-          return CRBTError(this, { title: t(this, 'ERROR_INVALID_HEX') });
+          return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
         }
         embed.color = parseInt(value.replace('#', ''), 16);
         break;

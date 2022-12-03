@@ -2,13 +2,13 @@ import { languagesAutocomplete } from '$lib/autocomplete/languagesAutocomplete';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import googleTranslateApi from '@vitalets/google-translate-api';
+import { upperCaseFirst } from 'change-case-all';
 import {
   CommandInteraction,
   ContextMenuInteraction,
   MessageComponentInteraction,
-  MessageEmbed,
 } from 'discord.js';
 import {
   ChatCommand,
@@ -18,21 +18,30 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import langCodes from '../../../data/misc/langCodes.json';
-import languages from '../../../data/misc/languages.json';
+import languages from '../../../data/misc/langs.json';
 import { useOcrScan } from './Find Text in Image';
 
 export default ChatCommand({
   name: 'translate',
+  nameLocalizations: getAllLanguages('TRANSLATE'),
   description: 'Translate text to another language.',
+  descriptionLocalizations: getAllLanguages('translate.description'),
   options: new OptionBuilder()
-    .string('text', 'The text to translate.', { required: true })
-    .string('target', 'The language to translate to. Defaults to your Discord locale.', {
+    .string('text', t('en-US', 'translate.options.text.description'), {
+      nameLocalizations: getAllLanguages('translate.options.text.name'),
+      descriptionLocalizations: getAllLanguages('translate.options.text.description'),
+      required: true,
+    })
+    .string('target', t('en-US', 'translate.options.target.description'), {
+      nameLocalizations: getAllLanguages('translate.options.target.name'),
+      descriptionLocalizations: getAllLanguages('translate.options.target.description'),
       autocomplete({ target }) {
         return languagesAutocomplete.call(this, target);
       },
     })
-    .string('source', 'The source language to translate from.', {
+    .string('source', t('en-US', 'translate.options.source.name'), {
+      nameLocalizations: getAllLanguages('translate.options.source.name'),
+      descriptionLocalizations: getAllLanguages('translate.options.source.description'),
       autocomplete({ source }) {
         return languagesAutocomplete.call(this, source);
       },
@@ -50,7 +59,7 @@ export default ChatCommand({
 });
 
 export const ctxCommand = MessageContextCommand({
-  name: 'Translate with Scan',
+  name: 'Translate (with scan)',
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
@@ -99,15 +108,25 @@ async function translate(
   text: string,
   opts?: { to?: string; from?: string }
 ) {
-  const target = opts?.to ?? this.locale.split('-')[0];
-  const from = opts?.from ?? 'auto';
+  const to = opts.to ?? this.locale.split('-')[0];
+  const from = opts.from ?? 'auto';
 
-  if (!languages[from]) {
-    CRBTError(this, `"${from}" is not a valid source language.`);
+  if (!languages.all.find((code) => code === from)) {
+    CRBTError(
+      this,
+      t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
+        language: from,
+      })
+    );
     return;
   }
-  if (!languages[target]) {
-    CRBTError(this, `"${target}" is not a valid target language.`);
+  if (!languages.all.find((code) => code === to)) {
+    CRBTError(
+      this,
+      t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
+        language: to,
+      })
+    );
     return;
   }
 
@@ -116,30 +135,46 @@ async function translate(
       language: { iso: source },
     },
     text: translated,
-  } = await googleTranslateApi(text, { to: target, from });
+  } = await googleTranslateApi(text, { to, from });
 
   const color = await getColor(this.user);
+  const intl = new Intl.DisplayNames(this.locale, {
+    languageDisplay: 'standard',
+    style: 'long',
+    type: 'language',
+    fallback: 'code',
+  });
 
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: `Translated from ${languages[source]} to ${languages[target]}`,
-        })
-        .addField(languages[source], text)
-        .addField(languages[target], translated)
-        .setColor(color),
+      {
+        title: t(this, 'TRANSLATE_RESULT', {
+          source: intl.of(source),
+          target: intl.of(to),
+        }),
+        fields: [
+          {
+            name: upperCaseFirst(intl.of(source)),
+            value: text,
+          },
+          {
+            name: upperCaseFirst(intl.of(to)),
+            value: translated,
+          },
+        ],
+        color,
+      },
     ],
     components: components(
       row(
         new TargetLangSelectMenu(source)
-          .setPlaceholder('Select a target language to translate to.')
+          .setPlaceholder(t(this, 'TRANSLATE_SELECT_MENU_PLACEHOLDER'))
           .setOptions(
-            Object.entries(langCodes).map(([code, lang]) => {
+            languages.limited.map((code) => {
               return {
-                label: lang,
+                label: upperCaseFirst(intl.of(code)),
                 value: code,
-                default: code === target,
+                default: code === to,
               };
             })
           )
@@ -154,7 +189,7 @@ export const TargetLangSelectMenu = SelectMenuComponent({
     const sourceText = this.message.embeds[0].fields[0].value;
 
     if (this.user.id !== this.message.interaction.user.id) {
-      return CRBTError(this, t(this, 'user_navbar').errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
 
     await this.update(

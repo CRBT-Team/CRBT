@@ -37,11 +37,15 @@ export default ChatCommand({
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
-        t(this, 'ERROR_MISSING_PERMISSIONS').replace('<PERMISSIONS>', 'Manage Server')
+        t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')
       );
     }
 
-    await this.reply(await renderModlogs.call(this));
+    await this.deferReply();
+
+    const res = await renderModlogs.call(this);
+
+    await this.editReply(res);
   },
 });
 
@@ -50,10 +54,7 @@ export function renderStrike(
   locale: string,
   strikes: moderationStrikes[]
 ) {
-  const action = t(
-    locale,
-    strike.type === 'CLEAR' ? 'MODERATION_LOGS_CLEAR' : `MODERATION_LOGS_ACTION_${strike.type}`
-  );
+  const action = t(locale, strike.type as any);
   const expires =
     Date.now() < (strike.expiresAt?.getTime() ?? 0)
       ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
@@ -111,7 +112,7 @@ export async function renderModlogs(
               iconURL: avatar(user),
             }
           : {
-              name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('<SERVER>', this.guild.name),
+              name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('{SERVER}', this.guild.name),
               iconURL: this.guild.iconURL(),
             },
         description: !data || data.length === 0 ? '*No moderation history found.*' : '',
@@ -133,9 +134,7 @@ export async function renderModlogs(
                   label: `Strike #${data.indexOf(s) + 1}`,
                   description: `${dayjs(s.createdAt).format('YYYY-MM-DD')} • ${t(
                     this.guildLocale,
-                    s.type === 'CLEAR'
-                      ? 'MODERATION_LOGS_CLEAR'
-                      : `MODERATION_LOGS_ACTION_${s.type}`
+                    s.type
                   )}`,
                   value: s.id,
                 }))
@@ -201,15 +200,12 @@ async function renderStrikePage(
     embeds: [
       {
         author: {
-          name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('<SERVER>', this.guild.name),
+          name: t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+            SERVER: this.guild.name,
+          }),
           icon_url: this.guild.iconURL(),
         },
-        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(
-          this.guildLocale,
-          strike.type === 'CLEAR'
-            ? 'MODERATION_LOGS_CLEAR'
-            : `MODERATION_LOGS_ACTION_${strike.type}`
-        )}`,
+        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(this.guildLocale, strike.type)}`,
         fields: [
           {
             name: 'Reason',
@@ -256,14 +252,18 @@ async function renderStrikePage(
           .setEmoji(emojis.buttons.left_arrow)
           .setLabel('Back')
           .setStyle('SECONDARY'),
-        new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
-          .setEmoji(emojis.buttons.pencil)
-          .setLabel('Edit Reason')
-          .setStyle('PRIMARY'),
-        new DeleteButton({ sId, page, userId })
-          .setEmoji(emojis.buttons.trash_bin)
-          .setLabel('Delete Strike')
-          .setStyle('DANGER')
+        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
+          ? [
+              new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
+                .setEmoji(emojis.buttons.pencil)
+                .setLabel('Edit Reason')
+                .setStyle('PRIMARY'),
+              new DeleteButton({ sId, page, userId })
+                .setEmoji(emojis.buttons.trash_bin)
+                .setLabel('Delete Strike')
+                .setStyle('DANGER'),
+            ]
+          : [])
       )
     ),
   };
@@ -286,7 +286,7 @@ export const EditButton = ButtonComponent({
             .setLabel('Reason')
             .setValue(strike.reason ?? '')
             .setCustomId('reason')
-            .setMaxLength(100)
+            .setMaxLength(256)
             .setStyle('PARAGRAPH')
             .setRequired(true)
         )

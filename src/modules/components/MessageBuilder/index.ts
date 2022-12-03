@@ -32,8 +32,6 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
           member: i.member as GuildMember,
         });
 
-  const { SAVE, IMPORT, EXPORT, SEND } = t(i, 'genericButtons');
-
   const fieldSelect = new FieldSelectMenu(type as never)
     .setPlaceholder(t(i, 'FIELD_SELECT_MENU'))
     .setOptions(
@@ -61,15 +59,15 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
 
   const buttons = {
     back: new BackSettingsButton(type)
-      .setLabel(t(i, 'SETTINGS'))
+      // .setLabel(t(i, 'SETTINGS'))
       .setEmoji(emojis.buttons.left_arrow)
       .setStyle('SECONDARY'),
     save:
       type !== MessageBuilderTypes.rolePicker
-        ? new SaveButton(type as never).setLabel(SAVE).setStyle('SUCCESS')
-        : new SendMessageButton(type as never).setLabel(SEND).setStyle('SUCCESS'),
-    import: new ImportJSONButton(type as never).setLabel(IMPORT).setStyle('SECONDARY'),
-    export: new ExportJSONButton(type as never).setLabel(EXPORT).setStyle('SECONDARY'),
+        ? new SaveButton(type as never).setLabel(t(i, 'SAVE')).setStyle('SUCCESS')
+        : new SendMessageButton(type as never).setLabel(t(i, 'SEND')).setStyle('SUCCESS'),
+    import: new ImportJSONButton(type as never).setLabel(t(i, 'IMPORT')).setStyle('SECONDARY'),
+    export: new ExportJSONButton(type as never).setLabel(t(i, 'EXPORT')).setStyle('SECONDARY'),
     CRBTscript: new MessageButton()
       .setURL(links.CRBTscript)
       .setStyle('LINK')

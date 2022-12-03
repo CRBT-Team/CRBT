@@ -1,5 +1,5 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
-import { cache } from '$lib/cache';
+import { cache, fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
@@ -8,19 +8,20 @@ import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
-import { getSettings, renderFeatureSettings, strings } from './settings';
+import { renderFeatureSettings } from './settings';
+import { include } from './_helpers';
 
 export const colorSettings: SettingsMenus = {
-  getSelectMenu: ({ settings }) => ({
-    label: strings.ACCENT_COLOR,
-    value: EditableFeatures.accentColor,
-    description: `Set to #${(settings.accentColor ?? colors.default).toString(16)}`,
+  getSelectMenu: ({ settings, i }) => ({
+    description: t(i, 'SETTINGS_COLOR_SET_TO', {
+      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+    }),
     emoji: '🎨',
   }),
-  getMenuDescription: ({ settings }) => ({
-    description: `The server's accent color is currently shown on the side of this message, and will be shown on new Polls, Giveaways, Role Pickers, the Server Info sheet, and more.\nIt is set to **#${(
-      settings.accentColor ?? colors.default
-    ).toString(16)}**.\nTo edit it, use one of the below presets or manually pick a new HEX color.`,
+  getMenuDescription: ({ settings, i }) => ({
+    description: t(i, 'SETTINGS_COLOR_DESCRIPTION', {
+      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+    }),
   }),
   getComponents: ({ i, backBtn, settings }) =>
     components(
@@ -52,14 +53,17 @@ export async function saveColorSettings(
   this: MessageComponentInteraction | ModalSubmitInteraction,
   color: number
 ) {
-  const settings = await getSettings(this.guild.id);
-  settings.accentColor = color;
-  await prisma.servers.update({
-    where: { id: this.guild.id },
-    data: { accentColor: color },
-  });
+  await fetchWithCache(
+    `${this.guildId}:settings`,
+    () =>
+      prisma.servers.update({
+        where: { id: this.guild.id },
+        data: { accentColor: color },
+        include,
+      }),
+    true
+  );
   cache.set(`${this.guildId}:color`, color);
-  cache.set(`${this.guildId}:settings`, settings);
 
   await this.update(await renderFeatureSettings.call(this, EditableFeatures.accentColor));
 

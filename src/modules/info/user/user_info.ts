@@ -5,19 +5,12 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
-import { time } from '$lib/functions/time';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
-import {
-  GuildMember,
-  Interaction,
-  MessageEmbed,
-  User,
-  UserContextMenuInteraction,
-  UserFlags,
-} from 'discord.js';
-import { ChatCommand, components, OptionBuilder, UserContextCommand } from 'purplet';
+import { snowflakeToDate, timestampMention } from '@purplet/utils';
+import { APIUser, PermissionFlagsBits, Routes, UserFlags } from 'discord-api-types/v10';
+import { EmbedFieldData, GuildMember, Interaction, UserContextMenuInteraction } from 'discord.js';
+import { ChatCommand, components, getRestClient, OptionBuilder, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -25,7 +18,7 @@ export default ChatCommand({
   description: "Get a user's Discord information.",
   options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
   async handle({ user }) {
-    const u = await (user ?? this.user).fetch();
+    const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
     const m = (user ? this.options.getMember('user') : this.member) as GuildMember;
 
     // enum UserStatus {
@@ -58,7 +51,7 @@ export const ctxCommand = UserContextCommand({
     await this.reply({
       ...(await renderUser(
         this,
-        user,
+        (await getRestClient().get(Routes.user(user.id))) as APIUser,
         {
           targetId: user.id,
           userId: this.user.id,
@@ -72,42 +65,39 @@ export const ctxCommand = UserContextCommand({
 
 export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
   const { badges } = emojis;
+
+  const userFlags: {
+    [k: string]: UserFlags;
+  } = {
+    [badges.verifiedBot]: UserFlags.VerifiedBot,
+    [badges.discordStaff]: UserFlags.Staff,
+    [badges.partner]: UserFlags.Partner,
+    [badges.cerifiedMod]: UserFlags.CertifiedModerator,
+    [badges.hypesquad]: UserFlags.Hypesquad,
+    [badges.houses.bravery]: UserFlags.HypeSquadOnlineHouse1,
+    [badges.houses.brilliance]: UserFlags.HypeSquadOnlineHouse2,
+    [badges.houses.balance]: UserFlags.HypeSquadOnlineHouse3,
+    [badges.bugHunter1]: UserFlags.BugHunterLevel1,
+    [badges.bugHunter2]: UserFlags.BugHunterLevel2,
+    [badges.activeDeveloper]: UserFlags.ActiveDeveloper,
+    [badges.earlySupporter]: UserFlags.PremiumEarlySupporter,
+    [badges.developer]: UserFlags.VerifiedDeveloper,
+  };
+
   return [
     ...(additionalBadges ? additionalBadges.map((b) => items.badges[b].contents) : []),
-    ...flags.toArray()?.map((flag) => {
-      switch (flag) {
-        case 'VERIFIED_BOT':
-          return badges.verifiedBot;
-        case 'DISCORD_EMPLOYEE':
-          return badges.discordStaff;
-        case 'PARTNERED_SERVER_OWNER':
-          return badges.partner;
-        case 'DISCORD_CERTIFIED_MODERATOR':
-          return badges.cerifiedMod;
-        case 'HYPESQUAD_EVENTS':
-          return badges.hypesquad;
-        case 'HOUSE_BRILLIANCE':
-          return badges.houses.brilliance;
-        case 'HOUSE_BALANCE':
-          return badges.houses.balance;
-        case 'HOUSE_BRAVERY':
-          return badges.houses.bravery;
-        case 'BUGHUNTER_LEVEL_1':
-          return badges.bugHunter1;
-        case 'BUGHUNTER_LEVEL_2':
-          return badges.bugHunter1;
-        case 'EARLY_SUPPORTER':
-          return badges.earlySupporter;
-        case 'EARLY_VERIFIED_BOT_DEVELOPER':
-          return badges.developer;
+    ...Object.entries(userFlags).reduce((acc, [key, value]) => {
+      if ((flags & value) === value) {
+        acc.push(key);
       }
-    }),
+      return acc;
+    }, []),
   ].filter(Boolean);
 }
 
 export async function renderUser(
   ctx: Interaction,
-  user: User,
+  user: APIUser,
   navCtx: NavBarContext,
   member?: GuildMember
 ) {
@@ -116,36 +106,35 @@ export async function renderUser(
     select: { crbtBadges: true },
   });
 
-  const userBadges = getBadgeEmojis(user.flags, crbtUser?.crbtBadges);
+  const userBadges = getBadgeEmojis(user.public_flags, crbtUser?.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
+  const createdAt = snowflakeToDate(user.id);
 
-  const e = new MessageEmbed()
-    .setAuthor({
-      name: t(ctx.locale, 'USER_INFO_EMBED_TITLE').replace('<USER>', user.tag),
-      iconURL: avatar(member ?? user, 64),
-    })
-    .setDescription(userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '')
-    .addField('ID', user.id)
-    .setImage(banner(user, size ?? 2048, format))
-    .setThumbnail(avatar(member ?? user, size ?? 256, format))
-    .setColor(await getColor(user));
+  const fields: EmbedFieldData[] = [
+    {
+      name: t(ctx, 'ID'),
+      value: user.id,
+    },
+  ];
 
   if (member) {
     const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
 
-    if (member.nickname) e.addField(t(ctx.locale, 'USER_INFO_NICKNAME'), member.nickname);
+    if (member.nickname) {
+      fields.push({
+        name: t(ctx, 'SERVER_NICKNAME'),
+        value: member.nickname,
+      });
+    }
 
-    e.addFields(
+    fields.push(
       {
-        name: `${t(ctx.locale, 'USER_INFO_ROLES')} • ${roles.size}`,
-        value:
-          roles.size > 0
-            ? roles.map((r) => r.toString()).join(' ')
-            : t(ctx.locale, 'USER_INFO_NO_ROLES'),
+        name: `${t(ctx, 'ROLES')} • ${roles.size}`,
+        value: roles.size > 0 ? roles.map((r) => r.toString()).join(' ') : t(ctx, 'USER_NO_ROLES'),
       },
       {
-        name: t(ctx.locale, 'USER_INFO_PERMS'),
+        name: t(ctx.locale, 'MAJOR_PERMS'),
         value:
           hasPerms(member, PermissionFlagsBits.Administrator) ||
           member.permissions.toArray().length === 0
@@ -153,24 +142,41 @@ export async function renderUser(
             : keyPerms(member.permissions).join(', '),
       },
       {
-        name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-        value: `${time(user.createdAt)}\n${time(user.createdAt, true)}`,
+        name: t(ctx, 'JOINED_DISCORD'),
+        value: `${timestampMention(createdAt)}\n${timestampMention(createdAt, 'R')}`,
         inline: true,
       },
       {
-        name: t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
-        value: `${time(member.joinedAt)}\n${time(member.joinedAt, true)}`,
+        name: t(ctx, 'JOINED_SERVER'),
+        value: `${timestampMention(member.joinedAt)}\n${timestampMention(member.joinedAt, 'R')}`,
         inline: true,
       }
     );
   } else {
-    e.addFields({
-      name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-      value: `${time(user.createdAt)} • ${time(user.createdAt, true)}`,
+    fields.push({
+      name: t(ctx.locale, 'JOINED_DISCORD'),
+      value: `${timestampMention(createdAt)} • ${timestampMention(createdAt, 'R')}`,
     });
   }
+
   return {
-    embeds: [e],
+    embeds: [
+      {
+        author: {
+          name: `${user.username}#${user.discriminator} • ${t(ctx.locale, 'USER_INFO')}`,
+          icon_url: avatar(member ?? user, 64),
+        },
+        description: userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '',
+        fields,
+        image: {
+          url: banner(user, size ?? 2048, format),
+        },
+        thumbnail: {
+          url: avatar(member ?? user, size ?? 256, format),
+        },
+        color: await getColor(user),
+      },
+    ],
     components: components(
       navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
     ),

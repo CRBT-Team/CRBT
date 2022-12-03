@@ -11,10 +11,8 @@ type Tabs = 'server_info' | 'icon' | 'roles' | 'emojis' | 'extra';
 
 export const ServerInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -24,10 +22,8 @@ export const ServerInfoBtn = ButtonComponent({
 
 export const ServerIconBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -37,10 +33,8 @@ export const ServerIconBtn = ButtonComponent({
 
 export const ServerMembersBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -50,10 +44,8 @@ export const ServerMembersBtn = ButtonComponent({
 
 export const ServerEmojisBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -82,16 +74,14 @@ export function serverNavBar(
   activeTab: Tabs,
   addTabs?: Set<Omit<Tabs, DefaultTabs>>
 ) {
-  const { strings } = t(locale, 'server_navbar');
-
   return row(
     new ServerInfoBtn(ctx)
-      .setLabel(strings.INFO)
+      .setLabel(t(locale, 'SERVER_INFO'))
       .setStyle('SECONDARY')
       .setDisabled(activeTab === 'server_info'),
     addTabs?.has('icon')
       ? new ServerIconBtn(ctx)
-          .setLabel(strings.ICON)
+          .setLabel(t(locale, 'ICON'))
           .setStyle('SECONDARY')
           .setDisabled(activeTab === 'icon')
       : null

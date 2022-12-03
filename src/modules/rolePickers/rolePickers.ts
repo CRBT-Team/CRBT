@@ -15,21 +15,21 @@ const { manual } = t('en-US', 'role-selectors');
 export const usersOnCooldown = new Map();
 
 const options = new OptionBuilder()
-  .string('behavior', manual.meta.options[1].description, {
+  .string('behavior', manual.meta.options[0].description, {
     choices: {
-      toggle: manual.meta.options[1].choices[0],
-      once: manual.meta.options[1].choices[1],
+      toggle: manual.meta.options[0].choices[0],
+      once: manual.meta.options[0].choices[1],
     },
     required: true,
   })
-  .integer('role_limit', manual.meta.options[2].description, {
+  .integer('role_limit', manual.meta.options[1].description, {
     minValue: 0,
     maxValue: 13,
     required: true,
   });
 
 for (let i = 1; i <= 13; i++) {
-  options.role(`role${i}`, manual.meta.options[3].description, { required: i === 1 });
+  options.role(`role${i}`, manual.meta.options[2].description, { required: i === 1 });
 }
 
 export const useManual = ChatCommand({
@@ -41,7 +41,7 @@ export const useManual = ChatCommand({
     const { strings, errors } = t(this.guildLocale, 'role-selectors');
 
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
-      return CRBTError(this, errors.USER_MISSING_PERMS);
+      return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
     }
 
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageRoles)) {
@@ -65,31 +65,31 @@ export const useManual = ChatCommand({
         components: components(
           rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)
             ? row().addComponents(
-              rolesList.map(({ name, id }) => {
-                return new Button({
-                  id,
-                  behavior,
-                })
-                  .setLabel(name)
-                  .setStyle('SECONDARY')
-                  .setDisabled(true);
-              })
-            )
-            : row(
-              new SelectMenu(null)
-                .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
-                .setMinValues(0)
-                .setMaxValues(limit)
-                .setOptions(
-                  rolesList.map((role) => {
-                    return {
-                      label: role.name,
-                      value: JSON.stringify({ id: role.id, behavior }),
-                    };
+                rolesList.map(({ name, id }) => {
+                  return new Button({
+                    id,
+                    behavior,
                   })
-                )
-                .setDisabled(true)
-            )
+                    .setLabel(name)
+                    .setStyle('SECONDARY')
+                    .setDisabled(true);
+                })
+              )
+            : row(
+                new SelectMenu(null)
+                  .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
+                  .setMinValues(0)
+                  .setMaxValues(limit)
+                  .setOptions(
+                    rolesList.map((role) => {
+                      return {
+                        label: role.name,
+                        value: JSON.stringify({ id: role.id, behavior }),
+                      };
+                    })
+                  )
+                  .setDisabled(true)
+              )
         ),
       },
       interaction: this,

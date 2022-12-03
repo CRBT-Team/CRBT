@@ -20,7 +20,6 @@ import { ManualColorEditButton } from './ManualColorEditButton';
 export const FieldSelectMenu = SelectMenuComponent({
   handle(type: MessageBuilderTypes) {
     const fieldName = this.values[0] as editableNames;
-    const { BACK } = t(this, 'genericButtons');
 
     const messageData = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
@@ -32,22 +31,22 @@ export const FieldSelectMenu = SelectMenuComponent({
               .setPlaceholder(t(this, 'COLOR_PRESET_SELECT_MENU'))
               .setOptions(
                 colorsMap
-                  .filter((color) => !color.private && color.value !== 'profile')
+                  .filter((color) => !color.private && color.value)
                   .map((colorObj) => ({
                     label: colorObj.fullName,
-                    value: colorObj.value,
+                    value: colorObj.value.toString(16),
                     emoji: colorObj.emoji,
                   }))
               )
           ),
           row(
             new BackButton(type as never)
-              .setLabel(BACK)
+              .setLabel(t(this, 'BACK'))
               .setEmoji(emojis.buttons.left_arrow)
               .setStyle('SECONDARY'),
             new ManualColorEditButton({
               type,
-              value: messageData.embed?.color?.toString(16) || colors.default,
+              value: (messageData.embed?.color || colors.default) as number,
             })
               .setLabel(t(this, 'MANUAL_COLOR_EDIT_BUTTON'))
               .setEmoji(emojis.buttons.pencil)

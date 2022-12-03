@@ -8,7 +8,7 @@ export const cache = new Cache({
 
 export async function fetchWithCache<T>(
   cacheKey: string,
-  fetchMethod: () => Promise<T>,
+  fetchMethod: () => T | Promise<T>,
   force = false,
   ttl: number = 60 * 3
 ): Promise<T> {

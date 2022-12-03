@@ -3,61 +3,95 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { JoinLeaveData, MessageBuilderTypes } from '$lib/types/messageBuilder';
-import { CamelCaseFeatures, SettingsMenus } from '$lib/types/settings';
+import { JoinLeaveData } from '$lib/types/messageBuilder';
+import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
+import { defaultMessage } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
-import { getSettings, renderFeatureSettings, strings } from './settings';
+import { renderFeatureSettings } from './settings';
+import { getSettings, include } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
-  getMenuDescription: ({ settings, feature, guild }) => {
-    const channelId = settings[CamelCaseFeatures[feature]] as string;
-    const isEnabled = settings.modules[CamelCaseFeatures[feature]] as boolean;
+  getErrors({ guild, settings, feature }) {
+    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
+    const channelId =
+      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
+    const errors: string[] = [];
+
+    if (isEnabled && channelId && !channel) {
+      errors.push('Channel not found. Edit it for CRBT to send new messages.');
+    }
+    if (isEnabled && !channelId) {
+      errors.push(
+        'No channel was set. Set it using the {button_label} button below to continue setup.'
+      );
+    }
+    if (isEnabled && !settings[CamelCaseFeatures[feature]]) {
+      errors.push(
+        'No message was set. Set it using the {button_label} button below to continue setup.'
+      );
+    }
+
+    return errors;
+  },
+  getMenuDescription({ settings, feature, isEnabled, i }) {
+    const channelId =
+      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+
     return {
-      description:
-        `This feature is currently ${isEnabled ? 'enabled' : 'disabled'} in this server.` +
-        (!isEnabled
-          ? ''
-          : '\n' +
-            (channel
-              ? `Messages are currently sent in ${channel}.`
-              : '**⚠️ The channel where messages are sent is no longer accessible or has been deleted. Please edit it in order to receive them.**')) +
-        `\nUse the buttons below to configure the feature or to ${
-          isEnabled ? 'enable' : 'disable'
-        } it.`,
+      fields: [
+        {
+          name: t(i, 'STATUS'),
+          value: isEnabled
+            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
+        },
+        ...(channelId
+          ? [
+              {
+                name: 'Channel',
+                value: `<#${channelId}>`,
+                inline: true,
+              },
+            ]
+          : []),
+      ],
     };
   },
   getSelectMenu: ({ settings, feature, i }) => {
     const channelId = settings[CamelCaseFeatures[feature]] as string;
     const isEnabled = settings.modules[CamelCaseFeatures[feature]] as boolean;
     const channel = i.guild.channels.cache.find((c) => c.id === channelId);
+    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
 
     return {
-      label: strings[feature],
       emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
       description: isEnabled
-        ? `Sending in ${channel ? `#${channel.name}` : '[Channel Deleted]'}`
-        : 'Disabled',
-      value: feature,
+        ? t(i, 'SETTINGS_SENDING_IN', {
+            channel: `#${channel.name}`,
+          })
+        : '',
     };
   },
-  getComponents: ({ feature, toggleBtn, backBtn }) =>
+  getComponents: ({ feature, toggleBtn, backBtn, isEnabled, i }) =>
     components(
       row(backBtn, toggleBtn),
       row(
         new EditJoinLeaveMessageBtn(feature as never)
-          .setLabel(`Edit Message`)
-          .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY'),
-        new EditJoinLeaveChannelBtn(feature as never)
-          .setLabel(`Edit Channel`)
+          .setLabel(t(i, 'EDIT_MESSAGE'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
+          .setDisabled(!isEnabled),
+        new EditJoinLeaveChannelBtn(feature as never)
+          .setLabel(t(i, 'EDIT_CHANNEL'))
+          .setEmoji(emojis.buttons.pencil)
+          .setStyle('PRIMARY')
+          .setDisabled(!isEnabled)
       )
     ),
 };
@@ -65,23 +99,22 @@ export const joinLeaveSettings: SettingsMenus = {
 export const EditJoinLeaveChannelBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
     const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
-    const channelId = data[CamelCaseFeatures[type]];
+    const channelId = data[type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
       new EditJoinLeaveChannelModal(type as never)
         .setTitle(
-          `Edit ${t(
-            this.locale,
-            type === MessageBuilderTypes.joinMessage ? 'JOIN_CHANNEL' : 'LEAVE_CHANNEL'
-          )}`
+          t(this, 'EDIT_SOMETHING', {
+            feature: t(this, type),
+          })
         )
         .setComponents(
           row(
             new TextInputComponent()
               .setCustomId('channel')
-              .setPlaceholder("You may use a Text Channel's exact name or its ID.")
-              .setLabel('Channel')
+              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
+              .setLabel(t(this, 'CHANNEL'))
               .setValue(channelName)
               .setRequired(true)
               .setStyle('SHORT')
@@ -103,35 +136,37 @@ export const EditJoinLeaveChannelModal = ModalComponent({
     if (!channel || channel.type !== 'GUILD_TEXT') {
       return CRBTError(this, 'This channel does not exist or is not a text channel.');
     }
+    const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
-    await fetchWithCache(
+    const res = await fetchWithCache(
       `${this.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
-          create: {
-            id: this.guildId,
-            [CamelCaseFeatures[type]]: channel.id,
-          },
-          update: {
-            [CamelCaseFeatures[type]]: channel.id,
-          },
-          where: { id: this.guildId },
+          where: { id: this.guild.id },
+          update: { [propName]: channel.id },
+          create: { id: this.guildId, [propName]: channel.id },
+          include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, type));
+    console.log(res);
+
+    this.update(await renderFeatureSettings.call(this, type as string as EditableFeatures));
   },
 });
 
 export const EditJoinLeaveMessageBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
-    const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
+    const data = (await getSettings(this.guild.id))[
+      CamelCaseFeatures[type]
+    ] as any as JoinLeaveData;
 
     const builder = MessageBuilder({
       data: {
         type,
-        ...data[CamelCaseFeatures[type]],
+        ...defaultMessage.call(this, type),
+        ...data,
       },
       interaction: this,
     });

@@ -1,7 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { CRBTError, createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { isValidTime, ms } from '$lib/functions/ms';
@@ -11,7 +11,7 @@ import { TimeoutTypes } from '$lib/types/timeouts';
 import { Giveaway } from '@prisma/client';
 import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageButton, MessageEmbed } from 'discord.js';
+import { Message, MessageButton, MessageComponentInteraction, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 const activeGiveaways = new Map<string, Giveaway>();
@@ -21,7 +21,7 @@ export default ChatCommand({
   description: 'Create a giveaway.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .string('prize', 'What to giveaway.', {
+    .string('prize', 'What to give away.', {
       required: true,
       maxLength: 100,
     })
@@ -37,7 +37,7 @@ export default ChatCommand({
     }),
   async handle({ prize, end_date, winners }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return CRBTError(this, 'Only managers ("Manage Server" permission) can create giveaways.');
+      return CRBTError(this, 'The "Manage Server" permission is required to create giveaways.');
     }
 
     if (!isValidTime(end_date) && ms(end_date) > ms('1M')) {
@@ -51,16 +51,27 @@ export default ChatCommand({
 
       const msg = await this.channel.send({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
+          {
+            author: {
               name: 'Giveaway',
               iconURL: icons.giveaway,
-            })
-            .setTitle(prize)
-            .setDescription(`Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`)
-            .addField('Entrants', `0`, true)
-            .addField('Winners', `${winners}`, true)
-            .setColor(await getColor(this.guild)),
+            },
+            title: prize,
+            description: `Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`,
+            fields: [
+              {
+                name: 'Entrants',
+                value: '0',
+                inline: true,
+              },
+              {
+                name: 'Winners',
+                value: winners.toLocaleString(this.guildLocale),
+                inline: true,
+              },
+            ],
+            color: await getColor(this.guild),
+          },
         ],
         components: components(
           row(
@@ -70,9 +81,8 @@ export default ChatCommand({
         ),
       });
 
-      const data = await dbTimeout({
+      const data = await dbTimeout(TimeoutTypes.Giveaway, {
         id: `${this.channel.id}/${msg.id}`,
-        type: TimeoutTypes.Giveaway,
         expiresAt: end.toDate(),
         serverId: this.guildId,
         locale: this.guildLocale,
@@ -100,13 +110,23 @@ export default ChatCommand({
   },
 });
 
-async function getGiveawayData(id: string) {
+async function getGiveawayData(i: MessageComponentInteraction | string) {
+  const id = typeof i === 'string' ? i : `${i.channelId}/${i.message.id}`;
   return (
     activeGiveaways.get(id) ??
     (await prisma.giveaway.findFirst({
       where: { id },
     }))
   );
+}
+
+async function updateGiveaway(i: MessageComponentInteraction | string, gway: Giveaway) {
+  const id = typeof i === 'string' ? i : `${i.channelId}/${i.message.id}`;
+  activeGiveaways.set(id, gway);
+  return await prisma.giveaway.update({
+    where: { id },
+    data: { ...gway },
+  });
 }
 
 export const GwayOptionsButton = ButtonComponent({
@@ -120,22 +140,23 @@ export const GwayOptionsButton = ButtonComponent({
       );
     }
 
-    const gwayData = await getGiveawayData(`${this.channelId}/${this.message.id}`);
+    const gwayData = await getGiveawayData(this);
 
     await this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: 'CRBT Giveaway • Data and Options',
-          })
-          .addField(
-            `Entrants (${gwayData.participants.length})`,
-            gwayData.participants.map((id) => `<@${id}>`).join(', ') || 'None'
-          )
-          .setFooter({
+        {
+          title: 'CRBT Giveaway • Data and Options',
+          fields: [
+            {
+              name: `Entrants (${gwayData.participants.length})`,
+              value: gwayData.participants.map((id) => `<@${id}>`).join(', ') || 'None',
+            },
+          ],
+          footer: {
             text: strings.POLL_DATA_FOOTER,
-          })
-          .setColor(await getColor(this.guild)),
+          },
+          color: await getColor(this.guild),
+        },
       ],
       components: components(
         row(
@@ -200,48 +221,88 @@ export const EndGwayButton = ButtonComponent({
   },
 });
 
+export const ExitGwayButton = ButtonComponent({
+  async handle(messageId: string) {
+    const id = `${this.channelId}/${messageId}`;
+    const gwayData = await getGiveawayData(id);
+    gwayData.participants = gwayData.participants.filter((i) => i !== this.user.id);
+    const msg = await this.channel.messages.fetch(messageId);
+
+    updateGiveaway(id, gwayData);
+
+    await this.update({
+      embeds: [
+        {
+          title: `${emojis.success} You left the giveaway.`,
+          color: colors.success,
+        },
+      ],
+      components: [],
+    });
+
+    msg.edit({
+      embeds: [
+        {
+          ...msg.embeds[0],
+          fields: [
+            {
+              ...msg.embeds[0].fields[0],
+              value: msg.embeds[0].fields[0].value.replace(
+                /\d+/,
+                (match) => `${parseInt(match) - 1}`
+              ),
+            },
+            ...(msg.embeds[0].fields.slice(1) as any[]),
+          ],
+        },
+      ],
+    });
+  },
+});
+
 export const EnterGwayButton = ButtonComponent({
   async handle() {
-    const gwayData = await getGiveawayData(`${this.channelId}/${this.message.id}`);
-    const participants = gwayData.participants;
+    const giveaway = await getGiveawayData(this);
 
-    if (participants.includes(this.user.id)) {
-      return CRBTError(this, 'You have already entered this giveaway.');
+    if (giveaway.participants.includes(this.user.id)) {
+      return this.reply({
+        ...createCRBTError(this, 'You have already entered this giveaway.'),
+        components: components(
+          row(
+            new ExitGwayButton(this.message.id)
+              .setLabel('Leave Giveaway')
+              .setEmoji(emojis.buttons.cross)
+              .setStyle('DANGER')
+          )
+        ),
+      });
     }
 
-    participants.push(this.user.id);
+    giveaway.participants.push(this.user.id);
 
-    await prisma.giveaway.update({
-      where: { id: gwayData.id },
-      data: { ...gwayData, participants },
-    });
+    updateGiveaway(this, giveaway);
 
     this.update({
       embeds: [
-        new MessageEmbed({
+        {
           ...this.message.embeds[0],
-          fields: [],
-        })
-          .addField(
-            this.message.embeds[0].fields[0].name,
-            this.message.embeds[0].fields[0].value.replace(
-              /\d+/,
-              (match) => `${parseInt(match) + 1}`
-            ),
-            true
-          )
-          .addField(
-            this.message.embeds[0].fields[1].name,
-            this.message.embeds[0].fields[1].value,
-            true
-          ),
+          fields: [
+            {
+              ...this.message.embeds[0].fields[0],
+              value: this.message.embeds[0].fields[0].value.replace(
+                /\d+/,
+                (match) => `${parseInt(match) + 1}`
+              ),
+            },
+            ...(this.message.embeds[0].fields.slice(1) as any[]),
+          ],
+        },
       ],
     });
   },
 });
 
 export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
-  const { JUMP_TO_MSG } = t(giveaway.locale, 'genericButtons');
   const winnersAmount = Number(gwayMsg.embeds[0].fields[1].value);
 
   const winners = giveaway.participants.sort(() => 0.5 - Math.random()).slice(0, winnersAmount);
@@ -283,13 +344,17 @@ export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
         .setColor(colors.success),
     ],
     components: components(
-      row(new MessageButton().setStyle('LINK').setURL(gwayMsg.url).setLabel(JUMP_TO_MSG))
+      row(
+        new MessageButton()
+          .setStyle('LINK')
+          .setURL(gwayMsg.url)
+          .setLabel(t(giveaway.locale, 'JUMP_TO_MSG'))
+      )
     ),
   });
 
   await prisma.giveaway.delete({
     where: { id: giveaway.id },
   });
-
   activeGiveaways.delete(giveaway.id);
 };

@@ -6,7 +6,7 @@ import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { LowBudgetMessage, renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { Reminder } from '@prisma/client';
+import { Reminder, ReminderTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import { Message } from 'discord.js';
@@ -108,17 +108,18 @@ export const SelectTimeMenu = SelectMenuComponent({
     };
 
     try {
-      const timeout: Reminder = {
+      const reminder: Reminder = {
         userId: this.user.id,
         destination: 'dm',
         expiresAt: expiresAt.toDate(),
         locale: this.locale,
-        id: `${url}-MESSAGEREMINDER-${randomBytes(6)}`,
+        id: `${url}-${randomBytes(6)}`,
         subject: `${message.author.tag}--${subject}`,
         details: JSON.stringify(details),
+        type: ReminderTypes.MESSAGE,
       };
 
-      await dbTimeout({ ...timeout, type: TimeoutTypes.Reminder });
+      await dbTimeout(TimeoutTypes.Reminder, reminder);
 
       const formattedExpires = `${timestampMention(expiresAt, 'T')} • ${timestampMention(
         expiresAt,
@@ -129,16 +130,10 @@ export const SelectTimeMenu = SelectMenuComponent({
         embeds: [
           {
             title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
-            description:
-              `${strings.SUCCESS_DM}\n` +
-              (expiresAt.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                ? strings.TODAY_AT.replace('<TIME>', formattedExpires)
-                : expiresAt.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                ? strings.TOMORROW_AT.replace('<TIME>', formattedExpires)
-                : formattedExpires),
+            description: `${strings.SUCCESS_DM}\n${formattedExpires}`,
             fields: [
               {
-                name: strings.SUBJECT,
+                name: t(this, 'SUBJECT'),
                 value: subject,
               },
             ],

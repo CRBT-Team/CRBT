@@ -3,7 +3,7 @@ import { colors, emojis } from '$lib/env';
 import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { Routes } from 'discord-api-types/v10';
+import { MessageFlags, Routes } from 'discord-api-types/v10';
 import { ButtonInteraction } from 'discord.js';
 import { ButtonComponent, components, getRestClient, row } from 'purplet';
 import { returnFeaturedItem } from './featured';
@@ -11,35 +11,44 @@ import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 
 export interface SearchTabBtnProps {
-  site: string;
-  page?: number;
-  pages?: number;
+  site?: string;
+  newPage?: number;
   // not used, aside from fixing a duplicating bug on Discord
   shit?: boolean;
 }
 
 export interface NavBarProps {
   locale: string;
+  userId: string;
   pages: number;
 }
 
-async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<SearchCmdOpts>) {
-  const { errors } = t(this, 'user_navbar');
-
-  if (this.user.id !== this.message.interaction.user.id) {
-    return CRBTError(this, errors.NOT_CMD_USER);
-  }
-
-  await this.deferUpdate();
-
+async function handleSearchTabBtn(this: ButtonInteraction, newOpts: SearchTabBtnProps) {
+  const originalInteraction = this.message.interaction;
+  const isEphemeral =
+    (this.message.flags.valueOf() & MessageFlags.Ephemeral) === MessageFlags.Ephemeral;
   const fromCache = cache.get<SearchCmdOpts>(`search:${this.message.id}`);
+
+  const isOriginalUser = this.user.id === (fromCache?.userId || originalInteraction.user.id);
 
   const opts: SearchCmdOpts = {
     ...fromCache,
-    ...newOpts,
+    anonymous: isEphemeral || !isOriginalUser,
+    page: newOpts.newPage,
+    site: newOpts.site ?? fromCache.site,
+    userId: this.user.id,
   };
 
-  if (fromCache?.site !== newOpts.site) {
+  console.log(JSON.stringify(fromCache));
+  console.log(JSON.stringify(opts));
+
+  if (isOriginalUser) {
+    await this.deferUpdate();
+  } else {
+    await this.deferReply({ ephemeral: true });
+  }
+
+  if (newOpts.site) {
     await this.editReply({
       embeds: [
         {
@@ -54,53 +63,30 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: Partial<Sear
       ),
     });
   }
+  // console.log(await this.fetchReply());
 
-  cache.set(`search:${this.message.id}`, opts);
-
-  const res = await searchEngines[opts.site].handle.call(this, opts);
-
-  if (res) await this.editReply(res);
+  await this.editReply(await searchEngines[opts.site].handle.call(this, opts));
 }
 
-export const HandleResultButton = ButtonComponent({
-  handle({ site }: SearchTabBtnProps) {
-    handleSearchTabBtn.call(this, { site, page: 1 });
-  },
-});
-
-export const PreviousPageButton = ButtonComponent({
-  handle({ site, page }: SearchTabBtnProps) {
-    handleSearchTabBtn.call(this, { site, page: page - 1 });
-  },
-});
-
-export const NextPageButton = ButtonComponent({
-  handle({ site, page }: SearchTabBtnProps) {
-    handleSearchTabBtn.call(this, { site, page: page + 1 });
-  },
-});
-
-export const LastPageButton = ButtonComponent({
-  handle({ site, pages }: SearchTabBtnProps) {
-    handleSearchTabBtn.call(this, { site, page: pages });
+export const ChangeSearchButton = ButtonComponent({
+  handle(props: SearchTabBtnProps) {
+    handleSearchTabBtn.call(this, props);
   },
 });
 
 export const DeleteSearchButton = ButtonComponent({
-  async handle() {
-    const { errors } = t(this, 'user_navbar');
-
-    if (this.user.id !== this.message.interaction.user.id) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+  async handle(userId: string) {
+    if (this.user.id !== userId) {
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
 
     getRestClient().delete(Routes.channelMessage(this.channelId, this.message.id));
   },
 });
 
-export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
-  const featured = returnFeaturedItem(opts);
+export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarProps) {
   const { page, site: currentSite } = opts;
+  const featured = returnFeaturedItem(opts.query);
 
   const arr = chunks(
     [
@@ -115,14 +101,12 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
     5
   );
 
-  console.log(arr);
-
   const result = components(
     ...arr.map((enginesRow) =>
       row().addComponents(
-        enginesRow.map(([engineSite, { name, emoji }]) =>
-          new HandleResultButton({ site: engineSite })
-            .setLabel(name)
+        enginesRow.map(([engineSite, { emoji }]) =>
+          new ChangeSearchButton({ site: engineSite, newPage: 1 })
+            .setLabel(t(locale, `SEARCH_ENGINES.${engineSite}` as any))
             .setEmoji(emoji)
             .setStyle('SECONDARY')
             .setDisabled(engineSite === currentSite)
@@ -136,19 +120,23 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
             ...(searchEngines[currentSite].noPagination
               ? []
               : [
-                  new HandleResultButton({ site: currentSite, shit: true })
+                  // First page
+                  new ChangeSearchButton({ newPage: 0, shit: true })
                     .setEmoji(emojis.buttons.skip_first)
                     .setStyle('PRIMARY')
                     .setDisabled(page - 1 <= 0),
-                  new PreviousPageButton({ site: currentSite, page })
+                  // Previous page
+                  new ChangeSearchButton({ newPage: page - 1 })
                     .setEmoji(emojis.buttons.left_arrow)
                     .setStyle('PRIMARY')
                     .setDisabled(page - 1 <= 0),
-                  new NextPageButton({ site: currentSite, page })
+                  // Next page
+                  new ChangeSearchButton({ newPage: page + 1 })
                     .setEmoji(emojis.buttons.right_arrow)
                     .setStyle('PRIMARY')
                     .setDisabled(page >= pages),
-                  new LastPageButton({ site: currentSite, page, pages })
+                  // Last page
+                  new ChangeSearchButton({ newPage: pages, shit: true })
                     .setEmoji(emojis.buttons.skip_last)
                     .setStyle('PRIMARY')
                     .setDisabled(page >= pages),
@@ -156,7 +144,7 @@ export function navbar(opts: SearchCmdOpts, { locale, pages }: NavBarProps) {
             ...(opts.anonymous
               ? []
               : [
-                  new DeleteSearchButton()
+                  new DeleteSearchButton(userId)
                     .setLabel(searchEngines[currentSite].noPagination ? 'Delete Search' : '')
                     .setEmoji(emojis.buttons.trash_bin)
                     .setStyle('DANGER'),

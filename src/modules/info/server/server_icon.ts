@@ -7,7 +7,6 @@ import {
   Interaction,
   MessageButton,
   MessageComponentInteraction,
-  MessageEmbed,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { AvatarFormats, AvatarSizes, NavBarContext } from '../user/_navbar';
@@ -37,7 +36,10 @@ export default ChatCommand({
     }),
   async handle({ id, size, format }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
-      return await CRBTError(this, `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`);
+      return await CRBTError(
+        this,
+        `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`
+      );
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
@@ -69,10 +71,11 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
 
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({ name: `${guild.name} - Server icon`, iconURL: av })
-        .setImage(av)
-        .setColor(`#${color}`),
+      {
+        author: { name: `${guild.name} - Server icon`, iconURL: av },
+        image: { url: av },
+        color,
+      },
     ],
     components: components(
       row(
@@ -81,9 +84,9 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
           .setLabel(
             !av.includes('embed/avatars')
               ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                ? 'GIF'
-                : format ?? 'png'
-              ).toUpperCase()})`
+                  ? 'GIF'
+                  : format ?? 'png'
+                ).toUpperCase()})`
               : 'Download (256px - PNG)'
           )
           .setURL(av)

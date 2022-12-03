@@ -10,7 +10,7 @@ import { RawServerJoin } from '../types';
 export default ChatCommand({
   name: 'welcome preview',
   description: t('en-US', 'JOINLEAVE_PREVIEW_DESCRIPTION').replace(
-    '<TYPE>',
+    '{TYPE}',
     t('en-US', 'JOIN_MESSAGE').toLowerCase()
   ),
   async handle() {

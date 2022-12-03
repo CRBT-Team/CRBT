@@ -1,38 +1,47 @@
 {
+  "ID": "Identifiant",
+  "CREATED_ON": "Créé le",
+  "MEMBER_COUNT": "Nombre de membres",
+  "SERVER_COUNT": "Nombre de membres",
+  "PING": "Latence",
+  "UPTIME": "Connecté depuis",
+  "WEBSITE": "Site web",
+  "ADD_TO_SERVER": "Ajouter au serveur",
+  "DISCORD_SERVER": "Serveur Discord",
+  "DONATE": "Faire un don",
   "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
-  "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) <PERMISSIONS> pour utiliser cette commande.",
+  "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
   "ERROR_INVALID_URL": "L'URL que vous avez indiquée est invalide.",
   "ERROR_INVALID_HEX": "La couleur HEX que vous avez fournie est invalide.",
+  "BACK": "Retour",
+  "JUMP_TO_MSG": "Aller au message",
+  "CANCEL": "Annuler",
+  "CONFIRM": "Confirmer",
+  "DELETE": "Supprimer",
+  "EDIT": "Modifier",
+  "PREVIOUS": "Précédent",
+  "NEXT": "Suivant",
+  "SAVE": "Enregistrer",
+  "SEND": "Envoyer",
+  "DONE": "Valider",
+  "ADD_REMINDER": "Envoyer un rappel",
+  "OPEN_DMS": "Ouvrir les MP",
+  "PREVIEW": "Aperçu",
+  "EXPORT": "Exporter",
+  "IMPORT": "Importer",
   "globalErrors": {
     "GUILD_ONLY": "Cette commande ne peut pas être utilisée en MP."
-  },
-  "genericButtons": {
-    "BACK": "Retour",
-    "JUMP_TO_MSG": "Aller au message",
-    "CANCEL": "Annuler",
-    "CONFIRM": "Confirmer",
-    "DELETE": "Supprimer",
-    "EDIT": "Modifier",
-    "PREVIOUS": "Précédent",
-    "NEXT": "Suivant",
-    "SAVE": "Enregistrer les modifications",
-    "DONE": "Valider",
-    "ADD_REMINDER": "Envoyer un rappel",
-    "OPEN_DMS": "Ouvrir les MP",
-    "PREVIEW": "Aperçu",
-    "EXPORT": "Export",
-    "IMPORT": "Import"
   },
   "UnknownError": {
     "strings": {
       "TITLE": "Une erreur inconnue est survenue.",
-      "DESCRIPTION": "Nous n'avons aucune idée de ce que ce problème pourrait être. Voici le message d'erreur reçu :\n<MESSAGE>\nCeci nous a été signalé automatiquement, et nous nous assurerons de corriger ce problème dès que possible. Désolé pour la gêne occasionnée."
+      "DESCRIPTION": "Nous n'avons aucune idée de ce que ce problème pourrait être. Voici le message d'erreur reçu :\n{MESSAGE}\nCeci nous a été signalé automatiquement, et nous nous assurerons de corriger ce problème dès que possible. Désolé pour la gêne occasionnée."
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Un instant !",
-      "DESCRIPTION": "Vous pourrez utiliser <TYPE> dans <TIME>...",
+      "DESCRIPTION": "Vous pourrez utiliser {TYPE} dans {TIME}...",
       "COMMAND": "cette commande",
       "COMPONENT": "ce bouton"
     }
@@ -100,30 +109,27 @@
       ]
     },
     "errors": {
-      "SUBJECT_MAX_LENGTH": "Le sujet de votre rappel ne peut pas dépasser 120 caractères.",
       "PAST": "Vous ne pouvez pas définir un rappel dans le passé.",
       "INVALID_FORMAT": "Le temps que vous avez entré est dans un format invalide ou est en dessous de 0 secondes dans le futur.",
       "TOO_LONG": "Vous ne pouvez pas définir un rappel pour plus de 2 ans.",
       "INVALID_CHANNEL_TYPE": "Le salon spécifié n'est pas un salon textuel.",
       "BOT_MISSING_PERMS": "Je n'ai pas la permission d'envoyer des messages dans ce salon.",
       "USER_MISSING_PERMS": "Vous n'avez pas la permission d'envoyer des messages dans ce salon.",
-      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas avoir plus de 10 rappels à la fois."
+      "REMINDERS_MAX_LIMIT": "Vous ne pouvez pas définir plus de 10 rappels à la fois."
     },
     "strings": {
       "SUCCESS_TITLE": "Rappel créé !",
-      "SUCCESS_CHANNEL": "Vous recevrez votre rappel dans <CHANNEL>",
+      "SUCCESS_CHANNEL": "Vous recevrez votre rappel dans {CHANNEL}",
       "SUCCESS_DM": "Vous recevrez votre rappel par MP",
       "SUBJECT": "Sujet",
-      "TOMORROW_AT": "Demain à <TIME>",
-      "TODAY_AT": "Aujourd'hui à <TIME>",
+      "TOMORROW_AT": "Demain à {TIME}",
+      "TODAY_AT": "Aujourd'hui à {TIME}",
       "BUTTON_GCALENDAR": "Ajouter à Google Calendrier",
       "GCALENDAR_EVENT": "Défini par un rappel CRBT.",
       "GCALENDAR_EVENT_DM": "Vous en serez aussi rappelé par MP.",
-      "GCALENDAR_EVENT_CHANNEL": "Vous en serez également rappelé dans <CHANNEL>, dans <SERVER>.",
+      "GCALENDAR_EVENT_CHANNEL": "Vous en serez également rappelé dans {CHANNEL}, dans {SERVER}.",
       "REMINDER_TITLE": "Rappel",
-      "REMINDER_DESCRIPTION": "Réglé le <TIME> (<RELATIVE_TIME>)",
-      "BUTTON_SNOOZE": "Reporter",
-      "BUTTON_SNOOZE_SUCCESS": "Reporté de 15 minutes"
+      "REMINDER_DESCRIPTION": "Réglé le {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "et",
@@ -139,11 +145,11 @@
       "description": "Renvoie la latence et les infos de connection de CRBT."
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Latence",
-      "WEBSOCKET": "WebSocket",
-      "INTERACTION": "Interaction",
+      "EMBED_TITLE": "{CRBT} - Latence",
+      "WEBSOCKET": "Latence WebSocket",
+      "INTERACTION": "Latence de l'interaction",
       "UPTIME": "Connecté depuis",
-      "FORMAT_MS": "<NUMBER>ms"
+      "FORMAT_MS": "{NUMBER}ms"
     }
   },
   "crbt info": {
@@ -151,39 +157,32 @@
       "description": "Obtenir des informations sur CRBT"
     },
     "strings": {
-      "EMBED_TITLE": "<CRBT> - Information",
-      "VERSION": "Version <VERSION> sur <PURPLET>",
       "MEMBER_COUNT": "Nombre de membres",
       "SERVER_COUNT": "Nombre de membres",
-      "PING": "Latence",
-      "PING_RESULT": "≈<PING> millisecondes",
-      "CREATED": "Créé le",
-      "UPTIME": "Connecté depuis",
-      "BUTTON_WEBSITE": "Site web",
-      "BUTTON_INVITE": "Ajouter au serveur",
-      "BUTTON_DISCORD": "Rejoindre la communauté",
-      "BUTTON_DONATE": "Donate"
+      "PING_RESULT": "≈{PING} millisecondes"
     }
   },
   "user_navbar": {
     "errors": {
-      "NOT_CMD_USER": "Seule la personne qui a utilisé cette commande peut utiliser ce bouton."
+      "NOT_CMD_USER": "Seule la personne utilisant cette commande peut utiliser ce composant."
     },
     "strings": {
       "AVATAR": "Avatar",
-      "INFO": "User Info",
-      "SERVER_AVATAR": "Server Avatar",
-      "USER_AVATAR": "User Avatar",
-      "USER_BANNER": "User Banner"
+      "INFO": "Infos utilisateur",
+      "BOTINFO": "Infos du Bot",
+      "SERVER_AVATAR": "Avatar de serveur",
+      "USER_AVATAR": "Avatar de l'utilisateur",
+      "USER_BANNER": "Bannière de l'utilisateur"
     }
   },
-  "profile": {
-    "pronouns": {
-      "hh": "Il",
-      "sh": "Elle",
-      "tt": "Iel",
-      "other": "Autre",
-      "ask": "Demandez-moi"
+  "server_navbar": {
+    "strings": {
+      "INFO": "Informations sur le serveur",
+      "ICON": "Icône",
+      "BANNER": "Bannière",
+      "ROLES": "Rôles & Membres",
+      "EMOJIS": "Émojis et Stickers",
+      "EXTRA": "Voir plus"
     }
   },
   "poll": {
@@ -205,22 +204,21 @@
       ]
     },
     "errors": {
-      "TITLE_TOO_LONG": "Le titre de votre sondage doit être de 100 caractères ou moins.",
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
+      "CHOICE_TOO_LONG": "Un choix ne peut pas contenir plus de 40 caractères (émojis exclus).",
       "CHOICE_EMPTY": "Un choix ne peut pas être vide (sans compter les émojis).",
       "POLL_DATA_NOT_ALLOWED": "Seuls les modérateurs de chat (avec la permission \"Gérer les messages\") et le créateur du sondage peuvent afficher ses données et ses options."
     },
     "strings": {
       "CHOICE": "Choix",
-      "POLL_DESCRIPTION": "Le sondage se terminera <TIME>.\nLe créateur de sondage peut afficher les options et autres données en cliquant sur le bouton <ICON> ci-dessous.",
-      "POLL_OPTION_RESULT": "<PERCENTAGE>% • <VOTES> vote(s)",
-      "POLL_FOOTER_VOTES": "Total des votes : <VOTES>",
-      "POLL_FOOTER_CREATOR": "Sondage lancé par <USER>",
+      "POLL_DESCRIPTION": "Le sondage se terminera {TIME}.\nLe créateur de sondage peut afficher les options et autres données en cliquant sur le bouton {ICON} ci-dessous.",
+      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
+      "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
+      "POLL_FOOTER_CREATOR": "Poll started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Voter",
       "KEYWORD_YES__KEEP_LOWERCASE": "oui",
       "KEYWORD_NO__KEEP_LOWERCASE": "non",
       "SUCCESS_TITLE": "Sondage créé !",
-      "SUCCESS_DESCRIPTION": "Le sondage se terminera <TIME>, mais vous pouvez le terminer prématurément en utilisant le menu <ICON> . À partir de ce dernier, vous pouvez également modifier le sondage, le supprimer ou afficher les voteurs.",
+      "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
       "POLL_DATA_OPTIONS": "Sondage CRBT • Données et options",
       "POLL_DATA_NOVOTES": "Aucun vote pour l'instant",
       "POLL_DATA_FOOTER": "Note : Ces données ne sont pas mises à jour en direct. Utilisez le bouton à nouveau pour les actualiser.",
@@ -233,15 +231,15 @@
       "POLL_HEADER_ENDED": "Terminé",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION_TIE": "Les choix \"<OPTION1>\" et \"<OPTION2>\" ont fini à égalité avec <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "Le choix \"<OPTION>\" a gagné avec <VOTES> vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "sur <TOTAL> !\nCliquez sur le bouton ci-dessous pour afficher les résultats.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
+      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
       "BUTTON_JUMP_TO_POLL": "Aller au sondage"
     }
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Obtenir l'avatar d'un utilisateur (du serveur ou de l'utilisateur).",
       "options": [
         {
           "name": "utilisateur",
@@ -258,17 +256,17 @@
       ]
     },
     "ctxMeta": {
-      "name": "Voir l'avatar"
+      "name": "Voir l'avatar/la bannière"
     },
     "strings": {
-      "EMBED_TITLE": "<USER> - Avatar",
-      "DOWNLOAD": "Télécharger (<SIZE> pixels - <FORMAT>)"
+      "EMBED_TITLE": "{USER} - Avatar",
+      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Merci d'avoir invité <CRBT> sur votre serveur !",
-      "EMBED_DESCRIPTION": "<CRBT> est maintenant dans <SERVERS> serveurs !\nPour commencer avec CRBT, tapez simplement `/` et cliquez sur son avatar !\nPour plus d'aide et d'informations, visitez le **[serveur de support](<DISCORD>)**."
+      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
+      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -279,7 +277,7 @@
       "DMS_DISABLED": "Vous devez activer vos MP ou débloquer CRBT pour pouvoir sauvegarder des messages."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "<USER> (message sauvegardé)",
+      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
       "SUCCESS_MESSAGE": "Ce message vous a été sauvegardé par MP !"
     }
   },
@@ -297,7 +295,7 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Créer un Sélecteur de rôles manuellement, permettant à vos membres de s'assigner des rôles.",
+        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
         "options": [
           {
             "name": "description",
@@ -322,51 +320,21 @@
         ]
       }
     },
-    "preset": {
-      "meta": {
-        "description": "Créer un nouveau Sélecteur de rôles en utilisant un kit préconçu.",
-        "options": [
-          {
-            "name": "kit",
-            "description": "Un kit à choisir. CRBT s'occupera de créer les rôles et d'envoyer un joli message."
-          }
-        ]
-      },
-      "presets": {
-        "colors": {
-          "name": "Couleurs",
-          "message": "Choisissez une couleur pour votre nom affiché."
-        },
-        "pronouns": {
-          "name": "Pronoms",
-          "message": "Quels sont vos pronoms ?"
-        },
-        "zodiacSigns": {
-          "name": "Signes du zodiaque",
-          "message": "Quel est votre signe du zodiaque ?"
-        },
-        "verification": {
-          "name": "Vérification humaine",
-          "message": "Cliquez sur le bouton pour vérifier votre compte."
-        }
-      }
-    },
     "errors": {
       "USER_MISSING_PERMS": "Seuls les administrateurs du serveur peuvent créer des Sélecteurs de rôles.",
       "BOT_MISSING_PERMS": "J'ai besoin de la permission \"Gérer les rôles\" pour créer un Sélecteur de rôles.",
-      "ROLE_DOES_NOT_EXIST": "Le rôle <ROLE> n'existe pas ou a été supprimé. Contactez un administrateur pour résoudre le problème.",
+      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
       "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles que vous avez spécifiés n'existent pas ou ont été supprimés. Contactez un administrateur pour résoudre le problème.",
       "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
     },
     "strings": {
       "CHOOSE_ROLE": "Choisissez un rôle",
       "CHOOSE_ROLES": "Choississez des rôles",
-      "OPTION_LABEL_GET_ROLE": "Obtenez le rôle <ROLE>.",
       "GENERIC_SELECTOR_TITLE": "Sélectionnez un ou plusieurs rôles en les choisissant ci-dessous.",
       "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
-      "BUTTON_ROLES_ADD": "Le rôle <ROLE> vous a été ajouté.",
+      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Sélectionnez-le à nouveau pour le retirer.",
-      "BUTTON_ROLES_REMOVE": "<ROLE> a été retiré de vos rôles.",
+      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Sélectionnez-le à nouveau pour l'ajouter.",
       "SUCCESS_TITLE": "Sélecteur de rôles créé !",
       "SUCCESS_DESCRIPTION": "Les membres pourront désormais choisir des rôles depuis ce menu. Pour le désactiver, supprimez le message du Sélecteur de rôles."
@@ -377,49 +345,76 @@
   "MODERATION_LOGS_ACTION_BAN": "Bannissement",
   "MODERATION_LOGS_ACTION_UNBAN": "Débannissement",
   "MODERATION_LOGS_ACTION_TIMEOUT": "Exclusion",
+  "MODERATION_LOGS_ACTION_TEMPBAN": "Bannissement temporaire",
   "MODERATION_LOGS_CLEAR": "Suppression de messages",
-  "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans <SERVER>",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Modéré par <MODERATOR>",
+  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
   "JOIN_MESSAGE": "Message de bienvenue",
   "LEAVE_MESSAGE": "Message de départ",
   "JOIN_CHANNEL": "Salon de bienvenue",
   "LEAVE_CHANNEL": "Salon de départ",
-  "JOINLEAVE_CHANNEL_DESCRIPTION": "Change le salon où envoyer le <TYPE>.",
-  "JOINLEAVE_CHANNEL_OPTION_CHANNEL_DESCRIPTION": "Où envoyer le <TYPE>.",
-  "JOINLEAVE_CHANNEL_SUCCESS_TITLE": "<TYPE> choisi !",
   "CRBTSCRIPT_GUIDE": "Ouvrir le guide CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifiez ce message pour personnaliser le <TYPE> en utilisant le menu déroulant ci-dessous.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_MESSAGE_SAVE_TITLE": "<TYPE> enregistré.",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Aperçu du <TYPE>.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "<TYPE> - Aperçu",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le <TYPE> lorsqu'il sera envoyé dans <CHANNEL>.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Une erreur s'est produite en essayant de prévisualiser le <TYPE>. Le salon n'existe peut-être plus, ou je n'ai pas la permission d'y envoyer des messages.",
-  "JOIN_CHANNEL_SUCCESS_DESCRIPTION": "Les nouveaux membres seront maintenant accueillis dans <CHANNEL>. Pour changer le message qui sera envoyé, vous pouvez utiliser la commande <COMMAND>.",
-  "JOIN_MESSAGE_SAVE_DESCRIPTION": "Les nouveaux membres verront maintenant ce message lorsqu'ils rejoindront le serveur. Pour changer le salon où il est envoyé, utilisez <COMMAND>.",
-  "JOIN_MESSAGE_DESCRIPTION": "Créer ou modifier le message à envoyer lorsqu'un utilisateur rejoint le serveur.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
-  "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message. Utilisez <COMMAND> pour en définir un.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "Vous devez d'abord choisir un salon où envoyer le <TYPE>. Utilisez /welcome channel pour en choisir un.",
-  "LEAVE_CHANNEL_SUCCESS_DESCRIPTION": "Lorsqu'un membre quittera le serveur, le message de leur départ sera désormais envoyé dans <CHANNEL>. Pour changer le message à envoyer, utilisez <COMMAND>.",
-  "LEAVE_MESSAGE_SAVE_DESCRIPTION": "Ce message sera désormais envoyé dès qu'un membre quittera le serveur. Pour changer le salon où ce message s'envoie, utilisez <COMMAND>.",
-  "LEAVE_MESSAGE_DESCRIPTION": "Créer ou modifier le message à envoyer lorsqu'un utilisateur quitte le serveur.",
+  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
+  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> a quitté le serveur.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "Vous devez d'abord choisir un salon où envoyer le <TYPE>. Utilisez /farewell channel pour en choisir un.",
+  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Choisissez un champ à éditer",
   "COLOR_PRESET_SELECT_MENU": "Choisissez une couleur préréglée",
   "MANUAL_COLOR_EDIT_BUTTON": "Utiliser un code HEX",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "La syntaxe Markdown et CRBTscript sont acceptés.",
   "FIELDS_CONTENT": "Texte standard",
   "FIELDS_AUTHOR": "Auteur de l'Embed",
-  "FIELDS_AUTHOR_NAME": "Embed Author Name",
-  "FIELDS_AUTHOR_URL": "Embed Author URL",
-  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
+  "FIELDS_AUTHOR_NAME": "Nom de l'auteur sur l'embed",
+  "FIELDS_AUTHOR_URL": "URL de l'auteur sur l'embed",
+  "FIELDS_AUTHOR_ICON": "Icône de l'auteur sur l'embed",
   "FIELDS_TITLE": "Titre de l'Embed",
   "FIELDS_DESCRIPTION": "Description de l'Embed",
   "FIELDS_FOOTER": "Pied de page de l'Embed",
   "FIELDS_COLOR": "Couleur de l'Embed",
   "FIELDS_IMAGE": "Image de l'Embed",
   "FIELDS_THUMBNAIL": "Vignette de l'Embed",
-  "FIELDS_URL": "Lien sur Titre de l'Embed"
+  "FIELDS_URL": "Lien sur Titre de l'Embed",
+  "SETTINGS": "Réglages",
+  "BIRTHDAY_REMINDER_MESSAGE": "Souhaitez un joyeux anniversaire à {USER} !",
+  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "USER_INFO_EMBED_TITLE": "{USER} - User info",
+  "USER_INFO_CREATED_AT": "A rejoint Discord",
+  "USER_INFO_JOINED_SERVER": "A rejoint le serveur",
+  "USER_INFO_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
+  "USER_INFO_NICKNAME": "Pseudo du serveur",
+  "USER_INFO_ROLES": "Rôle(s)",
+  "USER_INFO_PERMS": "Permissions principales sur ce serveur",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Bienvenue sur CRBT !",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Ajouter CRBT à un serveur (merci !)",
+  "ACHIEVEMENT_BUG_HUNTER_TITLE": "Chasseur de bugs",
+  "ACHIEVEMENT_BUG_HUNTER_DESC": "Signaler un bug avec {command}",
+  "ACHIEVEMENT_ARTIST_TITLE": "Artiste",
+  "ACHIEVEMENT_ARTIST_DESC": "Changer votre couleur d'accentuation avec {command}",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_TITLE": "Sympa et Cosy",
+  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_DESC": "Changez la couleur d'accentuation du serveur avec {command}.",
+  "ACHIEVEMENT_DND_PRO_TITLE": "Pro de D&D",
+  "ACHIEVEMENT_DND_PRO_DESC": "Lancez un d20 parfait sur {command}.",
+  "ACHIEVEMENT_BUG_NINJA_TITLE": "Ninja des Bugs",
+  "ACHIEVEMENT_BUG_NINJA_DESC": "Obtenez 5 de vos rapports de bug résolus.",
+  "ACHIEVEMENT_SEEKER_TITLE": "Chercheur d'info",
+  "ACHIEVEMENT_SEEKER_DESC": "Recherchez 10 fois avec {command}.",
+  "ACHIEVEMENT_BOOKMARKER_TITLE": "Fanatique des Messages",
+  "ACHIEVEMENT_BOOKMARKER_DESC": "Envoyez 5 messages à vos marque-pages.",
+  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "La sécurité avant tout !",
+  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Consultez les paramètres de confidentialité du CRBT avec {command}.",
+  "ACHIEVEMENT_BREWING_APPS_TITLE": "Concoction d'applis",
+  "ACHIEVEMENT_BREWING_APPS_DESC": "Créez et utilisez votre jeton d'API CRBT.",
+  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "Accro à CRBT",
+  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Utilisez 100 commandes.",
+  "ACHIEVEMENT_ERROR_MASTER_TITLE": "Toujours plus d'erreurs !",
+  "ACHIEVEMENT_ERROR_MASTER_DESC": "Trouve la commande d'erreur secrète.",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "tu me recopies ?",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Trouvez la couleur d'accentuation CRBT cachée."
 }

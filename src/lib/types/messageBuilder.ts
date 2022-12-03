@@ -5,6 +5,7 @@ import {
   MessageEmbedOptions,
   ModalSubmitInteraction,
 } from 'discord.js';
+import { EditableFeatures } from './settings';
 
 export interface BaseMessageData {
   content?: string;
@@ -12,8 +13,8 @@ export interface BaseMessageData {
 }
 
 export enum MessageBuilderTypes {
-  joinMessage = 'JOIN_MESSAGE',
-  leaveMessage = 'LEAVE_MESSAGE',
+  joinMessage = EditableFeatures.joinMessage,
+  leaveMessage = EditableFeatures.leaveMessage,
   rolePicker = 'ROLE_PICKER',
 }
 
@@ -23,7 +24,7 @@ export interface RolePickerData extends BaseMessageData {
 }
 
 export interface JoinLeaveData extends BaseMessageData {
-  type: MessageBuilderTypes.joinMessage | MessageBuilderTypes.leaveMessage;
+  type: EditableFeatures.joinMessage | EditableFeatures.leaveMessage;
   script?: string;
 }
 

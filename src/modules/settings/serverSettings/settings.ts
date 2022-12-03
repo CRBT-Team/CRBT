@@ -4,14 +4,10 @@ import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
-import {
-  CamelCaseFeatures,
-  EditableFeatures,
-  FullSettings,
-  SettingsMenus,
-} from '$lib/types/settings';
+import { getAllLanguages, t } from '$lib/language';
+import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { ServerFlags } from '$lib/util/serverFlags';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
@@ -19,53 +15,22 @@ import {
   ModalSubmitInteraction,
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import { colorSettings } from './accentColor';
-import { joinLeaveSettings } from './joinLeave';
-import { modlogsSettings } from './modlogs';
-
-export const strings = {
-  [EditableFeatures.joinMessage]: 'Welcome Message',
-  [EditableFeatures.leaveMessage]: 'Farewell Message',
-  [EditableFeatures.accentColor]: 'Server Accent Color',
-  [EditableFeatures.moderationLogs]: `Moderation Logs`,
-};
-
-const features: {
-  [k: string]: SettingsMenus;
-} = {
-  [EditableFeatures.joinMessage]: joinLeaveSettings,
-  [EditableFeatures.leaveMessage]: joinLeaveSettings,
-  [EditableFeatures.accentColor]: colorSettings,
-  [EditableFeatures.moderationLogs]: modlogsSettings,
-};
-
-export async function getSettings(guildId: string) {
-  const settings: FullSettings = {
-    id: guildId,
-    flags: 0n,
-    modules: {
-      id: guildId,
-      joinMessage: false,
-      leaveMessage: false,
-      moderationLogs: false,
-    },
-    ...(await fetchWithCache(`${guildId}:settings`, () =>
-      prisma.servers.findFirst({ where: { id: guildId }, include: { modules: true } })
-    )),
-  };
-
-  console.log(settings);
-
-  return settings as FullSettings;
-}
+import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from './_helpers';
 
 export default ChatCommand({
   name: 'settings',
-  description: 'Configure CRBT settings on this server.',
+  description: t('en-US', 'settings.description'),
+  nameLocalizations: getAllLanguages('settings.name'),
+  descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
-    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
-      return CRBTError(this, t(this.locale, 'ERROR_ADMIN_ONLY'));
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
+      return CRBTError(
+        this,
+        t(this.locale, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Server',
+        })
+      );
     }
 
     this.reply(await renderSettingsMenu.call(this));
@@ -77,14 +42,26 @@ export async function renderSettingsMenu(
 ) {
   const settings = await getSettings(this.guild.id);
 
-  const options = Object.entries(EditableFeatures)
-    .map(([key, snake_key]) => {
-      return features[snake_key].getSelectMenu({
-        i: this,
-        feature: snake_key,
-        guild: this.guild,
-        settings,
-      });
+  const options = Object.values(EditableFeatures)
+    .map((feature) => {
+      if (
+        feature === EditableFeatures.economy &&
+        (Number(settings.flags) & ServerFlags.HasEconomy) !== ServerFlags.HasEconomy
+      )
+        return;
+
+      const props = resolveSettingsProps(this, feature, settings);
+
+      return {
+        label: t(this, feature),
+        value: feature,
+        ...(props.errors.length > 0
+          ? {
+              emoji: '⚠️',
+              description: t(this, 'ATTENTION_REQUIRED'),
+            }
+          : featureSettingsMenus[feature].getSelectMenu(props)),
+      };
     })
     .filter(Boolean);
 
@@ -93,18 +70,16 @@ export async function renderSettingsMenu(
     embeds: [
       {
         author: {
-          name: `CRBT Settings`,
+          name: t(this, 'SETTINGS_TITLE'),
           iconURL: icons.settings,
         },
-        title: `${this.guild.name} / Overview`,
-        description: `Use the select menu below to configure a feature.`,
+        title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
+        description: t(this, 'SETTINGS_DESCRIPTION'),
         color: await getColor(this.guild),
       },
     ],
     components: components(
-      row(
-        new FeatureSelectMenu().setPlaceholder('Select a feature to configure.').setOptions(options)
-      )
+      row(new FeatureSelectMenu().setPlaceholder('Choose a setting.').setOptions(options))
     ),
     ephemeral: true,
   };
@@ -112,7 +87,7 @@ export async function renderSettingsMenu(
 
 export const FeatureSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
-    const featureId = this.values[0];
+    const featureId = this.values[0] as EditableFeatures;
 
     this.update(await renderFeatureSettings.call(this, featureId));
   },
@@ -120,58 +95,60 @@ export const FeatureSelectMenu = SelectMenuComponent({
 
 export async function renderFeatureSettings(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
-  feature: string
+  feature: EditableFeatures
 ): Promise<any> {
-  const [key, snake_key] = Object.entries(EditableFeatures).find(([_, value]) => value === feature);
-  const settings = await getSettings(this.guild.id);
-  const isModule = Object.keys(settings.modules).includes(key);
-  const isEnabled = isModule ? settings.modules[key] : settings[key];
+  const { getComponents, getMenuDescription } = featureSettingsMenus[feature];
+  const props = resolveSettingsProps(this, feature, await getSettings(this.guildId));
+  const { isEnabled, errors } = props;
 
   const backBtn = new BackSettingsButton(null)
-    .setLabel(t(this, 'SETTINGS'))
+    // .setLabel(t(this, 'SETTINGS'))
     .setEmoji(emojis.buttons.left_arrow)
     .setStyle('SECONDARY');
-  const toggleBtn = new ToggleFeatureBtn({ feature, state: !isEnabled })
-    .setLabel(isEnabled ? 'Enabled' : 'Disabled')
-    .setEmoji(isEnabled ? emojis.toggle.on : emojis.toggle.off)
-    .setStyle('SECONDARY');
 
-  const components = features[feature].getComponents({
-    backBtn,
-    toggleBtn,
-    feature: snake_key,
-    guild: this.guild,
-    i: this,
-    settings,
-  });
-  const embed = features[feature].getMenuDescription({
-    feature: snake_key,
-    i: this,
-    guild: this.guild,
-    settings,
-  });
+  const toggleBtn = new ToggleFeatureBtn({ feature, state: !isEnabled })
+    .setLabel(`${isEnabled ? t(this, 'DISABLE') : t(this, 'ENABLE')} ${t(this, feature)}`)
+    // .setEmoji(isEnabled ? emojis.toggle.on : emojis.toggle.off)
+    .setStyle(isEnabled ? 'DANGER' : 'SUCCESS');
+
+  const embed = getMenuDescription(props);
 
   return {
     content: invisibleChar,
     embeds: [
       {
-        ...embed,
-        title: `${this.guild.name} / ${strings[snake_key]}`,
         author: {
-          name: 'CRBT Settings',
+          name: t(this, 'SETTINGS_TITLE'),
           icon_url: icons.settings,
         },
+        title: `${this.guild.name} / ${t(this, feature)}`,
         color: await getColor(this.guild),
+        ...embed,
+        fields:
+          errors.length > 0
+            ? [
+                {
+                  name: `${t(this, 'STATUS')} • ${t(this, 'SETTINGS_ERRORS_FOUND', {
+                    number: errors.length.toLocaleString(this.locale),
+                  })}`,
+                  value: errors.map((error) => `⚠️ **${error}**`).join('\n'),
+                },
+              ]
+            : embed?.fields,
       },
     ],
-    components,
+    components: getComponents({
+      ...props,
+      backBtn,
+      toggleBtn,
+    }),
   };
 }
 
 export const BackSettingsButton = ButtonComponent({
   async handle(feature: string | null) {
     if (feature) {
-      return this.update(await renderFeatureSettings.call(this, feature));
+      return this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
     }
     return this.update(await renderSettingsMenu.call(this));
   },
@@ -179,37 +156,28 @@ export const BackSettingsButton = ButtonComponent({
 
 export const ToggleFeatureBtn = ButtonComponent({
   async handle({ feature, state }: { feature: string; state: boolean }) {
-    const key = CamelCaseFeatures[feature];
+    const Feature = CamelCaseFeatures[feature];
+    const newState = { [Feature]: state };
 
-    console.log(feature, state);
-
-    await fetchWithCache(
-      `${this.guild.id}:settings`,
+    const h = await fetchWithCache(
+      `${this.guildId}:settings`,
       () =>
         prisma.servers.upsert({
           where: { id: this.guildId },
-          include: { modules: true },
+          update: { modules: { upsert: { create: newState, update: newState } } },
           create: {
             id: this.guildId,
             modules: {
-              connectOrCreate: {
-                create: { [key]: state },
-                where: { id: this.guildId },
-              },
+              connectOrCreate: { create: newState, where: { id: this.guildId } },
             },
           },
-          update: {
-            modules: {
-              upsert: {
-                create: { [key]: state },
-                update: { [key]: state },
-              },
-            },
-          },
+          include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, feature));
+    console.log('h', h);
+
+    this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
   },
 });
