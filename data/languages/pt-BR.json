@@ -12,11 +12,7 @@
   "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
   "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "The URL you provided is invalid.",
-<<<<<<< HEAD
-  "ERROR_INVALID_HEX": "The HEX color you provided is invalid.",
-=======
   "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
->>>>>>> origin/l10n_dev
   "BACK": "Back",
   "JUMP_TO_MSG": "Jump to message",
   "CANCEL": "Cancel",
@@ -33,15 +29,6 @@
   "PREVIEW": "Preview",
   "EXPORT": "Export",
   "IMPORT": "Import",
-<<<<<<< HEAD
-  "globalErrors": {
-    "GUILD_ONLY": "Esse comando não pode ser usado por mensagens diretas."
-  },
-  "UnknownError": {
-    "strings": {
-      "TITLE": "Ocorreu um erro desconhecido.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
-=======
   "YES": "Yes",
   "NO": "No",
   "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
@@ -60,7 +47,6 @@
     "strings": {
       "TITLE": "Ocorreu um erro desconhecido.",
       "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
->>>>>>> origin/l10n_dev
     }
   },
   "CooldownError": {
@@ -106,21 +92,12 @@
       "white": "Branco"
     },
     "errors": {
-<<<<<<< HEAD
-      "NO_DISCORD_COLOR": "Você não tem uma cor de perfil do Discord para sincronizar! Para definir uma, edite o seu perfil de usuário do Discord e altere sua cor de perfil.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
-=======
       "NO_DISCORD_COLOR": "Você não tem uma cor de perfil do Discord para sincronizar! Para definir uma, edite o seu perfil de usuário do Discord e altere sua cor de perfil."
->>>>>>> origin/l10n_dev
     },
     "strings": {
       "EMBED_TITLE": "Cor de destaque atualizada.",
       "EMBED_SYNC_INFO": "Sua cor do perfil do Discord será sincronizada com sua cor de destaque CRBT.",
-<<<<<<< HEAD
-      "EMBED_DESCRIPTION": "Esta cor será usada na maioria das respostas de CRBT's para você, assim como nos seus cartões de perfil e informações, quando alguém os visita."
-=======
       "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
->>>>>>> origin/l10n_dev
     }
   },
   "remind me": {
@@ -129,19 +106,11 @@
       "options": [
         {
           "name": "quando",
-<<<<<<< HEAD
-          "description": "Quando enviar o lembrete (por exemplo, 2 horas, 3w2d, 20:30)."
-        },
-        {
-          "name": "assunto",
-          "description": "Do que te lembrar."
-=======
           "description": "When to remind you."
         },
         {
           "name": "assunto",
           "description": "What to be reminded about."
->>>>>>> origin/l10n_dev
         },
         {
           "name": "destino",
@@ -153,32 +122,16 @@
       "PAST": "Você não pode definir um lembrete no passado.",
       "INVALID_FORMAT": "O tempo que você inseriu está em um formato inválido, ou abaixo de 0 segundos no futuro.",
       "TOO_LONG": "Não é possível definir um lembrete além de 2 anos a partir de agora.",
-<<<<<<< HEAD
-      "INVALID_CHANNEL_TYPE": "O canal que você especificou não é um canal de texto válido.",
-      "BOT_MISSING_PERMS": "Eu não tenho permissão para enviar mensagens neste canal.",
-      "USER_MISSING_PERMS": "Você não tem permissão para enviar mensagens neste canal.",
-=======
->>>>>>> origin/l10n_dev
       "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Lembrete definido!",
       "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
       "SUCCESS_DM": "Você será lembrado por mensagem direta",
-<<<<<<< HEAD
-      "SUBJECT": "Assunto",
-      "TOMORROW_AT": "Tomorrow at {TIME}",
-      "TODAY_AT": "Today at {TIME}",
-=======
->>>>>>> origin/l10n_dev
       "BUTTON_GCALENDAR": "Adicionar como evento no Google Calendar",
       "GCALENDAR_EVENT": "Definido por Lembrete CRBT.",
       "GCALENDAR_EVENT_DM": "Você também será lembrado pelas mensagens diretas.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-<<<<<<< HEAD
-      "REMINDER_TITLE": "Reminder",
-=======
->>>>>>> origin/l10n_dev
       "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
@@ -193,53 +146,11 @@
   "ping": {
     "meta": {
       "description": "Envie um ping ao CRBT. Retorna latência e informações sobre a conexão."
-<<<<<<< HEAD
-    },
-    "strings": {
-      "EMBED_TITLE": "{CRBT} - Ping",
-      "WEBSOCKET": "WebSocket latency",
-      "INTERACTION": "Interaction latency",
-      "UPTIME": "Online desde",
-      "FORMAT_MS": "{NUMBER}ms"
-=======
->>>>>>> origin/l10n_dev
     }
   },
   "crbt info": {
     "meta": {
-<<<<<<< HEAD
-      "description": "Obter informações sobre CRBT"
-    },
-    "strings": {
-      "MEMBER_COUNT": "Contagem de membros",
-      "SERVER_COUNT": "Contagem de servidores",
-      "PING_RESULT": "≈{PING} milliseconds"
-    }
-  },
-  "user_navbar": {
-    "errors": {
-      "NOT_CMD_USER": "Only the person using this command can use this component."
-    },
-    "strings": {
-      "AVATAR": "Foto de perfil",
-      "INFO": "User Info",
-      "BOTINFO": "Bot Info",
-      "SERVER_AVATAR": "Server Avatar",
-      "USER_AVATAR": "User Avatar",
-      "USER_BANNER": "User Banner"
-    }
-  },
-  "server_navbar": {
-    "strings": {
-      "INFO": "Server info",
-      "ICON": "Icon",
-      "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
-      "EXTRA": "More"
-=======
       "description": "Get information about CRBT."
->>>>>>> origin/l10n_dev
     }
   },
   "poll": {
@@ -261,10 +172,6 @@
       ]
     },
     "errors": {
-<<<<<<< HEAD
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
-=======
->>>>>>> origin/l10n_dev
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
@@ -275,11 +182,6 @@
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
       "POLL_FOOTER_CREATOR": "Poll started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Vote",
-<<<<<<< HEAD
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
-=======
->>>>>>> origin/l10n_dev
       "SUCCESS_TITLE": "Poll created!",
       "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
       "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
@@ -322,10 +224,6 @@
       "name": "Get Avatar/Banner"
     },
     "strings": {
-<<<<<<< HEAD
-      "EMBED_TITLE": "{USER} - Avatar",
-=======
->>>>>>> origin/l10n_dev
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
     }
   },
@@ -364,26 +262,6 @@
         "description": "Create a new Role Picker, a menu for members to give themselves roles.",
         "options": [
           {
-<<<<<<< HEAD
-            "name": "descrição",
-            "description": "Descreva aos seus membros para que serve o seu Seletor de Cargos."
-          },
-          {
-            "name": "comportamento",
-            "description": "Como o Seletor de Cargos deve se comportar.",
-            "choices": [
-              "Alternar dar/remover cargo(s)",
-              "Dar o(s) cargo(s) apenas uma vez"
-            ]
-          },
-          {
-            "name": "limite",
-            "description": "Quantos cargos podem ser selecionados. Defina como 0 para ilimitado."
-          },
-          {
-            "name": "cargo",
-            "description": "Um cargo a ser atribuído ao membro quando selecionado."
-=======
             "name": "behavior",
             "description": "How the Role Picker should behave.",
             "choices": [
@@ -398,21 +276,13 @@
           {
             "name": "role",
             "description": "A role to assign to the member when selected."
->>>>>>> origin/l10n_dev
           }
         ]
       }
     },
     "errors": {
-<<<<<<< HEAD
-      "USER_MISSING_PERMS": "Somente os administradores do servidor podem criar Seletores de Cargos.",
-      "BOT_MISSING_PERMS": "Eu preciso da permissão \"Gerenciar Cargos\" para criar um Seletor de Cargos.",
-      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "Um ou mais dos cargos especificados não existem, ou foram removidos. Entre em contato com um administrador para resolver o problema.",
-=======
       "BOT_MISSING_PERMS": "Eu preciso da permissão \"Gerenciar Cargos\" para criar um Seletor de Cargos.",
       "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
->>>>>>> origin/l10n_dev
       "BUTTON_ROLES_ONCE": "Você só pode selecionar este cargo uma vez, e você não pode removê-lo."
     },
     "strings": {
@@ -425,18 +295,6 @@
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Selecione-o novamente para adicioná-lo.",
       "SUCCESS_TITLE": "Seletor de Cargo criado!",
-<<<<<<< HEAD
-      "SUCCESS_DESCRIPTION": "Os membros agora estão disponíveis para selecionar cargos neste menu. Para desativá-lo, basta excluir a mensagem com o Seletor de Cargos."
-    }
-  },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
-  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
-  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
-  "MODERATION_LOGS_CLEAR": "Channel message clear",
-=======
       "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
     }
   },
@@ -459,7 +317,6 @@
   "TIMEOUT": "Timeout",
   "TEMPBAN": "Temporary ban",
   "CLEAR": "Clear",
->>>>>>> origin/l10n_dev
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
   "JOIN_MESSAGE": "Welcome message",
@@ -475,14 +332,8 @@
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-<<<<<<< HEAD
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
-=======
   "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
->>>>>>> origin/l10n_dev
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",
   "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
@@ -502,15 +353,6 @@
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
   "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-<<<<<<< HEAD
-  "USER_INFO_EMBED_TITLE": "{USER} - User info",
-  "USER_INFO_CREATED_AT": "Joined Discord",
-  "USER_INFO_JOINED_SERVER": "Joined Server",
-  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
-  "USER_INFO_NICKNAME": "Server nickname",
-  "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server",
-=======
   "USER_INFO_TITLE": "{USER} - User info",
   "JOINED_DISCORD": "Joined Discord",
   "JOINED_SERVER": "Joined Server",
@@ -518,7 +360,6 @@
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Role(s)",
   "MAJOR_PERMS": "Major permissions in this server",
->>>>>>> origin/l10n_dev
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
   "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
@@ -544,9 +385,6 @@
   "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
   "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
-<<<<<<< HEAD
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
-=======
   "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color.",
   "help": {
     "name": "help",
@@ -749,5 +587,4 @@
   "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
   "SEARCH_TITLE": "{engine} results for \"{query}\""
->>>>>>> origin/l10n_dev
 }
