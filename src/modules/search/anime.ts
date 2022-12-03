@@ -1,4 +1,5 @@
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { createLinkButton, timestampMention } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import {
@@ -10,6 +11,7 @@ import {
 import fetch from 'node-fetch';
 import { components, row } from 'purplet';
 import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleAnimeMangas(
@@ -136,7 +138,10 @@ export async function handleAnimeMangas(
         embeds: [
           {
             author: {
-              name: `AniList results for "${query}"`,
+              name: t(this, 'SEARCH_TITLE', {
+                engine: t(this, `SEARCH_ENGINES.${opts.site}` as any),
+                query,
+              }),
               url: 'https://anilist.co',
             },
             title: `${result.title.romaji} (${capitalCase(result.type)})`,
@@ -160,8 +165,13 @@ export async function handleAnimeMangas(
               ...fields,
             ],
             footer: {
-              text: `Powered by AniList • Page ${opts.page} out of ${pages} results`,
-              iconURL: `https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/AniList_logo.svg/240px-AniList_logo.svg.png`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: searchEngines[opts.site].provider,
+              })} • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+                page: opts.page.toLocaleString(this.locale),
+                pages: pages.toLocaleString(this.locale),
+              })}`,
+              icon_url: `https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/AniList_logo.svg/240px-AniList_logo.svg.png`,
             },
             // .addField(
             //   'Episodes',

@@ -9,7 +9,9 @@ import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { ReminderTypes } from '@prisma/client';
+import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
+import dedent from 'dedent';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -32,7 +34,7 @@ export default ChatCommand({
       maxLength: 512,
     })
     .channel('destination', meta.options[2].description, {
-      channelTypes: [ChannelType.GuildText, ChannelType.GuildNews],
+      channelTypes: [ChannelType.GuildText, ChannelType.GuildAnnouncement],
     }),
   async handle({ when, subject, destination }) {
     const { strings, errors } = t(this, 'remind me');
@@ -55,13 +57,30 @@ export default ChatCommand({
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
       if (!channel) {
-        return CRBTError(this, errors.INVALID_CHANNEL_TYPE);
+        return CRBTError(
+          this,
+          t(this, 'ERROR_INVALID_CHANNEL', {
+            type: new Intl.ListFormat(this.locale, {
+              type: 'disjunction',
+            }).format([t(this, 'TEXT_CHANNEL'), t(this, 'ANNOUNCEMENT_CHANNEL')]),
+          })
+        );
       } else if (!hasPerms(channel.permissionsFor(this.user), PermissionFlagsBits.SendMessages)) {
-        return CRBTError(this, errors.USER_MISSING_PERMS);
+        return CRBTError(
+          this,
+          t(this, 'ERROR_MISSING_PERMISSIONS', {
+            PERMISSIONS: 'Send Messages',
+          })
+        );
       } else if (
         !hasPerms(channel.permissionsFor(this.guild.me), PermissionFlagsBits.SendMessages)
       ) {
-        return CRBTError(this, errors.BOT_MISSING_PERMS);
+        return CRBTError(
+          this,
+          t(this, 'ERROR_MISSING_PERMISSIONS', {
+            PERMISSIONS: 'Send Messages',
+          })
+        );
       }
     }
     const userReminders = await prisma.reminder.findMany({
@@ -73,8 +92,6 @@ export default ChatCommand({
     }
 
     await this.deferReply();
-
-    const expUnix = expiresAt.unix();
 
     const msg = await this.fetchReply();
     const url =
@@ -97,20 +114,20 @@ export default ChatCommand({
       await this.editReply({
         embeds: [
           {
-            title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
-            description:
-              (destination
-                ? strings.SUCCESS_CHANNEL.replace('{CHANNEL}', `${destination}`)
-                : strings.SUCCESS_DM) +
-              `\n` +
-              (expiresAt.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                ? strings.TODAY_AT.replace('{TIME}', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
-                : expiresAt.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                ? strings.TOMORROW_AT.replace('{TIME}', `<t:${expUnix}:T> • <t:${expUnix}:R>`)
-                : `<t:${expUnix}> • <t:${expUnix}:R>.`),
+            title: `${emojis.success} ${t(this, 'remind me.strings.SUCCESS_TITLE')}`,
+            description: dedent`
+              ${
+                destination
+                  ? t(this, 'remind me.strings.SUCCESS_CHANNEL', {
+                      CHANNEL: `${destination}`,
+                    })
+                  : t(this, 'remind me.strings.SUCCESS_CHANNEL')
+              }
+              ${timestampMention(expiresAt)} • ${timestampMention(expiresAt, 'R')}
+            `,
             fields: [
               {
-                name: strings.SUBJECT,
+                name: t(this, 'SUBJECT'),
                 value: subject,
               },
             ],

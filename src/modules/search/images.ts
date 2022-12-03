@@ -1,7 +1,9 @@
 import { UnknownError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { image as imageSearch } from 'googlethis';
 import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleImageSearch(
@@ -28,7 +30,10 @@ export async function handleImageSearch(
         embeds: [
           {
             author: {
-              name: `Image results for "${query}"`,
+              name: t(this, 'SEARCH_TITLE', {
+                engine: t(this, `SEARCH_ENGINES.${opts.site}` as any),
+                query,
+              }),
             },
             title: image.origin?.title,
             url: image.origin?.website.url,
@@ -36,8 +41,13 @@ export async function handleImageSearch(
               url: image.url,
             },
             footer: {
-              text: `Powered by Google Images • Page ${opts.page} out of ${pages} results`,
-              iconURL: `https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: searchEngines[opts.site].provider,
+              })} • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+                page: opts.page.toLocaleString(this.locale),
+                pages: pages.toLocaleString(this.locale),
+              })}`,
+              icon_url: `https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png`,
             },
           },
         ],

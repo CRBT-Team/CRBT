@@ -29,14 +29,14 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   const message = {
     embeds: [
       {
-        title: `${emojis.reminder} ${strings.REMINDER_TITLE}`,
+        title: `${emojis.reminder} ${t(reminder.locale, 'REMINDER')}}`,
         description: strings.REMINDER_DESCRIPTION.replace(
           '{TIME}',
           timestampMention(reminder.expiresAt, 'D')
         ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
         fields: [
           {
-            name: strings.SUBJECT,
+            name: t(reminder.locale, 'SUBJECT'),
             value: getReminderSubject(reminder, client, 0),
           },
         ],

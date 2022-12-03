@@ -1,11 +1,8 @@
-import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { englishDictionary } from './dictionary';
-import { SearchCmdOpts } from './search';
-import { searchEngines } from './_engines';
 
-export function returnFeaturedItem(opts: SearchCmdOpts) {
-  const query = opts.query.toLowerCase();
-  let item = opts.site;
+export function returnFeaturedItem(query: string) {
+  query = query.toLowerCase();
+  let item = 'web';
 
   if (englishDictionary.find((word) => word === query)) {
     item = 'dictionary';
@@ -15,15 +12,4 @@ export function returnFeaturedItem(opts: SearchCmdOpts) {
   }
 
   return item;
-}
-
-export function handleFeaturedSearch(
-  this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
-) {
-  const featured = returnFeaturedItem(opts);
-
-  opts.site = featured ?? 'web';
-
-  return searchEngines[opts.site].handle.call(this, opts);
 }

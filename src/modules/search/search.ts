@@ -1,7 +1,8 @@
+import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleFeaturedSearch } from './featured';
+import { returnFeaturedItem } from './featured';
 import { searchEngines } from './_engines';
 
 export interface SearchCmdOpts {
@@ -9,70 +10,85 @@ export interface SearchCmdOpts {
   query: string;
   anonymous?: boolean;
   page: number;
+  userId: string;
 }
 
-const choices = Object.entries(searchEngines).reduce((acc, [id, { name, emoji, provider }]) => {
-  return {
-    ...acc,
-    [id]: `${emoji} ${name}`,
-    // ...(hide ? { [id]: `${emoji} ${name}` } : {}),
-  };
-}, {});
+function getChoices(lang = 'en-US') {
+  return Object.keys(searchEngines).reduce(
+    (acc, id) => ({
+      ...acc,
+      [id]: `${searchEngines[id].emoji} ${t(lang, `SEARCH_ENGINES.${id}` as any)}`,
+    }),
+    {}
+  );
+}
 
 export default ChatCommand({
   name: 'search',
-  description: 'Search for anything in one of the provided search engines.',
+  description: t('en-US', 'search.description'),
+  nameLocalizations: getAllLanguages('search.name'),
+  descriptionLocalizations: getAllLanguages('search.description'),
   options: new OptionBuilder()
-    .string('query', 'What to search for.', {
+    .string('query', t('en-US', 'search.options.query.name'), {
+      nameLocalizations: getAllLanguages('search.options.query.name'),
+      descriptionLocalizations: getAllLanguages('search.options.query.description'),
       required: true,
       async autocomplete({ query }) {
         if (query) {
-          const res = await duckduckAutocomplete(query);
-          return res.map((r) => ({
-            name: r.phrase,
-            value: r.phrase,
-          }));
+          const res = await duckduckAutocomplete(query, this.locale);
+          return [
+            {
+              name: query,
+              value: query,
+            },
+            ...res.map((r) => ({
+              name: r.phrase,
+              value: r.phrase,
+            })),
+          ];
         } else {
           return [];
         }
       },
     })
-    .string('site', 'What search engine to use for your query.', {
-      choices,
+    .string('site', t('en-US', 'search.options.site.description'), {
+      nameLocalizations: getAllLanguages('search.options.site.name'),
+      descriptionLocalizations: getAllLanguages('search.options.site.description'),
+      choices: getChoices(),
+      // choiceLocalizations: {
+      //   fr: getChoices('fr'),
+      // },
+      // Object.keys(languages).reduce(
+      //   (acc, lang) => ({ ...acc, [lang]: getChoices(lang) }),
+      //   {}
+      // ),
     })
-    .boolean('anonymous', 'Whether to show the search results as a public message.'),
-  async handle(opts) {
+    .boolean('anonymous', t('en-US', 'search.options.anonymous.description'), {
+      nameLocalizations: getAllLanguages('search.options.anonymous.name'),
+      descriptionLocalizations: getAllLanguages('search.options.anonymous.description'),
+    }),
+  async handle({ query, anonymous, site }) {
+    anonymous ??= false;
+    site ??= returnFeaturedItem(query);
+
     await this.deferReply({
-      ephemeral: opts.anonymous,
+      ephemeral: anonymous,
     });
 
-    const fullOpts: SearchCmdOpts = {
+    const opts = {
       page: 1,
-      query: opts.query, //.match(/\w*:.*/) ? opts.query.split(':').at(1) : opts.query,
-      anonymous: opts.anonymous || false,
-      site:
-        opts.site ??
-        // opts.query
-        //   .match(/(\w*):.*/)
-        //   ?.at(1)
-        //   ?.trim() ??
-        null,
+      query,
+      anonymous,
+      site,
+      userId: this.user.id,
     };
 
-    await this.fetchReply();
+    console.log(opts);
 
-    await AchievementProgress.call(this, 'SEEKER');
-
-    if (fullOpts.site) {
-      const res = await searchEngines[fullOpts.site].handle.call(this, fullOpts);
-
-      await this.editReply(res);
-      return;
-    }
-
-    const res = await handleFeaturedSearch.call(this, fullOpts);
+    const res = await searchEngines[site].handle.call(this, opts);
 
     await this.editReply(res);
-    return;
+
+    await AchievementProgress.call(this, 'SEEKER');
   },
 });

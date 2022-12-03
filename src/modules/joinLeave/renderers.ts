@@ -1,5 +1,6 @@
 import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -77,7 +78,7 @@ export async function renderJoinLeavePreview(
     return CRBTError(
       this,
       t(this, 'ERROR_NO_MESSAGE', {
-        COMMAND: t(this, type),
+        COMMAND: slashCmd('settings'),
       })
     );
   }
@@ -87,15 +88,10 @@ export async function renderJoinLeavePreview(
   if (!channelId) {
     return CRBTError(
       this,
-      t(
-        this,
-        type === MessageBuilderTypes.joinMessage
-          ? 'JOIN_PREVIEW_ERROR_NO_CHANNEL'
-          : 'LEAVE_PREVIEW_ERROR_NO_CHANNEL',
-        {
-          TYPE: t(this, type),
-        }
-      )
+      t(this, 'JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL', {
+        command: slashCmd('settings'),
+        TYPE: t(this, type),
+      })
     );
   }
 

@@ -130,16 +130,10 @@ export const SelectTimeMenu = SelectMenuComponent({
         embeds: [
           {
             title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
-            description:
-              `${strings.SUCCESS_DM}\n` +
-              (expiresAt.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')
-                ? strings.TODAY_AT.replace('{TIME}', formattedExpires)
-                : expiresAt.format('YYYY-MM-DD') === now.add(1, 'day').format('YYYY-MM-DD')
-                ? strings.TOMORROW_AT.replace('{TIME}', formattedExpires)
-                : formattedExpires),
+            description: `${strings.SUCCESS_DM}\n${formattedExpires}`,
             fields: [
               {
-                name: strings.SUBJECT,
+                name: t(this, 'SUBJECT'),
                 value: subject,
               },
             ],

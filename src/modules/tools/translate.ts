@@ -189,7 +189,7 @@ export const TargetLangSelectMenu = SelectMenuComponent({
     const sourceText = this.message.embeds[0].fields[0].value;
 
     if (this.user.id !== this.message.interaction.user.id) {
-      return CRBTError(this, t(this, 'user_navbar').errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
 
     await this.update(

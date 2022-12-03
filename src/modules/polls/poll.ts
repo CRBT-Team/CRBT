@@ -114,9 +114,9 @@ export default ChatCommand({
                 return new PollButton({ choiceId: index.toString() })
                   .setLabel(choiceText)
                   .setStyle(
-                    choiceText.toLowerCase() === strings.KEYWORD_YES__KEEP_LOWERCASE
+                    choiceText.toLowerCase() === t(this, 'YES').toLocaleLowerCase(this.locale)
                       ? 'SUCCESS'
-                      : choiceText.toLowerCase() === strings.KEYWORD_NO__KEEP_LOWERCASE
+                      : choiceText.toLowerCase() === t(this, 'NO').toLocaleLowerCase(this.locale)
                       ? 'DANGER'
                       : 'PRIMARY'
                   )

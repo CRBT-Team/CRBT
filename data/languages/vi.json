@@ -286,7 +286,7 @@
       "description": "Tính toán một biểu thức toán học.",
       "options": [
         {
-          "name": "biểu thức",
+          "name": "biểu_thức",
           "description": "Biểu thức cần tính."
         }
       ]

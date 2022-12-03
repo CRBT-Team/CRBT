@@ -86,7 +86,7 @@ export async function renderBanner(
         navCtx,
         ctx.locale,
         type === 'default' ? 'banner' : 'user_banner',
-        getTabs('user_banner', user, member)
+        getTabs('user_banner', user.toJSON(), member)
       ),
       row(
         new MessageButton()

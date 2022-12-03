@@ -99,7 +99,7 @@ export const colorset = ChatCommand({
         await AchievementProgress.call(this, 'ARTIST');
       }
     } else {
-      await CRBTError(this, errors.INVALID_COLOR_NAME);
+      await CRBTError(this, t(this, 'ERROR_INVALID_COLOR'));
     }
   },
 });

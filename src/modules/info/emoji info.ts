@@ -2,6 +2,7 @@ import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { t } from '$lib/language';
 import {
   CustomEmojiRegex,
   formatEmojiURL,
@@ -70,7 +71,7 @@ export default ChatCommand({
             },
             fields: [
               {
-                name: 'ID',
+                name: t(this, 'ID'),
                 value: emojiData.id,
                 inline: true,
               },
@@ -80,7 +81,7 @@ export default ChatCommand({
                 inline: true,
               },
               {
-                name: 'Added',
+                name: t(this, 'ADDED'),
                 value: `${timestampMention(emojiData.createdAt)} • ${timestampMention(
                   emojiData.createdAt,
                   'R'

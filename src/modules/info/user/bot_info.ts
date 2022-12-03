@@ -1,4 +1,5 @@
 import { links } from '$lib/env';
+import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
@@ -18,58 +19,6 @@ import pjson from '../../../../package.json';
 import { getBadgeEmojis } from './user_info';
 import { getTabs, navBar, NavBarContext } from './_navbar';
 
-// export default
-// ChatCommand({
-//   name: 'bot info',
-//   description: 'Get info on a given Discord bot, or stats about CRBT if no bot is given.',
-//   options: new OptionBuilder().user('bot', 'What bot to get info on. Defaults to CRBT.'),
-//   async handle({ bot }) {
-//     bot = bot || this.client.user;
-
-//     if (!bot.bot) {
-//       return CRBTError(
-//         this,
-//         `This command only works on bot users. To get a regular user's info, run ${slashCmd(
-//           'user info'
-//         )}.`
-//       );
-//     }
-
-//     const isSelf = bot.id === this.client.user.id;
-
-//     const bots = !this.guild
-//       ? null
-//       : cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
-//         (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
-
-//     if (bots) {
-//       cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
-//     }
-
-//     const botInfo = isSelf
-//       ? await this.client.application.fetch()
-//       : bots.find(({ application }) => application.bot.id === bot.id);
-
-//     if (!botInfo) {
-//       await CRBTError(
-//         this,
-//         "Couldn't find that bot on the server. Make sure that it is on the server."
-//       );
-//     }
-
-//     await this.reply(
-//       await renderBotInfo.call(
-//         this,
-//         {
-//           targetId: bot.id,
-//           userId: this.user.id,
-//         },
-//         botInfo
-//       )
-//     );
-//   },
-// });
-
 export async function renderBotInfo(
   this: Interaction,
   navCtx: NavBarContext,
@@ -79,22 +28,14 @@ export async function renderBotInfo(
   const app = isSelf ? (integration as ClientApplication) : integration.application;
   const bot = app instanceof IntegrationApplication ? app.bot : this.client.user;
 
-  console.log(integration);
+  const userBadges = getBadgeEmojis(bot.flags.bitfield);
 
-  const userBadges = [
-    ...getBadgeEmojis(bot.flags.bitfield),
-    (integration as Integration).application,
-  ];
-  const uptime = new Date(Date.now() - this.client.uptime);
-  const i18n = new Intl.NumberFormat(this.locale);
-
-  const { strings } = t(this, 'crbt info');
   const color =
     this instanceof ButtonInteraction ? this.message.embeds[0].color : await getColor(this.user);
 
   const fields: EmbedFieldData[] = [
     {
-      name: 'ID',
+      name: t(this, 'ID'),
       value: app.id,
       inline: true,
     },
@@ -103,7 +44,7 @@ export async function renderBotInfo(
   if (this.guild && !isSelf) {
     fields.push({
       name: 'Added by',
-      value: integration.user.toString(),
+      value: `${integration.user}`,
       inline: true,
     });
   }
@@ -115,46 +56,47 @@ export async function renderBotInfo(
     });
   }
 
+  if (isSelf) {
+    const ping = Date.now() - this.createdTimestamp;
+    const onlineSince = new Date(Date.now() - this.client.uptime);
+
+    fields.push(
+      {
+        name: t(this, 'MEMBERS'),
+        value: this.client.users.cache.size.toLocaleString(this.locale),
+        inline: true,
+      },
+      {
+        name: t(this, 'SERVERS'),
+        value: this.client.guilds.cache.size.toLocaleString(this.locale),
+        inline: true,
+      },
+      {
+        name: t(this, 'PING'),
+        value: `≈${ping.toLocaleString(this.locale)}ms (${slashCmd('ping')})`,
+        inline: true,
+      },
+      {
+        name: t(this, 'UPTIME'),
+        value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
+        inline: true,
+      }
+    );
+  }
+
   fields.push({
     name: t(this, 'CREATED_ON'),
     value: `${timestampMention(app.createdAt)} • ${timestampMention(app.createdAt, 'R')}`,
     inline: true,
   });
 
-  if (isSelf) {
-    fields.push(
-      {
-        name: t(this, 'UPTIME'),
-        value: `${timestampMention(uptime)} • ${timestampMention(uptime, 'R')}`,
-        inline: true,
-      },
-      {
-        name: strings.MEMBER_COUNT,
-        value: i18n.format(this.client.users.cache.size),
-        inline: true,
-      },
-      {
-        name: strings.SERVER_COUNT,
-        value: i18n.format(this.client.guilds.cache.size),
-        inline: true,
-      },
-      {
-        name: t(this, 'PING'),
-        value: `${strings.PING_RESULT.replace(
-          '{PING}',
-          `${Date.now() - this.createdTimestamp}`
-        )} • ${slashCmd('ping')}`,
-        inline: true,
-      }
-    );
-  }
-
   return {
     embeds: [
       {
         author: {
           name: `${bot.username} - Bot info`,
-          iconURL: bot.avatarURL(),
+          icon_url: avatar(bot),
+          url: isSelf ? links.baseURL : null,
         },
         description:
           (userBadges.length > 0 ? `${userBadges.join(' ')} ${invisibleChar}\n` : '') +

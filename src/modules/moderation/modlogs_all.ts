@@ -54,10 +54,7 @@ export function renderStrike(
   locale: string,
   strikes: moderationStrikes[]
 ) {
-  const action = t(
-    locale,
-    strike.type === 'CLEAR' ? 'MODERATION_LOGS_CLEAR' : `MODERATION_LOGS_ACTION_${strike.type}`
-  );
+  const action = t(locale, strike.type as any);
   const expires =
     Date.now() < (strike.expiresAt?.getTime() ?? 0)
       ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
@@ -137,9 +134,7 @@ export async function renderModlogs(
                   label: `Strike #${data.indexOf(s) + 1}`,
                   description: `${dayjs(s.createdAt).format('YYYY-MM-DD')} • ${t(
                     this.guildLocale,
-                    s.type === 'CLEAR'
-                      ? 'MODERATION_LOGS_CLEAR'
-                      : `MODERATION_LOGS_ACTION_${s.type}`
+                    s.type
                   )}`,
                   value: s.id,
                 }))
@@ -205,15 +200,12 @@ async function renderStrikePage(
     embeds: [
       {
         author: {
-          name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('{SERVER}', this.guild.name),
+          name: t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+            SERVER: this.guild.name,
+          }),
           icon_url: this.guild.iconURL(),
         },
-        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(
-          this.guildLocale,
-          strike.type === 'CLEAR'
-            ? 'MODERATION_LOGS_CLEAR'
-            : `MODERATION_LOGS_ACTION_${strike.type}`
-        )}`,
+        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(this.guildLocale, strike.type)}`,
         fields: [
           {
             name: 'Reason',

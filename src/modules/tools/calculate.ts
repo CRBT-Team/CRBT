@@ -14,8 +14,8 @@ export default ChatCommand({
     'expression',
     t('en-US', 'calc.meta.options.0.description' as any),
     {
-      nameLocalizations: t('en-US', 'calc.meta.options.0.name' as any),
-      descriptionLocalizations: t('en-US', 'calc.meta.options.0.description' as any),
+      nameLocalizations: getAllLanguages('calc.meta.options.0.name' as any),
+      descriptionLocalizations: getAllLanguages('calc.meta.options.0.description' as any),
       required: true,
     }
   ),

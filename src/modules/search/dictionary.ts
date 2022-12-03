@@ -98,15 +98,14 @@ export default ChatCommand({
   async handle({ word }) {
     await this.deferReply();
 
-    const res = await handleDictionary.call(this, {
-      anonymous: false,
-      query: word,
-      site: 'dictionary',
-      page: -1,
-    });
-
-    if (res) {
-      await this.editReply(res);
-    }
+    await this.editReply(
+      await handleDictionary.call(this, {
+        anonymous: false,
+        query: word,
+        site: 'dictionary',
+        page: -1,
+        userId: this.user.id,
+      })
+    );
   },
 });

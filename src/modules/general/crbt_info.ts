@@ -15,16 +15,16 @@ export default ChatCommand({
     await this.deferReply();
 
     const { user } = this.client;
+    const ping = Date.now() - this.createdTimestamp;
     const onlineSince = new Date(Date.now() - this.client.uptime);
     const created = user.createdAt;
-    const i18n = new Intl.NumberFormat(this.locale);
 
     await this.editReply({
       embeds: [
         {
           author: {
             name: `${user.username} - Bot info`,
-            iconURL: avatar(this.client.user),
+            iconURL: avatar(user),
             url: links.baseURL,
           },
           description: `v${pjson.version} • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${
@@ -32,30 +32,28 @@ export default ChatCommand({
           })**`,
           fields: [
             {
-              name: t(this, 'crbt info.strings.MEMBER_COUNT'),
-              value: i18n.format(this.client.users.cache.size),
+              name: t(this, 'MEMBERS'),
+              value: this.client.users.cache.size.toLocaleString(this.locale),
               inline: true,
             },
             {
-              name: t(this, 'crbt info.strings.SERVER_COUNT'),
-              value: i18n.format(this.client.guilds.cache.size),
+              name: t(this, 'SERVERS'),
+              value: this.client.guilds.cache.size.toLocaleString(this.locale),
               inline: true,
             },
             {
               name: t(this, 'PING'),
-              value: `${t(this, 'crbt info.strings.PING_RESULT', {
-                PING: `${Date.now() - this.createdTimestamp}`,
-              })} (${slashCmd('ping')})`,
-              inline: true,
-            },
-            {
-              name: t(this, 'CREATED_ON'),
-              value: `${timestampMention(created)} • ${timestampMention(created, 'R')}`,
+              value: `≈${ping.toLocaleString(this.locale)}ms (${slashCmd('ping')})`,
               inline: true,
             },
             {
               name: t(this, 'UPTIME'),
               value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
+              inline: true,
+            },
+            {
+              name: t(this, 'CREATED_ON'),
+              value: `${timestampMention(created)} • ${timestampMention(created, 'R')}`,
               inline: true,
             },
           ],

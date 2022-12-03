@@ -22,7 +22,6 @@ export interface SearchEngine {
   ) => Promise<InteractionReplyOptions | InteractionUpdateOptions>;
   emoji: string;
   provider: string;
-  name: string;
   hide?: boolean;
   noPagination?: boolean;
 }
@@ -34,19 +33,16 @@ export const searchEngines: {
     handle: handleDuckDuckGo,
     emoji: '🔎',
     provider: 'DuckDuckGo',
-    name: 'Web',
   },
   images: {
     handle: handleImageSearch,
     emoji: '🖼️',
     provider: 'Google Images',
-    name: 'Images',
   },
   videos: {
     handle: handleVideosSearch,
     emoji: '🎥',
     provider: 'YouTube',
-    name: 'Videos',
   },
   // music: {
   //   handle: handleMusicSearch,
@@ -59,7 +55,6 @@ export const searchEngines: {
     handle: handleWeather,
     emoji: '☀️',
     provider: 'Open-Meteo.com & OpenStreetMap',
-    name: 'Weather',
     hide: true,
     noPagination: true,
   },
@@ -67,7 +62,6 @@ export const searchEngines: {
     handle: handleDictionary,
     emoji: '📖',
     provider: 'Google Dictionary',
-    name: 'Dictionary',
     hide: true,
     noPagination: true,
   },
@@ -75,7 +69,6 @@ export const searchEngines: {
     handle: handleUrbanDictionary,
     emoji: '🧱',
     provider: 'Urban Dictionary',
-    name: 'Urban Dictionary',
     hide: true,
   },
   // rawg: {
@@ -86,7 +79,6 @@ export const searchEngines: {
     handle: handleAnimeMangas,
     emoji: '🌸',
     provider: 'AniList',
-    name: 'Anime & Mangas',
     hide: true,
   },
   // npm: {

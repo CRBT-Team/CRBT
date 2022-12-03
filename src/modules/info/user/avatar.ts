@@ -1,14 +1,7 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import {
-  ButtonInteraction,
-  GuildMember,
-  Interaction,
-  MessageButton,
-  MessageEmbed,
-  User,
-} from 'discord.js';
+import { ButtonInteraction, GuildMember, Interaction, MessageButton, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
@@ -100,20 +93,23 @@ export async function renderPfp(
 
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: strings.EMBED_TITLE.replace('{USER}', user.tag),
-          iconURL: av,
-        })
-        .setImage(av)
-        .setColor(color),
+      {
+        author: {
+          name: `${user.tag} - ${t(ctx, type === 'default' ? 'AVATAR' : 'USER_AVATAR')}`,
+          icon_url: av,
+        },
+        image: {
+          url: av,
+        },
+        color,
+      },
     ],
     components: components(
       navBar(
         navCtx,
         ctx.locale,
         type === 'default' ? 'avatar' : 'user_avatar',
-        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user, member)
+        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user.toJSON(), member)
       ),
       row(
         new MessageButton()

@@ -23,7 +23,7 @@ export async function handleRolePickerButton(
   const { strings, errors } = t(this, 'role-selectors');
 
   if (!this.guild.roles.cache.has(data.id)) {
-    return CRBTError(this, errors.ROLE_DOES_NOT_EXIST.replace('{ROLE}', role.name));
+    return CRBTError(this, errors.ROLES_DO_NOT_EXIST);
   }
 
   const member = this.member as GuildMember;

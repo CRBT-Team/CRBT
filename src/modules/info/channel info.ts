@@ -1,5 +1,6 @@
 import { icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
+import { t } from '$lib/language';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import dayjs from 'dayjs';
@@ -42,11 +43,11 @@ export default ChatCommand({
 
     const fields: EmbedFieldData[] = [
       {
-        name: 'ID',
+        name: t(this, 'ID'),
         value: channel.id,
       },
       {
-        name: 'Created at',
+        name: t(this, 'CREATED_ON'),
         value: `${timestampMention(created)} • ${timestampMention(created, 'R')}`,
       },
     ];

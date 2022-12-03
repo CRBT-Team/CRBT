@@ -1,12 +1,14 @@
 import { emojis } from '$lib/env';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { trimURL } from '$lib/functions/trimURL';
+import { t } from '$lib/language';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { SafeSearchType, search } from 'duck-duck-scrape';
 import { decode } from 'html-entities';
 import fetch from 'node-fetch';
 import { escapeMarkdown } from 'purplet';
 import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDuckDuckGo(
@@ -33,7 +35,7 @@ export async function handleDuckDuckGo(
 
     if (page === 1) {
       try {
-        instantResultData = await fetchResults<any>(this, { ...opts, site: 'featured' }, () =>
+        instantResultData = await fetchResults<any>(this, opts, () =>
           fetch(
             `https://api.duckduckgo.com/?${new URLSearchParams({
               q: query,
@@ -56,7 +58,7 @@ export async function handleDuckDuckGo(
       return createCRBTError(this, {
         title: 'Uh-oh, there are no results for your query.',
         description:
-          'Try checking for spelling, or something more broad.\nNote that NSFW results are disabled outside of NSFW channels.',
+          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of NSFW channels.',
       });
     }
 
@@ -66,7 +68,10 @@ export async function handleDuckDuckGo(
       {
         embeds: [
           {
-            title: `Web results for "${query}"`,
+            title: t(this, 'SEARCH_TITLE', {
+              engine: t(this, `SEARCH_ENGINES.${opts.site}` as any),
+              query,
+            }),
             url: `https://duckduckgo.com/?q=${encodeURI(query)}`,
             fields: res.slice(realPage * 3, realPage * 3 + 3).map((result) => {
               const name = escapeMarkdown(decode(result.title));
@@ -81,9 +86,15 @@ export async function handleDuckDuckGo(
               };
             }),
             footer: {
-              text: `Powered by DuckDuckGo • Showing 3 out of ${res.length} Results (Page ${
-                opts.page
-              }/${instantResultData ? pages + 1 : pages})`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: searchEngines[opts.site].provider,
+              })} • ${t(this, 'PAGINATION_MULTIPLE_RESULTS', {
+                resultsPerPage: '3',
+                results: res.length.toLocaleString(this.locale),
+              })} (${t(this, 'PAGINATION_PAGE_OUT_OF', {
+                page: opts.page.toLocaleString(this.locale),
+                pages: (instantResultData ? pages + 1 : pages).toLocaleString(this.locale),
+              })})`,
               iconURL: `https://duckduckgo.com/favicon.png`,
             },
           },

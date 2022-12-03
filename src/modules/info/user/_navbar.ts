@@ -1,9 +1,9 @@
-import { cache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { CDNImageFormat, CDNImageSize } from '@purplet/utils';
 import { APIUser, Routes } from 'discord-api-types/v10';
-import { GuildMember, Integration } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import { ButtonComponent, getRestClient, row } from 'purplet';
 import { renderPfp } from './avatar';
 import { renderBanner } from './banner';
@@ -38,10 +38,8 @@ export type NavBarContext = {
 
 export const UserInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const u = (await getRestClient().get(Routes.user(opts.userId))) as APIUser;
     const m =
@@ -55,21 +53,17 @@ export const UserInfoBtn = ButtonComponent({
 
 export const BotInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
-    const bots =
-      cache.get<Integration[]>(`${this.guild.id}:integrations`) ??
-      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON();
+    const bots = await fetchWithCache(`${this.guild.id}:integrations`, async () =>
+      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON()
+    );
 
     const bot =
       opts.targetId === this.client.user.id
         ? await this.client.application.fetch()
         : bots.find(({ application }) => application.bot.id === opts.targetId);
-
-    cache.set<Integration[]>(`${this.guild.id}:integrations`, bots);
 
     await this.update(await renderBotInfo.call(this, opts, bot));
   },
@@ -77,10 +71,8 @@ export const BotInfoBtn = ButtonComponent({
 
 export const PfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -94,10 +86,8 @@ export const PfpBtn = ButtonComponent({
 
 export const UserPfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const u = await this.client.users.fetch(opts.targetId);
 
@@ -107,10 +97,8 @@ export const UserPfpBtn = ButtonComponent({
 
 export const UserBannerBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
-    const { errors } = t(this, 'user_navbar');
-
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, errors.NOT_CMD_USER);
+      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -146,39 +134,37 @@ export function navBar(
   activeTab: Tabs,
   addTabs?: Set<Omit<Tabs, DefaultTabs>>
 ) {
-  const { strings } = t(locale, 'user_navbar');
-
   return row(
     new UserInfoBtn(ctx)
-      .setLabel(strings.INFO)
+      .setLabel(t(locale, 'USER_INFO'))
       .setStyle('SECONDARY')
       .setDisabled(activeTab === 'userinfo'),
     addTabs?.has('botinfo')
       ? new BotInfoBtn(ctx)
-          .setLabel(strings.BOTINFO)
+          .setLabel(t(locale, 'BOT_INFO'))
           .setStyle('SECONDARY')
           .setDisabled(activeTab === 'botinfo')
       : null,
     ...(addTabs?.has('user_avatar')
       ? [
           new PfpBtn(ctx)
-            .setLabel(strings.SERVER_AVATAR)
+            .setLabel(t(locale, 'SERVER_AVATAR'))
             .setStyle('SECONDARY')
             .setDisabled(activeTab === 'avatar'),
           new UserPfpBtn(ctx)
-            .setLabel(strings.USER_AVATAR)
+            .setLabel(t(locale, 'USER_AVATAR'))
             .setStyle('SECONDARY')
             .setDisabled(activeTab === 'user_avatar'),
         ]
       : [
           new PfpBtn(ctx)
-            .setLabel(strings.AVATAR)
+            .setLabel(t(locale, 'AVATAR'))
             .setStyle('SECONDARY')
             .setDisabled(activeTab === 'avatar'),
         ]),
     addTabs?.has('user_banner')
       ? new UserBannerBtn(ctx)
-          .setLabel(strings.USER_BANNER)
+          .setLabel(t(locale, 'USER_BANNER'))
           .setStyle('SECONDARY')
           .setDisabled(activeTab === 'user_banner')
       : null

@@ -1,11 +1,13 @@
 import { emojis } from '$lib/env';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { SearchCmdOpts } from './search';
+import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleUrbanDictionary(
@@ -40,9 +42,19 @@ export async function handleUrbanDictionary(
         embeds: [
           {
             author: {
-              name: `Urban Dictionary search for "${query}"`,
+              name: t(this, 'SEARCH_TITLE', {
+                engine: t(this, `SEARCH_ENGINES.${opts.site}` as any),
+                query,
+              }),
             },
             title: post.word,
+            description: `**[${
+              post.author
+            }](https://www.urbandictionary.com/author.php/author=${encodeURIComponent(
+              post.author
+            )})** • ${emojis.thumbsup} **${post.thumbs_up}** ${emojis.thumbsdown} **${
+              post.thumbs_down
+            }**`,
             url: post.permalink,
             fields: [
               {
@@ -64,20 +76,6 @@ export async function handleUrbanDictionary(
                   ]
                 : []),
               {
-                name: 'Author',
-                value: `**[${
-                  post.author
-                }](https://www.urbandictionary.com/author.pho/author=${encodeURIComponent(
-                  post.author
-                )})**`,
-                inline: true,
-              },
-              {
-                name: 'Votes',
-                value: `${emojis.thumbsup} **${post.thumbs_up}** • ${emojis.thumbsdown} **${post.thumbs_down}**`,
-                inline: true,
-              },
-              {
                 name: 'Written',
                 value: `${timestampMention(new Date(post.written_on))}\n${timestampMention(
                   new Date(post.written_on),
@@ -88,7 +86,12 @@ export async function handleUrbanDictionary(
             ],
             color: await getColor(this.user),
             footer: {
-              text: `Powered by Urban Dictionary • Page ${page} out of ${pages} results`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: searchEngines[opts.site].provider,
+              })} • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+                page: opts.page.toLocaleString(this.locale),
+                pages: pages.toLocaleString(this.locale),
+              })}`,
               icon_url: 'https://i.imgur.com/VWRSZiW.png',
             },
           },
@@ -108,15 +111,14 @@ export default ChatCommand({
   async handle({ word }) {
     await this.deferReply();
 
-    const res = await handleUrbanDictionary.call(this, {
-      anonymous: false,
-      query: word,
-      site: 'urban',
-      page: 1,
-    });
-
-    if (res) {
-      await this.editReply(res);
-    }
+    this.editReply(
+      await handleUrbanDictionary.call(this, {
+        anonymous: false,
+        query: word,
+        site: 'urban',
+        page: 1,
+        userId: this.user.id,
+      })
+    );
   },
 });

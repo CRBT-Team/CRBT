@@ -9,7 +9,7 @@ import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import { APIUser, PermissionFlagsBits, Routes, UserFlags } from 'discord-api-types/v10';
-import { GuildMember, Interaction, MessageEmbed, UserContextMenuInteraction } from 'discord.js';
+import { EmbedFieldData, GuildMember, Interaction, UserContextMenuInteraction } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
@@ -109,35 +109,32 @@ export async function renderUser(
   const userBadges = getBadgeEmojis(user.public_flags, crbtUser?.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
+  const createdAt = snowflakeToDate(user.id);
 
-  const e = new MessageEmbed()
-    .setAuthor({
-      name: t(ctx.locale, 'USER_INFO_EMBED_TITLE', {
-        USER: `${user.username}#${user.discriminator}`,
-      }),
-      iconURL: avatar(member ?? user, 64),
-    })
-    .setDescription(userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '')
-    .addField('ID', user.id)
-    .setImage(banner(user, size ?? 2048, format))
-    .setThumbnail(avatar(member ?? user, size ?? 256, format))
-    .setColor(await getColor(user));
+  const fields: EmbedFieldData[] = [
+    {
+      name: t(ctx, 'ID'),
+      value: user.id,
+    },
+  ];
 
   if (member) {
     const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
 
-    if (member.nickname) e.addField(t(ctx.locale, 'USER_INFO_NICKNAME'), member.nickname);
+    if (member.nickname) {
+      fields.push({
+        name: t(ctx, 'SERVER_NICKNAME'),
+        value: member.nickname,
+      });
+    }
 
-    e.addFields(
+    fields.push(
       {
-        name: `${t(ctx.locale, 'USER_INFO_ROLES')} • ${roles.size}`,
-        value:
-          roles.size > 0
-            ? roles.map((r) => r.toString()).join(' ')
-            : t(ctx.locale, 'USER_INFO_NO_ROLES'),
+        name: `${t(ctx, 'ROLES')} • ${roles.size}`,
+        value: roles.size > 0 ? roles.map((r) => r.toString()).join(' ') : t(ctx, 'USER_NO_ROLES'),
       },
       {
-        name: t(ctx.locale, 'USER_INFO_PERMS'),
+        name: t(ctx.locale, 'MAJOR_PERMS'),
         value:
           hasPerms(member, PermissionFlagsBits.Administrator) ||
           member.permissions.toArray().length === 0
@@ -145,30 +142,41 @@ export async function renderUser(
             : keyPerms(member.permissions).join(', '),
       },
       {
-        name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-        value: `${timestampMention(snowflakeToDate(user.id))}\n${timestampMention(
-          snowflakeToDate(user.id),
-          'R'
-        )}`,
+        name: t(ctx, 'JOINED_DISCORD'),
+        value: `${timestampMention(createdAt)}\n${timestampMention(createdAt, 'R')}`,
         inline: true,
       },
       {
-        name: t(ctx.locale, 'USER_INFO_JOINED_SERVER'),
+        name: t(ctx, 'JOINED_SERVER'),
         value: `${timestampMention(member.joinedAt)}\n${timestampMention(member.joinedAt, 'R')}`,
         inline: true,
       }
     );
   } else {
-    e.addFields({
-      name: t(ctx.locale, 'USER_INFO_CREATED_AT'),
-      value: `${timestampMention(snowflakeToDate(user.id))} • ${timestampMention(
-        snowflakeToDate(user.id),
-        'R'
-      )}`,
+    fields.push({
+      name: t(ctx.locale, 'JOINED_DISCORD'),
+      value: `${timestampMention(createdAt)} • ${timestampMention(createdAt, 'R')}`,
     });
   }
+
   return {
-    embeds: [e],
+    embeds: [
+      {
+        author: {
+          name: `${user.username}#${user.discriminator} • ${t(ctx.locale, 'USER_INFO')}`,
+          icon_url: avatar(member ?? user, 64),
+        },
+        description: userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '',
+        fields,
+        image: {
+          url: banner(user, size ?? 2048, format),
+        },
+        thumbnail: {
+          url: avatar(member ?? user, size ?? 256, format),
+        },
+        color: await getColor(user),
+      },
+    ],
     components: components(
       navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
     ),

@@ -12,14 +12,14 @@ import { renderFeatureSettings } from './settings';
 import { include } from './_helpers';
 
 export const colorSettings: SettingsMenus = {
-  getSelectMenu: ({ settings }) => ({
-    description: t(this, 'SETTINGS_COLOR_SET_TO', {
+  getSelectMenu: ({ settings, i }) => ({
+    description: t(i, 'SETTINGS_COLOR_SET_TO', {
       color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
     }),
     emoji: '🎨',
   }),
-  getMenuDescription: ({ settings }) => ({
-    description: t(this, 'SETTINGS_COLOR_DESCRIPTION', {
+  getMenuDescription: ({ settings, i }) => ({
+    description: t(i, 'SETTINGS_COLOR_DESCRIPTION', {
       color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
     }),
   }),

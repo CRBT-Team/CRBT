@@ -95,7 +95,9 @@ type StringArgument = TopLevelKeys | DottedLanguageObjectStringPaths;
 export function t<K extends StringArgument>(
   i: Interaction | string,
   stringKey: K,
-  interpolations?: K extends DottedLanguageObjectStringPaths ? { [k: string]: any } : undefined
+  interpolations?: K extends DottedLanguageObjectStringPaths
+    ? Record<string, { toString: () => string }>
+    : never
 ): K extends TopLevelKeys ? StringsStructure[K] : string {
   const locale = typeof i === 'string' ? i : i.locale;
   const defaultData = accessObjectValue(stringKey, languages['en-US']);
@@ -113,7 +115,7 @@ export function t<K extends StringArgument>(
   if (interpolations && typeof string === 'string') {
     return Object.keys(interpolations).reduce(
       (interpolated, key) =>
-        interpolated.replace(new RegExp(`{\s*${key}\s*}`, 'g'), interpolations[key]),
+        interpolated.replace(new RegExp(`{${key}}`, 'g'), `${interpolations[key]}`),
       string
     ) as any;
   } else {
@@ -122,15 +124,25 @@ export function t<K extends StringArgument>(
 }
 
 export function getAllLanguages<K extends StringArgument>(
-  stringKey: K
+  stringKey: K,
+  changeString?: K extends DottedLanguageObjectStringPaths
+    ? (str: string, lang: string) => string
+    : never
 ): {
   [k: string]: K extends TopLevelKeys ? StringsStructure[K] : string;
 } {
-  return Object.keys(languages).reduce(
-    (acc, lang) => ({
-      ...acc,
-      [lang]: t(lang, stringKey),
-    }),
-    {}
-  );
+  return Object.keys(languages).reduce((acc, lang) => {
+    const translation = t(lang, stringKey);
+    if (changeString && typeof translation === 'string') {
+      return {
+        ...acc,
+        [lang]: changeString(translation, lang),
+      };
+    } else {
+      return {
+        ...acc,
+        [lang]: translation,
+      };
+    }
+  }, {});
 }

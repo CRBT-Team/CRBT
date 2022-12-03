@@ -86,8 +86,8 @@ export async function AchievementProgress(
           : t(locale, 'ACHIEVEMENT_UNLOCKED_TITLE'),
         icon_url: icons.giveaway,
       },
-      title: t(locale, `ACHIEVEMENT_${id}_TITLE` as any),
-      description: `${t(locale, `ACHIEVEMENT_${id}_DESC` as any, {
+      title: t(locale, `ACHIEVEMENT_${type}_TITLE` as any),
+      description: `${t(locale, `ACHIEVEMENT_${type}_DESC` as any, {
         command: suggestedCommand ? slashCmd(suggestedCommand) : null,
       })}\n${t(locale, 'ACHIEVEMENT_UNLOCKED_DESCRIPTION', {
         command: slashCmd('achievements'),
