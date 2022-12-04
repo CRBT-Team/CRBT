@@ -12,7 +12,7 @@
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
   "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
-  "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
+  "ERROR_INVALID_COLOR": "Выбранный цвет недействителен. Используйте корректный HEX цвет или один из предложенных пресетов.",
   "BACK": "Back",
   "JUMP_TO_MSG": "Jump to message",
   "CANCEL": "Cancel",
