@@ -282,7 +282,7 @@
     },
     "errors": {
       "BOT_MISSING_PERMS": "J'ai besoin de la permission \"Gérer les rôles\" pour créer un Sélecteur de rôles.",
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
+      "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles sélectionnés ont été supprimés. Contactez un administrateur pour résoudre le problème.",
       "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
     },
     "strings": {
@@ -562,24 +562,24 @@
     "options": {
       "query": {
         "name": "requête",
-        "description": "What to search for."
+        "description": "Quoi rechercher."
       },
       "site": {
         "name": "site",
-        "description": "What search engine to use."
+        "description": "Quel moteur de recherche utiliser."
       },
       "anonymous": {
-        "name": "anonymous",
-        "description": "Search without sending a public messsage."
+        "name": "incognito",
+        "description": "Faire une recherche sans envoyer de message public."
       }
     }
   },
   "SEARCH_ENGINES": {
     "web": "Web",
     "images": "Images",
-    "videos": "Videos",
-    "weather": "Weather",
-    "dictionary": "Dictionary",
+    "videos": "Vidéos",
+    "weather": "Météo",
+    "dictionary": "Dictionnaire",
     "urban": "Urban Dictionary",
     "anime": "Anime & Manga"
   },
