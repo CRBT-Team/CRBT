@@ -26,33 +26,33 @@
   "DONE": "Listo",
   "ADD_REMINDER": "Establecer recordatorio",
   "OPEN_DMS": "Abrir MD",
-  "PREVIEW": "Preview",
-  "EXPORT": "Export",
-  "IMPORT": "Import",
-  "YES": "Yes",
+  "PREVIEW": "Vista previa",
+  "EXPORT": "Exportar",
+  "IMPORT": "Importar",
+  "YES": "Sí",
   "NO": "No",
-  "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
-  "TEXT_CHANNEL": "Text Channel",
-  "VOICE_CHANNEL": "Voice Channel",
-  "STAGE_CHANNEL": "Stage Channel",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
+  "ERROR_INVALID_CHANNEL": "Debe proporcionar un canal {types} válido.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Sólo el usuario que ha ejecutado este comando puede usar este componente.",
+  "TEXT_CHANNEL": "Canal de texto",
+  "VOICE_CHANNEL": "Canal de voz",
+  "STAGE_CHANNEL": "Canal de escenario",
+  "ANNOUNCEMENT_CHANNEL": "Canal de anuncios",
   "WEBSOCKET": "Websocket",
-  "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
-  "SERVERS": "Servers",
-  "NONE": "None",
-  "ADDED": "Added",
+  "INTERACTION": "Interacción",
+  "MEMBERS": "Miembros",
+  "SERVERS": "Servidores",
+  "NONE": "Ninguno/a",
+  "ADDED": "Añadido/a",
   "UnknownError": {
     "strings": {
       "TITLE": "Ha ocurrido un error desconocido.",
-      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "Se nos ha informado automáticamente. Esto es lo que dice el error:\n{MESSAGE}"
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "¡Un momento!",
-      "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
+      "DESCRIPTION": "Podrá usar este {TYPE} en {TIME}...",
       "COMMAND": "comando",
       "COMPONENT": "componente"
     }
@@ -97,7 +97,7 @@
     "strings": {
       "EMBED_TITLE": "Color de contraste actualizado.",
       "EMBED_SYNC_INFO": "Su color de perfil de Discord se sincronizará con su color de contraste CRBT.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
+      "EMBED_DESCRIPTION": "Este color será utilizado en la mayoría de las respuestas que le dé CRBT, además de en su tarjeta de información, cuando otra persona la visite."
     }
   },
   "remind me": {
@@ -106,11 +106,11 @@
       "options": [
         {
           "name": "cuándo",
-          "description": "When to remind you."
+          "description": "Cuándo recordarle."
         },
         {
           "name": "asunto",
-          "description": "What to be reminded about."
+          "description": "De qué recordarle."
         },
         {
           "name": "destino",
@@ -122,17 +122,17 @@
       "PAST": "No se puede establecer un recordatorio en el pasado.",
       "INVALID_FORMAT": "La fecha que ha introducido está en un formato inválido o está en el pasado.",
       "TOO_LONG": "No se puede establecer un recordatorio para dentro de más de 2 años.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
+      "REMINDERS_MAX_LIMIT": "No se pueden establecer más de 10 recordatorios a la vez."
     },
     "strings": {
       "SUCCESS_TITLE": "¡Recordatorio establecido!",
-      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
+      "SUCCESS_CHANNEL": "CRBT se lo recordará en {CHANNEL}",
       "SUCCESS_DM": "CRBT se lo recordará por MD",
       "BUTTON_GCALENDAR": "Añadir como evento de Google Calendar",
       "GCALENDAR_EVENT": "Establecido por un Recordatorio CRBT.",
       "GCALENDAR_EVENT_DM": "También se le será recordado por MD.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+      "GCALENDAR_EVENT_CHANNEL": "También se le será recordado en {CHANNEL}, en {SERVER}.",
+      "REMINDER_DESCRIPTION": "Establecido el {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "y",
@@ -150,7 +150,7 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT."
+      "description": "Obtener información sobre CRBT."
     }
   },
   "poll": {
@@ -177,7 +177,7 @@
     },
     "strings": {
       "CHOICE": "Opción",
-      "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
+      "POLL_DESCRIPTION": "La encuesta terminará {TIME}.\nEl creador de la encuesta puede ver las opciones y otros datos haciendo clic en el botón {ICON} debajo.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
       "POLL_FOOTER_CREATOR": "Poll started by {USER}",
@@ -352,20 +352,20 @@
   "FIELDS_URL": "URL del título de la inserción",
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
-  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-  "USER_INFO_TITLE": "{USER} - User info",
-  "JOINED_DISCORD": "Joined Discord",
-  "JOINED_SERVER": "Joined Server",
-  "USER_NO_ROLES": "*This user doesn't any have roles...*",
-  "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
-  "MAJOR_PERMS": "Major permissions in this server",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
+  "BIRTHDAY_LIST_CONTENT": "Cumpleaños de {USER}",
+  "USER_INFO_TITLE": "{USER} - Información del usuario",
+  "JOINED_DISCORD": "Miembro de Discord desde",
+  "JOINED_SERVER": "Miembro del servidor desde",
+  "USER_NO_ROLES": "*Este usuario no tiene ningún rol...*",
+  "SERVER_NICKNAME": "Apodo en el servidor",
+  "ROLES": "Rol(es)",
+  "MAJOR_PERMS": "Permisos principales en este servidor",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "¡Bienvenido a CRBT!",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Añadir CRBT a un servidor (¡gracias!)",
   "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
-  "ACHIEVEMENT_BUG_HUNTER_DESC": "Report a bug with {command}",
-  "ACHIEVEMENT_ARTIST_TITLE": "Artist",
-  "ACHIEVEMENT_ARTIST_DESC": "Change your accent color using {command}",
+  "ACHIEVEMENT_BUG_HUNTER_DESC": "Informe sobre un error usando {command}",
+  "ACHIEVEMENT_ARTIST_TITLE": "Artista",
+  "ACHIEVEMENT_ARTIST_DESC": "Cambie su color de contraste usando {command}",
   "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_TITLE": "Nice n' Cozy",
   "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_DESC": "Change the server's accent color with {command}.",
   "ACHIEVEMENT_DND_PRO_TITLE": "DnD Pro",
