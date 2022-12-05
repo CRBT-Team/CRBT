@@ -67,12 +67,12 @@ export const ctxCommand = MessageContextCommand({
         message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
 
     if (!message.content && !image) {
-      return CRBTError(
-        this,
-        `This message doesn't have any content or images to translate!\nNote: CRBT doesn't translate embeds for now. You can translate any text with ${slashCmd(
+      return CRBTError(this, {
+        title: "This message doesn't have any content or images to translate!",
+        description: `Note: CRBT doesn't translate embeds for now. You can translate any text with ${slashCmd(
           'translate'
-        )}.`
-      );
+        )}.`,
+      });
     }
 
     await this.deferReply({

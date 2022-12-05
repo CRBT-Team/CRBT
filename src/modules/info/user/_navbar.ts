@@ -41,10 +41,10 @@ export const UserInfoBtn = ButtonComponent({
     if (this.user.id !== opts.userId) {
       return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
     }
-    const u = (await getRestClient().get(Routes.user(opts.userId))) as APIUser;
+    const u = (await getRestClient().get(Routes.user(opts.targetId))) as APIUser;
     const m =
       this.guild && this.guild.members.cache.has(u.id)
-        ? await this.guild.members.fetch(u.id)
+        ? await this.guild.members.fetch(u.id).catch((e) => null)
         : null;
 
     this.update(await renderUser(this, u, opts, m));

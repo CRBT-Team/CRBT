@@ -35,6 +35,7 @@ export default ChatCommand({
         page: 1,
         query: `${type} images`,
         site: 'images',
+        userId: this.user.id,
       })
     );
   },

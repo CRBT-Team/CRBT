@@ -1,5 +1,6 @@
 import { colors, icons } from '$lib/env';
 import { getAllLanguages, t } from '$lib/language';
+import { upperCaseFirst } from 'change-case-all';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
@@ -14,6 +15,8 @@ export default ChatCommand({
     maxLength: 1024,
   }),
   async handle({ question }) {
+    console.log(t(this, '8BALL_ANSWERS_NEGATIVE'));
+
     const answers = [
       ...t(this, '8BALL_ANSWERS_POSITIVE').map((answer) => ({
         answer: answer,
@@ -49,7 +52,7 @@ export default ChatCommand({
             },
             fields: [
               {
-                name: t(this, '8ball.options.question.name'),
+                name: upperCaseFirst(t(this, '8ball.options.question.name')),
                 value: question,
               },
               {

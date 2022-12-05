@@ -12,7 +12,7 @@
   "ERROR_ADMIN_ONLY": "Musisz być administratorem żeby użyj tej komendy.",
   "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "Podany URL jest nieprawidłowy.",
-  "ERROR_INVALID_HEX": "Podany kolor HEX jest nieprawidłowy.",
+  "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
   "BACK": "Back",
   "JUMP_TO_MSG": "Jump to message",
   "CANCEL": "Cancel",
@@ -29,13 +29,24 @@
   "PREVIEW": "Preview",
   "EXPORT": "Export",
   "IMPORT": "Import",
-  "globalErrors": {
-    "GUILD_ONLY": "Ta komenda nie może być użyta w DMach."
-  },
+  "YES": "Yes",
+  "NO": "No",
+  "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
+  "TEXT_CHANNEL": "Text Channel",
+  "VOICE_CHANNEL": "Voice Channel",
+  "STAGE_CHANNEL": "Stage Channel",
+  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
+  "WEBSOCKET": "Websocket",
+  "INTERACTION": "Interaction",
+  "MEMBERS": "Members",
+  "SERVERS": "Servers",
+  "NONE": "None",
+  "ADDED": "Added",
   "UnknownError": {
     "strings": {
       "TITLE": "Wystąpił nieznany błąd.",
-      "DESCRIPTION": "We have no clue what this issue may be. Here is the error message we received:\n{MESSAGE}\nThis was automatically reported to us, and we'll make sure to fix it as soon as possible. Sorry for the inconvenience."
+      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
@@ -81,13 +92,12 @@
       "white": "Biały"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color.",
-      "INVALID_COLOR_NAME": "You need to enter a valid color name using the autocomplete or use a HEX color."
+      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
     },
     "strings": {
       "EMBED_TITLE": "Accent color updated.",
       "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your profile and info cards, when someone else visits them."
+      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
     }
   },
   "remind me": {
@@ -96,11 +106,11 @@
       "options": [
         {
           "name": "when",
-          "description": "When to remind you (e.g. 2 hours, 3w2d, 20:30)."
+          "description": "When to remind you."
         },
         {
           "name": "subject",
-          "description": "What to remind you of."
+          "description": "What to be reminded about."
         },
         {
           "name": "destination",
@@ -112,23 +122,16 @@
       "PAST": "You cannot set a reminder in the past.",
       "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
       "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "INVALID_CHANNEL_TYPE": "The channel you specified is not a valid text channel.",
-      "BOT_MISSING_PERMS": "I do not have permission to send messages in this channel.",
-      "USER_MISSING_PERMS": "You do not have permission to send messages in this channel.",
       "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set!",
       "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
       "SUCCESS_DM": "You will be reminded by DM",
-      "SUBJECT": "Subject",
-      "TOMORROW_AT": "Tomorrow at {TIME}",
-      "TODAY_AT": "Today at {TIME}",
       "BUTTON_GCALENDAR": "Add as Google Calendar event",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
       "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-      "REMINDER_TITLE": "Reminder",
       "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
@@ -143,46 +146,11 @@
   "ping": {
     "meta": {
       "description": "Ping CRBT. Returns latency and connection info."
-    },
-    "strings": {
-      "EMBED_TITLE": "{CRBT} - Ping",
-      "WEBSOCKET": "WebSocket latency",
-      "INTERACTION": "Interaction latency",
-      "UPTIME": "Online since",
-      "FORMAT_MS": "{NUMBER}ms"
     }
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT"
-    },
-    "strings": {
-      "MEMBER_COUNT": "Member count",
-      "SERVER_COUNT": "Server count",
-      "PING_RESULT": "≈{PING} milliseconds"
-    }
-  },
-  "user_navbar": {
-    "errors": {
-      "NOT_CMD_USER": "Only the person using this command can use this component."
-    },
-    "strings": {
-      "AVATAR": "Avatar",
-      "INFO": "User Info",
-      "BOTINFO": "Bot Info",
-      "SERVER_AVATAR": "Server Avatar",
-      "USER_AVATAR": "User Avatar",
-      "USER_BANNER": "User Banner"
-    }
-  },
-  "server_navbar": {
-    "strings": {
-      "INFO": "Server info",
-      "ICON": "Icon",
-      "BANNER": "Banner",
-      "ROLES": "Roles & Members",
-      "EMOJIS": "Emojis & Stickers",
-      "EXTRA": "More"
+      "description": "Get information about CRBT."
     }
   },
   "poll": {
@@ -204,7 +172,6 @@
       ]
     },
     "errors": {
-      "CHOICE_TOO_LONG": "A choice cannot be longer than 40 characters (excluding emojis).",
       "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
@@ -215,8 +182,6 @@
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
       "POLL_FOOTER_CREATOR": "Poll started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Vote",
-      "KEYWORD_YES__KEEP_LOWERCASE": "yes",
-      "KEYWORD_NO__KEEP_LOWERCASE": "no",
       "SUCCESS_TITLE": "Poll created!",
       "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
       "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
@@ -259,7 +224,6 @@
       "name": "Get Avatar/Banner"
     },
     "strings": {
-      "EMBED_TITLE": "{USER} - Avatar",
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
     }
   },
@@ -298,10 +262,6 @@
         "description": "Create a new Role Picker, a menu for members to give themselves roles.",
         "options": [
           {
-            "name": "description",
-            "description": "Describe to your members what your Role Picker is for."
-          },
-          {
             "name": "behavior",
             "description": "How the Role Picker should behave.",
             "choices": [
@@ -321,10 +281,8 @@
       }
     },
     "errors": {
-      "USER_MISSING_PERMS": "Only server administrators can create Role Pickers.",
       "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLE_DOES_NOT_EXIST": "Role {ROLE} does not exist or has been removed. Contact an admin to resolve the issue.",
-      "ROLES_DO_NOT_EXIST": "One or more of the roles you specified do not exist or have been removed. Contact an admin to resolve the issue.",
+      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
@@ -337,16 +295,28 @@
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
       "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "Members will now available to select roles from this menu. To disable it, simply delete the Role Picker message."
+      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
     }
   },
-  "MODERATION_LOGS_ACTION_WARN": "Warn",
-  "MODERATION_LOGS_ACTION_KICK": "Kick",
-  "MODERATION_LOGS_ACTION_BAN": "Ban",
-  "MODERATION_LOGS_ACTION_UNBAN": "Unban",
-  "MODERATION_LOGS_ACTION_TIMEOUT": "Timeout",
-  "MODERATION_LOGS_ACTION_TEMPBAN": "Temporary ban",
-  "MODERATION_LOGS_CLEAR": "Channel message clear",
+  "AVATAR": "Avatar",
+  "USER_INFO": "User Info",
+  "BOT_INFO": "Bot Info",
+  "SERVER_AVATAR": "Server Avatar",
+  "USER_AVATAR": "User Avatar",
+  "USER_BANNER": "User Banner",
+  "SERVER_INFO": "Server info",
+  "ICON": "Icon",
+  "BANNER": "Banner",
+  "ROLES_AND_MEMBERS": "Roles & Members",
+  "EMOJIS": "Emojis & Stickers",
+  "EXTRA": "More",
+  "WARN": "Warn",
+  "KICK": "Kick",
+  "BAN": "Ban",
+  "UNBAN": "Unban",
+  "TIMEOUT": "Timeout",
+  "TEMPBAN": "Temporary ban",
+  "CLEAR": "Clear",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
   "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
   "JOIN_MESSAGE": "Welcome message",
@@ -362,9 +332,8 @@
   "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-  "JOIN_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /welcome channel to set one.",
+  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "LEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use /farewell channel to set one.",
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",
   "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
@@ -384,13 +353,13 @@
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
   "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-  "USER_INFO_EMBED_TITLE": "{USER} - User info",
-  "USER_INFO_CREATED_AT": "Joined Discord",
-  "USER_INFO_JOINED_SERVER": "Joined Server",
-  "USER_INFO_NO_ROLES": "*This user doesn't any have roles...*",
-  "USER_INFO_NICKNAME": "Server nickname",
-  "USER_INFO_ROLES": "Role(s)",
-  "USER_INFO_PERMS": "Major permissions in this server",
+  "USER_INFO_TITLE": "{USER} - User info",
+  "JOINED_DISCORD": "Joined Discord",
+  "JOINED_SERVER": "Joined Server",
+  "USER_NO_ROLES": "*This user doesn't any have roles...*",
+  "SERVER_NICKNAME": "Server nickname",
+  "ROLES": "Role(s)",
+  "MAJOR_PERMS": "Major permissions in this server",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
   "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
@@ -416,5 +385,206 @@
   "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
   "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
   "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color."
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color.",
+  "help": {
+    "name": "help",
+    "description": "Returns a quick help guide for CRBT."
+  },
+  "HELP_TITLE": "{botName} - Quick Guide",
+  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_AD_TITLE": "Like CRBT?",
+  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "giveaway": {
+    "name": "giveaway",
+    "description": "Create a giveaway.",
+    "options": {
+      "prize": {
+        "name": "prize",
+        "description": "What to give away."
+      },
+      "end_date": {
+        "name": "end_date",
+        "description": "When to end the giveaway."
+      },
+      "winners": {
+        "name": "winners",
+        "description": "How many people can win the giveaway."
+      }
+    }
+  },
+  "8ball": {
+    "name": "8ball",
+    "description": "Ask a question to 8-Ball.",
+    "options": {
+      "question": {
+        "name": "question",
+        "description": "What to ask."
+      }
+    }
+  },
+  "8BALL": "8-Ball",
+  "ANSWER": "Answer",
+  "8BALL_ANSWERS_POSITIVE": [
+    "It is certain.",
+    "It is decidedly so.",
+    "Without a doubt.",
+    "Yes, definitely.",
+    "You may rely on it.",
+    "As I see it, yes.",
+    "Most likely.",
+    "Outlook good.",
+    "Yes.",
+    "Signs point to yes."
+  ],
+  "8BALL_ANSWERS_NEUTRAL": [
+    "Reply hazy, try again.",
+    "Ask again later.",
+    "Better not tell you now.",
+    "Cannot predict now.",
+    "Concentrate and ask again."
+  ],
+  "8BALL_ANSWERS_NEGATIVE": [
+    "Don't count on it.",
+    "My reply is no.",
+    "My sources say no.",
+    "Outlook not so good.",
+    "Very doubtful."
+  ],
+  "COMMENT": "comment",
+  "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
+  "roll": {
+    "name": "roll",
+    "description": "Roll a dice. Supports RPG dice notation.",
+    "options": {
+      "dice": {
+        "name": "dice",
+        "description": "What dice to roll. Use 'd6' for a 6-sided die."
+      }
+    }
+  },
+  "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
+  "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
+  "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
+  "TRANSLATE": "translate",
+  "translate": {
+    "description": "Translate text to another language.",
+    "options": {
+      "text": {
+        "name": "text",
+        "description": "The text to translate."
+      },
+      "target": {
+        "name": "target",
+        "description": "The language to translate to."
+      },
+      "source": {
+        "name": "source",
+        "description": "The source language to translate from."
+      }
+    }
+  },
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
+  "TRANSLATE_RESULT": "Translated from {source} to {target}",
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to.",
+  "REMINDER_LIST_TITLE": "{user} - CRBT Reminders ({number})",
+  "REMINDER_LIST_NO_REMINDERS": "Uh oh, you don't have any reminders set. Use {command} to set one!",
+  "REMINDER_LIST_DESCRIPTION": "You can set a new reminder using {command}.",
+  "REMINDER_DESTINATION": "Destination:",
+  "IN_YOUR_DMS": "In your DMs",
+  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Select a reminder to edit or delete.",
+  "REMINDER": "Reminder",
+  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
+  "SUBJECT": "Subject",
+  "WHEN_TO_SEND": "When to send",
+  "REMINDER_DELETE_CONFIRMATION_TITLE": "Hold on! Are you sure you want to delete this reminder, forever?!",
+  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "reminder_list": {
+    "description": "Get a list of all of your reminders."
+  },
+  "pick": {
+    "name": "pick",
+    "description": "Pick an item at random from a given list.",
+    "options": {
+      "values": {
+        "name": "values",
+        "description": "The values to pick from, separated by commas."
+      }
+    }
+  },
+  "PICK_RESULT": "\"{value}\" was picked out of the {number} given choices.",
+  "privacy": {
+    "name": "privacy",
+    "description": "Review your CRBT privacy settings and edit them."
+  },
+  "ACHIEVEMENTS": "Achievements",
+  "SILENT_LEAVES": "Silent leaving",
+  "SILENT_JOINS": "Silent joining",
+  "TELEMETRY": "Command Telemetry",
+  "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "CRBT keeps track of Achievements by logging some command usage data. Turning this off will freeze your achievements.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this on will stop CRBT from announcing when you join a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this on will stop CRBT from announcing when you leave a server.",
+  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will only stop those from being sent.",
+  "YOUR_CRBT_DATA": "Your CRBT data",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
+  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
+  "settings": {
+    "name": "settings",
+    "description": "Configure CRBT settings on this server."
+  },
+  "ATTENTION_REQUIRED": "Attention Required",
+  "OVERVIEW": "Overview",
+  "SETTINGS_TITLE": "CRBT Server Settings",
+  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choose a setting.",
+  "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
+  "ENABLE": "Enable",
+  "DISABLE": "Disable",
+  "ACCENT_COLOR": "Accent Color",
+  "MODERATION_LOGS": "Moderation logs",
+  "ECONOMY": "Economy",
+  "STATUS": "Status",
+  "SETTINGS_ERRORS_FOUND": "{number} errors found",
+  "ENABLED": "Enabled",
+  "DISABLED": "Disabled",
+  "SETTINGS_SENDING_IN": "Sending in {channel}",
+  "EDIT_MESSAGE": "Edit Message",
+  "EDIT_CHANNEL": "Edit Channel",
+  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
+  "CHANNEL": "Channel",
+  "EDIT_SOMETHING": "Edit {feature}",
+  "SETTINGS_COLOR_SET_TO": "Set to {color}",
+  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages including Polls, Giveaways, Role Pickers, the Server Info sheet among other features.\nIt's currently set to **{color}**.",
+  "ACHIEVEMENT_UNLOCKED_TITLE": "Achievement Unlocked!",
+  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Secret Achievement Unlocked!",
+  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Check your achievements with {command}.",
+  "search": {
+    "name": "search",
+    "description": "Search for anything in one of the provided search engines.",
+    "options": {
+      "query": {
+        "name": "query",
+        "description": "What to search for."
+      },
+      "site": {
+        "name": "site",
+        "description": "What search engine to use."
+      },
+      "anonymous": {
+        "name": "anonymous",
+        "description": "Search without sending a public messsage."
+      }
+    }
+  },
+  "SEARCH_ENGINES": {
+    "web": "Web",
+    "images": "Images",
+    "videos": "Videos",
+    "weather": "Weather",
+    "dictionary": "Dictionary",
+    "urban": "Urban Dictionary",
+    "anime": "Anime & Manga"
+  },
+  "POWERED_BY": "Powered by {provider}",
+  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
+  "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
+  "SEARCH_TITLE": "{engine} results for \"{query}\""
 }

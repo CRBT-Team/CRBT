@@ -19,9 +19,10 @@ export const FieldEditModal = ModalComponent({
     fieldName: string;
     type: MessageBuilderTypes | EditableFeatures.accentColor;
   }) {
-    const value: string = this.fields.getTextInputValue('VALUE').toLowerCase().replace('#', '');
+    let value: string = this.fields.getTextInputValue('VALUE');
 
     if (type === EditableFeatures.accentColor) {
+      value = value.toLowerCase().replace('#', '');
       if (!value.match(/^[0-9a-f]{6}$/)) {
         return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
       }

@@ -16,7 +16,7 @@ import { components, MessageContextCommand, row, SelectMenuComponent } from 'pur
 export const messageCache = new Map<string, Message>();
 
 export default MessageContextCommand({
-  name: 'Remind me about this',
+  name: 'Set Reminder',
   async handle(message) {
     messageCache.set(message.id, message);
 
@@ -81,7 +81,6 @@ export const SelectTimeMenu = SelectMenuComponent({
       ''
     )?.slice(0, 60)}...`;
 
-    const now = dayjs();
     const [length, unit] = this.values[0].split('-');
     const expiresAt = dayjs().add(Number(length), unit);
 
@@ -149,7 +148,7 @@ export const SelectTimeMenu = SelectMenuComponent({
         components: [],
       });
     } catch (error) {
-      await this.editReply(UnknownError(this, String(error)));
+      await this.editReply(UnknownError(this, error));
     }
   },
 });

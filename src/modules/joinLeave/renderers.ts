@@ -20,8 +20,9 @@ import { MessageBuilder } from '../components/MessageBuilder';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerJoin, RawServerLeave, resolveMsgType } from './types';
 
-export async function defaultMessage(this: Interaction, type: JoinLeaveData['type']) {
+export function defaultMessage(this: Interaction, type: JoinLeaveData['type']): JoinLeaveData {
   return {
+    type,
     embed: {
       title: t(this.guildLocale, `${type}_DEFAULT_TITLE`),
       description: t(this.guildLocale, 'JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION', {

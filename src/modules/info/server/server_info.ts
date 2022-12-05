@@ -5,17 +5,23 @@ import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { trimArray } from '$lib/functions/trimArray';
 import { t } from '$lib/language';
+import {
+  formatGuildBannerURL,
+  formatGuildIconURL,
+  timestampMention,
+  userMention,
+} from '@purplet/utils';
 import canvas from 'canvas';
-import dayjs from 'dayjs';
+import dedent from 'dedent';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
+  EmbedFieldData,
   Guild,
   Interaction,
   MessageAttachment,
   MessageComponentInteraction,
   MessageEmbed,
 } from 'discord.js';
-import { ChannelTypes } from 'discord.js/typings/enums';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 import { NavBarContext } from '../user/_navbar';
 import { getTabs, serverNavBar } from './_navbar';
@@ -47,92 +53,116 @@ export default ChatCommand({
 });
 
 export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: NavBarContext) {
-  const channels = guild.channels.cache;
+  const allChannels = guild.channels.cache.filter((c) => !c.isThread());
   const stickers = guild.stickers.cache;
-  const emoji = guild.emojis.cache;
+  const allEmojis = guild.emojis.cache;
   const roles = guild.roles.cache
     .sort((a, b) => a.position - b.position)
     .filter((r) => r.id !== r.guild.id)
     .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
   const events = guild.scheduledEvents.cache;
+  const { format: formatNum } = new Intl.NumberFormat(this.locale);
   const bots = hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuild)
     ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
     : guild.members.cache.filter((m) => m.user.bot);
 
-  function cFilter(c: Exclude<keyof typeof ChannelTypes, 'DM' | 'GROUP_DM' | 'UNKNOWN'>): number {
-    return channels.filter((channel) => channel.type === c).size;
-  }
+  const channels = {
+    text: allChannels.filter((c) => c.type === 'GUILD_TEXT').size,
+    voice: allChannels.filter((c) => c.type === 'GUILD_VOICE').size,
+    stage: allChannels.filter((c) => c.type === 'GUILD_STAGE_VOICE').size,
+    announcement: allChannels.filter((c) => c.type === 'GUILD_NEWS').size,
+    category: allChannels.filter((c) => c.type === 'GUILD_CATEGORY').size,
+  };
 
-  const e = new MessageEmbed()
-
-    .setAuthor({ name: `${guild.name} - Server info`, iconURL: guild.iconURL({ dynamic: true }) })
-    .setDescription(
-      `${guild.partnered ?? guild.verified ? `${emojis.badges.partner}\n` : ''}${
-        guild.description ?? ''
-      }`
-    )
-    .setImage(guild.bannerURL())
-    .setThumbnail(guild.icon ? guild.iconURL({ dynamic: true }) : 'attachment://icon.png')
-    .setColor(colors.default)
-    .addField(t(this, 'ID'), guild.id, true)
-    .addField(`Owned by`, `<@${guild.ownerId}>`, true)
-    .addField(
-      t(this, 'CREATED_ON'),
-      `<t:${dayjs(guild.createdAt).unix()}> • <t:${dayjs(guild.createdAt).unix()}:R>`
-    )
-    .addField(
-      `Channels • ${channels.size}`,
-      `${emojis.channels.category} ${cFilter('GUILD_CATEGORY')} ${
-        cFilter('GUILD_CATEGORY') < 1 ? 'category' : 'categories'
-      }\n` +
-        `${emojis.channels.text} ${cFilter('GUILD_TEXT')} text channel(s)\n` +
-        `${emojis.channels.voice} ${cFilter('GUILD_VOICE')} voice channel(s)\n` +
-        (cFilter('GUILD_NEWS') !== 0
-          ? `${emojis.channels.news} ${cFilter('GUILD_NEWS')} annnouncement channel(s)\n`
-          : '') +
-        (cFilter('GUILD_STAGE_VOICE') !== 0
-          ? `${emojis.channels.stage} ${cFilter('GUILD_STAGE_VOICE')} stage channel(s)`
-          : ''),
-      true
-    );
-
-  if (emoji.size > 0) {
-    const allEmojis = chunks(trimArray(emoji.map((e) => e.toString())), 5)
+  const emoji = {
+    static: allEmojis.filter((e) => !e.animated).size,
+    animated: allEmojis.filter((e) => e.animated).size,
+    previews: chunks(trimArray(allEmojis.map((e) => e.toString())), 5)
       .map((e) => e.join('  '))
-      .join('\n');
+      .join('\n'),
+  };
 
-    e.addField(
-      `${emoji.size === 1 ? 'Emoji' : 'Emojis'} • ${emoji.size}`,
-      `${emoji.filter((r) => !r.animated).size} static • ${
-        emoji.filter((r) => r.animated).size
-      } animated\n\n${allEmojis}`,
-      true
-    );
+  const fields: EmbedFieldData[] = [
+    {
+      name: t(this, 'ID'),
+      value: guild.id,
+      inline: true,
+    },
+    {
+      name: t(this, 'OWNED_BY'),
+      value: userMention(guild.ownerId),
+      inline: true,
+    },
+    {
+      name: t(this, 'CREATED_ON'),
+      value: `${timestampMention(guild.createdAt)} • ${timestampMention(guild.createdAt, 'R')}`,
+    },
+    {
+      name: `${t(this, 'CHANNELS')} • ${formatNum(allChannels.size)}`,
+      value: dedent`
+      ${emojis.channels.category} ${formatNum(channels.category)} categories
+      ${emojis.channels.text} ${formatNum(channels.text)} text channels
+      ${emojis.channels.voice} ${formatNum(channels.voice)} voice channels
+      ${
+        channels.announcement > 0
+          ? `${emojis.channels.news} ${formatNum(channels.announcement)} annnouncement channels`
+          : ''
+      } ${
+        channels.stage > 0
+          ? `${emojis.channels.stage} ${formatNum(channels.stage)} stage channels`
+          : ''
+      }
+      `,
+    },
+  ];
+
+  if (allEmojis.size > 0) {
+    fields.push({
+      name: `${t(this, 'EMOJIS')} • ${formatNum(allEmojis.size)}`,
+      value: dedent`
+      ${formatNum(emoji.static)} ${t(this, 'STATIC')} • ${formatNum(emoji.animated)} ${t(
+        this,
+        'ANIMATED'
+      )}
+      
+      ${emoji.previews}`,
+      inline: true,
+    });
   }
-  if (stickers.size > 0) e.addField(`Stickers`, `${emojis.sticker} ${stickers.size}`, true);
+  if (stickers.size > 0) {
+    fields.push({
+      name: t(this, 'STICKERS'),
+      value: `${emojis.sticker} ${formatNum(stickers.size)}`,
+      inline: true,
+    });
+  }
 
-  e.addField(
-    `Members • ${guild.memberCount}`,
-    `${emojis.members} ${guild.memberCount - bots.size} Humans\n${emojis.bot} ${bots.size} Bots`,
-    true
-  );
+  fields.push({
+    name: `${t(this, 'MEMBERS')} • ${formatNum(guild.memberCount)}`,
+    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} Humans\n${
+      emojis.bot
+    } ${formatNum(bots.size)} Bots`,
+    inline: true,
+  });
 
-  if (roles.length > 0)
-    e.addField(
-      `${roles.length === 1 ? 'Role' : 'Roles'} • ${roles.length}`,
-      roles.length < 10 ? roles.join('  ') : trimArray(roles, 10).join('  ')
-    );
+  if (roles.length > 0) {
+    fields.push({
+      name: `${t(this, 'ROLES')} • ${formatNum(roles.length)}`,
+      value: roles.length < 10 ? roles.join('  ') : trimArray(roles, 10).join('  '),
+    });
+  }
 
-  e.addField(
-    `Server Boosting`,
-    `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
+  fields.push({
+    name: `Server Boosting`,
+    value:
+      `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
       (guild.premiumTier !== 'NONE'
         ? ` • ${
             emojis.boosting[guild.premiumTier.replace('TIER_', '')]
           } Level ${guild.premiumTier.replace('TIER_', '')}`
         : ''),
-    true
-  );
+    inline: true,
+  });
 
   // e.addField(
   //   'Moderation',
@@ -167,7 +197,23 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   }
 
   return {
-    embeds: [e],
+    embeds: [
+      {
+        author: {
+          name: `${guild.name} - ${t(this, 'SERVER_INFO')}`,
+          icon_url: guild.iconURL({ dynamic: true }),
+        },
+        description: guild.description,
+        image: {
+          url: formatGuildBannerURL(guild.id, guild.banner),
+        },
+        thumbnail: {
+          url: guild.icon ? formatGuildIconURL(guild.id, guild.icon) : 'attachment://icon.png',
+        },
+        color: await getColor(guild),
+        fields,
+      },
+    ],
     files: guild.icon ? [] : [new MessageAttachment(img.toBuffer(), 'icon.png')],
     components: components(
       serverNavBar(navCtx, this.locale, 'server_info', getTabs('server_info', guild))
