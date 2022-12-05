@@ -2,6 +2,7 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
@@ -144,7 +145,7 @@ export const EditJoinLeaveChannelModal = ModalComponent({
     }
     const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
-    const res = await fetchWithCache(
+    await fetchWithCache(
       `${this.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
@@ -156,9 +157,7 @@ export const EditJoinLeaveChannelModal = ModalComponent({
       true
     );
 
-    console.log(res);
-
-    this.update(await renderFeatureSettings.call(this, type as string as EditableFeatures));
+    this.update(await renderFeatureSettings.call(this, type));
   },
 });
 
@@ -171,8 +170,7 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
     const builder = MessageBuilder({
       data: {
         type,
-        ...defaultMessage.call(this, type),
-        ...data,
+        ...deepMerge(defaultMessage.call(this, type), data),
       },
       interaction: this,
     });
