@@ -62,7 +62,7 @@
       "description": "Thay đổi màu nhấn CRBT của bạn.",
       "options": [
         {
-          "name": "màu sắc",
+          "name": "màu_sắc",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
@@ -105,15 +105,15 @@
       "description": "Đặt một lời nhắc nhở.",
       "options": [
         {
-          "name": "khi nào",
+          "name": "khi_nào",
           "description": "When to remind you."
         },
         {
-          "name": "đối tượng",
+          "name": "đối_tượng",
           "description": "What to be reminded about."
         },
         {
-          "name": "đích đến",
+          "name": "đích_đến",
           "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
@@ -207,15 +207,15 @@
       "description": "Get a user's display avatar (Server or User Profile Avatar).",
       "options": [
         {
-          "name": "người dùng",
+          "name": "người_dùng",
           "description": "Người dùng của hình đại diện để lấy."
         },
         {
-          "name": "kích thước",
+          "name": "kích_thước",
           "description": "Kích cỡ của hình đại diện để lấy."
         },
         {
-          "name": "định dạng",
+          "name": "định_dạng",
           "description": "Định dạng của hình đại diện để lấy."
         }
       ]
@@ -250,7 +250,7 @@
       "description": "Tính toán một biểu thức toán học.",
       "options": [
         {
-          "name": "biểu thức",
+          "name": "biểu_thức",
           "description": "Biểu thức cần tính."
         }
       ]
