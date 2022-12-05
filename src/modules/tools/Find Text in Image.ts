@@ -1,5 +1,6 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { t } from '$lib/language';
 import { MessageEmbed } from 'discord.js';
 import { ocrSpace } from 'ocr-space-api-wrapper';
 import { MessageContextCommand } from 'purplet';
@@ -37,7 +38,9 @@ export default MessageContextCommand({
             .setAuthor({ name: 'Text found in image' })
             .setDescription(`\`\`\`\n${text}\`\`\``)
             .setFooter({
-              text: `Powered by ocr.space • Processed in ${Date.now() - start}ms`,
+              text: `${t(this, 'POWERED_BY', {
+                provider: 'ocr.space',
+              })} • Processed in ${Date.now() - start}ms`,
             })
             .setColor(await getColor(this.user)),
         ],
