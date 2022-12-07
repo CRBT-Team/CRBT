@@ -120,7 +120,7 @@ export default {
   },
   progress: {
     fill: '<:progressfill:971334221450862642>',
-    empty: '<:progressempty:949292806516641802>',
+    empty: '<:progressempty:1050093579525173338>',
     emptystart: '<:progressemptystart:971334221538951218>',
     emptyend: '<:progressemptyend:971334221425700894>',
     fillstart: '<:progressfillstart:971334221782196234>',
