@@ -54,6 +54,17 @@
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
   "ANIMATED": "Animated",
+  "END_DATE": "End date",
+  "POLL": "Poll",
+  "CHOICE": "Choice",
+  "TITLE": "Title",
+  "USER": "User",
+  "SIZE": "Size",
+  "FORMAT": "Format",
+  "SMALL": "Small",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "LARGEST": "Largest",
   "UnknownError": {
     "strings": {
       "TITLE": "Bir hata meydana geldi.",
@@ -167,27 +178,23 @@
   "poll": {
     "meta": {
       "description": "Verilen seçeneklerle bir anket oluşturun.",
-      "options": [
-        {
-          "description": "Bir kullanıcının seçebileceği bazı seçenekler. Tercihen kısa olsun."
+      "options": {
+        "title": {
+          "description": "What's your poll about?"
         },
-        {
-          "description": "Bir kullanıcının seçebileceği diğer bir seçenek."
+        "end_date": {
+          "description": "When the poll should end."
         },
-        {
-          "description": "Seçenek 1 ve 2 ile aynıdır, ancak zorunlu değildir."
-        },
-        {
-          "description": "İşte seçimler bu kadar ileri gidebilir."
+        "choice": {
+          "description": "Some choice a user can choose. Make it short, preferably."
         }
-      ]
+      }
     },
     "errors": {
       "CHOICE_EMPTY": "Bir seçim boş olamaz (emoji hariç).",
       "POLL_DATA_NOT_ALLOWED": "Yalnızca sohbet moderatörleri (\"Mesajları Yönetme\" izni) ve orijinal anket oluşturucu, verilerini ve seçeneklerini görüntüleyebilir."
     },
     "strings": {
-      "CHOICE": "Seçim",
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
@@ -201,7 +208,6 @@
       "BUTTON_EDIT_POLL": "Edit Poll",
       "BUTTON_CANCEL_POLL": "Delete Poll",
       "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_HEADER_ENDED": "Ended",
@@ -216,20 +222,17 @@
   "avatar": {
     "meta": {
       "description": "Get a user's display avatar (Server or User Profile Avatar).",
-      "options": [
-        {
-          "name": "user",
+      "options": {
+        "user": {
           "description": "The user to get the avatar of."
         },
-        {
-          "name": "size",
+        "size": {
           "description": "The size of the avatar to get."
         },
-        {
-          "name": "format",
+        "format": {
           "description": "The format of the avatar to get."
         }
-      ]
+      }
     },
     "ctxMeta": {
       "name": "Get Avatar/Banner"
@@ -258,6 +261,7 @@
   },
   "calc": {
     "meta": {
+      "name": "calculate",
       "description": "Calculate a mathematical expression.",
       "options": [
         {
@@ -285,7 +289,6 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -370,6 +373,7 @@
   "USER_NO_ROLES": "*This user doesn't any have roles...*",
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Role(s)",
+  "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
@@ -405,8 +409,8 @@
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
   "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "GIVEAWAY": "Giveaway",
   "giveaway": {
-    "name": "giveaway",
     "description": "Create a giveaway.",
     "options": {
       "prize": {
@@ -414,7 +418,6 @@
         "description": "What to give away."
       },
       "end_date": {
-        "name": "end_date",
         "description": "When to end the giveaway."
       },
       "winners": {
@@ -428,13 +431,13 @@
     "description": "Ask a question to 8-Ball.",
     "options": {
       "question": {
-        "name": "question",
         "description": "What to ask."
       }
     }
   },
   "8BALL": "8-Ball",
   "ANSWER": "Answer",
+  "QUESTION": "Question",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
