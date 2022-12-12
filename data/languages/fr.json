@@ -38,33 +38,33 @@
   "STAGE_CHANNEL": "Salon de conférence",
   "ANNOUNCEMENT_CHANNEL": "Salon d'annonce",
   "CATEGORY": "Catégorie",
-  "RULES_CHANNEL": "Rules Channel",
-  "THREAD_CHANNEL": "Thread",
-  "FORUM_CHANNEL": "Forum Channel",
-  "FORUM_POST": "Forum Post",
+  "RULES_CHANNEL": "Salon des règles",
+  "THREAD_CHANNEL": "Fil",
+  "FORUM_CHANNEL": "Salon de forum",
+  "FORUM_POST": "Post de forum",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Membres",
-  "STICKERS": "Stickers",
+  "STICKERS": "Autocollants",
   "SERVERS": "Serveurs",
   "NONE": "Aucun(e)",
-  "CHANNELS": "Channels",
-  "EMOJIS": "Emojis",
+  "CHANNELS": "Salons",
+  "EMOJIS": "Émojis",
   "ADDED": "Ajouté(e)",
-  "OWNED_BY": "Owned by",
-  "STATIC": "Static",
-  "ANIMATED": "Animated",
-  "END_DATE": "End date",
-  "POLL": "Poll",
-  "CHOICE": "Choice",
-  "TITLE": "Title",
-  "USER": "User",
-  "SIZE": "Size",
+  "OWNED_BY": "Propriété de",
+  "STATIC": "Fixe(s)",
+  "ANIMATED": "Animé(es)",
+  "END_DATE": "Date de fin",
+  "POLL": "Sondage",
+  "CHOICE": "Choix",
+  "TITLE": "Titre",
+  "USER": "Utilisateur",
+  "SIZE": "Taille",
   "FORMAT": "Format",
-  "SMALL": "Small",
-  "MEDIUM": "Medium",
-  "LARGE": "Large",
-  "LARGEST": "Largest",
+  "SMALL": "Petit(e)",
+  "MEDIUM": "Moyen(ne)",
+  "LARGE": "Grand(e)",
+  "LARGEST": "Maximal(e)",
   "UnknownError": {
     "strings": {
       "TITLE": "Une erreur inconnue est survenue.",
@@ -180,13 +180,13 @@
       "description": "Créer un sondage avec les choix indiqués.",
       "options": {
         "title": {
-          "description": "What's your poll about?"
+          "description": "Quel est l'objet de votre sondage ?"
         },
         "end_date": {
-          "description": "When the poll should end."
+          "description": "Quand le sondage doit se terminer."
         },
         "choice": {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Un choix qu'un utilisateur peut choisir. Soyez bref, de préférence."
         }
       }
     },
@@ -224,13 +224,13 @@
       "description": "Obtenir l'avatar d'un utilisateur (du serveur ou de l'utilisateur).",
       "options": {
         "user": {
-          "description": "The user to get the avatar of."
+          "description": "L'utilisateur dont vous voulez obtenir l'avatar."
         },
         "size": {
-          "description": "The size of the avatar to get."
+          "description": "La taille de l'avatar à obtenir."
         },
         "format": {
-          "description": "The format of the avatar to get."
+          "description": "Le format de l'avatar à obtenir."
         }
       }
     },
@@ -261,7 +261,7 @@
   },
   "calc": {
     "meta": {
-      "name": "calculate",
+      "name": "calculer",
       "description": "Calculer une expression mathématique.",
       "options": [
         {
@@ -277,19 +277,19 @@
         "description": "Créer un nouveau Sélecteur de rôles, un menu où vos membres peuvent se donner des rôles.",
         "options": [
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "comportement",
+            "description": "Comment le Sélecteur de rôles doit se comporter.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Alterner entre donner et retirer le(s) rôle(s)",
+              "Ne donner le(s) rôle(s) qu'une seule fois"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "limite",
+            "description": "Combien de rôles peuvent être sélectionnés à la fois. Mettez 0 pour une sélection illimitée."
           },
           {
-            "description": "A role to assign to the member when selected."
+            "description": "Un rôle à assigner au membre lorsqu'il est sélectionné."
           }
         ]
       }
@@ -322,7 +322,7 @@
   "ICON": "Icône",
   "BANNER": "Bannière",
   "ROLES_AND_MEMBERS": "Rôles & Membres",
-  "EMOJIS_AND_STICKERS": "Emojis & Stickers",
+  "EMOJIS_AND_STICKERS": "Émojis et Autocollants",
   "EXTRA": "Plus",
   "WARN": "Avertissement",
   "KICK": "Expulsion",
@@ -373,7 +373,7 @@
   "USER_NO_ROLES": "*Cet utilisateur n'a pas de rôles...*",
   "SERVER_NICKNAME": "Pseudo du serveur",
   "ROLES": "Rôle(s)",
-  "ROLE": "Role",
+  "ROLE": "Rôle(s)",
   "MAJOR_PERMS": "Permissions principales sur ce serveur",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Bienvenue sur CRBT !",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Ajouter CRBT à un serveur (merci !)",
@@ -409,7 +409,7 @@
   "HELP_DESCRIPTION": "Tapez {prefix} dans la saisie des messages et cliquez sur {botIcon} pour obtenir la liste des commandes.\nVous pouvez aussi faire un clic droit ou appuyer de manière prolongée sur un message ou un utilisateur pour des actions rapides.\n\nCRBT intégre des fonctionnalités pratiques et puissantes, tels que la création de rappels ({reminder}), faire l'annonce de nouveaux membres et ceux partant ({settings}), obtenir des informations sur Discord et sur le web ({infoCommands}), etc. ...\n\n...et plus à venir ! Restez à jour sur CRBT en rejoignant [notre serveur]({link}).",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
   "HELP_AD_DESCRIPTION": "Soutenez-nous en l'ajoutant à votre serveur !",
-  "GIVEAWAY": "Giveaway",
+  "GIVEAWAY": "Concours",
   "giveaway": {
     "description": "Créez un concours.",
     "options": {
