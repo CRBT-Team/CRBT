@@ -5,7 +5,8 @@ import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
-import { t } from '$lib/language';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import { APIUser, PermissionFlagsBits, Routes, UserFlags } from 'discord-api-types/v10';
@@ -16,7 +17,9 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 export default ChatCommand({
   name: 'user info',
   description: "Get a user's Discord information.",
-  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.'),
+  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.', {
+    nameLocalizations: getAllLanguages('USER', localeLower),
+  }),
   async handle({ user }) {
     const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
     const m = (user ? this.options.getMember('user') : this.member) as GuildMember;

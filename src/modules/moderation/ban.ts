@@ -1,7 +1,9 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
+import { getAllLanguages } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -9,10 +11,14 @@ import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'ban',
+  nameLocalizations: getAllLanguages('BAN', localeLower),
   description: 'Ban a chosen user from this server.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to ban.', { required: true })
+    .user('user', 'The user to ban.', {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+      required: true,
+    })
     .string('reason', 'The reason for the ban.', {
       maxLength: 256,
     })

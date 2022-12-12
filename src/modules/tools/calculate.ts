@@ -9,6 +9,7 @@ const math = new Parser();
 export default ChatCommand({
   name: 'calculate',
   description: t('en-US', 'calc.meta.description'),
+  nameLocalizations: getAllLanguages('calc.meta.name'),
   descriptionLocalizations: getAllLanguages('calc.meta.description'),
   options: new OptionBuilder().string(
     'expression',

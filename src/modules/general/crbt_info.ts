@@ -23,7 +23,7 @@ export default ChatCommand({
       embeds: [
         {
           author: {
-            name: `${user.username} - Bot info`,
+            name: `${user.username} - ${t(this, 'BOT_INFO')}`,
             iconURL: avatar(user),
             url: links.baseURL,
           },

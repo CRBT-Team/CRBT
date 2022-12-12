@@ -5,7 +5,7 @@ import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { ms } from '$lib/functions/ms';
 import { resolveToDate } from '$lib/functions/resolveToDate';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { ReminderTypes } from '@prisma/client';
@@ -16,28 +16,33 @@ import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const { meta } = t('en-US', 'remind me');
-
 export default ChatCommand({
   name: 'reminder new',
-  description: meta.description,
+  description: t('en-US', 'remind me.meta.description'),
+  descriptionLocalizations: getAllLanguages('remind me.meta.description'),
   options: new OptionBuilder()
-    .string('when', meta.options[0].description, {
+    .string('when', t('en-US', 'remind me.meta.options.0.description' as any), {
+      nameLocalizations: getAllLanguages('remind me.meta.options.0.name' as any),
+      descriptionLocalizations: getAllLanguages('remind me.meta.options.0.description' as any),
       autocomplete({ when }) {
         return timeAutocomplete.call(this, when, '2y');
       },
       required: true,
     })
-    .string('subject', meta.options[1].description, {
+    .string('subject', t('en-US', 'remind me.meta.options.1.description' as any), {
+      nameLocalizations: getAllLanguages('remind me.meta.options.1.name' as any),
+      descriptionLocalizations: getAllLanguages('remind me.meta.options.1.description' as any),
       required: true,
       minLength: 1,
       maxLength: 512,
     })
-    .channel('destination', meta.options[2].description, {
+    .channel('destination', t('en-US', 'remind me.meta.options.2.description' as any), {
+      nameLocalizations: getAllLanguages('remind me.meta.options.2.name' as any),
+      descriptionLocalizations: getAllLanguages('remind me.meta.options.2.description' as any),
       channelTypes: [ChannelType.GuildText, ChannelType.GuildAnnouncement],
     }),
   async handle({ when, subject, destination }) {
-    const { strings, errors } = t(this, 'remind me');
+    const { errors } = t(this, 'remind me');
 
     dayjs.locale(this.locale);
 
@@ -56,16 +61,7 @@ export default ChatCommand({
 
     if (destination) {
       const channel = destination as GuildTextBasedChannel;
-      if (!channel) {
-        return CRBTError(
-          this,
-          t(this, 'ERROR_INVALID_CHANNEL', {
-            type: new Intl.ListFormat(this.locale, {
-              type: 'disjunction',
-            }).format([t(this, 'TEXT_CHANNEL'), t(this, 'ANNOUNCEMENT_CHANNEL')]),
-          })
-        );
-      } else if (!hasPerms(channel.permissionsFor(this.user), PermissionFlagsBits.SendMessages)) {
+      if (!hasPerms(channel.permissionsFor(this.user), PermissionFlagsBits.SendMessages)) {
         return CRBTError(
           this,
           t(this, 'ERROR_MISSING_PERMISSIONS', {

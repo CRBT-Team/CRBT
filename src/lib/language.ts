@@ -108,10 +108,9 @@ export function t<K extends StringArgument>(
   }
 
   const string: string | StringsStructure =
-    // typeof defaultData === 'string'
-    //   ? localizedData || defaultData
-    //   : 
-      localizedData ?? deepMerge(defaultData, localizedData);
+    typeof defaultData === 'object' && !Array.isArray(defaultData)
+      ? deepMerge(defaultData, localizedData)
+      : defaultData || localizedData;
 
   if (interpolations && typeof string === 'string') {
     return Object.keys(interpolations).reduce(

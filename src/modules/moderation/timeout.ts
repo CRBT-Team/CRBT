@@ -1,6 +1,8 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { ms } from '$lib/functions/ms';
+import { getAllLanguages } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -9,9 +11,13 @@ import { handleModerationAction } from './_base';
 export default ChatCommand({
   name: 'timeout',
   description: 'Timeout a chosen user from this server.',
+  nameLocalizations: getAllLanguages('TIMEOUT', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to timeout.', { required: true })
+    .user('user', 'The user to timeout.', {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+      required: true,
+    })
     .string('duration', 'How long they should be timed out for.', {
       choices: {
         '60s': '60 seconds',

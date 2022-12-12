@@ -5,10 +5,11 @@ import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { progressBar } from '$lib/functions/progressBar';
 import { trimArray } from '$lib/functions/trimArray';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
@@ -28,36 +29,42 @@ import {
 const activePolls = new Map<string, Poll>();
 const usersOnCooldown = new Map();
 
+const options = new OptionBuilder()
+  .string('title', t('en-US', 'poll.meta.options.title.description'), {
+    nameLocalizations: getAllLanguages('TITLE', localeLower),
+    descriptionLocalizations: getAllLanguages('poll.meta.options.title.description'),
+    required: true,
+    minLength: 3,
+    maxLength: 120,
+  })
+  .string('end_date', t('en-US', 'poll.meta.options.end_date.description'), {
+    nameLocalizations: getAllLanguages('END_DATE', localeLower),
+    descriptionLocalizations: getAllLanguages('poll.meta.options.end_date.description'),
+    autocomplete({ end_date }) {
+      return timeAutocomplete.call(this, end_date, '3w', '20m');
+    },
+    required: true,
+  });
+
+for (let i = 1; i <= 4; i++) {
+  options.string(`choice${i}`, t('en-US', 'poll.meta.options.choice.description'), {
+    nameLocalizations: getAllLanguages(
+      'CHOICE',
+      (str, locale) => `${str.toLocaleLowerCase(locale)}${i}`
+    ),
+    descriptionLocalizations: getAllLanguages('poll.meta.options.choice.description'),
+    maxLength: 45,
+    required: i <= 2,
+  });
+}
+
 export default ChatCommand({
   name: 'poll',
-  description: 'Create a poll with the given choices.',
+  description: t('en-US', 'poll.meta.description'),
+  nameLocalizations: getAllLanguages('POLL', localeLower),
+  descriptionLocalizations: getAllLanguages('poll.meta.description'),
   allowInDMs: false,
-  options: new OptionBuilder()
-    .string('title', "What's your poll about?", {
-      required: true,
-      minLength: 3,
-      maxLength: 120,
-    })
-    .string('end_date', 'When the poll should end.', {
-      autocomplete({ end_date }) {
-        return timeAutocomplete.call(this, end_date, '3w', '20m');
-      },
-      required: true,
-    })
-    .string('choice1', 'The first choice a user can chose. Make it short preferably.', {
-      required: true,
-      maxLength: 45,
-    })
-    .string('choice2', 'An other choice a user can choose.', {
-      required: true,
-      maxLength: 45,
-    })
-    .string('choice3', 'Same as choice 1 and 2, not required.', {
-      maxLength: 45,
-    })
-    .string('choice4', "And that's how far choices can go.", {
-      maxLength: 45,
-    }),
+  options,
   async handle({ title, end_date, ...choices }) {
     const { strings } = t(this.guildLocale, 'poll');
     const { errors, strings: userStrings } = t(this, 'poll');
@@ -255,7 +262,7 @@ export const EditPollButton = ButtonComponent({
       row(
         new TextInputComponent()
           .setCustomId('poll_title')
-          .setLabel(strings.TITLE)
+          .setLabel(t(this, 'TITLE'))
           .setMaxLength(120)
           .setValue(msg.title)
           .setRequired(true)
@@ -265,7 +272,7 @@ export const EditPollButton = ButtonComponent({
         row(
           new TextInputComponent()
             .setCustomId(`poll_option_${index}`)
-            .setLabel(`${strings.CHOICE} ${index + 1}`)
+            .setLabel(`${t(this, 'CHOICE')} ${index + 1}`)
             .setValue(field.name)
             .setRequired(true)
             .setMaxLength(40)

@@ -1,35 +1,51 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import { ButtonInteraction, GuildMember, Interaction, MessageButton, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
-const { meta, ctxMeta } = t('en-US', 'avatar');
+const { ctxMeta } = t('en-US', 'avatar');
 
-const options = new OptionBuilder()
-  .user('user', meta.options[0].description)
-  .string('size', meta.options[1].description, {
-    choices: {
-      '1': 'Small (128px)',
-      '2': 'Medium (512px)',
-      '3': 'Large (2048px)',
-      '4': 'Largest (4096px)',
-    },
-  })
-  .string('format', meta.options[2].description, {
-    choices: {
-      '1': 'PNG',
-      '2': 'JPG',
-      '3': 'WEBP',
-      '4': 'GIF',
-    },
-  });
+console.log(t('en-US', 'avatar.meta.description'));
 
 export const defaultPfp = ChatCommand({
   name: 'avatar',
-  description: meta.description,
-  options,
+  description: t('en-US', 'avatar.meta.description'),
+  nameLocalizations: getAllLanguages('AVATAR', localeLower),
+  descriptionLocalizations: getAllLanguages('avatar.meta.description'),
+  options: new OptionBuilder()
+    .user('user', t('en-US', 'avatar.meta.options.user.description'), {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('avatar.meta.options.user.description'),
+    })
+    .string('size', t('en-US', 'avatar.meta.options.size.description'), {
+      nameLocalizations: getAllLanguages('SIZE', localeLower),
+      descriptionLocalizations: getAllLanguages('avatar.meta.options.size.description'),
+      choices: {
+        '1': 'Small (128px)',
+        '2': 'Medium (512px)',
+        '3': 'Large (2048px)',
+        '4': 'Largest (4096px)',
+      },
+      // choiceLocalizations: {
+      //   '1': getAllLanguages('SMALL', (str) => `${str} (128px)`),
+      //   '2': getAllLanguages('MEDIUM', (str) => `${str} (512px))`),
+      //   '3': getAllLanguages('LARGE', (str) => `${str} (2048px)`),
+      //   '4': getAllLanguages('LARGEST', (str) => `${str} (4096px)`),
+      // },
+    })
+    .string('format', t('en-US', 'avatar.meta.options.format.description'), {
+      nameLocalizations: getAllLanguages('FORMAT', localeLower),
+      descriptionLocalizations: getAllLanguages('avatar.meta.options.format.description'),
+      choices: {
+        '1': 'PNG',
+        '2': 'JPG',
+        '3': 'WEBP',
+        '4': 'GIF',
+      },
+    }),
   async handle({ user, size, format }) {
     const m = user
       ? (this.options.getMember('user') as GuildMember) ?? null
