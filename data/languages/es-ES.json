@@ -54,6 +54,17 @@
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
   "ANIMATED": "Animated",
+  "END_DATE": "End date",
+  "POLL": "Poll",
+  "CHOICE": "Choice",
+  "TITLE": "Title",
+  "USER": "User",
+  "SIZE": "Size",
+  "FORMAT": "Format",
+  "SMALL": "Small",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "LARGEST": "Largest",
   "UnknownError": {
     "strings": {
       "TITLE": "Ha ocurrido un error desconocido.",
@@ -167,27 +178,23 @@
   "poll": {
     "meta": {
       "description": "Crear una encuesta con las opciones dadas.",
-      "options": [
-        {
-          "description": "Alguna opción que el usuario pueda elegir. Preferiblemente corta."
+      "options": {
+        "title": {
+          "description": "What's your poll about?"
         },
-        {
-          "description": "Otra opción que el usuario pueda elegir."
+        "end_date": {
+          "description": "When the poll should end."
         },
-        {
-          "description": "Igual que las opciones 1 y 2, pero no obligatoria."
-        },
-        {
-          "description": "Tras esta opción, no puede añadir más opciones."
+        "choice": {
+          "description": "Some choice a user can choose. Make it short, preferably."
         }
-      ]
+      }
     },
     "errors": {
       "CHOICE_EMPTY": "Una opción no puede estar vacía (excluyendo emoji).",
       "POLL_DATA_NOT_ALLOWED": "Sólo los moderadores de chat (con el permiso \"Gestionar mensajes\") y el creador de la encuesta pueden ver sus datos y opciones."
     },
     "strings": {
-      "CHOICE": "Opción",
       "POLL_DESCRIPTION": "La encuesta terminará {TIME}.\nEl creador de la encuesta puede ver las opciones y otros datos haciendo clic en el botón {ICON} debajo.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
@@ -201,7 +208,6 @@
       "BUTTON_EDIT_POLL": "Editar encuesta",
       "BUTTON_CANCEL_POLL": "Eliminar encuesta",
       "BUTTON_END_POLL": "Finalizar encuesta",
-      "TITLE": "Título",
       "SUCCESS_POLL_DELETED": "Encuesta eliminada.",
       "SUCCESS_POLL_ENDED": "Encuesta finalizada.",
       "POLL_HEADER_ENDED": "Finalizada",
@@ -216,20 +222,17 @@
   "avatar": {
     "meta": {
       "description": "Obtener el avatar de un usuario (ya sea de servidor o de perfil).",
-      "options": [
-        {
-          "name": "usuario",
-          "description": "El usuario del que obtener el avatar."
+      "options": {
+        "user": {
+          "description": "The user to get the avatar of."
         },
-        {
-          "name": "tamaño",
-          "description": "El tamaño del avatar a obtener."
+        "size": {
+          "description": "The size of the avatar to get."
         },
-        {
-          "name": "formato",
-          "description": "El formato del avatar a obtener."
+        "format": {
+          "description": "The format of the avatar to get."
         }
-      ]
+      }
     },
     "ctxMeta": {
       "name": "Get Avatar/Banner"
@@ -258,6 +261,7 @@
   },
   "calc": {
     "meta": {
+      "name": "calculate",
       "description": "Calcular una expresión matemática.",
       "options": [
         {
@@ -285,7 +289,6 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -370,6 +373,7 @@
   "USER_NO_ROLES": "*Este usuario no tiene ningún rol...*",
   "SERVER_NICKNAME": "Apodo en el servidor",
   "ROLES": "Rol(es)",
+  "ROLE": "Role",
   "MAJOR_PERMS": "Permisos principales en este servidor",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "¡Bienvenido a CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Añadir CRBT a un servidor (¡gracias!)",
@@ -405,8 +409,8 @@
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
   "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "GIVEAWAY": "Giveaway",
   "giveaway": {
-    "name": "giveaway",
     "description": "Create a giveaway.",
     "options": {
       "prize": {
@@ -414,7 +418,6 @@
         "description": "What to give away."
       },
       "end_date": {
-        "name": "end_date",
         "description": "When to end the giveaway."
       },
       "winners": {
@@ -428,13 +431,13 @@
     "description": "Ask a question to 8-Ball.",
     "options": {
       "question": {
-        "name": "question",
         "description": "What to ask."
       }
     }
   },
   "8BALL": "8-Ball",
   "ANSWER": "Answer",
+  "QUESTION": "Question",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
