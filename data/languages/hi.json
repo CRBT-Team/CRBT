@@ -34,41 +34,41 @@
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल वह यूजर जो कमांड को इस्तेमाल कर रहे है वो ही कॉम्पोनेन्ट को इस्तेमाल कर सकते है |",
   "TEXT_CHANNEL": "टेक्स्ट चैनल ",
-  "VOICE_CHANNEL": "Voice Channel",
-  "STAGE_CHANNEL": "Stage Channel",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "CATEGORY": "Category",
-  "RULES_CHANNEL": "Rules Channel",
-  "THREAD_CHANNEL": "Thread",
-  "FORUM_CHANNEL": "Forum Channel",
-  "FORUM_POST": "Forum Post",
-  "WEBSOCKET": "WebSocket",
+  "VOICE_CHANNEL": "वोइस चैनल",
+  "STAGE_CHANNEL": "स्टेज चैनल",
+  "ANNOUNCEMENT_CHANNEL": "अनाउंसमेंट चैनल",
+  "CATEGORY": "केटेगरी",
+  "RULES_CHANNEL": "रूल्स चैनल",
+  "THREAD_CHANNEL": "थ्रेड ",
+  "FORUM_CHANNEL": "फोरम चैनल",
+  "FORUM_POST": "फोरम पोस्ट",
+  "WEBSOCKET": "वेब सॉकेट",
   "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
-  "STICKERS": "Stickers",
-  "SERVERS": "Servers",
+  "MEMBERS": "सदस्यों",
+  "STICKERS": "स्टिकर्स",
+  "SERVERS": "सर्वर्स",
   "NONE": "None",
-  "CHANNELS": "Channels",
-  "EMOJIS": "Emojis",
+  "CHANNELS": "चैनल्स",
+  "EMOJIS": "इमोजी",
   "ADDED": "Added",
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
   "ANIMATED": "Animated",
-  "END_DATE": "End date",
-  "POLL": "Poll",
-  "CHOICE": "Choice",
-  "TITLE": "Title",
-  "USER": "User",
-  "SIZE": "Size",
-  "FORMAT": "Format",
-  "SMALL": "Small",
-  "MEDIUM": "Medium",
-  "LARGE": "Large",
-  "LARGEST": "Largest",
+  "END_DATE": "अंतिम तिथि",
+  "POLL": "पोल",
+  "CHOICE": "विकल्प",
+  "TITLE": "टाइटल",
+  "USER": "यूजर",
+  "SIZE": "साइज़",
+  "FORMAT": "फॉर्मेट",
+  "SMALL": "छोटा",
+  "MEDIUM": "मध्यम",
+  "LARGE": "बड़ा",
+  "LARGEST": "सबसे बड़ा",
   "UnknownError": {
     "strings": {
       "TITLE": "कोई अजीब सी एरर हुई है |",
-      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "यह मेसेज ऑटोमेटिकली रिपोर्ट किया गया था | यह एरर कहती है:"
     }
   },
   "CooldownError": {
@@ -76,7 +76,7 @@
       "TITLE": "होल्ड करो! ",
       "DESCRIPTION": "आप इसे {TYPE} को {TIME} के बाद इस्तेमाल करेंगे... ",
       "COMMAND": "कमांड ",
-      "COMPONENT": "component"
+      "COMPONENT": "कॉम्पोनेन्ट"
     }
   },
   "color set": {
@@ -85,12 +85,12 @@
       "options": [
         {
           "name": "रंग ",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "आपका नया एक्सेंट कलर बदलने के लिए | कोई एक सुझाव या HEX कलर का इस्तेमाल करे |"
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "डिस्कोर्ड प्रोफाइल कलर को सिंक करे |",
       "lightred": "Light Red",
       "red": "लाल ",
       "darkred": "Dark Red",
@@ -114,11 +114,11 @@
       "white": "सफेद"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+      "NO_DISCORD_COLOR": "आपके पास सिंक करने के लिए डिस्कोर्ड प्रोफाइल कलर का कलर नहीं है | लगाने के लिए, आपके डिस्कोर्ड यूजर प्रोफाइल को एडिट करे और अपना प्रोफाइल कलर को बदले |"
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
+      "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
+      "EMBED_SYNC_INFO": "आपका डिस्कोर्ड प्रोफाइल कलर CRBT एक्सेंट कलर से सिंक हो जायेगा |",
       "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
     }
   },
