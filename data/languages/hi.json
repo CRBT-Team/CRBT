@@ -186,13 +186,13 @@
           "description": "पोल कब समाप्त होना चाहिए."
         },
         "choice": {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "कुछ विकल्प एक यूजर चुन सकते है | इसके बजाये, इसे छोटा करे |"
         }
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)",
+      "POLL_DATA_NOT_ALLOWED": "सिर्फ चैट मॉडरेटर (\"मैनेज मेसेज\" परमिशन ) & ओरिजिनल पोल क्रिएटर डाटा और विकल्प को देख सकते है |"
     },
     "strings": {
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
