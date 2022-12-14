@@ -119,7 +119,7 @@
     "strings": {
       "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
       "EMBED_SYNC_INFO": "आपका डिस्कोर्ड प्रोफाइल कलर CRBT एक्सेंट कलर से सिंक हो जायेगा |",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
+      "EMBED_DESCRIPTION": "इस कलर का उपयोग आपको CRBT के जवाब पर ज्यादातर इस्तेमाल किया जाएगा साथ ही साथ आपके सूचना कार्डों पर, जब कोई उसे विजिट करेगा |"
     }
   },
   "remind me": {
@@ -128,11 +128,11 @@
       "options": [
         {
           "name": "कब",
-          "description": "When to remind you."
+          "description": "कब आपको याद दिलाए?"
         },
         {
           "name": "विषय",
-          "description": "What to be reminded about."
+          "description": "किस बारे में याद दिलाए? "
         },
         {
           "name": "जगह ",
@@ -141,15 +141,15 @@
       ]
     },
     "errors": {
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
+      "PAST": "आप पिछले का रिमाइंडर नहीं लगा सकते हो |",
+      "INVALID_FORMAT": "जो आपने समय डाला है वो गलत फॉर्मेट में है या फिर फ्यूचर में 0 सेकंड के नीचे है |",
+      "TOO_LONG": "आप अभी के लिए 2 साल से अधिक रिमाइंडर को सेट नहीं कर सकते |",
+      "REMINDERS_MAX_LIMIT": "आप 10 रिमाइंडर से ज़्यादा सेट नहीं कर सकते |"
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_TITLE": "रिमाइंडर सेट! ",
+      "SUCCESS_CHANNEL": "इस {CHANNEL} पे आपको याद दिलाए जाएगा |",
+      "SUCCESS_DM": "DM पे आपको याद दिलाए जाएगा |",
       "BUTTON_GCALENDAR": "Add as Google Calendar event",
       "GCALENDAR_EVENT": "Set by CRBT Reminder.",
       "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
