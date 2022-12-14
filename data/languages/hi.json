@@ -151,18 +151,18 @@
       "SUCCESS_CHANNEL": "इस {CHANNEL} पे आपको याद दिलाए जाएगा |",
       "SUCCESS_DM": "DM पे आपको याद दिलाए जाएगा |",
       "BUTTON_GCALENDAR": "Add as Google Calendar event",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+      "GCALENDAR_EVENT": "CRBT रिमाइंडर के द्वारा सेट किया गया |",
+      "GCALENDAR_EVENT_DM": "आपको DM में भी याद दिलाए जायेगा |",
+      "GCALENDAR_EVENT_CHANNEL": "आपको {CHANNEL} {SERVER} में भी याद दिलाए जायेगा |",
+      "REMINDER_DESCRIPTION": "{TIME} ({RELATIVE_TIME}) पर सेट करे |"
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "और",
+      "AT": "पर",
+      "ON": "पर ",
+      "IN": "में",
+      "TOMORROW": "कल",
+      "TODAY": "आज"
     }
   },
   "ping": {
@@ -172,18 +172,18 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT."
+      "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
+      "description": "दिए गए विकल्प से पोल बनाए |",
       "options": {
         "title": {
-          "description": "What's your poll about?"
+          "description": "आपका पोल किस बारे में है ?"
         },
         "end_date": {
-          "description": "When the poll should end."
+          "description": "पोल कब समाप्त होना चाहिए."
         },
         "choice": {
           "description": "Some choice a user can choose. Make it short, preferably."
