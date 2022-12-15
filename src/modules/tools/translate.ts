@@ -22,9 +22,6 @@ import {
 import languages from '../../../data/misc/langs.json';
 import { useOcrScan } from './Find Text in Image';
 
-console.log(t('fr', 'TRANSLATE'));
-// console.log(getAllLanguages('TRANSLATE'));
-
 export default ChatCommand({
   name: 'translate',
   nameLocalizations: getAllLanguages('TRANSLATE'),

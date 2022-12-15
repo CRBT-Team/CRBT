@@ -16,6 +16,7 @@ export default ChatCommand({
   }),
   async handle({ user }) {
     await this.deferReply();
+    user ??= this.user;
 
     const res = await viewModLogs.call(this, user);
 
@@ -38,7 +39,10 @@ async function viewModLogs(
   this: CommandInteraction | ContextMenuInteraction | ButtonInteraction,
   user: User
 ) {
-  if (user !== this.user && !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
+  if (
+    user.id !== this.user.id &&
+    !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)
+  ) {
     return createCRBTError(
       this,
       t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')

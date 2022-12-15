@@ -8,8 +8,6 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 
 const { ctxMeta } = t('en-US', 'avatar');
 
-console.log(t('en-US', 'avatar.meta.description'));
-
 export const defaultPfp = ChatCommand({
   name: 'avatar',
   description: t('en-US', 'avatar.meta.description'),

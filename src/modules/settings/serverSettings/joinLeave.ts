@@ -16,11 +16,11 @@ import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
-  getErrors({ guild, settings, feature }) {
+  getErrors({ guild, settings, feature, i }) {
     const isEnabled = settings.modules[CamelCaseFeatures[feature]];
     const channelId =
       settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
-    const channel = guild.channels.cache.find((c) => c.id === channelId);
+    const channel = guild.channels.cache.get(channelId);
 
     const errors: string[] = [];
 
@@ -28,14 +28,10 @@ export const joinLeaveSettings: SettingsMenus = {
       errors.push('Channel not found. Edit it for CRBT to send new messages.');
     }
     if (isEnabled && !channelId) {
-      errors.push(
-        'No channel was set. Set it using the {button_label} button below to continue setup.'
-      );
+      errors.push(`No channel was set. Use the ${t(i, 'EDIT_CHANNEL')} button to continue setup.`);
     }
     if (isEnabled && !settings[CamelCaseFeatures[feature]]) {
-      errors.push(
-        'No message was set. Set it using the {button_label} button below to continue setup.'
-      );
+      errors.push(`No message was set. Use the ${t(i, 'EDIT_MESSAGE')} button to continue setup.`);
     }
 
     return errors;
@@ -55,7 +51,7 @@ export const joinLeaveSettings: SettingsMenus = {
         ...(channelId
           ? [
               {
-                name: 'Channel',
+                name: t(i, 'CHANNEL'),
                 value: `<#${channelId}>`,
                 inline: true,
               },
@@ -65,14 +61,15 @@ export const joinLeaveSettings: SettingsMenus = {
     };
   },
   getSelectMenu: ({ settings, feature, i, isEnabled }) => {
-    const channelId = settings[CamelCaseFeatures[feature]] as string;
-    const channel = i.guild.channels.cache.find((c) => c.id === channelId);
+    const channelId =
+      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+    const channel = i.guild.channels.cache.get(channelId);
 
     return {
       emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
       description: isEnabled
         ? t(i, 'SETTINGS_SENDING_IN', {
-            channel: `#${channel.name}`,
+            channel: `#${channel?.name}`,
           })
         : '',
     };
