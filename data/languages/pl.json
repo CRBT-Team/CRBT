@@ -414,18 +414,18 @@
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "name": "prize",
         "description": "What to give away."
       },
       "end_date": {
         "description": "When to end the giveaway."
       },
       "winners": {
-        "name": "winners",
         "description": "How many people can win the giveaway."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
