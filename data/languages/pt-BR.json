@@ -414,18 +414,18 @@
     "description": "Crie um sorteio.",
     "options": {
       "prize": {
-        "name": "prêmio",
         "description": "O que sortear."
       },
       "end_date": {
         "description": "Quando terminar o sorteio."
       },
       "winners": {
-        "name": "vencedores",
         "description": "Quantas pessoas podem ganhar no sorteio."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "bola8",
     "description": "Faça uma pergunta a Bola 8.",
