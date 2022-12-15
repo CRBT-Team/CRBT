@@ -4,12 +4,15 @@ import { colors, emojis, icons } from '$lib/env';
 import { CRBTError, createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Giveaway } from '@prisma/client';
+import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
+import dedent from 'dedent';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageButton, MessageComponentInteraction, MessageEmbed } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -18,20 +21,28 @@ const activeGiveaways = new Map<string, Giveaway>();
 
 export default ChatCommand({
   name: 'giveaway',
-  description: 'Create a giveaway.',
+  description: t('en-US', 'giveaway.description'),
+  nameLocalizations: getAllLanguages('GIVEAWAY', localeLower),
+  descriptionLocalizations: getAllLanguages('giveaway.description'),
   allowInDMs: false,
   options: new OptionBuilder()
-    .string('prize', 'What to give away.', {
+    .string('prize', t('en-US', 'PRIZE').toLowerCase(), {
+      nameLocalizations: getAllLanguages('PRIZE', localeLower),
+      descriptionLocalizations: getAllLanguages('giveaway.options.prize.description'),
       required: true,
       maxLength: 100,
     })
-    .string('end_date', 'When to end the giveaway.', {
+    .string('end_date', t('en-US', 'END_DATE').toLowerCase(), {
+      nameLocalizations: getAllLanguages('END_DATE', localeLower),
+      descriptionLocalizations: getAllLanguages('giveaway.options.end_date.description'),
       autocomplete({ end_date }) {
         return timeAutocomplete.call(this, end_date, '2M', '20s');
       },
       required: true,
     })
-    .integer('winners', 'How many people can win (up to 40).', {
+    .integer('winners', t('en-US', 'WINNERS').toLowerCase(), {
+      nameLocalizations: getAllLanguages('WINNERS', localeLower),
+      descriptionLocalizations: getAllLanguages('giveaway.options.winners.description'),
       minValue: 1,
       maxValue: 40,
     }),
@@ -44,20 +55,22 @@ export default ChatCommand({
       return CRBTError(this, 'Invalid duration or exceeds 1 month in the future.');
     }
 
-    winners = winners || 1;
+    winners ||= 1;
 
     try {
-      const end = dayjs().add(ms(end_date));
+      const end = new Date(Date.now() + ms(end_date));
 
       const msg = await this.channel.send({
         embeds: [
           {
             author: {
-              name: 'Giveaway',
+              name: t(this.guildLocale, 'GIVEAWAY'),
               iconURL: icons.giveaway,
             },
             title: prize,
-            description: `Ends <t:${end.unix()}> (<t:${end.unix()}:R>)\nHosted by ${this.user}`,
+            description: dedent`
+            Ends ${timestampMention(end)} • ${timestampMention(end, 'R')}
+            Hosted by ${this.user}`,
             fields: [
               {
                 name: 'Entrants',
@@ -65,7 +78,7 @@ export default ChatCommand({
                 inline: true,
               },
               {
-                name: 'Winners',
+                name: t(this.guildLocale, 'WINNERS'),
                 value: winners.toLocaleString(this.guildLocale),
                 inline: true,
               },
@@ -83,7 +96,7 @@ export default ChatCommand({
 
       const data = await dbTimeout(TimeoutTypes.Giveaway, {
         id: `${this.channel.id}/${msg.id}`,
-        expiresAt: end.toDate(),
+        expiresAt: end,
         serverId: this.guildId,
         locale: this.guildLocale,
         hostId: this.user.id,
@@ -96,7 +109,10 @@ export default ChatCommand({
         embeds: [
           {
             title: `${emojis.success} Giveaway started!`,
-            description: `It will end <t:${end.unix()}:R>, but you can prematurely end it by using the ${
+            description: `It will end  ${timestampMention(
+              end,
+              'R'
+            )}, but you can prematurely end it by using the ${
               emojis.menu
             } menu. From this menu, you can also cancel it or view the entrants.`,
             color: colors.success,

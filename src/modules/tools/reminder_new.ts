@@ -117,7 +117,7 @@ export default ChatCommand({
                   ? t(this, 'remind me.strings.SUCCESS_CHANNEL', {
                       CHANNEL: `${destination}`,
                     })
-                  : t(this, 'remind me.strings.SUCCESS_CHANNEL')
+                  : t(this, 'remind me.strings.SUCCESS_DM')
               }
               ${timestampMention(expiresAt)} • ${timestampMention(expiresAt, 'R')}
             `,
