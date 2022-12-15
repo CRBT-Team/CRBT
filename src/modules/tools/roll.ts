@@ -1,5 +1,6 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { Parser } from 'expr-eval';
@@ -9,16 +10,16 @@ const math = new Parser();
 export default ChatCommand({
   name: 'roll',
   description: t('en-US', 'roll.description'),
-  nameLocalizations: getAllLanguages('roll.name'),
+  nameLocalizations: getAllLanguages('roll.name', localeLower),
   descriptionLocalizations: getAllLanguages('roll.description'),
   options: new OptionBuilder()
     .string('dice', t('en-US', 'roll.options.dice.name'), {
-      nameLocalizations: getAllLanguages('roll.options.dice.name'),
+      nameLocalizations: getAllLanguages('roll.options.dice.name', localeLower),
       descriptionLocalizations: getAllLanguages('roll.options.dice.description'),
       required: true,
     })
     .string('comment', t('en-US', 'COMMENT_DESCRIPTION'), {
-      nameLocalizations: getAllLanguages('COMMENT'),
+      nameLocalizations: getAllLanguages('COMMENT', localeLower),
       descriptionLocalizations: getAllLanguages('COMMENT_DESCRIPTION'),
     }),
   async handle({ dice, comment }) {

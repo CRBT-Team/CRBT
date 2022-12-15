@@ -1,6 +1,7 @@
 import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
@@ -14,7 +15,10 @@ export const usersOnCooldown = new Map();
 
 const options = new OptionBuilder()
   .string('behavior', t('en-US', 'role-selectors.manual.meta.options.0.description' as any), {
-    nameLocalizations: getAllLanguages('role-selectors.manual.meta.options.0.name' as any),
+    nameLocalizations: getAllLanguages(
+      'role-selectors.manual.meta.options.0.name' as any,
+      localeLower
+    ),
     descriptionLocalizations: getAllLanguages(
       'role-selectors.manual.meta.options.0.description' as any
     ),
@@ -25,7 +29,10 @@ const options = new OptionBuilder()
     required: true,
   })
   .integer('role_limit', t('en-US', 'role-selectors.manual.meta.options.1.description' as any), {
-    nameLocalizations: getAllLanguages('role-selectors.manual.meta.options.1.name' as any),
+    nameLocalizations: getAllLanguages(
+      'role-selectors.manual.meta.options.1.name' as any,
+      localeLower
+    ),
     descriptionLocalizations: getAllLanguages(
       'role-selectors.manual.meta.options.1.description' as any
     ),
@@ -36,10 +43,7 @@ const options = new OptionBuilder()
 
 for (let i = 1; i <= 13; i++) {
   options.role(`role${i}`, t('en-US', 'role-selectors.manual.meta.options.2.description' as any), {
-    nameLocalizations: getAllLanguages(
-      'ROLE',
-      (str, locale) => `${str.toLocaleLowerCase(locale)}${i}`
-    ),
+    nameLocalizations: getAllLanguages('ROLE', (str, locale) => `${localeLower(str, locale)}${i}`),
     descriptionLocalizations: getAllLanguages(
       'role-selectors.manual.meta.options.2.description' as any
     ),

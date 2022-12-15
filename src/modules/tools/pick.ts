@@ -1,15 +1,16 @@
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'pick',
   description: t('en-US', 'pick.description'),
-  nameLocalizations: getAllLanguages('pick.name'),
+  nameLocalizations: getAllLanguages('pick.name', localeLower),
   descriptionLocalizations: getAllLanguages('pick.description'),
   options: new OptionBuilder()
     .string('values', t('en-US', 'pick.options.values.name'), {
-      nameLocalizations: getAllLanguages('pick.options.values.name'),
+      nameLocalizations: getAllLanguages('pick.options.values.name', localeLower),
       descriptionLocalizations: getAllLanguages('pick.options.values.description'),
       required: true,
     })

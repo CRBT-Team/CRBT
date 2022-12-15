@@ -3,6 +3,7 @@ import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { ms } from '$lib/functions/ms';
 import { resolveToDate } from '$lib/functions/resolveToDate';
 import { getAllLanguages, t } from '$lib/language';
@@ -22,7 +23,7 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('remind me.meta.description'),
   options: new OptionBuilder()
     .string('when', t('en-US', 'remind me.meta.options.0.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.0.name' as any),
+      nameLocalizations: getAllLanguages('remind me.meta.options.0.name' as any, localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.0.description' as any),
       autocomplete({ when }) {
         return timeAutocomplete.call(this, when, '2y');
@@ -30,14 +31,14 @@ export default ChatCommand({
       required: true,
     })
     .string('subject', t('en-US', 'remind me.meta.options.1.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.1.name' as any),
+      nameLocalizations: getAllLanguages('remind me.meta.options.1.name' as any, localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.1.description' as any),
       required: true,
       minLength: 1,
       maxLength: 512,
     })
     .channel('destination', t('en-US', 'remind me.meta.options.2.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.2.name' as any),
+      nameLocalizations: getAllLanguages('remind me.meta.options.2.name' as any, localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.2.description' as any),
       channelTypes: [ChannelType.GuildText, ChannelType.GuildAnnouncement],
     }),

@@ -50,7 +50,7 @@ for (let i = 1; i <= 4; i++) {
   options.string(`choice${i}`, t('en-US', 'poll.meta.options.choice.description'), {
     nameLocalizations: getAllLanguages(
       'CHOICE',
-      (str, locale) => `${str.toLocaleLowerCase(locale)}${i}`
+      (str, locale) => `${localeLower(str, locale)}${i}`
     ),
     descriptionLocalizations: getAllLanguages('poll.meta.options.choice.description'),
     maxLength: 45,

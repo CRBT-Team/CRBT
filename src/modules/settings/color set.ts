@@ -3,6 +3,7 @@ import { cache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -18,7 +19,7 @@ export const colorset = ChatCommand({
       autocomplete({ color }) {
         return colorAutocomplete.call(this, color);
       },
-      nameLocalizations: getAllLanguages('color set.meta.options.0.name' as any),
+      nameLocalizations: getAllLanguages('color set.meta.options.0.name' as any, localeLower),
       descriptionLocalizations: getAllLanguages('color set.meta.options.0.description' as any),
       required: true,
     }

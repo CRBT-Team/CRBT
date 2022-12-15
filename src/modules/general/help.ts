@@ -2,6 +2,7 @@ import { links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
@@ -9,7 +10,7 @@ import { ChatCommand, components, row } from 'purplet';
 export default ChatCommand({
   name: 'help',
   description: 'Returns a quick help guide for CRBT.',
-  nameLocalizations: getAllLanguages('help.name'),
+  nameLocalizations: getAllLanguages('help.name', localeLower),
   descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
     const showAdButton = !this.guild || this.guild.ownerId !== this.user.id;

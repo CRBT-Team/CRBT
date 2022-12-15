@@ -1,5 +1,6 @@
 import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
@@ -8,7 +9,7 @@ import { ChatCommand } from 'purplet';
 export default ChatCommand({
   name: 'ping',
   description: t('en-US', 'ping.meta.description'),
-  nameLocalizations: getAllLanguages('PING', (str, lang) => str.toLocaleLowerCase(lang)),
+  nameLocalizations: getAllLanguages('PING', localeLower),
   descriptionLocalizations: getAllLanguages('ping.meta.description'),
   async handle() {
     await this.deferReply();
