@@ -1,6 +1,6 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { prisma } from '$lib/db';
-import { colors, emojis, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
@@ -72,6 +72,10 @@ export default ChatCommand({
     if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
       return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
     }
+
+    await this.deferReply({
+      ephemeral: true,
+    });
 
     try {
       const pollChoices: string[] = Object.values(choices).filter(Boolean);
@@ -149,7 +153,7 @@ export default ChatCommand({
 
       activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
 
-      await this.reply({
+      await this.editReply({
         embeds: [
           {
             title: `${emojis.success} ${userStrings.SUCCESS_TITLE}`,
@@ -160,7 +164,6 @@ export default ChatCommand({
             color: colors.success,
           },
         ],
-        ephemeral: true,
       });
     } catch (error) {
       this.reply(UnknownError(this, String(error)));
@@ -211,26 +214,23 @@ export const PollOptionsButton = ButtonComponent({
 
     this.reply({
       embeds: [
-        new MessageEmbed()
-          .setAuthor({
-            name: strings.POLL_DATA_OPTIONS,
-          })
-          .setFields(
-            choices.map((choice, index) => ({
-              name: `${choicesNames[index]} (${choice.length})`,
-              value:
-                choice.length > 0
-                  ? trimArray(
-                      choice.map((id) => `<@${id}>`),
-                      15
-                    ).join(', ')
-                  : strings.POLL_DATA_NOVOTES,
-            }))
-          )
-          .setFooter({
+        {
+          title: strings.POLL_DATA_OPTIONS,
+          fields: choices.map((choice, index) => ({
+            name: `${choicesNames[index]} (${choice.length})`,
+            value:
+              choice.length > 0
+                ? trimArray(
+                    choice.map((id) => `<@${id}>`),
+                    15
+                  ).join(', ')
+                : strings.POLL_DATA_NOVOTES,
+          })),
+          footer: {
             text: strings.POLL_DATA_FOOTER,
-          })
-          .setColor(await getColor(this.guild)),
+          },
+          color: await getColor(this.guild),
+        },
       ],
       components: components(
         row(
@@ -395,12 +395,9 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
 
   await pollMsg.reply({
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: strings.POLL_RESULTS_TITLE,
-          iconURL: icons.giveaway,
-        })
-        .setDescription(
+      {
+        title: `${emojis.tada} ${strings.POLL_RESULTS_TITLE}`,
+        description:
           (winners.length > 1
             ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
                 .replace(
@@ -415,34 +412,33 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
                 '{OPTION}',
                 `${ranking[0].name}`
               ).replace('{VOTES}', ranking[0].votes.toString())) +
-            ' ' +
-            strings.POLL_RESULTS_DESCRIPTION_REST.replace('{TOTAL}', totalVotes.toString())
-        )
-        .setColor(colors.success),
+          ' ' +
+          strings.POLL_RESULTS_DESCRIPTION_REST.replace('{TOTAL}', totalVotes.toString()),
+        color: colors.success,
+      },
     ],
   });
 
   await pollMsg.edit({
     embeds: [
-      new MessageEmbed({
+      {
         ...pollMsg.embeds[0],
         author: {
           name: `${strings.POLL_HEADER_ENDED}`,
         },
         description: '',
-      })
-        .setFields(
-          pollMsg.embeds[0].fields.map((field) => {
-            if (winners.map(({ name }) => name).includes(field.name)) {
-              return {
-                name: `🏆 ${field.name}`,
-                value: field.value,
-              };
-            }
-            return field;
-          })
-        )
-        .setColor(colors.gray),
+        fields: pollMsg.embeds[0].fields.map((field) => {
+          if (winners.map(({ name }) => name).includes(field.name)) {
+            return {
+              name: `🏆 ${field.name}`,
+              value: field.value,
+              inline: false,
+            };
+          }
+          return field;
+        }),
+        color: colors.gray,
+      },
     ],
     components: [],
   });

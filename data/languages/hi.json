@@ -4,7 +4,7 @@
   "MEMBER_COUNT": "Member count",
   "SERVER_COUNT": "Server count",
   "PING": "पिंग",
-  "UPTIME": "Online since",
+  "UPTIME": "{time} से ऑनलाइन ",
   "WEBSITE": "वेबसाइट ",
   "ADD_TO_SERVER": "सर्वर को ऐड करे ",
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
@@ -12,7 +12,7 @@
   "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
   "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
   "ERROR_INVALID_URL": "आपका दिया गया URL गलत है|",
-  "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
+  "ERROR_INVALID_COLOR": "आपने जो कलर दिया है वो सही नहीं है | सही HEX कलर या जो प्रेजेंट दिया है वो इस्तेमाल करे |",
   "BACK": "वापस जाएं",
   "JUMP_TO_MSG": "मेसेज पर जाएं",
   "CANCEL": "रद्द करें",
@@ -29,24 +29,46 @@
   "PREVIEW": "प्रीव्यू",
   "EXPORT": "एक्सपोर्ट",
   "IMPORT": "इम्पोर्ट",
-  "YES": "Yes",
-  "NO": "No",
-  "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
-  "TEXT_CHANNEL": "Text Channel",
-  "VOICE_CHANNEL": "Voice Channel",
-  "STAGE_CHANNEL": "Stage Channel",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "WEBSOCKET": "Websocket",
+  "YES": "हाँ",
+  "NO": "नहीं",
+  "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल वह यूजर जो कमांड को इस्तेमाल कर रहे है वो ही कॉम्पोनेन्ट को इस्तेमाल कर सकते है |",
+  "TEXT_CHANNEL": "टेक्स्ट चैनल ",
+  "VOICE_CHANNEL": "वोइस चैनल",
+  "STAGE_CHANNEL": "स्टेज चैनल",
+  "ANNOUNCEMENT_CHANNEL": "अनाउंसमेंट चैनल",
+  "CATEGORY": "केटेगरी",
+  "RULES_CHANNEL": "रूल्स चैनल",
+  "THREAD_CHANNEL": "थ्रेड ",
+  "FORUM_CHANNEL": "फोरम चैनल",
+  "FORUM_POST": "फोरम पोस्ट",
+  "WEBSOCKET": "वेब सॉकेट",
   "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
-  "SERVERS": "Servers",
+  "MEMBERS": "सदस्यों",
+  "STICKERS": "स्टिकर्स",
+  "SERVERS": "सर्वर्स",
   "NONE": "None",
+  "CHANNELS": "चैनल्स",
+  "EMOJIS": "इमोजी",
   "ADDED": "Added",
+  "OWNED_BY": "Owned by",
+  "STATIC": "Static",
+  "ANIMATED": "Animated",
+  "END_DATE": "अंतिम तिथि",
+  "POLL": "पोल",
+  "CHOICE": "विकल्प",
+  "TITLE": "टाइटल",
+  "USER": "यूजर",
+  "SIZE": "साइज़",
+  "FORMAT": "फॉर्मेट",
+  "SMALL": "छोटा",
+  "MEDIUM": "मध्यम",
+  "LARGE": "बड़ा",
+  "LARGEST": "सबसे बड़ा",
   "UnknownError": {
     "strings": {
       "TITLE": "कोई अजीब सी एरर हुई है |",
-      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "यह मेसेज ऑटोमेटिकली रिपोर्ट किया गया था | यह एरर कहती है:"
     }
   },
   "CooldownError": {
@@ -54,7 +76,7 @@
       "TITLE": "होल्ड करो! ",
       "DESCRIPTION": "आप इसे {TYPE} को {TIME} के बाद इस्तेमाल करेंगे... ",
       "COMMAND": "कमांड ",
-      "COMPONENT": "component"
+      "COMPONENT": "कॉम्पोनेन्ट"
     }
   },
   "color set": {
@@ -63,12 +85,12 @@
       "options": [
         {
           "name": "रंग ",
-          "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
+          "description": "आपका नया एक्सेंट कलर बदलने के लिए | कोई एक सुझाव या HEX कलर का इस्तेमाल करे |"
         }
       ]
     },
     "colorNames": {
-      "sync": "Sync Discord Profile Color",
+      "sync": "डिस्कोर्ड प्रोफाइल कलर को सिंक करे |",
       "lightred": "Light Red",
       "red": "लाल ",
       "darkred": "Dark Red",
@@ -92,12 +114,12 @@
       "white": "सफेद"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You do not have a Discord profile color to sync from! To set one, edit your Discord User Profile and change your Profile Color."
+      "NO_DISCORD_COLOR": "आपके पास सिंक करने के लिए डिस्कोर्ड प्रोफाइल कलर का कलर नहीं है | लगाने के लिए, आपके डिस्कोर्ड यूजर प्रोफाइल को एडिट करे और अपना प्रोफाइल कलर को बदले |"
     },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your Discord profile color will be synced to your CRBT accent color.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
+      "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
+      "EMBED_SYNC_INFO": "आपका डिस्कोर्ड प्रोफाइल कलर CRBT एक्सेंट कलर से सिंक हो जायेगा |",
+      "EMBED_DESCRIPTION": "इस कलर का उपयोग आपको CRBT के जवाब पर ज्यादातर इस्तेमाल किया जाएगा साथ ही साथ आपके सूचना कार्डों पर, जब कोई उसे विजिट करेगा |"
     }
   },
   "remind me": {
@@ -106,11 +128,11 @@
       "options": [
         {
           "name": "कब",
-          "description": "When to remind you."
+          "description": "कब आपको याद दिलाए?"
         },
         {
           "name": "विषय",
-          "description": "What to be reminded about."
+          "description": "किस बारे में याद दिलाए? "
         },
         {
           "name": "जगह ",
@@ -119,28 +141,28 @@
       ]
     },
     "errors": {
-      "PAST": "You cannot set a reminder in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format, or below 0 seconds in the future.",
-      "TOO_LONG": "You cannot set a reminder for more than 2 years from now.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
+      "PAST": "आप पिछले का रिमाइंडर नहीं लगा सकते हो |",
+      "INVALID_FORMAT": "जो आपने समय डाला है वो गलत फॉर्मेट में है या फिर फ्यूचर में 0 सेकंड के नीचे है |",
+      "TOO_LONG": "आप अभी के लिए 2 साल से अधिक रिमाइंडर को सेट नहीं कर सकते |",
+      "REMINDERS_MAX_LIMIT": "आप 10 रिमाइंडर से ज़्यादा सेट नहीं कर सकते |"
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set!",
-      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
-      "SUCCESS_DM": "You will be reminded by DM",
+      "SUCCESS_TITLE": "रिमाइंडर सेट! ",
+      "SUCCESS_CHANNEL": "इस {CHANNEL} पे आपको याद दिलाए जाएगा |",
+      "SUCCESS_DM": "DM पे आपको याद दिलाए जाएगा |",
       "BUTTON_GCALENDAR": "Add as Google Calendar event",
-      "GCALENDAR_EVENT": "Set by CRBT Reminder.",
-      "GCALENDAR_EVENT_DM": "You will be also reminded by DM.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+      "GCALENDAR_EVENT": "CRBT रिमाइंडर के द्वारा सेट किया गया |",
+      "GCALENDAR_EVENT_DM": "आपको DM में भी याद दिलाए जायेगा |",
+      "GCALENDAR_EVENT_CHANNEL": "आपको {CHANNEL} {SERVER} में भी याद दिलाए जायेगा |",
+      "REMINDER_DESCRIPTION": "{TIME} ({RELATIVE_TIME}) पर सेट करे |"
     },
     "keywordsDetection__KEEPLOWERCASE": {
-      "AND": "and",
-      "AT": "at",
-      "ON": "on",
-      "IN": "in",
-      "TOMORROW": "tomorrow",
-      "TODAY": "today"
+      "AND": "और",
+      "AT": "पर",
+      "ON": "पर ",
+      "IN": "में",
+      "TOMORROW": "कल",
+      "TODAY": "आज"
     }
   },
   "ping": {
@@ -150,33 +172,29 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT."
+      "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
   "poll": {
     "meta": {
-      "description": "Create a poll with the given choices.",
-      "options": [
-        {
-          "description": "Some choice a user can choose. Make it short, preferably."
+      "description": "दिए गए विकल्प से पोल बनाए |",
+      "options": {
+        "title": {
+          "description": "आपका पोल किस बारे में है ?"
         },
-        {
-          "description": "An other choice a user can choose."
+        "end_date": {
+          "description": "पोल कब समाप्त होना चाहिए."
         },
-        {
-          "description": "Same as choice 1 and 2, but not required."
-        },
-        {
-          "description": "And that's how far choices can go."
+        "choice": {
+          "description": "कुछ विकल्प एक यूजर चुन सकते है | इसके बजाये, इसे छोटा करे |"
         }
-      ]
+      }
     },
     "errors": {
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
+      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)",
+      "POLL_DATA_NOT_ALLOWED": "सिर्फ चैट मॉडरेटर (\"मैनेज मेसेज\" परमिशन ) & ओरिजिनल पोल क्रिएटर डाटा और विकल्प को देख सकते है |"
     },
     "strings": {
-      "CHOICE": "Choice",
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
@@ -190,7 +208,6 @@
       "BUTTON_EDIT_POLL": "Edit Poll",
       "BUTTON_CANCEL_POLL": "Delete Poll",
       "BUTTON_END_POLL": "End Poll",
-      "TITLE": "Title",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_HEADER_ENDED": "Ended",
@@ -205,20 +222,17 @@
   "avatar": {
     "meta": {
       "description": "Get a user's display avatar (Server or User Profile Avatar).",
-      "options": [
-        {
-          "name": "user",
+      "options": {
+        "user": {
           "description": "The user to get the avatar of."
         },
-        {
-          "name": "size",
+        "size": {
           "description": "The size of the avatar to get."
         },
-        {
-          "name": "format",
+        "format": {
           "description": "The format of the avatar to get."
         }
-      ]
+      }
     },
     "ctxMeta": {
       "name": "Get Avatar/Banner"
@@ -247,6 +261,7 @@
   },
   "calc": {
     "meta": {
+      "name": "calculate",
       "description": "Calculate a mathematical expression.",
       "options": [
         {
@@ -274,7 +289,6 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -308,7 +322,7 @@
   "ICON": "Icon",
   "BANNER": "Banner",
   "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS": "Emojis & Stickers",
+  "EMOJIS_AND_STICKERS": "Emojis & Stickers",
   "EXTRA": "More",
   "WARN": "Warn",
   "KICK": "Kick",
@@ -359,6 +373,7 @@
   "USER_NO_ROLES": "*This user doesn't any have roles...*",
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Role(s)",
+  "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
@@ -394,36 +409,35 @@
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
   "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "GIVEAWAY": "Giveaway",
   "giveaway": {
-    "name": "giveaway",
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "name": "prize",
         "description": "What to give away."
       },
       "end_date": {
-        "name": "end_date",
         "description": "When to end the giveaway."
       },
       "winners": {
-        "name": "winners",
         "description": "How many people can win the giveaway."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
     "options": {
       "question": {
-        "name": "question",
         "description": "What to ask."
       }
     }
   },
   "8BALL": "8-Ball",
   "ANSWER": "Answer",
+  "QUESTION": "Question",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",

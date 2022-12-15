@@ -214,13 +214,6 @@ model Token {
   type  TokenTypes
 }
 
-enum TimeoutTypes {
-  REMINDER
-  POLL
-  TEMPBAN
-  GIVEAWAY
-}
-
 enum ModerationStrikeTypes {
   BAN
   TEMPBAN

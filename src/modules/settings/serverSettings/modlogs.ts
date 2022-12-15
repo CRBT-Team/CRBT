@@ -5,7 +5,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
-import { Channel, TextInputComponent } from 'discord.js';
+import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
@@ -70,7 +70,6 @@ export const EditModLogsChannelBtn = ButtonComponent({
   async handle() {
     const settings = await getSettings(this.guild.id);
     const channelId = settings.modLogsChannel;
-
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
     this.showModal(
@@ -80,8 +79,8 @@ export const EditModLogsChannelBtn = ButtonComponent({
           row(
             new TextInputComponent()
               .setCustomId('channel')
-              .setPlaceholder(t(this, "EDIT_CHANNEL_MODAL_PLACEHOLDER"))
-              .setLabel(t(this, "CHANNEL"))
+              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
+              .setLabel(t(this, 'CHANNEL'))
               .setValue(channelName)
               .setRequired(true)
               .setStyle('SHORT')
@@ -95,18 +94,13 @@ export const EditModLogsChannelBtn = ButtonComponent({
 export const EditModLogsChannelModal = ModalComponent({
   async handle() {
     const channelInput = this.fields.getTextInputValue('channel');
-    let channel: Channel;
 
-    if (SnowflakeRegex.test(channelInput)) {
-      channel = this.guild.channels.cache.get(channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
-    } else {
-      channel = this.guild.channels.cache.find((c) => c.name === channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
+    const channel = SnowflakeRegex.test(channelInput)
+      ? await this.guild.channels.fetch(channelInput)
+      : (await this.guild.channels.fetch())?.find((c) => c.name === channelInput);
+
+    if (!channel || channel.type !== 'GUILD_TEXT') {
+      return CRBTError(this, 'This channel does not exist or is not a text channel.');
     }
 
     await fetchWithCache(

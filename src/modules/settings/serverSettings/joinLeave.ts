@@ -7,7 +7,7 @@ import { t } from '$lib/language';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
-import { Channel, TextInputComponent } from 'discord.js';
+import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage } from '../../joinLeave/renderers';
@@ -64,12 +64,9 @@ export const joinLeaveSettings: SettingsMenus = {
       ],
     };
   },
-  getSelectMenu: ({ settings, feature, i }) => {
-    const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
-
+  getSelectMenu: ({ settings, feature, i, isEnabled }) => {
+    const channelId = settings[CamelCaseFeatures[feature]] as string;
     const channel = i.guild.channels.cache.find((c) => c.id === channelId);
-    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
 
     return {
       emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
@@ -130,18 +127,13 @@ export const EditJoinLeaveChannelBtn = ButtonComponent({
 export const EditJoinLeaveChannelModal = ModalComponent({
   async handle(type: JoinLeaveData['type']) {
     const channelInput = this.fields.getTextInputValue('channel');
-    let channel: Channel;
 
-    if (SnowflakeRegex.test(channelInput)) {
-      channel = this.guild.channels.cache.get(channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
-    } else {
-      channel = this.guild.channels.cache.find((c) => c.name === channelInput);
-      if (!channel || channel.type !== 'GUILD_TEXT') {
-        return CRBTError(this, 'This channel does not exist or is not a text channel.');
-      }
+    const channel = SnowflakeRegex.test(channelInput)
+      ? await this.guild.channels.fetch(channelInput)
+      : (await this.guild.channels.fetch()).find((c) => c.name === channelInput);
+
+    if (!channel || channel.type !== 'GUILD_TEXT') {
+      return CRBTError(this, 'This channel does not exist or is not a text channel.');
     }
     const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 

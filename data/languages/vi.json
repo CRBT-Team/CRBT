@@ -37,12 +37,34 @@
   "VOICE_CHANNEL": "Voice Channel",
   "STAGE_CHANNEL": "Stage Channel",
   "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "WEBSOCKET": "Websocket",
+  "CATEGORY": "Category",
+  "RULES_CHANNEL": "Rules Channel",
+  "THREAD_CHANNEL": "Thread",
+  "FORUM_CHANNEL": "Forum Channel",
+  "FORUM_POST": "Forum Post",
+  "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Members",
+  "STICKERS": "Stickers",
   "SERVERS": "Servers",
   "NONE": "None",
+  "CHANNELS": "Channels",
+  "EMOJIS": "Emojis",
   "ADDED": "Added",
+  "OWNED_BY": "Owned by",
+  "STATIC": "Static",
+  "ANIMATED": "Animated",
+  "END_DATE": "End date",
+  "POLL": "Poll",
+  "CHOICE": "Choice",
+  "TITLE": "Title",
+  "USER": "User",
+  "SIZE": "Size",
+  "FORMAT": "Format",
+  "SMALL": "Small",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "LARGEST": "Largest",
   "UnknownError": {
     "strings": {
       "TITLE": "Một lỗi không xác định đã xảy ra.",
@@ -62,7 +84,7 @@
       "description": "Thay đổi màu nhấn CRBT của bạn.",
       "options": [
         {
-          "name": "màu_sắc",
+          "name": "màu sắc",
           "description": "Color to change your accent color to. Use one of the suggestions or a HEX color."
         }
       ]
@@ -105,15 +127,15 @@
       "description": "Đặt một lời nhắc nhở.",
       "options": [
         {
-          "name": "khi_nào",
+          "name": "khi nào",
           "description": "When to remind you."
         },
         {
-          "name": "đối_tượng",
+          "name": "đối tượng",
           "description": "What to be reminded about."
         },
         {
-          "name": "đích_đến",
+          "name": "đích đến",
           "description": "Where to send the reminder (leave blank to send it by DM)."
         }
       ]
@@ -156,27 +178,23 @@
   "poll": {
     "meta": {
       "description": "Tạo một cuộc thăm dò với các lựa chọn nhất định.",
-      "options": [
-        {
+      "options": {
+        "title": {
+          "description": "What's your poll about?"
+        },
+        "end_date": {
+          "description": "When the poll should end."
+        },
+        "choice": {
           "description": "Some choice a user can choose. Make it short, preferably."
-        },
-        {
-          "description": "An other choice a user can choose."
-        },
-        {
-          "description": "Tương tự như lựa chọn 1 và 2, nhưng không bắt buộc."
-        },
-        {
-          "description": "Và đó là cách các lựa chọn có thể đi xa."
         }
-      ]
+      }
     },
     "errors": {
       "CHOICE_EMPTY": "Không được để trống lựa chọn (không bao gồm emoji).",
       "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) & the original poll creator can view its data and options."
     },
     "strings": {
-      "CHOICE": "Lựa chọn",
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
@@ -190,7 +208,6 @@
       "BUTTON_EDIT_POLL": "Chỉnh sửa cuộc thăm dò ý kiến",
       "BUTTON_CANCEL_POLL": "Xóa cuộc thăm dò ý kiến",
       "BUTTON_END_POLL": "Kết thúc cuộc thăm dò ý kiến",
-      "TITLE": "Tiêu đề",
       "SUCCESS_POLL_DELETED": "Đã xóa cuộc thăm dò ý kiến.",
       "SUCCESS_POLL_ENDED": "Cuộc thăm dò ý kiến đã kết thúc.",
       "POLL_HEADER_ENDED": "Đã kết thúc",
@@ -205,20 +222,17 @@
   "avatar": {
     "meta": {
       "description": "Get a user's display avatar (Server or User Profile Avatar).",
-      "options": [
-        {
-          "name": "người_dùng",
-          "description": "Người dùng của hình đại diện để lấy."
+      "options": {
+        "user": {
+          "description": "The user to get the avatar of."
         },
-        {
-          "name": "kích_thước",
-          "description": "Kích cỡ của hình đại diện để lấy."
+        "size": {
+          "description": "The size of the avatar to get."
         },
-        {
-          "name": "định_dạng",
-          "description": "Định dạng của hình đại diện để lấy."
+        "format": {
+          "description": "The format of the avatar to get."
         }
-      ]
+      }
     },
     "ctxMeta": {
       "name": "Lấy hình đại diện/biểu ngữ"
@@ -247,10 +261,11 @@
   },
   "calc": {
     "meta": {
+      "name": "calculate",
       "description": "Tính toán một biểu thức toán học.",
       "options": [
         {
-          "name": "biểu_thức",
+          "name": "biểu thức",
           "description": "Biểu thức cần tính."
         }
       ]
@@ -274,7 +289,6 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -308,7 +322,7 @@
   "ICON": "Icon",
   "BANNER": "Banner",
   "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS": "Emojis & Stickers",
+  "EMOJIS_AND_STICKERS": "Emojis & Stickers",
   "EXTRA": "More",
   "WARN": "Warn",
   "KICK": "Kick",
@@ -359,6 +373,7 @@
   "USER_NO_ROLES": "*This user doesn't any have roles...*",
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Role(s)",
+  "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
   "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
@@ -394,36 +409,35 @@
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
   "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "GIVEAWAY": "Giveaway",
   "giveaway": {
-    "name": "giveaway",
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "name": "prize",
         "description": "What to give away."
       },
       "end_date": {
-        "name": "end_date",
         "description": "When to end the giveaway."
       },
       "winners": {
-        "name": "winners",
         "description": "How many people can win the giveaway."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
     "options": {
       "question": {
-        "name": "question",
         "description": "What to ask."
       }
     }
   },
   "8BALL": "8-Ball",
   "ANSWER": "Answer",
+  "QUESTION": "Question",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
