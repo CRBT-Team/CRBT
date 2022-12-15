@@ -11,7 +11,7 @@ import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
-  getErrors({ guild, settings, isEnabled }) {
+  getErrors({ guild, settings, isEnabled, i }) {
     const channelId = settings.modLogsChannel;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
@@ -21,9 +21,7 @@ export const modlogsSettings: SettingsMenus = {
       errors.push('Channel not found. Edit it for CRBT to send new moderation logs.');
     }
     if (isEnabled && !channelId) {
-      errors.push(
-        'No channel was set. Set it using the {button_label} button below to continue setup.'
-      );
+      errors.push(`No channel was set. Use the ${t(i, 'EDIT_CHANNEL')} button to continue setup.`);
     }
 
     return errors;
@@ -35,13 +33,19 @@ export const modlogsSettings: SettingsMenus = {
       fields: [
         {
           name: t(i, 'STATUS'),
-          value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
+          value: isEnabled
+            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
         },
-        {
-          name: 'Channel',
-          value: `#${settings.modLogsChannel}`,
-          inline: true,
-        },
+        ...(settings.modLogsChannel
+          ? [
+              {
+                name: t(i, 'CHANNEL'),
+                value: `#${settings.modLogsChannel}`,
+                inline: true,
+              },
+            ]
+          : []),
       ],
     };
   },
@@ -53,7 +57,7 @@ export const modlogsSettings: SettingsMenus = {
       description: settings.modules.moderationLogs ? `Sending in #${channel.name}` : null,
     };
   },
-  getComponents: ({ backBtn, toggleBtn, i }) =>
+  getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>
     components(
       row(
         backBtn,
@@ -62,6 +66,7 @@ export const modlogsSettings: SettingsMenus = {
           .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
+          .setDisabled(!isEnabled)
       )
     ),
 };

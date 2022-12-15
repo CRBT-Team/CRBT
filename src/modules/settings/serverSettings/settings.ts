@@ -84,7 +84,11 @@ export async function renderSettingsMenu(
       },
     ],
     components: components(
-      row(new FeatureSelectMenu().setPlaceholder('Choose a setting.').setOptions(options))
+      row(
+        new FeatureSelectMenu()
+          .setPlaceholder(t(this, 'SETTINGS_SELECT_MENU_PLACEHOLDER'))
+          .setOptions(options)
+      )
     ),
     ephemeral: true,
   };

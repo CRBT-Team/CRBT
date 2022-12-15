@@ -19,8 +19,6 @@ export default ChatCommand({
     }
   ),
   async handle({ question }) {
-    console.log(t(this, '8BALL_ANSWERS_NEGATIVE'));
-
     const answers = [
       ...t(this, '8BALL_ANSWERS_POSITIVE').map((answer) => ({
         answer: answer,

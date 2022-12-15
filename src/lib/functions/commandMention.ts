@@ -5,5 +5,5 @@ export function slashCmd(commandName: string) {
 
   const command = allCommands.find((c) => c.name === rootCmdName);
 
-  return `</${commandName}:${command.id}>`;
+  return `</${commandName}:${command?.id}>`;
 }
