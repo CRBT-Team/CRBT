@@ -1,48 +1,70 @@
 {
   "ID": "ID",
-  "CREATED_ON": "Created on",
+  "CREATED_ON": "Создан(а) в",
   "MEMBER_COUNT": "Количество участников",
   "SERVER_COUNT": "Количество серверов",
-  "PING": "Ping",
+  "PING": "Пинг",
   "UPTIME": "В сети с",
-  "WEBSITE": "Website",
-  "ADD_TO_SERVER": "Add to Server",
-  "DISCORD_SERVER": "Discord Server",
-  "DONATE": "Donate",
+  "WEBSITE": "Веб-сайт",
+  "ADD_TO_SERVER": "Добавить на сервер",
+  "DISCORD_SERVER": "Сервер Discord",
+  "DONATE": "Поддержать",
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
-  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "ERROR_MISSING_PERMISSIONS": "Вам нужно разрешить {PERMISSIONS} для использования этой команды.",
   "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
-  "ERROR_INVALID_COLOR": "The color you provided is invalid. Use a valid HEX color or one of the provided presets.",
-  "BACK": "Back",
-  "JUMP_TO_MSG": "Jump to message",
-  "CANCEL": "Cancel",
-  "CONFIRM": "Confirm",
-  "DELETE": "Delete",
-  "EDIT": "Edit",
-  "PREVIOUS": "Previous",
-  "NEXT": "Next",
-  "SAVE": "Save Changes",
-  "SEND": "Send",
-  "DONE": "Done",
-  "ADD_REMINDER": "Add Reminder",
-  "OPEN_DMS": "Open DMs",
-  "PREVIEW": "Preview",
-  "EXPORT": "Export",
-  "IMPORT": "Import",
-  "YES": "Yes",
-  "NO": "No",
-  "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
-  "TEXT_CHANNEL": "Text Channel",
-  "VOICE_CHANNEL": "Voice Channel",
-  "STAGE_CHANNEL": "Stage Channel",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "WEBSOCKET": "Websocket",
-  "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
-  "SERVERS": "Servers",
-  "NONE": "None",
-  "ADDED": "Added",
+  "ERROR_INVALID_COLOR": "Выбранный цвет недействителен. Используйте корректный HEX цвет или один из предложенных пресетов.",
+  "BACK": "Вернуться",
+  "JUMP_TO_MSG": "Перейти к сообщению",
+  "CANCEL": "Отменить",
+  "CONFIRM": "Подтвердить",
+  "DELETE": "Удалить",
+  "EDIT": "Изменить",
+  "PREVIOUS": "Предыдущий",
+  "NEXT": "Следующий",
+  "SAVE": "Сохранить изменения",
+  "SEND": "Отправить",
+  "DONE": "Готово",
+  "ADD_REMINDER": "Добавить напоминание",
+  "OPEN_DMS": "Открыть ЛС",
+  "PREVIEW": "Предпросмотр",
+  "EXPORT": "Экспортировать",
+  "IMPORT": "Импортировать",
+  "YES": "Да",
+  "NO": "Нет",
+  "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Только пользователь, который использовал эту команду, может использовать этот компонент.",
+  "TEXT_CHANNEL": "Текстовый канал",
+  "VOICE_CHANNEL": "Голосовой канал",
+  "STAGE_CHANNEL": "Сцена",
+  "ANNOUNCEMENT_CHANNEL": "Канал объявлений",
+  "CATEGORY": "Категория",
+  "RULES_CHANNEL": "Канал правил",
+  "THREAD_CHANNEL": "Ветка",
+  "FORUM_CHANNEL": "Форум",
+  "FORUM_POST": "Пост на форуме",
+  "WEBSOCKET": "Вебсокет",
+  "INTERACTION": "Взаимодействие",
+  "MEMBERS": "Участники",
+  "STICKERS": "Стикеры",
+  "SERVERS": "Сервера",
+  "NONE": "Ничего",
+  "CHANNELS": "Каналы",
+  "EMOJIS": "Эмодзи",
+  "ADDED": "Добавлен(а)",
+  "OWNED_BY": "Принадлежит",
+  "STATIC": "Фиксированный",
+  "ANIMATED": "Анимировано",
+  "END_DATE": "Дата окончания",
+  "POLL": "Poll",
+  "CHOICE": "Choice",
+  "TITLE": "Title",
+  "USER": "User",
+  "SIZE": "Size",
+  "FORMAT": "Format",
+  "SMALL": "Small",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "LARGEST": "Largest",
   "UnknownError": {
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
@@ -156,27 +178,23 @@
   "poll": {
     "meta": {
       "description": "Создать опрос с выбранными вариантами.",
-      "options": [
-        {
-          "description": "Выбор, который может сделать пользователь. Желательно сделайте его коротким."
+      "options": {
+        "title": {
+          "description": "What's your poll about?"
         },
-        {
-          "description": "Другой выбор, который пользователь может выбрать."
+        "end_date": {
+          "description": "When the poll should end."
         },
-        {
-          "description": "То же что и выбор 1 и 2, но не требуется."
-        },
-        {
-          "description": "И вот сколько выборов есть."
+        "choice": {
+          "description": "Some choice a user can choose. Make it short, preferably."
         }
-      ]
+      }
     },
     "errors": {
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
       "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
     },
     "strings": {
-      "CHOICE": "Выбор",
       "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
@@ -190,7 +208,6 @@
       "BUTTON_EDIT_POLL": "Редактировать опрос",
       "BUTTON_CANCEL_POLL": "Удалить опрос",
       "BUTTON_END_POLL": "Завершить опрос",
-      "TITLE": "Заголовок",
       "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Опрос окончен.",
       "POLL_HEADER_ENDED": "Завершено",
@@ -205,20 +222,17 @@
   "avatar": {
     "meta": {
       "description": "Получить аватар пользователя (Серверный или пользовательский аватар).",
-      "options": [
-        {
-          "name": "пользователь",
-          "description": "Пользователь для просмотра аватара."
+      "options": {
+        "user": {
+          "description": "The user to get the avatar of."
         },
-        {
-          "name": "размер",
-          "description": "Размер получаемого аватара."
+        "size": {
+          "description": "The size of the avatar to get."
         },
-        {
-          "name": "формат",
-          "description": "Формат получаемого аватара."
+        "format": {
+          "description": "The format of the avatar to get."
         }
-      ]
+      }
     },
     "ctxMeta": {
       "name": "Get Avatar/Banner"
@@ -247,6 +261,7 @@
   },
   "calc": {
     "meta": {
+      "name": "calculate",
       "description": "Рассчитать математическое выражение.",
       "options": [
         {
@@ -274,7 +289,6 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "name": "role",
             "description": "A role to assign to the member when selected."
           }
         ]
@@ -292,47 +306,47 @@
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
+      "BUTTON_ROLES_REMOVE": "{ROLE} удалён из ваших ролей.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
       "SUCCESS_TITLE": "Выборщик ролей создан!",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "SUCCESS_DESCRIPTION": "Чтобы отключить это, просто удалите сообщение выборщика ролей."
     }
   },
-  "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
-  "BOT_INFO": "Bot Info",
-  "SERVER_AVATAR": "Server Avatar",
-  "USER_AVATAR": "User Avatar",
-  "USER_BANNER": "User Banner",
-  "SERVER_INFO": "Server info",
-  "ICON": "Icon",
-  "BANNER": "Banner",
-  "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS": "Emojis & Stickers",
-  "EXTRA": "More",
-  "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
-  "CLEAR": "Clear",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
+  "AVATAR": "Аватар",
+  "USER_INFO": "Информация о пользователе",
+  "BOT_INFO": "Информация о боте",
+  "SERVER_AVATAR": "Аватар сервера",
+  "USER_AVATAR": "Аватар пользователя",
+  "USER_BANNER": "Баннер пользователя",
+  "SERVER_INFO": "Информация о сервере",
+  "ICON": "Значок",
+  "BANNER": "Баннер",
+  "ROLES_AND_MEMBERS": "Роли и участники",
+  "EMOJIS_AND_STICKERS": "Эмодзи и стикеры",
+  "EXTRA": "Дополнительно",
+  "WARN": "Предупреждение",
+  "KICK": "Исключение",
+  "BAN": "Бан",
+  "UNBAN": "Разбан",
+  "TIMEOUT": "Истечение времени ожидания",
+  "TEMPBAN": "Временный бан",
+  "CLEAR": "Очистить",
+  "MODERATION_LOGS_VIEW_TITLE": "История действий на {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Модератор: {MODERATOR}",
   "JOIN_MESSAGE": "Приветствие",
   "LEAVE_MESSAGE": "Прощание",
   "JOIN_CHANNEL": "Канал приветствий",
   "LEAVE_CHANNEL": "Канал прощаний",
   "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
-  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
+  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр {TYPE}.",
+  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
+  "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
+  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра {TYPE}. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
+  "ERROR_NO_MESSAGE": "Для начала, задайте сообщение при помощи команды {COMMAND}.",
+  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте {command} для выбора.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
   "FIELD_SELECT_MENU": "Выберите поле для редактирования",
   "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
@@ -350,18 +364,19 @@
   "FIELDS_IMAGE": "Вставить изображение",
   "FIELDS_THUMBNAIL": "Вставить предпросматриваемое изображение",
   "FIELDS_URL": "Вставить URL название",
-  "SETTINGS": "Settings",
-  "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
-  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-  "USER_INFO_TITLE": "{USER} - User info",
-  "JOINED_DISCORD": "Joined Discord",
-  "JOINED_SERVER": "Joined Server",
-  "USER_NO_ROLES": "*This user doesn't any have roles...*",
-  "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
-  "MAJOR_PERMS": "Major permissions in this server",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
+  "SETTINGS": "Настройки",
+  "BIRTHDAY_REMINDER_MESSAGE": "Желаем {USER} счастливого дня рождения!",
+  "BIRTHDAY_LIST_CONTENT": "День рождения {USER}",
+  "USER_INFO_TITLE": "{USER} - Информация о пользователе",
+  "JOINED_DISCORD": "Присоединился в Discord",
+  "JOINED_SERVER": "Присоединился к серверу",
+  "USER_NO_ROLES": "*Этот пользователь не имеет ролей...*",
+  "SERVER_NICKNAME": "Имя сервера",
+  "ROLES": "Роль(роли)",
+  "ROLE": "Роль",
+  "MAJOR_PERMS": "Основные права на этом сервере",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Добро пожаловать в CRBT!",
+  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Добавить CRBT на сервер (Спасибо!)",
   "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
   "ACHIEVEMENT_BUG_HUNTER_DESC": "Report a bug with {command}",
   "ACHIEVEMENT_ARTIST_TITLE": "Artist",
@@ -394,36 +409,35 @@
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
   "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "GIVEAWAY": "Giveaway",
   "giveaway": {
-    "name": "giveaway",
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "name": "prize",
         "description": "What to give away."
       },
       "end_date": {
-        "name": "end_date",
         "description": "When to end the giveaway."
       },
       "winners": {
-        "name": "winners",
         "description": "How many people can win the giveaway."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
     "options": {
       "question": {
-        "name": "question",
         "description": "What to ask."
       }
     }
   },
   "8BALL": "8-Ball",
   "ANSWER": "Answer",
+  "QUESTION": "Question",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
