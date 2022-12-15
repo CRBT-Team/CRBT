@@ -1,5 +1,7 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -8,9 +10,13 @@ import { handleModerationAction } from './_base';
 export default ChatCommand({
   name: 'kick',
   description: 'Kick a chosen user from this server.',
+  nameLocalizations: getAllLanguages('KICK', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to kick.', { required: true })
+    .user('user', 'The user to kick.', {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+      required: true,
+    })
     .string('reason', 'The reason for the kick.'),
   async handle({ user, reason }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.KickMembers)) {

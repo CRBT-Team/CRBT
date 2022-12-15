@@ -33,7 +33,9 @@ export default ChatCommand({
       );
     }
 
-    await this.deferReply();
+    await this.deferReply({
+      ephemeral: true,
+    });
 
     await this.editReply(await renderSettingsMenu.call(this));
   },

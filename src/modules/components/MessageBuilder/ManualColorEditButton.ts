@@ -17,7 +17,11 @@ export const ManualColorEditButton = ButtonComponent({
 
     this.showModal(
       new FieldEditModal({ fieldName: id, type })
-        .setTitle(`Edit ${t(this, `FIELDS_${id.toUpperCase()}` as any)}`)
+        .setTitle(
+          t(this, 'EDIT_SOMETHING', {
+            feature: t(this, `FIELDS_${id.toUpperCase()}` as any),
+          })
+        )
         .setComponents(
           row(
             new TextInputComponent()

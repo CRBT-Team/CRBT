@@ -4,8 +4,9 @@ import { achievements, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { progressBar } from '$lib/functions/progressBar';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -15,7 +16,10 @@ import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'pu
 export default ChatCommand({
   name: 'achievements',
   description: "View a list of a user's CRBT Achievements.",
-  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to see yours.'),
+  nameLocalizations: getAllLanguages('ACHIEVEMENTS', localeLower),
+  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to see yours.', {
+    nameLocalizations: getAllLanguages('USER', localeLower),
+  }),
   async handle({ user }) {
     const u = user ?? this.user;
 

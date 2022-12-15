@@ -1,5 +1,7 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
@@ -15,9 +17,13 @@ import { handleModerationAction } from './_base';
 export default ChatCommand({
   name: 'warn',
   description: "Warn a chosen user. This will add a strike to the user's moderation history.",
+  nameLocalizations: getAllLanguages('WARN', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to warn.', { required: true })
+    .user('user', 'The user to warn.', {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+      required: true,
+    })
     .string('reason', 'The reason for warning.', {
       maxLength: 256,
     }),

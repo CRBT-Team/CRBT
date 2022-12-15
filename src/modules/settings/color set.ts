@@ -7,34 +7,22 @@ import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-const meta = {
-  descriptions: getAllLanguages('color set.meta.description'),
-  options: getAllLanguages('color set.meta.options' as any),
-};
-
 export const colorset = ChatCommand({
   name: 'color set',
-  description: meta.descriptions['en-US'],
-  descriptionLocalizations: meta.descriptions,
-  options: new OptionBuilder().string('color', meta.options['en-US'][0].name, {
-    autocomplete({ color }) {
-      return colorAutocomplete.call(this, color);
-    },
-    nameLocalizations: Object.entries(meta.options).reduce((acc, [lang, obj]) => {
-      return {
-        ...acc,
-        [lang]: obj[0].name.replaceAll(' ', '-'),
-      };
-    }, {}),
-    descriptionLocalizations: Object.entries(meta.options).reduce(
-      (acc, [lang, obj]) => ({
-        ...acc,
-        [lang]: obj[0].description,
-      }),
-      {}
-    ),
-    required: true,
-  }),
+  description: t('en-US', 'color set.meta.description'),
+  descriptionLocalizations: getAllLanguages('color set.meta.description'),
+  options: new OptionBuilder().string(
+    'color',
+    t('en-US', 'color set.meta.options.0.description' as any),
+    {
+      autocomplete({ color }) {
+        return colorAutocomplete.call(this, color);
+      },
+      nameLocalizations: getAllLanguages('color set.meta.options.0.name' as any),
+      descriptionLocalizations: getAllLanguages('color set.meta.options.0.description' as any),
+      required: true,
+    }
+  ),
   async handle({ color: colorHex }) {
     const { strings, errors } = t(this, 'color set');
 

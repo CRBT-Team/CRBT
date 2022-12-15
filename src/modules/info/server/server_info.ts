@@ -22,6 +22,7 @@ import {
   MessageComponentInteraction,
   MessageEmbed,
 } from 'discord.js';
+import { resolve } from 'path';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 import { NavBarContext } from '../user/_navbar';
 import { getTabs, serverNavBar } from './_navbar';
@@ -62,9 +63,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
   const events = guild.scheduledEvents.cache;
   const { format: formatNum } = new Intl.NumberFormat(this.locale);
-  const bots = hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuild)
-    ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
-    : guild.members.cache.filter((m) => m.user.bot);
+  const bots = guild.members.cache.filter((m) => m.user.bot);
 
   const channels = {
     text: allChannels.filter((c) => c.type === 'GUILD_TEXT').size,
@@ -182,15 +181,16 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   //     true
   //   );
   // }
+  canvas.registerFont(resolve('data/misc/ggsans.otf'), { family: 'ggsans' });
 
   const img = canvas.createCanvas(512, 512);
   const ctx = img.getContext('2d');
   if (!guild.icon) {
-    canvas.registerFont('data/misc/whitney.otf', { family: 'Whitney' });
-    ctx.fillStyle = colors.blurple.toString(16);
+    ctx.fillStyle = `#${colors.blurple.toString(16)}`;
     ctx.fillRect(0, 0, img.width, img.height);
+
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'normal 152px Whitney';
+    ctx.font = 'normal 152px ggsans';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(guild.nameAcronym, 256, 256);

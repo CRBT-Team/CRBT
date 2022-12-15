@@ -2,6 +2,8 @@ import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { createCRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages } from '$lib/language';
 import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
@@ -9,10 +11,13 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 export default ChatCommand({
   name: 'banner',
   description: `Get a user's Profile Banner.`,
+  nameLocalizations: getAllLanguages('BANNER', localeLower),
   options: new OptionBuilder()
-
-    .user('user', 'The user to get the banner of.')
+    .user('user', 'The user to get the banner of.', {
+      nameLocalizations: getAllLanguages('USER', localeLower),
+    })
     .string('size', 'The size of the banner to get.', {
+      nameLocalizations: getAllLanguages('SIZE', localeLower),
       choices: {
         '1': 'Small (128px)',
         '2': 'Medium (512px)',
@@ -21,6 +26,7 @@ export default ChatCommand({
       },
     })
     .string('format', 'The format of the banner to get.', {
+      nameLocalizations: getAllLanguages('FORMAT', localeLower),
       choices: {
         '1': 'PNG',
         '2': 'JPG',

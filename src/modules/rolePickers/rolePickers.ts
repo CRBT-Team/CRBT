@@ -1,7 +1,7 @@
 import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Role } from 'discord.js';
@@ -10,31 +10,47 @@ import { MessageBuilder } from '../components/MessageBuilder';
 import Button from './Button';
 import SelectMenu from './SelectMenu';
 
-const { manual } = t('en-US', 'role-selectors');
-
 export const usersOnCooldown = new Map();
 
 const options = new OptionBuilder()
-  .string('behavior', manual.meta.options[0].description, {
+  .string('behavior', t('en-US', 'role-selectors.manual.meta.options.0.description' as any), {
+    nameLocalizations: getAllLanguages('role-selectors.manual.meta.options.0.name' as any),
+    descriptionLocalizations: getAllLanguages(
+      'role-selectors.manual.meta.options.0.description' as any
+    ),
     choices: {
-      toggle: manual.meta.options[0].choices[0],
-      once: manual.meta.options[0].choices[1],
+      toggle: t('en-US', 'role-selectors.manual.meta.options.0.choices.0' as any),
+      once: t('en-US', 'role-selectors.manual.meta.options.0.choices.1' as any),
     },
     required: true,
   })
-  .integer('role_limit', manual.meta.options[1].description, {
+  .integer('role_limit', t('en-US', 'role-selectors.manual.meta.options.1.description' as any), {
+    nameLocalizations: getAllLanguages('role-selectors.manual.meta.options.1.name' as any),
+    descriptionLocalizations: getAllLanguages(
+      'role-selectors.manual.meta.options.1.description' as any
+    ),
     minValue: 0,
     maxValue: 13,
     required: true,
   });
 
 for (let i = 1; i <= 13; i++) {
-  options.role(`role${i}`, manual.meta.options[2].description, { required: i === 1 });
+  options.role(`role${i}`, t('en-US', 'role-selectors.manual.meta.options.2.description' as any), {
+    nameLocalizations: getAllLanguages(
+      'ROLE',
+      (str, locale) => `${str.toLocaleLowerCase(locale)}${i}`
+    ),
+    descriptionLocalizations: getAllLanguages(
+      'role-selectors.manual.meta.options.2.description' as any
+    ),
+    required: i === 1,
+  });
 }
 
 export const useManual = ChatCommand({
   name: 'role-picker create',
-  description: manual.meta.description,
+  description: t('en-US', 'role-selectors.manual.meta.description'),
+  descriptionLocalizations: getAllLanguages('role-selectors.manual.meta.description'),
   allowInDMs: false,
   options,
   async handle({ behavior, role_limit, ...roles }) {

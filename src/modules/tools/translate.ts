@@ -108,8 +108,8 @@ async function translate(
   text: string,
   opts?: { to?: string; from?: string }
 ) {
-  const to = opts.to ?? this.locale.split('-')[0];
-  const from = opts.from ?? 'auto';
+  const to = opts?.to ?? this.locale.split('-')[0];
+  const from = opts?.from ?? 'auto';
 
   if (!languages.all.find((code) => code === from)) {
     CRBTError(
