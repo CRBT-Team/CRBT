@@ -414,18 +414,18 @@
     "description": "Créez un concours.",
     "options": {
       "prize": {
-        "name": "prix",
         "description": "Quoi donner au concours."
       },
       "end_date": {
         "description": "Quand mettre fin au concours."
       },
       "winners": {
-        "name": "nombre_de_gagnants",
         "description": "Combien de personnes peuvent gagner."
       }
     }
   },
+  "WINNERS": "Winners",
+  "PRIZE": "Prize",
   "8ball": {
     "name": "boule_de_cristal",
     "description": "Posez une question à la boule de cristal.",
