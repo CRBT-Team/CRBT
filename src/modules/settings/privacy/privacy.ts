@@ -2,6 +2,7 @@ import { cache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis, icons, links } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { User } from '@prisma/client';
@@ -19,7 +20,7 @@ const privacyPreferences = [
 export default ChatCommand({
   name: 'privacy',
   description: t('en-US', 'privacy.description'),
-  nameLocalizations: getAllLanguages('privacy.name'),
+  nameLocalizations: getAllLanguages('privacy.name', localeLower),
   descriptionLocalizations: getAllLanguages('privacy.description'),
   async handle() {
     const preferences = (await prisma.user.findFirst({

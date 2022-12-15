@@ -2,6 +2,7 @@ import { languagesAutocomplete } from '$lib/autocomplete/languagesAutocomplete';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import googleTranslateApi from '@vitalets/google-translate-api';
 import { upperCaseFirst } from 'change-case-all';
@@ -21,6 +22,9 @@ import {
 import languages from '../../../data/misc/langs.json';
 import { useOcrScan } from './Find Text in Image';
 
+console.log(t('fr', 'TRANSLATE'));
+// console.log(getAllLanguages('TRANSLATE'));
+
 export default ChatCommand({
   name: 'translate',
   nameLocalizations: getAllLanguages('TRANSLATE'),
@@ -28,19 +32,19 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('translate.description'),
   options: new OptionBuilder()
     .string('text', t('en-US', 'translate.options.text.description'), {
-      nameLocalizations: getAllLanguages('translate.options.text.name'),
+      nameLocalizations: getAllLanguages('translate.options.text.name', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.text.description'),
       required: true,
     })
     .string('target', t('en-US', 'translate.options.target.description'), {
-      nameLocalizations: getAllLanguages('translate.options.target.name'),
+      nameLocalizations: getAllLanguages('translate.options.target.name', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.target.description'),
       autocomplete({ target }) {
         return languagesAutocomplete.call(this, target);
       },
     })
     .string('source', t('en-US', 'translate.options.source.name'), {
-      nameLocalizations: getAllLanguages('translate.options.source.name'),
+      nameLocalizations: getAllLanguages('translate.options.source.name', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.source.description'),
       autocomplete({ source }) {
         return languagesAutocomplete.call(this, source);

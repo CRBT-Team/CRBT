@@ -4,6 +4,7 @@ import { emojis, icons } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
@@ -20,7 +21,7 @@ import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from
 export default ChatCommand({
   name: 'settings',
   description: t('en-US', 'settings.description'),
-  nameLocalizations: getAllLanguages('settings.name'),
+  nameLocalizations: getAllLanguages('settings.name', localeLower),
   descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {

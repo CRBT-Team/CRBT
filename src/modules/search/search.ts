@@ -1,3 +1,4 @@
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { AchievementProgress } from '$lib/responses/Achievements';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
@@ -26,11 +27,11 @@ function getChoices(lang = 'en-US') {
 export default ChatCommand({
   name: 'search',
   description: t('en-US', 'search.description'),
-  nameLocalizations: getAllLanguages('search.name'),
+  nameLocalizations: getAllLanguages('search.name', localeLower),
   descriptionLocalizations: getAllLanguages('search.description'),
   options: new OptionBuilder()
     .string('query', t('en-US', 'search.options.query.name'), {
-      nameLocalizations: getAllLanguages('search.options.query.name'),
+      nameLocalizations: getAllLanguages('search.options.query.name', localeLower),
       descriptionLocalizations: getAllLanguages('search.options.query.description'),
       required: true,
       async autocomplete({ query }) {
@@ -52,7 +53,7 @@ export default ChatCommand({
       },
     })
     .string('site', t('en-US', 'search.options.site.description'), {
-      nameLocalizations: getAllLanguages('search.options.site.name'),
+      nameLocalizations: getAllLanguages('search.options.site.name', localeLower),
       descriptionLocalizations: getAllLanguages('search.options.site.description'),
       choices: getChoices(),
       // choiceLocalizations: {
@@ -64,7 +65,7 @@ export default ChatCommand({
       // ),
     })
     .boolean('anonymous', t('en-US', 'search.options.anonymous.description'), {
-      nameLocalizations: getAllLanguages('search.options.anonymous.name'),
+      nameLocalizations: getAllLanguages('search.options.anonymous.name', localeLower),
       descriptionLocalizations: getAllLanguages('search.options.anonymous.description'),
     }),
   async handle({ query, anonymous, site }) {

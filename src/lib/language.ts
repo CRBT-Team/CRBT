@@ -110,7 +110,7 @@ export function t<K extends StringArgument>(
   const string: string | StringsStructure =
     typeof defaultData === 'object' && !Array.isArray(defaultData)
       ? deepMerge(defaultData, localizedData)
-      : defaultData || localizedData;
+      : localizedData || defaultData;
 
   if (interpolations && typeof string === 'string') {
     return Object.keys(interpolations).reduce(
@@ -133,16 +133,12 @@ export function getAllLanguages<K extends StringArgument>(
 } {
   return Object.keys(languages).reduce((acc, lang) => {
     const translation = t(lang, stringKey);
-    if (changeString && typeof translation === 'string') {
-      return {
-        ...acc,
-        [lang]: changeString(translation, lang),
-      };
-    } else {
-      return {
-        ...acc,
-        [lang]: translation,
-      };
-    }
+    return {
+      ...acc,
+      [lang]:
+        changeString && typeof translation === 'string'
+          ? changeString(translation, lang)
+          : translation,
+    };
   }, {});
 }

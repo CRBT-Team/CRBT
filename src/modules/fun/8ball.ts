@@ -1,19 +1,23 @@
 import { colors, icons } from '$lib/env';
+import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { upperCaseFirst } from 'change-case-all';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: '8ball',
   description: t('en-US', '8ball.description'),
-  nameLocalizations: getAllLanguages('8ball.name'),
+  nameLocalizations: getAllLanguages('8ball.name', localeLower),
   descriptionLocalizations: getAllLanguages('8ball.description'),
-  options: new OptionBuilder().string('question', 'A question to ask.', {
-    nameLocalizations: getAllLanguages('8ball.options.question.name'),
-    descriptionLocalizations: getAllLanguages('8ball.options.question.description'),
-    required: true,
-    maxLength: 1024,
-  }),
+  options: new OptionBuilder().string(
+    'question',
+    t('en-US', '8ball.options.question.description'),
+    {
+      nameLocalizations: getAllLanguages('QUESTION', localeLower),
+      descriptionLocalizations: getAllLanguages('8ball.options.question.description'),
+      required: true,
+      maxLength: 1024,
+    }
+  ),
   async handle({ question }) {
     console.log(t(this, '8BALL_ANSWERS_NEGATIVE'));
 
@@ -52,7 +56,7 @@ export default ChatCommand({
             },
             fields: [
               {
-                name: upperCaseFirst(t(this, '8ball.options.question.name')),
+                name: t(this, 'QUESTION'),
                 value: question,
               },
               {
