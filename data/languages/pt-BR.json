@@ -221,30 +221,30 @@
   },
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Obtenha a foto de perfil do usuário (Do servidor ou do perfil original).",
       "options": {
         "user": {
-          "description": "The user to get the avatar of."
+          "description": "O usuário cujo será obtido o avatar."
         },
         "size": {
-          "description": "The size of the avatar to get."
+          "description": "O tamanho do avatar a ser obtido."
         },
         "format": {
-          "description": "The format of the avatar to get."
+          "description": "O formato do avatar a ser obtido."
         }
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Obter Avatar/Banner"
     },
     "strings": {
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "Baixar ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
-      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
+      "EMBED_TITLE": "Obrigado por convidar {CRBT} para o seu servidor!",
+      "EMBED_DESCRIPTION": "{CRBT} está agora em {SERVERS} servidores!\nPara começar a usar CRBT, digite `/` e clique em seu avatar!\nPara mais ajuda e informações, visite o **[servidor de suporte]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -255,13 +255,13 @@
       "DMS_DISABLED": "Você deve habilitar suas mensagens diretas ou desbloquear o CRBT para marcar as mensagens como favoritas."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
+      "BOOKMARK_AUTHOR": "{USER} (Mensagem salva)",
       "SUCCESS_MESSAGE": "Enviei esta mensagem por MD!"
     }
   },
   "calc": {
     "meta": {
-      "name": "calculate",
+      "name": "calcular",
       "description": "Calcular uma expressão matemática.",
       "options": [
         {
@@ -274,29 +274,29 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
+        "description": "Crie um Seletor de Cargos, um menu para membros atribuírem cargos a si mesmos.",
         "options": [
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "comportamento",
+            "description": "Como o Seletor de Cargos deve se comportar.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Alternar adicionar/remover cargo(s)",
+              "Adicionar o(s) cargo(s) apenas uma vez"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "limite",
+            "description": "Quantos cargos podem ser selecionados. Defina como 0 para ilimitado."
           },
           {
-            "description": "A role to assign to the member when selected."
+            "description": "Um cargo a ser atribuído ao membro quando selecionado."
           }
         ]
       }
     },
     "errors": {
       "BOT_MISSING_PERMS": "Eu preciso da permissão \"Gerenciar Cargos\" para criar um Seletor de Cargos.",
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
+      "ROLES_DO_NOT_EXIST": "Um ou mais dos cargos selecionados foram removidos. Entre em contato com um administrador para resolver o problema.",
       "BUTTON_ROLES_ONCE": "Você só pode selecionar este cargo uma vez, e você não pode removê-lo."
     },
     "strings": {
@@ -304,42 +304,42 @@
       "CHOOSE_ROLES": "Escolher cargos",
       "GENERIC_SELECTOR_TITLE": "Selecione um ou vários cargos, escolhendo-os abaixo.",
       "SELECT_MENU_ROLES_SUCCESS": "Cargos atualizados com sucesso.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
+      "BUTTON_ROLES_ADD": "{ROLE} foi adicionado aos seus cargos.",
       "BUTTON_ROLES_ADD_AGAIN": "Selecione-o novamente para removê-lo.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
+      "BUTTON_ROLES_REMOVE": "{ROLE} foi removido dos seus cargos.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Selecione-o novamente para adicioná-lo.",
       "SUCCESS_TITLE": "Seletor de Cargo criado!",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "SUCCESS_DESCRIPTION": "Para desativá-lo, exclua a mensagem do Seletor de Cargos."
     }
   },
-  "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
-  "BOT_INFO": "Bot Info",
-  "SERVER_AVATAR": "Server Avatar",
-  "USER_AVATAR": "User Avatar",
-  "USER_BANNER": "User Banner",
-  "SERVER_INFO": "Server info",
-  "ICON": "Icon",
+  "AVATAR": "Foto de perfil",
+  "USER_INFO": "Informações do usuário",
+  "BOT_INFO": "Informações do Bot",
+  "SERVER_AVATAR": "Ícone do Servidor",
+  "USER_AVATAR": "Foto de perfil do usuário",
+  "USER_BANNER": "Banner do Usuário",
+  "SERVER_INFO": "Informações do servidor",
+  "ICON": "Ícone",
   "BANNER": "Banner",
-  "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS_AND_STICKERS": "Emojis & Stickers",
-  "EXTRA": "More",
-  "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
-  "CLEAR": "Clear",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
-  "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
+  "ROLES_AND_MEMBERS": "Cargos e Membros",
+  "EMOJIS_AND_STICKERS": "Emojis e Figurinhas",
+  "EXTRA": "Mais",
+  "WARN": "Aviso",
+  "KICK": "Expulsar",
+  "BAN": "Banir",
+  "UNBAN": "Desbanir",
+  "TIMEOUT": "Silenciar",
+  "TEMPBAN": "Banimento temporário",
+  "CLEAR": "Limpar",
+  "MODERATION_LOGS_VIEW_TITLE": "Histórico de moderação em {SERVER}",
+  "MODERATION_LOGS_VIEW_MODERATOR": "Moderado por {MODERATOR}",
+  "JOIN_MESSAGE": "Mensagem de boas-vindas",
+  "LEAVE_MESSAGE": "Mensagem de despedida",
+  "JOIN_CHANNEL": "Canal de boas-vindas",
+  "LEAVE_CHANNEL": "Canal de despedidas",
+  "CRBTSCRIPT_GUIDE": "Abrir o guia de CRBTscript",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edite esta mensagem para personalizar o {TYPE} usando o menu de seleção abaixo.",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Sua mensagem não pode estar vazia!",
   "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
@@ -390,79 +390,79 @@
   "ACHIEVEMENT_SEEKER_TITLE": "Info Seeker",
   "ACHIEVEMENT_SEEKER_DESC": "Search 10 times with {command}.",
   "ACHIEVEMENT_BOOKMARKER_TITLE": "Message Afficionado",
-  "ACHIEVEMENT_BOOKMARKER_DESC": "Bookmark 5 messages.",
-  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "Safety First!",
-  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Check CRBT's privacy settings with {command}.",
+  "ACHIEVEMENT_BOOKMARKER_DESC": "Salvar 5 mensagens.",
+  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "Segurança em primeiro lugar!",
+  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Veja as configurações de privacidade do CRBT com {command}.",
   "ACHIEVEMENT_BREWING_APPS_TITLE": "Brewing apps",
-  "ACHIEVEMENT_BREWING_APPS_DESC": "Create and redeem your CRBT API token.",
-  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "CRBT Addict",
-  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Use 100 commands.",
-  "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
-  "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color.",
+  "ACHIEVEMENT_BREWING_APPS_DESC": "Crie e resgate seu token da API CRBT.",
+  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "Viciado em CRBT",
+  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Use 100 comandos.",
+  "ACHIEVEMENT_ERROR_MASTER_TITLE": "À procura de mais erros!",
+  "ACHIEVEMENT_ERROR_MASTER_DESC": "Encontre o comando de erro secreto.",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "ta me imitando, é?",
+  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Encontre a cor de destaque do CRBT escondida.",
   "help": {
-    "name": "help",
-    "description": "Returns a quick help guide for CRBT."
+    "name": "ajuda",
+    "description": "Retorna um guia de ajuda rápido para CRBT."
   },
-  "HELP_TITLE": "{botName} - Quick Guide",
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
-  "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
-  "GIVEAWAY": "Giveaway",
+  "HELP_TITLE": "{botName} - Guia rápido",
+  "HELP_DESCRIPTION": "Digite {prefix} no chat e clique em {botIcon} para obter uma lista de comandos de barra.\nVocê também pode clicar com o botão direito ou apertar e segurar uma mensagem ou um usuário para ver as ações rápidas.\n\nCRBT vem com recursos úteis e poderosos, como a criação de lembretes ({reminder}), registrando a entrada e saída de novos e antigos membros({settings}), obtendo informações do o Discord e da internet ({infoCommands}, etc.)...\n\n...e mais por vir em breve! Fique ligado nas atualizações do CRBT ao entrar em [nosso servidor]({link}).",
+  "HELP_AD_TITLE": "Gosta do CRBT?",
+  "HELP_AD_DESCRIPTION": "Apoie-nos adicionando-o em seu servidor!",
+  "GIVEAWAY": "Sorteio",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "Crie um sorteio.",
     "options": {
       "prize": {
-        "name": "prize",
-        "description": "What to give away."
+        "name": "prêmio",
+        "description": "O que sortear."
       },
       "end_date": {
-        "description": "When to end the giveaway."
+        "description": "Quando terminar o sorteio."
       },
       "winners": {
-        "name": "winners",
-        "description": "How many people can win the giveaway."
+        "name": "vencedores",
+        "description": "Quantas pessoas podem ganhar no sorteio."
       }
     }
   },
   "8ball": {
-    "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "name": "bola8",
+    "description": "Faça uma pergunta a Bola 8.",
     "options": {
       "question": {
-        "description": "What to ask."
+        "description": "O que perguntar."
       }
     }
   },
-  "8BALL": "8-Ball",
-  "ANSWER": "Answer",
-  "QUESTION": "Question",
+  "8BALL": "Bola 8",
+  "ANSWER": "Resposta",
+  "QUESTION": "Pergunta",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
-    "It is decidedly so.",
-    "Without a doubt.",
-    "Yes, definitely.",
-    "You may rely on it.",
-    "As I see it, yes.",
-    "Most likely.",
-    "Outlook good.",
-    "Yes.",
-    "Signs point to yes."
+    "Com certeza.",
+    "É decididamente assim.",
+    "Sem dúvida.",
+    "Sim, definitivamente.",
+    "Você pode contar com isso.",
+    "Do meu ponto de vista, sim.",
+    "Provavelmente.",
+    "Em geral, parece-me bom.",
+    "Sim.",
+    "Os sinais apontam que sim."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "Resposta confusa, tente novamente.",
+    "Me pergunte novamente mais tarde.",
+    "Melhor não te contar agora.",
+    "Não consigo prever agora.",
+    "Concentre-se e pergunte novamente."
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
-    "My sources say no.",
-    "Outlook not so good.",
-    "Very doubtful."
+    "Não conte com isso.",
+    "Minha resposta é não.",
+    "Minhas fontes dizem que não.",
+    "Em geral, não me parece bom.",
+    "Bem duvidoso."
   ],
   "COMMENT": "comment",
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
@@ -540,38 +540,38 @@
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will only stop those from being sent.",
   "YOUR_CRBT_DATA": "Your CRBT data",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
+  "PRIVACY_SETTINGS_TITLE": "CRBT - Configurações de Privacidade",
   "settings": {
-    "name": "settings",
-    "description": "Configure CRBT settings on this server."
+    "name": "configurações",
+    "description": "Configurar CRBT neste servidor."
   },
-  "ATTENTION_REQUIRED": "Attention Required",
-  "OVERVIEW": "Overview",
-  "SETTINGS_TITLE": "CRBT Server Settings",
-  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choose a setting.",
-  "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
-  "ENABLE": "Enable",
-  "DISABLE": "Disable",
-  "ACCENT_COLOR": "Accent Color",
-  "MODERATION_LOGS": "Moderation logs",
-  "ECONOMY": "Economy",
+  "ATTENTION_REQUIRED": "Atenção Necessária",
+  "OVERVIEW": "Visão Geral",
+  "SETTINGS_TITLE": "Configurações do Servidor do CRBT",
+  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Escolha uma configuração.",
+  "SETTINGS_DESCRIPTION": "Use o menu de seleção abaixo para atualizar as configurações para este servidor.",
+  "ENABLE": "Habilitar",
+  "DISABLE": "Desabilitar",
+  "ACCENT_COLOR": "Cor de destaque",
+  "MODERATION_LOGS": "Registros de moderação",
+  "ECONOMY": "Economia",
   "STATUS": "Status",
-  "SETTINGS_ERRORS_FOUND": "{number} errors found",
-  "ENABLED": "Enabled",
-  "DISABLED": "Disabled",
-  "SETTINGS_SENDING_IN": "Sending in {channel}",
-  "EDIT_MESSAGE": "Edit Message",
-  "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
-  "CHANNEL": "Channel",
-  "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages including Polls, Giveaways, Role Pickers, the Server Info sheet among other features.\nIt's currently set to **{color}**.",
-  "ACHIEVEMENT_UNLOCKED_TITLE": "Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Secret Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Check your achievements with {command}.",
+  "SETTINGS_ERRORS_FOUND": "{number} erros encontrados",
+  "ENABLED": "Habilitado",
+  "DISABLED": "Desabilitado",
+  "SETTINGS_SENDING_IN": "Enviando em {channel}",
+  "EDIT_MESSAGE": "Editar Mensagem",
+  "EDIT_CHANNEL": "Editar Canal",
+  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "Você pode usar o nome completo do Canal de Texto ou seu ID.",
+  "CHANNEL": "Canal",
+  "EDIT_SOMETHING": "Editar {feature}",
+  "SETTINGS_COLOR_SET_TO": "Alterado para {color}",
+  "SETTINGS_COLOR_DESCRIPTION": "A cor de destaque do servidor é mostrada em embeds públicos, incluindo Polls, Giveaways, Seletores de Cargos, a página de Informações do Servidor entre outros recursos.\nAtualmente está definido como **{color}**.",
+  "ACHIEVEMENT_UNLOCKED_TITLE": "Conquista Desbloqueada!",
+  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Conquista Secreta Desbloqueada!",
+  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Verifique as suas conquistas com {command}.",
   "search": {
-    "name": "search",
+    "name": "pesquisar",
     "description": "Search for anything in one of the provided search engines.",
     "options": {
       "query": {
