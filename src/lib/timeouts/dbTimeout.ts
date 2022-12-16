@@ -38,6 +38,22 @@ export async function dbTimeout<T extends TimeoutTypes>(
   if (loadOnly) return timeout;
 
   return await prisma[type].create({
-    data: timeout,
+    data: {
+      ...timeout,
+      ...('userId' in timeout
+        ? {
+            user: {
+              connectOrCreate: { create: { id: timeout.userId } },
+            },
+          }
+        : {}),
+      ...('serverId' in timeout
+        ? {
+            server: {
+              connectOrCreate: { create: { id: timeout.serverId } },
+            },
+          }
+        : {}),
+    },
   });
 }

@@ -38,8 +38,6 @@ export default ChatCommand({
         false
       );
 
-      console.log(getMessages.map((m) => m.content));
-
       await handleModerationAction.call(this, {
         guild: this.guild,
         moderator: this.user,

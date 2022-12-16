@@ -77,7 +77,7 @@ export const ChangeSearchButton = ButtonComponent({
 export const DeleteSearchButton = ButtonComponent({
   async handle(userId: string) {
     if (this.user.id !== userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
 
     getRestClient().delete(Routes.channelMessage(this.channelId, this.message.id));

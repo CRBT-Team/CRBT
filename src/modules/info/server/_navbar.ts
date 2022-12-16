@@ -12,7 +12,7 @@ type Tabs = 'server_info' | 'icon' | 'roles' | 'emojis' | 'extra';
 export const ServerInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -23,7 +23,7 @@ export const ServerInfoBtn = ButtonComponent({
 export const ServerIconBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -34,7 +34,7 @@ export const ServerIconBtn = ButtonComponent({
 export const ServerMembersBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 
@@ -45,7 +45,7 @@ export const ServerMembersBtn = ButtonComponent({
 export const ServerEmojisBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const guild = this.client.guilds.cache.get(opts.targetId);
 

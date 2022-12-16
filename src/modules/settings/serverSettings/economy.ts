@@ -57,7 +57,7 @@ export const economySettings: SettingsMenus = {
           inline: true,
         },
         {
-          name: `Items (${economy.items.length})`,
+          name: `Items • ${economy.items.length}`,
           value:
             economy.items.length === 0
               ? dedent`No items available.

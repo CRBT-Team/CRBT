@@ -39,7 +39,7 @@ export type NavBarContext = {
 export const UserInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const u = (await getRestClient().get(Routes.user(opts.targetId))) as APIUser;
     const m =
@@ -54,7 +54,7 @@ export const UserInfoBtn = ButtonComponent({
 export const BotInfoBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const bots = await fetchWithCache(`${this.guild.id}:integrations`, async () =>
       (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON()
@@ -72,7 +72,7 @@ export const BotInfoBtn = ButtonComponent({
 export const PfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
@@ -87,7 +87,7 @@ export const PfpBtn = ButtonComponent({
 export const UserPfpBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const u = await this.client.users.fetch(opts.targetId);
 
@@ -98,7 +98,7 @@ export const UserPfpBtn = ButtonComponent({
 export const UserBannerBtn = ButtonComponent({
   async handle(opts: NavBarContext) {
     if (this.user.id !== opts.userId) {
-      return CRBTError(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN');
+      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const u = await this.client.users.fetch(opts.targetId);
     const m =
