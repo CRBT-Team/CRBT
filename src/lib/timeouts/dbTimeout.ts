@@ -43,14 +43,20 @@ export async function dbTimeout<T extends TimeoutTypes>(
       ...('userId' in timeout
         ? {
             user: {
-              connectOrCreate: { create: { id: timeout.userId } },
+              connectOrCreate: {
+                create: { id: timeout.userId },
+                where: { id: timeout.userId },
+              },
             },
           }
         : {}),
       ...('serverId' in timeout
         ? {
             server: {
-              connectOrCreate: { create: { id: timeout.serverId } },
+              connectOrCreate: {
+                create: { id: timeout.serverId },
+                where: { id: timeout.serverId },
+              },
             },
           }
         : {}),
