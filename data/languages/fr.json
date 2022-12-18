@@ -424,8 +424,8 @@
       }
     }
   },
-  "WINNERS": "Winners",
-  "PRIZE": "Prize",
+  "WINNERS": "Nombre de gagnant(e)s",
+  "PRIZE": "Prix",
   "8ball": {
     "name": "boule_de_cristal",
     "description": "Posez une question à la boule de cristal.",
