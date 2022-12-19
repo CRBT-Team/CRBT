@@ -29,7 +29,7 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   const message = {
     embeds: [
       {
-        title: `${emojis.reminder} ${t(reminder.locale, 'REMINDER')}}`,
+        title: `${emojis.reminder} ${t(reminder.locale, 'REMINDER')}`,
         description: strings.REMINDER_DESCRIPTION.replace(
           '{TIME}',
           timestampMention(reminder.expiresAt, 'D')

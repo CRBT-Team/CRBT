@@ -9,7 +9,6 @@ import { progressBar } from '$lib/functions/progressBar';
 import { getAllLanguages, t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
-import { MessageFlags } from 'discord-api-types/v10';
 import { ButtonInteraction, CommandInteraction, Interaction, User } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
 
@@ -21,19 +20,19 @@ export default ChatCommand({
     nameLocalizations: getAllLanguages('USER', localeLower),
   }),
   async handle({ user }) {
-    const u = user ?? this.user;
+    user ??= this.user;
 
     await this.deferReply({
       ephemeral: true,
     });
 
-    const res = await renderAchievementsPage.call(this, u, 0);
+    const res = await renderAchievementsPage.call(this, user);
 
     await this.editReply(res);
   },
 });
 
-async function renderAchievementsPage(this: Interaction, user: User | string, page: number) {
+async function renderAchievementsPage(this: Interaction, user: User | string, page: number = 0) {
   const u = typeof user === 'string' ? this.client.users.cache.get(user) : user;
 
   const data = await fetchWithCache(
@@ -48,23 +47,28 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
 
   const userAchievements = data.globalAchievements;
 
-  const allAchievements = achievements.sort((a, b) => {
-    const ua = userAchievements.find((ua) => ua.achievement === a.id);
-    const ub = userAchievements.find((ua) => ua.achievement === b.id);
+  const allAchievements = Object.entries(achievements)
+    .map(([id, a]) => ({
+      id,
+      ...a,
+    }))
+    .sort((a, b) => {
+      const ua = userAchievements.find((ua) => ua.achievement === a.id);
+      const ub = userAchievements.find((ua) => ua.achievement === b.id);
 
-    if (!ua?.progression && a.secret) return 1;
+      if (!ua?.progression && a.secret) return 1;
 
-    const pa = (ua?.progression ?? 1) / a.steps;
-    const pb = (ub?.progression ?? 1) / b.steps;
+      const pa = (ua?.progression ?? 1) / a.steps;
+      const pb = (ub?.progression ?? 1) / b.steps;
 
-    return (pa > pb ? 1 : -1) ?? 1;
-  });
+      return (pa > pb ? 1 : -1) ?? 1;
+    });
 
   const pages = Math.ceil(allAchievements.length / 3);
 
   const fields = allAchievements
     .slice(page * 3, page * 3 + 3)
-    .map(([id, { secret, steps, emoji, suggestedCommand }]) => {
+    .map(({ id, secret, steps, emoji, suggestedCommand }) => {
       const userData = userAchievements?.find((a) => a?.achievement === id);
 
       const title = t(this, `ACHIEVEMENT_${id}_TITLE` as any);
@@ -149,7 +153,6 @@ async function renderAchievementsPage(this: Interaction, user: User | string, pa
           .setDisabled(page + 1 >= pages)
       )
     ),
-    flags: MessageFlags.Ephemeral,
   };
 }
 

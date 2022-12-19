@@ -61,7 +61,6 @@ export async function handleModerationAction(
   });
 
   if (target instanceof User) {
-    console.log('h');
     await target
       .send({
         embeds: [

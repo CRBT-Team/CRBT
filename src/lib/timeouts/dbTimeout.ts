@@ -39,7 +39,8 @@ export async function dbTimeout<T extends TimeoutTypes>(
 
   return await prisma[type].create({
     data: {
-      ...timeout,
+      //@ts-ignore
+      ...(({ serverId, userId, ...o }) => o)(timeout),
       ...('userId' in timeout
         ? {
             user: {
