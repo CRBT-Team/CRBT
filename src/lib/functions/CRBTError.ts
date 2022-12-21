@@ -85,7 +85,7 @@ export function CRBTError(i: Interaction, embed: MessageEmbedOptions | string, e
   if (i.replied) {
     return i.editReply(errorMessage);
   } else {
-    return i.reply(errorMessage);
+    return i.reply(errorMessage).catch((e) => i.editReply(errorMessage));
   }
 }
 

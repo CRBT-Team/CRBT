@@ -40,21 +40,23 @@ model Reminder {
 }
 
 model servers {
-  id             String         @id
-  joinChannel    String?        @map("join_channel")
-  joinMessage    Json?          @map("join_message")
-  leaveChannel   String?        @map("leave_channel")
-  leaveMessage   Json?          @map("leave_message")
-  modLogsChannel String?        @map("modlogs_channel")
-  accentColor    Int?           @map("accent_color")
-  economy        Economy?
-  modules        serverModules?
-  giveaways      Giveaway[]
-  polls          Poll[]
-  flags          Int?           @default(0)
-  achievements   Achievement[]
+  id               String         @id
+  joinChannel      String?        @map("join_channel")
+  joinMessage      Json?          @map("join_message")
+  leaveChannel     String?        @map("leave_channel")
+  leaveMessage     Json?          @map("leave_message")
+  modLogsChannel   String?        @map("modlogs_channel")
+  accentColor      Int?           @map("accent_color")
+  economy          Economy?
+  modules          serverModules?
+  giveaways        Giveaway[]
+  polls            Poll[]
+  flags            Int?           @default(0)
+  achievements     Achievement[]
   // permissions  ServerPermissions[]
-  members        ServerMember[]
+  members          ServerMember[]
+  premiumExpiresAt DateTime?      @map("sub_expiration")
+  hasPremium       Boolean        @default(false) @map("premium")
 }
 
 // model ServerPermissions {
@@ -87,19 +89,30 @@ model moderationStrikes {
   type        ModerationStrikeTypes
 }
 
+model Transaction {
+  id             Int              @id @default(autoincrement())
+  userId         String           @map("user_id")
+  user           User             @relation(fields: [userId], references: [id])
+  serverId       String?          @map("server_id")
+  purchasedAt    DateTime         @map("purchased_at")
+  availableUntil DateTime?        @map("available_until")
+  item           PurchasableTypes
+}
+
 model User {
-  id                    String               @id
-  guildedId             String?              @unique @map("guilded_id")
-  accentColor           Int?                 @map("accent_color")
-  crbtBadges            String[]             @map("crbt_badges")
-  telemetry             Boolean              @default(true)
-  silentJoins           Boolean              @default(false) @map("silent_joins")
-  silentLeaves          Boolean              @default(false) @map("silent_leaves")
-  enableAchievements    Boolean              @default(true) @map("achievements_enabled")
-  subscriptionExpiresAt DateTime?            @map("sub_expiration")
-  reminders             Reminder[]
-  globalAchievements    GlobalAchievements[]
-  memberData            ServerMember[]
+  id                 String               @id
+  guildedId          String?              @unique @map("guilded_id")
+  accentColor        Int?                 @map("accent_color")
+  crbtBadges         String[]             @map("crbt_badges")
+  telemetry          Boolean              @default(true)
+  silentJoins        Boolean              @default(false) @map("silent_joins")
+  silentLeaves       Boolean              @default(false) @map("silent_leaves")
+  enableAchievements Boolean              @default(true) @map("achievements_enabled")
+  premiumExpiresAt   DateTime?            @map("sub_expiration")
+  transactionHistory Transaction[]
+  reminders          Reminder[]
+  globalAchievements GlobalAchievements[]
+  memberData         ServerMember[]
 }
 
 model ServerMember {
@@ -251,4 +264,8 @@ enum ReminderTypes {
   MESSAGE
   // reminder set for someone's birthday (deprecated feature)
   BIRTHDAY
+}
+
+enum PurchasableTypes {
+  PREMIUM
 }

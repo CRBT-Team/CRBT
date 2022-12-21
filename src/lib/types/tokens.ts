@@ -17,10 +17,14 @@ export interface APITokenData extends BaseToken {
   type: TokenTypes.API;
 }
 
+export enum RedeemableProduct {
+  PREMIUM,
+}
+
 export interface RedeemTokenData extends BaseToken {
   data: {
-    codeType: 'Subscription1Month' | 'LabsAccess';
-    output: string;
+    product: RedeemableProduct;
+    monthsValue?: number;
     redeemed: boolean;
   };
   type: TokenTypes.Redeem;
