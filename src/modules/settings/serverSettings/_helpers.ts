@@ -14,6 +14,7 @@ import { colorSettings } from './accentColor';
 import { economySettings } from './economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
+import { modReportsSettings } from './modreports';
 
 export const featureSettingsMenus: {
   [k: string]: SettingsMenus;
@@ -22,6 +23,7 @@ export const featureSettingsMenus: {
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.accentColor]: colorSettings,
   [EditableFeatures.moderationLogs]: modlogsSettings,
+  [EditableFeatures.moderationReports]: modReportsSettings,
   [EditableFeatures.economy]: economySettings,
 };
 
@@ -34,6 +36,7 @@ export const defaultSettings: FullSettings = {
     joinMessage: false,
     leaveMessage: false,
     moderationLogs: false,
+    moderationReports: false,
   },
   economy: {
     currencyNamePlural: 'Coins',

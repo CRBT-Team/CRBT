@@ -58,7 +58,7 @@ export async function handleDuckDuckGo(
       return createCRBTError(this, {
         title: 'Uh-oh, there are no results for your query.',
         description:
-          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of NSFW channels.',
+          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of age-restricted channels.',
       });
     }
 

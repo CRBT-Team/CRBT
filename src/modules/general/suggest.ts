@@ -16,7 +16,7 @@ export default ChatCommand({
           new TextInputComponent()
             .setCustomId('suggest_title')
             .setLabel('Title')
-            .setPlaceholder('What do you want to suggest?')
+            .setPlaceholder('What would you like to suggest?')
             .setStyle('SHORT')
             .setMinLength(10)
             .setMaxLength(50)
