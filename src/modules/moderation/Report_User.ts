@@ -8,9 +8,10 @@ import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
 import { PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
-import { GuildTextBasedChannel, MessageEmbedOptions } from 'discord.js';
-import { components, ModalComponent, row, UserContextCommand } from 'purplet';
+import { GuildTextBasedChannel, Message, MessageButton, MessageEmbedOptions } from 'discord.js';
+import { ButtonComponent, components, ModalComponent, row, UserContextCommand } from 'purplet';
 import { getSettings } from '../settings/serverSettings/_helpers';
+import { checkModerationPermission, handleModerationAction } from './_base';
 
 export default UserContextCommand({
   name: 'Report User',
@@ -26,6 +27,14 @@ export default UserContextCommand({
       });
     }
 
+    const { error } = checkModerationPermission.call(this, user, ModerationStrikeTypes.REPORT, {
+      checkHierarchy: false,
+    });
+
+    if (error) {
+      return this.reply(error);
+    }
+
     await this.showModal(
       new ReportModal(user.id).setTitle(`Report ${user.tag}`).setComponents(
         row({
@@ -33,7 +42,7 @@ export default UserContextCommand({
           label: `Report description`,
           placeholder: 'Describe your report and add details to go with it.',
           style: TextInputStyle.Paragraph,
-          max_length: 2048,
+          max_length: 1024,
           min_length: 10,
           required: true,
           type: 'TEXT_INPUT',
@@ -95,7 +104,19 @@ export const ReportModal = ModalComponent({
     try {
       await reportsChannel.send({
         embeds: [reportEmbed],
-        components: components(row()),
+        components: components(
+          row(
+            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.WARN })
+              .setStyle('PRIMARY')
+              .setLabel('Warn User'),
+            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.KICK })
+              .setStyle('DANGER')
+              .setLabel('Kick User'),
+            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.BAN })
+              .setStyle('DANGER')
+              .setLabel('Ban User')
+          )
+        ),
       });
 
       await this.editReply({
@@ -114,15 +135,27 @@ export const ReportModal = ModalComponent({
   },
 });
 
-// TODO
-// export const ActionMember = ButtonComponent({
-//   async handle({ userId, action }: { userId: string; action: ModerationStrikeTypes }) {
-//     const user = await this.client.users.fetch(userId);
+export const ActionButton = ButtonComponent({
+  async handle({ userId, type }: { userId: string; type: ModerationStrikeTypes }) {
+    const user = await this.client.users.fetch(userId);
 
-//     switch (action) {
-//       case ModerationStrikeTypes.BAN: {
-//         ban.call(this, { user });
-//       }
-//     }
-//   },
-// });
+    await (this.message as Message).edit({
+      components: components(
+        row(
+          new MessageButton()
+            .setLabel(`User was ${t(this.guildLocale, `MOD_VERB_${type}`)} by ${this.user.tag}`)
+            .setStyle('SECONDARY')
+            .setDisabled()
+        )
+      ),
+    });
+
+    return await handleModerationAction.call(this, {
+      type,
+      guild: this.guild,
+      target: user,
+      moderator: this.user,
+      reason: this.message.embeds[0].fields[0].value,
+    });
+  },
+});
