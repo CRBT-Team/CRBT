@@ -8,7 +8,7 @@ The perfect just-about-anything Discord bot.
 ![License](https://img.shields.io/github/license/CRBT-Team/CRBT?color=F27187)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CRBT-Team/CRBT?color=F27187)
 [![Issues](https://img.shields.io/github/issues/CRBT-Team/CRBT)](https://github.com/CRBT-Team/CRBT/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/CRBT-Team/CRBT)](https://github.com/CRBT-Team/CRBT/pulls)
+[![Pull requests](https://img.shields.io/github/issues-pr/CRBT-Team/CRBT)](https://github.com/CRBT-Team/CRBT/pulls) [![Crowdin](https://badges.crowdin.net/crbt/localized.svg)](https://crowdin.com/project/crbt)
 
 ### Tech stack
 
