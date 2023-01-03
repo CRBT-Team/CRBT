@@ -1,6 +1,5 @@
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { returnFeaturedItem } from './featured';
@@ -89,7 +88,5 @@ export default ChatCommand({
     const res = await searchEngines[site].handle.call(this, opts);
 
     await this.editReply(res);
-
-    await AchievementProgress.call(this, 'SEEKER');
   },
 });

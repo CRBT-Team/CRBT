@@ -3,7 +3,6 @@ import { cache, fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
@@ -66,8 +65,6 @@ export async function saveColorSettings(
   cache.set(`${this.guildId}:color`, color);
 
   await this.update(await renderFeatureSettings.call(this, EditableFeatures.accentColor));
-
-  await AchievementProgress.call(this, 'REPAINTING_THE_COMMUNITY');
 }
 
 export const ColorPresetSelectMenu = SelectMenuComponent({

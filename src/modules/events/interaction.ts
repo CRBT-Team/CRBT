@@ -1,8 +1,6 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { channels, clients } from '$lib/env';
-import { AchievementProgress } from '$lib/responses/Achievements';
-import dayjs from 'dayjs';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 // import { customCmds } from '../customCommands/commands';
@@ -36,8 +34,6 @@ export default OnEvent('interactionCreate', async (i) => {
 
   const channel = i.client.channels.cache.get(channels.telemetry) as TextChannel;
 
-  await AchievementProgress.call(i.user, 'CRBT_ADDICT');
-
   channel.send({
     embeds: [
       {
@@ -51,14 +47,4 @@ export default OnEvent('interactionCreate', async (i) => {
       },
     ],
   });
-
-  if (i.client.user.id === clients.crbt.id) {
-    await prisma.statistics.update({
-      where: { date: dayjs().startOf('day').toISOString() },
-      data: {
-        commandsUsed: { push: commandName },
-        uniqueUsers: { push: i.user.id },
-      },
-    });
-  }
 });

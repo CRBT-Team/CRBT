@@ -2,7 +2,6 @@ import { colors } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { GuildChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, MessageContextCommand, row } from 'purplet';
 
@@ -50,7 +49,5 @@ export default MessageContextCommand({
         });
       })
       .catch(async () => await CRBTError(this, errors.DMS_DISABLED));
-
-    await AchievementProgress.call(this, 'BOOKMARKER');
   },
 });

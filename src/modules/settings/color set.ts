@@ -5,7 +5,6 @@ import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export const colorset = ChatCommand({
@@ -58,12 +57,6 @@ export const colorset = ChatCommand({
         ],
         ephemeral: true,
       });
-
-      await AchievementProgress.call(this, 'ARTIST');
-
-      if (colorHex.toLowerCase().trim() === 'clembs') {
-        await AchievementProgress.call(this, 'IMITATING_THE_CREATOR');
-      }
     } else if (color === 0) {
       if (!user.hexAccentColor) {
         await CRBTError(this, errors.NO_DISCORD_COLOR);
@@ -84,8 +77,6 @@ export const colorset = ChatCommand({
           ],
           ephemeral: true,
         });
-
-        await AchievementProgress.call(this, 'ARTIST');
       }
     } else {
       await CRBTError(this, t(this, 'ERROR_INVALID_COLOR'));

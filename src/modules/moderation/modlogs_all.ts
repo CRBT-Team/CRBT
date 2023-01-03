@@ -26,8 +26,13 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { PageBtnProps } from '../info/achievements';
 import { ModerationColors } from './_base';
+
+interface PageBtnProps {
+  page: number;
+  userId?: string;
+  s?: boolean;
+}
 
 export default ChatCommand({
   name: 'modlogs all',

@@ -10,15 +10,10 @@ export const ExportAllData = ButtonComponent({
       where: { id: this.user.id },
       include: { reminders: true },
     });
-    const achievements = await prisma.globalAchievements.findMany({
-      where: { userId: this.user.id },
-    });
 
     await this.reply({
       files: [
-        new MessageAttachment(
-          Buffer.from(JSON.stringify({ ...userData, achievements }, null, 2))
-        ).setName('data.json'),
+        new MessageAttachment(Buffer.from(JSON.stringify(userData, null, 2))).setName('data.json'),
       ],
       flags: MessageFlags.Ephemeral,
     });
@@ -34,7 +29,7 @@ export const ConfirmDataDeletion = ButtonComponent({
             name: 'Are you sure that you want all of your data deleted forever?',
           },
           description:
-            "This includes the **entirety** of your reminders, your privacy settings, your achievements, your badges, **your CRBT+ subscription info** (__you can't recover this!__), and your other settings.\nIt will be gone, **FOREVER**!",
+            'This includes the **entirety** of your reminders, settings, badges and other data. All will be gone, **FOREVER**!',
           color: colors.red,
         },
       ],

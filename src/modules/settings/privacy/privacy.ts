@@ -4,7 +4,6 @@ import { emojis, icons, links } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { User } from '@prisma/client';
 import { ButtonInteraction, CommandInteraction } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
@@ -14,7 +13,6 @@ const privacyPreferences = [
   ['telemetry', 'TELEMETRY'],
   ['silentJoins', 'SILENT_JOINS'],
   ['silentLeaves', 'SILENT_LEAVES'],
-  ['enableAchievements', 'ACHIEVEMENTS'],
 ];
 
 export default ChatCommand({
@@ -25,20 +23,17 @@ export default ChatCommand({
   async handle() {
     const preferences = (await prisma.user.findFirst({
       where: { id: this.user.id },
-      select: { telemetry: true, silentJoins: true, silentLeaves: true, enableAchievements: true },
+      select: { telemetry: true, silentJoins: true, silentLeaves: true },
     })) || {
       telemetry: true,
       silentJoins: false,
       silentLeaves: false,
-      enableAchievements: true,
     };
 
     await this.reply({
       ...(await renderPrivacySettings.call(this, preferences)),
       ephemeral: true,
     });
-
-    await AchievementProgress.call(this, 'SAFETY_FIRST');
   },
 });
 

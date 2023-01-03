@@ -1,7 +1,6 @@
 import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { MessageFlags, Routes } from 'discord-api-types/v10';
 import { TextInputComponent } from 'discord.js';
 import fetch from 'node-fetch';
@@ -10,7 +9,7 @@ import { ChatCommand, getRestClient, ModalComponent, OptionBuilder, row } from '
 
 export default ChatCommand({
   name: 'report',
-  description: 'File a new bug report on the Discord server.',
+  description: 'Report a CRBT-related issue, bug, typo or any problem.',
   options: new OptionBuilder().attachment('image', 'An image to attach to the report.'),
   async handle({ image }) {
     if (image && !image.contentType.startsWith('image/')) {
@@ -24,7 +23,7 @@ export default ChatCommand({
           new TextInputComponent()
             .setCustomId('issue_title')
             .setLabel('Title')
-            .setPlaceholder("What's the issue?")
+            .setPlaceholder("What's the problem?")
             .setStyle('SHORT')
             .setMinLength(10)
             .setMaxLength(50)
@@ -34,7 +33,7 @@ export default ChatCommand({
           new TextInputComponent()
             .setCustomId('issue_description')
             .setLabel('Description')
-            .setPlaceholder('Describe your issue in detail.')
+            .setPlaceholder('Describe your report in detail.')
             .setStyle('PARAGRAPH')
             .setMinLength(10)
             .setMaxLength(500)
@@ -110,7 +109,5 @@ export const Modal = ModalComponent({
       ],
       flags: MessageFlags.Ephemeral,
     });
-
-    await AchievementProgress.call(this, 'BUG_HUNTER');
   },
 });

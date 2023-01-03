@@ -1,8 +1,8 @@
 import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
-export default ChatCommand({
+// export default
+ChatCommand({
   name: 'error',
   description:
     'Send an error message to the developers. For debugging purposes, or to send me a message :)',
@@ -24,7 +24,7 @@ export default ChatCommand({
       case 'formatted': {
         await CRBTError(this, {
           title: error,
-          description: details
+          description: details,
         });
         break;
       }
@@ -37,7 +37,5 @@ export default ChatCommand({
         break;
       }
     }
-
-    await AchievementProgress.call(this, 'ERROR_MASTER');
   },
 });

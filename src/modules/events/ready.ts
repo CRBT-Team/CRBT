@@ -2,7 +2,6 @@ import { prisma } from '$lib/db';
 import { clients, servers } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { AnyTimeout, TimeoutTypes } from '$lib/types/timeouts';
-import dayjs from 'dayjs';
 import { ApplicationCommand, Collection } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -25,22 +24,4 @@ export default OnEvent('ready', async (client) => {
       timeouts.map((t) => dbTimeout(type, t, true))
     )
   );
-
-  const date = dayjs().startOf('day').toISOString();
-
-  const guilds = await Promise.all(client.guilds.cache.map((guild) => guild.fetch()));
-
-  const stats = {
-    servers: guilds.length,
-    members: guilds.reduce((acc, g) => acc + g.memberCount, 0),
-  };
-
-  await prisma.statistics.upsert({
-    where: { date },
-    update: stats,
-    create: {
-      date,
-      ...stats,
-    },
-  });
 });

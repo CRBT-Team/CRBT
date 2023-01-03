@@ -102,18 +102,16 @@ model Transaction {
 }
 
 model User {
-  id                 String               @id
-  guildedId          String?              @unique @map("guilded_id")
-  accentColor        Int?                 @map("accent_color")
-  crbtBadges         String[]             @map("crbt_badges")
-  telemetry          Boolean              @default(true)
-  silentJoins        Boolean              @default(false) @map("silent_joins")
-  silentLeaves       Boolean              @default(false) @map("silent_leaves")
-  enableAchievements Boolean              @default(true) @map("achievements_enabled")
-  premiumExpiresAt   DateTime?            @map("sub_expiration")
+  id                 String         @id
+  guildedId          String?        @unique @map("guilded_id")
+  accentColor        Int?           @map("accent_color")
+  crbtBadges         String[]       @map("crbt_badges")
+  telemetry          Boolean        @default(true)
+  silentJoins        Boolean        @default(false) @map("silent_joins")
+  silentLeaves       Boolean        @default(false) @map("silent_leaves")
+  premiumExpiresAt   DateTime?      @map("sub_expiration")
   transactionHistory Transaction[]
   reminders          Reminder[]
-  globalAchievements GlobalAchievements[]
   memberData         ServerMember[]
 }
 
@@ -130,23 +128,6 @@ model ServerMember {
   money        Int                 @default(0) @db.Integer
   activeItems  EconomyItem[]       @relation("active_items")
   items        EconomyItem[]       @relation("items")
-}
-
-model Statistics {
-  date         String   @id
-  servers      Int
-  uniqueUsers  String[]
-  commandsUsed String[]
-  members      Int
-}
-
-model GlobalAchievements {
-  id          String    @id
-  userId      String    @map("user_id")
-  user        User      @relation(fields: [userId], references: [id])
-  achievement String
-  progression Int
-  achievedAt  DateTime? @map("achieved_at") @db.Timestamptz(6)
 }
 
 model MemberAchievement {

@@ -1,5 +1,5 @@
 import { Achievement } from '$lib/responses/Achievements';
-import emojis from './emojis';
+import emojis from '../../src/lib/env/emojis';
 
 export default {
   WELCOME_TO_CRBT: {
