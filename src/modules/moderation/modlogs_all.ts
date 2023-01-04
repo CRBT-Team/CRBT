@@ -26,8 +26,13 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import { PageBtnProps } from '../info/achievements';
-import { ModerationColors, ModerationStrikeVerbs } from './_base';
+import { ModerationColors } from './_base';
+
+interface PageBtnProps {
+  page: number;
+  userId?: string;
+  s?: boolean;
+}
 
 export default ChatCommand({
   name: 'modlogs all',
@@ -59,7 +64,9 @@ export function renderStrike(
     Date.now() < (strike.expiresAt?.getTime() ?? 0)
       ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
       : '';
-  const reason = `**Reason:** ${strike.reason ?? '*None specified*'}`;
+  const reason = `**${t(locale, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON')}:** ${
+    strike.reason ?? '*None specified*'
+  }`;
   const target = strike.type !== 'CLEAR' ? `<@${strike.targetId}>` : `<#${strike.targetId}>`;
 
   return {
@@ -68,7 +75,9 @@ export function renderStrike(
       'f'
     )} • ${action} ${expires}`,
     value: dedent`
-    <@${strike.moderatorId}> ${ModerationStrikeVerbs[strike.type].toLowerCase()} ${target}
+    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`).toLocaleLowerCase(
+      locale
+    )} ${target}
     ${reason}
     `,
   };
@@ -108,15 +117,19 @@ export async function renderModlogs(
       {
         author: user
           ? {
-              name: `${user.tag} - Moderation history in ${this.guild.name}`,
+              name: `${user.tag} - ${t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+                SERVER: this.guild.name,
+              })}`,
               iconURL: avatar(user),
             }
           : {
-              name: t(this, 'MODERATION_LOGS_VIEW_TITLE').replace('{SERVER}', this.guild.name),
+              name: t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+                SERVER: this.guild.name,
+              }),
               iconURL: this.guild.iconURL(),
             },
-        description: !data || data.length === 0 ? '*No moderation history found.*' : '',
-        fields: results.map((strike) => renderStrike(strike, this.guildLocale, data)),
+        description: !data || data.length === 0 ? t(this, 'MODERATION_LOGS_VIEW_EMPTY') : '',
+        fields: results.map((strike) => renderStrike(strike, this.locale, data)),
         footer: {
           text: `${data.length} entries total • Page ${page + 1}/${pages}`,
         },
@@ -125,8 +138,8 @@ export async function renderModlogs(
     ],
     components: components(
       row(
-        new StrikeSelectMenu({ page, userId: filters.userId })
-          .setPlaceholder('View, edit or delete a strike')
+        new StrikeSelectMenu({ page, userId: filters?.userId })
+          .setPlaceholder(t(this, 'MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER'))
           .setOptions(
             !data || data.length === 0
               ? [{ label: 'h', value: 'h' }]
@@ -185,14 +198,18 @@ async function renderStrikePage(
   sId: string,
   { page, userId }: PageBtnProps
 ) {
-  const strikes = await fetchWithCache(
-    `strikes:${this.guildId}`,
-    () =>
-      prisma.moderationStrikes.findMany({
-        where: { serverId: this.guild.id },
-      }),
-    this instanceof ModalSubmitInteraction
-  );
+  const strikes = (
+    await fetchWithCache(
+      `strikes:${this.guildId}`,
+      () =>
+        prisma.moderationStrikes.findMany({
+          where: { serverId: this.guild.id },
+        }),
+      this instanceof ModalSubmitInteraction
+    )
+  )
+    .filter((a) => (userId ? a.targetId === userId : a))
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const strike: moderationStrikes = strikes.find(({ id }) => id === sId);
 
@@ -205,28 +222,28 @@ async function renderStrikePage(
           }),
           icon_url: this.guild.iconURL(),
         },
-        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(this.guildLocale, strike.type)}`,
+        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(this, strike.type)}`,
         fields: [
           {
-            name: 'Reason',
+            name: t(this, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON'),
             value: strike.reason ?? '*No reason specified*',
           },
           {
-            name: 'Moderator',
+            name: t(this, strike.type === 'REPORT' ? 'REPORTED_BY' : 'MODERATOR'),
             value: `<@${strike.moderatorId}>`,
             inline: true,
           },
           ...(strike.type === 'CLEAR'
             ? [
                 {
-                  name: 'Channel',
+                  name: t(this, 'CHANNEL'),
                   value: `<#${strike.targetId}>`,
                   inline: true,
                 },
               ]
             : [
                 {
-                  name: 'User',
+                  name: t(this, 'USER'),
                   value: `<@${strike.targetId}>`,
                   inline: true,
                 },
@@ -234,7 +251,7 @@ async function renderStrikePage(
           ...(strike.expiresAt
             ? [
                 {
-                  name: 'Set to expire',
+                  name: t(this, 'EXPIRES_AT'),
                   value: `${timestampMention(strike.expiresAt)} • ${timestampMention(
                     strike.expiresAt,
                     'R'
@@ -243,21 +260,23 @@ async function renderStrikePage(
               ]
             : []),
         ],
-        color: ModerationColors[strike.type],
+        color:
+          strike.type === 'REPORT' ? await getColor(this.guild) : ModerationColors[strike.type],
       },
     ],
     components: components(
       row(
-        new GoToPage({ page, userId })
-          .setEmoji(emojis.buttons.left_arrow)
-          .setLabel('Back')
-          .setStyle('SECONDARY'),
+        new GoToPage({ page, userId }).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
           ? [
-              new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
-                .setEmoji(emojis.buttons.pencil)
-                .setLabel('Edit Reason')
-                .setStyle('PRIMARY'),
+              ...(strike.type === 'REPORT'
+                ? []
+                : [
+                    new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
+                      .setEmoji(emojis.buttons.pencil)
+                      .setLabel('Edit Reason')
+                      .setStyle('PRIMARY'),
+                  ]),
               new DeleteButton({ sId, page, userId })
                 .setEmoji(emojis.buttons.trash_bin)
                 .setLabel('Delete Strike')
@@ -283,7 +302,7 @@ export const EditButton = ButtonComponent({
       new EditModal({ page, userId, sId }).setTitle(`Edit Strike #${i}`).setComponents(
         row(
           new TextInputComponent()
-            .setLabel('Reason')
+            .setLabel(t(this, 'REASON'))
             .setValue(strike.reason ?? '')
             .setCustomId('reason')
             .setMaxLength(256)
@@ -317,7 +336,7 @@ export const DeleteButton = ButtonComponent({
         {
           ...embed,
           author: {
-            name: 'Are you sure you want to delete this reminder?',
+            name: 'Are you sure you want to delete this strike?',
           },
         },
       ],
@@ -335,7 +354,7 @@ export const ConfirmDeleteButton = ButtonComponent({
   async handle(sId: string) {
     await prisma.moderationStrikes.delete({ where: { id: sId } });
 
-    const newData = await fetchWithCache(
+    await fetchWithCache(
       `strikes:${this.guildId}`,
       () =>
         prisma.moderationStrikes.findMany({

@@ -5,20 +5,20 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { SnowflakeRegex } from '@purplet/utils';
-import { TextInputComponent } from 'discord.js';
+import { TextInputStyle } from 'discord-api-types/v10';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
-export const modlogsSettings: SettingsMenus = {
+export const modReportsSettings: SettingsMenus = {
   getErrors({ guild, settings, isEnabled, i }) {
-    const channelId = settings.modLogsChannel;
+    const channelId = settings.modReportsChannel;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
     const errors: string[] = [];
 
     if (isEnabled && channelId && !channel) {
-      errors.push('Channel not found. Edit it for CRBT to send new moderation logs.');
+      errors.push('Channel not found. Edit it for CRBT to send new reports.');
     }
     if (isEnabled && !channelId) {
       errors.push(`No channel was set. Use the ${t(i, 'EDIT_CHANNEL')} button to continue setup.`);
@@ -26,10 +26,18 @@ export const modlogsSettings: SettingsMenus = {
 
     return errors;
   },
+  getSelectMenu: ({ settings, guild, isEnabled }) => {
+    const channel = guild.channels.cache.find((c) => c.id === settings.modReportsChannel);
+
+    return {
+      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
+      description: isEnabled ? `Sending in #${channel.name}` : null,
+    };
+  },
   getMenuDescription({ settings, isEnabled, i }) {
     return {
       description:
-        'Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!',
+        "Moderation Reports allow your members to report a message or user (by right-clicking or long-pressing them) to your server's moderation team. Reports will be sent in the chosen channel.",
       fields: [
         {
           name: t(i, 'STATUS'),
@@ -38,11 +46,11 @@ export const modlogsSettings: SettingsMenus = {
             : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
           inline: true,
         },
-        ...(settings.modLogsChannel
+        ...(settings.modReportsChannel
           ? [
               {
                 name: t(i, 'CHANNEL'),
-                value: `<#${settings.modLogsChannel}>`,
+                value: `<#${settings.modReportsChannel}>`,
                 inline: true,
               },
             ]
@@ -50,20 +58,12 @@ export const modlogsSettings: SettingsMenus = {
       ],
     };
   },
-  getSelectMenu({ settings, guild, isEnabled }) {
-    const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
-
-    return {
-      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
-      description: isEnabled ? `Sending in #${channel.name}` : null,
-    };
-  },
   getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>
     components(
       row(
         backBtn,
         toggleBtn,
-        new EditModLogsChannelBtn()
+        new EditReportsChannelBtn()
           .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
@@ -72,32 +72,31 @@ export const modlogsSettings: SettingsMenus = {
     ),
 };
 
-export const EditModLogsChannelBtn = ButtonComponent({
+export const EditReportsChannelBtn = ButtonComponent({
   async handle() {
-    const settings = await getSettings(this.guild.id);
-    const channelId = settings.modLogsChannel;
-    const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
+    const { modReportsChannel } = await getSettings(this.guild.id);
+    const channelName = modReportsChannel
+      ? this.guild.channels.cache.get(modReportsChannel)?.name ?? ''
+      : '';
 
     this.showModal(
-      new EditModLogsChannelModal(null)
-        .setTitle(`Edit Moderation Logs Channel`)
-        .setComponents(
-          row(
-            new TextInputComponent()
-              .setCustomId('channel')
-              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
-              .setLabel(t(this, 'CHANNEL'))
-              .setValue(channelName)
-              .setRequired(true)
-              .setStyle('SHORT')
-              .setMaxLength(100)
-          )
-        )
+      new EditReportsChannelModal(null).setTitle(`Edit Moderation Reports Channel`).setComponents(
+        row({
+          type: 'TEXT_INPUT',
+          custom_id: 'channel',
+          placeholder: t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'),
+          label: t(this, 'CHANNEL'),
+          value: channelName,
+          required: true,
+          style: TextInputStyle.Short,
+          max_length: 100,
+        })
+      )
     );
   },
 });
 
-export const EditModLogsChannelModal = ModalComponent({
+export const EditReportsChannelModal = ModalComponent({
   async handle() {
     const channelInput = this.fields.getTextInputValue('channel');
 
@@ -114,13 +113,13 @@ export const EditModLogsChannelModal = ModalComponent({
       () =>
         prisma.servers.upsert({
           where: { id: this.guild.id },
-          update: { modLogsChannel: channel.id },
-          create: { id: this.guildId, modLogsChannel: channel.id },
+          update: { modReportsChannel: channel.id },
+          create: { id: this.guildId, modReportsChannel: channel.id },
           include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationLogs));
+    this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationReports));
   },
 });

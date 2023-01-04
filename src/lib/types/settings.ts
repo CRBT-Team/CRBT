@@ -14,6 +14,7 @@ export enum EditableFeatures {
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
+  moderationReports = 'MODERATION_REPORTS',
   economy = 'ECONOMY',
 }
 
@@ -22,6 +23,7 @@ export enum CamelCaseFeatures {
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
+  MODERATION_REPORTS = 'moderationReports',
   ECONOMY = 'economy',
 }
 

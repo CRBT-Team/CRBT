@@ -1,6 +1,6 @@
 export { channels, clients, devs, servers } from './misc';
 export { achievements, colors, emojis, icons, items, links };
-import achievements from './achievements';
+import achievements from '../../../disabled/env/achievements';
 import colors from './colors';
 import emojis from './emojis';
 import icons from './icons';

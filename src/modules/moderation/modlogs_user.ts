@@ -27,7 +27,9 @@ export default ChatCommand({
 export const viewModLogsCtxCommand = UserContextCommand({
   name: 'View Moderation History',
   async handle(user) {
-    await this.deferReply();
+    await this.deferReply({
+      ephemeral: true,
+    });
 
     const res = await viewModLogs.call(this, user);
 

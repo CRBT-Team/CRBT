@@ -1,43 +1,36 @@
+![CRBT](/.assets/readme-banner.png)
+
 # CRBT
-The Discord companion made for you. 
 
-This is a private repo, so if you can see this, congrats!
+The perfect just-about-anything Discord bot.
 
-## Commands
-`/8ball` - Ask a question to 8ball.\
-`/achievements` - View a list of a user's CRBT achievements.\
-`activity` -  Start an activity in the current voice channel.\
-`/animal` - Get a random animal image and fact.\
-`/avatar` - Get a user's display avatar.\
-`/ban` - Ban a chosen user.\
-`/banner` - Get a user's profile banner.\
-`/bot info` - Get an info on a given Discord Bot.\
-`/calculate` - Calculate a mathematical expression.\
-`/channel info` - Gives info on a given channel.\
-`/color set` - Change your CRBT accent color.\
-`/convert` - Convert a specified amount from any unit to another.\
-`/define` - Look up the definition of a given word in the English dictionary.\
-`/emoji info` - Get info on a given emoji.\
-`/error` - Send an error message to the developers.\
-`/farewell preview` - Preview the farewell message.\
-`/github` - Get a user's GitHub profile, for view a repo from them.\
-`/giveaway` - Create a giveaway.\
-`/modlogs user` - View the moderation history of a chosen user, or yours.\
-`/modlogs all` - View the moderation history for all users and channels.\
-`/ping` - Ping CRBT. \
-`/poll` - Create a poll with the given choices.\
-`/quote` - Quote a message using a link.\
-`/reminder new` - Set a reminder.\
-`/reminder list` - Get a list of all your reminders.\
-`/report` - File a new bug report on the Discord Server.\
-`/role-picker create` - Manually create a new Role Picker, a menu for members to choose roles themselves.\
-`/roll` - Roll a dice.\
-`/server icon` - Get a chosen server's icon.\
-`/server info` - Get information on a given Discord Server.\
-`/settings` - Configure CRBT settings on your server.\
-`/skin` - Get a Minecraft skin from a username.\
-`/translate` - Translate text to another language.\
-`/urban` - Get the definition of a word from Urban Dictionary.\
-`/user info` - Get a user's Discord information.\
-`/warn` - Warn a chosen user.\
-`/welcome preview` - Preview the welcome message.
+[![Discord](https://img.shields.io/discord/995533040040292373?color=F27187&label=discord&logo=discord&logoColor=white)](https://discord.gg/AvwhNtsgAC)
+![License](https://img.shields.io/github/license/CRBT-Team/CRBT?color=F27187)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CRBT-Team/CRBT?color=F27187)
+[![Issues](https://img.shields.io/github/issues/CRBT-Team/CRBT)](https://github.com/CRBT-Team/CRBT/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/CRBT-Team/CRBT)](https://github.com/CRBT-Team/CRBT/pulls) [![Crowdin](https://badges.crowdin.net/crbt/localized.svg)](https://crowdin.com/project/crbt)
+
+### Tech stack
+
+- [Purplet](https://purplet.js.org) (v1), our custom-built Discord bot framework.
+- [Discord.js](https://discord.js.org), though we're moving away from it in Purplet v2.
+- [Supabase](https://supabase.com) for the database
+- [Prisma](https://prisma.io) for interacting with the database
+
+### Installation
+
+1. Clone with `git clone https://github.com/CRBT-Team/CRBT`
+2. Install dependencies with `yarn`
+3. Run `yarn dev` to run it locally
+4. Run `yarn build` to build a production-ready bot
+
+### Project Structure
+
+- `/data` contains JSON data and other assets used in the bot
+- `/disabled` contains deprecated or cancelled features, put on hold in case I bring them back
+- `/src/lib` is used for custom functions, constants, and components used throughout the bot
+- `/src/modules` is where Purplet modules are contained, and where commands & components are exported. Each directory maps to a CRBT feature.
+
+### Acknowledgements
+
+- [paperdave](https://github.com/paperdave) for coding the large majority of Purplet and helping with the early code.

@@ -2,7 +2,6 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
 import { Parser } from 'expr-eval';
 import { ChatCommand, OptionBuilder } from 'purplet';
 const math = new Parser();
@@ -25,7 +24,6 @@ export default ChatCommand({
   async handle({ dice, comment }) {
     const diceRegex = /(\d+)?d(\d+)/g;
     const rolls = [];
-    let achievement = false;
 
     const parsedDice = dice.toLowerCase().replaceAll(diceRegex, (_, dice = '1', diceSides) => {
       const randDice = () => Math.floor(Math.random() * diceSides) + 1;
@@ -33,10 +31,6 @@ export default ChatCommand({
       const diceArr = new Array(parseInt(dice)).fill(null).map(randDice);
 
       diceArr.forEach((roll) => rolls.push(roll));
-
-      if (diceSides === '20' && diceArr.includes(20)) {
-        achievement = true;
-      }
 
       return diceArr.join('+');
     });
@@ -66,9 +60,5 @@ export default ChatCommand({
         },
       ],
     });
-
-    if (achievement) {
-      AchievementProgress.call(this, 'DND_PRO');
-    }
   },
 });

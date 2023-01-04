@@ -1,9 +1,6 @@
-import { prisma } from '$lib/db';
 import { channels, colors, icons, links } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import { AchievementProgress } from '$lib/responses/Achievements';
-import dayjs from 'dayjs';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
@@ -14,14 +11,6 @@ export const botLeave = OnEvent('guildDelete', async (guild) => {
   guild.client.user.setActivity({
     name: `${guild.client.guilds.cache.size} servers • crbt.app`,
     type: 'WATCHING',
-  });
-
-  await prisma.statistics.update({
-    where: { date: dayjs().startOf('day').toISOString() },
-    data: {
-      servers: { decrement: 1 },
-      members: { decrement: guild.members.cache.size },
-    },
   });
 });
 
@@ -52,16 +41,4 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
       ],
     });
   }
-
-  const owner = await guild.fetchOwner();
-
-  await prisma.statistics.update({
-    where: { date: dayjs().startOf('day').toISOString() },
-    data: {
-      servers: { increment: 1 },
-      members: { increment: guild.members.cache.size },
-    },
-  });
-
-  await AchievementProgress.call(owner, 'WELCOME_TO_CRBT');
 });

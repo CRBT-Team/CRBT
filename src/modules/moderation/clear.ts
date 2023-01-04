@@ -59,7 +59,7 @@ export default ChatCommand({
 
       setTimeout(() => this.deleteReply(), 1_000);
     } catch (e) {
-      return this['replied' ? 'editReply' : 'reply'](UnknownError(this, e));
+      return this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
     }
   },
 });
