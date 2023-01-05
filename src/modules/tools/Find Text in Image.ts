@@ -5,7 +5,8 @@ import { MessageEmbed } from 'discord.js';
 import { ocrSpace } from 'ocr-space-api-wrapper';
 import { MessageContextCommand } from 'purplet';
 
-export default MessageContextCommand({
+// export default
+MessageContextCommand({
   name: 'Find Text in Image',
   async handle(message) {
     const image = message.attachments.size

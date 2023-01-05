@@ -89,6 +89,7 @@ model moderationStrikes {
   createdAt   DateTime              @map("created_at") @db.Timestamptz(6)
   expiresAt   DateTime?             @map("expires_at") @db.Timestamptz(6)
   type        ModerationStrikeTypes
+  details     String?
 }
 
 model Transaction {

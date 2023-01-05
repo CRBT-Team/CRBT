@@ -585,5 +585,17 @@
   "POWERED_BY": "Powered by {provider}",
   "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
-  "SEARCH_TITLE": "{engine} results for \"{query}\""
+  "SEARCH_TITLE": "{engine} results for \"{query}\"",
+  "VIEW_MESSAGE_BELOW": "View message below",
+  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
+  "MODREPORTS_MODAL_TITLE": "Report {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
+  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
+  "KICK_USER": "Kick User",
+  "WARN_USER": "Warn User",
+  "BAN_USER": "Ban User",
+  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly."
 }
