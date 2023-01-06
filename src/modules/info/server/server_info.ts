@@ -3,8 +3,9 @@ import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
 import { trimArray } from '$lib/functions/trimArray';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import {
   formatGuildBannerURL,
   formatGuildIconURL,
@@ -29,18 +30,16 @@ import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server info',
-  description:
-    'Get information on a given Discord server, or the current one if no server is specified.',
-  options: new OptionBuilder().string(
-    'id',
-    'ID of the server to get info on. Defaults to the current server.'
-  ),
+  description: "Get information on this server, or another one's.",
+  options: new OptionBuilder().string('id', 'ID of the server to get information on.', {
+    nameLocalizations: getAllLanguages('ID', localeLower),
+  }),
   async handle({ id }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
-      return await CRBTError(
-        this,
-        `The server ID that you used is either invalid, or I was not added to this server. To do so, click CRBT then "Add to Server".`
-      );
+      return await CRBTError(this, {
+        title: "The ID you have used is either invalid, or I'm not part of this server.",
+        description: `You can also **[invite me to it]($[links.invite])**, if you have permission to.`,
+      });
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
@@ -112,6 +111,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
           : ''
       }
       `,
+      inline: true,
     },
   ];
 
@@ -151,17 +151,15 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     });
   }
 
-  fields.push({
-    name: `Server Boosting`,
-    value:
-      `${guild.premiumSubscriptionCount === 0 ? 'No' : guild.premiumSubscriptionCount} boosts` +
-      (guild.premiumTier !== 'NONE'
-        ? ` • ${
-            emojis.boosting[guild.premiumTier.replace('TIER_', '')]
-          } Level ${guild.premiumTier.replace('TIER_', '')}`
-        : ''),
-    inline: true,
-  });
+  if (guild.premiumSubscriptionCount > 0) {
+    fields.push({
+      name: `Server Boosting`,
+      value: `${guild.premiumSubscriptionCount} boosts • ${
+        emojis.boosting[guild.premiumTier.replace('TIER_', '')]
+      } Level ${guild.premiumTier.replace('TIER_', '')}`,
+      inline: true,
+    });
+  }
 
   // e.addField(
   //   'Moderation',

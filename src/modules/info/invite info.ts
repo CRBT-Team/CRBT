@@ -1,13 +1,21 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import dayjs from 'dayjs';
+import { t } from '$lib/language';
+import {
+  formatDefaultUserAvatarURL,
+  formatGuildBannerURL,
+  formatGuildIconURL,
+  formatGuildSplashURL,
+  timestampMention,
+} from '@purplet/utils';
 import { APIInvite, GuildNSFWLevel, Routes } from 'discord-api-types/v10';
-import { MessageEmbed } from 'discord.js';
+import { EmbedFieldData } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
+
 export default ChatCommand({
   name: 'invite info',
-  description: 'Get information on a given Discord invite URL or code.',
-  options: new OptionBuilder().string('invite', 'A discord.gg invite URL, or just its code.', {
+  description: 'Get information on a Discord server invite.',
+  options: new OptionBuilder().string('invite', 'A Discord server invite link or code.', {
     required: true,
   }),
   async handle({ invite }) {
@@ -18,51 +26,80 @@ export default ChatCommand({
 
     const req = (await getRestClient()
       .get(Routes.invite(inviteCode))
-      .catch(async (r) => await CRBTError(this, "Invalid invite code or URL. Make sure it hasn't expired and anyone has access to it.")
+      .catch(
+        async (r) =>
+          await CRBTError(
+            this,
+            "Invalid server invite. Make sure that it hasn't expired and that everyone has access to it."
+          )
       )) as APIInvite;
 
     const { code, expires_at, guild, channel, inviter } = req;
 
-    const e = new MessageEmbed()
-      .setAuthor({
-        name: `${code} - Invite Info`,
-        iconURL: 'https://cdn.discordapp.com/embed/avatars/0.png',
-      })
-      .setTitle(guild.name)
-      .setDescription(guild.description ?? '')
-      .addField('ID', guild.id)
-      .addField('Landing channel', `#${channel.name} (${channel.id})`, true)
-      .addField(
-        'Inviter',
-        inviter
+    const fields: EmbedFieldData[] = [
+      {
+        name: t(this, 'ID'),
+        value: guild.id,
+      },
+      {
+        name: 'Landing channel',
+        value: `#${channel.name} (${channel.id})`,
+        inline: true,
+      },
+      {
+        name: 'Invited by',
+        value: inviter
           ? `${inviter.username}#${inviter.discriminator} (${inviter.id})`
           : `Custom Invite Link`,
-        true
-      )
-      .addField('Content Warning', GuildNSFWLevel[guild.nsfw_level], true)
-      .setImage(
-        guild.banner
-          ? `https://cdn.discordapp.com/banners/${guild.id}/${guild.banner}.png`
-          : guild.splash
-            ? `https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png`
-            : null
-      )
-      .setThumbnail(
-        guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : null
-      )
-      .setColor(await getColor(this.user));
+        inline: true,
+      },
+      {
+        name: 'Content Warning',
+        value: GuildNSFWLevel[guild.nsfw_level],
+        inline: true,
+      },
+    ];
 
     if (expires_at) {
-      const date = dayjs(expires_at).unix();
-      e.addField('Expires', `<t:${date}> • <t:${date}:R>`, true);
+      const date = new Date(expires_at);
+
+      fields.push({
+        name: t(this, 'EXPIRES_AT'),
+        value: `${timestampMention(date)} • ${timestampMention(date, 'R')}`,
+        inline: true,
+      });
     }
 
     if (this.client.guilds.cache.has(guild.id)) {
-      e.addField('More info', `\`/server info id:${guild.id}\``);
+      fields.push({
+        name: 'More info',
+        value: `\`/server info id:${guild.id}\``,
+      });
     }
 
-    this.reply({
-      embeds: [e],
+    await this.reply({
+      embeds: [
+        {
+          author: {
+            name: `${code} - Invite info`,
+            icon_url: formatDefaultUserAvatarURL(0),
+          },
+          title: guild.name,
+          description: guild.description ?? '',
+          image: {
+            url: guild.banner
+              ? formatGuildBannerURL(guild.id, guild.banner)
+              : guild.splash
+              ? formatGuildSplashURL(guild.id, guild.splash)
+              : null,
+          },
+          thumbnail: {
+            url: guild.icon ? formatGuildIconURL(guild.id, guild.icon) : null,
+          },
+          color: await getColor(this.user),
+          fields,
+        },
+      ],
     });
   },
 });

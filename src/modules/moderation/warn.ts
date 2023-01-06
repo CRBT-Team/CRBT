@@ -1,12 +1,12 @@
 import { localeLower } from '$lib/functions/localeLower';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { TextInputComponent } from 'discord.js';
 import { ChatCommand, ModalComponent, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'warn',
-  description: "Warn a chosen user. This will add a strike to the user's moderation history.",
+  description: "Warn a server member and add to the member's Moderation History.",
   nameLocalizations: getAllLanguages('WARN', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
@@ -14,7 +14,8 @@ export default ChatCommand({
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
-    .string('reason', 'The reason for warning.', {
+    .string('reason', 'More context for the Moderation History.', {
+      nameLocalizations: getAllLanguages('REASON', localeLower),
       maxLength: 256,
     }),
   handle({ user, reason }) {
@@ -38,7 +39,7 @@ export const CtxCommand = UserContextCommand({
           row(
             new TextInputComponent()
               .setCustomId('REASON')
-              .setLabel('Reason for warning')
+              .setLabel(t(this, 'REASON'))
               .setMaxLength(256)
               .setRequired(true)
               .setStyle('PARAGRAPH')

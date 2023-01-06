@@ -24,7 +24,7 @@ export default MessageContextCommand({
     await this.reply({
       embeds: [
         {
-          title: `${emojis.pending} Select when to be remind of that message`,
+          title: `${emojis.pending} Choose when to be reminded of this message.`,
           description: `You can edit this later with ${slashCmd('reminder list')}`,
           color: colors.yellow,
         },

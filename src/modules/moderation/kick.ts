@@ -6,16 +6,17 @@ import { handleModerationAction, ModerationContext } from './_base';
 
 export default ChatCommand({
   name: 'kick',
-  description: 'Kick a chosen user from this server.',
+  description: 'Kick a server member.',
   nameLocalizations: getAllLanguages('KICK', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to kick.', {
+    .user('user', 'Who to kick.', {
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
-    .string('reason', 'The reason for the kick.', {
+    .string('reason', 'More context for the Moderation History.', {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      maxLength: 256,
     }),
   handle({ user, reason }) {
     return handleModerationAction.call(this, {

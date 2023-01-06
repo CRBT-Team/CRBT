@@ -37,7 +37,7 @@ interface PageBtnProps {
 
 export default ChatCommand({
   name: 'modlogs all',
-  description: 'View the moderation history for all users and channels in this server.',
+  description: 'View the entire Moderation History for this server.',
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {

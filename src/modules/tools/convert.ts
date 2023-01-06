@@ -24,7 +24,7 @@ const allUnits = [...currencies, ...units] as {
 
 export default ChatCommand({
   name: 'convert',
-  description: 'Convert a specified amount from any unit to another.',
+  description: 'Convert between two units of measure.',
   options: new OptionBuilder()
     .number('amount', 'The amount to convert.', { required: true })
     .string('from', 'The unit to convert from.', {

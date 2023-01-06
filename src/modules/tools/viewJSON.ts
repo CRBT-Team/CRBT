@@ -2,7 +2,7 @@ import { MessageAttachment } from 'discord.js';
 import { MessageContextCommand } from 'purplet';
 
 export default MessageContextCommand({
-  name: 'View JSON',
+  name: 'View Raw JSON',
   async handle(message) {
     const output = message.toJSON();
 

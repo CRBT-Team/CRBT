@@ -1,12 +1,11 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 
 export default ChatCommand({
   name: 'skin',
-  description: 'Get a Minecraft skin from a username.',
+  description: "Get a Minecraft: Java Edition player's skin.",
   options: new OptionBuilder().string(
     'player_name',
     'The username of the player. (Java Edition only)',
@@ -14,27 +13,52 @@ export default ChatCommand({
   ),
   async handle({ player_name }) {
     try {
-      const req = await fetch(`https://api.mojang.com/users/profiles/minecraft/${player_name}`);
-
-      const { id, name }: any = await req.json();
+      const { id, name } = (await (
+        await fetch(`https://api.mojang.com/users/profiles/minecraft/${player_name}`)
+      ).json()) as any;
 
       await this.reply({
         embeds: [
-          new MessageEmbed()
-            .setAuthor({
-              name: `${name} - Minecraft info`,
-              iconURL: `https://visage.surgeplay.com/face/64/${id}`,
-            })
-            .setDescription(
-              `**[Open in NameMC](https://namemc.com/profile/${name})** | **[Open skin](https://visage.surgeplay.com/skin/${id})**`
-            )
-            .addField('UUID', id, true)
-            .setImage(`https://visage.surgeplay.com/full/512/${id}`)
-            .setColor(await getColor(this.user)),
+          {
+            author: {
+              name: `${name} - Minecraft player info`,
+              icon_url: `https://visage.surgeplay.com/face/64/${id}`,
+            },
+            fields: [
+              {
+                name: 'UUID',
+                value: id,
+                inline: true,
+              },
+            ],
+            image: {
+              url: `https://visage.surgeplay.com/full/512/${id}`,
+            },
+            color: await getColor(this.user),
+          },
         ],
+        components: components(
+          row(
+            {
+              style: 'LINK',
+              label: 'NameMC profile',
+              type: 'BUTTON',
+              url: `https://namemc.com/profile/${name}`,
+            },
+            {
+              style: 'LINK',
+              label: 'View skin file',
+              type: 'BUTTON',
+              url: `https://visage.surgeplay.com/skin/${id}`,
+            }
+          )
+        ),
       });
     } catch (error) {
-      CRBTError(this, 'This player does not exist. Make sure to use a Minecraft: Java Edition username.');
+      CRBTError(
+        this,
+        "Couldn't find this player. Make sure to use a Minecraft: Java Edition username."
+      );
     }
   },
 });

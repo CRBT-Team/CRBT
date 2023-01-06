@@ -5,10 +5,10 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'rng',
-  description: 'Pick a number at random from the given range.',
+  description: 'Pick a number at random from a given range.',
   options: new OptionBuilder()
-    .number('max', 'The maximum number to pick. Defaults to 100.')
-    .number('min', 'The minimum number to pick. Defaults to 1.')
+    .number('max', "The range's maximum number, 100 by default.")
+    .number('min', "The range's minimum number, 1 by default.")
     .string('comment', t('en-US', 'COMMENT_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('COMMENT', localeLower),
       descriptionLocalizations: getAllLanguages('COMMENT_DESCRIPTION'),

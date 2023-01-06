@@ -45,7 +45,7 @@ export default ChatCommand({
   description: 'Get info on a given emoji.',
   options: new OptionBuilder().string(
     'emoji',
-    'The emoji whose info to get. Works with custom emojis and standard Unicode emoji.',
+    'The emoji to get info about. Custom and default emojis are supported.',
     { required: true }
   ),
   async handle({ emoji }) {
@@ -76,7 +76,7 @@ export default ChatCommand({
                 inline: true,
               },
               {
-                name: 'Animated',
+                name: t(this, 'ANIMATED'),
                 value: emojiData.animated ? 'Yes' : 'No',
                 inline: true,
               },

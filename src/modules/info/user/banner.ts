@@ -10,10 +10,10 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 
 export default ChatCommand({
   name: 'banner',
-  description: `Get a user's Profile Banner.`,
+  description: `Display your Profile Banner or someone else's.`,
   nameLocalizations: getAllLanguages('BANNER', localeLower),
   options: new OptionBuilder()
-    .user('user', 'The user to get the banner of.', {
+    .user('user', 'The user whose banner to get.', {
       nameLocalizations: getAllLanguages('USER', localeLower),
     })
     .string('size', 'The size of the banner to get.', {

@@ -11,6 +11,7 @@ import {
   ContextMenuInteraction,
   MessageComponentInteraction,
 } from 'discord.js';
+import { ocrSpace } from 'ocr-space-api-wrapper';
 import {
   ChatCommand,
   components,
@@ -20,7 +21,6 @@ import {
   SelectMenuComponent,
 } from 'purplet';
 import languages from '../../../data/misc/langs.json';
-import { useOcrScan } from './Find Text in Image';
 
 export default ChatCommand({
   name: 'translate',
@@ -60,7 +60,7 @@ export default ChatCommand({
 });
 
 export const ctxCommand = MessageContextCommand({
-  name: 'Translate (with scan)',
+  name: 'Translate (+ Image Scan)',
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
@@ -90,10 +90,11 @@ export const ctxCommand = MessageContextCommand({
         const [content, error] = await useOcrScan(image);
 
         if (error)
-          await CRBTError(
-            this,
-            'No text was recognized from this image. Please try again with a different image, and make sure that the text is legible.'
-          );
+          await CRBTError(this, {
+            title: 'No text was recognized from this image.',
+            description:
+              'Try again using a different image, and make sure that the text is legible.',
+          });
 
         const result = await translate.call(this, content);
         if (result) await this.editReply(result);
@@ -201,3 +202,28 @@ export const TargetLangSelectMenu = SelectMenuComponent({
     );
   },
 });
+
+export async function useOcrScan(
+  imageUrl: string,
+  lang: string = 'eng'
+): Promise<[string, boolean]> {
+  const req = await ocrSpace(imageUrl, {
+    apiKey: process.env.OCR_TOKEN,
+    OCREngine: '3',
+  });
+
+  let error = false;
+
+  if (
+    !req ||
+    !req.ParsedResults ||
+    req.IsErroredOnProcessing ||
+    !req.ParsedResults.length ||
+    !req.ParsedResults[0].ParsedText ||
+    req.ParsedResults?.ErrorMessage
+  ) {
+    error = true;
+  }
+
+  return [req.ParsedResults[0].ParsedText, error];
+}

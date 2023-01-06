@@ -1,5 +1,5 @@
 import { prisma } from '$lib/db';
-import { emojis, items } from '$lib/env';
+import { badges, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { getColor } from '$lib/functions/getColor';
@@ -67,28 +67,28 @@ export const ctxCommand = UserContextCommand({
 });
 
 export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
-  const { badges } = emojis;
+  const { badges: discordBadges } = emojis;
 
   const userFlags: {
     [k: string]: UserFlags;
   } = {
-    [badges.verifiedBot]: UserFlags.VerifiedBot,
-    [badges.discordStaff]: UserFlags.Staff,
-    [badges.partner]: UserFlags.Partner,
-    [badges.cerifiedMod]: UserFlags.CertifiedModerator,
-    [badges.hypesquad]: UserFlags.Hypesquad,
-    [badges.houses.bravery]: UserFlags.HypeSquadOnlineHouse1,
-    [badges.houses.brilliance]: UserFlags.HypeSquadOnlineHouse2,
-    [badges.houses.balance]: UserFlags.HypeSquadOnlineHouse3,
-    [badges.bugHunter1]: UserFlags.BugHunterLevel1,
-    [badges.bugHunter2]: UserFlags.BugHunterLevel2,
-    [badges.activeDeveloper]: UserFlags.ActiveDeveloper,
-    [badges.earlySupporter]: UserFlags.PremiumEarlySupporter,
-    [badges.developer]: UserFlags.VerifiedDeveloper,
+    [discordBadges.verifiedBot]: UserFlags.VerifiedBot,
+    [discordBadges.discordStaff]: UserFlags.Staff,
+    [discordBadges.partner]: UserFlags.Partner,
+    [discordBadges.cerifiedMod]: UserFlags.CertifiedModerator,
+    [discordBadges.hypesquad]: UserFlags.Hypesquad,
+    [discordBadges.houses.bravery]: UserFlags.HypeSquadOnlineHouse1,
+    [discordBadges.houses.brilliance]: UserFlags.HypeSquadOnlineHouse2,
+    [discordBadges.houses.balance]: UserFlags.HypeSquadOnlineHouse3,
+    [discordBadges.bugHunter1]: UserFlags.BugHunterLevel1,
+    [discordBadges.bugHunter2]: UserFlags.BugHunterLevel2,
+    [discordBadges.activeDeveloper]: UserFlags.ActiveDeveloper,
+    [discordBadges.earlySupporter]: UserFlags.PremiumEarlySupporter,
+    [discordBadges.developer]: UserFlags.VerifiedDeveloper,
   };
 
   return [
-    ...(additionalBadges ? additionalBadges.map((b) => items.badges[b].contents) : []),
+    ...(additionalBadges ? additionalBadges.map((b) => badges[b].contents) : []),
     ...Object.entries(userFlags).reduce((acc, [key, value]) => {
       if ((flags & value) === value) {
         acc.push(key);

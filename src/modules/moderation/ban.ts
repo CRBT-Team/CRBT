@@ -10,19 +10,19 @@ import { handleModerationAction, ModerationContext } from './_base';
 export default ChatCommand({
   name: 'ban',
   nameLocalizations: getAllLanguages('BAN', localeLower),
-  description: 'Ban a chosen user from this server.',
+  description: 'Ban a server member.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to ban.', {
+    .user('user', 'Who to ban.', {
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
-    .string('reason', 'The reason for the ban.', {
+    .string('reason', 'More context for the Moderation History.', {
       nameLocalizations: getAllLanguages('REASON', localeLower),
       maxLength: 256,
     })
-    .integer('delete_messages', 'The number of messages to delete.')
-    .string('duration', 'Temporarily ban the user for a specified time.', {
+    .integer('delete_messages', 'The amount of messages to delete.')
+    .string('duration', 'Temporarily ban the user until a point in time.', {
       autocomplete({ duration }) {
         return timeAutocomplete.call(this, duration, '10y', '1m');
       },
@@ -48,10 +48,6 @@ export function ban(
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('3y')) {
     return createCRBTError(this, 'Invalid duration or exceeds 3 years');
-  }
-
-  if (!isValidTime(duration)) {
-    return createCRBTError(this, 'Invalid duration.');
   }
 
   member.ban({

@@ -1,6 +1,8 @@
 import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -8,22 +10,24 @@ import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'clear',
-  description: 'Clear a number of messages from this channel.',
+  description: 'Clear messages from this channel.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .integer('amount', 'The number of messages to delete.', {
+    .integer('amount', 'How many messages to delete.', {
       required: true,
+      minValue: 1,
+      maxValue: 100,
     })
-    .string('reason', 'The reason for clearing the channel.'),
+    .string('reason', 'More context for the Moderation History.', {
+      nameLocalizations: getAllLanguages('REASON', localeLower),
+      maxLength: 256,
+    }),
   async handle({ amount, reason }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)) {
       return CRBTError(this, 'You do not have permission to manage messages.');
     }
     if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageMessages)) {
       return CRBTError(this, 'I do not have permission to manage messages.');
-    }
-    if (amount > 100 || amount < 1) {
-      return CRBTError(this, 'You can only delete between 1 and 100 messages.');
     }
 
     try {
