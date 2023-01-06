@@ -1,5 +1,5 @@
-import { colors } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
@@ -8,7 +8,6 @@ import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { Role } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { MessageBuilder } from '../components/MessageBuilder';
-import Button from './Button';
 import SelectMenu from './SelectMenu';
 
 export const usersOnCooldown = new Map();
@@ -80,36 +79,24 @@ export const useManual = ChatCommand({
         type: MessageBuilderTypes.rolePicker,
         embed: {
           title: strings.GENERIC_SELECTOR_TITLE,
-          color: colors.default,
+          color: await getColor(this.guild),
         },
         components: components(
-          rolesList.length === 1 || (rolesList.length <= 3 && limit === rolesList.length)
-            ? row().addComponents(
-                rolesList.map(({ name, id }) => {
-                  return new Button({
-                    id,
-                    behavior,
-                  })
-                    .setLabel(name)
-                    .setStyle('SECONDARY')
-                    .setDisabled(true);
+          row(
+            new SelectMenu(null)
+              .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
+              .setMinValues(0)
+              .setMaxValues(limit)
+              .setOptions(
+                rolesList.map((role) => {
+                  return {
+                    label: role.name,
+                    value: JSON.stringify({ id: role.id, behavior }),
+                  };
                 })
               )
-            : row(
-                new SelectMenu(null)
-                  .setPlaceholder(limit === 1 ? strings.CHOOSE_ROLE : strings.CHOOSE_ROLES)
-                  .setMinValues(0)
-                  .setMaxValues(limit)
-                  .setOptions(
-                    rolesList.map((role) => {
-                      return {
-                        label: role.name,
-                        value: JSON.stringify({ id: role.id, behavior }),
-                      };
-                    })
-                  )
-                  .setDisabled(true)
-              )
+              .setDisabled(true)
+          )
         ),
       },
       interaction: this,
