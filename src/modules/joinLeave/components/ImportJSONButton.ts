@@ -1,7 +1,7 @@
+import { MessageBuilderTypes } from '$lib/types/MessageBuilder';
+import { CamelCaseFeatures } from '$lib/types/settings';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
-import { MessageBuilderTypes } from '$lib/types/MessageBuilder';
-import { resolveMsgType } from '../types';
 import { ImportJSONModal } from './ImportJSONModal';
 
 export const ImportJSONButton = ButtonComponent({
@@ -16,7 +16,7 @@ export const ImportJSONButton = ButtonComponent({
             .setStyle('PARAGRAPH')
             .setMinLength(29)
             .setMaxLength(4000)
-            .setPlaceholder(`Paste the contents of the ${resolveMsgType[type]}.json file here.`)
+            .setPlaceholder(`Paste the contents of the ${CamelCaseFeatures[type]}.json file here.`)
             .setRequired(true)
         )
       );

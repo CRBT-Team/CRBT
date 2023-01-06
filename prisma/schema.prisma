@@ -56,8 +56,6 @@ model servers {
   achievements      Achievement[]
   // permissions  ServerPermissions[]
   members           ServerMember[]
-  premiumExpiresAt  DateTime?      @map("sub_expiration")
-  hasPremium        Boolean        @default(false) @map("premium")
 }
 
 // model ServerPermissions {
@@ -92,28 +90,16 @@ model moderationStrikes {
   details     String?
 }
 
-model Transaction {
-  id             Int              @id @default(autoincrement())
-  userId         String           @map("user_id")
-  user           User             @relation(fields: [userId], references: [id])
-  serverId       String?          @map("server_id")
-  purchasedAt    DateTime         @map("purchased_at")
-  availableUntil DateTime?        @map("available_until")
-  item           PurchasableTypes
-}
-
 model User {
-  id                 String         @id
-  guildedId          String?        @unique @map("guilded_id")
-  accentColor        Int?           @map("accent_color")
-  crbtBadges         String[]       @map("crbt_badges")
-  telemetry          Boolean        @default(true)
-  silentJoins        Boolean        @default(false) @map("silent_joins")
-  silentLeaves       Boolean        @default(false) @map("silent_leaves")
-  premiumExpiresAt   DateTime?      @map("sub_expiration")
-  transactionHistory Transaction[]
-  reminders          Reminder[]
-  memberData         ServerMember[]
+  id           String         @id
+  guildedId    String?        @unique @map("guilded_id")
+  accentColor  Int?           @map("accent_color")
+  crbtBadges   String[]       @map("crbt_badges")
+  telemetry    Boolean        @default(true)
+  silentJoins  Boolean        @default(false) @map("silent_joins")
+  silentLeaves Boolean        @default(false) @map("silent_leaves")
+  reminders    Reminder[]
+  memberData   ServerMember[]
 }
 
 model ServerMember {
@@ -237,7 +223,6 @@ enum ItemTypes {
 
 enum TokenTypes {
   API
-  REDEEM
 }
 
 enum ReminderTypes {
@@ -249,8 +234,4 @@ enum ReminderTypes {
   MESSAGE
   // reminder set for someone's birthday (deprecated feature)
   BIRTHDAY
-}
-
-enum PurchasableTypes {
-  PREMIUM
 }
