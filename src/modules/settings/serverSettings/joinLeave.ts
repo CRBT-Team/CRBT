@@ -10,7 +10,7 @@ import { SnowflakeRegex } from '@purplet/utils';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, components, ModalComponent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { defaultMessage } from '../../joinLeave/renderers';
+import { defaultMessage, renderJoinLeavePreview } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
@@ -74,7 +74,7 @@ export const joinLeaveSettings: SettingsMenus = {
         : '',
     };
   },
-  getComponents: ({ feature, toggleBtn, backBtn, isEnabled, i }) =>
+  getComponents: ({ feature, toggleBtn, backBtn, isEnabled, i, errors }) =>
     components(
       row(backBtn, toggleBtn),
       row(
@@ -87,14 +87,19 @@ export const joinLeaveSettings: SettingsMenus = {
           .setLabel(t(i, 'EDIT_CHANNEL'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
-          .setDisabled(!isEnabled)
+          .setDisabled(!isEnabled),
+        new TestJoinLeaveBtn(feature as never)
+          .setLabel(t(i, 'PREVIEW'))
+          .setStyle('SECONDARY')
+          .setEmoji(emojis.buttons.preview)
+          .setDisabled(!isEnabled || errors.length !== 0)
       )
     ),
 };
 
 export const EditJoinLeaveChannelBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
-    const data = (await getSettings(this.guild.id)) as RawServerJoin | RawServerLeave;
+    const data = (await getSettings(this.guild.id)) as any as RawServerJoin | RawServerLeave;
     const channelId = data[type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
 
@@ -165,5 +170,13 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
     });
 
     await this.update(builder);
+  },
+});
+
+export const TestJoinLeaveBtn = ButtonComponent({
+  async handle(type: JoinLeaveData['type']) {
+    const data = (await getSettings(this.guild.id)) as any as RawServerJoin | RawServerLeave;
+
+    await renderJoinLeavePreview.call(this, type, data);
   },
 });

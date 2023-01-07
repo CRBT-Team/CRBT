@@ -1,5 +1,7 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages } from '$lib/language';
 import {
   AllowedImageSize,
   DynamicImageFormat,
@@ -14,11 +16,13 @@ import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server icon',
-  description: `Get a chosen server's icon or the current server's icon.`,
+  description: `Get this server's icon, or another one's.`,
   options: new OptionBuilder()
-    .string('id', 'The ID of the server to get the icon of.')
-
+    .string('id', 'The ID of the server to get the icon of.', {
+      nameLocalizations: getAllLanguages('ID', localeLower),
+    })
     .string('size', 'The size of the icon to get.', {
+      nameLocalizations: getAllLanguages('SIZE', localeLower),
       choices: {
         '1': 'Small (128px)',
         '2': 'Medium (512px)',
@@ -27,6 +31,7 @@ export default ChatCommand({
       },
     })
     .string('format', 'The format of the icon to get.', {
+      nameLocalizations: getAllLanguages('FORMAT', localeLower),
       choices: {
         '1': 'PNG',
         '2': 'JPG',
@@ -36,10 +41,10 @@ export default ChatCommand({
     }),
   async handle({ id, size, format }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
-      return await CRBTError(
-        this,
-        `The server ID that you used is either invalid, or I'm not part of that server! To invite me, use this link: crbt.app/invite.`
-      );
+      return await CRBTError(this, {
+        title: "The ID you have used is either invalid, or I'm not part of this server.",
+        description: `You can also **[invite me to it]($[links.invite])**, if you have permission to.`,
+      });
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 

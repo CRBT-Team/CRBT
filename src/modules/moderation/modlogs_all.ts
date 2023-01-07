@@ -6,6 +6,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { moderationStrikes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
@@ -36,7 +37,7 @@ interface PageBtnProps {
 
 export default ChatCommand({
   name: 'modlogs all',
-  description: 'View the moderation history for all users and channels in this server.',
+  description: 'View the entire Moderation History for this server.',
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
@@ -65,7 +66,7 @@ export function renderStrike(
       ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
       : '';
   const reason = `**${t(locale, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON')}:** ${
-    strike.reason ?? '*None specified*'
+    strike.details ? '[Message from user]' : strike.reason ?? '*None specified*'
   }`;
   const target = strike.type !== 'CLEAR' ? `<@${strike.targetId}>` : `<#${strike.targetId}>`;
 
@@ -212,6 +213,7 @@ async function renderStrikePage(
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const strike: moderationStrikes = strikes.find(({ id }) => id === sId);
+  const target = await this.client.users.fetch(strike.targetId);
 
   return {
     embeds: [
@@ -263,6 +265,14 @@ async function renderStrikePage(
         color:
           strike.type === 'REPORT' ? await getColor(this.guild) : ModerationColors[strike.type],
       },
+      ...(strike.details
+        ? renderLowBudgetMessage({
+            details: JSON.parse(strike.details),
+            channel: this.channel,
+            guild: this.guild,
+            author: target,
+          })
+        : []),
     ],
     components: components(
       row(

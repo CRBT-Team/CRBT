@@ -1,21 +1,27 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
+import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
+import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { ModerationStrikeTypes } from '@prisma/client';
-import { PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
-import { GuildTextBasedChannel, Message, MessageButton, MessageEmbedOptions } from 'discord.js';
-import { ButtonComponent, components, ModalComponent, row, UserContextCommand } from 'purplet';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
+import { GuildTextBasedChannel, Message, MessageEmbedOptions } from 'discord.js';
+import { components, MessageContextCommand, row } from 'purplet';
 import { getSettings } from '../settings/serverSettings/_helpers';
-import { checkModerationPermission, handleModerationAction } from './_base';
+import { ActionButton } from './Report_User';
+import { checkModerationPermission } from './_base';
 
-export default UserContextCommand({
-  name: 'Report User',
-  async handle(user) {
+const messageCache = new Map<string, Message>();
+
+export default MessageContextCommand({
+  name: 'Report Message',
+  async handle(message) {
+    const user = message.author;
     const { modules, modReportsChannel } = await getSettings(this.guildId);
 
     if (!modules?.moderationReports && !modReportsChannel) {
@@ -41,40 +47,31 @@ export default UserContextCommand({
       return this.reply(error);
     }
 
-    await this.showModal(
-      new ReportModal(user.id).setTitle(`Report ${user.tag}`).setComponents(
-        row({
-          custom_id: 'description',
-          label: t(this, 'DESCRIPTION'),
-          placeholder: t(this, 'MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER'),
-          style: TextInputStyle.Paragraph,
-          max_length: 1024,
-          min_length: 10,
-          required: true,
-          type: 'TEXT_INPUT',
-        })
-      )
-    );
-  },
-});
-
-export const ReportModal = ModalComponent({
-  async handle(userId: string) {
-    const description = this.fields.getTextInputValue('description');
-    const user = await this.client.users.fetch(userId);
+    messageCache.set(message.id, message);
 
     await this.deferReply({
       ephemeral: true,
     });
+
+    const details = budgetify(message);
+    const embed = message.embeds.find((e) => e.title || e.description || e.fields[0].name);
+    const description = `${(
+      message.content ||
+      embed?.title ||
+      embed?.description ||
+      embed?.fields[0].name ||
+      ''
+    )?.slice(0, 60)}...`;
 
     await prisma.moderationStrikes.create({
       data: {
         createdAt: new Date(),
         moderatorId: this.user.id,
         serverId: this.guildId,
-        targetId: userId,
+        targetId: user.id,
         type: ModerationStrikeTypes.REPORT,
         reason: description,
+        details: JSON.stringify(details),
       },
     });
 
@@ -105,14 +102,21 @@ export const ReportModal = ModalComponent({
       color: await getColor(this.guild),
     };
 
-    const { modReportsChannel } = await getSettings(this.guildId);
     const reportsChannel = this.guild.channels.cache.get(
       modReportsChannel
     ) as GuildTextBasedChannel;
 
     try {
       await reportsChannel.send({
-        embeds: [reportEmbed],
+        embeds: [
+          reportEmbed,
+          ...renderLowBudgetMessage({
+            details,
+            channel: this.channel,
+            guild: this.guild,
+            author: user,
+          }),
+        ],
         components: components(
           row(
             new ActionButton({ userId: user.id, type: ModerationStrikeTypes.WARN })
@@ -145,37 +149,5 @@ export const ReportModal = ModalComponent({
     } catch (e) {
       await this.editReply(UnknownError(this, e));
     }
-  },
-});
-
-export const ActionButton = ButtonComponent({
-  async handle({ userId, type }: { userId: string; type: ModerationStrikeTypes }) {
-    const user = await this.client.users.fetch(userId);
-
-    const { error } = checkModerationPermission.call(this, user, type);
-
-    if (error) {
-      return this.reply(error);
-    }
-
-    await (this.message as Message).edit({
-      components: components(
-        row(
-          new MessageButton()
-            .setCustomId('who_reads_this')
-            .setLabel(`User was ${t(this.guildLocale, `MOD_VERB_${type}`)} by ${this.user.tag}`)
-            .setStyle('SECONDARY')
-            .setDisabled()
-        )
-      ),
-    });
-
-    return await handleModerationAction.call(this, {
-      type,
-      guild: this.guild,
-      target: user,
-      moderator: this.user,
-      reason: this.message.embeds[0].fields[0].value,
-    });
   },
 });

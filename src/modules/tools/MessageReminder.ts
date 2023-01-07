@@ -1,10 +1,11 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
+import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { LowBudgetMessage, renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
+import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Reminder, ReminderTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
@@ -23,7 +24,7 @@ export default MessageContextCommand({
     await this.reply({
       embeds: [
         {
-          title: `${emojis.pending} Select when to be remind of that message`,
+          title: `${emojis.pending} Choose when to be reminded of this message.`,
           description: `You can edit this later with ${slashCmd('reminder list')}`,
           color: colors.yellow,
         },
@@ -84,27 +85,7 @@ export const SelectTimeMenu = SelectMenuComponent({
     const [length, unit] = this.values[0].split('-');
     const expiresAt = dayjs().add(Number(length), unit);
 
-    const details: LowBudgetMessage = {
-      authorId: message.author.id,
-      ...(message.content
-        ? {
-            content:
-              message.content.length > 150
-                ? `${message.content.slice(0, 150)}...`
-                : message.content,
-          }
-        : {}),
-      ...(!message.content && message.embeds[0]
-        ? {
-            firstEmbed: {
-              author: message.embeds[0].author,
-              title: message.embeds[0].title,
-              description: message.embeds[0].description,
-              color: message.embeds[0].color,
-            },
-          }
-        : {}),
-    };
+    const details = budgetify(message);
 
     try {
       const reminder: Reminder = {

@@ -1,16 +1,11 @@
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 
-export const resolveMsgType = {
-  JOIN_MESSAGE: 'joinMessage',
-  LEAVE_MESSAGE: 'leaveMessage',
-};
-
 export interface RawServerJoin {
-  joinMessage?: Omit<JoinLeaveData, 'type'>;
+  joinMessage?: JoinLeaveData;
   joinChannel?: string;
 }
 
 export interface RawServerLeave {
-  leaveMessage?: Omit<JoinLeaveData, 'type'>;
+  leaveMessage?: JoinLeaveData;
   leaveChannel?: string;
 }

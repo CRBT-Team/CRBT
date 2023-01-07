@@ -23,12 +23,9 @@ dayjs.extend(duration);
 
 export default ChatCommand({
   name: 'channel info',
-  description: 'Gives info on a given channel.',
+  description: 'Gives info on the current channel or another one.',
   allowInDMs: false,
-  options: new OptionBuilder().channel(
-    'channel',
-    'The channel to get info from. Leave blank to get the current one.'
-  ),
+  options: new OptionBuilder().channel('channel', 'The channel to get info from.'),
   async handle() {
     const c = this.options.getChannel('channel') || this.channel;
     const channel = (await getRestClient()

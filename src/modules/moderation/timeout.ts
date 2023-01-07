@@ -7,11 +7,11 @@ import { handleModerationAction, ModerationContext } from './_base';
 
 export default ChatCommand({
   name: 'timeout',
-  description: 'Timeout a chosen user from this server.',
+  description: 'Timeout a server member.',
   nameLocalizations: getAllLanguages('TIMEOUT', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'The user to timeout.', {
+    .user('user', 'Who to timeout.', {
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
@@ -28,8 +28,9 @@ export default ChatCommand({
       },
       required: true,
     })
-    .string('reason', 'The reason for timing them out.', {
+    .string('reason', 'More context for the Moderation History.', {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      maxLength: 256,
     }),
   handle({ user, reason, duration }) {
     return handleModerationAction.call(this, {

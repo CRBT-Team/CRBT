@@ -9,9 +9,9 @@ import { renderModlogs } from './modlogs_all';
 
 export default ChatCommand({
   name: 'modlogs user',
-  description: 'View the moderation history for a chosen user, or yours.',
+  description: "View your Moderation History, or someone else's.",
   allowInDMs: false,
-  options: new OptionBuilder().user('user', 'The user to view the history of.', {
+  options: new OptionBuilder().user('user', 'The user whose Moderation History to get.', {
     nameLocalizations: getAllLanguages('USER', localeLower),
   }),
   async handle({ user }) {

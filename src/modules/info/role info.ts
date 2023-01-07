@@ -8,9 +8,11 @@ import { ChatCommand, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'role info',
-  description: 'Get information about a specified server role.',
+  description: 'Get information about a server role.',
   allowInDMs: false,
-  options: new OptionBuilder().role('role', 'The role whose info to get.', { required: true }),
+  options: new OptionBuilder().role('role', 'The role to get information about.', {
+    required: true,
+  }),
   async handle({ role }) {
     const img = canvas.createCanvas(256, 256);
     const ctx = img.getContext('2d');

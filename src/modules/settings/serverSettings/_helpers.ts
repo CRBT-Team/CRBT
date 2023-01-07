@@ -101,7 +101,6 @@ export async function getSettings(guildId: string) {
       include,
     })
   );
-  console.log(data);
 
   const merged = deepMerge(defaultSettings, data);
   return merged;
