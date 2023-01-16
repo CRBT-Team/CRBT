@@ -110,11 +110,12 @@ model ServerMember {
   server       servers             @relation(references: [id], fields: [serverId])
   achievements MemberAchievement[]
   lastWork     DateTime?           @map("last_work") @db.Timestamptz(6)
-  lastHourly   DateTime?           @map("last_hourly") @db.Timestamptz(6)
+  lastDaily    DateTime?           @map("last_daily") @db.Timestamptz(6)
   workExp      Int                 @default(0) @db.Integer
   money        Int                 @default(0) @db.Integer
   activeItems  EconomyItem[]       @relation("active_items")
   items        EconomyItem[]       @relation("items")
+  dailyStreak  Int                 @map("daily_streak")
 }
 
 model MemberAchievement {

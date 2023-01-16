@@ -185,8 +185,6 @@ export const ToggleFeatureBtn = ButtonComponent({
       true
     );
 
-    console.log('h', h);
-
     this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
   },
 });

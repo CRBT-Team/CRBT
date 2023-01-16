@@ -1,4 +1,4 @@
-import { UnknownError } from '$lib/functions/CRBTError';
+import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { image as imageSearch } from 'googlethis';
@@ -22,6 +22,14 @@ export async function handleImageSearch(
 
     const image = res[opts.page - 1];
     const pages = res.length;
+
+    if (!pages) {
+      return createCRBTError(this, {
+        title: 'Uh-oh, there are no results for your query.',
+        description:
+          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of age-restricted channels.',
+      });
+    }
 
     return createSearchResponse(
       this,
