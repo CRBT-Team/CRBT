@@ -14,8 +14,9 @@ import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
 import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
+import dayjs from 'dayjs';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageAttachment, MessageEmbed, TextInputComponent } from 'discord.js';
+import { Message, MessageEmbed, TextInputComponent } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -57,14 +58,6 @@ for (let i = 1; i <= 4; i++) {
   });
 }
 
-options.attachment(
-  'image',
-  t('en-US', 'poll.meta.options.multichoice.description', {
-    nameLocalizations: getAllLanguages('IMAGE', (str, locale) => localeLower(str, locale)),
-    descriptionLocalizations: getAllLanguages('poll.meta.options.multichoice.description'),
-  })
-);
-
 export default ChatCommand({
   name: 'poll',
   description: t('en-US', 'poll.meta.description'),
@@ -80,18 +73,12 @@ export default ChatCommand({
       return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
     }
 
-    const attachment = Object.values(choices).at(-1) as MessageAttachment;
-
-    if (!attachment.contentType.startsWith('image')) {
-      return CRBTError(this, 'The chosen attachment must be an image.');
-    }
-
     await this.deferReply({
       ephemeral: true,
     });
 
     try {
-      const pollChoices: string[] = Object.values(choices).slice(0, 3).filter(Boolean);
+      const pollChoices: string[] = Object.values(choices).filter(Boolean);
 
       for (const choice of pollChoices) {
         if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
@@ -101,29 +88,32 @@ export default ChatCommand({
 
       const msg = await this.channel.send({
         embeds: [
-          {
-            title,
-            description: strings.POLL_DESCRIPTION.replace(
-              '{TIME}',
-              `${timestampMention(new Date(Date.now() + ms(end_date)), 'R')}`
-            ).replace('{ICON}', emojis.menu),
-            fields: pollChoices.map((choice) => ({
-              name: choice,
-              value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
-                emojis.progress.emptyend
-              }\n${strings.POLL_OPTION_RESULT.replace('{PERCENTAGE}', '0').replace(
-                '{VOTES}',
-                '0'
-              )}`,
-            })),
-            footer: {
+          new MessageEmbed()
+            .setTitle(title)
+            .setDescription(
+              strings.POLL_DESCRIPTION.replace(
+                '{TIME}',
+                `<t:${dayjs().add(ms(end_date)).unix()}:R>`
+              ).replace('{ICON}', emojis.menu)
+            )
+            .addFields(
+              pollChoices.map((choice) => ({
+                name: choice,
+                value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
+                  emojis.progress.emptyend
+                }\n${strings.POLL_OPTION_RESULT.replace('{PERCENTAGE}', '0').replace(
+                  '{VOTES}',
+                  '0'
+                )}`,
+              }))
+            )
+            .setFooter({
               text: `${strings.POLL_FOOTER_VOTES.replace(
                 '{VOTES}',
                 '0'
               )} • ${strings.POLL_FOOTER_CREATOR.replace('{USER}', this.user.tag)}`,
-            },
-            color: await getColor(this.guild),
-          },
+            })
+            .setColor(await getColor(this.guild)),
         ],
         components: components(
           row()

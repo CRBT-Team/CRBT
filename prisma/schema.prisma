@@ -48,8 +48,6 @@ model servers {
   modLogsChannel    String?        @map("modlogs_channel")
   modReportsChannel String?        @map("reports_channel")
   accentColor       Int?           @map("accent_color")
-  automaticTheming  Boolean?       @default(true) @map("auto_theme")
-  iconHash          String?        @map("icon")
   economy           Economy?
   modules           serverModules?
   giveaways         Giveaway[]

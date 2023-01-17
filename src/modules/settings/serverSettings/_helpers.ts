@@ -30,7 +30,6 @@ export const featureSettingsMenus: {
 export const defaultSettings: FullSettings = {
   accentColor: colors.default,
   flags: 0,
-  automaticTheming: true,
   modules: {
     id: null,
     economy: false,
