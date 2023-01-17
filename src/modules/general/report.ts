@@ -1,11 +1,11 @@
 import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
-import { MessageFlags, Routes } from 'discord-api-types/v10';
-import { TextInputComponent } from 'discord.js';
+import { ButtonStyle, ComponentType, Routes } from 'discord-api-types/v10';
+import { GuildTextBasedChannel, MessageAttachment, TextInputComponent } from 'discord.js';
 import fetch from 'node-fetch';
-import { writeFileSync } from 'node:fs';
 import { ChatCommand, getRestClient, ModalComponent, OptionBuilder, row } from 'purplet';
+import pjson from '../../../package.json';
 
 export default ChatCommand({
   name: 'report',
@@ -57,14 +57,44 @@ export const Modal = ModalComponent({
         )
       : null;
 
-    writeFileSync('image.png', imageBuffer);
+    const privateData = JSON.stringify(
+      {
+        guild: {
+          id: this.guildId ?? 'DM',
+          channelId: this.channelId,
+          locale: this.guildLocale,
+        },
+        user: {
+          id: this.user.id,
+          permissions: this.memberPermissions,
+          locale: this.locale,
+        },
+        bot: {
+          permissions: this.appPermissions,
+          version: pjson.version,
+        },
+      },
+      null,
+      2
+    );
+
+    await this.deferReply({
+      ephemeral: true,
+    });
+
+    const channel = (await this.client.channels.fetch(
+      channels.privateReports
+    )) as GuildTextBasedChannel;
+    const { url } = await channel.send({
+      files: [new MessageAttachment(Buffer.from(privateData)).setName('data.json')],
+    });
 
     await getRestClient().post(
       Routes.threads(
         this.client.user.id === clients.crbt.id ? channels.report : channels.reportDev
       ),
       {
-        passThroughBody: true,
+        passThroughBody: !!image_url,
         body: {
           applied_tags:
             this.client.user.id === clients.crbt.id
@@ -80,9 +110,23 @@ export const Modal = ModalComponent({
                 },
                 title,
                 description,
-                // image: image_url ? 'attachment://image.png' : null,
-                footer: { text: `User ID: ${this.user.id}` },
                 color: colors.yellow,
+              },
+            ],
+            components: [
+              {
+                type: ComponentType.ActionRow,
+                components: [
+                  {
+                    type: ComponentType.Button,
+                    label: 'Data',
+                    url,
+                    emoji: {
+                      name: '🔒',
+                    },
+                    style: ButtonStyle.Link,
+                  },
+                ],
               },
             ],
           },
@@ -91,7 +135,6 @@ export const Modal = ModalComponent({
           ? [
               {
                 data: imageBuffer,
-                key: 'files[0]',
                 name: 'image.png',
               },
             ]
@@ -99,7 +142,7 @@ export const Modal = ModalComponent({
       }
     );
 
-    await this.reply({
+    await this.editReply({
       embeds: [
         {
           title: `${emojis.success} Report sent successfully.`,
@@ -107,7 +150,6 @@ export const Modal = ModalComponent({
           color: colors.success,
         },
       ],
-      flags: MessageFlags.Ephemeral,
     });
   },
 });
