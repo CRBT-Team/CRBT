@@ -14,9 +14,10 @@ import {
   ChannelType,
   Routes,
   SortOrderType,
+  ThreadAutoArchiveDuration,
   VideoQualityMode,
 } from 'discord-api-types/v10';
-import { EmbedFieldData, TextChannel, ThreadAutoArchiveDuration } from 'discord.js';
+import { EmbedFieldData, TextChannel } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
 
 dayjs.extend(duration);
@@ -118,18 +119,18 @@ export default ChatCommand({
           name: 'Bitrate',
           value: `${channel.bitrate / 1000}kbps`,
           inline: true,
-        },
-        ...(channel.type === ChannelType.GuildVoice
-          ? [
-              {
-                name: 'Video Quality',
-                value: channel.video_quality_mode === VideoQualityMode.Full ? '720p' : 'Auto',
-                inline: true,
-              },
-            ]
-          : [])
+        }
       );
     }
+
+    if ('video_quality_mode' in channel) {
+      fields.push({
+        name: 'Video Quality',
+        value: channel.video_quality_mode === VideoQualityMode.Full ? '720p' : 'Auto',
+        inline: true,
+      });
+    }
+
     // Check if it's an announcement channel
     if (channel.type === ChannelType.GuildAnnouncement) {
       icon = icons.channels.announcement;
@@ -148,12 +149,19 @@ export default ChatCommand({
         Routes.channelThreads(channel.id, 'public')
       )) as APIThreadChannel[];
 
+      const threadDuration: Record<ThreadAutoArchiveDuration, string> = {
+        60: '1 hour',
+        1440: '24 hours',
+        4320: '3 days',
+        10080: '1 week',
+      };
+
       fields.push({
         name: `${channel.type === ChannelType.GuildForum ? 'Posts' : 'Threads'} (${
           threads.length
         })`,
         value: threads
-          .map((t) => `${t} (${threadDuration(t.thread_metadata.auto_archive_duration)})`)
+          .map((t) => `${t} (${threadDuration[t.thread_metadata.auto_archive_duration]})`)
           .join(', '),
       });
     }
@@ -204,16 +212,3 @@ export default ChatCommand({
     });
   },
 });
-
-function threadDuration(tDuration: ThreadAutoArchiveDuration) {
-  switch (tDuration) {
-    case 60:
-      return '1 Hour';
-    case 1440:
-      return '24 Hours';
-    case 4320:
-      return '3 Days';
-    case 10080:
-      return '1 Week';
-  }
-}

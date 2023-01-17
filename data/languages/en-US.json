@@ -175,6 +175,7 @@
       "description": "Get information about CRBT."
     }
   },
+  "IMAGE": "Image",
   "poll": {
     "meta": {
       "description": "Create a poll with the given choices.",
@@ -187,6 +188,12 @@
         },
         "choice": {
           "description": "Some choice a user can choose. Make it short, preferably."
+        },
+        "image": {
+          "description": "Append an image to your poll."
+        },
+        "multichoice": {
+          "description": "Allow members to vote for multiple choices. Off by default."
         }
       }
     },
