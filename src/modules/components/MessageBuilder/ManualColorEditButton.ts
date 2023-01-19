@@ -1,6 +1,7 @@
 import { t } from '$lib/language';
 import { editableList, MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { EditableFeatures } from '$lib/types/settings';
+import chroma from 'chroma-js';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 import { FieldEditModal } from './FieldEditModal';
@@ -14,6 +15,7 @@ export const ManualColorEditButton = ButtonComponent({
     value: number;
   }) {
     const [id, maxLength] = editableList.find(([id]) => id === 'color')!;
+    const color = chroma(value).hex();
 
     this.showModal(
       new FieldEditModal({ fieldName: id, type })
@@ -28,7 +30,7 @@ export const ManualColorEditButton = ButtonComponent({
               .setLabel('Value')
               .setCustomId('VALUE')
               .setStyle('SHORT')
-              .setValue(`#${value.toString(16)}`)
+              .setValue(color)
               .setMaxLength(maxLength)
           )
         )

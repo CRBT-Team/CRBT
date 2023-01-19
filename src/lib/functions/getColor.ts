@@ -34,20 +34,23 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
       const guildIcon = thing.iconURL({ format: 'png' });
       const dominantColor = (await imgDominantColor(guildIcon)).num();
 
-      await fetchWithCache(`${thing.id}:settings`, () =>
-        prisma.servers.upsert({
-          where: { id: thing.id },
-          create: {
-            id: thing.id,
-            iconHash: thing.icon,
-            accentColor: dominantColor,
-          },
-          update: {
-            iconHash: thing.icon,
-            accentColor: dominantColor,
-          },
-          include,
-        })
+      await fetchWithCache(
+        `${thing.id}:settings`,
+        () =>
+          prisma.servers.upsert({
+            where: { id: thing.id },
+            create: {
+              id: thing.id,
+              iconHash: thing.icon,
+              accentColor: dominantColor,
+            },
+            update: {
+              iconHash: thing.icon,
+              accentColor: dominantColor,
+            },
+            include,
+          }),
+        true
       );
 
       return dominantColor;
