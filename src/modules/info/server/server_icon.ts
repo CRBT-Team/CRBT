@@ -1,13 +1,14 @@
+import { links } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
+import { ButtonStyle } from 'discord-api-types/v10';
 import {
   AllowedImageSize,
   DynamicImageFormat,
   Guild,
   Interaction,
-  MessageButton,
   MessageComponentInteraction,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -16,13 +17,15 @@ import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server icon',
-  description: `Get this server's icon, or another one's.`,
+  description: t('en-US', 'server_icon.description'),
   options: new OptionBuilder()
-    .string('id', 'The ID of the server to get the icon of.', {
+    .string('id', t('en-US', 'server_icon.options.id.description'), {
       nameLocalizations: getAllLanguages('ID', localeLower),
+      descriptionLocalizations: getAllLanguages('server_icon.options.id.description'),
     })
-    .string('size', 'The size of the icon to get.', {
+    .string('size', t('en-US', 'avatar.meta.options.size.description'), {
       nameLocalizations: getAllLanguages('SIZE', localeLower),
+      descriptionLocalizations: getAllLanguages('avatar.meta.options.size.description'),
       choices: {
         '1': 'Small (128px)',
         '2': 'Medium (512px)',
@@ -30,8 +33,9 @@ export default ChatCommand({
         '4': 'Largest (4096px)',
       },
     })
-    .string('format', 'The format of the icon to get.', {
+    .string('format', t('en-US', 'avatar.meta.options.format.description'), {
       nameLocalizations: getAllLanguages('FORMAT', localeLower),
+      descriptionLocalizations: getAllLanguages('avatar.meta.options.format.description'),
       choices: {
         '1': 'PNG',
         '2': 'JPG',
@@ -42,8 +46,10 @@ export default ChatCommand({
   async handle({ id, size, format }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
       return await CRBTError(this, {
-        title: "The ID you have used is either invalid, or I'm not part of this server.",
-        description: `You can also **[invite me to it]($[links.invite])**, if you have permission to.`,
+        title: t(this, 'SERVER_INFO_ERROR_INVALID_SERVER_TITLE'),
+        description: t(this, 'SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION', {
+          link: links.invite,
+        }),
       });
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
@@ -77,25 +83,25 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
   return {
     embeds: [
       {
-        author: { name: `${guild.name} - Server icon`, iconURL: av },
+        author: { name: `${guild.name} - ${t(this, 'ICON')}`, iconURL: av },
         image: { url: av },
         color,
       },
     ],
     components: components(
-      row(
-        new MessageButton()
-          .setStyle('LINK')
-          .setLabel(
-            !av.includes('embed/avatars')
-              ? `Download (${size ?? 2048}px - ${(av.includes('.gif')
-                  ? 'GIF'
-                  : format ?? 'png'
-                ).toUpperCase()})`
-              : 'Download (256px - PNG)'
-          )
-          .setURL(av)
-      ),
+      row({
+        type: 'BUTTON',
+        style: ButtonStyle.Link,
+        url: av,
+        label: t(this, 'avatar.strings.DOWNLOAD', {
+          SIZE: av.includes('embed/avatars') ? '256' : `${size ?? 2048}`,
+          FORMAT: av.includes('embed/avatars')
+            ? 'PNG'
+            : av.includes('.gif')
+            ? 'GIF'
+            : format?.toUpperCase() ?? 'PNG',
+        }),
+      }),
       serverNavBar(navCtx, this.locale, 'icon', getTabs('icon', guild))
     ),
   };

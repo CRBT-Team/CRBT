@@ -4,7 +4,7 @@ import { Guild } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 import { NavBarContext } from '../user/_navbar';
 import { renderServerIcon } from './server_icon';
-import { renderServerEmojis, renderServerInfo, renderServerMembersRoles } from './server_info';
+import { renderServerInfo } from './server_info';
 
 type DefaultTabs = 'server_info' | 'roles' | 'extra';
 type Tabs = 'server_info' | 'icon' | 'roles' | 'emojis' | 'extra';
@@ -31,27 +31,27 @@ export const ServerIconBtn = ButtonComponent({
   },
 });
 
-export const ServerMembersBtn = ButtonComponent({
-  async handle(opts: NavBarContext) {
-    if (this.user.id !== opts.userId) {
-      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
-    }
-    const guild = this.client.guilds.cache.get(opts.targetId);
+// export const ServerMembersBtn = ButtonComponent({
+//   async handle(opts: NavBarContext) {
+//     if (this.user.id !== opts.userId) {
+//       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
+//     }
+//     const guild = this.client.guilds.cache.get(opts.targetId);
 
-    this.update(await renderServerMembersRoles.call(this, guild, opts));
-  },
-});
+//     this.update(await renderServerMembersRoles.call(this, guild, opts));
+//   },
+// });
 
-export const ServerEmojisBtn = ButtonComponent({
-  async handle(opts: NavBarContext) {
-    if (this.user.id !== opts.userId) {
-      return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
-    }
-    const guild = this.client.guilds.cache.get(opts.targetId);
+// export const ServerEmojisBtn = ButtonComponent({
+//   async handle(opts: NavBarContext) {
+//     if (this.user.id !== opts.userId) {
+//       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
+//     }
+//     const guild = this.client.guilds.cache.get(opts.targetId);
 
-    this.update(await renderServerEmojis.call(this, guild, opts));
-  },
-});
+//     this.update(await renderServerEmojis.call(this, guild, opts));
+//   },
+// });
 
 export function getTabs(activeTab: Tabs, guild: Guild) {
   const tabs = new Set<Tabs>();

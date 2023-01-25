@@ -2,12 +2,7 @@ import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { createLinkButton, timestampMention } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
-import {
-  CommandInteraction,
-  EmbedFieldData,
-  MessageAttachment,
-  MessageComponentInteraction,
-} from 'discord.js';
+import { CommandInteraction, EmbedFieldData, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
 import { components, row } from 'purplet';
 import { SearchCmdOpts } from './search';
@@ -132,9 +127,6 @@ export async function handleAnimeMangas(
       this,
       opts,
       {
-        files: [
-          new MessageAttachment(Buffer.from(JSON.stringify(result, null, 2))).setName('res.json'),
-        ],
         embeds: [
           {
             author: {

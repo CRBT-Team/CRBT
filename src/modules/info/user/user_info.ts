@@ -123,6 +123,7 @@ export async function renderUser(
 
   if (member) {
     const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
+    const perms = keyPerms(member.permissions);
 
     if (member.nickname) {
       fields.push({
@@ -138,11 +139,11 @@ export async function renderUser(
       },
       {
         name: t(ctx.locale, 'MAJOR_PERMS'),
-        value:
-          hasPerms(member, PermissionFlagsBits.Administrator) ||
-          member.permissions.toArray().length === 0
-            ? 'Administrator (all permissions)'
-            : keyPerms(member.permissions).join(', '),
+        value: hasPerms(member.permissions, PermissionFlagsBits.Administrator, true)
+          ? t(ctx, 'ADMIN_ALL_PERMS')
+          : perms.length
+          ? perms.join(', ')
+          : t(ctx, 'NO_PERMS'),
       },
       {
         name: t(ctx, 'JOINED_DISCORD'),
@@ -166,7 +167,7 @@ export async function renderUser(
     embeds: [
       {
         author: {
-          name: `${user.username}#${user.discriminator} • ${t(ctx.locale, 'USER_INFO')}`,
+          name: `${user.username}#${user.discriminator} - ${t(ctx.locale, 'USER_INFO')}`,
           icon_url: avatar(member ?? user, 64),
         },
         description: userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '',

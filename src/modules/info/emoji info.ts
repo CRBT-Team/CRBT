@@ -1,8 +1,9 @@
-import { emojis } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import {
   CustomEmojiRegex,
   formatEmojiURL,
@@ -10,8 +11,8 @@ import {
   timestampMention,
 } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { ButtonInteraction, Interaction, MessageButton } from 'discord.js';
+import { ButtonStyle, PermissionFlagsBits } from 'discord-api-types/v10';
+import { ButtonInteraction, Interaction, MessageButton, SelectMenuInteraction } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -30,24 +31,25 @@ export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
 
   return {
     Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
-    'Google Noto Color': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
+    Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
+    'Google Noto Color Emoji': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
+    'Microsoft Fluent Emoji 3D': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
+    'Microsoft Fluent Emoji Flat': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
     Samsung: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
-    Microsoft: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
     WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
     Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
-    Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
-    'Microsoft Teams': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
   };
 }
 
 export default ChatCommand({
   name: 'emoji info',
-  description: 'Get info on a given emoji.',
-  options: new OptionBuilder().string(
-    'emoji',
-    'The emoji to get info about. Custom and default emojis are supported.',
-    { required: true }
-  ),
+  description: t('en-US', 'emoji_info.description'),
+  descriptionLocalizations: getAllLanguages('emoji_info.description'),
+  options: new OptionBuilder().string('emoji', t('en-US', 'emoji_info.options.emoji.description'), {
+    nameLocalizations: getAllLanguages('EMOJI', localeLower),
+    descriptionLocalizations: getAllLanguages('emoji_info.options.emoji.description'),
+    required: true,
+  }),
   async handle({ emoji }) {
     if (CustomEmojiRegex.test(emoji)) {
       const emojiData = {
@@ -66,18 +68,13 @@ export default ChatCommand({
         embeds: [
           {
             author: {
-              name: `${emojiData.name} - Emoji info`,
+              name: `:${emojiData.name}: - ${t(this, 'EMOJI_INFO')}`,
               iconURL: emojiData.url,
             },
             fields: [
               {
                 name: t(this, 'ID'),
                 value: emojiData.id,
-                inline: true,
-              },
-              {
-                name: t(this, 'ANIMATED'),
-                value: emojiData.animated ? 'Yes' : 'No',
                 inline: true,
               },
               {
@@ -100,7 +97,7 @@ export default ChatCommand({
               row(
                 new AddEmojiButton(emoji)
                   .setStyle('SECONDARY')
-                  .setLabel('Clone to this server')
+                  .setLabel(t(this, 'CLONE_TO_THIS_SERVER'))
                   .setEmoji(emojis.buttons.add)
               )
             ),
@@ -110,9 +107,12 @@ export default ChatCommand({
 
       return this.reply(await renderUnicodeEmoji.call(this, emojiData.codes));
     } else {
-      await CRBTError(this, {
-        title: 'Could not find that emoji',
-        description: `Try using a default Unicode emoji 😀, or a custom emoji. ${emojis.emotiguy.coolwoah}`,
+      return await CRBTError(this, {
+        title: t(this, 'EMOJI_INFO_ERROR_UNKNOWN_TITLE'),
+        description: t(this, 'EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION', {
+          standardEmoji: '😊',
+          customEmoji: emojis.emotiguy.coolwoah,
+        }),
       });
     }
   },
@@ -131,23 +131,24 @@ async function renderUnicodeEmoji(
     embeds: [
       {
         author: {
-          name: `${capitalCase(emojiData.name)} - Emoji info`,
+          name: `${capitalCase(emojiData.name)} - ${t(this, 'EMOJI_INFO')}`,
           icon_url: emojiURL,
         },
-        description: `**[View on Emojipedia](https://emojipedia.org/${emojiData.char})**`,
         fields: [
           {
-            name: 'Unicode',
+            name: t(this, 'UNICODE'),
             value: emojiData.codes,
             inline: true,
           },
           {
-            name: 'Available since',
-            value: `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
+            name: t(this, 'AVAILABLE_SINCE'),
+            value: `**[${t(this, 'UNICODE')} ${emojiData.unicode}](https://emojipedia.org/unicode-${
+              emojiData.unicode
+            })**`,
             inline: true,
           },
           {
-            name: 'Category',
+            name: t(this, 'CATEGORY'),
             value: emojiData.category,
             inline: true,
           },
@@ -161,17 +162,27 @@ async function renderUnicodeEmoji(
             : await getColor(this.user),
       },
     ],
-    components: components(
-      row(
-        new EmojiDesignSelect(emojiCodes).setOptions(
-          Object.entries(emojiImg(emojiData)).map(([brand, url]) => ({
-            label: brand === vendor ? `Viewing design: ${capitalCase(brand)}` : brand,
-            value: brand,
-            default: brand === vendor,
-          }))
-        )
-      )
-    ),
+    ...(this instanceof SelectMenuInteraction
+      ? {}
+      : {
+          components: components(
+            row(
+              new EmojiDesignSelect(emojiCodes).setOptions(
+                Object.entries(emojiImg(emojiData)).map(([brand, url]) => ({
+                  label: brand,
+                  value: brand,
+                  default: brand === vendor,
+                }))
+              )
+            ),
+            row({
+              type: 'BUTTON',
+              label: t(this, 'EMOJI_INFO_EMOJIPEDIA_BUTTON'),
+              url: `https://emojipedia.org/${emojiData.char}`,
+              style: ButtonStyle.Link,
+            })
+          ),
+        }),
   };
 }
 
@@ -209,7 +220,7 @@ export const AddEmojiButton = ButtonComponent({
         row(
           new MessageButton()
             .setStyle('SECONDARY')
-            .setLabel('Clone to this server')
+            .setLabel(t(this, 'CLONE_TO_THIS_SERVER'))
             .setEmoji(emojis.buttons.add)
             .setDisabled(true)
         )
@@ -219,7 +230,10 @@ export const AddEmojiButton = ButtonComponent({
     await this.reply({
       embeds: [
         {
-          title: `${emojis.success} Successfully added :${emojiData.name}: to this server!`,
+          title: `${emojis.success} ${t(this, 'EMOJI_INFO_CLONE_SUCCESS', {
+            emoji: `:${emojiData.name}:`,
+          })}`,
+          color: colors.success,
         },
       ],
     });

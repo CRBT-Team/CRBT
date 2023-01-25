@@ -2,7 +2,8 @@ import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { ButtonInteraction, GuildMember, Interaction, MessageButton, User } from 'discord.js';
+import { ButtonStyle } from 'discord-api-types/v10';
+import { ButtonInteraction, GuildMember, Interaction, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
@@ -125,19 +126,17 @@ export async function renderPfp(
         type === 'default' ? 'avatar' : 'user_avatar',
         getTabs(type === 'default' ? 'avatar' : 'user_avatar', user.toJSON(), member)
       ),
-      row(
-        new MessageButton()
-          .setLabel(
-            !av.includes('embed/avatars')
-              ? strings.DOWNLOAD.replace('{SIZE}', `${size ?? 2048}`).replace(
-                  '{FORMAT}',
-                  av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG'
-                )
-              : strings.DOWNLOAD.replace('{SIZE}', `256`).replace('{FORMAT}', 'PNG')
-          )
-          .setStyle('LINK')
-          .setURL(av)
-      )
+      row({
+        type: 'BUTTON',
+        style: ButtonStyle.Link,
+        url: av,
+        label: !av.includes('embed/avatars')
+          ? strings.DOWNLOAD.replace('{SIZE}', `${size ?? 2048}`).replace(
+              '{FORMAT}',
+              av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG'
+            )
+          : strings.DOWNLOAD.replace('{SIZE}', `256`).replace('{FORMAT}', 'PNG'),
+      })
     ),
   };
 }
