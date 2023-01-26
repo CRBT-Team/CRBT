@@ -32,7 +32,7 @@
   "YES": "Да",
   "NO": "Нет",
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Только пользователь, который использовал эту команду, может использовать этот компонент.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
   "TEXT_CHANNEL": "Текстовый канал",
   "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "Голосовой канал",
@@ -95,7 +95,7 @@
       "options": [
         {
           "name": "цвет",
-          "description": "Цвет для изменения акцента. Используйте один из предложенных цветов или цвет в HEX формате."
+          "description": "What to change your accent color to. Use a suggestion or a HEX color."
         }
       ]
     },
@@ -124,12 +124,12 @@
       "white": "Белый"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "У вас нет цвета профиля Discord для синхронизации. Чтобы поставить его, измените пользовательский профиль Discord'а и смените его цвет."
+      "NO_DISCORD_COLOR": "You don't have a profile color to sync from! To set one, go to your Discord Profile settings."
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с цветом вашего профиля CRBT.",
-      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также для других при просмотре вашего профиля."
+      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
+      "EMBED_DESCRIPTION": "It will be used in CRBT's replies to you, and when someone views information about you."
     }
   },
   "remind me": {
@@ -146,13 +146,13 @@
         },
         {
           "name": "адресат",
-          "description": "Куда отправить напоминание (Оставить пустым для отправки в ЛС)."
+          "description": "Where to send the reminder. Sends to DMs by default."
         }
       ]
     },
     "errors": {
       "PAST": "Нельзя установить напоминание в прошлом.",
-      "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
+      "INVALID_FORMAT": "The time you entered is in an invalid format.",
       "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
       "REMINDERS_MAX_LIMIT": "Вы не можете установить более 10 напоминаний одновременно."
     },
@@ -160,7 +160,7 @@
       "SUCCESS_TITLE": "Напоминание установлено!",
       "SUCCESS_CHANNEL": "Вы получите напоминание в {CHANNEL}",
       "SUCCESS_DM": "Вы получите уведомление в ЛС",
-      "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
+      "BUTTON_GCALENDAR": "Add to Google Calendar",
       "GCALENDAR_EVENT": "Установка напоминания CRBT.",
       "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
       "GCALENDAR_EVENT_CHANNEL": "Напоминание также будет отправлено в {CHANNEL} на {SERVER}.",
@@ -177,7 +177,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Пинг CRBT. Информация о соединении и времени ожидания."
+      "description": "Returns CRBT's latency information."
     }
   },
   "crbt info": {
@@ -188,22 +188,22 @@
   "IMAGE": "Image",
   "poll": {
     "meta": {
-      "description": "Создать опрос с выбранными вариантами.",
+      "description": "Create a poll.",
       "options": {
         "title": {
           "description": "О чем ваш опрос?"
         },
         "end_date": {
-          "description": "Когда опрос должен закончиться."
+          "description": "When it should end."
         },
         "choice": {
           "description": "Выбор, который может сделать пользователь. Желательно сделать его коротким."
         },
         "image": {
-          "description": "Append an image to your poll."
+          "description": "Append an image."
         },
         "multichoice": {
-          "description": "Allow members to vote for multiple choices. Off by default."
+          "description": "Allow members to vote for multiple choices."
         }
       }
     },
@@ -212,18 +212,16 @@
       "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
     },
     "strings": {
-      "POLL_DESCRIPTION": "Опрос закончится {TIME}.\nСоздатель опроса может просматривать параметры и другие данные, нажав кнопку {ICON} ниже.",
+      "POLL_DESCRIPTION": "The poll will end {TIME}.\nIts creator can view vote details using the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
       "POLL_FOOTER_VOTES": "Всего голосов: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Опрос начат {USER}",
+      "POLL_FOOTER_CREATOR": "Started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "SUCCESS_TITLE": "Опрос создан!",
-      "SUCCESS_DESCRIPTION": "Опрос закончится {TIME}, но вы можете преждевременно завершить его с помощью меню {ICON}. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
-      "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
+      "SUCCESS_DESCRIPTION": "It will end {TIME}, but you can prematurely end it with the {ICON} menu. From there, you can also edit or delete it, or view the votes.",
+      "POLL_DATA_OPTIONS": "Poll • Data and Options",
       "POLL_DATA_NOVOTES": "Пока нет голосов",
-      "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться в реальном времени. Используйте кнопку снова, чтобы обновить данные.",
-      "BUTTON_EDIT_POLL": "Редактировать опрос",
-      "BUTTON_CANCEL_POLL": "Удалить опрос",
+      "POLL_DATA_FOOTER": "Note: Data does not update live. Use the button again to refresh the data.",
       "BUTTON_END_POLL": "Завершить опрос",
       "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Опрос окончен.",
@@ -232,8 +230,7 @@
       "POLL_RESULTS_TITLE": "Результаты опроса!",
       "POLL_RESULTS_DESCRIPTION_TIE": "Варианты \"{OPTION1}\" и \"{OPTION2}\" имеют равное число голосов: {VOTES}",
       "POLL_RESULTS_DESCRIPTION_WIN": "Вариант \"{OPTION}\" выиграл с количеством голосов: {VOTES}",
-      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите на кнопку ниже, чтобы просмотреть все результаты.",
-      "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
+      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите на кнопку ниже, чтобы просмотреть все результаты."
     }
   },
   "banner": {
@@ -267,10 +264,8 @@
     }
   },
   "crbt_introduction": {
-    "strings": {
-      "EMBED_TITLE": "Спасибо, что пригласили {CRBT} на свой сервер!",
-      "EMBED_DESCRIPTION": "{CRBT} теперь на {SERVERS} серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки]({DISCORD})**."
-    }
+    "EMBED_TITLE": "Thank you for inviting CRBT!",
+    "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
   },
   "bookmark": {
     "ctxMeta": {
@@ -314,7 +309,7 @@
             "description": "Сколько ролей может быть выбрано. Установите 0 для неограниченного количества."
           },
           {
-            "description": "Роль для назначения участнику при выборе."
+            "description": "A role that a member may select."
           }
         ]
       }
@@ -346,9 +341,6 @@
   "SERVER_INFO": "Информация о сервере",
   "ICON": "Иконка",
   "BANNER": "Баннер",
-  "ROLES_AND_MEMBERS": "Роли и Участники",
-  "EMOJIS_AND_STICKERS": "Эмодзи и Стикеры",
-  "EXTRA": "Больше",
   "WARN": "Предупреждение",
   "KICK": "Исключение",
   "BAN": "Бан",
@@ -388,7 +380,7 @@
   "COLOR_PRESET_SELECT_MENU": "Выберите пресет цвета",
   "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Поддерживаются Markdown и CRBTscript.",
-  "FIELDS_CONTENT": "Обычный Текст",
+  "FIELDS_CONTENT": "Message Content",
   "FIELDS_AUTHOR": "Вставить автора",
   "FIELDS_AUTHOR_NAME": "Вставить имя автора",
   "FIELDS_AUTHOR_URL": "Вставить URL автора",
@@ -403,24 +395,21 @@
   "SETTINGS": "Настройки",
   "BIRTHDAY_REMINDER_MESSAGE": "Желаем {USER} счастливого дня рождения!",
   "BIRTHDAY_LIST_CONTENT": "День рождения {USER}",
-  "USER_INFO_TITLE": "{USER} - Информация о пользователе",
-  "JOINED_DISCORD": "Присоединился в Discord",
-  "JOINED_SERVER": "Присоединился к серверу",
-  "USER_NO_ROLES": "*Этот пользователь не имеет ролей...*",
+  "JOINED_DISCORD": "Discord member since",
+  "JOINED_SERVER": "Server member since",
   "SERVER_NICKNAME": "Имя сервера",
   "ROLES": "Роль(роли)",
   "ROLE": "Роль",
   "MAJOR_PERMS": "Основные права на этом сервере",
   "NO_PERMS": "*No permissions*",
   "ADMIN_ALL_PERMS": "Administrator (all permissions)",
+  "HELP": "Help",
   "help": {
-    "name": "справка",
     "description": "Возвращает краткое руководство по CRBT."
   },
-  "HELP_TITLE": "{botName} - Краткое руководство",
-  "HELP_DESCRIPTION": "Введите {prefix} в чате и нажмите {botIcon} , чтобы получить список Слэш-Команд.\nВы также можете нажать правой кнопкой мыши или удерживать сообщение или пользователя для быстрых действий.\n\nCRBT поставляется с удобными и мощными функциями, такими как создание напоминаний ({reminder}), объявление новых и уходящих участников ({settings}), получение Discord и веб-информации ({infoCommands} и т.д.)...\n\n...и это еще не все! Будьте в курсе событий CRBT, присоединившись к [нашему серверу]({link}).",
+  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Нравится CRBT?",
-  "HELP_AD_DESCRIPTION": "Поддержите нас, добавив его на свой сервер!",
+  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
   "GIVEAWAY": "Раздача",
   "giveaway": {
     "description": "Создать раздачу.",
@@ -497,7 +486,7 @@
     "options": {
       "text": {
         "name": "текст",
-        "description": "Текст для перевода."
+        "description": "What to translate."
       },
       "target": {
         "name": "цель",
@@ -509,27 +498,27 @@
       }
     }
   },
-  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} недопустимый исходный язык.",
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Переведено с {source} на {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Выберите язык, на который нужно перевести.",
   "REMINDER_LIST_TITLE": "{user} - CRBT Напоминания ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Ой, у вас нет никаких напоминаний. Используйте {command} , чтобы установить его!",
+  "REMINDER_LIST_NO_REMINDERS": "You don't have any reminders set. Use {command} to set one!",
   "REMINDER_LIST_DESCRIPTION": "Вы можете установить новое напоминание, используя {command}.",
   "REMINDER_DESTINATION": "Место назначения:",
-  "IN_YOUR_DMS": "В вашем ЛС",
+  "DMS": "DMs",
   "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Выберите напоминание для редактирования или удаления.",
   "REMINDER": "Напоминание",
   "REMINDER_EDIT_MODAL_TITLE": "Редактирование Напоминания",
   "SUBJECT": "Тема",
   "WHEN_TO_SEND": "Когда отправить",
-  "REMINDER_DELETE_CONFIRMATION_TITLE": "Подождите! Вы уверены, что хотите удалить это напоминание навсегда?!",
+  "DELETE_CONFIRMATION_TITLE": "Are you sure you want to delete it, forever?!",
   "REMINDER_MESSAGE_TITLE": "[Сообщение от {user}]",
   "reminder_list": {
-    "description": "Получить список всех ваших напоминаний."
+    "description": "Get a list of your reminders."
   },
   "pick": {
     "name": "выбрать",
-    "description": "Выбрать случайный элемент из заданного списка.",
+    "description": "Pick something at random.",
     "options": {
       "values": {
         "name": "значения",
@@ -537,28 +526,26 @@
       }
     }
   },
-  "PICK_RESULT": "\"{value}\" было выбрано из {number} заданных вариантов.",
+  "PICK_RESULT": "\"{value}\" was picked out of the {number} choices.",
   "privacy": {
     "name": "конфиденциальность",
     "description": "Проверьте настройки конфиденциальности CRBT и отредактируйте их."
   },
-  "ACHIEVEMENTS": "Достижения",
   "SILENT_LEAVES": "Беззвучный выход",
   "SILENT_JOINS": "Беззвучное присоединение",
   "TELEMETRY": "Командная телеметрия",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "После включения, CRBT перестанет оповещать о вашем присоединении к серверу.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "После включения, CRBT перестанет оповещать о вашем уходе с сервера.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT will not announce when you join a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT will not announce when you leave a server.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT регистрирует использование команд, как описано в нашей политике конфиденциальности. Отключение его приведет только к тому, что они не будут отправлены.",
   "YOUR_CRBT_DATA": "Ваши данные CRBT",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "CRBT - Настройки Конфиденциальности",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "Basic data you submit and more is used for CRBT's features. You may download or delete of your data. Beware, the latter erases everything about you on CRBT (including Reminders, Economy and more!!).",
+  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
   "settings": {
-    "name": "параметры",
     "description": "Настроить параметры CRBT на этом сервере."
   },
   "ATTENTION_REQUIRED": "Требуется внимание",
   "OVERVIEW": "Общий обзор",
-  "SETTINGS_TITLE": "Параметры CRBT сервера",
+  "SETTINGS_TITLE": "Server Settings",
   "SETTINGS_SELECT_MENU_PLACEHOLDER": "Выберите параметр.",
   "SETTINGS_DESCRIPTION": "Используйте меню выбора ниже, чтобы обновить параметры для этого сервера.",
   "ENABLE": "Включить",
@@ -578,7 +565,7 @@
   "CHANNEL": "Канал",
   "EDIT_SOMETHING": "Редактировать {feature}",
   "SETTINGS_COLOR_SET_TO": "Установить {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Цвет акцента сервера отображается в общедоступных эмбедах сообщений, включая Опросы, Раздачи, Выборщик Ролей, Информацию о Сервере и других функций.\nВ настоящее время он установлен на **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
   "search": {
     "name": "поиск",
     "description": "Поиск чего-либо в одном из предоставленных поисковиков.",
@@ -607,7 +594,7 @@
     "anime": "Аниме и Манга"
   },
   "POWERED_BY": "При поддержке {provider}",
-  "PAGINATION_MULTIPLE_RESULTS": "Показано {resultsPerPage} из {results} результатов.",
+  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage}/{results} results.",
   "PAGINATION_PAGE_OUT_OF": "Страница {page}/{pages}",
   "SEARCH_TITLE": "{engine} по запросу \"{query}\"",
   "VIEW_MESSAGE_BELOW": "View message below",
@@ -635,7 +622,7 @@
   "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
   "ROLE_INFO_MANAGED_INTEGRATION": "Role managed by an external integration.",
   "role_info": {
-    "description": "Get information about a server's role.",
+    "description": "Get information about a server role.",
     "options": {
       "role": {
         "description": "What role to get info from."
@@ -671,7 +658,7 @@
   "SLOWMODE": "Slowmode",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
-    "description": "Get information about a server's channel, category, thread or post.",
+    "description": "Get information about a server channel.",
     "options": {
       "channel": {
         "description": "What channel to get info from."
@@ -692,7 +679,7 @@
       }
     }
   },
-  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Could not find this emoji.",
+  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Can't find this emoji.",
   "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
   "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
   "INVITE_INFO": "Invite info",
@@ -703,7 +690,7 @@
   "SERVER_INVITE": "Server invite",
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
-  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid server or group DM invite.",
+  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
   "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
   "invite_info": {
     "description": "Get information about a Discord invite.",
