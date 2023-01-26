@@ -14,7 +14,7 @@ import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
 import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
+import { ButtonStyle, PermissionFlagsBits } from 'discord-api-types/v10';
 import { Message, MessageAttachment, MessageEmbed, TextInputComponent } from 'discord.js';
 import {
   ButtonComponent,
@@ -245,7 +245,7 @@ export const PollOptionsButton = ButtonComponent({
       components: components(
         row(
           new EditPollButton(this.message.id)
-            .setLabel(strings.BUTTON_EDIT_POLL)
+            .setLabel(t(this, 'EDIT'))
             .setEmoji(emojis.buttons.pencil)
             .setStyle('SECONDARY'),
           new EndPollButton(this.message.id)
@@ -253,7 +253,7 @@ export const PollOptionsButton = ButtonComponent({
             .setStyle('DANGER')
             .setEmoji(emojis.buttons.cross),
           new CancelPollButton(this.message.id)
-            .setLabel(strings.BUTTON_CANCEL_POLL)
+            .setLabel(t(this, 'CANCEL'))
             .setStyle('DANGER')
             .setEmoji(emojis.buttons.trash_bin)
         )
@@ -265,10 +265,9 @@ export const PollOptionsButton = ButtonComponent({
 
 export const EditPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = t(this, 'poll');
     const msg = (await this.channel.messages.fetch(msgId)).embeds[0];
 
-    const modal = new EditPollModal(msgId).setTitle(strings.BUTTON_EDIT_POLL).setComponents(
+    const modal = new EditPollModal(msgId).setTitle(t(this, 'EDIT')).setComponents(
       row(
         new TextInputComponent()
           .setCustomId('poll_title')
@@ -369,7 +368,6 @@ export const CancelPollButton = ButtonComponent({
 
 export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const { strings } = t(this, 'poll');
 
     const pollData = await getPollData(`${this.channel.id}/${msgId}`);
 
@@ -381,7 +379,7 @@ export const EndPollButton = ButtonComponent({
     await this.update({
       embeds: [
         {
-          title: `${emojis.success} ${strings.SUCCESS_POLL_ENDED}`,
+          title: `${emojis.success} ${t(this, 'poll.strings.SUCCESS_POLL_ENDED')}`,
           color: colors.success,
         },
       ],
@@ -427,6 +425,16 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
         color: colors.success,
       },
     ],
+    components: components(
+      row(
+        {
+          type: 'BUTTON',
+          style: ButtonStyle.Link,
+          label: t(this, 'JUMP_TO_MSG'),
+          url: pollMsg.url
+        }
+      )
+    )
   });
 
   await pollMsg.edit({

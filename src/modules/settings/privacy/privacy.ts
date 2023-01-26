@@ -61,7 +61,7 @@ async function renderPrivacySettings(
     embeds: [
       {
         author: {
-          name: t(this, 'PRIVACY_SETTINGS_TITLE'),
+          name: `CRBT - ${t(this, 'PRIVACY_SETTINGS_TITLE')}`,
           icon_url: icons.settings,
         },
         description: `You can review our **[Privacy Policy on the website](${links.policy})**.`,

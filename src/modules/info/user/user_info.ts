@@ -135,7 +135,7 @@ export async function renderUser(
     fields.push(
       {
         name: `${t(ctx, 'ROLES')} • ${roles.size}`,
-        value: roles.size > 0 ? roles.map((r) => r.toString()).join(' ') : t(ctx, 'USER_NO_ROLES'),
+        value: roles.size > 0 ? roles.map((r) => r.toString()).join(' ') : `*${t(ctx, 'NONE')}*`,
       },
       {
         name: t(ctx.locale, 'MAJOR_PERMS'),

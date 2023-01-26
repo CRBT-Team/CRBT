@@ -10,7 +10,7 @@ export default ChatCommand({
   description: 'Appends ( ͡° ͜ʖ ͡°) to your message.',
   allowInDMs: false,
   options: new OptionBuilder().string('message', 'Your message.', {
-    maxLength: 4096,
+    maxLength: 4084,
   }),
   async handle({ message }) {
     if (!hasPerms(this.guild.me.permissionsIn(this.channel), PermissionFlagsBits.ManageWebhooks)) {

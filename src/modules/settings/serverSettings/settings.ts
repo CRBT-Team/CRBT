@@ -22,7 +22,7 @@ import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from
 export default ChatCommand({
   name: 'settings',
   description: t('en-US', 'settings.description'),
-  nameLocalizations: getAllLanguages('settings.name', localeLower),
+  nameLocalizations: getAllLanguages('SETTINGS', localeLower),
   descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
@@ -76,7 +76,7 @@ export async function renderSettingsMenu(
     embeds: [
       {
         author: {
-          name: t(this, 'SETTINGS_TITLE'),
+          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
           iconURL: icon(settings.accentColor, 'settings', 'image'),
         },
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
@@ -129,7 +129,7 @@ export async function renderFeatureSettings(
     embeds: [
       {
         author: {
-          name: t(this, 'SETTINGS_TITLE'),
+          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
           icon_url: icon(settings.accentColor, 'settings', 'image'),
         },
         title: `${this.guild.name} / ${t(this, feature)}`,
