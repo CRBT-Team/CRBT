@@ -1,6 +1,6 @@
 {
   "ID": "ID",
-  "CREATED_ON": "Создан(а) в",
+  "CREATED_ON": "Дата создания",
   "MEMBER_COUNT": "Количество участников",
   "SERVER_COUNT": "Количество серверов",
   "PING": "Пинг",
@@ -9,10 +9,10 @@
   "ADD_TO_SERVER": "Добавить на сервер",
   "DISCORD_SERVER": "Сервер Discord",
   "DONATE": "Поддержать",
-  "ERROR_ADMIN_ONLY": "Вы должны быть администратором для использования этой команды.",
-  "ERROR_MISSING_PERMISSIONS": "Вам нужно разрешить {PERMISSIONS} для использования этой команды.",
-  "ERROR_INVALID_URL": "Предоставленный URL недействителен.",
-  "ERROR_INVALID_COLOR": "Выбранный цвет недействителен. Используйте корректный HEX цвет или один из предложенных пресетов.",
+  "ERROR_ADMIN_ONLY": "Вы должны быть администратором, чтобы использовать эту команду.",
+  "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
+  "ERROR_INVALID_URL": "Предоставленная ссылка недействительна.",
+  "ERROR_INVALID_COLOR": "Выбранный цвет недействителен. Используйте корректный HEX цвет или один из предложенных шаблонов.",
   "BACK": "Вернуться",
   "JUMP_TO_MSG": "Перейти к сообщению",
   "CANCEL": "Отменить",
@@ -34,63 +34,73 @@
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Только пользователь, который использовал эту команду, может использовать этот компонент.",
   "TEXT_CHANNEL": "Текстовый канал",
+  "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "Голосовой канал",
-  "STAGE_CHANNEL": "Сцена",
+  "VOICE_CHANNELS": "Voice Channel(s)",
+  "STAGE_CHANNEL": "Трибуна",
+  "STAGE_CHANNELS": "Stage Channel(s)",
   "ANNOUNCEMENT_CHANNEL": "Канал объявлений",
+  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
   "CATEGORY": "Категория",
+  "CATEGORIES": "Category(ies)",
   "RULES_CHANNEL": "Канал правил",
+  "RULES_CHANNELS": "Rules Channel(s)",
   "THREAD_CHANNEL": "Ветка",
+  "THREAD_CHANNELS": "Thread(s)",
   "FORUM_CHANNEL": "Форум",
+  "FORUM_CHANNELS": "Forum Channel(s)",
   "FORUM_POST": "Пост на форуме",
-  "WEBSOCKET": "Вебсокет",
+  "FORUM_POSTS": "Forum Post(s)",
+  "WEBSOCKET": "Веб-сокет",
   "INTERACTION": "Взаимодействие",
   "MEMBERS": "Участники",
   "STICKERS": "Стикеры",
-  "SERVERS": "Сервера",
+  "SERVERS": "Серверы",
   "NONE": "Ничего",
   "CHANNELS": "Каналы",
   "EMOJIS": "Эмодзи",
   "ADDED": "Добавлен(а)",
   "OWNED_BY": "Принадлежит",
-  "STATIC": "Фиксированный",
-  "ANIMATED": "Анимировано",
+  "STATIC": "Статичный",
+  "ANIMATED": "Анимированный",
   "END_DATE": "Дата окончания",
-  "POLL": "Poll",
-  "CHOICE": "Choice",
-  "TITLE": "Title",
-  "USER": "User",
-  "SIZE": "Size",
-  "FORMAT": "Format",
-  "SMALL": "Small",
-  "MEDIUM": "Medium",
-  "LARGE": "Large",
-  "LARGEST": "Largest",
+  "POLL": "Опрос",
+  "CHOICE": "Выбор",
+  "TITLE": "Заголовок",
+  "USER": "Пользователь",
+  "SIZE": "Размер",
+  "FORMAT": "Формат",
+  "SMALL": "Маленький",
+  "MEDIUM": "Средний",
+  "LARGE": "Большой",
+  "LARGEST": "Огромный",
+  "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
-      "DESCRIPTION": "This was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "Об этом нам сообщили автоматически. Вот что говорит ошибка:\n{MESSAGE}"
     }
   },
   "CooldownError": {
     "strings": {
       "TITLE": "Подождите!",
-      "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
-      "COMMAND": "команду",
+      "DESCRIPTION": "Вы сможете использовать {TYPE} через {TIME}...",
+      "COMMAND": "команда",
       "COMPONENT": "компонент"
     }
   },
   "color set": {
     "meta": {
-      "description": "Изменить пользовательский цвет CRBT.",
+      "description": "Изменить цвет акцента CRBT.",
       "options": [
         {
           "name": "цвет",
-          "description": "Цвет для изменения акцента. Используйте одно из предложений или цвет HEX."
+          "description": "Цвет для изменения акцента. Используйте один из предложенных цветов или цвет в HEX формате."
         }
       ]
     },
     "colorNames": {
-      "sync": "Синхронизировать цвет профиля Discord",
+      "sync": "Синхронизировать Цвет Профиля Discord",
       "lightred": "Светло-красный",
       "red": "Красный",
       "darkred": "Тёмно-красный",
@@ -103,7 +113,7 @@
       "lightblue": "Светло-синий",
       "blue": "Синий",
       "darkblue": "Тёмно-синий",
-      "blurple": "Фиолетово-синий",
+      "blurple": "Синелетовый",
       "lightpurple": "Светло-фиолетовый",
       "purple": "Фиолетовый",
       "darkpurple": "Тёмно-фиолетовый",
@@ -119,7 +129,7 @@
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
       "EMBED_SYNC_INFO": "Ваш цвет профиля Discord будет синхронизирован с цветом вашего профиля CRBT.",
-      "EMBED_DESCRIPTION": "This color will be used across most of CRBT's replies to you, as well as on your info cards, when someone else visits them."
+      "EMBED_DESCRIPTION": "Этот цвет будет использован в большинстве ответов CRBT к вам, а также для других при просмотре вашего профиля."
     }
   },
   "remind me": {
@@ -128,11 +138,11 @@
       "options": [
         {
           "name": "когда",
-          "description": "When to remind you."
+          "description": "Когда вам напомнить."
         },
         {
           "name": "тема",
-          "description": "What to be reminded about."
+          "description": "О чем напомнить."
         },
         {
           "name": "адресат",
@@ -144,17 +154,17 @@
       "PAST": "Нельзя установить напоминание в прошлом.",
       "INVALID_FORMAT": "Введенное время в неправильном формате, или менее 0 секунд в будущем.",
       "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
-      "REMINDERS_MAX_LIMIT": "You cannot set more than 10 reminders at once."
+      "REMINDERS_MAX_LIMIT": "Вы не можете установить более 10 напоминаний одновременно."
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "You will be reminded in {CHANNEL}",
+      "SUCCESS_CHANNEL": "Вы получите напоминание в {CHANNEL}",
       "SUCCESS_DM": "Вы получите уведомление в ЛС",
       "BUTTON_GCALENDAR": "Добавить как событие календаря Google",
       "GCALENDAR_EVENT": "Установка напоминания CRBT.",
       "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {CHANNEL}, in {SERVER}.",
-      "REMINDER_DESCRIPTION": "Set on {TIME} ({RELATIVE_TIME})"
+      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будет отправлено в {CHANNEL} на {SERVER}.",
+      "REMINDER_DESCRIPTION": "Установлено на {TIME} ({RELATIVE_TIME})"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -172,21 +182,28 @@
   },
   "crbt info": {
     "meta": {
-      "description": "Get information about CRBT."
+      "description": "Получить информацию о CRBT."
     }
   },
+  "IMAGE": "Image",
   "poll": {
     "meta": {
       "description": "Создать опрос с выбранными вариантами.",
       "options": {
         "title": {
-          "description": "What's your poll about?"
+          "description": "О чем ваш опрос?"
         },
         "end_date": {
-          "description": "When the poll should end."
+          "description": "Когда опрос должен закончиться."
         },
         "choice": {
-          "description": "Some choice a user can choose. Make it short, preferably."
+          "description": "Выбор, который может сделать пользователь. Желательно сделать его коротким."
+        },
+        "image": {
+          "description": "Append an image to your poll."
+        },
+        "multichoice": {
+          "description": "Allow members to vote for multiple choices. Off by default."
         }
       }
     },
@@ -195,13 +212,13 @@
       "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
     },
     "strings": {
-      "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
-      "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Poll started by {USER}",
+      "POLL_DESCRIPTION": "Опрос закончится {TIME}.\nСоздатель опроса может просматривать параметры и другие данные, нажав кнопку {ICON} ниже.",
+      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
+      "POLL_FOOTER_VOTES": "Всего голосов: {VOTES}",
+      "POLL_FOOTER_CREATOR": "Опрос начат {USER}",
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "SUCCESS_TITLE": "Опрос создан!",
-      "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
+      "SUCCESS_DESCRIPTION": "Опрос закончится {TIME}, но вы можете преждевременно завершить его с помощью меню {ICON}. Из этого меню вы также можете редактировать опрос, удалить его или просмотреть голосующих.",
       "POLL_DATA_OPTIONS": "Опрос CRBT • Данные и варианты",
       "POLL_DATA_NOVOTES": "Пока нет голосов",
       "POLL_DATA_FOOTER": "Примечание: Эти данные не будут обновляться в реальном времени. Используйте кнопку снова, чтобы обновить данные.",
@@ -213,10 +230,18 @@
       "POLL_HEADER_ENDED": "Завершено",
       "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
       "POLL_RESULTS_TITLE": "Результаты опроса!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
+      "POLL_RESULTS_DESCRIPTION_TIE": "Варианты \"{OPTION1}\" и \"{OPTION2}\" имеют равное число голосов: {VOTES}",
+      "POLL_RESULTS_DESCRIPTION_WIN": "Вариант \"{OPTION}\" выиграл с количеством голосов: {VOTES}",
+      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите на кнопку ниже, чтобы просмотреть все результаты.",
       "BUTTON_JUMP_TO_POLL": "Перейти к опросу"
+    }
+  },
+  "banner": {
+    "description": "Get a user's profile banner.",
+    "options": {
+      "user": {
+        "description": "The user whose banner to get."
+      }
     }
   },
   "avatar": {
@@ -235,16 +260,16 @@
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Получить аватар/баннер"
     },
     "strings": {
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "Скачать ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
     "strings": {
-      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
-      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
+      "EMBED_TITLE": "Спасибо, что пригласили {CRBT} на свой сервер!",
+      "EMBED_DESCRIPTION": "{CRBT} теперь на {SERVERS} серверах!\nДля начала работы с CRBT, просто введите `/` и нажмите на его аватар!\nДля получения дополнительной информации посетите **[сервер поддержки]({DISCORD})**."
     }
   },
   "bookmark": {
@@ -255,13 +280,13 @@
       "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
+      "BOOKMARK_AUTHOR": "{USER} (сохранил сообщение)",
       "SUCCESS_MESSAGE": "Это сообщение отправлено в ЛС!"
     }
   },
   "calc": {
     "meta": {
-      "name": "calculate",
+      "name": "вычислить",
       "description": "Рассчитать математическое выражение.",
       "options": [
         {
@@ -274,42 +299,42 @@
   "role-selectors": {
     "manual": {
       "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
+        "description": "Создайте новый Выборщик Ролей, меню для выбора роли.",
         "options": [
           {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
+            "name": "поведение",
+            "description": "Как должен вести себя Выборщик Ролей.",
             "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
+              "Переключить выдачу/убирание роли(ей)",
+              "Выдать эту(и) роль(и) только один раз"
             ]
           },
           {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
+            "name": "предел",
+            "description": "Сколько ролей может быть выбрано. Установите 0 для неограниченного количества."
           },
           {
-            "description": "A role to assign to the member when selected."
+            "description": "Роль для назначения участнику при выборе."
           }
         ]
       }
     },
     "errors": {
       "BOT_MISSING_PERMS": "Мне нужно разрешение \"Управление ролями\" для создания выборщика ролей.",
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить ее."
+      "ROLES_DO_NOT_EXIST": "Одна или несколько указанных ролей были удалены. Свяжитесь с администратором для решения проблемы.",
+      "BUTTON_ROLES_ONCE": "Вы можете выбрать эту роль только один раз, и вы не сможете удалить её."
     },
     "strings": {
       "CHOOSE_ROLE": "Выберите роль",
       "CHOOSE_ROLES": "Выберите роли",
-      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей, из списка ниже.",
+      "GENERIC_SELECTOR_TITLE": "Выберите одну или несколько ролей из списка ниже.",
       "SELECT_MENU_ROLES_SUCCESS": "Ваши роли успешно обновлены.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
+      "BUTTON_ROLES_ADD": "Роль {ROLE} добавлена к вашему списку ролей.",
       "BUTTON_ROLES_ADD_AGAIN": "Выберите снова для удаления.",
-      "BUTTON_ROLES_REMOVE": "{ROLE} удалён из ваших ролей.",
+      "BUTTON_ROLES_REMOVE": "Роль {ROLE} удалена из списка ваших ролей.",
       "BUTTON_ROLES_REMOVE_AGAIN": "Выберите снова для добавления.",
-      "SUCCESS_TITLE": "Выборщик ролей создан!",
-      "SUCCESS_DESCRIPTION": "Чтобы отключить это, просто удалите сообщение выборщика ролей."
+      "SUCCESS_TITLE": "Выборщик Ролей создан!",
+      "SUCCESS_DESCRIPTION": "Чтобы отключить его, просто удалите сообщение Выборщика Ролей."
     }
   },
   "AVATAR": "Аватар",
@@ -319,11 +344,11 @@
   "USER_AVATAR": "Аватар пользователя",
   "USER_BANNER": "Баннер пользователя",
   "SERVER_INFO": "Информация о сервере",
-  "ICON": "Значок",
+  "ICON": "Иконка",
   "BANNER": "Баннер",
-  "ROLES_AND_MEMBERS": "Роли и участники",
-  "EMOJIS_AND_STICKERS": "Эмодзи и стикеры",
-  "EXTRA": "Дополнительно",
+  "ROLES_AND_MEMBERS": "Роли и Участники",
+  "EMOJIS_AND_STICKERS": "Эмодзи и Стикеры",
+  "EXTRA": "Больше",
   "WARN": "Предупреждение",
   "KICK": "Исключение",
   "BAN": "Бан",
@@ -331,39 +356,36 @@
   "TIMEOUT": "Истечение времени ожидания",
   "TEMPBAN": "Временный бан",
   "CLEAR": "Очистить",
-  "REPORT": "Report",
-  "REASON": "Reason",
-  "MOD_VERB_BAN": "Banned",
-  "MOD_VERB_TEMPBAN": "Temporarily banned",
-  "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
-  "MOD_VERB_TIMEOUT": "Timed out",
-  "MOD_VERB_WARN": "Warned",
-  "MOD_VERB_REPORT": "Reported",
-  "DESCRIPTION": "Description",
-  "EXPIRES_AT": "Expires at",
-  "MODERATION_LOGS_VIEW_EMPTY": "*No moderation history found.*",
-  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete a strike",
-  "MODERATION_LOGS_VIEW_TITLE": "История действий на {SERVER}",
-  "MODERATOR": "Moderator",
-  "REPORTED_BY": "Reported by",
-  "JOIN_MESSAGE": "Приветствие",
-  "LEAVE_MESSAGE": "Прощание",
+  "REPORT": "Пожаловаться",
+  "REASON": "Причина",
+  "MOD_VERB_BAN": "Забанен",
+  "MOD_VERB_TEMPBAN": "Временно забанен",
+  "MOD_VERB_CLEAR": "Очищены сообщения в {target}",
+  "MOD_VERB_KICK": "Изгнан",
+  "MOD_VERB_TIMEOUT": "Наказан",
+  "MOD_VERB_WARN": "Предупрежден",
+  "MOD_VERB_REPORT": "Пожаловался",
+  "DESCRIPTION": "Описание",
+  "EXPIRES_AT": "Истекает в",
+  "MODERATION_LOGS_VIEW_EMPTY": "*История модерации не найдена.*",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "Просмотр, редактирование или удаление страйка",
+  "MODERATION_LOGS_VIEW_TITLE": "История модерации на сервере {SERVER}",
+  "MODERATOR": "Модератор",
+  "REPORTED_BY": "Сообщил",
+  "JOIN_MESSAGE": "Приветственное сообщение",
+  "LEAVE_MESSAGE": "Прощальное сообщение",
   "JOIN_CHANNEL": "Канал приветствий",
   "LEAVE_CHANNEL": "Канал прощаний",
   "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Предпросмотр {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "Произошла ошибка при попытке предпросмотра {TYPE}. Возможно, канал больше не существует или у меня нет разрешения на отправку сообщений в нём.",
-  "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на <server.name>!",
+  "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на сервере <server.name>!",
   "ERROR_NO_MESSAGE": "Для начала, задайте сообщение при помощи команды {COMMAND}.",
-  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "Сначала нужно выбрать канал для отправки {TYPE}. Используйте {command} для выбора.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
   "FIELD_SELECT_MENU": "Выберите поле для редактирования",
-  "COLOR_PRESET_SELECT_MENU": "Выберите шаблон цвета",
+  "COLOR_PRESET_SELECT_MENU": "Выберите пресет цвета",
   "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Поддерживаются Markdown и CRBTscript.",
   "FIELDS_CONTENT": "Обычный Текст",
@@ -389,201 +411,306 @@
   "ROLES": "Роль(роли)",
   "ROLE": "Роль",
   "MAJOR_PERMS": "Основные права на этом сервере",
+  "NO_PERMS": "*No permissions*",
+  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "help": {
-    "name": "help",
-    "description": "Returns a quick help guide for CRBT."
+    "name": "справка",
+    "description": "Возвращает краткое руководство по CRBT."
   },
-  "HELP_TITLE": "{botName} - Quick Guide",
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
-  "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
-  "GIVEAWAY": "Giveaway",
+  "HELP_TITLE": "{botName} - Краткое руководство",
+  "HELP_DESCRIPTION": "Введите {prefix} в чате и нажмите {botIcon} , чтобы получить список Слэш-Команд.\nВы также можете нажать правой кнопкой мыши или удерживать сообщение или пользователя для быстрых действий.\n\nCRBT поставляется с удобными и мощными функциями, такими как создание напоминаний ({reminder}), объявление новых и уходящих участников ({settings}), получение Discord и веб-информации ({infoCommands} и т.д.)...\n\n...и это еще не все! Будьте в курсе событий CRBT, присоединившись к [нашему серверу]({link}).",
+  "HELP_AD_TITLE": "Нравится CRBT?",
+  "HELP_AD_DESCRIPTION": "Поддержите нас, добавив его на свой сервер!",
+  "GIVEAWAY": "Раздача",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "Создать раздачу.",
     "options": {
       "prize": {
-        "description": "What to give away."
+        "description": "Что раздавать."
       },
       "end_date": {
-        "description": "When to end the giveaway."
+        "description": "Когда закончить раздачу."
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "Сколько человек может выиграть в раздаче."
       }
     }
   },
-  "WINNERS": "Winners",
-  "PRIZE": "Prize",
+  "WINNERS": "Победители",
+  "PRIZE": "Награда",
   "8ball": {
-    "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "name": "шар_судьбы",
+    "description": "Спросить у шара судьбы.",
     "options": {
       "question": {
-        "description": "What to ask."
+        "description": "Что спросить."
       }
     }
   },
-  "8BALL": "8-Ball",
-  "ANSWER": "Answer",
-  "QUESTION": "Question",
+  "8BALL": "Шар судьбы",
+  "ANSWER": "Ответ",
+  "QUESTION": "Вопрос",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
-    "It is decidedly so.",
-    "Without a doubt.",
-    "Yes, definitely.",
-    "You may rely on it.",
-    "As I see it, yes.",
-    "Most likely.",
-    "Outlook good.",
-    "Yes.",
-    "Signs point to yes."
+    "Несомненно.",
+    "Предрешено.",
+    "Без сомнения.",
+    "Да, определенно.",
+    "Можешь быть уверен в этом.",
+    "Мне кажется — «да».",
+    "Вероятнее всего.",
+    "Хорошие перспективы.",
+    "Да.",
+    "Знаки говорят — «да»."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "Пока не ясно, попробуйте снова.",
+    "Спросите позже.",
+    "Лучше не рассказывать.",
+    "Сейчас нельзя предсказать.",
+    "Сконцентрируйтесь и спросите снова."
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
-    "My sources say no.",
-    "Outlook not so good.",
-    "Very doubtful."
+    "Даже не думайте.",
+    "Мой ответ — «нет».",
+    "По моим данным — «нет».",
+    "Перспективы не очень хорошие.",
+    "Весьма сомнительно."
   ],
-  "COMMENT": "comment",
-  "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
+  "COMMENT": "комментарий",
+  "COMMENT_DESCRIPTION": "Комментарий для отображения для дополнительного контекста.",
   "roll": {
-    "name": "roll",
-    "description": "Roll a dice. Supports RPG dice notation.",
+    "name": "бросить",
+    "description": "Бросить кости. Поддерживает обозначение игральных костей RPG.",
     "options": {
       "dice": {
-        "name": "dice",
-        "description": "What dice to roll. Use 'd6' for a 6-sided die."
+        "name": "кости",
+        "description": "Какие кости бросить. Используйте 'd6' для шестигранного кубика."
       }
     }
   },
-  "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
-  "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
-  "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
-  "TRANSLATE": "translate",
+  "ROLL_ERROR_TOO_MANY_DICE": "Нельзя бросить более 100 костей за раз.",
+  "ROLL_RESULTS_TITLE": "Результат ваших бросков — {result}.",
+  "ROLL_RESULTS_FOOTER": "Ваши броски: {results}.",
+  "TRANSLATE": "перевод",
   "translate": {
-    "description": "Translate text to another language.",
+    "description": "Перевести текст на другой язык.",
     "options": {
       "text": {
-        "name": "text",
-        "description": "The text to translate."
+        "name": "текст",
+        "description": "Текст для перевода."
       },
       "target": {
-        "name": "target",
-        "description": "The language to translate to."
+        "name": "цель",
+        "description": "Язык, на который нужно перевести."
       },
       "source": {
-        "name": "source",
-        "description": "The source language to translate from."
+        "name": "источник",
+        "description": "Исходный язык для перевода."
       }
     }
   },
-  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
-  "TRANSLATE_RESULT": "Translated from {source} to {target}",
-  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to.",
-  "REMINDER_LIST_TITLE": "{user} - CRBT Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Uh oh, you don't have any reminders set. Use {command} to set one!",
-  "REMINDER_LIST_DESCRIPTION": "You can set a new reminder using {command}.",
-  "REMINDER_DESTINATION": "Destination:",
-  "IN_YOUR_DMS": "In your DMs",
-  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Select a reminder to edit or delete.",
-  "REMINDER": "Reminder",
-  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} недопустимый исходный язык.",
+  "TRANSLATE_RESULT": "Переведено с {source} на {target}",
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Выберите язык, на который нужно перевести.",
+  "REMINDER_LIST_TITLE": "{user} - CRBT Напоминания ({number})",
+  "REMINDER_LIST_NO_REMINDERS": "Ой, у вас нет никаких напоминаний. Используйте {command} , чтобы установить его!",
+  "REMINDER_LIST_DESCRIPTION": "Вы можете установить новое напоминание, используя {command}.",
+  "REMINDER_DESTINATION": "Место назначения:",
+  "IN_YOUR_DMS": "В вашем ЛС",
+  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Выберите напоминание для редактирования или удаления.",
+  "REMINDER": "Напоминание",
+  "REMINDER_EDIT_MODAL_TITLE": "Редактирование Напоминания",
   "SUBJECT": "Тема",
-  "WHEN_TO_SEND": "When to send",
-  "REMINDER_DELETE_CONFIRMATION_TITLE": "Hold on! Are you sure you want to delete this reminder, forever?!",
-  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "WHEN_TO_SEND": "Когда отправить",
+  "REMINDER_DELETE_CONFIRMATION_TITLE": "Подождите! Вы уверены, что хотите удалить это напоминание навсегда?!",
+  "REMINDER_MESSAGE_TITLE": "[Сообщение от {user}]",
   "reminder_list": {
-    "description": "Get a list of all of your reminders."
+    "description": "Получить список всех ваших напоминаний."
   },
   "pick": {
-    "name": "pick",
-    "description": "Pick an item at random from a given list.",
+    "name": "выбрать",
+    "description": "Выбрать случайный элемент из заданного списка.",
     "options": {
       "values": {
-        "name": "values",
-        "description": "The values to pick from, separated by commas."
+        "name": "значения",
+        "description": "Значения для выбора, разделенные запятыми."
       }
     }
   },
-  "PICK_RESULT": "\"{value}\" was picked out of the {number} given choices.",
+  "PICK_RESULT": "\"{value}\" было выбрано из {number} заданных вариантов.",
   "privacy": {
-    "name": "privacy",
-    "description": "Review your CRBT privacy settings and edit them."
+    "name": "конфиденциальность",
+    "description": "Проверьте настройки конфиденциальности CRBT и отредактируйте их."
   },
-  "ACHIEVEMENTS": "Achievements",
-  "SILENT_LEAVES": "Silent leaving",
-  "SILENT_JOINS": "Silent joining",
-  "TELEMETRY": "Command Telemetry",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this on will stop CRBT from announcing when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this on will stop CRBT from announcing when you leave a server.",
-  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will only stop those from being sent.",
-  "YOUR_CRBT_DATA": "Your CRBT data",
+  "ACHIEVEMENTS": "Достижения",
+  "SILENT_LEAVES": "Беззвучный выход",
+  "SILENT_JOINS": "Беззвучное присоединение",
+  "TELEMETRY": "Командная телеметрия",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "После включения, CRBT перестанет оповещать о вашем присоединении к серверу.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "После включения, CRBT перестанет оповещать о вашем уходе с сервера.",
+  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT регистрирует использование команд, как описано в нашей политике конфиденциальности. Отключение его приведет только к тому, что они не будут отправлены.",
+  "YOUR_CRBT_DATA": "Ваши данные CRBT",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
+  "PRIVACY_SETTINGS_TITLE": "CRBT - Настройки Конфиденциальности",
   "settings": {
-    "name": "settings",
-    "description": "Configure CRBT settings on this server."
+    "name": "параметры",
+    "description": "Настроить параметры CRBT на этом сервере."
   },
-  "ATTENTION_REQUIRED": "Attention Required",
-  "OVERVIEW": "Overview",
-  "SETTINGS_TITLE": "CRBT Server Settings",
-  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choose a setting.",
-  "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
-  "ENABLE": "Enable",
-  "DISABLE": "Disable",
-  "ACCENT_COLOR": "Accent Color",
-  "MODERATION_LOGS": "Moderation logs",
-  "MODERATION_REPORTS": "Moderation Reports",
-  "ECONOMY": "Economy",
-  "STATUS": "Status",
-  "SETTINGS_ERRORS_FOUND": "{number} errors found",
-  "ENABLED": "Enabled",
-  "DISABLED": "Disabled",
-  "SETTINGS_SENDING_IN": "Sending in {channel}",
-  "EDIT_MESSAGE": "Edit Message",
-  "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
-  "CHANNEL": "Channel",
-  "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages including Polls, Giveaways, Role Pickers, the Server Info sheet among other features.\nIt's currently set to **{color}**.",
+  "ATTENTION_REQUIRED": "Требуется внимание",
+  "OVERVIEW": "Общий обзор",
+  "SETTINGS_TITLE": "Параметры CRBT сервера",
+  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Выберите параметр.",
+  "SETTINGS_DESCRIPTION": "Используйте меню выбора ниже, чтобы обновить параметры для этого сервера.",
+  "ENABLE": "Включить",
+  "DISABLE": "Выключить",
+  "ACCENT_COLOR": "Цвет Акцента",
+  "MODERATION_LOGS": "Журнал Модерации",
+  "MODERATION_REPORTS": "Отчёты Модерации",
+  "ECONOMY": "Экономика",
+  "STATUS": "Статус",
+  "SETTINGS_ERRORS_FOUND": "Найдено {number} ошибок",
+  "ENABLED": "Включено",
+  "DISABLED": "Выключено",
+  "SETTINGS_SENDING_IN": "Отправка в {channel}",
+  "EDIT_MESSAGE": "Редактировать Сообщение",
+  "EDIT_CHANNEL": "Редактировать Канал",
+  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "Вы можете использовать имя Текстового Канала или его ID.",
+  "CHANNEL": "Канал",
+  "EDIT_SOMETHING": "Редактировать {feature}",
+  "SETTINGS_COLOR_SET_TO": "Установить {color}",
+  "SETTINGS_COLOR_DESCRIPTION": "Цвет акцента сервера отображается в общедоступных эмбедах сообщений, включая Опросы, Раздачи, Выборщик Ролей, Информацию о Сервере и других функций.\nВ настоящее время он установлен на **{color}**.",
   "search": {
-    "name": "search",
-    "description": "Search for anything in one of the provided search engines.",
+    "name": "поиск",
+    "description": "Поиск чего-либо в одном из предоставленных поисковиков.",
     "options": {
       "query": {
-        "name": "query",
-        "description": "What to search for."
+        "name": "запрос",
+        "description": "Что искать."
       },
       "site": {
-        "name": "site",
-        "description": "What search engine to use."
+        "name": "сайт",
+        "description": "Какой поисковик использовать."
       },
       "anonymous": {
-        "name": "anonymous",
-        "description": "Search without sending a public messsage."
+        "name": "анонимно",
+        "description": "Поиск без отправки публичного сообщения."
       }
     }
   },
   "SEARCH_ENGINES": {
-    "web": "Web",
-    "images": "Images",
-    "videos": "Videos",
-    "weather": "Weather",
-    "dictionary": "Dictionary",
+    "web": "Веб",
+    "images": "Изображения",
+    "videos": "Видео",
+    "weather": "Погода",
+    "dictionary": "Словарь",
     "urban": "Urban Dictionary",
-    "anime": "Anime & Manga"
+    "anime": "Аниме и Манга"
   },
-  "POWERED_BY": "Powered by {provider}",
-  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
-  "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
-  "SEARCH_TITLE": "{engine} results for \"{query}\""
+  "POWERED_BY": "При поддержке {provider}",
+  "PAGINATION_MULTIPLE_RESULTS": "Показано {resultsPerPage} из {results} результатов.",
+  "PAGINATION_PAGE_OUT_OF": "Страница {page}/{pages}",
+  "SEARCH_TITLE": "{engine} по запросу \"{query}\"",
+  "VIEW_MESSAGE_BELOW": "View message below",
+  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
+  "MODREPORTS_MODAL_TITLE": "Report {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
+  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
+  "KICK_USER": "Kick User",
+  "WARN_USER": "Warn User",
+  "BAN_USER": "Ban User",
+  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
+  "ROLE_INFO_TITLE": "{role} - Role info",
+  "POSITION": "Position",
+  "HUMANS": "Human(s)",
+  "BOTS": "Bot(s)",
+  "COLOR": "Color",
+  "ROLE_INFO_POSITION": "{position} out of {roles} roles",
+  "ROLE_INFO_HOISTED": "Displays separately from online members",
+  "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
+  "ROLE_INFO_MANAGED": "Managed",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
+  "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
+  "ROLE_INFO_MANAGED_INTEGRATION": "Role managed by an external integration.",
+  "role_info": {
+    "description": "Get information about a server's role.",
+    "options": {
+      "role": {
+        "description": "What role to get info from."
+      }
+    }
+  },
+  "server_info": {
+    "description": "Get information about a Discord server.",
+    "options": {
+      "id": {
+        "description": "ID of the server to get information from."
+      }
+    }
+  },
+  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "The ID you have used is either invalid, or I'm not part of this server.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
+  "server_icon": {
+    "description": "Get a Discord server's icon.",
+    "options": {
+      "id": {
+        "description": "ID of the server whose icon to get."
+      }
+    }
+  },
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
+  "AGE_RESTRICTED": "Age-Restricted",
+  "TAGS": "Tags",
+  "BITRATE": "Bitrate",
+  "KBPS": "{number}kbps",
+  "VIDEO_QUALITY": "Video Quality",
+  "AUTO": "Auto",
+  "SLOWMODE": "Slowmode",
+  "PARENT_CHANNEL": "Parent channel",
+  "channel_info": {
+    "description": "Get information about a server's channel, category, thread or post.",
+    "options": {
+      "channel": {
+        "description": "What channel to get info from."
+      }
+    }
+  },
+  "EMOJI_INFO": "Emoji info",
+  "UNICODE": "Unicode",
+  "EMOJI": "Эмодзи",
+  "AVAILABLE_SINCE": "Available since",
+  "CLONE_TO_THIS_SERVER": "Clone to this server",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "emoji_info": {
+    "description": "Get information about an emoji.",
+    "options": {
+      "emoji": {
+        "description": "The emoji to get info from. Default and custom emoji are supported."
+      }
+    }
+  },
+  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Could not find this emoji.",
+  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
+  "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
+  "INVITE_INFO": "Invite info",
+  "INVITE": "Invite",
+  "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
+  "INVITE_INFO_INVITER": "Invited by",
+  "CUSTOM_INVITE_LINK": "Custom Invite Link",
+  "SERVER_INVITE": "Server invite",
+  "GROUP_DM_INVITE": "Group DM invite",
+  "UNNAMED": "Unnamed",
+  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid server or group DM invite.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "invite_info": {
+    "description": "Get information about a Discord invite.",
+    "options": {
+      "invite": {
+        "description": "A server or group DM invite link or code."
+      }
+    }
+  }
 }
