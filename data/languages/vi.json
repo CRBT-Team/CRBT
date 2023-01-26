@@ -34,14 +34,23 @@
   "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the user who was using this command can use this component.",
   "TEXT_CHANNEL": "Text Channel",
+  "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "Voice Channel",
+  "VOICE_CHANNELS": "Voice Channel(s)",
   "STAGE_CHANNEL": "Stage Channel",
+  "STAGE_CHANNELS": "Stage Channel(s)",
   "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
+  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
   "CATEGORY": "Category",
+  "CATEGORIES": "Category(ies)",
   "RULES_CHANNEL": "Rules Channel",
+  "RULES_CHANNELS": "Rules Channel(s)",
   "THREAD_CHANNEL": "Thread",
+  "THREAD_CHANNELS": "Thread(s)",
   "FORUM_CHANNEL": "Forum Channel",
+  "FORUM_CHANNELS": "Forum Channel(s)",
   "FORUM_POST": "Forum Post",
+  "FORUM_POSTS": "Forum Post(s)",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Members",
@@ -65,6 +74,7 @@
   "MEDIUM": "Medium",
   "LARGE": "Large",
   "LARGEST": "Largest",
+  "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
       "TITLE": "Một lỗi không xác định đã xảy ra.",
@@ -175,6 +185,7 @@
       "description": "Get information about CRBT."
     }
   },
+  "IMAGE": "Image",
   "poll": {
     "meta": {
       "description": "Tạo một cuộc thăm dò với các lựa chọn nhất định.",
@@ -187,6 +198,12 @@
         },
         "choice": {
           "description": "Some choice a user can choose. Make it short, preferably."
+        },
+        "image": {
+          "description": "Append an image to your poll."
+        },
+        "multichoice": {
+          "description": "Allow members to vote for multiple choices. Off by default."
         }
       }
     },
@@ -217,6 +234,14 @@
       "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
       "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
       "BUTTON_JUMP_TO_POLL": "Nhảy đến cuộc thăm dò ý kiến"
+    }
+  },
+  "banner": {
+    "description": "Get a user's profile banner.",
+    "options": {
+      "user": {
+        "description": "The user whose banner to get."
+      }
     }
   },
   "avatar": {
@@ -354,13 +379,10 @@
   "CRBTSCRIPT_GUIDE": "Mở hướng dẫn về CRBTscript",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Chào mừng <user.name> đã đến với <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> đã rời khỏi máy chủ này.",
   "FIELD_SELECT_MENU": "Chọn một dòng để chỉnh sửa",
   "COLOR_PRESET_SELECT_MENU": "Chọn một cài đặt trước màu",
@@ -389,6 +411,8 @@
   "ROLES": "Role(s)",
   "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
+  "NO_PERMS": "*No permissions*",
+  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "help": {
     "name": "help",
     "description": "Returns a quick help guide for CRBT."
@@ -585,5 +609,108 @@
   "POWERED_BY": "Powered by {provider}",
   "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
-  "SEARCH_TITLE": "{engine} results for \"{query}\""
+  "SEARCH_TITLE": "{engine} results for \"{query}\"",
+  "VIEW_MESSAGE_BELOW": "View message below",
+  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
+  "MODREPORTS_MODAL_TITLE": "Report {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
+  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
+  "KICK_USER": "Kick User",
+  "WARN_USER": "Warn User",
+  "BAN_USER": "Ban User",
+  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
+  "ROLE_INFO_TITLE": "{role} - Role info",
+  "POSITION": "Position",
+  "HUMANS": "Human(s)",
+  "BOTS": "Bot(s)",
+  "COLOR": "Color",
+  "ROLE_INFO_POSITION": "{position} out of {roles} roles",
+  "ROLE_INFO_HOISTED": "Displays separately from online members",
+  "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
+  "ROLE_INFO_MANAGED": "Managed",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
+  "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
+  "ROLE_INFO_MANAGED_INTEGRATION": "Role managed by an external integration.",
+  "role_info": {
+    "description": "Get information about a server's role.",
+    "options": {
+      "role": {
+        "description": "What role to get info from."
+      }
+    }
+  },
+  "server_info": {
+    "description": "Get information about a Discord server.",
+    "options": {
+      "id": {
+        "description": "ID of the server to get information from."
+      }
+    }
+  },
+  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "The ID you have used is either invalid, or I'm not part of this server.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
+  "server_icon": {
+    "description": "Get a Discord server's icon.",
+    "options": {
+      "id": {
+        "description": "ID of the server whose icon to get."
+      }
+    }
+  },
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
+  "AGE_RESTRICTED": "Age-Restricted",
+  "TAGS": "Tags",
+  "BITRATE": "Bitrate",
+  "KBPS": "{number}kbps",
+  "VIDEO_QUALITY": "Video Quality",
+  "AUTO": "Auto",
+  "SLOWMODE": "Slowmode",
+  "PARENT_CHANNEL": "Parent channel",
+  "channel_info": {
+    "description": "Get information about a server's channel, category, thread or post.",
+    "options": {
+      "channel": {
+        "description": "What channel to get info from."
+      }
+    }
+  },
+  "EMOJI_INFO": "Emoji info",
+  "UNICODE": "Unicode",
+  "EMOJI": "Emojis",
+  "AVAILABLE_SINCE": "Available since",
+  "CLONE_TO_THIS_SERVER": "Clone to this server",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "emoji_info": {
+    "description": "Get information about an emoji.",
+    "options": {
+      "emoji": {
+        "description": "The emoji to get info from. Default and custom emoji are supported."
+      }
+    }
+  },
+  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Could not find this emoji.",
+  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
+  "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
+  "INVITE_INFO": "Invite info",
+  "INVITE": "Invite",
+  "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
+  "INVITE_INFO_INVITER": "Invited by",
+  "CUSTOM_INVITE_LINK": "Custom Invite Link",
+  "SERVER_INVITE": "Server invite",
+  "GROUP_DM_INVITE": "Group DM invite",
+  "UNNAMED": "Unnamed",
+  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid server or group DM invite.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "invite_info": {
+    "description": "Get information about a Discord invite.",
+    "options": {
+      "invite": {
+        "description": "A server or group DM invite link or code."
+      }
+    }
+  }
 }
