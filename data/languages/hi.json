@@ -32,16 +32,25 @@
   "YES": "हाँ",
   "NO": "नहीं",
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल वह यूजर जो कमांड को इस्तेमाल कर रहे है वो ही कॉम्पोनेन्ट को इस्तेमाल कर सकते है |",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
   "TEXT_CHANNEL": "टेक्स्ट चैनल ",
+  "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "वोइस चैनल",
+  "VOICE_CHANNELS": "Voice Channel(s)",
   "STAGE_CHANNEL": "स्टेज चैनल",
+  "STAGE_CHANNELS": "Stage Channel(s)",
   "ANNOUNCEMENT_CHANNEL": "अनाउंसमेंट चैनल",
+  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
   "CATEGORY": "केटेगरी",
+  "CATEGORIES": "Category(ies)",
   "RULES_CHANNEL": "रूल्स चैनल",
+  "RULES_CHANNELS": "Rules Channel(s)",
   "THREAD_CHANNEL": "थ्रेड ",
+  "THREAD_CHANNELS": "Thread(s)",
   "FORUM_CHANNEL": "फोरम चैनल",
+  "FORUM_CHANNELS": "Forum Channel(s)",
   "FORUM_POST": "फोरम पोस्ट",
+  "FORUM_POSTS": "Forum Post(s)",
   "WEBSOCKET": "वेब सॉकेट",
   "INTERACTION": "Interaction",
   "MEMBERS": "सदस्यों",
@@ -65,6 +74,7 @@
   "MEDIUM": "मध्यम",
   "LARGE": "बड़ा",
   "LARGEST": "सबसे बड़ा",
+  "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
       "TITLE": "कोई अजीब सी एरर हुई है |",
@@ -85,7 +95,7 @@
       "options": [
         {
           "name": "रंग ",
-          "description": "आपका नया एक्सेंट कलर बदलने के लिए | कोई एक सुझाव या HEX कलर का इस्तेमाल करे |"
+          "description": "What to change your accent color to. Use a suggestion or a HEX color."
         }
       ]
     },
@@ -114,12 +124,12 @@
       "white": "सफेद"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "आपके पास सिंक करने के लिए डिस्कोर्ड प्रोफाइल कलर का कलर नहीं है | लगाने के लिए, आपके डिस्कोर्ड यूजर प्रोफाइल को एडिट करे और अपना प्रोफाइल कलर को बदले |"
+      "NO_DISCORD_COLOR": "You don't have a profile color to sync from! To set one, go to your Discord Profile settings."
     },
     "strings": {
       "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
-      "EMBED_SYNC_INFO": "आपका डिस्कोर्ड प्रोफाइल कलर CRBT एक्सेंट कलर से सिंक हो जायेगा |",
-      "EMBED_DESCRIPTION": "इस कलर का उपयोग आपको CRBT के जवाब पर ज्यादातर इस्तेमाल किया जाएगा साथ ही साथ आपके सूचना कार्डों पर, जब कोई उसे विजिट करेगा |"
+      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
+      "EMBED_DESCRIPTION": "It will be used in CRBT's replies to you, and when someone views information about you."
     }
   },
   "remind me": {
@@ -136,13 +146,13 @@
         },
         {
           "name": "जगह ",
-          "description": "कहा से रिमाइंडर भेजे? "
+          "description": "Where to send the reminder. Sends to DMs by default."
         }
       ]
     },
     "errors": {
       "PAST": "आप पिछले का रिमाइंडर नहीं लगा सकते हो |",
-      "INVALID_FORMAT": "जो आपने समय डाला है वो गलत फॉर्मेट में है या फिर फ्यूचर में 0 सेकंड के नीचे है |",
+      "INVALID_FORMAT": "The time you entered is in an invalid format.",
       "TOO_LONG": "आप अभी के लिए 2 साल से अधिक रिमाइंडर को सेट नहीं कर सकते |",
       "REMINDERS_MAX_LIMIT": "आप 10 रिमाइंडर से ज़्यादा सेट नहीं कर सकते |"
     },
@@ -150,7 +160,7 @@
       "SUCCESS_TITLE": "रिमाइंडर सेट! ",
       "SUCCESS_CHANNEL": "इस {CHANNEL} पे आपको याद दिलाए जाएगा |",
       "SUCCESS_DM": "DM पे आपको याद दिलाए जाएगा |",
-      "BUTTON_GCALENDAR": "Add as Google Calendar event",
+      "BUTTON_GCALENDAR": "Add to Google Calendar",
       "GCALENDAR_EVENT": "CRBT रिमाइंडर के द्वारा सेट किया गया |",
       "GCALENDAR_EVENT_DM": "आपको DM में भी याद दिलाए जायेगा |",
       "GCALENDAR_EVENT_CHANNEL": "आपको {CHANNEL} {SERVER} में भी याद दिलाए जायेगा |",
@@ -167,7 +177,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Ping CRBT. Returns latency and connection info."
+      "description": "Returns CRBT's latency information."
     }
   },
   "crbt info": {
@@ -175,18 +185,25 @@
       "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
+  "IMAGE": "Image",
   "poll": {
     "meta": {
-      "description": "दिए गए विकल्प से पोल बनाए |",
+      "description": "Create a poll.",
       "options": {
         "title": {
           "description": "आपका पोल किस बारे में है ?"
         },
         "end_date": {
-          "description": "पोल कब समाप्त होना चाहिए."
+          "description": "When it should end."
         },
         "choice": {
           "description": "कुछ विकल्प एक यूजर चुन सकते है | इसके बजाये, इसे छोटा करे |"
+        },
+        "image": {
+          "description": "Append an image."
+        },
+        "multichoice": {
+          "description": "Allow members to vote for multiple choices."
         }
       }
     },
@@ -195,28 +212,33 @@
       "POLL_DATA_NOT_ALLOWED": "सिर्फ चैट मॉडरेटर (\"मैनेज मेसेज\" परमिशन ) & ओरिजिनल पोल क्रिएटर डाटा और विकल्प को देख सकते है |"
     },
     "strings": {
-      "POLL_DESCRIPTION": "The poll will end {TIME}.\nThe poll creator can view options & other data by clicking the {ICON} button below.",
+      "POLL_DESCRIPTION": "The poll will end {TIME}.\nIts creator can view vote details using the {ICON} button below.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_VOTES": "Total votes: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Poll started by {USER}",
+      "POLL_FOOTER_CREATOR": "Started by {USER}",
       "POLL_SELECT_MENU_VOTE": "Vote",
       "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "The poll will end {TIME}, but you can prematurely end it by using the {ICON} menu. From this menu, you can also edit the poll, delete it or view the voters.",
-      "POLL_DATA_OPTIONS": "CRBT Poll • Data and Options",
+      "SUCCESS_DESCRIPTION": "It will end {TIME}, but you can prematurely end it with the {ICON} menu. From there, you can also edit or delete it, or view the votes.",
+      "POLL_DATA_OPTIONS": "Poll • Data and Options",
       "POLL_DATA_NOVOTES": "No votes yet",
-      "POLL_DATA_FOOTER": "Note: This data will not update live. Use the button again to refresh the data.",
-      "BUTTON_EDIT_POLL": "Edit Poll",
-      "BUTTON_CANCEL_POLL": "Delete Poll",
+      "POLL_DATA_FOOTER": "Note: Data does not update live. Use the button again to refresh the data.",
       "BUTTON_END_POLL": "End Poll",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_HEADER_ENDED": "Ended",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
+      "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
+      "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
+      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" और \"{OPTION2}\" {VOTES} के साथ टाई हो गया |",
       "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results.",
-      "BUTTON_JUMP_TO_POLL": "Jump to Poll"
+      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results."
+    }
+  },
+  "banner": {
+    "description": "Get a user's profile banner.",
+    "options": {
+      "user": {
+        "description": "The user whose banner to get."
+      }
     }
   },
   "avatar": {
@@ -242,10 +264,8 @@
     }
   },
   "crbt_introduction": {
-    "strings": {
-      "EMBED_TITLE": "Thanks for inviting {CRBT} to your server!",
-      "EMBED_DESCRIPTION": "{CRBT} is now in {SERVERS} servers!\nTo get started with CRBT, simply type `/` and click its avatar!\nFor more help and info, visit the **[support server]({DISCORD})**."
-    }
+    "EMBED_TITLE": "Thank you for inviting CRBT!",
+    "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
   },
   "bookmark": {
     "ctxMeta": {
@@ -289,7 +309,7 @@
             "description": "How much roles can be selected. Set to 0 for unlimited."
           },
           {
-            "description": "A role to assign to the member when selected."
+            "description": "A role that a member may select."
           }
         ]
       }
@@ -321,9 +341,6 @@
   "SERVER_INFO": "Server info",
   "ICON": "Icon",
   "BANNER": "Banner",
-  "ROLES_AND_MEMBERS": "Roles & Members",
-  "EMOJIS_AND_STICKERS": "Emojis & Stickers",
-  "EXTRA": "More",
   "WARN": "Warn",
   "KICK": "Kick",
   "BAN": "Ban",
@@ -331,8 +348,22 @@
   "TIMEOUT": "Timeout",
   "TEMPBAN": "Temporary ban",
   "CLEAR": "Clear",
+  "REPORT": "Report",
+  "REASON": "Reason",
+  "MOD_VERB_BAN": "Banned",
+  "MOD_VERB_TEMPBAN": "Temporarily banned",
+  "MOD_VERB_CLEAR": "Cleared messages in {target}",
+  "MOD_VERB_KICK": "Kicked",
+  "MOD_VERB_TIMEOUT": "Timed out",
+  "MOD_VERB_WARN": "Warned",
+  "MOD_VERB_REPORT": "Reported",
+  "DESCRIPTION": "Description",
+  "EXPIRES_AT": "Expires at",
+  "MODERATION_LOGS_VIEW_EMPTY": "*No moderation history found.*",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete a strike",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation history in {SERVER}",
-  "MODERATION_LOGS_VIEW_MODERATOR": "Moderated by {MODERATOR}",
+  "MODERATOR": "Moderator",
+  "REPORTED_BY": "Reported by",
   "JOIN_MESSAGE": "Welcome message",
   "LEAVE_MESSAGE": "Farewell message",
   "JOIN_CHANNEL": "Welcome channel",
@@ -340,19 +371,16 @@
   "CRBTSCRIPT_GUIDE": "Open CRBTscript Guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_PREVIEW_DESCRIPTION": "Preview the {TYPE}.",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
-  "JOINLEAVE_PREVIEW_ERROR_UNKNOWN": "An error occurred while trying to preview the {TYPE}. The channel may no longer exist or I don't have the permission to send messages there.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first. Use {COMMAND} to set one.",
-  "JOINLEAVE_PREVIEW_ERROR_NO_CHANNEL": "You must set a channel to send the {TYPE} first. Use {command} to set one.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
   "FIELD_SELECT_MENU": "Select a field to edit",
   "COLOR_PRESET_SELECT_MENU": "Select a color preset",
   "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Plain Text",
+  "FIELDS_CONTENT": "Message Content",
   "FIELDS_AUTHOR": "Embed Author",
   "FIELDS_AUTHOR_NAME": "Embed Author Name",
   "FIELDS_AUTHOR_URL": "Embed Author URL",
@@ -367,48 +395,21 @@
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
   "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
-  "USER_INFO_TITLE": "{USER} - User info",
-  "JOINED_DISCORD": "Joined Discord",
-  "JOINED_SERVER": "Joined Server",
-  "USER_NO_ROLES": "*This user doesn't any have roles...*",
+  "JOINED_DISCORD": "Discord member since",
+  "JOINED_SERVER": "Server member since",
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Role(s)",
   "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_TITLE": "Welcome to CRBT!",
-  "ACHIEVEMENT_WELCOME_TO_CRBT_DESC": "Add CRBT to a server (thanks!)",
-  "ACHIEVEMENT_BUG_HUNTER_TITLE": "Bug Hunter",
-  "ACHIEVEMENT_BUG_HUNTER_DESC": "Report a bug with {command}",
-  "ACHIEVEMENT_ARTIST_TITLE": "Artist",
-  "ACHIEVEMENT_ARTIST_DESC": "Change your accent color using {command}",
-  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_TITLE": "Nice n' Cozy",
-  "ACHIEVEMENT_REPAINTING_THE_COMMUNITY_DESC": "Change the server's accent color with {command}.",
-  "ACHIEVEMENT_DND_PRO_TITLE": "DnD Pro",
-  "ACHIEVEMENT_DND_PRO_DESC": "Roll a perfect d20 in {command}.",
-  "ACHIEVEMENT_BUG_NINJA_TITLE": "Bug Ninja",
-  "ACHIEVEMENT_BUG_NINJA_DESC": "Get 5 of your bug reports resolved.",
-  "ACHIEVEMENT_SEEKER_TITLE": "Info Seeker",
-  "ACHIEVEMENT_SEEKER_DESC": "Search 10 times with {command}.",
-  "ACHIEVEMENT_BOOKMARKER_TITLE": "Message Afficionado",
-  "ACHIEVEMENT_BOOKMARKER_DESC": "Bookmark 5 messages.",
-  "ACHIEVEMENT_SAFETY_FIRST_TITLE": "Safety First!",
-  "ACHIEVEMENT_SAFETY_FIRST_DESC": "Check CRBT's privacy settings with {command}.",
-  "ACHIEVEMENT_BREWING_APPS_TITLE": "Brewing apps",
-  "ACHIEVEMENT_BREWING_APPS_DESC": "Create and redeem your CRBT API token.",
-  "ACHIEVEMENT_CRBT_ADDICT_TITLE": "CRBT Addict",
-  "ACHIEVEMENT_CRBT_ADDICT_DESC": "Use 100 commands.",
-  "ACHIEVEMENT_ERROR_MASTER_TITLE": "On the lookout for more errors!",
-  "ACHIEVEMENT_ERROR_MASTER_DESC": "Find the secret error command.",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_TITLE": "you impersonatin me?",
-  "ACHIEVEMENT_IMITATING_THE_CREATOR_DESC": "Find the hidden CRBT accent color.",
+  "NO_PERMS": "*No permissions*",
+  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
+  "HELP": "Help",
   "help": {
-    "name": "help",
     "description": "Returns a quick help guide for CRBT."
   },
-  "HELP_TITLE": "{botName} - Quick Guide",
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} to get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
   "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Support us by adding it to your server!",
+  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
   "GIVEAWAY": "Giveaway",
   "giveaway": {
     "description": "Create a giveaway.",
@@ -485,7 +486,7 @@
     "options": {
       "text": {
         "name": "text",
-        "description": "The text to translate."
+        "description": "What to translate."
       },
       "target": {
         "name": "target",
@@ -497,27 +498,27 @@
       }
     }
   },
-  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid source language.",
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Select a language to translate to.",
   "REMINDER_LIST_TITLE": "{user} - CRBT Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Uh oh, you don't have any reminders set. Use {command} to set one!",
+  "REMINDER_LIST_NO_REMINDERS": "You don't have any reminders set. Use {command} to set one!",
   "REMINDER_LIST_DESCRIPTION": "You can set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Destination:",
-  "IN_YOUR_DMS": "In your DMs",
+  "DMS": "DMs",
   "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Select a reminder to edit or delete.",
   "REMINDER": "Reminder",
   "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
   "SUBJECT": "Subject",
   "WHEN_TO_SEND": "When to send",
-  "REMINDER_DELETE_CONFIRMATION_TITLE": "Hold on! Are you sure you want to delete this reminder, forever?!",
+  "DELETE_CONFIRMATION_TITLE": "Are you sure you want to delete it, forever?!",
   "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
   "reminder_list": {
-    "description": "Get a list of all of your reminders."
+    "description": "Get a list of your reminders."
   },
   "pick": {
     "name": "pick",
-    "description": "Pick an item at random from a given list.",
+    "description": "Pick something at random.",
     "options": {
       "values": {
         "name": "values",
@@ -525,35 +526,33 @@
       }
     }
   },
-  "PICK_RESULT": "\"{value}\" was picked out of the {number} given choices.",
+  "PICK_RESULT": "\"{value}\" was picked out of the {number} choices.",
   "privacy": {
     "name": "privacy",
     "description": "Review your CRBT privacy settings and edit them."
   },
-  "ACHIEVEMENTS": "Achievements",
   "SILENT_LEAVES": "Silent leaving",
   "SILENT_JOINS": "Silent joining",
   "TELEMETRY": "Command Telemetry",
-  "PRIVACY_ACHIEVEMENTS_DESCRIPTION": "CRBT keeps track of Achievements by logging some command usage data. Turning this off will freeze your achievements.",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "Turning this on will stop CRBT from announcing when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Turning this on will stop CRBT from announcing when you leave a server.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT will not announce when you join a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT will not announce when you leave a server.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage as detailed in our Privacy Policy. Turning it off will only stop those from being sent.",
   "YOUR_CRBT_DATA": "Your CRBT data",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT collects usage data, whether you submit it or some that we track to provide features. You can download or delete all of your data. Beware, deleting will erase everything you set on CRBT (that includes Reminders, Achievements and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "CRBT - Privacy Settings",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "Basic data you submit and more is used for CRBT's features. You may download or delete of your data. Beware, the latter erases everything about you on CRBT (including Reminders, Economy and more!!).",
+  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
   "settings": {
-    "name": "settings",
     "description": "Configure CRBT settings on this server."
   },
   "ATTENTION_REQUIRED": "Attention Required",
   "OVERVIEW": "Overview",
-  "SETTINGS_TITLE": "CRBT Server Settings",
+  "SETTINGS_TITLE": "Server Settings",
   "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choose a setting.",
   "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
   "ENABLE": "Enable",
   "DISABLE": "Disable",
   "ACCENT_COLOR": "Accent Color",
   "MODERATION_LOGS": "Moderation logs",
+  "MODERATION_REPORTS": "Moderation Reports",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -566,10 +565,7 @@
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages including Polls, Giveaways, Role Pickers, the Server Info sheet among other features.\nIt's currently set to **{color}**.",
-  "ACHIEVEMENT_UNLOCKED_TITLE": "Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_TITLE_SECRET": "Secret Achievement Unlocked!",
-  "ACHIEVEMENT_UNLOCKED_DESCRIPTION": "Check your achievements with {command}.",
+  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
   "search": {
     "name": "search",
     "description": "Search for anything in one of the provided search engines.",
@@ -598,7 +594,110 @@
     "anime": "Anime & Manga"
   },
   "POWERED_BY": "Powered by {provider}",
-  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage} out of {results} results.",
+  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage}/{results} results.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
-  "SEARCH_TITLE": "{engine} results for \"{query}\""
+  "SEARCH_TITLE": "{engine} results for \"{query}\"",
+  "VIEW_MESSAGE_BELOW": "View message below",
+  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
+  "MODREPORTS_MODAL_TITLE": "Report {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
+  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
+  "KICK_USER": "Kick User",
+  "WARN_USER": "Warn User",
+  "BAN_USER": "Ban User",
+  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
+  "ROLE_INFO_TITLE": "{role} - Role info",
+  "POSITION": "Position",
+  "HUMANS": "Human(s)",
+  "BOTS": "Bot(s)",
+  "COLOR": "Color",
+  "ROLE_INFO_POSITION": "{position} out of {roles} roles",
+  "ROLE_INFO_HOISTED": "Displays separately from online members",
+  "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
+  "ROLE_INFO_MANAGED": "Managed",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
+  "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
+  "ROLE_INFO_MANAGED_INTEGRATION": "Role managed by an external integration.",
+  "role_info": {
+    "description": "Get information about a server role.",
+    "options": {
+      "role": {
+        "description": "What role to get info from."
+      }
+    }
+  },
+  "server_info": {
+    "description": "Get information about a Discord server.",
+    "options": {
+      "id": {
+        "description": "ID of the server to get information from."
+      }
+    }
+  },
+  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "The ID you have used is either invalid, or I'm not part of this server.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
+  "server_icon": {
+    "description": "Get a Discord server's icon.",
+    "options": {
+      "id": {
+        "description": "ID of the server whose icon to get."
+      }
+    }
+  },
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
+  "AGE_RESTRICTED": "Age-Restricted",
+  "TAGS": "Tags",
+  "BITRATE": "Bitrate",
+  "KBPS": "{number}kbps",
+  "VIDEO_QUALITY": "Video Quality",
+  "AUTO": "Auto",
+  "SLOWMODE": "Slowmode",
+  "PARENT_CHANNEL": "Parent channel",
+  "channel_info": {
+    "description": "Get information about a server channel.",
+    "options": {
+      "channel": {
+        "description": "What channel to get info from."
+      }
+    }
+  },
+  "EMOJI_INFO": "Emoji info",
+  "UNICODE": "Unicode",
+  "EMOJI": "इमोजी",
+  "AVAILABLE_SINCE": "Available since",
+  "CLONE_TO_THIS_SERVER": "Clone to this server",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "emoji_info": {
+    "description": "Get information about an emoji.",
+    "options": {
+      "emoji": {
+        "description": "The emoji to get info from. Default and custom emoji are supported."
+      }
+    }
+  },
+  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Can't find this emoji.",
+  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
+  "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
+  "INVITE_INFO": "Invite info",
+  "INVITE": "Invite",
+  "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
+  "INVITE_INFO_INVITER": "Invited by",
+  "CUSTOM_INVITE_LINK": "Custom Invite Link",
+  "SERVER_INVITE": "Server invite",
+  "GROUP_DM_INVITE": "Group DM invite",
+  "UNNAMED": "Unnamed",
+  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "invite_info": {
+    "description": "Get information about a Discord invite.",
+    "options": {
+      "invite": {
+        "description": "A server or group DM invite link or code."
+      }
+    }
+  }
 }
