@@ -1,6 +1,8 @@
 import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import { ButtonStyle, ComponentType, Routes } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, MessageAttachment, TextInputComponent } from 'discord.js';
 import fetch from 'node-fetch';
@@ -9,21 +11,26 @@ import pjson from '../../../package.json';
 
 export default ChatCommand({
   name: 'report',
-  description: 'Report a CRBT-related issue, bug, typo or any problem.',
-  options: new OptionBuilder().attachment('image', 'An image to attach to the report.'),
+  description: t('en-US', 'report.description'),
+  nameLocalizations: getAllLanguages('REPORT', localeLower),
+  descriptionLocalizations: getAllLanguages('report.description'),
+  options: new OptionBuilder().attachment('image', t('en-US', 'IMAGE_OPTION_DESCRIPTION'), {
+    nameLocalizations: getAllLanguages('IMAGE', localeLower),
+    descriptionLocalizations: getAllLanguages('IMAGE_OPTION_DESCRIPTION'),
+  }),
   async handle({ image }) {
     if (image && !image.contentType.startsWith('image/')) {
-      CRBTError(this, 'You can only upload images');
+      CRBTError(this, t(this.locale, 'ERROR_ATTACHMENT_INVALID_TYPE_IMAGE'));
     }
 
     const modal = new Modal(image ? `${this.commandId}/${image.id}/${image.name}` : null)
-      .setTitle('New bug report')
+      .setTitle(t(this, 'REPORT_MODAL_TITLE'))
       .setComponents(
         row(
           new TextInputComponent()
             .setCustomId('issue_title')
-            .setLabel('Title')
-            .setPlaceholder("What's the problem?")
+            .setLabel(t(this, 'TITLE'))
+            .setPlaceholder(t(this, 'REPORT_MDOAL_TITLE_PLACEHOLDER'))
             .setStyle('SHORT')
             .setMinLength(10)
             .setMaxLength(50)
@@ -32,11 +39,11 @@ export default ChatCommand({
         row(
           new TextInputComponent()
             .setCustomId('issue_description')
-            .setLabel('Description')
-            .setPlaceholder('Describe your report in detail.')
+            .setLabel(t(this, 'DESCRIPTION'))
+            .setPlaceholder(t(this, 'REPORT_MDOAL_DESCRIPTION_PLACEHOLDER'))
             .setStyle('PARAGRAPH')
             .setMinLength(10)
-            .setMaxLength(500)
+            .setMaxLength(512)
         )
       );
 
@@ -145,8 +152,10 @@ export const Modal = ModalComponent({
     await this.editReply({
       embeds: [
         {
-          title: `${emojis.success} Report sent successfully.`,
-          description: `It was sent to the **[CRBT Community](${links.discord})** where other members can discuss the issue.\nWe will review it, and you'll get notified on developer messages through your DMs.`,
+          title: `${emojis.success} ${t(this, 'REPORT_SUCCESS_TITLE')}.`,
+          description: t(this, 'REPORT_SUCCESS_DESCRIPTION', {
+            server: links.discord,
+          }),
           color: colors.success,
         },
       ],
