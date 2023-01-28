@@ -1,8 +1,7 @@
-import { colors, emojis } from '$lib/env';
+import { colors, emojis, links } from '$lib/env';
 import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
-import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
 import { trimArray } from '$lib/functions/trimArray';
 import { getAllLanguages, t } from '$lib/language';
@@ -14,15 +13,7 @@ import {
 } from '@purplet/utils';
 import canvas from 'canvas';
 import dedent from 'dedent';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
-import {
-  EmbedFieldData,
-  Guild,
-  Interaction,
-  MessageAttachment,
-  MessageComponentInteraction,
-  MessageEmbed,
-} from 'discord.js';
+import { EmbedFieldData, Guild, Interaction, MessageAttachment } from 'discord.js';
 import { resolve } from 'path';
 import { ChatCommand, components, OptionBuilder } from 'purplet';
 import { NavBarContext } from '../user/_navbar';
@@ -30,15 +21,19 @@ import { getTabs, serverNavBar } from './_navbar';
 
 export default ChatCommand({
   name: 'server info',
-  description: "Get information on this server, or another one's.",
-  options: new OptionBuilder().string('id', 'ID of the server to get information on.', {
+  description: t('en-US', 'server_info.description'),
+  descriptionLocalizations: getAllLanguages('server_info.description'),
+  options: new OptionBuilder().string('id', t('en-US', 'server_info.options.id.description'), {
     nameLocalizations: getAllLanguages('ID', localeLower),
+    descriptionLocalizations: getAllLanguages('server_info.options.id.description'),
   }),
   async handle({ id }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
       return await CRBTError(this, {
-        title: "The ID you have used is either invalid, or I'm not part of this server.",
-        description: `You can also **[invite me to it]($[links.invite])**, if you have permission to.`,
+        title: t(this, 'SERVER_INFO_ERROR_INVALID_SERVER_TITLE'),
+        description: t(this, 'SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION', {
+          link: links.invite,
+        }),
       });
 
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
@@ -98,16 +93,19 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     {
       name: `${t(this, 'CHANNELS')} • ${formatNum(allChannels.size)}`,
       value: dedent`
-      ${emojis.channels.category} ${formatNum(channels.category)} categories
-      ${emojis.channels.text} ${formatNum(channels.text)} text channels
-      ${emojis.channels.voice} ${formatNum(channels.voice)} voice channels
+      ${emojis.channels.category} ${formatNum(channels.category)} ${t(this, 'CATEGORIES')}
+      ${emojis.channels.text} ${formatNum(channels.text)} ${t(this, 'TEXT_CHANNELS')}
+      ${emojis.channels.voice} ${formatNum(channels.voice)} ${t(this, 'VOICE_CHANNELS')}
       ${
         channels.announcement > 0
-          ? `${emojis.channels.news} ${formatNum(channels.announcement)} annnouncement channels`
+          ? `${emojis.channels.news} ${formatNum(channels.announcement)} ${t(
+              this,
+              'ANNOUNCEMENT_CHANNELS'
+            )}`
           : ''
       } ${
         channels.stage > 0
-          ? `${emojis.channels.stage} ${formatNum(channels.stage)} stage channels`
+          ? `${emojis.channels.stage} ${formatNum(channels.stage)} ${t(this, 'STAGE_CHANNELS')}`
           : ''
       }
       `,
@@ -138,9 +136,9 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
 
   fields.push({
     name: `${t(this, 'MEMBERS')} • ${formatNum(guild.memberCount)}`,
-    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} Humans\n${
+    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} ${t(this, 'HUMANS')}\n${
       emojis.bot
-    } ${formatNum(bots.size)} Bots`,
+    } ${formatNum(bots.size)} ${t(this, 'BOTS')}`,
     inline: true,
   });
 
@@ -153,7 +151,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
 
   if (guild.premiumSubscriptionCount > 0) {
     fields.push({
-      name: `Server Boosting`,
+      name: t(this, 'SERVER_BOOSTING'),
       value: `${guild.premiumSubscriptionCount} boosts • ${
         emojis.boosting[guild.premiumTier.replace('TIER_', '')]
       } Level ${guild.premiumTier.replace('TIER_', '')}`,
@@ -219,73 +217,73 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   };
 }
 
-export async function renderServerMembersRoles(
-  this: Interaction,
-  guild: Guild,
-  navCtx: NavBarContext
-) {
-  const color =
-    this instanceof MessageComponentInteraction
-      ? this.message.embeds[0].color
-      : await getColor(guild);
+// export async function renderServerMembersRoles(
+//   this: Interaction,
+//   guild: Guild,
+//   navCtx: NavBarContext
+// ) {
+//   const color =
+//     this instanceof MessageComponentInteraction
+//       ? this.message.embeds[0].color
+//       : await getColor(guild);
 
-  const members = guild.memberCount;
-  const bots = hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuild)
-    ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
-    : guild.members.cache.filter((m) => m.user.bot);
-  const roles = guild.roles.cache
-    .sort((a, b) => a.position - b.position)
-    .filter((r) => r.id !== r.guild.id)
-    .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
+//   const members = guild.memberCount;
+//   const bots = hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuild)
+//     ? (await guild.fetchIntegrations()).filter((i) => i.type === 'discord')
+//     : guild.members.cache.filter((m) => m.user.bot);
+//   const roles = guild.roles.cache
+//     .sort((a, b) => a.position - b.position)
+//     .filter((r) => r.id !== r.guild.id)
+//     .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
 
-  const e = new MessageEmbed()
-    .setAuthor({
-      name: `${guild.name} - Roles & Members`,
-      iconURL: guild.iconURL({ format: 'png', dynamic: true }),
-    })
-    .setDescription(
-      `${emojis.members} ${members - bots.size} Humans • ${emojis.bot} ${bots.size} Bots`
-    )
-    .addField(`Roles • ${roles.length}`, roles.map((r) => `${r}`).join(''), true)
-    .setColor(color);
+//   const e = new MessageEmbed()
+//     .setAuthor({
+//       name: `${guild.name} - Roles & Members`,
+//       iconURL: guild.iconURL({ format: 'png', dynamic: true }),
+//     })
+//     .setDescription(
+//       `${emojis.members} ${members - bots.size} Humans • ${emojis.bot} ${bots.size} Bots`
+//     )
+//     .addField(`Roles • ${roles.length}`, roles.map((r) => `${r}`).join(''), true)
+//     .setColor(color);
 
-  return {
-    embeds: [e],
-    components: components(serverNavBar(navCtx, this.locale, 'roles', getTabs('icon', guild))),
-  };
-}
+//   return {
+//     embeds: [e],
+//     components: components(serverNavBar(navCtx, this.locale, 'roles', getTabs('icon', guild))),
+//   };
+// }
 
-export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx: NavBarContext) {
-  const color =
-    this instanceof MessageComponentInteraction
-      ? this.message.embeds[0].color
-      : await getColor(guild);
-  const emojis = guild.emojis.cache;
-  const stickers = guild.stickers.cache;
+// export async function renderServerEmojis(this: Interaction, guild: Guild, navCtx: NavBarContext) {
+//   const color =
+//     this instanceof MessageComponentInteraction
+//       ? this.message.embeds[0].color
+//       : await getColor(guild);
+//   const emojis = guild.emojis.cache;
+//   const stickers = guild.stickers.cache;
 
-  const e = new MessageEmbed().setAuthor({
-    name: `${guild.name} - Emojis & Stickers`,
-    iconURL: guild.iconURL({ format: 'png', dynamic: true }),
-  });
+//   const e = new MessageEmbed().setAuthor({
+//     name: `${guild.name} - Emojis & Stickers`,
+//     iconURL: guild.iconURL({ format: 'png', dynamic: true }),
+//   });
 
-  if (emojis.size > 0)
-    e.addField(
-      `Emojis • ${emojis.size}`,
-      `${emojis.filter((r) => !r.animated).size} static • ${
-        emojis.filter((r) => r.animated).size
-      } animated`,
-      true
-    );
+//   if (emojis.size > 0)
+//     e.addField(
+//       `Emojis • ${emojis.size}`,
+//       `${emojis.filter((r) => !r.animated).size} static • ${
+//         emojis.filter((r) => r.animated).size
+//       } animated`,
+//       true
+//     );
 
-  if (stickers.size > 0)
-    e.addField(
-      `Stickers • ${stickers.size}`,
-      stickers.map((r) => `${r.name}`).join(', '),
-      true
-    ).setColor(color);
+//   if (stickers.size > 0)
+//     e.addField(
+//       `Stickers • ${stickers.size}`,
+//       stickers.map((r) => `${r.name}`).join(', '),
+//       true
+//     ).setColor(color);
 
-  return {
-    embeds: [e],
-    components: components(serverNavBar(navCtx, this.locale, 'emojis')),
-  };
-}
+//   return {
+//     embeds: [e],
+//     components: components(serverNavBar(navCtx, this.locale, 'emojis')),
+//   };
+// }

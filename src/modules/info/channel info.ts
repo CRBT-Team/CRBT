@@ -1,6 +1,7 @@
-import { icons } from '$lib/env';
+import { emojis, icons } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import dayjs from 'dayjs';
@@ -14,18 +15,23 @@ import {
   ChannelType,
   Routes,
   SortOrderType,
+  ThreadAutoArchiveDuration,
   VideoQualityMode,
 } from 'discord-api-types/v10';
-import { EmbedFieldData, TextChannel, ThreadAutoArchiveDuration } from 'discord.js';
+import { EmbedFieldData, TextChannel } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
 
 dayjs.extend(duration);
 
 export default ChatCommand({
   name: 'channel info',
-  description: 'Gives info on the current channel or another one.',
+  description: t('en-US', 'channel_info.description'),
+  descriptionLocalizations: getAllLanguages('channel_info.description'),
   allowInDMs: false,
-  options: new OptionBuilder().channel('channel', 'The channel to get info from.'),
+  options: new OptionBuilder().channel('channel', t('en-US', 'channel_info.options.channel.description'), {
+    nameLocalizations: getAllLanguages('CHANNEL', localeLower),
+    descriptionLocalizations: getAllLanguages('channel_info.options.channel.description')
+  }),
   async handle() {
     const c = this.options.getChannel('channel') || this.channel;
     const channel = (await getRestClient()
@@ -36,7 +42,7 @@ export default ChatCommand({
     const created = snowflakeToDate(channel.id);
 
     let icon: string;
-    let title = 'Channel info';
+    let title = t(this, 'CHANNEL');
 
     const fields: EmbedFieldData[] = [
       {
@@ -52,10 +58,10 @@ export default ChatCommand({
     // Check if it's a category
     if (channel.type === ChannelType.GuildCategory) {
       icon = icons.channels.category;
-      title = 'Category info';
+      title = t(this, 'CATEGORY');
 
       fields.push({
-        name: 'Position',
+        name: t(this, 'POSITION'),
         value: `${channel.position + 1} of ${categories.size} categories`,
       });
     }
@@ -71,7 +77,7 @@ export default ChatCommand({
         | APIGuildForumChannel;
 
       icon = icons.channels.text_thread;
-      title = parent ? 'Thread info' : 'Post info';
+      title = parent ? t(this, 'THREAD_CHANNEL') : t(this, 'FORUM_POST');
 
       const autoArchives = new Date(
         created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000
@@ -79,7 +85,7 @@ export default ChatCommand({
 
       fields.push(
         {
-          name: 'Parent channel',
+          name: t(this, 'PARENT_CHANNEL'),
           value: `<#${channel.parent_id}>`,
           inline: true,
         },
@@ -111,25 +117,25 @@ export default ChatCommand({
         },
         {
           name: 'User limit',
-          value: channel.user_limit ? `${channel.user_limit} users` : `*No limit*`,
+          value: channel.user_limit ? `${channel.user_limit} users` : `*${t(this, 'NONE')}*`,
           inline: true,
         },
         {
           name: 'Bitrate',
           value: `${channel.bitrate / 1000}kbps`,
           inline: true,
-        },
-        ...(channel.type === ChannelType.GuildVoice
-          ? [
-              {
-                name: 'Video Quality',
-                value: channel.video_quality_mode === VideoQualityMode.Full ? '720p' : 'Auto',
-                inline: true,
-              },
-            ]
-          : [])
+        }
       );
     }
+
+    if ('video_quality_mode' in channel) {
+      fields.push({
+        name: t(this, 'VIDEO_QUALITY'),
+        value: channel.video_quality_mode === VideoQualityMode.Full ? '720p' : t(this, 'AUTO'),
+        inline: true,
+      });
+    }
+
     // Check if it's an announcement channel
     if (channel.type === ChannelType.GuildAnnouncement) {
       icon = icons.channels.announcement;
@@ -137,7 +143,7 @@ export default ChatCommand({
     // Check if it has slowmode
     if ('rate_limit_per_user' in channel) {
       fields.push({
-        name: 'Slowmode',
+        name: t(this, 'SLOWMODE'),
         value: channel.rate_limit_per_user ? `${channel.rate_limit_per_user} seconds` : 'Off',
         inline: true,
       });
@@ -148,12 +154,20 @@ export default ChatCommand({
         Routes.channelThreads(channel.id, 'public')
       )) as APIThreadChannel[];
 
+      const threadDuration: Record<ThreadAutoArchiveDuration, string> = {
+        60: '1 hour',
+        1440: '24 hours',
+        4320: '3 days',
+        10080: '1 week',
+      };
+
       fields.push({
-        name: `${channel.type === ChannelType.GuildForum ? 'Posts' : 'Threads'} (${
-          threads.length
-        })`,
+        name: `${t(
+          this,
+          channel.type === ChannelType.GuildForum ? 'FORUM_POSTS' : 'THREAD_CHANNELS'
+        )} (${threads.length})`,
         value: threads
-          .map((t) => `${t} (${threadDuration(t.thread_metadata.auto_archive_duration)})`)
+          .map((t) => `${t} (${threadDuration[t.thread_metadata.auto_archive_duration]})`)
           .join(', '),
       });
     }
@@ -163,31 +177,25 @@ export default ChatCommand({
 
       fields.push(
         {
-          name: 'Tags',
+          name: t(this, 'TAGS'),
           value:
             channel.available_tags
               .map(
                 (tag) =>
                   `${tag.emoji_id ? `<:a:${tag.emoji_id}>` : tag.emoji_name ?? ''} ${tag.name}`
               )
-              .join(', ') || '*None*',
+              .join(', ') || `*${t(this, 'NONE')}*`,
         },
         {
           name: 'Default sort order',
           value:
             channel.default_sort_order === SortOrderType.CreationDate
-              ? 'Creation date'
-              : 'Latest activity',
+              ? 'Date posted'
+              : 'Recently Active',
           inline: true,
         }
       );
     }
-
-    fields.push({
-      name: 'Age-Restricted',
-      value: channel.nsfw ? 'Yes' : 'No',
-      inline: true,
-    });
 
     await this.reply({
       embeds: [
@@ -196,7 +204,16 @@ export default ChatCommand({
             name: `${channel.name} - ${title}`,
             icon_url: icon,
           },
-          description: 'topic' in channel ? channel?.topic : '',
+          description:
+            `${channel.nsfw ? emojis.toggle.on : emojis.toggle.off} ${t(
+              this,
+              'AGE_RESTRICTED'
+            )}\n` +
+            ('topic' in channel && channel.topic
+              ? channel.topic.length > 512
+                ? `${channel.topic.slice(0, 512)}...`
+                : channel.topic
+              : ''),
           fields,
           color: await getColor(this.user),
         },
@@ -204,16 +221,3 @@ export default ChatCommand({
     });
   },
 });
-
-function threadDuration(tDuration: ThreadAutoArchiveDuration) {
-  switch (tDuration) {
-    case 60:
-      return '1 Hour';
-    case 1440:
-      return '24 Hours';
-    case 4320:
-      return '3 Days';
-    case 10080:
-      return '1 Week';
-  }
-}

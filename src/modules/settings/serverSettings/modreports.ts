@@ -1,6 +1,7 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
@@ -30,7 +31,7 @@ export const modReportsSettings: SettingsMenus = {
     const channel = guild.channels.cache.find((c) => c.id === settings.modReportsChannel);
 
     return {
-      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
+      emoji: isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off,
       description: isEnabled ? `Sending in #${channel.name}` : null,
     };
   },

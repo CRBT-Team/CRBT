@@ -1,9 +1,10 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
-import { cache, fetchWithCache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import chroma from 'chroma-js';
 import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
@@ -13,13 +14,13 @@ import { include } from './_helpers';
 export const colorSettings: SettingsMenus = {
   getSelectMenu: ({ settings, i }) => ({
     description: t(i, 'SETTINGS_COLOR_SET_TO', {
-      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+      color: chroma(settings.accentColor).hex(),
     }),
     emoji: '🎨',
   }),
   getMenuDescription: ({ settings, i }) => ({
     description: t(i, 'SETTINGS_COLOR_DESCRIPTION', {
-      color: `#${(settings.accentColor ?? colors.default).toString(16)}`,
+      color: chroma(settings.accentColor).hex(),
     }),
   }),
   getComponents: ({ i, backBtn, settings }) =>
@@ -62,7 +63,6 @@ export async function saveColorSettings(
       }),
     true
   );
-  cache.set(`${this.guildId}:color`, color);
 
   await this.update(await renderFeatureSettings.call(this, EditableFeatures.accentColor));
 }

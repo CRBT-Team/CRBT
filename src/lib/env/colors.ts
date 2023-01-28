@@ -1,4 +1,16 @@
 export default {
+  accents: {
+    red: [0, 100, 74],
+    orange: [32, 97, 64],
+    yellow: [46, 100, 56],
+    green: [132, 82, 52],
+    blue: [206, 100, 71],
+    blurple: [234, 99, 73],
+    pink: [302, 100, 76],
+    purple: [260, 100, 76],
+    gray: [0, 0, 66],
+  },
+
   success: 5305201,
   // success: 4906087,
   error: 16741492,

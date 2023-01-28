@@ -1,30 +1,67 @@
-import { colors } from '$lib/env';
+import { emojis } from '$lib/env';
+import { getColor } from '$lib/functions/getColor';
+import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
-import { t } from '$lib/language';
-import { timestampMention } from '@purplet/utils';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
+import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import canvas from 'canvas';
+import dedent from 'dedent';
+import { APIRole, PermissionFlagsBits, Routes } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
-import { ChatCommand, OptionBuilder } from 'purplet';
+import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'role info',
-  description: 'Get information about a server role.',
+  description: t('en-US', 'role_info.description'),
+  descriptionLocalizations: getAllLanguages('role_info.description'),
   allowInDMs: false,
-  options: new OptionBuilder().role('role', 'The role to get information about.', {
+  options: new OptionBuilder().role('role', t('en-US', 'role_info.options.role.description'), {
+    nameLocalizations: getAllLanguages('ROLE', localeLower),
+    descriptionLocalizations: getAllLanguages('role_info.options.role.description', localeLower),
     required: true,
   }),
   async handle({ role }) {
+    const rawRole: APIRole = (
+      (await getRestClient().get(Routes.guildRoles(this.guildId))) as APIRole[]
+    ).find((r) => r.id === role.id);
+
     const img = canvas.createCanvas(256, 256);
-    const ctx = img.getContext('2d');
-    ctx.fillStyle = role.hexColor;
-    ctx.fillRect(0, 0, img.width, img.height);
+    if (!role.icon && role.color) {
+      const ctx = img.getContext('2d');
+      ctx.fillStyle = role.hexColor;
+      ctx.fillRect(0, 0, img.width, img.height);
+    }
+
+    const perms = keyPerms(role.permissions);
+
+    let managed: string;
+
+    if (rawRole.tags?.premium_subscriber) {
+      managed = t(this, 'ROLE_INFO_PREMIUM_SUBSCRIBER');
+    } else if (rawRole.tags?.bot_id) {
+      managed = t(this, 'ROLE_INFO_MANAGED_BOT', {
+        bot: `<@${rawRole.tags.bot_id}>`,
+      });
+    } else if (rawRole.tags?.integration_id) {
+      managed = t(this, 'ROLE_INFO_MANAGED_INTEGRATION');
+    }
 
     await this.reply({
       embeds: [
         {
-          author: {
-            name: `${role.name} - Role info`,
-          },
+          title: t(this, 'ROLE_INFO_TITLE', {
+            role: role.name,
+          }),
+          description:
+            (managed ? `**${managed}**\n` : '') +
+            dedent`
+          ${role.mentionable ? emojis.toggle.on : emojis.toggle.off} ${t(
+              this,
+              'ROLE_INFO_MENTIONABLE'
+            )}
+          ${role.hoist ? emojis.toggle.on : emojis.toggle.off} ${t(this, 'ROLE_INFO_HOISTED')}
+          `,
           fields: [
             {
               name: t(this, 'ID'),
@@ -36,59 +73,43 @@ export default ChatCommand({
               inline: true,
             },
             {
-              name: 'Color',
+              name: t(this, 'COLOR'),
               value: role.color === 0 ? t(this, 'NONE') : role.hexColor,
               inline: true,
             },
             {
-              name: 'Position',
-              value:
-                (role.position === 0 ? '-' : `${this.guild.roles.cache.size - role.rawPosition}`) +
-                ` out of ${this.guild.roles.cache.size - 1} roles`,
+              name: t(this, 'POSITION'),
+              value: t(this, 'ROLE_INFO_POSITION', {
+                position: !role.position
+                  ? '-'
+                  : (this.guild.roles.cache.size - role.rawPosition).toLocaleString(this.locale),
+                roles: (this.guild.roles.cache.size - 1).toLocaleString(this.locale),
+              }),
               inline: true,
             },
             {
               name: t(this, 'ADDED'),
-              value: `${timestampMention(role.createdAt)} • ${timestampMention(
-                role.createdAt,
+              value: `${timestampMention(snowflakeToDate(role.id))} • ${timestampMention(
+                snowflakeToDate(role.id),
                 'R'
               )}`,
             },
             {
-              name: 'Hoisted',
-              value: t(this, role.hoist ? 'YES' : 'NO'),
-              inline: true,
-            },
-            {
-              name: 'Mentionable',
-              value: t(this, role.mentionable ? 'YES' : 'NO'),
-              inline: true,
-            },
-            {
-              name: 'Managed',
-              value: role.managed
-                ? role.tags.premiumSubscriberRole
-                  ? `Subscriber role`
-                  : `By <@!${role.tags.botId ?? role.tags.integrationId}>`
-                : ' No',
-              inline: true,
-            },
-            {
               name: t(this, 'MAJOR_PERMS'),
-              value:
-                role.permissions.has('ADMINISTRATOR', true) ||
-                role.permissions.toArray().length === 0
-                  ? 'Administrator (all permissions)'
-                  : keyPerms(role.permissions).join(', '),
+              value: hasPerms(role.permissions, PermissionFlagsBits.Administrator, true)
+                ? t(this, 'ADMIN_ALL_PERMS')
+                : perms.length
+                ? perms.join(', ')
+                : t(this, 'NO_PERMS'),
             },
           ],
           thumbnail: {
-            url: 'attachment://role.png',
+            url: role.icon ? role.iconURL() : 'attachment://role.png',
           },
-          color: role.color === 0 ? colors.blurple : role.color,
+          color: role.color || (await getColor(this.guild)),
         },
       ],
-      files: role.color === 0 ? [] : [new MessageAttachment(img.toBuffer(), 'role.png')],
+      files: !(role.icon || role.color) ? [] : [new MessageAttachment(img.toBuffer(), 'role.png')],
     });
   },
 });

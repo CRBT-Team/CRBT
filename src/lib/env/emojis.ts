@@ -1,14 +1,70 @@
-export default {
+import { getEmojiObject } from '$lib/functions/getEmojiObject';
+import { formatEmojiURL } from '@purplet/utils';
+import chroma from 'chroma-js';
+import colors from './colors';
+
+const emojis = {
+  red: {
+    thumbsdown: '<:thumbsdown:1065281274329182319>',
+    thumbsup: '<:thumbsup:1065281276946415617>',
+    toggleon: '<:toggleon:1065281281715347466>',
+    settings: '<:settings:1065306493177573396>',
+  },
+  orange: {
+    thumbsdown: '<:thumbsdown:1065314150827442296>',
+    thumbsup: '<:thumbsup:1065314152169615371>',
+    toggleon: '<:toggleon:1065314156665917622>',
+    settings: '<:settings:1065314147589431417>',
+  },
+  yellow: {
+    thumbsdown: '<:thumbsdown:1065314430721736754>',
+    thumbsup: '<:thumbsup:1065314432382668841>',
+    toggleon: '<:toggleon:1065314436899950712>',
+    settings: '<:settings:1065314427831865385>',
+  },
+  blue: {
+    thumbsdown: '<:thumbsdown:1065347354007441468>',
+    thumbsup: '<:thumbsup:1065347355592896612>',
+    toggleon: '<:toggleon:1065347357086077090>',
+    settings: '<:settings:1065347351453106217>',
+  },
+  green: {
+    thumbsdown: '<:thumbsdown:1065298484686770299>',
+    thumbsup: '<:thumbsup:1065298485865365587>',
+    toggleon: '<:toggleon:1065298489673789522>',
+    settings: '<:settings:1065306807230279800>',
+  },
+  blurple: {
+    thumbsdown: '<:thumbsdown:1065302732950483025>',
+    thumbsup: '<:thumbsup:1065302734246531134>',
+    toggleon: '<:toggleon:1065306696609697862>',
+    settings: '<:settings:1065306692138586183>',
+  },
+  purple: {
+    thumbsdown: '<:thumbsdown:1065314570874396752>',
+    thumbsup: '<:thumbsup:1065314572350803968>',
+    toggleon: '<:toggleon:1065314576511545364>',
+    settings: '<:settings:1065314568043249817>',
+  },
+  pink: {
+    thumbsdown: '<:thumbsdown:1065314225519599757>',
+    thumbsup: '<:thumbsup:1065314228426256384>',
+    toggleon: '<:toggleon:1065314232851243059>',
+    settings: '<:settings:1065314224085139589>',
+  },
+  gray: {
+    thumbsdown: '<:thumbsdown:1065349393672323092>',
+    thumbsup: '<:thumbsup:1065349395450699806>',
+    toggleon: '<:toggleon:1065349397916946452>',
+    settings: '<:settings:1030989527235428402>',
+  },
   error: '<:error:1035880321901674596> ',
   success: '<:success:1035880323482931230>',
-  information: '<:info:1030989515654975488>',
-  verified: '<:verified:1030989522118377493>',
   pending: '<:pending:1035314617532039279>',
   sticker: '<:sticker:970753754704007218>',
   emoji: '<:emoji:970653903664349214>',
   event: '<:event:970653903760814160>',
   role: '<:role:970752908536709271>',
-  activity: '<:activity:970653903509139497>',
   slash_command: '<:slash_command:970752908255698998>',
   thumbsup: '<:thumbsup:1030989520725889105>',
   thumbsdown: '<:thumbsdown:1030989519421456405>',
@@ -16,9 +72,7 @@ export default {
   trash_bin: '<:trash_bin:970980243030540308>',
   pencil: '<:pencil:970980242560794686>',
   menu: '<:menu:970980242925711402>',
-  id: '<:id:970983898613948456>',
   tada: '<:tada:1000761543350296626>',
-  new: '<:new1:1035878030863777912><:new2:1035878032256278649>',
   lock: '<:locked:1003323812651212860>',
   toggle: {
     on: '<:toggleon:1035314618983256215>',
@@ -27,13 +81,10 @@ export default {
     foff: '<:forcedoff:866042899501940757>',
   },
   buttons: {
-    activity: '<:activity_white:970980242657267754>',
     pencil: '<:pencil_white:970980243013779536>',
     trash_bin: '<:trash_bin_white:970980243097677874>',
     menu: '<:menu_white:970980243047350302>',
-    reply: '<:reply_white:971352169418747944>',
     cross: '<:cross_white:971363011308707840>',
-    link: '<:link_white:971363011275157524>',
     left_arrow: '<:left_arrow_white:987721485978304514>',
     right_arrow: '<:right_arrow_white:987721488557801552>',
     preview: '<:preview_white:987721487467302982>',
@@ -129,3 +180,49 @@ export default {
     fillstartcut: '<:progressfillstartcut:971347568409841664>',
   },
 };
+
+export default emojis;
+
+export function icon(
+  accentColor: number,
+  icon: keyof typeof emojis['red'],
+  type: 'emoji' | 'image' = 'emoji'
+) {
+  const [accentH, accentS, accentL] = chroma(accentColor).hsl();
+
+  const color = Object.entries(colors.accents)
+    .map(([name, [hue, sat, lum]]) => ({
+      name,
+      hue,
+      sat,
+      lum,
+    }))
+    .reduce((a, b) => {
+      let aScore = a.hue + accentH;
+      let bScore = b.hue + accentH;
+      // if (accentL > 0.5) {
+      //   aScore -= a.lum + accentL;
+      // }
+      // if (accentL > 0.5) {
+      //   bScore -= b.lum + accentL;
+      // }
+      // if (accentS > 0.5) {
+      //   aScore -= a.sat + accentS;
+      // }
+      // if (accentS > 0.5) {
+      //   bScore -= b.sat + accentS;
+      // }
+
+      return Math.abs(bScore - 0) < Math.abs(aScore - 0) ? b : a;
+    }).name;
+
+  const emoji = emojis[color]?.[icon];
+
+  if (type === 'emoji') {
+    return emoji;
+  }
+  if (type === 'image') {
+    const { id } = getEmojiObject(emoji);
+    return formatEmojiURL(id);
+  }
+}

@@ -1,6 +1,7 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { emojis, icons } from '$lib/env';
+import { emojis } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
@@ -21,7 +22,7 @@ import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from
 export default ChatCommand({
   name: 'settings',
   description: t('en-US', 'settings.description'),
-  nameLocalizations: getAllLanguages('settings.name', localeLower),
+  nameLocalizations: getAllLanguages('SETTINGS', localeLower),
   descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
@@ -75,8 +76,8 @@ export async function renderSettingsMenu(
     embeds: [
       {
         author: {
-          name: t(this, 'SETTINGS_TITLE'),
-          iconURL: icons.settings,
+          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
+          iconURL: icon(settings.accentColor, 'settings', 'image'),
         },
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
         description: t(this, 'SETTINGS_DESCRIPTION'),
@@ -107,7 +108,8 @@ export async function renderFeatureSettings(
   feature: EditableFeatures
 ): Promise<any> {
   const { getComponents, getMenuDescription } = featureSettingsMenus[feature];
-  const props = resolveSettingsProps(this, feature, await getSettings(this.guildId));
+  const settings = await getSettings(this.guildId);
+  const props = resolveSettingsProps(this, feature, settings);
   const { isEnabled, errors } = props;
 
   const backBtn = new BackSettingsButton(null)
@@ -127,8 +129,8 @@ export async function renderFeatureSettings(
     embeds: [
       {
         author: {
-          name: t(this, 'SETTINGS_TITLE'),
-          icon_url: icons.settings,
+          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
+          icon_url: icon(settings.accentColor, 'settings', 'image'),
         },
         title: `${this.guild.name} / ${t(this, feature)}`,
         color: await getColor(this.guild),
@@ -184,8 +186,6 @@ export const ToggleFeatureBtn = ButtonComponent({
         }),
       true
     );
-
-    console.log('h', h);
 
     this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
   },

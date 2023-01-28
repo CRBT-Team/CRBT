@@ -138,7 +138,7 @@ export const DeleteButton = ButtonComponent({
         {
           ...embed,
           author: {
-            name: t(this, 'REMINDER_DELETE_CONFIRMATION_TITLE'),
+            name: t(this, 'DELETE_CONFIRMATION_TITLE'),
           },
         },
       ],
@@ -300,7 +300,7 @@ async function renderList(this: CommandInteraction | ButtonInteraction, userRemi
             name: getReminderSubject(r, this.client),
             value: dedent`${timestampMention(r.expiresAt, 'R')}
             ${t(this, 'REMINDER_DESTINATION')} ${
-              r.destination === 'dm' ? t(this, 'IN_YOUR_DMS') : `<#${r.destination}>`
+              r.destination === 'dm' ? t(this, 'DMS') : `<#${r.destination}>`
             }`,
           })),
         color:

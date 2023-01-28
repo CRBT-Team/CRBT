@@ -51,7 +51,7 @@ export async function renderBotInfo(
 
   if (!isSelf && integration.role) {
     fields.push({
-      name: 'Managed role',
+      name: 'Managing role',
       value: integration.role.toString(),
     });
   }
@@ -94,7 +94,7 @@ export async function renderBotInfo(
     embeds: [
       {
         author: {
-          name: `${bot.username} - Bot info`,
+          name: `${bot.username} - ${t(this, 'BOT_INFO')}`,
           icon_url: avatar(bot),
           url: isSelf ? links.baseURL : null,
         },

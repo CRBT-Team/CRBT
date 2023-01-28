@@ -1,7 +1,8 @@
-import { channels, colors, icons, links } from '$lib/env';
+import { channels, colors, icons } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import { MessageEmbed, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 
 export const botLeave = OnEvent('guildDelete', async (guild) => {
@@ -24,20 +25,24 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
     type: 'WATCHING',
   });
 
-  const { strings } = t(guild.preferredLocale, 'crbt_introduction');
+  const locale = guild.preferredLocale;
 
   if (guild.systemChannel.permissionsFor(guild.client.user).has('SEND_MESSAGES')) {
     guild.systemChannel.send({
       embeds: [
-        new MessageEmbed()
-          .setTitle(strings.EMBED_TITLE.replace('{CRBT}', guild.client.user.username))
-          .setDescription(
-            strings.EMBED_DESCRIPTION.replace('{CRBT}', guild.client.user.username)
-              .replace('{SERVERS}', guild.client.guilds.cache.size.toString())
-              .replace('{DISCORD}', links.discord)
-          )
-          .setImage(icons.welcome)
-          .setColor(await getColor(guild)),
+        {
+          title: t(locale, 'crbt_introduction.EMBED_TITLE'),
+          description: t(locale, 'crbt_introduction.EMBED_DESCRIPTION', {
+            crbt: guild.client.user.username,
+            serverCount: guild.client.guilds.cache.size.toLocaleString(locale),
+            help: slashCmd('help'),
+            settings: slashCmd('settings'),
+          }),
+          image: {
+            url: icons.welcome,
+          },
+          color: await getColor(guild),
+        },
       ],
     });
   }

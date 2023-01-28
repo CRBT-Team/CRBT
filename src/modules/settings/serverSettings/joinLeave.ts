@@ -1,6 +1,7 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
@@ -66,7 +67,7 @@ export const joinLeaveSettings: SettingsMenus = {
     const channel = i.guild.channels.cache.get(channelId);
 
     return {
-      emoji: emojis.toggle[isEnabled ? 'on' : 'off'],
+      emoji: isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off,
       description: isEnabled
         ? t(i, 'SETTINGS_SENDING_IN', {
             channel: `#${channel?.name}`,

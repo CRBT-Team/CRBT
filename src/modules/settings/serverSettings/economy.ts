@@ -9,9 +9,11 @@ import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { CustomEmojiRegex, emojiMention, SnowflakeRegex } from '@purplet/utils';
 import dayjs from 'dayjs';
 import dedent from 'dedent';
+import { Routes } from 'discord-api-types/v10';
 import { Channel, MessageButton } from 'discord.js';
-import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import { ButtonComponent, components, getRestClient, ModalComponent, row } from 'purplet';
 import emojiJSON from '../../../../data/misc/emoji.json';
+import { economyCommands } from '../../events/interaction';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
@@ -79,9 +81,14 @@ export const economySettings: SettingsMenus = {
       },
     };
   },
-  getComponents({ backBtn, toggleBtn }) {
+  getComponents({ backBtn, isEnabled }) {
     return components(
-      row(backBtn, toggleBtn),
+      row(
+        backBtn,
+        new ToggleEconomy(isEnabled as never)
+          .setLabel(isEnabled ? 'Disable Economy' : 'Enable Economy')
+          .setStyle(isEnabled ? 'DANGER' : 'SUCCESS')
+      ),
       row(
         new EditCurrencyBtn()
           .setEmoji(emojis.buttons.pencil)
@@ -101,6 +108,68 @@ export const economySettings: SettingsMenus = {
     );
   },
 };
+
+export const ToggleEconomy = ButtonComponent({
+  async handle(isEnabled: boolean) {
+    const newState = { economy: !isEnabled };
+
+    await fetchWithCache(
+      `${this.guildId}:settings`,
+      () =>
+        prisma.servers.upsert({
+          where: { id: this.guildId },
+          update: { modules: { upsert: { create: newState, update: newState } } },
+          create: {
+            id: this.guildId,
+            modules: {
+              connectOrCreate: { create: newState, where: { id: this.guildId } },
+            },
+          },
+          include,
+        }),
+      true
+    );
+
+    await this.deferUpdate();
+
+    const {
+      economy: { currencyNamePlural, currencyNameSingular },
+    } = await getSettings(this.guildId);
+    const rest = getRestClient();
+    const promises: Promise<any>[] = [];
+
+    if (isEnabled) {
+      const guildCommands = (
+        (await rest.get(Routes.applicationGuildCommands(this.applicationId, this.guildId))) as any[]
+      ).filter((c) => Object.keys(economyCommands).includes(c.name));
+      console.log(guildCommands);
+
+      guildCommands.forEach((command) =>
+        promises.push(
+          rest.delete(Routes.applicationGuildCommand(this.applicationId, this.guildId, command.id))
+        )
+      );
+    } else {
+      Object.values(economyCommands).map((command) => {
+        const commandMeta = command.getMeta({
+          plural: currencyNamePlural,
+          singular: currencyNameSingular,
+        });
+
+        promises.push(
+          rest.post(Routes.applicationGuildCommands(this.applicationId, this.guildId), {
+            body: commandMeta,
+          })
+        );
+      });
+    }
+
+    await Promise.all(promises).then(
+      async () =>
+        await this.editReply(await renderFeatureSettings.call(this, EditableFeatures.economy))
+    );
+  },
+});
 
 export const EditCurrencyBtn = ButtonComponent({
   async handle() {
