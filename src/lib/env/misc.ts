@@ -4,8 +4,8 @@ export const servers = {
   },
   channels = {
     report: '1019657321154093096',
-    reportDev: '1065035615269290105',
-    privateReports: '1065034464884969622',
+    reportDev: '1068841290592170094',
+    privateReports: '1068841378114703383',
     suggestions: '1021746343485636618',
     error: '829605038656978985',
     telemetry: '926077264884559913',

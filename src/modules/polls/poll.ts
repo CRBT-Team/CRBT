@@ -430,7 +430,7 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
         {
           type: 'BUTTON',
           style: ButtonStyle.Link,
-          label: t(this, 'JUMP_TO_MSG'),
+          label: t(poll.locale, 'JUMP_TO_MSG'),
           url: pollMsg.url
         }
       )
