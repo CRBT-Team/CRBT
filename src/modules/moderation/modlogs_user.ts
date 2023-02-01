@@ -9,9 +9,9 @@ import { renderModlogs } from './modlogs_all';
 
 export default ChatCommand({
   name: 'modlogs user',
-  description: "View your Moderation History, or someone else's.",
+  description: "View a user's Moderation History.",
   allowInDMs: false,
-  options: new OptionBuilder().user('user', 'The user whose Moderation History to get.', {
+  options: new OptionBuilder().user('user', 'Whose Moderation History to get.', {
     nameLocalizations: getAllLanguages('USER', localeLower),
   }),
   async handle({ user }) {
@@ -25,7 +25,7 @@ export default ChatCommand({
 });
 
 export const viewModLogsCtxCommand = UserContextCommand({
-  name: 'View Moderation History',
+  name: 'Moderation History',
   async handle(user) {
     await this.deferReply({
       ephemeral: true,

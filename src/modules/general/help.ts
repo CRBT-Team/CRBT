@@ -10,7 +10,7 @@ import { ChatCommand, components, row } from 'purplet';
 export default ChatCommand({
   name: 'help',
   description: 'Returns a quick help guide for CRBT.',
-  nameLocalizations: getAllLanguages('help.name', localeLower),
+  nameLocalizations: getAllLanguages('HELP', localeLower),
   descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
     const showAdButton = !this.guild || this.guild.ownerId !== this.user.id;
@@ -20,9 +20,7 @@ export default ChatCommand({
       embeds: [
         {
           author: {
-            name: t(this, 'HELP_TITLE', {
-              botName: this.client.user.username,
-            }),
+            name: `${this.client.user.username} ${t(this, 'HELP')}`,
             iconURL: avatar(this.client.user, 64),
           },
           description: t(this, 'HELP_DESCRIPTION', {

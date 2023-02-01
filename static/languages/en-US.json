@@ -257,7 +257,7 @@
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Avatar & Banner"
     },
     "strings": {
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"

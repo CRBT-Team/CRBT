@@ -69,7 +69,7 @@ export const EditButton = ButtonComponent({
 
     await this.showModal(
       new EditModal(index)
-        .setTitle('Edit Reminder')
+        .setTitle(t(this, 'EDIT'))
         .setComponents(
           row(
             new TextInputComponent()
@@ -104,7 +104,7 @@ export const EditModal = ModalComponent({
     try {
       resolveToDate(this.fields.getTextInputValue('date'));
     } catch (e) {
-      return CRBTError(this, 'Invalid date format');
+      return CRBTError(this, t(this, 'remind me.errors.INVALID_FORMAT'));
     }
 
     const expiresAt = (await resolveToDate(this.fields.getTextInputValue('date'))).toDate();
@@ -209,7 +209,7 @@ async function renderReminder(
         title: getReminderSubject(reminder, this.client),
         description: dedent`${timestampMention(data.expiresAt, 'R')}
         ${t(this, 'REMINDER_DESTINATION')} ${
-          data.raw.destination === 'dm' ? 'your DMs' : `${data.channel}`
+          data.raw.destination === 'dm' ? t(this, 'DMS') : `${data.channel}`
         }
         ${t(this, 'CREATED_ON')} ${timestampMention(created, 'R')} (${timestampMention(
           created,

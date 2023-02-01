@@ -37,7 +37,7 @@ interface PageBtnProps {
 
 export default ChatCommand({
   name: 'modlogs all',
-  description: 'View the entire Moderation History for this server.',
+  description: "View the server's Moderation History.",
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
@@ -228,7 +228,7 @@ async function renderStrikePage(
         fields: [
           {
             name: t(this, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON'),
-            value: strike.reason ?? '*No reason specified*',
+            value: strike.reason ?? `*${t(this, 'NONE')}*`,
           },
           {
             name: t(this, strike.type === 'REPORT' ? 'REPORTED_BY' : 'MODERATOR'),
@@ -346,7 +346,7 @@ export const DeleteButton = ButtonComponent({
         {
           ...embed,
           author: {
-            name: 'Are you sure you want to delete this strike?',
+            name: t(this, 'DELETE_CONFIRMATION_TITLE'),
           },
         },
       ],

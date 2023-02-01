@@ -24,14 +24,6 @@ export default ChatCommand({
     const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
     const m = (user ? this.options.getMember('user') : this.member) as GuildMember;
 
-    // enum UserStatus {
-    //   online = 'https://cdn.discordapp.com/attachments/782584672772423684/851805512370880512/unknown.png',
-    //   idle = 'https://cdn.discordapp.com/attachments/782584672772423684/851805544507113542/unknown.png',
-    //   dnd = 'https://cdn.discordapp.com/attachments/782584672772423684/851805534527946762/unknown.png',
-    //   offline = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
-    //   invisible = 'https://cdn.discordapp.com/attachments/782584672772423684/851805558503243826/unknown.png',
-    // }
-
     await this.reply(
       await renderUser(
         this,
@@ -47,7 +39,7 @@ export default ChatCommand({
 });
 
 export const ctxCommand = UserContextCommand({
-  name: 'Get User Info',
+  name: 'User Info',
   async handle(user) {
     const member = (this as UserContextMenuInteraction).targetMember as GuildMember;
 
