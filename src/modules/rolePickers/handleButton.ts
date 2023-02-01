@@ -1,24 +1,13 @@
 import { colors, emojis } from '$lib/env';
-import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { ButtonInteraction, GuildMember } from 'discord.js';
-import { usersOnCooldown } from './rolePickers';
 
 export async function handleRolePickerButton(
   this: ButtonInteraction,
   data: { id: string; behavior: string }
 ) {
   const role = await this.guild.roles.fetch(data.id);
-
-  if (
-    usersOnCooldown.has(`${this.guild.id}/${this.user.id}`) &&
-    usersOnCooldown.get(`${this.guild.id}/${this.user.id}`) > Date.now()
-  ) {
-    return this.reply(
-      await CooldownError(this, usersOnCooldown.get(`${this.guild.id}/${this.user.id}`), false)
-    );
-  }
-  usersOnCooldown.set(this.user.id, Date.now() + 3000);
 
   const { strings, errors } = t(this, 'role-selectors');
 

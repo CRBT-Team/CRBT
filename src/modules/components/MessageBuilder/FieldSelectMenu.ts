@@ -91,11 +91,7 @@ export const FieldSelectMenu = SelectMenuComponent({
           .setCustomId('VALUE')
           .setStyle(maxLength <= 256 ? 'SHORT' : 'PARAGRAPH')
           .setMaxLength(maxLength)
-          .setPlaceholder(
-            markdownSupport && type !== MessageBuilderTypes.rolePicker
-              ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT')
-              : ''
-          )
+          .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : '')
       )
     );
 

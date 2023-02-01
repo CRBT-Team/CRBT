@@ -36,13 +36,10 @@ export const FieldEditModal = ModalComponent({
 
     const invalidURL = t(this, 'ERROR_INVALID_URL');
 
-    const parsed =
-      type === MessageBuilderTypes.rolePicker
-        ? value
-        : parseCRBTscript(value, {
-            channel: this.channel as TextChannel,
-            member: this.member as GuildMember,
-          });
+    const parsed = parseCRBTscript(value, {
+      channel: this.channel as TextChannel,
+      member: this.member as GuildMember,
+    });
 
     switch (fieldName) {
       case 'content':

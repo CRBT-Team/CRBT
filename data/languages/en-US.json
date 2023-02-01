@@ -292,44 +292,16 @@
     }
   },
   "role-selectors": {
-    "manual": {
-      "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
-        "options": [
-          {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
-            "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
-            ]
-          },
-          {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
-          },
-          {
-            "description": "A role that a member may select."
-          }
-        ]
-      }
-    },
     "errors": {
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "ROLES_DO_NOT_EXIST": "Some roles you've selected have been removed. Contact an admin to resolve the issue.",
+      "BUTTON_ROLES_ONCE": "You cannot remove this role."
     },
     "strings": {
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
     }
   },
   "AVATAR": "Avatar",

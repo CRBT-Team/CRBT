@@ -1,24 +1,9 @@
 import { colors, emojis } from '$lib/env';
-import { CooldownError, CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { GuildMember, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
-import { usersOnCooldown } from './rolePickers';
 
 export async function handleRolePickerSelectMenu(this: SelectMenuInteraction) {
-  if (
-    usersOnCooldown.has(`${this.guild.id}/${this.user.id}`) &&
-    usersOnCooldown.get(`${this.guild.id}/${this.user.id}`) > Date.now()
-  ) {
-    return this.reply(
-      await CooldownError(
-        this,
-        await usersOnCooldown.get(`${this.guild.id}/${this.user.id}`),
-        false
-      )
-    );
-  }
-  usersOnCooldown.set(this.user.id, Date.now() + 3000);
-
   const { strings, errors } = t(this, 'role-selectors');
   const roleArray = (this.message.components[0].components[0] as MessageSelectMenu).options.map(
     (role) => JSON.parse(role.value)
