@@ -14,7 +14,7 @@ export default OnEvent('ready', async (client) => {
   });
 
   allCommands = await client.application.commands.fetch({
-    guildId: client.user.id !== clients.crbt.id ? servers.dev : undefined,
+    guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
   });
 
   console.log(`Loaded ${allCommands.size} commands`);

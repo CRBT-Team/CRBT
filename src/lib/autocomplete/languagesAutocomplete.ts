@@ -1,6 +1,6 @@
 import { upperCaseFirst } from 'change-case-all';
 import { AutocompleteInteraction } from 'discord.js';
-import languages from '../../../data/misc/langs.json';
+import languages from '../../../static/misc/langs.json';
 
 export function languagesAutocomplete(this: AutocompleteInteraction, text: string) {
   const intl = new Intl.DisplayNames(this.locale, {

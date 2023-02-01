@@ -1,5 +1,5 @@
 import { CustomEmojiRegex, formatEmojiURL } from '@purplet/utils';
-import emojiJSON from '../../../data/misc/emoji.json';
+import emojiJSON from '../../../static/misc/emoji.json';
 import { emojiImg } from '../../modules/info/emoji info';
 import { getEmojiObject } from './getEmojiObject';
 

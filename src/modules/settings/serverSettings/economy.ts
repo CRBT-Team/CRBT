@@ -12,7 +12,7 @@ import dedent from 'dedent';
 import { Routes } from 'discord-api-types/v10';
 import { Channel, MessageButton } from 'discord.js';
 import { ButtonComponent, components, getRestClient, ModalComponent, row } from 'purplet';
-import emojiJSON from '../../../../data/misc/emoji.json';
+import emojiJSON from '../../../../static/misc/emoji.json';
 import { economyCommands } from '../../events/interaction';
 import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';

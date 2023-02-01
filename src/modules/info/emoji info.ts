@@ -21,7 +21,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import emojiJSON from '../../../data/misc/emoji.json';
+import emojiJSON from '../../../static/misc/emoji.json';
 
 export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
   const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes

@@ -20,7 +20,7 @@ import {
   row,
   SelectMenuComponent,
 } from 'purplet';
-import languages from '../../../data/misc/langs.json';
+import languages from '../../../static/misc/langs.json';
 
 export default ChatCommand({
   name: 'translate',
@@ -60,19 +60,21 @@ export default ChatCommand({
 });
 
 export const ctxCommand = MessageContextCommand({
-  name: 'Translate (+ Image Scan)',
+  name: 'Translate (w/ images)',
   async handle(message) {
     const image = message.attachments.size
       ? message.attachments.first().url
       : message.embeds.find((e) => e.image)?.image?.url ??
         message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
 
-    if (!message.content && !image) {
+    const embedsWithText = message.embeds.filter(
+      (e) => e.title || e.author?.name || e.footer?.text || e.description || e.fields?.length
+    );
+
+    if (!message.content && !image && !embedsWithText.length) {
       return CRBTError(this, {
-        title: "This message doesn't have any content or images to translate!",
-        description: `Note: CRBT doesn't translate embeds for now. You can translate any text with ${slashCmd(
-          'translate'
-        )}.`,
+        title: "This message doesn't have any text or images to translate!",
+        description: `You can translate any other text with ${slashCmd('translate')}.`,
       });
     }
 
@@ -80,27 +82,67 @@ export const ctxCommand = MessageContextCommand({
       ephemeral: true,
     });
 
-    try {
-      if (message.content) {
-        const { content } = message;
+    const target = this.locale.split('-')[0];
+    const simpleTr = async (text: string) => (await useTranslate(text, { target }))?.[0];
 
-        const result = await translate.call(this, content);
-        if (result) await this.editReply(result);
-      } else if (image) {
+    try {
+      const translatedEmbeds = embedsWithText.map(async (embed) => ({
+        ...embed,
+        title: embed.title ? await simpleTr(embed.title) : null,
+        description: embed.description ? await simpleTr(embed.description) : null,
+        author: embed.author
+          ? {
+              ...embed.author,
+              name: await simpleTr(embed.author.name),
+            }
+          : null,
+        footer: embed.footer
+          ? {
+              ...embed.footer,
+              text: await simpleTr(embed.footer.text),
+            }
+          : null,
+        fields: await Promise.all(
+          embed.fields.map(async (f) => ({
+            ...f,
+            name: await simpleTr(f.name),
+            value: await simpleTr(f.value),
+          }))
+        ),
+      }));
+
+      console.log(translatedEmbeds);
+
+      if (message.content) {
+        const successMessage = await translate.call(this, message.content);
+        if (embedsWithText.length) {
+          console.log(translatedEmbeds);
+          return Promise.all(translatedEmbeds).then((embeds) =>
+            this.editReply({
+              ...successMessage.embeds,
+              embeds,
+            })
+          );
+        } else {
+          return this.editReply(successMessage);
+        }
+      }
+
+      if (image) {
         const [content, error] = await useOcrScan(image);
 
-        if (error)
-          await CRBTError(this, {
+        if (error) {
+          return await CRBTError(this, {
             title: 'No text was recognized from this image.',
             description:
               'Try again using a different image, and make sure that the text is legible.',
           });
+        }
 
-        const result = await translate.call(this, content);
-        if (result) await this.editReply(result);
+        return this.editReply(await translate.call(this, content));
       }
     } catch (e) {
-      await this.editReply(UnknownError(this, e));
+      this.editReply(UnknownError(this, e));
     }
   },
 });
@@ -132,12 +174,10 @@ async function translate(
     return;
   }
 
-  const {
-    from: {
-      language: { iso: source },
-    },
-    text: translated,
-  } = await googleTranslateApi(text, { to, from });
+  const [translated, source, target] = await useTranslate(text, {
+    source: from,
+    target: to,
+  });
 
   const color = await getColor(this.user);
   const intl = new Intl.DisplayNames(this.locale, {
@@ -202,6 +242,26 @@ export const TargetLangSelectMenu = SelectMenuComponent({
     );
   },
 });
+
+export async function useTranslate(
+  text: string,
+  opts?: {
+    source?: string;
+    target?: string;
+  }
+) {
+  opts.source ??= 'auto';
+  opts.target ??= 'en';
+
+  const {
+    from: {
+      language: { iso: source },
+    },
+    text: translated,
+  } = await googleTranslateApi(text, { to: opts.target, from: opts.source });
+
+  return [translated, source, opts.target];
+}
 
 export async function useOcrScan(
   imageUrl: string,

@@ -5,7 +5,7 @@ import convert, { Unit } from 'convert-units';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import Currencies from '../../../data/misc/currencies.json';
+import Currencies from '../../../static/misc/currencies.json';
 
 const units = convert().list();
 const currencies = Object.entries(Currencies).map(([_, { code, name, name_plural }]) => ({

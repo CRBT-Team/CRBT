@@ -1,6 +1,6 @@
 import { CustomEmojiRegex } from '@purplet/utils';
 import { APIPartialEmoji } from 'discord-api-types/v10';
-import emojiJSON from '../../../data/misc/emoji.json';
+import emojiJSON from '../../../static/misc/emoji.json';
 
 export function getEmojiObject(emoji: string): Partial<APIPartialEmoji> {
   if (!emoji.match(CustomEmojiRegex)) {

@@ -26,10 +26,10 @@ The perfect just-about-anything Discord bot.
 
 ### Project Structure
 
-- `/data` contains JSON data and other assets used in the bot
+- `/static` contains JSON files and other assets used in the bot
 - `/disabled` contains deprecated or cancelled features, put on hold in case I bring them back
-- `/src/lib` is used for custom functions, constants, and components used throughout the bot
-- `/src/modules` is where Purplet modules are contained, and where commands & components are exported. Each directory maps to a CRBT feature.
+- `/src/lib` is for custom functions, constants, and components used throughout the bot
+- `/src/modules` is where Purplet modules are contained, and where commands & components are exported. Each directory within maps to a CRBT feature.
 
 ### Acknowledgements
 

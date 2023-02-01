@@ -177,7 +177,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   //     true
   //   );
   // }
-  canvas.registerFont(resolve('data/misc/ggsans.otf'), { family: 'ggsans' });
+  canvas.registerFont(resolve('static/misc/ggsans.otf'), { family: 'ggsans' });
 
   const img = canvas.createCanvas(512, 512);
   const ctx = img.getContext('2d');
