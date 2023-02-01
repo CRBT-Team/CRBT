@@ -82,7 +82,7 @@ export default ChatCommand({
 
     const attachment = Object.values(choices).at(-1) as MessageAttachment;
 
-    if (!attachment.contentType.startsWith('image')) {
+    if (!attachment?.contentType.startsWith('image')) {
       return CRBTError(this, 'The chosen attachment must be an image.');
     }
 
