@@ -11,7 +11,7 @@ import {
   timestampMention,
 } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
-import { ButtonStyle, PermissionFlagsBits } from 'discord-api-types/v10';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ButtonInteraction, Interaction, MessageButton, SelectMenuInteraction } from 'discord.js';
 import {
   ButtonComponent,
@@ -175,12 +175,13 @@ async function renderUnicodeEmoji(
                 }))
               )
             ),
-            row({
-              type: 'BUTTON',
-              label: t(this, 'EMOJI_INFO_EMOJIPEDIA_BUTTON'),
-              url: `https://emojipedia.org/${emojiData.char}`,
-              style: ButtonStyle.Link,
-            })
+            row(
+              new MessageButton({
+                label: t(this, 'EMOJI_INFO_EMOJIPEDIA_BUTTON'),
+                url: `https://emojipedia.org/${emojiData.char}`,
+                style: 'LINK',
+              })
+            )
           ),
         }),
   };

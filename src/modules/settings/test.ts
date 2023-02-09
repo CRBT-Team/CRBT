@@ -51,35 +51,21 @@
 //   },
 // });
 
-import { InteractionResponseType, Routes } from 'discord-api-types/v10';
-import { ChatCommand, getRestClient } from 'purplet';
+// import { ChannelType } from 'discord-api-types/v10';
+// import { MessageSelectMenu } from 'discord.js';
+// import { ChatCommand, components, row } from 'purplet';
 
-// export default
-ChatCommand({
-  name: 'test',
-  description: 'a select menu',
-  async handle() {
-    await getRestClient().post(Routes.interactionCallback(this.id, this.token), {
-      body: {
-        type: InteractionResponseType.ChannelMessageWithSource,
-        data: {
-          content: 'hi',
-          components: [
-            {
-              type: 1,
-              components: [
-                {
-                  type: 5,
-                  custom_id: 'idk',
-                  placeholder: 'Choose a user',
-                  min_values: 1,
-                  max_values: 3,
-                },
-              ],
-            },
-          ],
-        },
-      },
-    });
-  },
-});
+// export default ChatCommand({
+//   name: 'test',
+//   description: 'a select menu',
+//   async handle() {
+//     const selectMenu = new MessageSelectMenu()
+//       .setType('CHANNEL_SELECT')
+//       .addChannelTypes(ChannelType.GuildText as number)
+//       .setCustomId('hi');
+
+//     this.reply({
+//       components: components(row(selectMenu)),
+//     });
+//   },
+// });

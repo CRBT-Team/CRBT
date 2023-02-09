@@ -4,8 +4,8 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "start": "prisma generate && purplet build && node dist/bot.mjs",
-    "dev": "purplet build && node dist/bot.mjs --dev",
+    "start": "node patches/apply-patches && prisma generate && purplet build && node dist/bot.mjs",
+    "dev": "node patches/apply-patches && purplet build && node dist/bot.mjs --dev",
     "db": "supabase start",
     "build": "purplet build",
     "generate": "prisma generate"

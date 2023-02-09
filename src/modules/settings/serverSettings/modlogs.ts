@@ -2,14 +2,13 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
-import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
-import { SnowflakeRegex } from '@purplet/utils';
-import { TextInputComponent } from 'discord.js';
-import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import { ChannelType } from 'discord-api-types/v10';
+import { MessageSelectMenu } from 'discord.js';
+import { components, OnEvent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
-import { getSettings, include } from './_helpers';
+import { include } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
   getErrors({ guild, settings, isEnabled, i }) {
@@ -61,67 +60,47 @@ export const modlogsSettings: SettingsMenus = {
   },
   getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>
     components(
+      row(backBtn, toggleBtn),
       row(
-        backBtn,
-        toggleBtn,
-        new EditModLogsChannelBtn()
-          .setLabel(t(i, 'EDIT_CHANNEL'))
-          .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY')
+        new MessageSelectMenu()
+          .setType('CHANNEL_SELECT')
+          .addChannelTypes(
+            ...([
+              ChannelType.GuildText,
+              ChannelType.GuildAnnouncement,
+              ChannelType.PublicThread,
+              ChannelType.PrivateThread,
+            ] as number[])
+          )
+          .setCustomId(customId)
           .setDisabled(!isEnabled)
+          .setPlaceholder(t(i, 'EDIT_CHANNEL'))
       )
+      // new EditModLogsChannelBtn()
+      //   .setEmoji(emojis.buttons.pencil)
+      //   .setStyle('PRIMARY')
     ),
 };
 
-export const EditModLogsChannelBtn = ButtonComponent({
-  async handle() {
-    const settings = await getSettings(this.guild.id);
-    const channelId = settings.modLogsChannel;
-    const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
+const customId = 'hselect';
 
-    this.showModal(
-      new EditModLogsChannelModal(null)
-        .setTitle(`Edit Moderation Logs Channel`)
-        .setComponents(
-          row(
-            new TextInputComponent()
-              .setCustomId('channel')
-              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
-              .setLabel(t(this, 'CHANNEL'))
-              .setValue(channelName)
-              .setRequired(true)
-              .setStyle('SHORT')
-              .setMaxLength(100)
-          )
-        )
-    );
-  },
-});
-
-export const EditModLogsChannelModal = ModalComponent({
-  async handle() {
-    const channelInput = this.fields.getTextInputValue('channel');
-
-    const channel = SnowflakeRegex.test(channelInput)
-      ? await this.guild.channels.fetch(channelInput)
-      : (await this.guild.channels.fetch())?.find((c) => c.name === channelInput);
-
-    if (!channel || channel.type !== 'GUILD_TEXT') {
-      return CRBTError(this, 'This channel does not exist or is not a text channel.');
-    }
+export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
+  if (i.isChannelSelect() && i.customId === customId) {
+    console.log(i.channels);
+    const channel = i.channels.first();
 
     await fetchWithCache(
-      `${this.guild.id}:settings`,
+      `${i.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
-          where: { id: this.guild.id },
+          where: { id: i.guild.id },
           update: { modLogsChannel: channel.id },
-          create: { id: this.guildId, modLogsChannel: channel.id },
+          create: { id: i.guildId, modLogsChannel: channel.id },
           include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationLogs));
-  },
+    i.update(await renderFeatureSettings.call(i, EditableFeatures.moderationLogs));
+  }
 });

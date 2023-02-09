@@ -3,12 +3,12 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { ButtonStyle } from 'discord-api-types/v10';
 import {
   AllowedImageSize,
   DynamicImageFormat,
   Guild,
   Interaction,
+  MessageButton,
   MessageComponentInteraction,
 } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
@@ -89,19 +89,20 @@ export async function renderServerIcon(this: Interaction, guild: Guild, navCtx: 
       },
     ],
     components: components(
-      row({
-        type: 'BUTTON',
-        style: ButtonStyle.Link,
-        url: av,
-        label: t(this, 'avatar.strings.DOWNLOAD', {
-          SIZE: av.includes('embed/avatars') ? '256' : `${size ?? 2048}`,
-          FORMAT: av.includes('embed/avatars')
-            ? 'PNG'
-            : av.includes('.gif')
-            ? 'GIF'
-            : format?.toUpperCase() ?? 'PNG',
-        }),
-      }),
+      row(
+        new MessageButton({
+          style: 'LINK',
+          url: av,
+          label: t(this, 'avatar.strings.DOWNLOAD', {
+            SIZE: av.includes('embed/avatars') ? '256' : `${size ?? 2048}`,
+            FORMAT: av.includes('embed/avatars')
+              ? 'PNG'
+              : av.includes('.gif')
+              ? 'GIF'
+              : format?.toUpperCase() ?? 'PNG',
+          }),
+        })
+      ),
       serverNavBar(navCtx, this.locale, 'icon', getTabs('icon', guild))
     ),
   };
