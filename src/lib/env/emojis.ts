@@ -190,30 +190,34 @@ export function icon(
 ) {
   const [accentH, accentS, accentL] = chroma(accentColor).hsl();
 
-  const color = Object.entries(colors.accents)
-    .map(([name, [hue, sat, lum]]) => ({
-      name,
-      hue,
-      sat,
-      lum,
-    }))
+  const color = colors.accents
+    .map(
+      ([name, [hue, sat, lum]]) =>
+        ({
+          name,
+          hue,
+          sat,
+          lum,
+        } as { name: string; hue: number; sat: number; lum: number })
+    )
     .reduce((a, b) => {
-      let aScore = a.hue + accentH;
-      let bScore = b.hue + accentH;
-      // if (accentL > 0.5) {
-      //   aScore -= a.lum + accentL;
-      // }
-      // if (accentL > 0.5) {
-      //   bScore -= b.lum + accentL;
-      // }
-      // if (accentS > 0.5) {
-      //   aScore -= a.sat + accentS;
-      // }
-      // if (accentS > 0.5) {
-      //   bScore -= b.sat + accentS;
-      // }
+      let aScore = Math.abs(a.hue - accentH);
+      let bScore = Math.abs(b.hue - accentH);
 
-      return Math.abs(bScore - 0) < Math.abs(aScore - 0) ? b : a;
+      if (accentL > 0.5) {
+        aScore -= a.lum + accentL;
+      }
+      if (accentL > 0.5) {
+        bScore -= b.lum + accentL;
+      }
+      if (accentS > 0.5) {
+        aScore -= a.sat + accentS;
+      }
+      if (accentS > 0.5) {
+        bScore -= b.sat + accentS;
+      }
+
+      return bScore < aScore ? b : a;
     }).name;
 
   const emoji = emojis[color]?.[icon];
