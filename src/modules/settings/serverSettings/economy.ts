@@ -1,6 +1,7 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis, links } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
@@ -27,7 +28,7 @@ export const economySettings: SettingsMenus = {
       description: economy.currencyNamePlural,
     };
   },
-  getMenuDescription({ settings: { economy }, isEnabled }) {
+  getMenuDescription({ settings: { economy, accentColor }, isEnabled }) {
     return {
       description: dedent`
       **⚠️ Economy is in alpha that's being experimented with. If you're seeing this, you've got early access!**
@@ -37,7 +38,9 @@ export const economySettings: SettingsMenus = {
       fields: [
         {
           name: 'Status',
-          value: isEnabled ? `${emojis.toggle.on} Enabled` : `${emojis.toggle.off} Disabled`,
+          value: isEnabled
+            ? `${icon(accentColor, 'toggleon')} Enabled`
+            : `${emojis.toggle.off} Disabled`,
         },
         {
           name: 'Currency',

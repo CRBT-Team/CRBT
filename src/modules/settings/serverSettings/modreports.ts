@@ -2,14 +2,13 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
-import { CRBTError } from '$lib/functions/CRBTError';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
-import { SnowflakeRegex } from '@purplet/utils';
-import { TextInputStyle } from 'discord-api-types/v10';
-import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import { ChannelType } from 'discord-api-types/v10';
+import { MessageSelectMenu } from 'discord.js';
+import { components, OnEvent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
-import { getSettings, include } from './_helpers';
+import { include } from './_helpers';
 
 export const modReportsSettings: SettingsMenus = {
   getErrors({ guild, settings, isEnabled, i }) {
@@ -43,7 +42,7 @@ export const modReportsSettings: SettingsMenus = {
         {
           name: t(i, 'STATUS'),
           value: isEnabled
-            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            ? `${icon(settings.accentColor, 'toggleon')} ${t(i, 'ENABLED')}`
             : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
           inline: true,
         },
@@ -61,66 +60,43 @@ export const modReportsSettings: SettingsMenus = {
   },
   getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>
     components(
+      row(backBtn, toggleBtn),
       row(
-        backBtn,
-        toggleBtn,
-        new EditReportsChannelBtn()
-          .setLabel(t(i, 'EDIT_CHANNEL'))
-          .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY')
+        new MessageSelectMenu()
+          .setType('CHANNEL_SELECT')
+          .addChannelTypes(
+            ...([
+              ChannelType.GuildText,
+              ChannelType.GuildAnnouncement,
+              ChannelType.PublicThread,
+              ChannelType.PrivateThread,
+            ] as number[])
+          )
+          .setCustomId(customId)
           .setDisabled(!isEnabled)
+          .setPlaceholder(t(i, 'EDIT_CHANNEL'))
       )
     ),
 };
 
-export const EditReportsChannelBtn = ButtonComponent({
-  async handle() {
-    const { modReportsChannel } = await getSettings(this.guild.id);
-    const channelName = modReportsChannel
-      ? this.guild.channels.cache.get(modReportsChannel)?.name ?? ''
-      : '';
+const customId = 'hselect';
 
-    this.showModal(
-      new EditReportsChannelModal(null).setTitle(`Edit Moderation Reports Channel`).setComponents(
-        row({
-          type: 'TEXT_INPUT',
-          custom_id: 'channel',
-          placeholder: t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'),
-          label: t(this, 'CHANNEL'),
-          value: channelName,
-          required: true,
-          style: TextInputStyle.Short,
-          max_length: 100,
-        })
-      )
-    );
-  },
-});
-
-export const EditReportsChannelModal = ModalComponent({
-  async handle() {
-    const channelInput = this.fields.getTextInputValue('channel');
-
-    const channel = SnowflakeRegex.test(channelInput)
-      ? await this.guild.channels.fetch(channelInput)
-      : (await this.guild.channels.fetch())?.find((c) => c.name === channelInput);
-
-    if (!channel || channel.type !== 'GUILD_TEXT') {
-      return CRBTError(this, 'This channel does not exist or is not a text channel.');
-    }
+export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
+  if (i.isChannelSelect() && i.customId === customId) {
+    const channel = i.channels.first();
 
     await fetchWithCache(
-      `${this.guild.id}:settings`,
+      `${i.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
-          where: { id: this.guild.id },
+          where: { id: i.guild.id },
           update: { modReportsChannel: channel.id },
-          create: { id: this.guildId, modReportsChannel: channel.id },
+          create: { id: i.guildId, modReportsChannel: channel.id },
           include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.moderationReports));
-  },
+    i.update(await renderFeatureSettings.call(i, EditableFeatures.moderationReports));
+  }
 });

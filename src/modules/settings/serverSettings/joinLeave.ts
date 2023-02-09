@@ -2,14 +2,13 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
-import { CRBTError } from '$lib/functions/CRBTError';
 import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
-import { SnowflakeRegex } from '@purplet/utils';
-import { TextInputComponent } from 'discord.js';
-import { ButtonComponent, components, ModalComponent, row } from 'purplet';
+import { ChannelType } from 'discord-api-types/v10';
+import { MessageSelectMenu } from 'discord.js';
+import { ButtonComponent, components, OnEvent, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage, renderJoinLeavePreview } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
@@ -46,7 +45,7 @@ export const joinLeaveSettings: SettingsMenus = {
         {
           name: t(i, 'STATUS'),
           value: isEnabled
-            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            ? `${icon(settings.accentColor, 'toggleon')} ${t(i, 'ENABLED')}`
             : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
         },
         ...(channelId
@@ -84,76 +83,67 @@ export const joinLeaveSettings: SettingsMenus = {
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
           .setDisabled(!isEnabled),
-        new EditJoinLeaveChannelBtn(feature as never)
-          .setLabel(t(i, 'EDIT_CHANNEL'))
-          .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY')
-          .setDisabled(!isEnabled),
+        // new EditJoinLeaveChannelBtn(feature as never)
+        //   .setLabel(t(i, 'EDIT_CHANNEL'))
+        //   .setEmoji(emojis.buttons.pencil)
+        //   .setStyle('PRIMARY')
+        //   .setDisabled(!isEnabled),
         new TestJoinLeaveBtn(feature as never)
           .setLabel(t(i, 'PREVIEW'))
           .setStyle('SECONDARY')
           .setEmoji(emojis.buttons.preview)
           .setDisabled(!isEnabled || errors.length !== 0)
+      ),
+      row(
+        new MessageSelectMenu()
+          .setType('CHANNEL_SELECT')
+          .addChannelTypes(
+            ...([
+              ChannelType.GuildText,
+              ChannelType.GuildAnnouncement,
+              ChannelType.PublicThread,
+              ChannelType.PrivateThread,
+            ] as number[])
+          )
+          .setCustomId(`${customId}${feature}`)
+          .setDisabled(!isEnabled)
+          .setPlaceholder(t(i, 'EDIT_CHANNEL'))
       )
     ),
 };
 
-export const EditJoinLeaveChannelBtn = ButtonComponent({
-  async handle(type: JoinLeaveData['type']) {
-    const data = (await getSettings(this.guild.id)) as any as RawServerJoin | RawServerLeave;
-    const channelId = data[type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
-    const channelName = channelId ? this.guild.channels.cache.get(channelId)?.name ?? '' : '';
+const customId = 'h_edit_';
 
-    this.showModal(
-      new EditJoinLeaveChannelModal(type as never)
-        .setTitle(
-          t(this, 'EDIT_SOMETHING', {
-            feature: t(this, type),
-          })
-        )
-        .setComponents(
-          row(
-            new TextInputComponent()
-              .setCustomId('channel')
-              .setPlaceholder(t(this, 'EDIT_CHANNEL_MODAL_PLACEHOLDER'))
-              .setLabel(t(this, 'CHANNEL'))
-              .setValue(channelName)
-              .setRequired(true)
-              .setStyle('SHORT')
-              .setMaxLength(100)
-          )
-        )
-    );
-  },
-});
+export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
+  if (i.isChannelSelect()) {
+    console.log(i.customId.replace(customId, ''));
+  }
 
-export const EditJoinLeaveChannelModal = ModalComponent({
-  async handle(type: JoinLeaveData['type']) {
-    const channelInput = this.fields.getTextInputValue('channel');
+  if (
+    i.isChannelSelect() &&
+    [EditableFeatures.joinMessage, EditableFeatures.leaveMessage].includes(
+      i.customId.replace(customId, '') as any
+    )
+  ) {
+    const type = i.customId.replace(customId, '') as EditableFeatures;
+    const channel = i.channels.first();
 
-    const channel = SnowflakeRegex.test(channelInput)
-      ? await this.guild.channels.fetch(channelInput)
-      : (await this.guild.channels.fetch()).find((c) => c.name === channelInput);
-
-    if (!channel || channel.type !== 'GUILD_TEXT') {
-      return CRBTError(this, 'This channel does not exist or is not a text channel.');
-    }
     const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
     await fetchWithCache(
-      `${this.guild.id}:settings`,
+      `${i.guild.id}:settings`,
       () =>
         prisma.servers.upsert({
-          where: { id: this.guild.id },
+          where: { id: i.guild.id },
           update: { [propName]: channel.id },
-          create: { id: this.guildId, [propName]: channel.id },
+          create: { id: i.guildId, [propName]: channel.id },
           include,
         }),
       true
     );
 
-    this.update(await renderFeatureSettings.call(this, type));
-  },
+    i.update(await renderFeatureSettings.call(i, type));
+  }
 });
 
 export const EditJoinLeaveMessageBtn = ButtonComponent({

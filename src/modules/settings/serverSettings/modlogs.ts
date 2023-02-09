@@ -34,7 +34,7 @@ export const modlogsSettings: SettingsMenus = {
         {
           name: t(i, 'STATUS'),
           value: isEnabled
-            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
+            ? `${icon(settings.accentColor, 'toggleon')} ${t(i, 'ENABLED')}`
             : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
           inline: true,
         },
@@ -76,9 +76,6 @@ export const modlogsSettings: SettingsMenus = {
           .setDisabled(!isEnabled)
           .setPlaceholder(t(i, 'EDIT_CHANNEL'))
       )
-      // new EditModLogsChannelBtn()
-      //   .setEmoji(emojis.buttons.pencil)
-      //   .setStyle('PRIMARY')
     ),
 };
 
@@ -86,7 +83,6 @@ const customId = 'hselect';
 
 export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (i.isChannelSelect() && i.customId === customId) {
-    console.log(i.channels);
     const channel = i.channels.first();
 
     await fetchWithCache(

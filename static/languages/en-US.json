@@ -561,7 +561,6 @@
   "SETTINGS_SENDING_IN": "Sending in {channel}",
   "EDIT_MESSAGE": "Edit Message",
   "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
