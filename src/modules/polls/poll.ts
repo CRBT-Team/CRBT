@@ -14,8 +14,14 @@ import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
 import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
-import { ButtonStyle, PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageAttachment, MessageEmbed, TextInputComponent } from 'discord.js';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
+import {
+  Message,
+  MessageAttachment,
+  MessageButton,
+  MessageEmbed,
+  TextInputComponent,
+} from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -57,13 +63,14 @@ for (let i = 1; i <= 4; i++) {
   });
 }
 
-options.attachment(
-  'image',
-  t('en-US', 'poll.meta.options.multichoice.description', {
-    nameLocalizations: getAllLanguages('IMAGE', (str, locale) => localeLower(str, locale)),
-    descriptionLocalizations: getAllLanguages('poll.meta.options.multichoice.description'),
-  })
-);
+//TODO: make this real
+// options.attachment(
+//   'image',
+//   t('en-US', 'poll.meta.options.multichoice.description', {
+//     nameLocalizations: getAllLanguages('IMAGE', (str, locale) => localeLower(str, locale)),
+//     descriptionLocalizations: getAllLanguages('poll.meta.options.multichoice.description'),
+//   })
+// );
 
 export default ChatCommand({
   name: 'poll',
@@ -72,7 +79,9 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('poll.meta.description'),
   allowInDMs: false,
   options,
-  async handle({ title, end_date, ...choices }) {
+  // async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
+  async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
+    let image = untypedImage as MessageAttachment;
     const { strings } = t(this.guildLocale, 'poll');
     const { errors, strings: userStrings } = t(this, 'poll');
 
@@ -80,24 +89,28 @@ export default ChatCommand({
       return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
     }
 
-    const attachment = Object.values(choices).at(-1) as MessageAttachment;
-
-    if (!attachment?.contentType.startsWith('image')) {
-      return CRBTError(this, 'The chosen attachment must be an image.');
-    }
+    // if (image && !image.contentType?.startsWith('image')) {
+    //   return CRBTError(this, 'The chosen attachment must be an image.');
+    // }
 
     await this.deferReply({
       ephemeral: true,
     });
 
     try {
-      const pollChoices: string[] = Object.values(choices).slice(0, 3).filter(Boolean);
+      const pollChoices: string[] = [choice1, choice2, choice3, choice4].filter(Boolean);
 
       for (const choice of pollChoices) {
         if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
           return CRBTError(this, errors.CHOICE_EMPTY);
         }
       }
+
+      // if (image) {
+      //   console.log('hello');
+      //   const imageBuffer = Buffer.from(await (await fetch(image.url)).arrayBuffer());
+      //   image = new MessageAttachment(imageBuffer, image.name);
+      // }
 
       const msg = await this.channel.send({
         embeds: [
@@ -116,6 +129,13 @@ export default ChatCommand({
                 '0'
               )}`,
             })),
+            // ...(image
+            //   ? {
+            //       image: {
+            //         url: `attachment://${image.name}`,
+            //       },
+            //     }
+            //   : {}),
             footer: {
               text: `${strings.POLL_FOOTER_VOTES.replace(
                 '{VOTES}',
@@ -125,6 +145,7 @@ export default ChatCommand({
             color: await getColor(this.guild),
           },
         ],
+        files: [image],
         components: components(
           row()
             .addComponents(
@@ -368,7 +389,6 @@ export const CancelPollButton = ButtonComponent({
 
 export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
-
     const pollData = await getPollData(`${this.channel.id}/${msgId}`);
 
     if (pollData) {
@@ -427,14 +447,13 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
     ],
     components: components(
       row(
-        {
-          type: 'BUTTON',
-          style: ButtonStyle.Link,
+        new MessageButton({
+          style: 'LINK',
           label: t(poll.locale, 'JUMP_TO_MSG'),
-          url: pollMsg.url
-        }
+          url: pollMsg.url,
+        })
       )
-    )
+    ),
   });
 
   await pollMsg.edit({
