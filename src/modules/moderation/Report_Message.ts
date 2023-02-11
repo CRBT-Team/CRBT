@@ -11,9 +11,9 @@ import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { ModerationStrikeTypes } from '@prisma/client';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message, MessageEmbedOptions } from 'discord.js';
-import { components, MessageContextCommand, row } from 'purplet';
+import { ButtonComponent, components, MessageContextCommand, row } from 'purplet';
 import { getSettings } from '../settings/serverSettings/_helpers';
-import { ActionButton } from './Report_User';
+import { ActionSelectMenu, DismissReportBtn } from './Report_User';
 import { checkModerationPermission } from './_base';
 
 const messageCache = new Map<string, Message>();
@@ -63,7 +63,7 @@ export default MessageContextCommand({
       ''
     )?.slice(0, 60)}...`;
 
-    await prisma.moderationStrikes.create({
+    const strike = await prisma.moderationStrikes.create({
       data: {
         createdAt: new Date(),
         moderatorId: this.user.id,
@@ -119,15 +119,35 @@ export default MessageContextCommand({
         ],
         components: components(
           row(
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.WARN })
+            new ActionSelectMenu({ reportId: strike.id, userId: user.id })
+              .setPlaceholder('Choose an action to take.')
+              .setOptions([
+                {
+                  label: t(this.guildLocale, 'WARN_USER'),
+                  value: ModerationStrikeTypes.WARN,
+                  emoji: emojis.colors.yellow,
+                },
+                {
+                  label: t(this.guildLocale, 'KICK_USER'),
+                  value: ModerationStrikeTypes.KICK,
+                  emoji: emojis.colors.orange,
+                },
+                {
+                  label: t(this.guildLocale, 'BAN_USER'),
+                  value: ModerationStrikeTypes.BAN,
+                  emoji: emojis.colors.red,
+                },
+              ])
+          ),
+          row(
+            new DeleteMsgBtn(message.id)
               .setStyle('PRIMARY')
-              .setLabel(t(this.guildLocale, 'WARN_USER')),
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.KICK })
-              .setStyle('DANGER')
-              .setLabel(t(this.guildLocale, 'KICK_USER')),
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.BAN })
-              .setStyle('DANGER')
-              .setLabel(t(this.guildLocale, 'BAN_USER'))
+              .setLabel(t(this.guildLocale, 'DELETE_MESSAGE'))
+              .setEmoji(emojis.buttons.trash_bin),
+            new DismissReportBtn({ reportId: strike.id })
+              .setStyle('SECONDARY')
+              .setLabel('Delete Report')
+              .setEmoji(emojis.buttons.trash_bin)
           )
         ),
       });
@@ -149,5 +169,26 @@ export default MessageContextCommand({
     } catch (e) {
       await this.editReply(UnknownError(this, e));
     }
+  },
+});
+
+export const DeleteMsgBtn = ButtonComponent({
+  async handle(messageId: string) {
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageMessages)) {
+      return CRBTError(this, 'I need the "Manage Messages" permission to delete this message!');
+    }
+
+    const message = messageCache.get(messageId);
+
+    await message.delete();
+
+    await this.reply({
+      embeds: [
+        {
+          title: `${emojis.success} Message successfully deleted.`,
+          color: colors.success,
+        },
+      ],
+    });
   },
 });

@@ -1,3 +1,4 @@
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
@@ -7,9 +8,22 @@ import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
-import { PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
-import { GuildTextBasedChannel, Message, MessageButton, MessageEmbedOptions } from 'discord.js';
-import { ButtonComponent, components, ModalComponent, row, UserContextCommand } from 'purplet';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
+import {
+  GuildTextBasedChannel,
+  Message,
+  MessageButton,
+  MessageEmbedOptions,
+  TextInputComponent,
+} from 'discord.js';
+import {
+  ButtonComponent,
+  components,
+  ModalComponent,
+  row,
+  SelectMenuComponent,
+  UserContextCommand,
+} from 'purplet';
 import { getSettings } from '../settings/serverSettings/_helpers';
 import { checkModerationPermission, handleModerationAction } from './_base';
 
@@ -43,16 +57,18 @@ export default UserContextCommand({
 
     await this.showModal(
       new ReportModal(user.id).setTitle(`Report ${user.tag}`).setComponents(
-        row({
-          custom_id: 'description',
-          label: t(this, 'DESCRIPTION'),
-          placeholder: t(this, 'MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER'),
-          style: TextInputStyle.Paragraph,
-          max_length: 1024,
-          min_length: 10,
-          required: true,
-          type: 'TEXT_INPUT',
-        })
+        row(
+          new TextInputComponent({
+            customId: 'description',
+            label: t(this, 'DESCRIPTION'),
+            placeholder: t(this, 'MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER'),
+            style: 'PARAGRAPH',
+            maxLength: 1024,
+            minLength: 10,
+            required: true,
+            type: 'TEXT_INPUT',
+          })
+        )
       )
     );
   },
@@ -67,7 +83,7 @@ export const ReportModal = ModalComponent({
       ephemeral: true,
     });
 
-    await prisma.moderationStrikes.create({
+    const strike = await prisma.moderationStrikes.create({
       data: {
         createdAt: new Date(),
         moderatorId: this.user.id,
@@ -115,15 +131,31 @@ export const ReportModal = ModalComponent({
         embeds: [reportEmbed],
         components: components(
           row(
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.WARN })
-              .setStyle('PRIMARY')
-              .setLabel(t(this.guildLocale, 'WARN_USER')),
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.KICK })
-              .setStyle('DANGER')
-              .setLabel(t(this.guildLocale, 'KICK_USER')),
-            new ActionButton({ userId: user.id, type: ModerationStrikeTypes.BAN })
-              .setStyle('DANGER')
-              .setLabel(t(this.guildLocale, 'BAN_USER'))
+            new ActionSelectMenu({ userId, reportId: strike.id })
+              .setPlaceholder('Choose an action to take.')
+              .setOptions([
+                {
+                  label: t(this.guildLocale, 'WARN_USER'),
+                  value: ModerationStrikeTypes.WARN,
+                  emoji: emojis.colors.yellow,
+                },
+                {
+                  label: t(this.guildLocale, 'KICK_USER'),
+                  value: ModerationStrikeTypes.KICK,
+                  emoji: emojis.colors.orange,
+                },
+                {
+                  label: t(this.guildLocale, 'BAN_USER'),
+                  value: ModerationStrikeTypes.BAN,
+                  emoji: emojis.colors.red,
+                },
+              ])
+          ),
+          row(
+            new DismissReportBtn({ reportId: strike.id })
+              .setStyle('SECONDARY')
+              .setLabel('Delete Report')
+              .setEmoji(emojis.buttons.trash_bin)
           )
         ),
       });
@@ -148,15 +180,54 @@ export const ReportModal = ModalComponent({
   },
 });
 
-export const ActionButton = ButtonComponent({
-  async handle({ userId, type }: { userId: string; type: ModerationStrikeTypes }) {
+export const DismissReportBtn = ButtonComponent({
+  async handle({ reportId }) {
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
+      return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
+    }
+
+    await prisma.moderationStrikes.delete({
+      where: { id: reportId },
+    });
+
+    await fetchWithCache(
+      `strikes:${this.guildId}`,
+      () =>
+        prisma.moderationStrikes.findMany({
+          where: { serverId: this.guild.id },
+        }),
+      true
+    );
+
+    await this.update({
+      components: components(
+        row(
+          new MessageButton({
+            customId: 'lol',
+            style: 'SECONDARY',
+            disabled: true,
+            label: `Report deleted by ${this.user.tag}`,
+          })
+        )
+      ),
+    });
+  },
+});
+
+export const ActionSelectMenu = SelectMenuComponent({
+  async handle({ userId, reportId }) {
     const user = await this.client.users.fetch(userId);
+    const type = this.values[0] as ModerationStrikeTypes;
 
     const { error } = checkModerationPermission.call(this, user, type);
 
     if (error) {
       return this.reply(error);
     }
+
+    await prisma.moderationStrikes.delete({
+      where: { id: reportId },
+    });
 
     await (this.message as Message).edit({
       components: components(

@@ -119,7 +119,6 @@ export async function renderFeatureSettings(
 
   const toggleBtn = new ToggleFeatureBtn({ feature, state: !isEnabled })
     .setLabel(`${isEnabled ? t(this, 'DISABLE') : t(this, 'ENABLE')} ${t(this, feature)}`)
-    // .setEmoji(isEnabled ? emojis.toggle.on : emojis.toggle.off)
     .setStyle(isEnabled ? 'DANGER' : 'SUCCESS');
 
   const embed = getMenuDescription(props);

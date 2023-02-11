@@ -606,6 +606,7 @@
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
   "BAN_USER": "Ban User",
+  "DELETE_MESSAGE": "Delete Message",
   "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
   "ROLE_INFO_TITLE": "{role} - Role info",
