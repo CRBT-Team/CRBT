@@ -27,7 +27,10 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
 
   const locale = guild.preferredLocale;
 
-  if (guild.systemChannel.permissionsFor(guild.client.user).has('SEND_MESSAGES')) {
+  if (
+    guild.systemChannel &&
+    guild.systemChannel?.permissionsFor(guild.client.user)?.has('SEND_MESSAGES')
+  ) {
     guild.systemChannel.send({
       embeds: [
         {
