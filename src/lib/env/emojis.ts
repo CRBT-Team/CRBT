@@ -220,7 +220,7 @@ export function icon(
       return bScore < aScore ? b : a;
     }).name;
 
-  const emoji = emojis[color]?.[icon];
+  const emoji = emojis[color]?.[icon] as string;
 
   if (type === 'emoji') {
     return emoji;

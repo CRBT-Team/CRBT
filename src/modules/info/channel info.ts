@@ -1,4 +1,5 @@
 import { emojis, icons } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
@@ -20,6 +21,7 @@ import {
 } from 'discord-api-types/v10';
 import { EmbedFieldData, TextChannel } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 dayjs.extend(duration);
 
@@ -28,10 +30,14 @@ export default ChatCommand({
   description: t('en-US', 'channel_info.description'),
   descriptionLocalizations: getAllLanguages('channel_info.description'),
   allowInDMs: false,
-  options: new OptionBuilder().channel('channel', t('en-US', 'channel_info.options.channel.description'), {
-    nameLocalizations: getAllLanguages('CHANNEL', localeLower),
-    descriptionLocalizations: getAllLanguages('channel_info.options.channel.description')
-  }),
+  options: new OptionBuilder().channel(
+    'channel',
+    t('en-US', 'channel_info.options.channel.description'),
+    {
+      nameLocalizations: getAllLanguages('CHANNEL', localeLower),
+      descriptionLocalizations: getAllLanguages('channel_info.options.channel.description'),
+    }
+  ),
   async handle() {
     const c = this.options.getChannel('channel') || this.channel;
     const channel = (await getRestClient()
@@ -41,7 +47,7 @@ export default ChatCommand({
     const categories = channels.cache.filter((c) => c.type === 'GUILD_CATEGORY');
     const created = snowflakeToDate(channel.id);
 
-    let icon: string;
+    let authorIcon: string;
     let title = t(this, 'CHANNEL');
 
     const fields: EmbedFieldData[] = [
@@ -57,7 +63,7 @@ export default ChatCommand({
 
     // Check if it's a category
     if (channel.type === ChannelType.GuildCategory) {
-      icon = icons.channels.category;
+      authorIcon = icons.channels.category;
       title = t(this, 'CATEGORY');
 
       fields.push({
@@ -76,7 +82,7 @@ export default ChatCommand({
         | TextChannel
         | APIGuildForumChannel;
 
-      icon = icons.channels.text_thread;
+      authorIcon = icons.channels.text_thread;
       title = parent ? t(this, 'THREAD_CHANNEL') : t(this, 'FORUM_POST');
 
       const autoArchives = new Date(
@@ -97,7 +103,7 @@ export default ChatCommand({
     }
     // Check if it's a text-like channel
     if (channel.type === ChannelType.GuildText) {
-      icon =
+      authorIcon =
         channel.id === this.guild.rulesChannelId
           ? icons.channels.rules
           : channel.nsfw
@@ -107,7 +113,8 @@ export default ChatCommand({
 
     // Check if it's a voice-like channels (stage, voice)
     if ('bitrate' in channel) {
-      icon = String(channel.type) === 'GUILD_VOICE' ? icons.channels.voice : icons.channels.stage;
+      authorIcon =
+        String(channel.type) === 'GUILD_VOICE' ? icons.channels.voice : icons.channels.stage;
 
       fields.push(
         {
@@ -138,7 +145,7 @@ export default ChatCommand({
 
     // Check if it's an announcement channel
     if (channel.type === ChannelType.GuildAnnouncement) {
-      icon = icons.channels.announcement;
+      authorIcon = icons.channels.announcement;
     }
     // Check if it has slowmode
     if ('rate_limit_per_user' in channel) {
@@ -173,7 +180,7 @@ export default ChatCommand({
     }
     // Check if it's a forum
     if (channel.type === ChannelType.GuildForum) {
-      icon = icons.channels.forum;
+      authorIcon = icons.channels.forum;
 
       fields.push(
         {
@@ -202,13 +209,14 @@ export default ChatCommand({
         {
           author: {
             name: `${channel.name} - ${title}`,
-            icon_url: icon,
+            icon_url: authorIcon,
           },
           description:
-            `${channel.nsfw ? emojis.toggle.on : emojis.toggle.off} ${t(
-              this,
-              'AGE_RESTRICTED'
-            )}\n` +
+            `${
+              channel.nsfw
+                ? icon((await getSettings(this.guildId)).accentColor, 'toggleon')
+                : emojis.toggle.off
+            } ${t(this, 'AGE_RESTRICTED')}\n` +
             ('topic' in channel && channel.topic
               ? channel.topic.length > 512
                 ? `${channel.topic.slice(0, 512)}...`
