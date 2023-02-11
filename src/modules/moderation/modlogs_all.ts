@@ -31,7 +31,7 @@ import { ModerationColors } from './_base';
 
 interface PageBtnProps {
   page: number;
-  userId?: string;
+  uId?: string;
   s?: boolean;
 }
 
@@ -88,10 +88,10 @@ export async function renderModlogs(
   this: Interaction,
   page: number = 0,
   filters?: {
-    userId?: string;
+    uId?: string;
   }
 ) {
-  const user = filters?.userId ? this.client.users.cache.get(filters?.userId) : null;
+  const user = filters?.uId ? this.client.users.cache.get(filters?.uId) : null;
 
   const data = (
     await fetchWithCache(
@@ -106,7 +106,7 @@ export async function renderModlogs(
         this.component.style === 'PRIMARY'
       )
     )
-  ).filter((a) => (filters?.userId ? a.targetId === filters?.userId : a));
+  ).filter((a) => (filters?.uId ? a.targetId === filters?.uId : a));
 
   const results = data
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
@@ -139,7 +139,7 @@ export async function renderModlogs(
     ],
     components: components(
       row(
-        new StrikeSelectMenu({ page, userId: filters?.userId })
+        new StrikeSelectMenu({ page, uId: filters?.uId })
           .setPlaceholder(t(this, 'MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER'))
           .setOptions(
             !data || data.length === 0
@@ -157,19 +157,19 @@ export async function renderModlogs(
       ),
       row(
         // new ShowFiltersBtn().setStyle('SECONDARY').setLabel('Show Filters'),
-        new GoToPage({ page: 0, userId: user?.id, s: false })
+        new GoToPage({ page: 0, uId: user?.id, s: false })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_first)
           .setDisabled(page <= 0),
-        new GoToPage({ page: page - 1, userId: user?.id })
+        new GoToPage({ page: page - 1, uId: user?.id })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.left_arrow)
           .setDisabled(page <= 0),
-        new GoToPage({ page: page + 1, userId: user?.id })
+        new GoToPage({ page: page + 1, uId: user?.id })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.right_arrow)
           .setDisabled(page >= pages - 1),
-        new GoToPage({ page: pages - 1, userId: user?.id, s: true })
+        new GoToPage({ page: pages - 1, uId: user?.id, s: true })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_last)
           .setDisabled(page >= pages - 1)
@@ -183,21 +183,21 @@ export async function renderModlogs(
 }
 
 export const GoToPage = ButtonComponent({
-  async handle({ page, userId }: PageBtnProps) {
-    this.update(await renderModlogs.call(this, page, { userId }));
+  async handle({ page, uId }: PageBtnProps) {
+    this.update(await renderModlogs.call(this, page, { uId }));
   },
 });
 
 export const StrikeSelectMenu = SelectMenuComponent({
-  async handle({ page, userId }: PageBtnProps) {
-    return this.update(await renderStrikePage.call(this, this.values[0], { page, userId }));
+  async handle({ page, uId }: PageBtnProps) {
+    return this.update(await renderStrikePage.call(this, this.values[0], { page, uId }));
   },
 });
 
 async function renderStrikePage(
-  this: SelectMenuInteraction | ModalSubmitInteraction,
+  this: SelectMenuInteraction | ModalSubmitInteraction | ButtonInteraction,
   sId: string,
-  { page, userId }: PageBtnProps
+  { page, uId }: PageBtnProps
 ) {
   const strikes = (
     await fetchWithCache(
@@ -209,7 +209,7 @@ async function renderStrikePage(
       this instanceof ModalSubmitInteraction
     )
   )
-    .filter((a) => (userId ? a.targetId === userId : a))
+    .filter((a) => (uId ? a.targetId === uId : a))
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const strike: moderationStrikes = strikes.find(({ id }) => id === sId);
@@ -276,18 +276,18 @@ async function renderStrikePage(
     ],
     components: components(
       row(
-        new GoToPage({ page, userId }).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
+        new GoToPage({ page, uId }).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
           ? [
               ...(strike.type === 'REPORT'
                 ? []
                 : [
-                    new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, userId })
+                    new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, uId })
                       .setEmoji(emojis.buttons.pencil)
                       .setLabel('Edit Reason')
                       .setStyle('PRIMARY'),
                   ]),
-              new DeleteButton({ sId, page, userId })
+              new DeleteButton({ sId, page, uId })
                 .setEmoji(emojis.buttons.trash_bin)
                 .setLabel('Delete Strike')
                 .setStyle('DANGER'),
@@ -299,7 +299,7 @@ async function renderStrikePage(
 }
 
 export const EditButton = ButtonComponent({
-  async handle({ sId, userId, i, page }: PageBtnProps & { sId: string; i: number }) {
+  async handle({ sId, uId, i, page }: PageBtnProps & { sId: string; i: number }) {
     const strike = (
       await fetchWithCache(`strikes:${this.guildId}`, () =>
         prisma.moderationStrikes.findMany({
@@ -309,7 +309,7 @@ export const EditButton = ButtonComponent({
     ).find(({ id }) => id === sId);
 
     await this.showModal(
-      new EditModal({ page, userId, sId }).setTitle(`Edit Strike #${i}`).setComponents(
+      new EditModal({ page, uId, sId }).setTitle(`Edit Strike #${i}`).setComponents(
         row(
           new TextInputComponent()
             .setLabel(t(this, 'REASON'))
@@ -325,7 +325,7 @@ export const EditButton = ButtonComponent({
 });
 
 export const EditModal = ModalComponent({
-  async handle({ sId, userId, page }: PageBtnProps & { sId: string }) {
+  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
     const reason = this.fields.getTextInputValue('reason');
 
     await prisma.moderationStrikes.update({
@@ -333,12 +333,12 @@ export const EditModal = ModalComponent({
       data: { reason },
     });
 
-    await this.update(await renderStrikePage.call(this, sId, { userId, page }));
+    await this.update(await renderStrikePage.call(this, sId, { uId, page }));
   },
 });
 
 export const DeleteButton = ButtonComponent({
-  async handle({ sId, userId }: PageBtnProps & { sId: string }) {
+  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
     const embed = this.message.embeds[0];
 
     await this.update({
@@ -352,8 +352,8 @@ export const DeleteButton = ButtonComponent({
       ],
       components: components(
         row(
-          new ConfirmDeleteButton(sId).setLabel('Yes').setStyle('DANGER'),
-          new GoToPage({ page: 0, userId }).setLabel('Cancel').setStyle('SECONDARY')
+          new ConfirmDeleteButton({ uId, sId, page }).setLabel('Yes').setStyle('DANGER'),
+          new GoToPage({ page: 0, uId }).setLabel('Cancel').setStyle('SECONDARY')
         )
       ),
     });
@@ -361,7 +361,7 @@ export const DeleteButton = ButtonComponent({
 });
 
 export const ConfirmDeleteButton = ButtonComponent({
-  async handle(sId: string) {
+  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
     await prisma.moderationStrikes.delete({ where: { id: sId } });
 
     await fetchWithCache(
@@ -373,6 +373,6 @@ export const ConfirmDeleteButton = ButtonComponent({
       true
     );
 
-    await this.update(await renderModlogs.call(this));
+    await this.update(await renderModlogs.call(this, page, { uId }));
   },
 });

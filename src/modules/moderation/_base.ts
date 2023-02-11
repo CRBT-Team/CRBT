@@ -1,3 +1,4 @@
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
@@ -109,6 +110,15 @@ export async function handleModerationAction(
         },
       });
 
+      await fetchWithCache(
+        `strikes:${this.guildId}`,
+        () =>
+          prisma.moderationStrikes.findMany({
+            where: { serverId: this.guild.id },
+          }),
+        true
+      );
+
       await this.editReply({
         embeds: [
           {
@@ -186,7 +196,7 @@ export async function handleModerationAction(
       } catch (e) {}
     }
   } catch (e) {
-    return this[this.replied ? 'editReply' : 'reply'](UnknownError(this, e));
+    (this.replied ? this.editReply : this.reply)(UnknownError(this, e));
   }
 }
 
@@ -239,7 +249,7 @@ export function checkModerationPermission(
     // Check if bot can execute command
     if (!hasPerms(this.appPermissions, perms[type])) {
       return {
-        error: createCRBTError(this, 'I do not have permission to ${type.toLowerCase()} members.'),
+        error: createCRBTError(this, `I do not have permission to ${type.toLowerCase()} members.`),
       };
     }
     // Check if user can ban themselves
