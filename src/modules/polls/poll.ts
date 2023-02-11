@@ -15,13 +15,7 @@ import { TimeoutTypes } from '$lib/types/timeouts';
 import { Poll } from '@prisma/client';
 import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import {
-  Message,
-  MessageAttachment,
-  MessageButton,
-  MessageEmbed,
-  TextInputComponent,
-} from 'discord.js';
+import { Message, MessageButton, MessageEmbed, TextInputComponent } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -30,6 +24,7 @@ import {
   OptionBuilder,
   row,
 } from 'purplet';
+import { getSettings } from '../settings/serverSettings/_helpers';
 
 const activePolls = new Map<string, Poll>();
 const usersOnCooldown = new Map();
@@ -80,8 +75,8 @@ export default ChatCommand({
   allowInDMs: false,
   options,
   // async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
-  async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
-    let image = untypedImage as MessageAttachment;
+  async handle({ title, end_date, choice1, choice2, choice3, choice4 }) {
+    // let image = untypedImage as MessageAttachment;
     const { strings } = t(this.guildLocale, 'poll');
     const { errors, strings: userStrings } = t(this, 'poll');
 
@@ -111,6 +106,7 @@ export default ChatCommand({
       //   const imageBuffer = Buffer.from(await (await fetch(image.url)).arrayBuffer());
       //   image = new MessageAttachment(imageBuffer, image.name);
       // }
+      const accentColor = await getColor(this.guild);
 
       const msg = await this.channel.send({
         embeds: [
@@ -122,12 +118,10 @@ export default ChatCommand({
             ).replace('{ICON}', emojis.menu),
             fields: pollChoices.map((choice) => ({
               name: choice,
-              value: `${emojis.progress.emptystart}${emojis.progress.empty.repeat(8)}${
-                emojis.progress.emptyend
-              }\n${strings.POLL_OPTION_RESULT.replace('{PERCENTAGE}', '0').replace(
-                '{VOTES}',
+              value: `${progressBar(0, accentColor)}\n${strings.POLL_OPTION_RESULT.replace(
+                '{PERCENTAGE}',
                 '0'
-              )}`,
+              ).replace('{VOTES}', '0')}`,
             })),
             // ...(image
             //   ? {
@@ -142,10 +136,10 @@ export default ChatCommand({
                 '0'
               )} • ${strings.POLL_FOOTER_CREATOR.replace('{USER}', this.user.tag)}`,
             },
-            color: await getColor(this.guild),
+            color: accentColor,
           },
         ],
-        files: [image],
+        // files: [image],
         components: components(
           row()
             .addComponents(
@@ -197,7 +191,7 @@ export default ChatCommand({
         ],
       });
     } catch (error) {
-      this.reply(UnknownError(this, String(error)));
+      (this.replied ? this.reply : this.editReply)(UnknownError(this, String(error)));
     }
   },
 });
@@ -494,6 +488,7 @@ const renderPoll = async (
   pollEmbed: MessageEmbed
 ) => {
   const { strings } = t(poll.locale, 'poll');
+  const { accentColor } = await getSettings(poll.serverId);
 
   const choices = poll.choices as string[][];
   const newChoiceId = Number(choiceId);
@@ -524,7 +519,7 @@ const renderPoll = async (
     if (isNaN(percentage)) percentage = 0;
     if (percentage === Infinity) percentage = 100;
 
-    choice.value = `${progressBar(percentage)}\n${strings.POLL_OPTION_RESULT.replace(
+    choice.value = `${progressBar(percentage, accentColor)}\n${strings.POLL_OPTION_RESULT.replace(
       '{PERCENTAGE}',
       percentage.toString()
     ).replace('{VOTES}', votes.toString())}`;
@@ -533,6 +528,7 @@ const renderPoll = async (
     '{VOTES}',
     totalVotes.toString()
   )} • ${pollEmbed.footer.text.split(' • ').slice(1).join(' • ')}`;
+  pollEmbed.color = accentColor;
 
   return pollEmbed;
 };

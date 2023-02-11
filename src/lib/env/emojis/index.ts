@@ -1,63 +1,39 @@
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { formatEmojiURL } from '@purplet/utils';
 import chroma from 'chroma-js';
-import colors from './colors';
+import colors from '../colors';
+import { blue } from './blue';
+import { blurple } from './blurple';
+import { gray } from './gray';
+import { green } from './green';
+import { orange } from './orange';
+import { pink } from './pink';
+import { purple } from './purple';
+import { red } from './red';
+import { yellow } from './yellow';
+
+export type ThemedEmojis = {
+  thumbsup: string;
+  thumbsdown: string;
+  toggleon: string;
+  settings: string;
+  progressfill: string;
+  progressfillstart: string;
+  progressfillend: string;
+  progressfillcut: string;
+  progressfillstartcut: string;
+};
 
 const emojis = {
-  red: {
-    thumbsdown: '<:thumbsdown:1065281274329182319>',
-    thumbsup: '<:thumbsup:1065281276946415617>',
-    toggleon: '<:toggleon:1065281281715347466>',
-    settings: '<:settings:1065306493177573396>',
-  },
-  orange: {
-    thumbsdown: '<:thumbsdown:1065314150827442296>',
-    thumbsup: '<:thumbsup:1065314152169615371>',
-    toggleon: '<:toggleon:1065314156665917622>',
-    settings: '<:settings:1065314147589431417>',
-  },
-  yellow: {
-    thumbsdown: '<:thumbsdown:1065314430721736754>',
-    thumbsup: '<:thumbsup:1065314432382668841>',
-    toggleon: '<:toggleon:1065314436899950712>',
-    settings: '<:settings:1065314427831865385>',
-  },
-  blue: {
-    thumbsdown: '<:thumbsdown:1065347354007441468>',
-    thumbsup: '<:thumbsup:1065347355592896612>',
-    toggleon: '<:toggleon:1065347357086077090>',
-    settings: '<:settings:1065347351453106217>',
-  },
-  green: {
-    thumbsdown: '<:thumbsdown:1065298484686770299>',
-    thumbsup: '<:thumbsup:1065298485865365587>',
-    toggleon: '<:toggleon:1065298489673789522>',
-    settings: '<:settings:1065306807230279800>',
-  },
-  blurple: {
-    thumbsdown: '<:thumbsdown:1065302732950483025>',
-    thumbsup: '<:thumbsup:1065302734246531134>',
-    toggleon: '<:toggleon:1065306696609697862>',
-    settings: '<:settings:1065306692138586183>',
-  },
-  purple: {
-    thumbsdown: '<:thumbsdown:1065314570874396752>',
-    thumbsup: '<:thumbsup:1065314572350803968>',
-    toggleon: '<:toggleon:1065314576511545364>',
-    settings: '<:settings:1065314568043249817>',
-  },
-  pink: {
-    thumbsdown: '<:thumbsdown:1065314225519599757>',
-    thumbsup: '<:thumbsup:1065314228426256384>',
-    toggleon: '<:toggleon:1065314232851243059>',
-    settings: '<:settings:1065314224085139589>',
-  },
-  gray: {
-    thumbsdown: '<:thumbsdown:1065349393672323092>',
-    thumbsup: '<:thumbsup:1065349395450699806>',
-    toggleon: '<:toggleon:1065349397916946452>',
-    settings: '<:settings:1030989527235428402>',
-  },
+  red: red,
+  orange: orange,
+  yellow: yellow,
+  blue: blue,
+  green: green,
+  blurple: blurple,
+  purple: purple,
+  pink: pink,
+  gray: gray,
   error: '<:error:1035880321901674596> ',
   success: '<:success:1035880323482931230>',
   pending: '<:pending:1035314617532039279>',
@@ -168,14 +144,9 @@ const emojis = {
     goodmeal: '<:good_meal:768948885162295326>',
   },
   progress: {
-    fill: '<:progressfill:971334221450862642>',
     empty: '<:progressempty:1050093579525173338>',
     emptystart: '<:progressemptystart:971334221538951218>',
     emptyend: '<:progressemptyend:971334221425700894>',
-    fillstart: '<:progressfillstart:971334221782196234>',
-    fillend: '<:progressfillend:971334221006258187>',
-    fillcut: '<:progressfillcut:971334221455036456>',
-    fillstartcut: '<:progressfillstartcut:971347568409841664>',
   },
 };
 
