@@ -1,4 +1,4 @@
-import { emojis } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
@@ -35,6 +35,8 @@ export async function handleUrbanDictionary(
       );
     }
 
+    const accentColor = await getColor(this.user);
+
     return createSearchResponse(
       this,
       opts,
@@ -52,9 +54,10 @@ export async function handleUrbanDictionary(
               post.author
             }](https://www.urbandictionary.com/author.php/author=${encodeURIComponent(
               post.author
-            )})** • ${emojis.thumbsup} **${post.thumbs_up}** ${emojis.thumbsdown} **${
-              post.thumbs_down
-            }**`,
+            )})** • ${icon(accentColor, 'thumbsup')} **${post.thumbs_up}** ${icon(
+              accentColor,
+              'thumbsdown'
+            )} **${post.thumbs_down}**`,
             url: post.permalink,
             fields: [
               {
@@ -84,7 +87,7 @@ export async function handleUrbanDictionary(
                 inline: true,
               },
             ],
-            color: await getColor(this.user),
+            color: accentColor,
             footer: {
               text: `${t(this, 'POWERED_BY', {
                 provider: searchEngines[opts.site].provider,

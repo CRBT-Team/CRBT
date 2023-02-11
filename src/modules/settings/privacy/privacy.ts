@@ -1,6 +1,7 @@
 import { cache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { emojis, icons, links } from '$lib/env';
+import { emojis, links } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
@@ -57,34 +58,36 @@ async function renderPrivacySettings(
   this: CommandInteraction | ButtonInteraction,
   preferences: Partial<User>
 ) {
+  const accentColor = await getColor(this.user);
+
   return {
     embeds: [
       {
         author: {
           name: `CRBT - ${t(this, 'PRIVACY_SETTINGS_TITLE')}`,
-          icon_url: icons.settings,
+          icon_url: icon(accentColor, 'settings', 'image'),
         },
         description: `You can review our **[Privacy Policy on the website](${links.policy})**.`,
         fields: [
-          ...privacyPreferences.map(([id, langId]) => ({
-            name: t(this, langId as any),
-            value: t(this, `PRIVACY_${langId}_DESCRIPTION` as any),
+          ...privacyPreferences.map(([id, stringId]) => ({
+            name: t(this, stringId as any),
+            value: t(this, `PRIVACY_${stringId}_DESCRIPTION` as any),
           })),
           {
             name: t(this, 'YOUR_CRBT_DATA'),
             value: t(this, 'PRIVACY_CRBT_DATA_DESCRIPTION'),
           },
         ],
-        color: await getColor(this.user),
+        color: accentColor,
       },
     ],
     components: components(
       row(
-        ...privacyPreferences.map(([id, langId]) =>
+        ...privacyPreferences.map(([id, stringId]) =>
           new ToggleSettingBtn({ setting: id, newState: !preferences[id] })
-            .setLabel(t(this, `PRIVACY_${langId}_DESCRIPTION` as any))
+            .setLabel(t(this, stringId as any))
             .setStyle('SECONDARY')
-            .setEmoji(emojis.toggle[preferences[id] ? 'on' : 'off'])
+            .setEmoji(preferences[id] ? icon(accentColor, 'toggleon') : emojis.toggle.off)
         )
       ),
       row(

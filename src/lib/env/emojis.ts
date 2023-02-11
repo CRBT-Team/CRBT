@@ -66,8 +66,6 @@ const emojis = {
   event: '<:event:970653903760814160>',
   role: '<:role:970752908536709271>',
   slash_command: '<:slash_command:970752908255698998>',
-  thumbsup: '<:thumbsup:1030989520725889105>',
-  thumbsdown: '<:thumbsdown:1030989519421456405>',
   reminder: '<:reminder_circle:1035314614835105863>',
   trash_bin: '<:trash_bin:970980243030540308>',
   pencil: '<:pencil:970980242560794686>',
@@ -188,7 +186,7 @@ export function icon(
   icon: keyof typeof emojis['red'],
   type: 'emoji' | 'image' = 'emoji'
 ) {
-  const [accentH, accentS, accentL] = chroma(accentColor).hsl();
+  const [accentH, accentS, accentL] = chroma(accentColor || colors.default).hsl();
 
   const color = colors.accents
     .map(
