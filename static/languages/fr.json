@@ -1,8 +1,8 @@
 {
-  "ID": "ID",
+  "ID": "Identifiant",
   "CREATED_ON": "Créé le",
   "MEMBER_COUNT": "Nombre de membres",
-  "SERVER_COUNT": "Nombre de membres",
+  "SERVER_COUNT": "Nombre de serveurs",
   "PING": "Latence",
   "UPTIME": "Connecté depuis",
   "WEBSITE": "Site web",
@@ -653,7 +653,7 @@
     "description": "Obtenir des informations sur un emoji.",
     "options": {
       "emoji": {
-        "description": "L'émoji dont vous voulez obtenir des infos. Les émojis par défaut et personnalisés sont pris en charge."
+        "description": "L'émoji dont vous voulez obtenir des infos. Les émojis par défaut et personnalisés sont acceptés."
       }
     }
   },
