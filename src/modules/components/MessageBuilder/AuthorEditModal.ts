@@ -16,15 +16,12 @@ export const AuthorEditModal = ModalComponent({
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const parsedIcon =
-      type === MessageBuilderTypes.rolePicker
-        ? icon
-        : icon
-          ? parseCRBTscript(icon, {
-            channel: this.channel,
-            member: this.member as GuildMember,
-          })
-          : null;
+    const parsedIcon = icon
+      ? parseCRBTscript(icon, {
+          channel: this.channel,
+          member: this.member as GuildMember,
+        })
+      : null;
 
     if (parsedIcon && !parsedIcon.match(ImageUrlRegex)) {
       return CRBTError(this, { title: t(this, 'ERROR_INVALID_URL') });

@@ -5,7 +5,6 @@ import { t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
 import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
@@ -107,21 +106,21 @@ export async function handleUrbanDictionary(
   }
 }
 
-export default ChatCommand({
-  name: 'urban',
-  description: 'Get the definition of a word from Urban Dictionary.',
-  options: new OptionBuilder().string('word', 'The word to define.', { required: true }),
-  async handle({ word }) {
-    await this.deferReply();
+// export default ChatCommand({
+//   name: 'urban',
+//   description: 'Get the definition of a word from Urban Dictionary.',
+//   options: new OptionBuilder().string('word', 'The word to define.', { required: true }),
+//   async handle({ word }) {
+//     await this.deferReply();
 
-    this.editReply(
-      await handleUrbanDictionary.call(this, {
-        anonymous: false,
-        query: word,
-        site: 'urban',
-        page: 1,
-        userId: this.user.id,
-      })
-    );
-  },
-});
+//     this.editReply(
+//       await handleUrbanDictionary.call(this, {
+//         anonymous: false,
+//         query: word,
+//         site: 'urban',
+//         page: 1,
+//         userId: this.user.id,
+//       })
+//     );
+//   },
+// });

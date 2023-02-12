@@ -1,6 +1,5 @@
 import {
   CommandInteraction,
-  MessageActionRow,
   MessageComponentInteraction,
   MessageEmbedOptions,
   ModalSubmitInteraction,
@@ -15,12 +14,6 @@ export interface BaseMessageData {
 export enum MessageBuilderTypes {
   joinMessage = EditableFeatures.joinMessage,
   leaveMessage = EditableFeatures.leaveMessage,
-  rolePicker = 'ROLE_PICKER',
-}
-
-export interface RolePickerData extends BaseMessageData {
-  type: MessageBuilderTypes.rolePicker;
-  components?: MessageActionRow[];
 }
 
 export interface JoinLeaveData extends BaseMessageData {
@@ -28,7 +21,7 @@ export interface JoinLeaveData extends BaseMessageData {
   script?: string;
 }
 
-export type MessageBuilderData = JoinLeaveData | RolePickerData;
+export type MessageBuilderData = JoinLeaveData;
 
 export interface MessageBuilderProps {
   data: MessageBuilderData;
