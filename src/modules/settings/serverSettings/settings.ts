@@ -118,7 +118,7 @@ export async function renderFeatureSettings(
     .setStyle('SECONDARY');
 
   const toggleBtn = new ToggleFeatureBtn({ feature, state: !isEnabled })
-    .setLabel(`${isEnabled ? t(this, 'DISABLE') : t(this, 'ENABLE')} ${t(this, feature)}`)
+    .setLabel(isEnabled ? t(this, 'DISABLE_FEATURE') : t(this, 'ENABLE_FEATURE'))
     .setStyle(isEnabled ? 'DANGER' : 'SUCCESS');
 
   const embed = getMenuDescription(props);

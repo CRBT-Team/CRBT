@@ -18,18 +18,17 @@ export const modlogsSettings: SettingsMenus = {
     const errors: string[] = [];
 
     if (isEnabled && channelId && !channel) {
-      errors.push('Channel not found. Edit it for CRBT to send new moderation logs.');
+      errors.push(t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND'));
     }
     if (isEnabled && !channelId) {
-      errors.push(`No channel was set. Use the ${t(i, 'EDIT_CHANNEL')} button to continue setup.`);
+      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
 
     return errors;
   },
   getMenuDescription({ settings, isEnabled, i }) {
     return {
-      description:
-        'Moderation logs allow you to get realtime notifications in any channel for every moderation action a moderator takes using CRBT!',
+      description: t(i, 'SETTINGS_MODLOGS_DESCRIPTION'),
       fields: [
         {
           name: t(i, 'STATUS'),
@@ -50,12 +49,16 @@ export const modlogsSettings: SettingsMenus = {
       ],
     };
   },
-  getSelectMenu({ settings, guild, isEnabled }) {
+  getSelectMenu({ settings, guild, isEnabled, i }) {
     const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
 
     return {
       emoji: isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off,
-      description: isEnabled ? `Sending in #${channel.name}` : null,
+      description: isEnabled
+        ? t(i, 'SETTINGS_SENDING_IN', {
+            channel: channel.name,
+          })
+        : null,
     };
   },
   getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>

@@ -30,7 +30,7 @@ export const colorSettings: SettingsMenus = {
           colorsMap
             .filter((color) => !color.private && color.value !== 0)
             .map((colorObj) => ({
-              label: colorObj.fullName,
+              label: t(i, `color set.colorNames.${colorObj.key}` as any),
               value: colorObj.value.toString(16),
               emoji: colorObj.emoji,
             }))

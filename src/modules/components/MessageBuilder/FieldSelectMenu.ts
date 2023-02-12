@@ -33,7 +33,7 @@ export const FieldSelectMenu = SelectMenuComponent({
                 colorsMap
                   .filter((color) => !color.private && color.value)
                   .map((colorObj) => ({
-                    label: colorObj.fullName,
+                    label: t(this, `color set.colorNames.${colorObj.key}` as any),
                     value: colorObj.value.toString(16),
                     emoji: colorObj.emoji,
                   }))

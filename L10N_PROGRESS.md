@@ -1,52 +1,55 @@
-X = 100% localizable
-+ = metadata partially localizable, content is OK
-- = content partially localizable
-  = not localizable
+x = 100% localizable
 
-- [X] /8ball
+- = metadata partially localizable, content is OK
+
+\- = content partially localizable
+
+= not localizable
+
+- [x] /8ball
 - [+] /avatar
+- [+] Avatar & Banner
 - [+] /ban
 - [+] /banner
 - [-] Bot info
 - [+] Bookmark Message
-- [X] /calculate
+- [x] /calculate
 - [-] /channel info
 - [-] /clear
 - [ ] /coinflip
-- [X] /color set
+- [x] /color set
 - [ ] /convert
-- [X] /crbt info
+- [x] /crbt info
 - [-] /emoji info
-- [+] Get Avatar/Banner
-- [+] Get User Info
+- [ ] Get JSON
 - [-] /giveaway
-- [X] /help
+- [x] /help
 - [-] /invite info
 - [+] /kick
-- [ ] Moderation History
+- [*] Moderation History
 - [-] /modlogs all
 - [-] /modlogs user
-- [X] /pick
-- [X] /ping
+- [x] /pick
+- [x] /ping
 - [-] /poll
 - [-] /privacy
 - [+] Report Message
 - [+] Report User
-- [X] /reminder new
+- [x] /reminder new
 - [-] /reminder list
-- [X] /report
+- [x] /report
 - [ ] /rng
-- [X] /role info
-- [X] /roll
+- [x] /role info
+- [x] /roll
 - [ ] /search
 - [+] /server icon
 - [-] /server info
-- [ ] /settings
+- [x] /settings
 - [-] Set Reminder
 - [+] /timeout
-- [X] /translate
+- [x] /translate
 - [+] Translate Message
 - [+] /user info
-- [ ] View Raw JSON
+- [+] User Info
 - [+] /warn
 - [+] Warn User

@@ -25,13 +25,13 @@ export const joinLeaveSettings: SettingsMenus = {
     const errors: string[] = [];
 
     if (isEnabled && channelId && !channel) {
-      errors.push('Channel not found. Edit it for CRBT to send new messages.');
+      errors.push(t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND'));
     }
     if (isEnabled && !channelId) {
-      errors.push(`No channel was set. Use the ${t(i, 'EDIT_CHANNEL')} button to continue setup.`);
+      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
     if (isEnabled && !settings[CamelCaseFeatures[feature]]) {
-      errors.push(`No message was set. Use the ${t(i, 'EDIT_MESSAGE')} button to continue setup.`);
+      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
 
     return errors;
@@ -83,11 +83,6 @@ export const joinLeaveSettings: SettingsMenus = {
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
           .setDisabled(!isEnabled),
-        // new EditJoinLeaveChannelBtn(feature as never)
-        //   .setLabel(t(i, 'EDIT_CHANNEL'))
-        //   .setEmoji(emojis.buttons.pencil)
-        //   .setStyle('PRIMARY')
-        //   .setDisabled(!isEnabled),
         new TestJoinLeaveBtn(feature as never)
           .setLabel(t(i, 'PREVIEW'))
           .setStyle('SECONDARY')
