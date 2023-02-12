@@ -58,7 +58,7 @@
   "SERVERS": "Serveurs",
   "NONE": "Aucun(e)",
   "CHANNELS": "Salons",
-  "EMOJIS": "Émojis",
+  "EMOJIS": "Émoji(s)",
   "ADDED": "Ajouté(e)",
   "OWNED_BY": "Propriété de",
   "STATIC": "Fixe(s)",
@@ -237,7 +237,7 @@
     "description": "Obtenir la bannière de profil d'un utilisateur.",
     "options": {
       "user": {
-        "description": "The user whose banner to get."
+        "description": "L'utilisateur dont vous voulez obtenir la bannière."
       }
     }
   },
@@ -249,15 +249,15 @@
           "description": "L'utilisateur dont vous voulez obtenir l'avatar."
         },
         "size": {
-          "description": "La taille de l'avatar à obtenir."
+          "description": "La taille de l'image à obtenir."
         },
         "format": {
-          "description": "Le format de l'avatar à obtenir."
+          "description": "Le format de l'image à obtenir."
         }
       }
     },
     "ctxMeta": {
-      "name": "Voir l'avatar/la bannière"
+      "name": "Avatar et Bannière"
     },
     "strings": {
       "DOWNLOAD": "Télécharger ({SIZE}px - {FORMAT})"
@@ -294,7 +294,7 @@
   "role-selectors": {
     "errors": {
       "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles sélectionnés ont été supprimés. Contactez un administrateur pour résoudre le problème.",
-      "BUTTON_ROLES_ONCE": "Vous ne pouvez sélectionner ce rôle qu'une seule fois, et vous ne pouvez pas le retirer."
+      "BUTTON_ROLES_ONCE": "Vous ne pouvez pas retirer ce rôle."
     },
     "strings": {
       "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
@@ -324,15 +324,15 @@
   "REASON": "Motif",
   "MOD_VERB_BAN": "Banni(e)(s)",
   "MOD_VERB_TEMPBAN": "Banni temporairement",
-  "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
-  "MOD_VERB_TIMEOUT": "Timed out",
-  "MOD_VERB_WARN": "Warned",
-  "MOD_VERB_REPORT": "Reported",
+  "MOD_VERB_CLEAR": "Messages supprimés dans {target}",
+  "MOD_VERB_KICK": "Expulsé(e)",
+  "MOD_VERB_TIMEOUT": "Exclu(e)",
+  "MOD_VERB_WARN": "Averti(e)",
+  "MOD_VERB_REPORT": "Signalé(e)",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expire le",
   "MODERATION_LOGS_VIEW_EMPTY": "*Aucun historique de modération trouvé.*",
-  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete a strike",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "Voir, modifier ou supprimer un log de modération",
   "MODERATION_LOGS_VIEW_TITLE": "Historique de la modération dans {SERVER}",
   "MODERATOR": "Modérateur",
   "REPORTED_BY": "Signalé par ",
@@ -352,7 +352,7 @@
   "COLOR_PRESET_SELECT_MENU": "Choisissez une couleur préréglée",
   "MANUAL_COLOR_EDIT_BUTTON": "Utiliser un code HEX",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "La syntaxe Markdown et CRBTscript sont acceptés.",
-  "FIELDS_CONTENT": "Message Content",
+  "FIELDS_CONTENT": "Contenu du message",
   "FIELDS_AUTHOR": "Auteur de l'Embed",
   "FIELDS_AUTHOR_NAME": "Nom de l'auteur sur l'embed",
   "FIELDS_AUTHOR_URL": "URL de l'auteur sur l'embed",
@@ -367,21 +367,21 @@
   "SETTINGS": "Réglages",
   "BIRTHDAY_REMINDER_MESSAGE": "Souhaitez un joyeux anniversaire à {USER} !",
   "BIRTHDAY_LIST_CONTENT": "Anniversaire de {USER}",
-  "JOINED_DISCORD": "Discord member since",
-  "JOINED_SERVER": "Server member since",
+  "JOINED_DISCORD": "Membre Discord depuis",
+  "JOINED_SERVER": "Membre du serveur depuis",
   "SERVER_NICKNAME": "Pseudo du serveur",
   "ROLES": "Rôle(s)",
   "ROLE": "Rôle(s)",
   "MAJOR_PERMS": "Permissions principales sur ce serveur",
-  "NO_PERMS": "*No permissions*",
-  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
+  "NO_PERMS": "*Aucune permission*",
+  "ADMIN_ALL_PERMS": "Administrateur (toutes les permissions)",
   "HELP": "Aide",
   "help": {
     "description": "Donne un guide d'utilisation rapide de CRBT."
   },
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_DESCRIPTION": "Ecrivez {prefix} dans la saisie des messages et cliquez sur {botIcon} pour obtenir la liste des commandes.\nVous pouvez aussi faire un clic droit ou appuyer de manière prolongée sur un message ou un utilisateur pour des actions rapides.\n\nCRBT intégre des fonctionnalités pratiques et puissantes, tels que la création de rappels ({reminder}), faire l'annonce de nouveaux membres et ceux partant ({settings}), obtenir des informations sur Discord et sur le web ({infoCommands}), etc. ...\n\n...et plus à venir ! Restez à jour sur CRBT en rejoignant [notre serveur]({link}).",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
-  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
+  "HELP_AD_DESCRIPTION": "Ajoutez-moi à votre serveur !",
   "GIVEAWAY": "Concours",
   "giveaway": {
     "description": "Créez un concours.",
@@ -470,11 +470,11 @@
       }
     }
   },
-  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
+  "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} n'est pas une langue valide.",
   "TRANSLATE_RESULT": "Traduction {source} vers {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Sélectionnez une langue vers laquelle traduire.",
   "REMINDER_LIST_TITLE": "{user} - Rappels CRBT ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "You don't have any reminders set. Use {command} to set one!",
+  "REMINDER_LIST_NO_REMINDERS": "Vous n'avez aucun rappel défini. Utilisez {command} pour en définir un !",
   "REMINDER_LIST_DESCRIPTION": "Vous pouvez définir un nouveau rappel en utilisant {command}.",
   "REMINDER_DESTINATION": "Destination :",
   "DMS": "MP",
@@ -507,10 +507,10 @@
   "SILENT_JOINS": "Rejoindre en mode silencieux",
   "TELEMETRY": "Télémétrie de commandes",
   "PRIVACY_SILENT_JOINS_DESCRIPTION": "Lorsque cette option est active, CRBT n'annoncera pas lorsque vous rejoindrez un serveur.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT will not announce when you leave a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Lorsque cette option est active, CRBT n'annoncera pas lorsque vous quittez un serveur.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT envoie d'utilisation des commandes comme décrit dans notre politique de confidentialité. Désactiver cette option ne fera qu'arrêter des futurs envois.",
   "YOUR_CRBT_DATA": "Vos données CRBT",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "Basic data you submit and more is used for CRBT's features. You may download or delete of your data. Beware, the latter erases everything about you on CRBT (including Reminders, Economy and more!!).",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "Les données de base que vous soumettez et plus encore sont utilisées pour les fonctionnalités de CRBT. Vous pouvez télécharger ou supprimer vos données. Attention, faire ceci efface tout ce qui vous concerne sur CRBT (y compris les Rappels, vos données d'Économie sur les serveurs, et plus!!).",
   "PRIVACY_SETTINGS_TITLE": "Réglages de confidentialité",
   "settings": {
     "description": "Configurez les paramètres de CRBT sur ce serveur."
@@ -522,8 +522,8 @@
   "SETTINGS_DESCRIPTION": "Utilisez le menu déroulant ci-dessous pour mettre à jour les paramètres de ce serveur.",
   "ENABLE": "Activer",
   "DISABLE": "Désactiver",
-  "ENABLE_FEATURE": "Enable feature",
-  "DISABLE_FEATURE": "Disable feature",
+  "ENABLE_FEATURE": "Activer cette fonctionnalité",
+  "DISABLE_FEATURE": "Désactiver cette fonctionnalité",
   "ACCENT_COLOR": "Couleur d’accentuation",
   "MODERATION_LOGS": "Logs de modération",
   "MODERATION_REPORTS": "Signalements",
@@ -538,11 +538,11 @@
   "CHANNEL": "Salon",
   "EDIT_SOMETHING": "Modifier {feature}",
   "SETTINGS_COLOR_SET_TO": "Couleur réglée sur {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
-  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
-  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
-  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
-  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
+  "SETTINGS_COLOR_DESCRIPTION": "La couleur d'accentuation du serveur est affichée sur les messages, y compris les Sondages, les Concours, les infos du serveur, parmi d'autres.\nElle est actuellement réglée sur **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Les logs de modération vous permettent d'obtenir des notifications en temps réel dans le salon de votre choix pour chaque action de modération qu'un modérateur prend avec CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "La fonctionnalité de Signalements permettent à vos membres de signaler un message ou un utilisateur (en faisant un clic droit ou en appuyant longtemps dessus) vers le salon de votre choix.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Salon introuvable. Modifiez-le pour que CRBT puisse continuer à y envoyer des messages.",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Cette fonctionnalité n'est pas entièrement configurée. Utilisez les boutons ci-dessous pour terminer la configuration.",
   "search": {
     "name": "rechercher",
     "description": "Recherchez quelque chose dans l'un des moteurs de recherche.",
@@ -571,32 +571,32 @@
     "anime": "Anime & Manga"
   },
   "POWERED_BY": "Propulsé par {provider}",
-  "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage}/{results} results.",
+  "PAGINATION_MULTIPLE_RESULTS": "Affichage de {resultsPerPage} résultats sur {results}.",
   "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
   "SEARCH_TITLE": "Résultats {engine} pour \"{query}\"",
-  "VIEW_MESSAGE_BELOW": "View message below",
-  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
-  "MODREPORTS_MODAL_TITLE": "Report {user}",
-  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
-  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
-  "KICK_USER": "Kick User",
-  "WARN_USER": "Warn User",
-  "BAN_USER": "Ban User",
-  "DELETE_MESSAGE": "Delete Message",
-  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
-  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
-  "ROLE_INFO_TITLE": "{role} - Role info",
+  "VIEW_MESSAGE_BELOW": "Voir le message ci-dessous",
+  "ERROR_MODULE_DISABLED_TITLE": "Cette fonctionnalité n'est pas activée sur le serveur !",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "Vous pouvez l'activer en utilisant {command}.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "Demandez à un administrateur du serveur de l'activer en utilisant {command}.",
+  "MODREPORTS_MODAL_TITLE": "Signaler {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Décrivez votre signalement et ajoutez-y des détails.",
+  "MODREPORTS_EMBED_TITLE": "{target} a été signalé par {user}",
+  "KICK_USER": "Expulser l'utilisateur",
+  "WARN_USER": "Avertir l'utilisateur",
+  "BAN_USER": "Bannir l'utilisateur",
+  "DELETE_MESSAGE": "Supprimer le message",
+  "MODREPORTS_SUCCESS_TITLE": "Votre signalement a été envoyé avec succès aux modérateurs de {server}.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "Ce signalement a été ajouté à l'historique de modération de {user}. Les personnes ayant accès au salon des signalements pourront consulter votre signalement et agir en conséquence.",
+  "ROLE_INFO_TITLE": "{role} - Infos sur le rôle",
   "POSITION": "Position",
   "HUMANS": "Humain(s)",
   "BOTS": "Bot(s)",
   "COLOR": "Couleur",
-  "ROLE_INFO_POSITION": "{position} out of {roles} roles",
-  "ROLE_INFO_HOISTED": "Displays separately from online members",
-  "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
-  "ROLE_INFO_MANAGED": "Managed",
-  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
+  "ROLE_INFO_POSITION": "{position} sur {roles} rôles",
+  "ROLE_INFO_HOISTED": "Affiche séparément des autres membres en ligne",
+  "ROLE_INFO_MENTIONABLE": "Tout le monde peut @mentionner ce rôle",
+  "ROLE_INFO_MANAGED": "Géré",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Rôle automatiquement ajouté pour les boosts de serveur.",
   "ROLE_INFO_MANAGED_BOT": "Rôle géré par {bot}.",
   "ROLE_INFO_MANAGED_INTEGRATION": "Rôle géré par une intégration externe.",
   "role_info": {
@@ -608,84 +608,84 @@
     }
   },
   "server_info": {
-    "description": "Get information about a Discord server.",
+    "description": "Obtenez des informations sur un serveur Discord.",
     "options": {
       "id": {
-        "description": "ID of the server to get information from."
+        "description": "L'identifiant du serveur dont vous voulez obtenir des informations."
       }
     }
   },
-  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "The ID you have used is either invalid, or I'm not part of this server.",
-  "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "L'identifiant utilisé est soit invalide, ou je ne fais pas partie de ce serveur.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "Vous pouvez **[m'y inviter]({link})**, si vous en avez la permission.",
   "server_icon": {
-    "description": "Get a Discord server's icon.",
+    "description": "Obtenez l'icône d'un serveur Discord.",
     "options": {
       "id": {
-        "description": "ID of the server whose icon to get."
+        "description": "L'identifiant du serveur dont vous voulez obtenir l'icône."
       }
     }
   },
-  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
-  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "Vous n'avez pas de bannière de profil !",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "Cet utilisateur n'a pas de bannière de profil !",
   "AGE_RESTRICTED": "Soumis à une limite d'âge",
   "TAGS": "Tags",
-  "BITRATE": "Bitrate",
-  "KBPS": "{number}kbps",
-  "VIDEO_QUALITY": "Video Quality",
-  "AUTO": "Auto",
-  "SLOWMODE": "Slowmode",
-  "PARENT_CHANNEL": "Parent channel",
+  "BITRATE": "Débit binaire",
+  "KBPS": "{number} ko/s",
+  "VIDEO_QUALITY": "Qualité de la vidéo",
+  "AUTO": "Automatique",
+  "SLOWMODE": "Mode lent",
+  "PARENT_CHANNEL": "Salon père",
   "channel_info": {
-    "description": "Get information about a server channel.",
+    "description": "Obtenir des informations sur un salon du serveur.",
     "options": {
       "channel": {
-        "description": "What channel to get info from."
+        "description": "Le salon dont vous souhaitez voir les informations."
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
+  "EMOJI_INFO": "Info sur l'emoji",
   "UNICODE": "Unicode",
-  "EMOJI": "Émojis",
-  "AVAILABLE_SINCE": "Available since",
-  "CLONE_TO_THIS_SERVER": "Clone to this server",
-  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "EMOJI": "Émoji(s)",
+  "AVAILABLE_SINCE": "Disponible depuis",
+  "CLONE_TO_THIS_SERVER": "Cloner sur ce serveur",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "Voir sur Emojipedia",
   "emoji_info": {
-    "description": "Get information about an emoji.",
+    "description": "Obtenir des informations sur un emoji.",
     "options": {
       "emoji": {
-        "description": "The emoji to get info from. Default and custom emoji are supported."
+        "description": "L'émoji dont vous voulez obtenir des infos. Les émojis par défaut et personnalisés sont pris en charge."
       }
     }
   },
-  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Can't find this emoji.",
-  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
-  "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
-  "INVITE_INFO": "Invite info",
-  "INVITE": "Invite",
-  "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
-  "INVITE_INFO_INVITER": "Invited by",
-  "CUSTOM_INVITE_LINK": "Custom Invite Link",
-  "SERVER_INVITE": "Server invite",
-  "GROUP_DM_INVITE": "Group DM invite",
-  "UNNAMED": "Unnamed",
-  "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
-  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Impossible de trouver cet émoji.",
+  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Essayez à nouveau en utilisant un émoji par défaut {standardEmoji} ou personnalisé {customEmoji}.",
+  "EMOJI_INFO_CLONE_SUCCESS": "{emoji} a été ajouté au serveur avec succès !",
+  "INVITE_INFO": "Infos sur l'invitation",
+  "INVITE": "Invitation",
+  "INVITE_INFO_LANDING_CHANNEL": "Salon de destination",
+  "INVITE_INFO_INVITER": "Invité par",
+  "CUSTOM_INVITE_LINK": "Lien d'invitation personnalisé",
+  "SERVER_INVITE": "Invitation de serveur",
+  "GROUP_DM_INVITE": "Invitation à un groupe de MP",
+  "UNNAMED": "Sans nom",
+  "INVITE_INFO_ERROR_INVALID_TITLE": "Lien d'invitation invalide.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Assurez-vous qu'il n'a pas expiré, et que tout le monde peut y accéder.",
   "invite_info": {
-    "description": "Get information about a Discord invite.",
+    "description": "Obtenez des informations sur une invitation Discord.",
     "options": {
       "invite": {
-        "description": "A server or group DM invite link or code."
+        "description": "Un lien ou code d'invitation de serveur ou de groupe."
       }
     }
   },
-  "REPORT_SUCCESS_TITLE": "Report sent!",
-  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
-  "REPORT_MODAL_TITLE": "New Report",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
-  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
-  "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
-  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
+  "REPORT_SUCCESS_TITLE": "Signalement envoyé !",
+  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé au **[serveur communautaire]({server})**, où les membres peuvent discuter du problème.\nVous serez mis à jour à ce sujet par l'intermédiaire de vos DM.",
+  "REPORT_MODAL_TITLE": "Nouveau rapport",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Quel est le problème ?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Décrivez votre signalement en détail.",
+  "IMAGE_OPTION_DESCRIPTION": "Ajouter une image.",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "Vous ne pouvez envoyer que des images.",
   "report": {
-    "description": "Report a CRBT-related issue, bug, typo, etc."
+    "description": "Signaler un problème lié à CRBT, un bug, une faute de frappe, etc."
   }
 }
