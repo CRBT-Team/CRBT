@@ -3,7 +3,6 @@ import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import { readFileSync } from 'fs';
 import fetch from 'node-fetch';
-import { ChatCommand, OptionBuilder } from 'purplet';
 import { SearchCmdOpts } from './search';
 import { handleDuckDuckGo } from './web';
 import { createSearchResponse, fetchResults } from './_response';
@@ -81,31 +80,31 @@ export const englishDictionary = readFileSync('./src/lib/util/words-en-US.txt', 
   '\r\n'
 );
 
-export default ChatCommand({
-  name: 'define',
-  description: 'Look up the definition of a given word on an English dictionary.',
-  options: new OptionBuilder().string('word', 'The word to define.', {
-    autocomplete({ word }) {
-      return englishDictionary
-        .filter((w) => w.toLowerCase() === word || w.toLowerCase().startsWith(word))
-        .map((word) => ({
-          name: word,
-          value: word,
-        }));
-    },
-    required: true,
-  }),
-  async handle({ word }) {
-    await this.deferReply();
+// export default ChatCommand({
+//   name: 'define',
+//   description: 'Look up the definition of a given word on an English dictionary.',
+//   options: new OptionBuilder().string('word', 'The word to define.', {
+//     autocomplete({ word }) {
+//       return englishDictionary
+//         .filter((w) => w.toLowerCase() === word || w.toLowerCase().startsWith(word))
+//         .map((word) => ({
+//           name: word,
+//           value: word,
+//         }));
+//     },
+//     required: true,
+//   }),
+//   async handle({ word }) {
+//     await this.deferReply();
 
-    await this.editReply(
-      await handleDictionary.call(this, {
-        anonymous: false,
-        query: word,
-        site: 'dictionary',
-        page: -1,
-        userId: this.user.id,
-      })
-    );
-  },
-});
+//     await this.editReply(
+//       await handleDictionary.call(this, {
+//         anonymous: false,
+//         query: word,
+//         site: 'dictionary',
+//         page: -1,
+//         userId: this.user.id,
+//       })
+//     );
+//   },
+// });

@@ -1,12 +1,7 @@
 import { cache } from '$lib/cache';
 import { emojis, links } from '$lib/env';
 import { t } from '$lib/language';
-import {
-  editableList,
-  MessageBuilderData,
-  MessageBuilderProps,
-  MessageBuilderTypes,
-} from '$lib/types/messageBuilder';
+import { editableList, MessageBuilderData, MessageBuilderProps } from '$lib/types/messageBuilder';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, row } from 'purplet';
@@ -17,20 +12,16 @@ import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';
 import { SaveButton } from './SaveButton';
-import { SendMessageButton } from './SendMessageButton';
 
 export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
   const { type } = data;
 
   cache.set<MessageBuilderData>(`${type}_BUILDER:${i.guildId}`, data);
 
-  const parsed =
-    type === MessageBuilderTypes.rolePicker
-      ? data
-      : parseCRBTscriptInMessage(data, {
-          channel: i.channel as GuildTextBasedChannel,
-          member: i.member as GuildMember,
-        });
+  const parsed = parseCRBTscriptInMessage(data, {
+    channel: i.channel as GuildTextBasedChannel,
+    member: i.member as GuildMember,
+  });
 
   const fieldSelect = new FieldSelectMenu(type as never)
     .setPlaceholder(t(i, 'FIELD_SELECT_MENU'))
@@ -62,10 +53,7 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
       // .setLabel(t(i, 'SETTINGS'))
       .setEmoji(emojis.buttons.left_arrow)
       .setStyle('SECONDARY'),
-    save:
-      type !== MessageBuilderTypes.rolePicker
-        ? new SaveButton(type as never).setLabel(t(i, 'SAVE')).setStyle('SUCCESS')
-        : new SendMessageButton(type as never).setLabel(t(i, 'SEND')).setStyle('SUCCESS'),
+    save: new SaveButton(type as never).setLabel(t(i, 'SAVE')).setStyle('SUCCESS'),
     import: new ImportJSONButton(type as never).setLabel(t(i, 'IMPORT')).setStyle('SECONDARY'),
     export: new ExportJSONButton(type as never).setLabel(t(i, 'EXPORT')).setStyle('SECONDARY'),
     CRBTscript: new MessageButton()
@@ -82,16 +70,9 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
     content: data.content ? parsed.content : invisibleChar,
     embeds: data.embed ? [new MessageEmbed(parsed.embed)] : [],
     components: components(
-      ...[
-        type === MessageBuilderTypes.rolePicker ? data.components[0] : null,
-        row(fieldSelect),
-        ...(type !== MessageBuilderTypes.rolePicker
-          ? [
-              row(buttons.back, buttons.save, buttons.import, buttons.export),
-              row(buttons.CRBTscript),
-            ]
-          : [row(buttons.save)]),
-      ].filter(Boolean)
+      row(fieldSelect),
+      row(buttons.back, buttons.save, buttons.import, buttons.export),
+      row(buttons.CRBTscript)
     ),
     files: [],
   };

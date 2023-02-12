@@ -1,5 +1,5 @@
 import { CRBTscriptParserArgs, parseCRBTscript } from '$lib/functions/parseCRBTscript';
-import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { MessageBuilderData } from '$lib/types/messageBuilder';
 import { APIEmbedField } from 'discord-api-types/v10';
 
 export function parseCRBTscriptInMessage<T extends MessageBuilderData>(
@@ -8,9 +8,7 @@ export function parseCRBTscriptInMessage<T extends MessageBuilderData>(
 ): T {
   const parsed = {} as MessageBuilderData;
 
-  if (message.type !== MessageBuilderTypes.rolePicker) {
-    parseCRBTscript(message.script, args);
-  }
+  parseCRBTscript(message.script, args);
 
   if (message.content) {
     parsed.content = parseCRBTscript(message.content, args);
