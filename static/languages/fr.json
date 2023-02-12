@@ -511,13 +511,13 @@
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT envoie d'utilisation des commandes comme décrit dans notre politique de confidentialité. Désactiver cette option ne fera qu'arrêter des futurs envois.",
   "YOUR_CRBT_DATA": "Vos données CRBT",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "Basic data you submit and more is used for CRBT's features. You may download or delete of your data. Beware, the latter erases everything about you on CRBT (including Reminders, Economy and more!!).",
-  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
+  "PRIVACY_SETTINGS_TITLE": "Réglages de confidentialité",
   "settings": {
     "description": "Configurez les paramètres de CRBT sur ce serveur."
   },
   "ATTENTION_REQUIRED": "Attention requise",
   "OVERVIEW": "Vue d'ensemble",
-  "SETTINGS_TITLE": "Server Settings",
+  "SETTINGS_TITLE": "Réglages du serveur",
   "SETTINGS_SELECT_MENU_PLACEHOLDER": "Choisissez un paramètre.",
   "SETTINGS_DESCRIPTION": "Utilisez le menu déroulant ci-dessous pour mettre à jour les paramètres de ce serveur.",
   "ENABLE": "Activer",
