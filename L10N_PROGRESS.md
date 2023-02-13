@@ -1,55 +1,55 @@
-x = 100% localizable
+[x] = 100% localizable
 
-- = metadata partially localizable, content is OK
+[~] = Content OK, metadata not entirely localizable
 
-\- = content partially localizable
+[0] = Content not entirely localizable
 
-= not localizable
+[ ] = Not localizable
 
 - [x] /8ball
-- [+] /avatar
-- [+] Avatar & Banner
-- [+] /ban
-- [+] /banner
-- [-] Bot info
-- [+] Bookmark Message
+- [~] /avatar
+- [~] Avatar & Banner
+- [~] /ban
+- [~] /banner
+- [~] Bot info
+- [0] Bookmark Message
 - [x] /calculate
-- [-] /channel info
-- [-] /clear
+- [0] /channel info
+- [~] /clear
 - [ ] /coinflip
 - [x] /color set
 - [ ] /convert
 - [x] /crbt info
-- [-] /emoji info
+- [~] /emoji info
 - [ ] Get JSON
-- [-] /giveaway
+- [~] /giveaway
 - [x] /help
-- [-] /invite info
-- [+] /kick
-- [*] Moderation History
-- [-] /modlogs all
-- [-] /modlogs user
+- [~] /invite info
+- [0] /kick
+- [0] Moderation History
+- [0] /modlogs all
+- [0] /modlogs user
 - [x] /pick
 - [x] /ping
-- [-] /poll
-- [-] /privacy
-- [+] Report Message
-- [+] Report User
+- [~] /poll
+- [~] /privacy
+- [0] Report Message
+- [0] Report User
 - [x] /reminder new
-- [-] /reminder list
+- [~] /reminder list
 - [x] /report
 - [ ] /rng
 - [x] /role info
 - [x] /roll
-- [ ] /search
-- [+] /server icon
-- [-] /server info
+- [0] /search
+- [0] /server icon
+- [~] /server info
 - [x] /settings
-- [-] Set Reminder
-- [+] /timeout
+- [~] Set Reminder
+- [0] /timeout
 - [x] /translate
-- [+] Translate Message
-- [+] /user info
-- [+] User Info
-- [+] /warn
-- [+] Warn User
+- [~] Translate Message
+- [x] /user info
+- [~] User Info
+- [0] /warn
+- [0] Warn User

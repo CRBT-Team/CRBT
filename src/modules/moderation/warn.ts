@@ -6,7 +6,7 @@ import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'warn',
-  description: "Warn a server member and add to the member's Moderation History.",
+  description: 'Warn a server member and add to their Moderation History.',
   nameLocalizations: getAllLanguages('WARN', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
@@ -14,8 +14,9 @@ export default ChatCommand({
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
-    .string('reason', 'More context for the Moderation History.', {
+    .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     }),
   handle({ user, reason }) {

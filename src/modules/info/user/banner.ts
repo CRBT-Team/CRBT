@@ -4,8 +4,7 @@ import { createCRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { ButtonStyle } from 'discord-api-types/v10';
-import { GuildMember, Interaction, MessageEmbed, User } from 'discord.js';
+import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
 import { ChatCommand, components, OptionBuilder, row } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
@@ -104,15 +103,16 @@ export async function renderBanner(
         type === 'default' ? 'banner' : 'user_banner',
         getTabs('user_banner', user.toJSON(), member)
       ),
-      row({
-        type: 'BUTTON',
-        style: ButtonStyle.Link,
-        url: b,
-        label: t(ctx, 'avatar.strings.DOWNLOAD', {
-          SIZE: `${size ?? 2048}`,
-          FORMAT: b.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG',
-        }),
-      })
+      row(
+        new MessageButton({
+          style: 'LINK',
+          url: b,
+          label: t(ctx, 'avatar.strings.DOWNLOAD', {
+            SIZE: `${size ?? 2048}`,
+            FORMAT: b.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG',
+          }),
+        })
+      )
     ),
   };
 }

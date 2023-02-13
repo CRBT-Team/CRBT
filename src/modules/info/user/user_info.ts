@@ -16,9 +16,12 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 
 export default ChatCommand({
   name: 'user info',
-  description: "Get a user's Discord information.",
-  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.', {
+  nameLocalizations: getAllLanguages('USER', localeLower),
+  description: t('en-US', 'user_info.description'),
+  descriptionLocalizations: getAllLanguages('user_info.description'),
+  options: new OptionBuilder().user('user', t('en-US', 'user_info.options.user.description'), {
     nameLocalizations: getAllLanguages('USER', localeLower),
+    descriptionLocalizations: getAllLanguages('user_info.options.user.description'),
   }),
   async handle({ user }) {
     const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;

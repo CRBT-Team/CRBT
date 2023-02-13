@@ -43,6 +43,7 @@ export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
 
 export default ChatCommand({
   name: 'emoji info',
+  nameLocalizations: getAllLanguages('EMOJI', localeLower),
   description: t('en-US', 'emoji_info.description'),
   descriptionLocalizations: getAllLanguages('emoji_info.description'),
   options: new OptionBuilder().string('emoji', t('en-US', 'emoji_info.options.emoji.description'), {
