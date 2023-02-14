@@ -241,10 +241,10 @@
       }
     }
   },
-  "REASON_DESCRIPTION": "More context for the Moderation History.",
+  "REASON_DESCRIPTION": "Davantage de contexte pour l'Histoire de Modération.",
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar.",
+      "description": "Obtenir un avatar d'un utilisateur.",
       "options": {
         "user": {
           "description": "L'utilisateur dont vous voulez obtenir l'avatar."
@@ -690,10 +690,10 @@
     "description": "Signaler un problème lié à CRBT, un bug, une faute de frappe, etc."
   },
   "user_info": {
-    "description": "Get a user's Discord information.",
+    "description": "Obtenir les informations Discord sur un utilisateur.",
     "options": {
       "user": {
-        "description": "User to get info from."
+        "description": "L'utilisateur dont vous souhaitez voir des informations."
       }
     }
   }
