@@ -675,7 +675,7 @@
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
-  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "ध्यान रहे कि ये expire नहीं हो और लोग एक्सेस कर सके |",
   "invite_info": {
     "description": "Get information about a Discord invite.",
     "options": {
