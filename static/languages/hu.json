@@ -24,6 +24,9 @@
   "SAVE": "Változtatások mentése",
   "SEND": "Küldés",
   "DONE": "Kész",
+  "ON": "Bekapcsolva",
+  "OFF": "Kikapcsolva",
+  "NEW": "Új",
   "ADD_REMINDER": "Emlékeztető hozzáadása",
   "OPEN_DMS": "Nyisd meg a DM üzeneteket",
   "PREVIEW": "Előnézet",
@@ -55,8 +58,8 @@
   "INTERACTION": "Interaction",
   "MEMBERS": "Felhasználók",
   "STICKERS": "Stickers",
-  "SERVERS": "Servers",
-  "NONE": "None",
+  "SERVERS": "Szerver(ek)",
+  "NONE": "Semmi",
   "CHANNELS": "Csatornák",
   "EMOJIS": "Emojis",
   "ADDED": "Added",
@@ -306,7 +309,7 @@
     }
   },
   "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
+  "USER_INFO": "Felhasználó információ",
   "BOT_INFO": "Bot információ",
   "SERVER_AVATAR": "Szerver Avatar",
   "USER_AVATAR": "Felhasználói Avatar",
@@ -314,21 +317,21 @@
   "SERVER_INFO": "Szerver információ",
   "ICON": "Ikon",
   "BANNER": "Banner",
-  "WARN": "Warn",
-  "KICK": "Kick",
+  "WARN": "Figyelmeztetés",
+  "KICK": "Kirúgás",
   "BAN": "Kitíltás",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
+  "UNBAN": "Feloldás",
+  "TIMEOUT": "Időtúllépés",
+  "TEMPBAN": "Ideiglenes eltíltás",
   "CLEAR": "Clear",
-  "REPORT": "Report",
+  "REPORT": "Jelentés",
   "REASON": "Indok",
-  "MOD_VERB_BAN": "Banned",
+  "MOD_VERB_BAN": "Kitíltva",
   "MOD_VERB_TEMPBAN": "Temporarily banned",
   "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
+  "MOD_VERB_KICK": "Kirúgva",
   "MOD_VERB_TIMEOUT": "Timed out",
-  "MOD_VERB_WARN": "Warned",
+  "MOD_VERB_WARN": "Figyelmeztetett",
   "MOD_VERB_REPORT": "Reported",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
@@ -365,40 +368,40 @@
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
   "FIELDS_URL": "Embed Title URL",
-  "SETTINGS": "Settings",
+  "SETTINGS": "Beállítások",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
   "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
   "JOINED_DISCORD": "Discord member since",
   "JOINED_SERVER": "Server member since",
   "SERVER_NICKNAME": "Server nickname",
   "ROLES": "Rang(ok)",
-  "ROLE": "Role",
+  "ROLE": "Rang",
   "MAJOR_PERMS": "Major permissions in this server",
   "NO_PERMS": "*No permissions*",
   "ADMIN_ALL_PERMS": "Administrator (all permissions)",
-  "HELP": "Help",
+  "HELP": "Segítség",
   "help": {
     "description": "Returns a quick help guide for CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
-  "HELP_AD_TITLE": "Like CRBT?",
+  "HELP_AD_TITLE": "Tetszik a CRBT?",
   "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
-  "GIVEAWAY": "Giveaway",
+  "GIVEAWAY": "Nyereményjáték",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "Nyereményjáték létrehozás",
     "options": {
       "prize": {
-        "description": "What to give away."
+        "description": "Mit szeretnél feltenni a nyereményjátékra."
       },
       "end_date": {
-        "description": "When to end the giveaway."
+        "description": "Mikor érjen véget a nyereményjáték."
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "Hány ember nyerheti meg a nyereményjátékot."
       }
     }
   },
-  "WINNERS": "Winners",
+  "WINNERS": "Nyertes(ek)",
   "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
@@ -528,6 +531,8 @@
   "ACCENT_COLOR": "Accent Color",
   "MODERATION_LOGS": "Moderation logs",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -539,7 +544,7 @@
   "CHANNEL": "Csatorna",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
@@ -633,7 +638,7 @@
   "BITRATE": "Bitrate",
   "KBPS": "{number}kbps",
   "VIDEO_QUALITY": "Video Quality",
-  "AUTO": "Auto",
+  "AUTO": "Automatikus",
   "SLOWMODE": "Lassú mód",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
@@ -644,7 +649,7 @@
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
+  "EMOJI_INFO": "Emoji információ",
   "UNICODE": "Unicode",
   "EMOJI": "Emojis",
   "AVAILABLE_SINCE": "Available since",
@@ -662,11 +667,11 @@
   "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
   "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
   "INVITE_INFO": "Invite info",
-  "INVITE": "Invite",
+  "INVITE": "Meghívás",
   "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
-  "INVITE_INFO_INVITER": "Invited by",
-  "CUSTOM_INVITE_LINK": "Custom Invite Link",
-  "SERVER_INVITE": "Server invite",
+  "INVITE_INFO_INVITER": "Meghívta",
+  "CUSTOM_INVITE_LINK": "Egyéni meghívó link",
+  "SERVER_INVITE": "Szerver meghívás",
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
@@ -679,9 +684,9 @@
       }
     }
   },
-  "REPORT_SUCCESS_TITLE": "Report sent!",
+  "REPORT_SUCCESS_TITLE": "Jelentés elküldve!",
   "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
-  "REPORT_MODAL_TITLE": "New Report",
+  "REPORT_MODAL_TITLE": "Új jelentés",
   "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
   "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
   "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
@@ -690,10 +695,10 @@
     "description": "Report a CRBT-related issue, bug, typo, etc."
   },
   "user_info": {
-    "description": "Get a user's Discord information.",
+    "description": "Szerezz be egy felhasználó Discord-információt.",
     "options": {
       "user": {
-        "description": "User to get info from."
+        "description": "Felhasználó, akitől információt kaphatsz."
       }
     }
   }

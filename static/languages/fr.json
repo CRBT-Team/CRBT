@@ -24,6 +24,9 @@
   "SAVE": "Enregistrer",
   "SEND": "Envoyer",
   "DONE": "Valider",
+  "ON": "Activé(e)",
+  "OFF": "Désactivé(e)",
+  "NEW": "Nouveau",
   "ADD_REMINDER": "Envoyer un rappel",
   "OPEN_DMS": "Ouvrir les MP",
   "PREVIEW": "Aperçu",
@@ -528,6 +531,8 @@
   "ACCENT_COLOR": "Couleur d’accentuation",
   "MODERATION_LOGS": "Logs de modération",
   "MODERATION_REPORTS": "Signalements",
+  "SERVER_THEME": "Thème du Serveur",
+  "AUTOMATIC_THEMING": "Thème automatique",
   "ECONOMY": "Économie",
   "STATUS": "État",
   "SETTINGS_ERRORS_FOUND": "{number} erreurs détectées",
@@ -539,7 +544,7 @@
   "CHANNEL": "Salon",
   "EDIT_SOMETHING": "Modifier {feature}",
   "SETTINGS_COLOR_SET_TO": "Couleur réglée sur {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "La couleur d'accentuation du serveur est affichée sur les messages, y compris les Sondages, les Concours, les infos du serveur, parmi d'autres.\nElle est actuellement réglée sur **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Personnalisez vos Sondages, Concours et plus en définissant un thème ! Le Thème automatique laisse CRBT choisir la couleur prédominante de l'icône du serveur, ou vous pouvez manuellement en choisir une avec un code HEX ou l'un des préréglages.\n\nThème actuel : **{color}**.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Les logs de modération vous permettent d'obtenir des notifications en temps réel dans le salon de votre choix pour chaque action de modération qu'un modérateur prend avec CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "La fonctionnalité de Signalements permettent à vos membres de signaler un message ou un utilisateur (en faisant un clic droit ou en appuyant longtemps dessus) vers le salon de votre choix.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Salon introuvable. Modifiez-le pour que CRBT puisse continuer à y envoyer des messages.",
@@ -696,15 +701,5 @@
         "description": "L'utilisateur dont vous souhaitez voir des informations."
       }
     }
-  },
-  "REPORT_SUCCESS_TITLE": "Signalement envoyé !",
-  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé au **[serveur communautaire]({server})**, où les membres peuvent discuter du problème.\nVous serez mis à jour à ce sujet par l'intermédiaire de vos DM.",
-  "REPORT_MODAL_TITLE": "Nouveau rapport",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Quel est le problème ?",
-  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Décrivez votre signalement en détail.",
-  "IMAGE_OPTION_DESCRIPTION": "Ajouter une image.",
-  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "Vous ne pouvez envoyer que des images.",
-  "report": {
-    "description": "Signaler un problème lié à CRBT, un bug, une faute de frappe, etc."
   }
 }

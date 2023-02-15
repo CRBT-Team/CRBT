@@ -24,6 +24,9 @@
   "SAVE": "Save Changes",
   "SEND": "भेजें",
   "DONE": "समाप्त",
+  "ON": "On",
+  "OFF": "Off",
+  "NEW": "New",
   "ADD_REMINDER": "रिमाइंडर सेट करे",
   "OPEN_DMS": "DMs खोले |",
   "PREVIEW": "प्रीव्यू",
@@ -295,7 +298,7 @@
   "role-selectors": {
     "errors": {
       "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
+      "BUTTON_ROLES_ONCE": "आप रोल को हटा नहीं सकते |"
     },
     "strings": {
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
@@ -528,6 +531,8 @@
   "ACCENT_COLOR": "Accent Color",
   "MODERATION_LOGS": "Moderation logs",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -539,7 +544,7 @@
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
@@ -590,12 +595,12 @@
   "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
   "ROLE_INFO_TITLE": "{role} - Role info",
   "POSITION": "Position",
-  "HUMANS": "Human(s)",
-  "BOTS": "Bot(s)",
-  "COLOR": "Color",
+  "HUMANS": "इंसान ",
+  "BOTS": "बोट(स)",
+  "COLOR": "रंग ",
   "ROLE_INFO_POSITION": "{position} out of {roles} roles",
   "ROLE_INFO_HOISTED": "Displays separately from online members",
-  "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
+  "ROLE_INFO_MENTIONABLE": "कोई भी इस रोल को @mention कर सकते है |\n",
   "ROLE_INFO_MANAGED": "Managed",
   "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
   "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
@@ -670,12 +675,30 @@
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
-  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "ध्यान रहे कि ये expire नहीं हो और लोग एक्सेस कर सके |",
   "invite_info": {
-    "description": "Get information about a Discord invite.",
+    "description": "डिस्कोर्ड इनवाइट के बारे में जानकारी प्राप्त करे |",
     "options": {
       "invite": {
-        "description": "A server or group DM invite link or code."
+        "description": "एक सर्वर या ग्रुप DM की इनवाइट लिंक या कोड |"
+      }
+    }
+  },
+  "REPORT_SUCCESS_TITLE": "आपका रिपोर्ट दर्ज हो गया !",
+  "REPORT_SUCCESS_DESCRIPTION": "यह **[म्युनिटी सर्वर] ({server})** पे भेज दिया गया है, जहा पर लोग समस्या की बातचीत की जाईगी | आपको अपने DMs पे अपडेट किया जायेगा |",
+  "REPORT_MODAL_TITLE": "नई रिपोर्ट",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "आपकी क्या समस्या है ?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "आप रिपोर्ट को डिटेल्स में बताए |",
+  "IMAGE_OPTION_DESCRIPTION": "उसके ऊपर चित्र डाले |",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "सिर्फ आप इमेज को अपलोड कर सकते है |",
+  "report": {
+    "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Get a user's Discord information.",
+    "options": {
+      "user": {
+        "description": "User to get info from."
       }
     }
   },
