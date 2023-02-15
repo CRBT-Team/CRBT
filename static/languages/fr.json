@@ -1,8 +1,8 @@
 {
-  "ID": "ID",
+  "ID": "Identifiant",
   "CREATED_ON": "Créé le",
   "MEMBER_COUNT": "Nombre de membres",
-  "SERVER_COUNT": "Nombre de membres",
+  "SERVER_COUNT": "Nombre de serveurs",
   "PING": "Latence",
   "UPTIME": "Connecté depuis",
   "WEBSITE": "Site web",
@@ -241,9 +241,10 @@
       }
     }
   },
+  "REASON_DESCRIPTION": "Davantage de contexte pour l'Histoire de Modération.",
   "avatar": {
     "meta": {
-      "description": "Obtenir l'avatar d'un utilisateur (du serveur ou de l'utilisateur).",
+      "description": "Obtenir un avatar d'un utilisateur.",
       "options": {
         "user": {
           "description": "L'utilisateur dont vous voulez obtenir l'avatar."
@@ -653,7 +654,7 @@
     "description": "Obtenir des informations sur un emoji.",
     "options": {
       "emoji": {
-        "description": "L'émoji dont vous voulez obtenir des infos. Les émojis par défaut et personnalisés sont pris en charge."
+        "description": "L'émoji dont vous voulez obtenir des infos. Les émojis par défaut et personnalisés sont acceptés."
       }
     }
   },
@@ -675,6 +676,24 @@
     "options": {
       "invite": {
         "description": "Un lien ou code d'invitation de serveur ou de groupe."
+      }
+    }
+  },
+  "REPORT_SUCCESS_TITLE": "Signalement envoyé !",
+  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé au **[serveur communautaire]({server})**, où les membres peuvent discuter du problème.\nVous serez mis à jour à ce sujet par l'intermédiaire de vos DM.",
+  "REPORT_MODAL_TITLE": "Nouveau rapport",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Quel est le problème ?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Décrivez votre signalement en détail.",
+  "IMAGE_OPTION_DESCRIPTION": "Ajouter une image.",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "Vous ne pouvez envoyer que des images.",
+  "report": {
+    "description": "Signaler un problème lié à CRBT, un bug, une faute de frappe, etc."
+  },
+  "user_info": {
+    "description": "Obtenir les informations Discord sur un utilisateur.",
+    "options": {
+      "user": {
+        "description": "L'utilisateur dont vous souhaitez voir des informations."
       }
     }
   },

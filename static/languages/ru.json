@@ -241,9 +241,10 @@
       }
     }
   },
+  "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Получить аватар пользователя (Серверный или пользовательский аватар).",
+      "description": "Get a user's display avatar.",
       "options": {
         "user": {
           "description": "The user to get the avatar of."
@@ -687,5 +688,13 @@
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
   "report": {
     "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Get a user's Discord information.",
+    "options": {
+      "user": {
+        "description": "User to get info from."
+      }
+    }
   }
 }
