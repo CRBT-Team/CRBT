@@ -1,5 +1,3 @@
-import { fetchWithCache } from '$lib/cache';
-import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { CRBTError } from '$lib/functions/CRBTError';
@@ -17,7 +15,12 @@ import {
   ModalSubmitInteraction,
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import { featureSettingsMenus, getSettings, include, resolveSettingsProps } from './_helpers';
+import {
+  featureSettingsMenus,
+  getSettings,
+  resolveSettingsProps,
+  saveServerSettings,
+} from './_helpers';
 
 export default ChatCommand({
   name: 'settings',
@@ -57,16 +60,19 @@ export async function renderSettingsMenu(
         return;
 
       const props = resolveSettingsProps(this, feature, settings);
+      const featureSettings = featureSettingsMenus[feature];
 
       return {
-        label: t(this, feature),
+        label:
+          t(this, feature) +
+          (featureSettings.newLabel ? ` [${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''),
         value: feature,
         ...(props.errors.length > 0
           ? {
               emoji: '⚠️',
               description: t(this, 'ATTENTION_REQUIRED'),
             }
-          : featureSettingsMenus[feature].getSelectMenu(props)),
+          : featureSettings.getSelectMenu(props)),
       };
     })
     .filter(Boolean);
@@ -107,7 +113,7 @@ export async function renderFeatureSettings(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
   feature: EditableFeatures
 ): Promise<any> {
-  const { getComponents, getMenuDescription } = featureSettingsMenus[feature];
+  const { getComponents, getMenuDescription, newLabel } = featureSettingsMenus[feature];
   const settings = await getSettings(this.guildId);
   const props = resolveSettingsProps(this, feature, settings);
   const { isEnabled, errors } = props;
@@ -131,7 +137,9 @@ export async function renderFeatureSettings(
           name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
           icon_url: icon(settings.accentColor, 'settings', 'image'),
         },
-        title: `${this.guild.name} / ${t(this, feature)}`,
+        title: `${this.guild.name} / ${t(this, feature)} ${
+          newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
+        }`,
         color: await getColor(this.guild),
         ...embed,
         fields:
@@ -169,22 +177,9 @@ export const ToggleFeatureBtn = ButtonComponent({
     const Feature = CamelCaseFeatures[feature];
     const newState = { [Feature]: state };
 
-    const h = await fetchWithCache(
-      `${this.guildId}:settings`,
-      () =>
-        prisma.servers.upsert({
-          where: { id: this.guildId },
-          update: { modules: { upsert: { create: newState, update: newState } } },
-          create: {
-            id: this.guildId,
-            modules: {
-              connectOrCreate: { create: newState, where: { id: this.guildId } },
-            },
-          },
-          include,
-        }),
-      true
-    );
+    await saveServerSettings(this.guildId, {
+      modules: newState,
+    });
 
     this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
   },

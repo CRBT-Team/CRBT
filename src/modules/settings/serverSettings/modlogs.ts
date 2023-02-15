@@ -1,5 +1,3 @@
-import { fetchWithCache } from '$lib/cache';
-import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { t } from '$lib/language';
@@ -8,7 +6,7 @@ import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { components, OnEvent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
-import { include } from './_helpers';
+import { saveServerSettings } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
   getErrors({ guild, settings, isEnabled, i }) {
@@ -88,17 +86,9 @@ export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (i.isChannelSelect() && i.customId === customId) {
     const channel = i.channels.first();
 
-    await fetchWithCache(
-      `${i.guild.id}:settings`,
-      () =>
-        prisma.servers.upsert({
-          where: { id: i.guild.id },
-          update: { modLogsChannel: channel.id },
-          create: { id: i.guildId, modLogsChannel: channel.id },
-          include,
-        }),
-      true
-    );
+    await saveServerSettings(i.guildId, {
+      modLogsChannel: channel.id,
+    });
 
     i.update(await renderFeatureSettings.call(i, EditableFeatures.moderationLogs));
   }

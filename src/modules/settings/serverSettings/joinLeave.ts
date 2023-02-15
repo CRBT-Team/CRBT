@@ -1,5 +1,3 @@
-import { fetchWithCache } from '$lib/cache';
-import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { deepMerge } from '$lib/functions/deepMerge';
@@ -13,7 +11,7 @@ import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage, renderJoinLeavePreview } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
 import { renderFeatureSettings } from './settings';
-import { getSettings, include } from './_helpers';
+import { getSettings, saveServerSettings } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
   getErrors({ guild, settings, feature, i }) {
@@ -125,17 +123,9 @@ export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
 
     const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
-    await fetchWithCache(
-      `${i.guild.id}:settings`,
-      () =>
-        prisma.servers.upsert({
-          where: { id: i.guild.id },
-          update: { [propName]: channel.id },
-          create: { id: i.guildId, [propName]: channel.id },
-          include,
-        }),
-      true
-    );
+    await saveServerSettings(i.guildId, {
+      [propName]: channel.id,
+    });
 
     i.update(await renderFeatureSettings.call(i, type));
   }

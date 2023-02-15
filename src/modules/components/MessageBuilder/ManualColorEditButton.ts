@@ -11,7 +11,7 @@ export const ManualColorEditButton = ButtonComponent({
     type,
     value,
   }: {
-    type: MessageBuilderTypes | EditableFeatures.accentColor;
+    type: MessageBuilderTypes | EditableFeatures.automaticTheming;
     value: number;
   }) {
     const [id, maxLength] = editableList.find(([id]) => id === 'color')!;

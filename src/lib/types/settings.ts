@@ -10,7 +10,7 @@ import { APIEmbed } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
 
 export enum EditableFeatures {
-  accentColor = 'ACCENT_COLOR',
+  automaticTheming = 'SERVER_THEME',
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
@@ -19,7 +19,7 @@ export enum EditableFeatures {
 }
 
 export enum CamelCaseFeatures {
-  ACCENT_COLOR = 'accentColor',
+  SERVER_THEME = 'automaticTheming',
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
@@ -38,7 +38,7 @@ export interface FeatureSettingsProps {
 
 export type FullSettings = Partial<
   servers & {
-    modules?: serverModules;
+    modules?: Partial<serverModules>;
     economy?: Partial<
       Economy & {
         commands: EconomyCommands;
@@ -50,6 +50,7 @@ export type FullSettings = Partial<
 >;
 
 export interface SettingsMenus {
+  newLabel?: boolean;
   getErrors?(props: Omit<FeatureSettingsProps, 'errors'>): string[];
   getSelectMenu(props: FeatureSettingsProps): Partial<MessageSelectOptionData>;
   getMenuDescription(props: FeatureSettingsProps): Partial<APIEmbed>;
