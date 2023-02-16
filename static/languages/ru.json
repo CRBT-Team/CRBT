@@ -35,7 +35,7 @@
   "YES": "Да",
   "NO": "Нет",
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Этот компонент может использовать только первоначальный пользователь команды.",
   "TEXT_CHANNEL": "Текстовый канал",
   "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "Голосовой канал",
