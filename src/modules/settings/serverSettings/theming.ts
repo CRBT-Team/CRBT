@@ -1,4 +1,5 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
+import { colors } from '$lib/env';
 import emojis, { icon } from '$lib/env/emojis';
 import { imgDominantColor } from '$lib/functions/imgDominantColor';
 import { t } from '$lib/language';
@@ -78,11 +79,12 @@ export const themeSettings: SettingsMenus = {
           .setDisabled(settings.automaticTheming)
           .setOptions(
             colorsMap
-              .filter((color) => !color.private && color.value !== 0)
+              .filter(({ value }) => value !== colors.sync)
               .map((colorObj) => ({
                 label: t(i, `color set.colorNames.${colorObj.key}` as any),
-                value: colorObj.value.toString(16),
+                value: colorObj.value.toString(),
                 emoji: colorObj.emoji,
+                default: settings.accentColor === colorObj.value,
               }))
           )
       )
@@ -112,7 +114,7 @@ export const ToggleAutoThemeBtn = ButtonComponent({
 
 export const ColorPresetSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
-    const color = parseInt(this.values[0], 16);
+    const color = parseInt(this.values[0]);
 
     await saveServerSettings(this.guildId, {
       accentColor: color,
