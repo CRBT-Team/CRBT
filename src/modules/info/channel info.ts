@@ -27,6 +27,7 @@ dayjs.extend(duration);
 
 export default ChatCommand({
   name: 'channel info',
+  nameLocalizations: getAllLanguages('CHANNEL', localeLower),
   description: t('en-US', 'channel_info.description'),
   descriptionLocalizations: getAllLanguages('channel_info.description'),
   allowInDMs: false,
@@ -119,7 +120,7 @@ export default ChatCommand({
       fields.push(
         {
           name: 'Region Override',
-          value: channel.rtc_region ? capitalCase(channel.rtc_region) : 'Automatic',
+          value: channel.rtc_region ? capitalCase(channel.rtc_region) : t(this, 'AUTO'),
           inline: true,
         },
         {
@@ -128,7 +129,7 @@ export default ChatCommand({
           inline: true,
         },
         {
-          name: 'Bitrate',
+          name: t(this, 'BITRATE'),
           value: `${channel.bitrate / 1000}kbps`,
           inline: true,
         }

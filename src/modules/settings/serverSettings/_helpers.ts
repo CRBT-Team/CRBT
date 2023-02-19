@@ -10,18 +10,16 @@ import {
   SettingsMenus,
 } from '$lib/types/settings';
 import { Prisma } from '@prisma/client';
-import { colorSettings } from './accentColor';
 import { economySettings } from './economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
+import { themeSettings } from './theming';
 
-export const featureSettingsMenus: {
-  [k: string]: SettingsMenus;
-} = {
+export const featureSettingsMenus: Record<EditableFeatures, SettingsMenus> = {
+  [EditableFeatures.automaticTheming]: themeSettings,
   [EditableFeatures.joinMessage]: joinLeaveSettings,
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
-  [EditableFeatures.accentColor]: colorSettings,
   [EditableFeatures.moderationLogs]: modlogsSettings,
   [EditableFeatures.moderationReports]: modReportsSettings,
   [EditableFeatures.economy]: economySettings,
@@ -69,9 +67,10 @@ export function resolveSettingsProps(
 ): FeatureSettingsProps {
   const camelCasedKey = CamelCaseFeatures[feature];
   const guild = i.guild;
-  const isEnabled = Object.keys(settings.modules).includes(camelCasedKey)
-    ? settings.modules[camelCasedKey]
-    : settings[camelCasedKey];
+  const isEnabled =
+    (Object.keys(settings.modules).includes(camelCasedKey)
+      ? settings.modules[camelCasedKey]
+      : settings[camelCasedKey]) || undefined;
   const errors =
     featureSettingsMenus[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) || [];
 
@@ -105,4 +104,51 @@ export async function getSettings(guildId: string) {
 
   const merged = deepMerge(defaultSettings, data);
   return merged;
+}
+
+export async function saveServerSettings(guildId: string, newSettings: Partial<FullSettings>) {
+  const query = (type: 'update' | 'create') =>
+    Object.entries(newSettings).reduce((acc, [key, value]) => {
+      if (typeof value === 'object') {
+        return {
+          ...acc,
+          [key]:
+            type === 'create'
+              ? {
+                  connectOrCreate: {
+                    where: { id: guildId },
+                    create: value,
+                  },
+                }
+              : {
+                  upsert: {
+                    create: value,
+                    update: value,
+                  },
+                },
+        };
+      }
+
+      return {
+        ...acc,
+        [key]: value,
+      };
+    }, {});
+
+  return fetchWithCache(
+    `${guildId}:settings`,
+    () =>
+      prisma.servers.upsert({
+        where: { id: guildId },
+        create: {
+          id: guildId,
+          ...query('create'),
+        },
+        update: {
+          ...query('update'),
+        },
+        include: include,
+      }),
+    true
+  ) as FullSettings;
 }

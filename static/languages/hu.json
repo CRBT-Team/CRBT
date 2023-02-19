@@ -24,6 +24,9 @@
   "SAVE": "Változtatások mentése",
   "SEND": "Küldés",
   "DONE": "Kész",
+  "ON": "Bekapcsolva",
+  "OFF": "Kikapcsolva",
+  "NEW": "Új",
   "ADD_REMINDER": "Emlékeztető hozzáadása",
   "OPEN_DMS": "Nyisd meg a DM üzeneteket",
   "PREVIEW": "Előnézet",
@@ -32,32 +35,32 @@
   "YES": "Igen",
   "NO": "Nem",
   "ERROR_INVALID_CHANNEL": "Meg kell adnod egy érvényes {types} csatornát.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Parancs eredeti felhasználója használhatja ezt az összetevőt.",
   "TEXT_CHANNEL": "Szöveges csatorna",
-  "TEXT_CHANNELS": "Text Channel(s)",
+  "TEXT_CHANNELS": "Szöveges csatorna",
   "VOICE_CHANNEL": "Hang csatorna",
-  "VOICE_CHANNELS": "Voice Channel(s)",
+  "VOICE_CHANNELS": "Hang csatorna",
   "STAGE_CHANNEL": "Színpadi csatorna",
-  "STAGE_CHANNELS": "Stage Channel(s)",
+  "STAGE_CHANNELS": "Színpadi csatorna",
   "ANNOUNCEMENT_CHANNEL": "Bejelentési csatorna",
-  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
+  "ANNOUNCEMENT_CHANNELS": "Bejelentési csatorna",
   "CATEGORY": "Kategória",
-  "CATEGORIES": "Category(ies)",
+  "CATEGORIES": "Kategória",
   "RULES_CHANNEL": "Szabályok csatorna",
-  "RULES_CHANNELS": "Rules Channel(s)",
+  "RULES_CHANNELS": "Szabályzat csatorna",
   "THREAD_CHANNEL": "Thread",
   "THREAD_CHANNELS": "Thread(s)",
   "FORUM_CHANNEL": "Fórum csatorna",
-  "FORUM_CHANNELS": "Forum Channel(s)",
+  "FORUM_CHANNELS": "Fórum csatorna",
   "FORUM_POST": "Forum Post",
   "FORUM_POSTS": "Forum Post(s)",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
-  "MEMBERS": "Members",
+  "MEMBERS": "Felhasználók",
   "STICKERS": "Stickers",
-  "SERVERS": "Servers",
-  "NONE": "None",
-  "CHANNELS": "Channels",
+  "SERVERS": "Szerver(ek)",
+  "NONE": "Semmi",
+  "CHANNELS": "Csatornák",
   "EMOJIS": "Emojis",
   "ADDED": "Added",
   "OWNED_BY": "Tulajdonos",
@@ -70,10 +73,10 @@
   "USER": "User",
   "SIZE": "Size",
   "FORMAT": "Format",
-  "SMALL": "Small",
-  "MEDIUM": "Medium",
-  "LARGE": "Large",
-  "LARGEST": "Largest",
+  "SMALL": "Kicsi",
+  "MEDIUM": "Közepes",
+  "LARGE": "Nagy",
+  "LARGEST": "Legnagyobb",
   "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
@@ -101,23 +104,23 @@
     },
     "colorNames": {
       "sync": "Sync Discord Profile Color",
-      "lightred": "Light Red",
-      "red": "Red",
-      "darkred": "Dark Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "lightgreen": "Light Green",
-      "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
-      "blue": "Blue",
-      "darkblue": "Dark Blue",
+      "lightred": "Világos piros",
+      "red": "Piros",
+      "darkred": "Sötét piros",
+      "orange": "Narancssárga",
+      "yellow": "Sárga",
+      "lightgreen": "Világos zöld",
+      "green": "Zöld",
+      "darkgreen": "Sötét zöld",
+      "cyan": "Cián",
+      "lightblue": "Világos kék",
+      "blue": "Kék",
+      "darkblue": "Sötét kék",
       "blurple": "Blurple",
-      "lightpurple": "Light Purple",
+      "lightpurple": "Világos lila",
       "purple": "Lila",
-      "darkpurple": "Dark Purple",
-      "pink": "Pink",
+      "darkpurple": "Sötét lila",
+      "pink": "Rózsaszín",
       "brown": "Barna",
       "black": "Fekete",
       "gray": "Szürke",
@@ -234,25 +237,26 @@
     }
   },
   "banner": {
-    "description": "Get a user's profile banner.",
+    "description": "Szerezd be a felhasználó profil bannerét.",
     "options": {
       "user": {
-        "description": "The user whose banner to get."
+        "description": "A felhasználó, akinek meg kell szerezned a bannerét."
       }
     }
   },
+  "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Get a user's display avatar.",
       "options": {
         "user": {
-          "description": "The user to get the avatar of."
+          "description": "A felhasználó, akinek meg kell szerezned az avatarját."
         },
         "size": {
-          "description": "The size of the avatar to get."
+          "description": "A beszerezendő avatar mérete."
         },
         "format": {
-          "description": "The format of the avatar to get."
+          "description": "A beszerezendő avatar formátuma."
         }
       }
     },
@@ -260,12 +264,12 @@
       "name": "Get Avatar/Banner"
     },
     "strings": {
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "Letöltés ({SIZE}px - {FORMAT})"
     }
   },
   "crbt_introduction": {
-    "EMBED_TITLE": "Thank you for inviting CRBT!",
-    "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
+    "EMBED_TITLE": "Köszönjük a CRBT meghívását!",
+    "EMBED_DESCRIPTION": "{crbt} jelenleg {serverCount} szerveren elérhető!\nA kezdéshez használd a {help} parancsot a parancsok rövid listájához.\nA CRBT-t a {settings} paranccsal konfigurálhatod."
   },
   "bookmark": {
     "ctxMeta": {
@@ -292,70 +296,42 @@
     }
   },
   "role-selectors": {
-    "manual": {
-      "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
-        "options": [
-          {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
-            "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
-            ]
-          },
-          {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
-          },
-          {
-            "description": "A role that a member may select."
-          }
-        ]
-      }
-    },
     "errors": {
-      "BOT_MISSING_PERMS": "I need the \"Manage Roles\" permission in order to create a Role Picker.",
       "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
     },
     "strings": {
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "GENERIC_SELECTOR_TITLE": "Select one or multiple roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
     }
   },
   "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
-  "BOT_INFO": "Bot Info",
-  "SERVER_AVATAR": "Server Avatar",
-  "USER_AVATAR": "User Avatar",
-  "USER_BANNER": "User Banner",
-  "SERVER_INFO": "Server info",
-  "ICON": "Icon",
+  "USER_INFO": "Felhasználó információ",
+  "BOT_INFO": "Bot információ",
+  "SERVER_AVATAR": "Szerver Avatar",
+  "USER_AVATAR": "Felhasználói Avatar",
+  "USER_BANNER": "Felhasználói Banner",
+  "SERVER_INFO": "Szerver információ",
+  "ICON": "Ikon",
   "BANNER": "Banner",
-  "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
+  "WARN": "Figyelmeztetés",
+  "KICK": "Kirúgás",
+  "BAN": "Kitíltás",
+  "UNBAN": "Feloldás",
+  "TIMEOUT": "Időtúllépés",
+  "TEMPBAN": "Ideiglenes eltíltás",
   "CLEAR": "Clear",
-  "REPORT": "Report",
-  "REASON": "Reason",
-  "MOD_VERB_BAN": "Banned",
+  "REPORT": "Jelentés",
+  "REASON": "Indok",
+  "MOD_VERB_BAN": "Kitíltva",
   "MOD_VERB_TEMPBAN": "Temporarily banned",
   "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
+  "MOD_VERB_KICK": "Kirúgva",
   "MOD_VERB_TIMEOUT": "Timed out",
-  "MOD_VERB_WARN": "Warned",
+  "MOD_VERB_WARN": "Figyelmeztetett",
   "MOD_VERB_REPORT": "Reported",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
@@ -392,78 +368,78 @@
   "FIELDS_IMAGE": "Embed Image",
   "FIELDS_THUMBNAIL": "Embed Thumbnail",
   "FIELDS_URL": "Embed Title URL",
-  "SETTINGS": "Settings",
+  "SETTINGS": "Beállítások",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
   "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
   "JOINED_DISCORD": "Discord member since",
   "JOINED_SERVER": "Server member since",
   "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
-  "ROLE": "Role",
+  "ROLES": "Rang(ok)",
+  "ROLE": "Rang",
   "MAJOR_PERMS": "Major permissions in this server",
   "NO_PERMS": "*No permissions*",
   "ADMIN_ALL_PERMS": "Administrator (all permissions)",
-  "HELP": "Help",
+  "HELP": "Segítség",
   "help": {
     "description": "Returns a quick help guide for CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
-  "HELP_AD_TITLE": "Like CRBT?",
+  "HELP_AD_TITLE": "Tetszik a CRBT?",
   "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
-  "GIVEAWAY": "Giveaway",
+  "GIVEAWAY": "Nyereményjáték",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "Nyereményjáték létrehozás",
     "options": {
       "prize": {
-        "description": "What to give away."
+        "description": "Mit szeretnél feltenni a nyereményjátékra."
       },
       "end_date": {
-        "description": "When to end the giveaway."
+        "description": "Mikor érjen véget a nyereményjáték."
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "Hány ember nyerheti meg a nyereményjátékot."
       }
     }
   },
-  "WINNERS": "Winners",
+  "WINNERS": "Nyertes(ek)",
   "PRIZE": "Prize",
   "8ball": {
     "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "description": "Tegyél fel kérdést a 8-Ball-nak.",
     "options": {
       "question": {
-        "description": "What to ask."
+        "description": "Tedd fel a kérdést."
       }
     }
   },
   "8BALL": "8-Ball",
-  "ANSWER": "Answer",
-  "QUESTION": "Question",
+  "ANSWER": "Válasz",
+  "QUESTION": "Kérdés",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
-    "It is decidedly so.",
-    "Without a doubt.",
-    "Yes, definitely.",
-    "You may rely on it.",
-    "As I see it, yes.",
-    "Most likely.",
-    "Outlook good.",
-    "Yes.",
-    "Signs point to yes."
+    "Az biztos.",
+    "Határozottan így van.",
+    "Kétségtelenül.",
+    "Igen határozottan.",
+    "Bízhatsz benne.",
+    "Ahogy én látom, igen.",
+    "Legvalószínűbb.",
+    "Jó a kilátás.",
+    "Igen.",
+    "A jelek igenre mutatnak."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "Válaszolj ködösen, próbáld újra.",
+    "Kérdezd meg újra később.",
+    "Jobb, ha most nem mondom el.",
+    "Most nem lehet megjósolni.",
+    "Koncentrálj és kérdezd meg újra."
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
-    "My sources say no.",
-    "Outlook not so good.",
-    "Very doubtful."
+    "Ne számíts rá.",
+    "A válaszom nem.",
+    "A forrásaim szerint nem.",
+    "A kilátások nem túl jók.",
+    "Nagyon kétséges."
   ],
   "COMMENT": "comment",
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
@@ -550,9 +526,13 @@
   "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
   "ENABLE": "Enable",
   "DISABLE": "Disable",
+  "ENABLE_FEATURE": "Enable feature",
+  "DISABLE_FEATURE": "Disable feature",
   "ACCENT_COLOR": "Accent Color",
   "MODERATION_LOGS": "Moderation logs",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -561,11 +541,14 @@
   "SETTINGS_SENDING_IN": "Sending in {channel}",
   "EDIT_MESSAGE": "Edit Message",
   "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
-  "CHANNEL": "Channel",
+  "CHANNEL": "Csatorna",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
     "name": "search",
     "description": "Search for anything in one of the provided search engines.",
@@ -607,12 +590,13 @@
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
   "BAN_USER": "Ban User",
+  "DELETE_MESSAGE": "Delete Message",
   "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
   "ROLE_INFO_TITLE": "{role} - Role info",
   "POSITION": "Position",
-  "HUMANS": "Human(s)",
-  "BOTS": "Bot(s)",
+  "HUMANS": "Ember(ek)",
+  "BOTS": "Bot(ok)",
   "COLOR": "Color",
   "ROLE_INFO_POSITION": "{position} out of {roles} roles",
   "ROLE_INFO_HOISTED": "Displays separately from online members",
@@ -630,7 +614,7 @@
     }
   },
   "server_info": {
-    "description": "Get information about a Discord server.",
+    "description": "Információkat kaphatsz egy adott Discord szerverről.",
     "options": {
       "id": {
         "description": "ID of the server to get information from."
@@ -647,15 +631,15 @@
       }
     }
   },
-  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
-  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
-  "AGE_RESTRICTED": "Age-Restricted",
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "Nem rendelkezel profil bannerrel!",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "Felhasználó nem rendelkezik profil bannerrel!",
+  "AGE_RESTRICTED": "Korhatáros",
   "TAGS": "Tags",
   "BITRATE": "Bitrate",
   "KBPS": "{number}kbps",
   "VIDEO_QUALITY": "Video Quality",
-  "AUTO": "Auto",
-  "SLOWMODE": "Slowmode",
+  "AUTO": "Automatikus",
+  "SLOWMODE": "Lassú mód",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
     "description": "Get information about a server channel.",
@@ -665,7 +649,7 @@
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
+  "EMOJI_INFO": "Emoji információ",
   "UNICODE": "Unicode",
   "EMOJI": "Emojis",
   "AVAILABLE_SINCE": "Available since",
@@ -683,11 +667,11 @@
   "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
   "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
   "INVITE_INFO": "Invite info",
-  "INVITE": "Invite",
+  "INVITE": "Meghívás",
   "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
-  "INVITE_INFO_INVITER": "Invited by",
-  "CUSTOM_INVITE_LINK": "Custom Invite Link",
-  "SERVER_INVITE": "Server invite",
+  "INVITE_INFO_INVITER": "Meghívta",
+  "CUSTOM_INVITE_LINK": "Egyéni meghívó link",
+  "SERVER_INVITE": "Szerver meghívás",
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
@@ -697,6 +681,24 @@
     "options": {
       "invite": {
         "description": "A server or group DM invite link or code."
+      }
+    }
+  },
+  "REPORT_SUCCESS_TITLE": "Jelentés elküldve!",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
+  "REPORT_MODAL_TITLE": "Új jelentés",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
+  "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
+  "report": {
+    "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Szerezz be egy felhasználó Discord-információt.",
+    "options": {
+      "user": {
+        "description": "Felhasználó, akitől információt kaphatsz."
       }
     }
   }

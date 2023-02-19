@@ -4,7 +4,7 @@ import { colors, emojis, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { createCRBTmsg } from '$lib/functions/sendCRBTmsg';
+import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
@@ -85,9 +85,9 @@ export async function handleModerationAction(
           embeds: [
             {
               ...createCRBTmsg({
-                type: 'moderation',
-                user: moderator,
-                subject: `${t(this.guildLocale, `MOD_VERB_${type}`)} from ${guild.name}`,
+                source: CRBTMessageSourceType.Moderator,
+                action: type,
+                locale: this.guildLocale,
                 message: reason,
                 guildName: guild.name,
                 expiration: expiresAt,

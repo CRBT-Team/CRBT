@@ -51,5 +51,5 @@ async function viewModLogs(
     );
   }
 
-  return renderModlogs.call(this, 0, { userId: user.id });
+  return renderModlogs.call(this, 0, { uId: user.id });
 }

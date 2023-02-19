@@ -2,7 +2,7 @@ import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { createCRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleModerationAction, ModerationContext } from './_base';
@@ -17,8 +17,9 @@ export default ChatCommand({
       nameLocalizations: getAllLanguages('USER', localeLower),
       required: true,
     })
-    .string('reason', 'More context for the Moderation History.', {
+    .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     })
     .integer('delete_messages', 'The amount of messages to delete.')

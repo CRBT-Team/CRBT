@@ -113,7 +113,7 @@ export const issueReply = async (
       embeds: [
         {
           ...createCRBTmsg({
-            type: 'issue',
+            source: 'issue',
             user,
             subject:
               type === 'reply'

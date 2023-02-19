@@ -24,6 +24,9 @@
   "SAVE": "Save Changes",
   "SEND": "Send",
   "DONE": "Done",
+  "ON": "On",
+  "OFF": "Off",
+  "NEW": "New",
   "ADD_REMINDER": "Add Reminder",
   "OPEN_DMS": "Open DMs",
   "PREVIEW": "Preview",
@@ -241,9 +244,10 @@
       }
     }
   },
+  "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar (Server or User Profile Avatar).",
+      "description": "Get a user's display avatar.",
       "options": {
         "user": {
           "description": "The user whose avatar to get."
@@ -522,9 +526,13 @@
   "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
   "ENABLE": "Enable",
   "DISABLE": "Disable",
+  "ENABLE_FEATURE": "Enable feature",
+  "DISABLE_FEATURE": "Disable feature",
   "ACCENT_COLOR": "Accent Color",
-  "MODERATION_LOGS": "Moderation logs",
+  "MODERATION_LOGS": "Moderation Notifications",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -536,7 +544,11 @@
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation Notifications allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
     "name": "search",
     "description": "Search for anything in one of the provided search engines.",
@@ -681,5 +693,13 @@
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
   "report": {
     "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Get a user's Discord information.",
+    "options": {
+      "user": {
+        "description": "User to get info from."
+      }
+    }
   }
 }

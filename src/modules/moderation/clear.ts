@@ -2,7 +2,7 @@ import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
@@ -18,8 +18,9 @@ export default ChatCommand({
       minValue: 1,
       maxValue: 100,
     })
-    .string('reason', 'More context for the Moderation History.', {
+    .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     }),
   async handle({ amount, reason }) {

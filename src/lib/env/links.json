@@ -16,7 +16,6 @@
     "api": "https://docs.crbt.app/api/intro"
   },
   "blog": {
-    "about-crbt-messages": "https://docs.crbt.app/blog/about-crbt-messages",
-    "crbtTokens": "https://docs.crbt.app/blog/crbt-tokens"
+    "about-crbt-messages": "https://docs.crbt.app/blog/about-crbt-messages"
   }
 }

@@ -24,6 +24,9 @@
   "SAVE": "Salvar Alterações",
   "SEND": "Enviar",
   "DONE": "Pronto",
+  "ON": "On",
+  "OFF": "Off",
+  "NEW": "New",
   "ADD_REMINDER": "Adicionar Lembrete",
   "OPEN_DMS": "Abrir DMs",
   "PREVIEW": "Pré-visualização",
@@ -241,9 +244,10 @@
       }
     }
   },
+  "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Obtenha a foto de perfil do usuário (Do servidor ou do perfil original).",
+      "description": "Get a user's display avatar.",
       "options": {
         "user": {
           "description": "O usuário cujo será obtido o avatar."
@@ -292,44 +296,16 @@
     }
   },
   "role-selectors": {
-    "manual": {
-      "meta": {
-        "description": "Crie um Seletor de Cargos, um menu para membros atribuírem cargos a si mesmos.",
-        "options": [
-          {
-            "name": "comportamento",
-            "description": "Como o Seletor de Cargos deve se comportar.",
-            "choices": [
-              "Alternar adicionar/remover cargo(s)",
-              "Adicionar o(s) cargo(s) apenas uma vez"
-            ]
-          },
-          {
-            "name": "limite",
-            "description": "Quantos cargos podem ser selecionados. Defina como 0 para ilimitado."
-          },
-          {
-            "description": "A role that a member may select."
-          }
-        ]
-      }
-    },
     "errors": {
-      "BOT_MISSING_PERMS": "Eu preciso da permissão \"Gerenciar Cargos\" para criar um Seletor de Cargos.",
       "ROLES_DO_NOT_EXIST": "Um ou mais dos cargos selecionados foram removidos. Entre em contato com um administrador para resolver o problema.",
       "BUTTON_ROLES_ONCE": "Você só pode selecionar este cargo uma vez, e você não pode removê-lo."
     },
     "strings": {
-      "CHOOSE_ROLE": "Escolha um cargo",
-      "CHOOSE_ROLES": "Escolher cargos",
-      "GENERIC_SELECTOR_TITLE": "Selecione um ou vários cargos, escolhendo-os abaixo.",
       "SELECT_MENU_ROLES_SUCCESS": "Cargos atualizados com sucesso.",
       "BUTTON_ROLES_ADD": "{ROLE} foi adicionado aos seus cargos.",
       "BUTTON_ROLES_ADD_AGAIN": "Selecione-o novamente para removê-lo.",
       "BUTTON_ROLES_REMOVE": "{ROLE} foi removido dos seus cargos.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Selecione-o novamente para adicioná-lo.",
-      "SUCCESS_TITLE": "Seletor de Cargo criado!",
-      "SUCCESS_DESCRIPTION": "Para desativá-lo, exclua a mensagem do Seletor de Cargos."
+      "BUTTON_ROLES_REMOVE_AGAIN": "Selecione-o novamente para adicioná-lo."
     }
   },
   "AVATAR": "Foto de perfil",
@@ -550,9 +526,13 @@
   "SETTINGS_DESCRIPTION": "Use o menu de seleção abaixo para atualizar as configurações para este servidor.",
   "ENABLE": "Habilitar",
   "DISABLE": "Desabilitar",
+  "ENABLE_FEATURE": "Enable feature",
+  "DISABLE_FEATURE": "Disable feature",
   "ACCENT_COLOR": "Cor de destaque",
   "MODERATION_LOGS": "Registros de moderação",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economia",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} erros encontrados",
@@ -561,11 +541,14 @@
   "SETTINGS_SENDING_IN": "Enviando em {channel}",
   "EDIT_MESSAGE": "Editar Mensagem",
   "EDIT_CHANNEL": "Editar Canal",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "Você pode usar o nome completo do Canal de Texto ou seu ID.",
   "CHANNEL": "Canal",
   "EDIT_SOMETHING": "Editar {feature}",
   "SETTINGS_COLOR_SET_TO": "Alterado para {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
     "name": "pesquisar",
     "description": "Search for anything in one of the provided search engines.",
@@ -607,6 +590,7 @@
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
   "BAN_USER": "Ban User",
+  "DELETE_MESSAGE": "Delete Message",
   "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
   "ROLE_INFO_TITLE": "{role} - Role info",
@@ -697,6 +681,24 @@
     "options": {
       "invite": {
         "description": "A server or group DM invite link or code."
+      }
+    }
+  },
+  "REPORT_SUCCESS_TITLE": "Report sent!",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
+  "REPORT_MODAL_TITLE": "New Report",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
+  "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
+  "report": {
+    "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Get a user's Discord information.",
+    "options": {
+      "user": {
+        "description": "User to get info from."
       }
     }
   }

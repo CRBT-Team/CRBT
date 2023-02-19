@@ -1,5 +1,6 @@
 import { slashCmd } from '$lib/functions/commandMention';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import { readFileSync } from 'fs';
 import fetch from 'node-fetch';
@@ -56,7 +57,11 @@ export async function handleDictionary(
               inline: false,
             })),
           ],
-          footer: { text: 'Powered by Google Dictionary' },
+          footer: {
+            text: t(this, 'POWERED_BY', {
+              provider: 'Google Dictionary',
+            }),
+          },
         },
       ],
       files:

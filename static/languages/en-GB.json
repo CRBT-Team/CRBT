@@ -24,6 +24,9 @@
   "SAVE": "Save Changes",
   "SEND": "Send",
   "DONE": "Done",
+  "ON": "On",
+  "OFF": "Off",
+  "NEW": "New",
   "ADD_REMINDER": "Add Reminder",
   "OPEN_DMS": "Open DMs",
   "PREVIEW": "Preview",
@@ -241,9 +244,10 @@
       }
     }
   },
+  "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's server or user profile avatar.",
+      "description": "Get a user's display avatar.",
       "options": {
         "user": {
           "description": "The user to get the avatar of."
@@ -292,44 +296,16 @@
     }
   },
   "role-selectors": {
-    "manual": {
-      "meta": {
-        "description": "Create a new Role Picker, a menu for members to give themselves roles.",
-        "options": [
-          {
-            "name": "behavior",
-            "description": "How the Role Picker should behave.",
-            "choices": [
-              "Toggle giving/removing role(s)",
-              "Only give the role(s) once"
-            ]
-          },
-          {
-            "name": "limit",
-            "description": "How much roles can be selected. Set to 0 for unlimited."
-          },
-          {
-            "description": "A role that a member may select."
-          }
-        ]
-      }
-    },
     "errors": {
-      "BOT_MISSING_PERMS": "To create a Role Picker, I need the `Manage Roles` permission.",
       "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
       "BUTTON_ROLES_ONCE": "This role can only be selected once and is impossible to remove."
     },
     "strings": {
-      "CHOOSE_ROLE": "Choose a role",
-      "CHOOSE_ROLES": "Choose roles",
-      "GENERIC_SELECTOR_TITLE": "Select one or more roles by choosing them below.",
       "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
       "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
       "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
       "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it.",
-      "SUCCESS_TITLE": "Role Picker created!",
-      "SUCCESS_DESCRIPTION": "To disable it, simply delete the Role Picker message."
+      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
     }
   },
   "AVATAR": "Avatar",
@@ -550,9 +526,13 @@
   "SETTINGS_DESCRIPTION": "Use the select menu below to update the settings for this server.",
   "ENABLE": "Enable",
   "DISABLE": "Disable",
+  "ENABLE_FEATURE": "Enable feature",
+  "DISABLE_FEATURE": "Disable feature",
   "ACCENT_COLOR": "Accent Color",
   "MODERATION_LOGS": "Moderation logs",
   "MODERATION_REPORTS": "Moderation Reports",
+  "SERVER_THEME": "Theming",
+  "AUTOMATIC_THEMING": "Auto Theming",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -561,11 +541,14 @@
   "SETTINGS_SENDING_IN": "Sending in {channel}",
   "EDIT_MESSAGE": "Edit Message",
   "EDIT_CHANNEL": "Edit Channel",
-  "EDIT_CHANNEL_MODAL_PLACEHOLDER": "You may use a Text Channel's exact name or its ID.",
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "The Server Accent Color is shown on public embed messages like Polls, Giveaways, Server Info and more.\nIt's currently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
     "name": "search",
     "description": "Search for anything in one of the provided search engines.",
@@ -607,6 +590,7 @@
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
   "BAN_USER": "Ban User",
+  "DELETE_MESSAGE": "Delete Message",
   "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
   "ROLE_INFO_TITLE": "{role} - Role info",
@@ -697,6 +681,24 @@
     "options": {
       "invite": {
         "description": "A server or group DM invite link or code."
+      }
+    }
+  },
+  "REPORT_SUCCESS_TITLE": "Report sent!",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
+  "REPORT_MODAL_TITLE": "New Report",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
+  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
+  "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
+  "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
+  "report": {
+    "description": "Report a CRBT-related issue, bug, typo, etc."
+  },
+  "user_info": {
+    "description": "Get a user's Discord information.",
+    "options": {
+      "user": {
+        "description": "User to get info from."
       }
     }
   }
