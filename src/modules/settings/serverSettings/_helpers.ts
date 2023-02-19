@@ -67,9 +67,10 @@ export function resolveSettingsProps(
 ): FeatureSettingsProps {
   const camelCasedKey = CamelCaseFeatures[feature];
   const guild = i.guild;
-  const isEnabled = Object.keys(settings.modules).includes(camelCasedKey)
-    ? settings.modules[camelCasedKey]
-    : settings[camelCasedKey];
+  const isEnabled =
+    (Object.keys(settings.modules).includes(camelCasedKey)
+      ? settings.modules[camelCasedKey]
+      : settings[camelCasedKey]) || undefined;
   const errors =
     featureSettingsMenus[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) || [];
 
@@ -134,23 +135,20 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
       };
     }, {});
 
-  const fullQuery = {
-    where: { id: guildId },
-    create: {
-      id: guildId,
-      ...query('create'),
-    },
-    update: {
-      ...query('update'),
-    },
-    include: include,
-  };
-
-  console.log(fullQuery);
-
   return fetchWithCache(
     `${guildId}:settings`,
-    () => prisma.servers.upsert(fullQuery),
+    () =>
+      prisma.servers.upsert({
+        where: { id: guildId },
+        create: {
+          id: guildId,
+          ...query('create'),
+        },
+        update: {
+          ...query('update'),
+        },
+        include: include,
+      }),
     true
   ) as FullSettings;
 }

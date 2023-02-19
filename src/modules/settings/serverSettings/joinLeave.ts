@@ -4,6 +4,7 @@ import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { channelMention } from '@purplet/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, components, OnEvent, row } from 'purplet';
@@ -14,6 +15,16 @@ import { renderFeatureSettings } from './settings';
 import { getSettings, saveServerSettings } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
+  getOverviewValue({ feature, settings, i, isEnabled }) {
+    const channelId =
+      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+
+    return {
+      value: t(i, 'SETTINGS_SENDING_IN', {
+        channel: channelMention(channelId),
+      }),
+    };
+  },
   getErrors({ guild, settings, feature, i }) {
     const isEnabled = settings.modules[CamelCaseFeatures[feature]];
     const channelId =
@@ -107,11 +118,7 @@ export const joinLeaveSettings: SettingsMenus = {
 
 const customId = 'h_edit_';
 
-export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
-  if (i.isChannelSelect()) {
-    console.log(i.customId.replace(customId, ''));
-  }
-
+export const EditJoinLeaveChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (
     i.isChannelSelect() &&
     [EditableFeatures.joinMessage, EditableFeatures.leaveMessage].includes(

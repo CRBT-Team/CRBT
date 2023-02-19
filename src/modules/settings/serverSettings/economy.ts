@@ -19,6 +19,9 @@ import { renderFeatureSettings } from './settings';
 import { getSettings, include } from './_helpers';
 
 export const economySettings: SettingsMenus = {
+  getOverviewValue: ({ settings: { economy } }) => ({
+    value: `${economy.currencySymbol} ${economy.currencyNamePlural} • ${economy.items.length} items`,
+  }),
   getErrors({ settings }) {
     return [];
   },
@@ -145,7 +148,6 @@ export const ToggleEconomy = ButtonComponent({
       const guildCommands = (
         (await rest.get(Routes.applicationGuildCommands(this.applicationId, this.guildId))) as any[]
       ).filter((c) => Object.keys(economyCommands).includes(c.name));
-      console.log(guildCommands);
 
       guildCommands.forEach((command) =>
         promises.push(

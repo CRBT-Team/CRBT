@@ -51,6 +51,10 @@ export type FullSettings = Partial<
 
 export interface SettingsMenus {
   newLabel?: boolean;
+  getOverviewValue(props: FeatureSettingsProps): {
+    icon?: string;
+    value: string;
+  };
   getErrors?(props: Omit<FeatureSettingsProps, 'errors'>): string[];
   getSelectMenu(props: FeatureSettingsProps): Partial<MessageSelectOptionData>;
   getMenuDescription(props: FeatureSettingsProps): Partial<APIEmbed>;

@@ -52,13 +52,12 @@ export async function renderSettingsMenu(
   const settings = await getSettings(this.guild.id);
 
   const options = Object.values(EditableFeatures)
+    .filter((feature) =>
+      feature === EditableFeatures.economy
+        ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
+        : true
+    )
     .map((feature) => {
-      if (
-        feature === EditableFeatures.economy &&
-        (Number(settings.flags) & ServerFlags.HasEconomy) !== ServerFlags.HasEconomy
-      )
-        return;
-
       const props = resolveSettingsProps(this, feature, settings);
       const featureSettings = featureSettingsMenus[feature];
 
@@ -87,6 +86,29 @@ export async function renderSettingsMenu(
         },
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
         description: t(this, 'SETTINGS_DESCRIPTION'),
+        fields: [
+          {
+            name: `${t(this, 'STATUS')}`,
+            value: Object.values(EditableFeatures)
+              .filter((feature) =>
+                feature === EditableFeatures.economy
+                  ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
+                  : true
+              )
+              .map((feature) => {
+                const props = resolveSettingsProps(this, feature, settings);
+                const featureSettings = featureSettingsMenus[feature];
+                let { icon: i, value } = featureSettings.getOverviewValue(props);
+                if (props.errors.length) {
+                  (i = '⚠️'), (value = t(this, 'ATTENTION_REQUIRED'));
+                }
+                i ??= props.isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off;
+
+                return `${i} **${t(this, feature)}**\n${emojis.angle} ${value}`;
+              })
+              .join('\n\n'),
+          },
+        ],
         color: await getColor(this.guild),
       },
     ],

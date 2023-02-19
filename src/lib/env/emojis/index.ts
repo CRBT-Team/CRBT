@@ -34,6 +34,7 @@ const emojis = {
   purple: purple,
   pink: pink,
   gray: gray,
+  angle: '<:angle:1076872815858425976>',
   error: '<:error:1035880321901674596> ',
   success: '<:success:1035880323482931230>',
   pending: '<:pending:1035314617532039279>',
@@ -43,8 +44,6 @@ const emojis = {
   role: '<:role:970752908536709271>',
   slash_command: '<:slash_command:970752908255698998>',
   reminder: '<:reminder_circle:1035314614835105863>',
-  trash_bin: '<:trash_bin:970980243030540308>',
-  pencil: '<:pencil:970980242560794686>',
   menu: '<:menu:970980242925711402>',
   tada: '<:tada:1000761543350296626>',
   lock: '<:locked:1003323812651212860>',
@@ -70,7 +69,7 @@ const emojis = {
     text: '<:text_channel:970653903681114182>',
     voice: '<:voice_channel:970653903869861888>',
     news: '<:news_channel:970653903819513905>',
-    forum: '<:forum_channel:970653903613997106>970653903613997106>',
+    forum: '<:forum_channel:970653903613997106>',
     rules: '<:rules_channel:970653903622373417>',
     nsfw: '<:nsfw_channel:970653903395913779>',
     category: '<:category:970653903039381595>',
@@ -144,9 +143,9 @@ const emojis = {
     goodmeal: '<:good_meal:768948885162295326>',
   },
   progress: {
-    empty: '<:progressempty:1050093579525173338>',
-    emptystart: '<:progressemptystart:971334221538951218>',
-    emptyend: '<:progressemptyend:971334221425700894>',
+    empty: '<:progressempty:1076874029274767411>',
+    emptystart: '<:progressemptystart:1076874032697319484>',
+    emptyend: '<:progressemptyend:1076874030465953902>',
   },
 };
 

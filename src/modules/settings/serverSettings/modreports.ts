@@ -2,6 +2,7 @@ import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { t } from '$lib/language';
 import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { channelMention } from '@purplet/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { components, OnEvent, row } from 'purplet';
@@ -9,6 +10,11 @@ import { renderFeatureSettings } from './settings';
 import { saveServerSettings } from './_helpers';
 
 export const modReportsSettings: SettingsMenus = {
+  getOverviewValue: ({ settings, i }) => ({
+    value: t(i, 'SETTINGS_SENDING_IN', {
+      channel: channelMention(settings.modReportsChannel),
+    }),
+  }),
   getErrors({ guild, settings, isEnabled, i }) {
     const channelId = settings.modReportsChannel;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
@@ -80,9 +86,9 @@ export const modReportsSettings: SettingsMenus = {
     ),
 };
 
-const customId = 'hselect';
+const customId = 'hreportsselect';
 
-export const EditChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
+export const EditReportsChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (i.isChannelSelect() && i.customId === customId) {
     const channel = i.channels.first();
 

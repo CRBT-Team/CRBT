@@ -11,6 +11,12 @@ import { saveServerSettings } from './_helpers';
 
 export const themeSettings: SettingsMenus = {
   newLabel: true,
+  getOverviewValue: ({ settings, i }) => ({
+    icon: '🎨',
+    value: settings.automaticTheming
+      ? t(i, 'AUTOMATIC_THEMING')
+      : chroma(settings.accentColor).hex(),
+  }),
   getSelectMenu: ({ settings, i }) => ({
     description: t(i, 'SETTINGS_COLOR_SET_TO', {
       color: settings.automaticTheming
