@@ -2,6 +2,21 @@ import { prisma } from '$lib/db';
 import { Economy, ServerMember } from '@prisma/client';
 import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v10';
 import { CommandInteraction, Interaction } from 'discord.js';
+import { balance } from './balance';
+import { daily } from './daily';
+import { give } from './give';
+import { leaderboard } from './leaderboard';
+import { shop } from './shop/shop';
+import { work } from './work';
+
+export const economyCommands = {
+  balance: balance,
+  daily: daily,
+  give: give,
+  leaderboard: leaderboard,
+  work: work,
+  shop: shop,
+};
 
 interface EconomyCommandMetaProps {
   singular: string;

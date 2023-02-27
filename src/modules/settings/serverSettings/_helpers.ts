@@ -44,7 +44,7 @@ export const defaultSettings: FullSettings = {
     items: [],
     categories: [],
     commands: {
-      serverId: null,
+      id: null,
       workStrings: [
         'You washed and properly cleaned a car, which got you {money}.',
         'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
@@ -90,6 +90,11 @@ export const include: Prisma.serversInclude = {
     include: {
       commands: true,
       items: true,
+      categories: {
+        include: {
+          items: true,
+        },
+      },
     },
   },
 };
@@ -134,6 +139,9 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
         [key]: value,
       };
     }, {});
+
+  console.log(query('create'));
+  console.log(query('update'));
 
   return fetchWithCache(
     `${guildId}:settings`,

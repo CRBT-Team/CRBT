@@ -5,8 +5,8 @@ import { AnyTimeout, TimeoutTypes } from '$lib/types/timeouts';
 import { Routes } from 'discord-api-types/v10';
 import { ApplicationCommand, Client, Collection } from 'discord.js';
 import { getRestClient, OnEvent } from 'purplet';
+import { economyCommands } from '../economy/_helpers';
 import { getSettings } from '../settings/serverSettings/_helpers';
-import { economyCommands } from './interaction';
 
 export let allCommands: Collection<string, ApplicationCommand>;
 
@@ -42,7 +42,11 @@ async function loadEconomyCommands(client: Client): Promise<Promise<any>[]> {
     const { modules, economy } = await getSettings(servers.community);
 
     if (modules.economy) {
-      Object.values(economyCommands).map((command) => {
+      Object.entries(economyCommands).map(([name, command]) => {
+        if (!economy.categories.length && name === 'shop') {
+          return;
+        }
+
         const commandMeta = command.getMeta({
           plural: economy.currencyNamePlural,
           singular: economy.currencyNameSingular,

@@ -141,25 +141,25 @@ model Achievement {
 }
 
 model Economy {
-  serverId               String                @id
+  id                     String                @id
   currencyNameSingular   String?               @map("currency_name_singular")
   currencyNamePlural     String?               @map("currency_name_plural")
   currencySymbol         String?               @map("currency_symbol")
   transactionLogsChannel String?               @map("logs_channel")
   commands               EconomyCommands?
-  server                 servers?              @relation(fields: [serverId], references: [id])
+  server                 servers?              @relation(fields: [id], references: [id])
   items                  EconomyItem[]
   categories             EconomyItemCategory[]
 }
 
 model EconomyCommands {
-  serverId      String   @id
+  id            String   @id
   workCooldown  Int
   workStrings   String[]
   workReward    String
   dailyReward   String
   weeklyRewards String[]
-  Economy       Economy? @relation(fields: [serverId], references: [serverId])
+  Economy       Economy? @relation(fields: [id], references: [id])
 }
 
 model EconomyItem {
@@ -182,7 +182,7 @@ model EconomyItem {
   // who has the item
   owners         ServerMember[]      @relation("items")
   // which economy does the item belong to
-  economy        Economy             @relation(fields: [serverId], references: [serverId])
+  economy        Economy             @relation(fields: [serverId], references: [id])
 }
 
 model EconomyItemCategory {
@@ -191,7 +191,7 @@ model EconomyItemCategory {
   items    EconomyItem[]
   label    String
   emoji    String?
-  economy  Economy       @relation(fields: [serverId], references: [serverId])
+  economy  Economy       @relation(fields: [serverId], references: [id])
 }
 
 model Token {

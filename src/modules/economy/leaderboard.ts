@@ -3,6 +3,7 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { t } from '$lib/language';
 import { CommandInteraction, Interaction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { getSettings } from '../settings/serverSettings/_helpers';
@@ -49,15 +50,10 @@ async function renderLeaderboard(this: Interaction, page: number) {
 
   const { economy } = await getSettings(this.guildId);
   const userData = leaderboard.find(({ userId }) => userId === this.user.id);
-  const members = await this.guild.members.fetch();
   const self = this;
 
   function renderUser(user: { money: number; userId: string }, rank: number) {
-    return `**${rank}.** ${members.get(user.userId).displayName} - **${currencyFormat(
-      user,
-      economy,
-      self.locale
-    )}`;
+    return `**${rank}.** <@${user.userId}> - **${currencyFormat(user, economy, self.locale)}**`;
   }
 
   return {
@@ -80,7 +76,12 @@ async function renderLeaderboard(this: Interaction, page: number) {
           },
         ],
         footer: {
-          text: `Page ${page}/${Math.ceil(leaderboard.length > 10 ? leaderboard.length / 10 : 1)}`,
+          text: t(this, 'PAGINATION_PAGE_OUT_OF', {
+            page: page.toLocaleString(this.locale),
+            pages: Math.ceil(leaderboard.length > 10 ? leaderboard.length / 10 : 1).toLocaleString(
+              this.locale
+            ),
+          }),
         },
         color: await getColor(this.guild),
       },

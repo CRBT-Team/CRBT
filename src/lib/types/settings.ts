@@ -43,7 +43,9 @@ export type FullSettings = Partial<
       Economy & {
         commands: EconomyCommands;
         items: EconomyItem[];
-        categories: EconomyItemCategory[];
+        categories: (EconomyItemCategory & {
+          items: EconomyItem[];
+        })[];
       }
     >;
   }

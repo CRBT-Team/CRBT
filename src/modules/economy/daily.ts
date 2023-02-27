@@ -32,6 +32,7 @@ export const daily: EconomyCommand = {
 
     await upsertServerMember(this, {
       money: income,
+      dailyStreak: currentStreak + 1,
       lastDaily: new Date(),
     });
 
