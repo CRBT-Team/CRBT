@@ -1,33 +1,19 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { prisma } from '$lib/db';
+import { fetchWithCache } from '$lib/cache';
 import { colors, emojis } from '$lib/env';
-import { CooldownError, CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
 import { getColor } from '$lib/functions/getColor';
-import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { progressBar } from '$lib/functions/progressBar';
-import { trimArray } from '$lib/functions/trimArray';
 import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { Poll } from '@prisma/client';
 import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageButton, MessageEmbed, TextInputComponent } from 'discord.js';
-import {
-  ButtonComponent,
-  ChatCommand,
-  components,
-  ModalComponent,
-  OptionBuilder,
-  row,
-} from 'purplet';
-import { getSettings } from '../settings/serverSettings/_helpers';
-
-const activePolls = new Map<string, Poll>();
-const usersOnCooldown = new Map();
+import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { PollMenuButton } from './components/PollMenuButton';
+import { VoteButton } from './components/VoteButton';
+import { renderPoll } from './functions/renderPoll';
 
 const options = new OptionBuilder()
   .string('title', t('en-US', 'poll.meta.options.title.description'), {
@@ -77,16 +63,9 @@ export default ChatCommand({
   // async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
   async handle({ title, end_date, choice1, choice2, choice3, choice4 }) {
     // let image = untypedImage as MessageAttachment;
-    const { strings } = t(this.guildLocale, 'poll');
-    const { errors, strings: userStrings } = t(this, 'poll');
-
     if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
       return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
     }
-
-    // if (image && !image.contentType?.startsWith('image')) {
-    //   return CRBTError(this, 'The chosen attachment must be an image.');
-    // }
 
     await this.deferReply({
       ephemeral: true,
@@ -97,95 +76,86 @@ export default ChatCommand({
 
       for (const choice of pollChoices) {
         if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
-          return CRBTError(this, errors.CHOICE_EMPTY);
+          return CRBTError(this, t(this, 'poll.errors.CHOICE_EMPTY'));
         }
       }
 
-      // if (image) {
-      //   console.log('hello');
-      //   const imageBuffer = Buffer.from(await (await fetch(image.url)).arrayBuffer());
-      //   image = new MessageAttachment(imageBuffer, image.name);
-      // }
       const accentColor = await getColor(this.guild);
-
-      const msg = await this.channel.send({
-        embeds: [
-          {
-            title,
-            description: strings.POLL_DESCRIPTION.replace(
-              '{TIME}',
-              `${timestampMention(new Date(Date.now() + ms(end_date)), 'R')}`
-            ).replace('{ICON}', emojis.menu),
-            fields: pollChoices.map((choice) => ({
-              name: choice,
-              value: `${progressBar(0, accentColor)}\n${strings.POLL_OPTION_RESULT.replace(
-                '{PERCENTAGE}',
-                '0'
-              ).replace('{VOTES}', '0')}`,
-            })),
-            // ...(image
-            //   ? {
-            //       image: {
-            //         url: `attachment://${image.name}`,
-            //       },
-            //     }
-            //   : {}),
-            footer: {
-              text: `${strings.POLL_FOOTER_VOTES.replace(
-                '{VOTES}',
-                '0'
-              )} • ${strings.POLL_FOOTER_CREATOR.replace('{USER}', this.user.tag)}`,
-            },
-            color: accentColor,
-          },
-        ],
-        // files: [image],
-        components: components(
-          row()
-            .addComponents(
-              pollChoices.map((choice, index) => {
-                const choiceEmoji = findEmojis(choice)[0] || null;
-                const choiceText = choice.replace(CustomEmojiRegex, '');
-
-                return new PollButton({ choiceId: index.toString() })
-                  .setLabel(choiceText)
-                  .setStyle(
-                    choiceText.toLowerCase() === t(this, 'YES').toLocaleLowerCase(this.locale)
-                      ? 'SUCCESS'
-                      : choiceText.toLowerCase() === t(this, 'NO').toLocaleLowerCase(this.locale)
-                      ? 'DANGER'
-                      : 'PRIMARY'
-                  )
-                  .setEmoji(choiceEmoji);
-              })
-            )
-            .addComponents(
-              new PollOptionsButton(this.user.id)
-                .setEmoji(emojis.buttons.menu)
-                .setStyle('SECONDARY')
-            )
-        ),
-      });
-
-      const pollData = await dbTimeout(TimeoutTypes.Poll, {
-        id: `${this.channel.id}/${msg.id}`,
+      const pollData = {
         expiresAt: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         creatorId: this.user.id,
         serverId: this.guild.id,
         choices: pollChoices.map((_) => []),
+      };
+
+      const msg = await this.channel.send({
+        ...(await renderPoll.call(this, pollData, null, {
+          title,
+          choices: pollChoices,
+        })),
+        //   {
+        //     title,
+        //     description: t(this.guildLocale, 'poll.strings.POLL_DESCRIPTION', {
+        //       TIME: timestampMention(new Date(Date.now() + ms(end_date)), 'R'),
+        //       ICON: emojis.menu,
+        //     }),
+        //     fields: pollChoices.map((choice) => ({
+        //       name: `${choice} • 0% (0 votes)`,
+        //       value: progressBar(0, accentColor),
+        //       // value: dedent`
+        //       // ${progressBar(0, accentColor)}
+        //       // ${t(this.guildLocale, 'poll.strings.POLL_OPTION_RESULT', {
+        //       //   PERCENTAGE: '0',
+        //       //   VOTES: '0',
+        //       // })}`,
+        //     })),
+        //     footer: {
+        //       text: `${t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
+        //         USER: this.user.tag,
+        //       })}`,
+        //       // text: `${t(this.guildLocale, 'poll.strings.POLL_FOOTER_VOTES', {
+        //       //   VOTES: '0',
+        //       // })} • ${t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
+        //       //   USER: this.user.tag,
+        //       // })}`,
+        //     },
+        //     color: accentColor,
+        // },
+        components: components(
+          row().addComponents([
+            ...pollChoices.map((choice, index) => {
+              const choiceEmoji = findEmojis(choice)[0] || null;
+              const choiceText = choice.replace(CustomEmojiRegex, '');
+
+              return new VoteButton({ choiceId: index.toString() })
+                .setLabel(choiceText)
+                .setStyle('PRIMARY')
+                .setEmoji(choiceEmoji);
+            }),
+            new PollMenuButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY'),
+          ])
+        ),
       });
 
-      activePolls.set(`${this.channel.id}/${msg.id}`, pollData);
+      await fetchWithCache(
+        `poll:${this.channel.id}/${msg.id}`,
+        () =>
+          dbTimeout(TimeoutTypes.Poll, {
+            id: `${this.channel.id}/${msg.id}`,
+            ...pollData,
+          }),
+        true
+      );
 
       await this.editReply({
         embeds: [
           {
-            title: `${emojis.success} ${userStrings.SUCCESS_TITLE}`,
-            description: userStrings.SUCCESS_DESCRIPTION.replace(
-              '{TIME}',
-              timestampMention(Date.now() + ms(end_date), 'R')
-            ).replace('{ICON}', emojis.menu),
+            title: `${emojis.success} ${t(this, 'poll.strings.SUCCESS_TITLE')}`,
+            description: t(this, 'poll.strings.SUCCESS_DESCRIPTION', {
+              TIME: timestampMention(Date.now() + ms(end_date), 'R'),
+              ICON: emojis.menu,
+            }),
             color: colors.success,
           },
         ],
@@ -195,340 +165,3 @@ export default ChatCommand({
     }
   },
 });
-
-async function getPollData(id: string) {
-  return (
-    activePolls.get(id) ??
-    (await prisma.poll.findFirst({
-      where: { id },
-    }))
-  );
-}
-
-export const PollButton = ButtonComponent({
-  async handle({ choiceId }) {
-    if (usersOnCooldown.has(this.user.id) && usersOnCooldown.get(this.user.id) > Date.now()) {
-      return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
-    }
-
-    const poll = await getPollData(`${this.channel.id}/${this.message.id}`);
-    const pollEmbed = this.message.embeds[0] as MessageEmbed;
-
-    const e = await renderPoll(choiceId, this.user.id, poll, pollEmbed);
-    this.update({
-      embeds: [e],
-    });
-    usersOnCooldown.set(this.user.id, Date.now() + 3000);
-  },
-});
-
-export const PollOptionsButton = ButtonComponent({
-  async handle(creatorId: string) {
-    const { strings, errors } = t(this, 'poll');
-
-    if (
-      this.user.id !== creatorId &&
-      !hasPerms(this.memberPermissions, PermissionFlagsBits.ManageMessages)
-    ) {
-      return CRBTError(this, errors.POLL_DATA_NOT_ALLOWED);
-    }
-
-    const pollData = await getPollData(`${this.channel.id}/${this.message.id}`);
-    const choicesNames = this.message.embeds[0].fields.map(({ name }) => name);
-    const choices = pollData.choices as string[][];
-
-    this.reply({
-      embeds: [
-        {
-          title: strings.POLL_DATA_OPTIONS,
-          fields: choices.map((choice, index) => ({
-            name: `${choicesNames[index]} (${choice.length})`,
-            value:
-              choice.length > 0
-                ? trimArray(
-                    choice.map((id) => `<@${id}>`),
-                    15
-                  ).join(', ')
-                : strings.POLL_DATA_NOVOTES,
-          })),
-          footer: {
-            text: strings.POLL_DATA_FOOTER,
-          },
-          color: await getColor(this.guild),
-        },
-      ],
-      components: components(
-        row(
-          new EditPollButton(this.message.id)
-            .setLabel(t(this, 'EDIT'))
-            .setEmoji(emojis.buttons.pencil)
-            .setStyle('SECONDARY'),
-          new EndPollButton(this.message.id)
-            .setLabel(strings.BUTTON_END_POLL)
-            .setStyle('DANGER')
-            .setEmoji(emojis.buttons.cross),
-          new CancelPollButton(this.message.id)
-            .setLabel(t(this, 'CANCEL'))
-            .setStyle('DANGER')
-            .setEmoji(emojis.buttons.trash_bin)
-        )
-      ),
-      ephemeral: true,
-    });
-  },
-});
-
-export const EditPollButton = ButtonComponent({
-  async handle(msgId: string) {
-    const msg = (await this.channel.messages.fetch(msgId)).embeds[0];
-
-    const modal = new EditPollModal(msgId).setTitle(t(this, 'EDIT')).setComponents(
-      row(
-        new TextInputComponent()
-          .setCustomId('poll_title')
-          .setLabel(t(this, 'TITLE'))
-          .setMaxLength(120)
-          .setValue(msg.title)
-          .setRequired(true)
-          .setStyle('PARAGRAPH')
-      ),
-      ...msg.fields.map((field, index) =>
-        row(
-          new TextInputComponent()
-            .setCustomId(`poll_option_${index}`)
-            .setLabel(`${t(this, 'CHOICE')} ${index + 1}`)
-            .setValue(field.name)
-            .setRequired(true)
-            .setMaxLength(40)
-            .setStyle('SHORT')
-        )
-      )
-    );
-
-    await this.showModal(modal);
-  },
-});
-
-export const EditPollModal = ModalComponent({
-  async handle(msgId: string) {
-    const pollTitle = this.fields.getTextInputValue('poll_title');
-    const choices = this.components.slice(1).map((_, i) => {
-      return this.fields.getTextInputValue(`poll_option_${i}`);
-    });
-
-    const msg = await this.channel.messages.fetch(msgId);
-
-    const Components = components(
-      row(
-        //@ts-ignore
-        msg.components[0].components.slice(0, -1).map((component, i) => ({
-          ...component,
-          label: choices[i],
-        })),
-        msg.components[0].components.at(-1)
-      )
-    );
-
-    await msg.edit({
-      embeds: [
-        new MessageEmbed({
-          ...msg.embeds[0],
-          footer: {
-            text: `${msg.embeds[0].footer.text.split(',')[0]}, edited `,
-          },
-        })
-          .setTimestamp()
-          .setTitle(pollTitle)
-          .setFields(
-            choices.map((choice, i) => ({
-              name: choice,
-              value: msg.embeds[0].fields[i].value,
-            }))
-          ),
-      ],
-      components: Components,
-    });
-
-    //@ts-ignore
-    await this.update({});
-  },
-});
-
-export const CancelPollButton = ButtonComponent({
-  async handle(msgId: string) {
-    const { strings } = t(this, 'poll');
-
-    try {
-      await prisma.poll.delete({
-        where: { id: `${this.channel.id}/${msgId}` },
-      });
-
-      const msg = await this.channel.messages.fetch(msgId);
-      await msg.delete();
-
-      await this.update({
-        embeds: [
-          {
-            title: `${emojis.success} ${strings.SUCCESS_POLL_DELETED}`,
-            color: colors.success,
-          },
-        ],
-        components: [],
-      });
-    } catch (err) {
-      UnknownError(this, err);
-    }
-  },
-});
-
-export const EndPollButton = ButtonComponent({
-  async handle(msgId: string) {
-    const pollData = await getPollData(`${this.channel.id}/${msgId}`);
-
-    if (pollData) {
-      const msg = await this.channel.messages.fetch(msgId);
-      await endPoll(pollData, msg);
-    }
-
-    await this.update({
-      embeds: [
-        {
-          title: `${emojis.success} ${t(this, 'poll.strings.SUCCESS_POLL_ENDED')}`,
-          color: colors.success,
-        },
-      ],
-      components: [],
-    });
-  },
-});
-
-export const endPoll = async (poll: Poll, pollMsg: Message) => {
-  const { strings } = t(poll.locale, 'poll');
-
-  const choices = poll.choices as string[][];
-  const totalVotes = choices.flat().length;
-  const ranking = choices
-    .map((choice, index) => {
-      const votes = choice.length;
-      return { name: pollMsg.embeds[0].fields[index].name, votes };
-    })
-    .sort((a, b) => b.votes - a.votes);
-  const winners = ranking.filter((place) => place.votes === ranking[0].votes);
-
-  await pollMsg.reply({
-    embeds: [
-      {
-        title: `${emojis.tada} ${strings.POLL_RESULTS_TITLE}`,
-        description:
-          (winners.length > 1
-            ? strings.POLL_RESULTS_DESCRIPTION_TIE.replace('<OPTION1>', ranking[0].name)
-                .replace(
-                  '<OPTION2>',
-                  winners
-                    .slice(1)
-                    .map((winner) => winner.name)
-                    .join(', ')
-                )
-                .replace('{VOTES}', ranking[0].votes.toString())
-            : strings.POLL_RESULTS_DESCRIPTION_WIN.replace(
-                '{OPTION}',
-                `${ranking[0].name}`
-              ).replace('{VOTES}', ranking[0].votes.toString())) +
-          ' ' +
-          strings.POLL_RESULTS_DESCRIPTION_REST.replace('{TOTAL}', totalVotes.toString()),
-        color: colors.success,
-      },
-    ],
-    components: components(
-      row(
-        new MessageButton({
-          style: 'LINK',
-          label: t(poll.locale, 'JUMP_TO_MSG'),
-          url: pollMsg.url,
-        })
-      )
-    ),
-  });
-
-  await pollMsg.edit({
-    embeds: [
-      {
-        ...pollMsg.embeds[0],
-        author: {
-          name: `${strings.POLL_HEADER_ENDED}`,
-        },
-        description: '',
-        fields: pollMsg.embeds[0].fields.map((field) => {
-          if (winners.map(({ name }) => name).includes(field.name)) {
-            return {
-              name: `🏆 ${field.name}`,
-              value: field.value,
-              inline: false,
-            };
-          }
-          return field;
-        }),
-        color: colors.gray,
-      },
-    ],
-    components: [],
-  });
-
-  activePolls.delete(poll.id);
-
-  await prisma.poll.delete({
-    where: { id: poll.id },
-  });
-};
-
-const renderPoll = async (
-  choiceId: string,
-  userId: string,
-  poll: Poll,
-  pollEmbed: MessageEmbed
-) => {
-  const { strings } = t(poll.locale, 'poll');
-  const { accentColor } = await getSettings(poll.serverId);
-
-  const choices = poll.choices as string[][];
-  const newChoiceId = Number(choiceId);
-  const previousChoiceId = choices.findIndex((choice) => choice.find((voter) => voter === userId));
-
-  if (previousChoiceId !== -1) {
-    choices[previousChoiceId]?.splice(
-      choices[previousChoiceId].findIndex((voter) => voter === userId),
-      1
-    );
-  }
-  if (previousChoiceId !== newChoiceId) {
-    choices[newChoiceId]?.push(userId);
-  }
-
-  const newData = await prisma.poll.update({
-    where: { id: poll.id },
-    data: { ...poll, choices },
-  });
-
-  activePolls.set(poll.id, newData);
-
-  const totalVotes = choices.flat().length;
-
-  pollEmbed.fields.forEach((choice, id) => {
-    const votes = choices[id].length;
-    let percentage = Math.round((votes / totalVotes) * 100);
-    if (isNaN(percentage)) percentage = 0;
-    if (percentage === Infinity) percentage = 100;
-
-    choice.value = `${progressBar(percentage, accentColor)}\n${strings.POLL_OPTION_RESULT.replace(
-      '{PERCENTAGE}',
-      percentage.toString()
-    ).replace('{VOTES}', votes.toString())}`;
-  });
-  pollEmbed.footer.text = `${strings.POLL_FOOTER_VOTES.replace(
-    '{VOTES}',
-    totalVotes.toString()
-  )} • ${pollEmbed.footer.text.split(' • ').slice(1).join(' • ')}`;
-  pollEmbed.color = accentColor;
-
-  return pollEmbed;
-};
