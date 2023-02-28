@@ -1,41 +1,17 @@
 import { CRBTError } from '$lib/functions/CRBTError';
-import { getEmojiObject } from '$lib/functions/getEmojiObject';
+import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { EditableFeatures } from '$lib/types/settings';
-import { CustomEmojiRegex, emojiMention } from '@purplet/utils';
 import { ModalComponent } from 'purplet';
-import emojiJSON from '../../../../../static/misc/emoji.json';
 import { renderFeatureSettings } from '../settings';
 import { getSettings, saveServerSettings } from '../_helpers';
 
 export const EditCurrencyModal = ModalComponent({
   async handle(h: null) {
     const { economy } = await getSettings(this.guildId);
-    let currencySymbol = this.fields.getTextInputValue('currencySymbol');
-
-    if (currencySymbol) {
-      const emojiObj = getEmojiObject(currencySymbol);
-      const fromJSON = emojiJSON.find(
-        ({ name }) =>
-          name.toLowerCase().replaceAll(' ', '_') ===
-          currencySymbol.toLowerCase().replaceAll(' ', '_').replaceAll(':', '')
-      );
-      const fromEmojis = (await this.guild.emojis.fetch()).find(
-        (e) => e.name === currencySymbol.replaceAll(':', '')
-      );
-      if (emojiObj && emojiObj.name && emojiObj.animated === undefined) {
-        currencySymbol = currencySymbol;
-      } else if (fromJSON) {
-        currencySymbol = fromJSON.char;
-      } else if (currencySymbol.match(CustomEmojiRegex)) {
-        currencySymbol = currencySymbol;
-      } else if (fromEmojis) {
-        currencySymbol = emojiMention(fromEmojis);
-      } else {
-        currencySymbol = null;
-      }
-    } else {
-      currencySymbol = economy.currencyNameSingular;
-    }
+    const currencySymbol = await parseEmojiString(
+      this.fields.getTextInputValue('currencySymbol') || economy.currencySymbol,
+      await this.guild.emojis.fetch()
+    );
 
     if (!currencySymbol) {
       return CRBTError(

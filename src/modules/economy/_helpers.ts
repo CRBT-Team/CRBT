@@ -29,12 +29,13 @@ export interface EconomyCommand {
 }
 
 export function currencyFormat(
-  user: { money: number },
+  amount: { money: number } | number,
   economy: Partial<Economy>,
   locale = 'en-US'
 ) {
-  return `${economy.currencySymbol} ${user.money.toLocaleString(locale)} ${
-    user.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
+  amount = typeof amount === 'object' ? amount.money : amount; 
+  return `${economy.currencySymbol} ${amount.toLocaleString(locale)} ${
+    amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
   }`;
 }
 

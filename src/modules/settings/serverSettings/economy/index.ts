@@ -7,8 +7,8 @@ import { t } from '$lib/language';
 import { SettingsMenus } from '$lib/types/settings';
 import { CustomEmojiRegex } from '@purplet/utils';
 import dedent from 'dedent';
-import { MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
+import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCurrencyButton } from './EditCurrencyButton';
 import { ToggleEconomyButton } from './ToggleEconomyButton';
 
@@ -97,11 +97,9 @@ export const economySettings: SettingsMenus = {
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
           .setLabel('Edit Currency'),
-        new MessageButton()
-          .setCustomId('h')
+        new EditCategoriesButton()
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
-          .setDisabled()
           .setLabel('Edit Shop')
         // new EditEconomyLogsBtn()
         //   .setEmoji(emojis.buttons.pencil)

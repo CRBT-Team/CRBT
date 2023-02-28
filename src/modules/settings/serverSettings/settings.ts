@@ -18,6 +18,7 @@ import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } fr
 import {
   featureSettingsMenus,
   getSettings,
+  getSettingsHeader,
   resolveSettingsProps,
   saveServerSettings,
 } from './_helpers';
@@ -155,13 +156,12 @@ export async function renderFeatureSettings(
     content: invisibleChar,
     embeds: [
       {
-        author: {
-          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
-          icon_url: icon(settings.accentColor, 'settings', 'image'),
-        },
-        title: `${this.guild.name} / ${t(this, feature)} ${
-          newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
-        }`,
+        ...getSettingsHeader(this.locale, settings.accentColor, [
+          this.guild.name,
+          `${t(this, feature)} ${
+            newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
+          }`,
+        ]),
         color: await getColor(this.guild),
         ...embed,
         fields:
