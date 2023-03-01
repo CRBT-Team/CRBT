@@ -3,7 +3,7 @@ import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { EconomyItem } from '@prisma/client';
-import { MessageComponentInteraction } from 'discord.js';
+import { MessageButton, MessageComponentInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { currencyFormat } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
@@ -21,7 +21,7 @@ export const CreateItemButton = ButtonComponent({
 
 export async function handleCreateItemPart1(this: MessageComponentInteraction, categoryId: number) {
   await this.deferUpdate();
-  const { economy, accentColor } = await getSettings(this.guildId, true);
+  const { economy, accentColor } = await getSettings(this.guildId);
   const buildingItem = newItemCache.get(this.message.id);
 
   await this.editReply({
@@ -57,15 +57,22 @@ export async function handleCreateItemPart1(this: MessageComponentInteraction, c
         })
           .setLabel(t(this, 'EDIT'))
           .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY'),
+          .setStyle('PRIMARY')
+      ),
+      //TODO: add a button to get to the category
+      row(
+        new EditCategoriesButton().setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
+        new MessageButton()
+          .setCustomId('whocares')
+          .setDisabled()
+          .setEmoji(emojis.buttons.left_arrow)
+          .setStyle('SECONDARY'),
         new CreateItemPart2()
-          .setLabel('Next step')
+          .setLabel(t(this, 'NEXT'))
           .setEmoji(emojis.buttons.right_arrow)
           .setStyle('PRIMARY')
           .setDisabled(!buildingItem?.name || !buildingItem?.icon || !buildingItem?.description)
-      ),
-      //TODO: add a button to get to the category
-      row(new EditCategoriesButton().setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'))
+      )
     ),
   });
 }

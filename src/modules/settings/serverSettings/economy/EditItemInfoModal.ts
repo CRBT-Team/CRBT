@@ -10,9 +10,9 @@ export const EditItemInfoModal = ModalComponent({
       this.fields.getTextInputValue('icon'),
       await this.guild.emojis.fetch()
     );
-    const price = Number(this.fields.getTextInputValue('price'));
+    const price = parseInt(this.fields.getTextInputValue('price'));
     if (isNaN(price)) {
-      return CRBTError(this, 'The price can only be a number.');
+      return CRBTError(this, 'The price can only be a valid number without decimals.');
     }
 
     if (mode === 'setup') {
