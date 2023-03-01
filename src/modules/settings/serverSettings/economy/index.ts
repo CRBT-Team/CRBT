@@ -12,6 +12,12 @@ import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCurrencyButton } from './EditCurrencyButton';
 import { ToggleEconomyButton } from './ToggleEconomyButton';
 
+export interface ItemEditProps {
+  id?: number | null;
+  mode: 'setup' | 'edit';
+  cId: number;
+}
+
 export const economySettings: SettingsMenus = {
   getOverviewValue: ({ settings: { economy } }) => ({
     value: `${economy.currencySymbol} ${economy.currencyNamePlural} • ${economy.items.length} items`,

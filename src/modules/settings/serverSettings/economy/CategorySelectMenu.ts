@@ -8,6 +8,7 @@ import { Interaction, MessageSelectMenu } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
 import { currencyFormat } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
+import { CreateItemButton } from './CreateItemPart1';
 import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCategoryButton } from './EditCategoryButton';
 
@@ -28,16 +29,14 @@ export async function renderItemCategory(
   },
   economy: FullSettings['economy']
 ) {
-  const color = await getColor(this.guild);
   return {
     embeds: [
       {
-        ...getSettingsHeader(this.locale, color, [
+        ...getSettingsHeader(this.locale, await getColor(this.guild), [
           this.guild.name,
           t(this, EditableFeatures.economy),
           category.label,
         ]),
-        color,
         fields: category.items.map((i) => ({
           name: `${i.icon} ${i.name}`,
           value: `${i.type}\n\n**${currencyFormat(i.price, economy, this.locale)}**`,
@@ -55,7 +54,8 @@ export async function renderItemCategory(
         new EditCategoryButton(category.id)
           .setLabel(t(this, 'EDIT'))
           .setStyle('PRIMARY')
-          .setEmoji(emojis.buttons.pencil)
+          .setEmoji(emojis.buttons.pencil),
+        new CreateItemButton(category.id).setLabel('Create Item').setStyle('PRIMARY')
       ),
       row(
         new MessageSelectMenu()
