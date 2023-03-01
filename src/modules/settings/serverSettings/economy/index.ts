@@ -15,7 +15,7 @@ import { ToggleEconomyButton } from './ToggleEconomyButton';
 export interface ItemEditProps {
   id?: number | null;
   mode: 'setup' | 'edit';
-  cId: number;
+  cId?: number;
 }
 
 export const economySettings: SettingsMenus = {
