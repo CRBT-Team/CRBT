@@ -2,11 +2,13 @@ import { emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { ItemTypes } from '@prisma/client';
-import { MessageButton, MessageComponentInteraction, MessageSelectMenu } from 'discord.js';
+import { MessageComponentInteraction, MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
+import { formatItemValue } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
+import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemButton, newItemCache } from './CreateItemPart1';
-import { EditCategoriesButton } from './EditCategoriesButton';
+import { CreateItemPart3 } from './CreateItemPart3';
 import { EditItemTypeSelectMenu } from './EditItemTypeSelectMenu';
 import { roleSelectMenuCustomId } from './EditItemValueRoleSelect';
 
@@ -23,13 +25,13 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
   const { economy, accentColor } = await getSettings(this.guildId);
   const buildingItem = newItemCache.get(this.message.id);
   const lastRow = [
-    new EditCategoriesButton().setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
+    new CancelItemCreateButton(buildingItem.categoryId)
+      .setLabel(t(this, 'CANCEL'))
+      .setStyle('SECONDARY'),
     new CreateItemButton(buildingItem.categoryId)
       .setEmoji(emojis.buttons.left_arrow)
       .setStyle('SECONDARY'),
-    new MessageButton()
-      .setCustomId('whocares')
-      // new CreateItemPart3()
+    new CreateItemPart3()
       .setLabel(t(this, 'NEXT'))
       .setEmoji(emojis.buttons.right_arrow)
       .setStyle('PRIMARY')
@@ -45,7 +47,22 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
           `Editing ${buildingItem!.name}`,
           'Value',
         ]),
-        description: 'Choose an item type and its value.',
+        description:
+          'Choose an item type and its value.\nNote that once this item is created, you will not be able change its type.',
+        fields: [
+          {
+            name: 'Type',
+            value: buildingItem.type || `⚠️ Not set`,
+            inline: true,
+          },
+          {
+            name: 'Value',
+            value: buildingItem.value
+              ? formatItemValue(buildingItem.type, buildingItem.value)
+              : `⚠️ Not set`,
+            inline: true,
+          },
+        ],
       },
     ],
     components: components(

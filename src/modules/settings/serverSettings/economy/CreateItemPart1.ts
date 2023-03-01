@@ -7,8 +7,8 @@ import { MessageButton, MessageComponentInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { currencyFormat } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
+import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemPart2 } from './CreateItemPart2';
-import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditItemInfoButton } from './EditItemInfoButton';
 
 export const newItemCache = new Map<string, Partial<EconomyItem>>();
@@ -36,6 +36,10 @@ export async function handleCreateItemPart1(this: MessageComponentInteraction, c
         description: 'Choose a name, icon, description & price for your item.',
         fields: [
           {
+            name: 'Name',
+            value: buildingItem?.name ? `${buildingItem.icon} ${buildingItem.name}` : `⚠️ Not set`,
+          },
+          {
             name: t(this, 'DESCRIPTION'),
             value: buildingItem?.description ?? `⚠️ Not set`,
           },
@@ -59,9 +63,8 @@ export async function handleCreateItemPart1(this: MessageComponentInteraction, c
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
       ),
-      //TODO: add a button to get to the category
       row(
-        new EditCategoriesButton().setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
+        new CancelItemCreateButton(categoryId).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
         new MessageButton()
           .setCustomId('whocares')
           .setDisabled()

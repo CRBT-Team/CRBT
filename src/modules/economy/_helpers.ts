@@ -1,5 +1,6 @@
 import { prisma } from '$lib/db';
-import { Economy, ServerMember } from '@prisma/client';
+import { Economy, ItemTypes, ServerMember } from '@prisma/client';
+import { roleMention } from '@purplet/utils';
 import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v10';
 import { CommandInteraction, Interaction } from 'discord.js';
 import { balance } from './balance';
@@ -33,10 +34,27 @@ export function currencyFormat(
   economy: Partial<Economy>,
   locale = 'en-US'
 ) {
-  amount = typeof amount === 'object' ? amount.money : amount; 
+  amount = typeof amount === 'object' ? amount.money : amount;
   return `${economy.currencySymbol} ${amount.toLocaleString(locale)} ${
     amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
   }`;
+}
+
+export function formatItemValue(itemType: ItemTypes, itemValue?: string) {
+  switch (itemType) {
+    case ItemTypes.COSMETIC: {
+      return itemValue;
+    }
+    case ItemTypes.ROLE: {
+      return roleMention(itemValue);
+    }
+    case ItemTypes.INCOME_MULTIPLIER: {
+      return `x${itemValue}`;
+    }
+    default: {
+      return itemValue;
+    }
+  }
 }
 
 export async function upsertServerMember(
