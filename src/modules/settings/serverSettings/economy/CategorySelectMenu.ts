@@ -8,7 +8,7 @@ import { Interaction, MessageSelectMenu } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
 import { currencyFormat } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
-import { CreateItemButton } from './CreateItemPart1';
+import { CreateItemPart1 } from './CreateItemPart1';
 import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCategoryButton } from './EditCategoryButton';
 
@@ -55,7 +55,7 @@ export async function renderItemCategory(
           .setLabel(t(this, 'EDIT'))
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.pencil),
-        new CreateItemButton(category.id).setLabel('Create Item').setStyle('PRIMARY')
+        new CreateItemPart1(category.id).setLabel('Create Item').setStyle('PRIMARY')
       ),
       row(
         new MessageSelectMenu()

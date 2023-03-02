@@ -1,13 +1,15 @@
 import { emojis } from '$lib/env';
+import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { timestampMention } from '@purplet/utils';
-import { MessageButton, MessageComponentInteraction } from 'discord.js';
+import { MessageComponentInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { getSettings, getSettingsHeader } from '../_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { newItemCache } from './CreateItemPart1';
 import { CreateItemPart2 } from './CreateItemPart2';
+import { CreateItemReview } from './CreateItemReview';
 import { EditItemStockButton } from './EditItemStockButton';
 
 export const CreateItemPart3 = ButtonComponent({
@@ -30,7 +32,7 @@ export async function handleCreateItemPart3(this: MessageComponentInteraction) {
           this.guild.name,
           t(this, EditableFeatures.economy),
           `Editing ${buildingItem!.name}`,
-          'Limits',
+          'Availability',
         ]),
         description:
           'Optionally, you can set limits as to how much maximum stock this item can have for all users, or if this item should be limited in time.\nNote that when the item runs out of stock or expires, you will always be able to edit it, restock it, or push its time of expiry.',
@@ -47,10 +49,11 @@ export async function handleCreateItemPart3(this: MessageComponentInteraction) {
             name: 'Limited until',
             value: buildingItem.availableUntil
               ? timestampMention(buildingItem.availableUntil, 'f')
-              : 'Always',
+              : 'Always in stock',
             inline: true,
           },
         ],
+        thumbnail: { url: getEmojiURL(buildingItem.icon) },
       },
     ],
     components: components(
@@ -68,15 +71,11 @@ export async function handleCreateItemPart3(this: MessageComponentInteraction) {
           .setStyle('SECONDARY'),
         new CreateItemPart2().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         buildingItem.stock || buildingItem.availableUntil
-          ? new MessageButton()
-              .setCustomId('whocares')
+          ? new CreateItemReview()
               .setLabel('Skip')
               .setEmoji(emojis.buttons.right_arrow)
               .setStyle('SECONDARY')
-          : new MessageButton()
-              .setCustomId('whocares')
-              .setLabel(t(this, 'PREVIEW'))
-              .setStyle('PRIMARY')
+          : new CreateItemReview().setLabel(t(this, 'PREVIEW')).setStyle('PRIMARY')
       )
     ),
   });

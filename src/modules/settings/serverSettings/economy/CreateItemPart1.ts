@@ -13,7 +13,7 @@ import { EditItemInfoButton } from './EditItemInfoButton';
 
 export const newItemCache = new Map<string, Partial<EconomyItem>>();
 
-export const CreateItemButton = ButtonComponent({
+export const CreateItemPart1 = ButtonComponent({
   async handle(categoryId: number) {
     await handleCreateItemPart1.call(this, categoryId);
   },
@@ -45,9 +45,10 @@ export async function handleCreateItemPart1(this: MessageComponentInteraction, c
           },
           {
             name: 'Price',
-            value: buildingItem?.price
-              ? currencyFormat(buildingItem.price, economy, this.locale)
-              : '⚠️ Not set',
+            value:
+              buildingItem?.price !== undefined
+                ? currencyFormat(buildingItem.price, economy, this.locale)
+                : '⚠️ Not set',
           },
         ],
         thumbnail: buildingItem?.icon ? { url: getEmojiURL(buildingItem.icon) } : null,

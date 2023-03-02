@@ -1,4 +1,5 @@
 import { emojis } from '$lib/env';
+import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { ItemTypes } from '@prisma/client';
@@ -7,7 +8,7 @@ import { ButtonComponent, components, row } from 'purplet';
 import { formatItemValue } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
-import { CreateItemButton, newItemCache } from './CreateItemPart1';
+import { CreateItemPart1, newItemCache } from './CreateItemPart1';
 import { CreateItemPart3 } from './CreateItemPart3';
 import { EditItemTypeSelectMenu } from './EditItemTypeSelectMenu';
 import { roleSelectMenuCustomId } from './EditItemValueRoleSelect';
@@ -28,7 +29,7 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
     new CancelItemCreateButton(buildingItem.categoryId)
       .setLabel(t(this, 'CANCEL'))
       .setStyle('SECONDARY'),
-    new CreateItemButton(buildingItem.categoryId)
+    new CreateItemPart1(buildingItem.categoryId)
       .setEmoji(emojis.buttons.left_arrow)
       .setStyle('SECONDARY'),
     new CreateItemPart3()
@@ -63,6 +64,7 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
             inline: true,
           },
         ],
+        thumbnail: { url: getEmojiURL(buildingItem.icon) },
       },
     ],
     components: components(

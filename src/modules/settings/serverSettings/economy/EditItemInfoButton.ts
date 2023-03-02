@@ -55,7 +55,7 @@ export const EditItemInfoButton = ButtonComponent({
         row({
           type: 'TEXT_INPUT',
           customId: 'price',
-          value: itemInfo?.price?.toString() || undefined,
+          value: itemInfo?.price !== undefined ? itemInfo.price.toString() : '0',
           required: true,
           minLength: 1,
           maxLength: 9,

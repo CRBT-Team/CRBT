@@ -172,7 +172,7 @@ model EconomyItem {
   categoryId     Int
   category       EconomyItemCategory @relation(fields: [categoryId], references: [id])
   type           ItemTypes
-  stock          Int
+  stock          Int?
   // for items limited in time
   availableUntil DateTime?           @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
