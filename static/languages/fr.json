@@ -11,8 +11,8 @@
   "DONATE": "Faire un don",
   "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
   "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
-  "ERROR_INVALID_URL": "Invalid URL.",
-  "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
+  "ERROR_INVALID_URL": "URL invalide.",
+  "ERROR_INVALID_COLOR": "Couleur invalide. Utilisez un préréglage ou un code HEX valide.",
   "BACK": "Retour",
   "JUMP_TO_MSG": "Aller au message",
   "CANCEL": "Annuler",
@@ -80,8 +80,8 @@
   "SERVER_BOOSTING": "Boosts de serveur",
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "TITLE": "Une erreur inconnue s'est produite.",
+      "DESCRIPTION": "Elle nous a automatiquement été signalée. Voici ce que l'erreur dit :\n{MESSAGE}"
     }
   },
   "CooldownError": {
@@ -98,7 +98,7 @@
       "options": [
         {
           "name": "couleur",
-          "description": "Choose a suggestion or a HEX code."
+          "description": "Choisissez une suggestion ou un code HEX."
         }
       ]
     },
@@ -127,12 +127,12 @@
       "white": "Blanc"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
+      "NO_DISCORD_COLOR": "Aucune couleur de profil à synchroniser. Pour en définir une, modifiez votre profil Discord."
     },
     "strings": {
       "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
       "EMBED_SYNC_INFO": "Votre couleur d'accentuation CRBT est maintenant synchronisée avec votre couleur de profil Discord.",
-      "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
+      "EMBED_DESCRIPTION": "Cette couleur est utilisée lorsque CRBT vous répond et dans l'affichage de vos infos utilisateur."
     }
   },
   "remind me": {
@@ -141,7 +141,7 @@
       "options": [
         {
           "name": "quand",
-          "description": "Choose a date or relative time."
+          "description": "Choisissez une date ou une heure relative."
         },
         {
           "name": "sujet",
@@ -149,12 +149,12 @@
         },
         {
           "name": "destination",
-          "description": "A channel to send the reminder, in DMs by default."
+          "description": "Un salon où envoyer le rappel, par MPs par défaut."
         }
       ]
     },
     "errors": {
-      "PAST": "Reminders cannot be set in the past.",
+      "PAST": "Les rappels ne peuvent pas être définis dans le passé.",
       "INVALID_FORMAT": "L'heure que vous avez saisie est dans un format invalide.",
       "TOO_LONG": "Reminders cannot be set for more than 2 years in the future.",
       "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached."
