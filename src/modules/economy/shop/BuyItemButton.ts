@@ -1,13 +1,17 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { Message } from 'discord.js';
-import { ButtonComponent } from 'purplet';
+import { emojis } from '$lib/env';
+import { MessageButton } from 'discord.js';
+import { ButtonComponent, components, row } from 'purplet';
 import { getSettings } from '../../settings/serverSettings/_helpers';
+import { BackButton } from './shop';
 
 export const BuyItemButton = ButtonComponent({
   async handle(itemId: number) {
+    await this.deferUpdate();
+
     const userId = `${this.user.id}_${this.guildId}`;
-    await fetchWithCache(`items:${userId}`, () =>
+    const inventory = await fetchWithCache(`inventory:${userId}`, () =>
       prisma.serverMember.upsert({
         where: { id: userId },
         create: {
@@ -31,12 +35,27 @@ export const BuyItemButton = ButtonComponent({
             connect: { id: itemId },
           },
         },
+        include: { items: true },
       })
     );
+    const item = inventory.items.find((i) => i.id === itemId);
 
     await getSettings(this.guildId, true);
 
-    //TODO: do shit
-    await (this.message as Message).edit({});
+    await this.editReply({
+      content: `${emojis.success} Transaction complete! To use your item, open your inventory.`,
+      components: components(
+        row(
+          new BackButton(item.categoryId).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
+          // todo: make this a btn to open the user's inventory so they can use it
+          new MessageButton({
+            customId: 'hahayouboughtthisthatssocool',
+            label: 'In inventory',
+            style: 'SECONDARY',
+            disabled: true,
+          })
+        )
+      ),
+    });
   },
 });
