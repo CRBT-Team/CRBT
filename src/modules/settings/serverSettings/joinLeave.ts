@@ -20,9 +20,7 @@ export const joinLeaveSettings: SettingsMenus = {
       settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
     return {
-      value: t(i, 'SETTINGS_SENDING_IN', {
-        channel: channelMention(channelId),
-      }),
+      value: channelMention(channelId),
     };
   },
   getErrors({ guild, settings, feature, i }) {
