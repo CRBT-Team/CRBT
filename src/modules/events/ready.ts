@@ -24,15 +24,17 @@ export default OnEvent('ready', async (client) => {
     console.log(`Loaded ${allCommands.size} commands`);
   });
 
-  loadTimeouts();
+  loadTimeouts(client);
 });
 
-function loadTimeouts() {
-  Object.values(TimeoutTypes).forEach((type) =>
+function loadTimeouts(client: Client) {
+  Object.values(TimeoutTypes).forEach((type) => {
+    if (type === TimeoutTypes.Reminder && client.user.id !== clients.crbt.id) return;
+
     (prisma[type as string].findMany() as Promise<AnyTimeout[]>).then((timeouts) =>
       timeouts.map((t) => dbTimeout(type, t, true))
-    )
-  );
+    );
+  });
 }
 
 async function loadEconomyCommands(client: Client): Promise<Promise<any>[]> {
