@@ -1,3 +1,4 @@
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { Economy, ItemTypes, ServerMember } from '@prisma/client';
 import { roleMention } from '@purplet/utils';
@@ -32,15 +33,25 @@ export interface EconomyCommand {
 export function currencyFormat(
   amount: { money: number } | number,
   economy: Partial<Economy>,
-  locale = 'en-US',
-  zeroEqualsFree = true
+  locale: string,
+  options?: {
+    zeroEqualsFree?: boolean;
+    withoutSymbol?: boolean;
+  }
 ) {
+  options ??= {};
+  options.zeroEqualsFree ??= true;
+  options.withoutSymbol ??= false;
   amount = typeof amount === 'object' ? amount.money : amount;
-  return zeroEqualsFree && amount === 0
-    ? 'Free'
-    : `${economy.currencySymbol} ${amount.toLocaleString(locale)} ${
-        amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-      }`;
+
+  const formattedString =
+    options.zeroEqualsFree && amount === 0
+      ? 'Free'
+      : `${amount.toLocaleString(locale)} ${
+          amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
+        }`;
+
+  return options.withoutSymbol ? formattedString : `${economy.currencySymbol} ${formattedString}`;
 }
 
 export function formatItemValue(itemType: ItemTypes, itemValue?: string) {
@@ -96,4 +107,18 @@ export async function upsertServerMember(
     },
     update: updateArgs ?? createArgs,
   });
+}
+
+export async function getServerMember(userId: string, guildId: string, force = false) {
+  const memberId = `${guildId}_${userId}`;
+
+  return await fetchWithCache(
+    `member:${memberId}`,
+    () =>
+      prisma.serverMember.findFirst({
+        where: { id: memberId },
+        include: { items: true, activeItems: true },
+      }),
+    force
+  );
 }

@@ -4,9 +4,11 @@ import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { EditableFeatures, FullSettings } from '$lib/types/settings';
 import { EconomyItem, EconomyItemCategory } from '@prisma/client';
-import { Interaction, MessageSelectMenu } from 'discord.js';
+import dedent from 'dedent';
+import { Interaction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
-import { currencyFormat } from '../../../economy/_helpers';
+import { ItemSelectMenu } from '../../../economy/shop/ItemSelectMenu';
+import { currencyFormat, formatItemValue } from '../../../economy/_helpers';
 import { getSettings, getSettingsHeader } from '../_helpers';
 import { CreateItemPart1 } from './CreateItemPart1';
 import { EditCategoriesButton } from './EditCategoriesButton';
@@ -39,7 +41,9 @@ export async function renderItemCategoryEditMenu(
         ]),
         fields: category.items.map((i) => ({
           name: `${i.icon} ${i.name}`,
-          value: `${i.type}\n\n**${currencyFormat(i.price, economy, this.locale)}**`,
+          value: dedent`
+          ${i.type}: ${formatItemValue(i.type, i.value)}
+          **${currencyFormat(i.price, economy, this.locale)}**`,
         })),
         thumbnail: category.emoji
           ? {
@@ -58,8 +62,7 @@ export async function renderItemCategoryEditMenu(
         new CreateItemPart1(category.id).setLabel('Create Item').setStyle('PRIMARY')
       ),
       row(
-        new MessageSelectMenu()
-          .setCustomId('todo')
+        new ItemSelectMenu('edit' as never)
           .setPlaceholder('Items')
           .setDisabled(!category.items.length)
           .setOptions(

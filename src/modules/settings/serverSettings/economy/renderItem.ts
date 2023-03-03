@@ -9,21 +9,14 @@ import { EconomyItem, ItemTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { EmbedFieldData, Interaction, MessageButton } from 'discord.js';
-import { components, row, SelectMenuComponent } from 'purplet';
+import { components, row } from 'purplet';
+import { BuyItemButton } from '../../../economy/shop/BuyItemButton';
 import { BackButton } from '../../../economy/shop/shop';
 import { currencyFormat } from '../../../economy/_helpers';
-import { getSettings, getSettingsHeader } from '../_helpers';
-import { EditCategoryButton } from './EditCategoryButton';
-
-export const ItemSelectMenu = SelectMenuComponent({
-  async handle(ctx: null) {
-    const id = parseInt(this.values[0]);
-    const { economy } = await getSettings(this.guildId);
-    const item = economy.items.find((i) => i.id === id);
-
-    await this.update(await renderItem.call(this, item, economy, 'edit'));
-  },
-});
+import { getSettingsHeader } from '../_helpers';
+import { CancelItemCreateButton } from './CancelItemCreateButton';
+import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
+import { EditItemInfoButton } from './EditItemInfoButton';
 
 export async function renderItem(
   this: Interaction,
@@ -37,6 +30,8 @@ export async function renderItem(
       include: { owners: true, activeMembers: true },
     })
   );
+  const userHasItem = !!fullItem.owners.find((m) => m.userId === this.user.id);
+  console.log(fullItem);
   const category = economy.categories.find((c) => c.id === item.categoryId);
   const fields: EmbedFieldData[] = [
     {
@@ -44,23 +39,7 @@ export async function renderItem(
       value: currencyFormat(item.price, economy, this.locale),
       inline: true,
     },
-    {
-      name: 'Availability',
-      value: dedent`
-      ${item.stock ? `${item.stock} remaining in stock` : 'Unlimited stock'} • ${
-        item.availableUntil
-          ? `**Available until ${timestampMention(item.availableUntil, 'R')}**`
-          : 'Available for purchase'
-      }`,
-    },
   ];
-
-  if (mode === 'edit') {
-    fields.push({
-      name: 'Stats',
-      value: `Purchased by ${fullItem.owners.length} members • Used by ${fullItem.activeMembers.length} members`,
-    });
-  }
 
   switch (item.type) {
     case ItemTypes.COSMETIC: {
@@ -93,6 +72,26 @@ export async function renderItem(
     }
   }
 
+  if (mode === 'edit') {
+    fields.push({
+      name: 'Stats',
+      value: `Purchased by ${fullItem.owners.length} members • Used by ${fullItem.activeMembers.length} members`,
+    });
+  }
+
+  fields.push({
+    name: 'Availability',
+    value:
+      mode === 'shop' && userHasItem
+        ? '**Bought**'
+        : dedent`
+      ${item.stock ? `${item.stock} remaining in stock` : 'Unlimited stock'} • ${
+            item.availableUntil
+              ? `**Available until ${timestampMention(item.availableUntil, 'R')}**`
+              : 'Available for purchase'
+          }`,
+  });
+
   const header =
     mode === 'edit'
       ? getSettingsHeader(this.locale, await getColor(this.guild), [
@@ -106,6 +105,7 @@ export async function renderItem(
             name: `${this.guild.name} - Shop`,
             icon_url: this.guild.iconURL(),
           },
+          title: item.name,
           color: await getColor(this.guild),
         };
 
@@ -120,28 +120,43 @@ export async function renderItem(
       },
     ],
     components: components(
-      row(
-        mode === 'edit'
-          ? new EditCategoryButton(category.id)
-              .setEmoji(emojis.buttons.left_arrow)
-              .setStyle('SECONDARY')
-          : new BackButton(item.categoryId)
-              .setEmoji(emojis.buttons.left_arrow)
-              .setStyle('SECONDARY')
-      ).addComponents(
+      row().addComponents(
         ...(mode === 'edit'
           ? [
-              //TODO: do that
-              new MessageButton()
-                .setDisabled(true)
+              new EditItemInfoButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
-                .setLabel(t(this, 'EDIT'))
-                .setCustomId('todo'),
+                .setLabel(`Information`)
+                .setEmoji(emojis.buttons.pencil),
+              new EditItemAvailabilityButton({ id: item.id, mode: 'edit' })
+                .setStyle('PRIMARY')
+                .setLabel(`Information`)
+                .setEmoji(emojis.buttons.pencil),
             ]
           : [
-              // new BuyItemButton()
-              // .set
+              new BackButton(item.categoryId)
+                .setEmoji(emojis.buttons.left_arrow)
+                .setStyle('SECONDARY'),
+              userHasItem
+                ? //TODO: work on this
+                  new MessageButton()
+                    .setCustomId('todo')
+                    .setDisabled()
+                    .setLabel('In inventory')
+                    .setStyle('SECONDARY')
+                : new BuyItemButton(item.id)
+                    .setLabel(
+                      `Buy - ${currencyFormat(item.price, economy, this.locale, {
+                        withoutSymbol: true,
+                      })}`
+                    )
+                    .setEmoji(economy.currencySymbol)
+                    .setStyle('PRIMARY'),
             ])
+      ),
+      row(
+        new CancelItemCreateButton(category.id)
+          .setEmoji(emojis.buttons.left_arrow)
+          .setStyle('SECONDARY')
       )
     ),
   };

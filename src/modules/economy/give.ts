@@ -1,6 +1,7 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { getAllLanguages, t } from '$lib/language';
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 import { getSettings } from '../settings/serverSettings/_helpers';
 import { currencyFormat, EconomyCommand } from './_helpers';
@@ -14,7 +15,8 @@ export const give: EconomyCommand = {
         {
           type: ApplicationCommandOptionType.User,
           name: 'user',
-          description: `Who to give ${plural} to.`,
+          description: t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
+          description_localizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
           required: true,
         },
         {
@@ -53,22 +55,23 @@ export const give: EconomyCommand = {
           fields: [
             {
               name: 'Your current balance',
-              value: `${economy.currencySymbol} ${userData.money || 0} ${
-                userData?.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-              }`,
+              value: currencyFormat(userData.money, economy, this.locale, {
+                zeroEqualsFree: false,
+              }),
               inline: true,
             },
             {
               name: `${economy.currencyNamePlural} missing`,
-              value: `${economy.currencySymbol} ${(userData.money || 0) - amount} ${
-                userData?.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-              }`,
+              value: currencyFormat(userData?.money || 0 - amount, economy, this.locale, {
+                zeroEqualsFree: false,
+              }),
               inline: true,
             },
           ],
         });
       }
 
+      //TODO: update this with the new methods
       const targetData = await prisma.serverMember.upsert({
         where: { id: `${target.id}_${this.guildId}` },
         update: { money: { increment: amount } },
@@ -90,25 +93,28 @@ export const give: EconomyCommand = {
         embeds: [
           {
             title: `${emojis.success} Transaction successful!`,
-            description: `You successfully gave **${currencyFormat(
-              { money: amount },
-              economy
-            )}** to ${target}.`,
             fields: [
               {
                 name: 'Your balance',
-                value: `${economy.currencySymbol} ~~${userData.money}~~ **${newData.money} ${
-                  newData.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-                }**`,
+                value: `${economy.currencySymbol} ~~${userData.money}~~ **${currencyFormat(
+                  newData.money,
+                  economy,
+                  this.locale,
+                  {
+                    zeroEqualsFree: false,
+                    withoutSymbol: true,
+                  }
+                )}**`,
                 inline: true,
               },
               {
                 name: `${target.username}'s balance`,
-                value: `${economy.currencySymbol} ~~${targetData.money - amount}~~ **${
-                  targetData.money
-                } ${
-                  targetData.money === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-                }**`,
+                value: `${economy.currencySymbol} ~~${
+                  targetData.money - amount
+                }~~ **${currencyFormat(targetData.money, economy, this.locale, {
+                  zeroEqualsFree: false,
+                  withoutSymbol: true,
+                })}**`,
                 inline: true,
               },
             ],
