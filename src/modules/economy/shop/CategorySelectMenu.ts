@@ -42,7 +42,7 @@ export async function renderCategoryShopPage(
     ],
     components: components(
       row(
-        new ItemSelectMenu().setOptions(
+        new ItemSelectMenu('shop' as never).setOptions(
           category.items.map((i) => ({
             label: i.name,
             emoji: i.icon,

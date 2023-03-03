@@ -3,14 +3,14 @@ import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { timestampMention } from '@purplet/utils';
-import { MessageComponentInteraction } from 'discord.js';
+import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { getSettings, getSettingsHeader } from '../_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { newItemCache } from './CreateItemPart1';
 import { CreateItemPart2 } from './CreateItemPart2';
 import { CreateItemReview } from './CreateItemReview';
-import { EditItemStockButton } from './EditItemStockButton';
+import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
 
 export const CreateItemPart3 = ButtonComponent({
   async handle() {
@@ -19,7 +19,9 @@ export const CreateItemPart3 = ButtonComponent({
 });
 
 //TODO: localize
-export async function handleCreateItemPart3(this: MessageComponentInteraction) {
+export async function handleCreateItemPart3(
+  this: MessageComponentInteraction | ModalSubmitInteraction
+) {
   await this.deferUpdate();
 
   const { economy, accentColor } = await getSettings(this.guildId);
@@ -58,10 +60,10 @@ export async function handleCreateItemPart3(this: MessageComponentInteraction) {
     ],
     components: components(
       row(
-        new EditItemStockButton({
+        new EditItemAvailabilityButton({
           mode: 'setup',
         })
-          .setLabel('Edit Stock')
+          .setLabel(t(this, 'EDIT'))
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.pencil)
       ),

@@ -1,8 +1,12 @@
+import { fetchWithCache } from '$lib/cache';
+import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
 import { ItemEditProps } from '.';
+import { getSettings } from '../_helpers';
 import { handleCreateItemPart1, newItemCache } from './CreateItemPart1';
+import { renderItem } from './renderItem';
 
 export const EditItemInfoModal = ModalComponent({
   async handle({ id, mode, cId }: ItemEditProps) {
@@ -32,7 +36,29 @@ export const EditItemInfoModal = ModalComponent({
       });
 
       return await handleCreateItemPart1.call(this, cId);
+    } else {
+      const newData = await fetchWithCache(
+        `economyItem:${id}`,
+        () =>
+          prisma.economyItem.update({
+            where: { id: id },
+            data: {
+              name: this.fields.getTextInputValue('name'),
+              description: this.fields.getTextInputValue('description'),
+              icon,
+              price,
+            },
+            include: {
+              owners: true,
+              activeMembers: true,
+            },
+          }),
+        true
+      );
+
+      const { economy } = await getSettings(this.guildId, true);
+
+      return this.update(await renderItem.call(this, newData, economy, 'edit'));
     }
-    // TODO: add for regular editing
   },
 });
