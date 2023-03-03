@@ -81,7 +81,7 @@
   "UnknownError": {
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "Мы уже получили авторепорт о ней. Вот что говорит ошибка:\n{MESSAGE}"
     }
   },
   "CooldownError": {
@@ -98,7 +98,7 @@
       "options": [
         {
           "name": "цвет",
-          "description": "Choose a suggestion or a HEX code."
+          "description": "Выберите из предложенных, иди введите HEX код."
         }
       ]
     },
@@ -131,8 +131,8 @@
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
+      "EMBED_SYNC_INFO": "Ваш CRBT цвет теперь синхронизирован с цветом вашего профиля Discord.",
+      "EMBED_DESCRIPTION": "Этот цвет используется в ответах CRBT на вас и при отображении информации о вашем профиле."
     }
   },
   "remind me": {
@@ -141,7 +141,7 @@
       "options": [
         {
           "name": "когда",
-          "description": "Choose a date or relative time."
+          "description": "Укажите дату и время."
         },
         {
           "name": "тема",
@@ -149,21 +149,21 @@
         },
         {
           "name": "адресат",
-          "description": "A channel to send the reminder, in DMs by default."
+          "description": "Канал для отправки напоминания. Используется ЛС по умолчанию."
         }
       ]
     },
     "errors": {
-      "PAST": "Reminders cannot be set in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format.",
-      "TOO_LONG": "Reminders cannot be set for more than 2 years in the future.",
-      "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached."
+      "PAST": "Напоминания нельзя задавать на прошедшее время.",
+      "INVALID_FORMAT": "Введённое вами время имеет недопустимый формат.",
+      "TOO_LONG": "Напоминания не могут быть заданы более чем на 2 года вперед.",
+      "REMINDERS_MAX_LIMIT": "Достигнут предел 10 напоминаний."
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
-      "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT": "CRBT Reminder.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {destination}."
+      "SUCCESS_TITLE": "Напоминание задано! Используйте {command} для управления вашими напоминаниями.",
+      "BUTTON_GCALENDAR": "Добавить в Google Календарь",
+      "GCALENDAR_EVENT": "Напоминание CRBT.",
+      "GCALENDAR_EVENT_CHANNEL": "Вы также получите напоминание в {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -176,7 +176,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Returns CRBT's latency information."
+      "description": "Отправляет информацию о задержках CRBT."
     }
   },
   "crbt info": {
@@ -184,33 +184,33 @@
       "description": "Получить информацию о CRBT."
     }
   },
-  "IMAGE": "Image",
+  "IMAGE": "Изображение",
   "poll": {
     "meta": {
-      "description": "Create a poll.",
+      "description": "Создать опрос.",
       "options": {
         "title": {
           "description": "О чем ваш опрос?"
         },
         "end_date": {
-          "description": "When does it end?"
+          "description": "Когда он должен закончиться?"
         },
         "choice": {
-          "description": "One of the poll's choices."
+          "description": "Один их вариантов опроса."
         },
         "image": {
-          "description": "Append an image."
+          "description": "Добавить изображение."
         }
       }
     },
     "errors": {
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) and the poll creator can use this menu."
+      "POLL_DATA_NOT_ALLOWED": "Только модераторы чата (с возможностью \"Управлять сообщениями\") и создатель опроса могут использовать это меню."
     },
     "strings": {
-      "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
+      "POLL_DESCRIPTION": "Закончится в {TIME}.\nСоздатель может просматривать данные голосованя с помощью кнопки {ICON}.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
-      "POLL_FOOTER_CREATOR": "{user} created a poll",
+      "POLL_FOOTER_CREATOR": "{user} создал(а) голосование",
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "SUCCESS_TITLE": "Опрос создан!",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
