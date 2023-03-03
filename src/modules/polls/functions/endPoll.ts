@@ -59,10 +59,7 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
     embeds: [
       {
         ...pollMsg.embeds[0],
-        author: {
-          name: `${t(poll.locale, 'poll.strings.POLL_HEADER_ENDED')}`,
-        },
-        description: '',
+        description: t(poll.locale, 'poll.strings.POLL_DESCRIPTION_ENDED'),
         fields: pollMsg.embeds[0].fields.map((field) => {
           if (winners.map(({ name }) => name).includes(field.name)) {
             return {

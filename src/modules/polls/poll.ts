@@ -3,7 +3,6 @@ import { fetchWithCache } from '$lib/cache';
 import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
-import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
@@ -80,7 +79,6 @@ export default ChatCommand({
         }
       }
 
-      const accentColor = await getColor(this.guild);
       const pollData = {
         expiresAt: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
@@ -94,34 +92,6 @@ export default ChatCommand({
           title,
           choices: pollChoices,
         })),
-        //   {
-        //     title,
-        //     description: t(this.guildLocale, 'poll.strings.POLL_DESCRIPTION', {
-        //       TIME: timestampMention(new Date(Date.now() + ms(end_date)), 'R'),
-        //       ICON: emojis.menu,
-        //     }),
-        //     fields: pollChoices.map((choice) => ({
-        //       name: `${choice} • 0% (0 votes)`,
-        //       value: progressBar(0, accentColor),
-        //       // value: dedent`
-        //       // ${progressBar(0, accentColor)}
-        //       // ${t(this.guildLocale, 'poll.strings.POLL_OPTION_RESULT', {
-        //       //   PERCENTAGE: '0',
-        //       //   VOTES: '0',
-        //       // })}`,
-        //     })),
-        //     footer: {
-        //       text: `${t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
-        //         USER: this.user.tag,
-        //       })}`,
-        //       // text: `${t(this.guildLocale, 'poll.strings.POLL_FOOTER_VOTES', {
-        //       //   VOTES: '0',
-        //       // })} • ${t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
-        //       //   USER: this.user.tag,
-        //       // })}`,
-        //     },
-        //     color: accentColor,
-        // },
         components: components(
           row().addComponents([
             ...pollChoices.map((choice, index) => {

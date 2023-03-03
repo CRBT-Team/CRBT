@@ -13,8 +13,9 @@ export default ChatCommand({
   description: 'Ban a server member.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'Who to ban.', {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
     .string('reason', t('en-US', 'REASON_DESCRIPTION'), {

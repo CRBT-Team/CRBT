@@ -14,9 +14,9 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('BANNER', localeLower),
   descriptionLocalizations: getAllLanguages('banner.description'),
   options: new OptionBuilder()
-    .user('user', t('en-US', 'banner.options.user.description'), {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
-      descriptionLocalizations: getAllLanguages('banner.options.user.description'),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
     })
     .string('size', t('en-US', 'avatar.meta.options.size.description'), {
       nameLocalizations: getAllLanguages('SIZE', localeLower),

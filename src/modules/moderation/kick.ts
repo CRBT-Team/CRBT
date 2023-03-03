@@ -10,8 +10,9 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('KICK', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'Who to kick.', {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
     .string('reason', t('en-US', 'REASON_DESCRIPTION'), {

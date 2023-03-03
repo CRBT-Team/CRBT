@@ -61,8 +61,9 @@ export async function renderPoll(
 
   return {
     content:
-      `<@${poll.creatorId}> started a poll` +
-      (options?.editedAt ? ` (edited ${timestampMention(options.editedAt, 'd')})` : ''),
+      t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
+        user: `<@${poll.creatorId}>`,
+      }) + (options?.editedAt ? ` (edited ${timestampMention(options.editedAt, 'd')})` : ''),
     embeds: [
       {
         title: options?.title,
@@ -71,17 +72,6 @@ export async function renderPoll(
           ICON: emojis.menu,
         }),
         color: accentColor,
-        // footer: {
-        //   text:
-        //     `${t(this.guildLocale, 'poll.strings.POLL_FOOTER_CREATOR', {
-        //       USER: this.user.tag,
-        //     })}` + (options?.editedAt ? `, last edited ` : ''),
-        // },
-        // ...(options?.editedAt
-        //   ? {
-        //       timestamp: options?.editedAt.getTime(),
-        //     }
-        //   : {}),
         ...previousEmbed,
         fields: choices.map(({ length: votes }, index) => {
           let percentage = Math.round((votes / totalVotes) * 100);

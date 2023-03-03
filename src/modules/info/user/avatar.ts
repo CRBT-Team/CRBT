@@ -14,9 +14,9 @@ export const defaultPfp = ChatCommand({
   nameLocalizations: getAllLanguages('AVATAR', localeLower),
   descriptionLocalizations: getAllLanguages('avatar.meta.description'),
   options: new OptionBuilder()
-    .user('user', t('en-US', 'avatar.meta.options.user.description'), {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
-      descriptionLocalizations: getAllLanguages('avatar.meta.options.user.description'),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
     })
     .string('size', t('en-US', 'avatar.meta.options.size.description'), {
       nameLocalizations: getAllLanguages('SIZE', localeLower),

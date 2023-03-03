@@ -11,8 +11,9 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('TIMEOUT', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'Who to timeout.', {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
     .string('duration', 'How long they should be timed out for.', {
