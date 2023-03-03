@@ -1,6 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { prisma } from '$lib/db';
-import { colors, emojis } from '$lib/env';
+import { emojis } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
@@ -10,12 +11,12 @@ import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { ReminderTypes } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
-import dedent from 'dedent';
 import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { renderReminder } from './reminder_list';
+import { getUserReminders } from './_helpers';
 
 export default ChatCommand({
   name: 'reminder new',
@@ -97,7 +98,7 @@ export default ChatCommand({
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
 
     try {
-      await dbTimeout(TimeoutTypes.Reminder, {
+      const reminder = await dbTimeout(TimeoutTypes.Reminder, {
         id: url,
         expiresAt: expiresAt.toDate(),
         destination: destination ? destination.id : 'dm',
@@ -107,33 +108,16 @@ export default ChatCommand({
         type: ReminderTypes.NORMAL,
         details: null,
       });
+      await getUserReminders(this.user.id, true);
 
       await this.editReply({
-        embeds: [
-          {
-            title: `${emojis.success} ${t(this, 'remind me.strings.SUCCESS_TITLE')}`,
-            description: dedent`
-              ${
-                destination
-                  ? t(this, 'remind me.strings.SUCCESS_CHANNEL', {
-                      CHANNEL: `${destination}`,
-                    })
-                  : t(this, 'remind me.strings.SUCCESS_DM')
-              }
-              ${timestampMention(expiresAt)} • ${timestampMention(expiresAt, 'R')}
-            `,
-            fields: [
-              {
-                name: t(this, 'SUBJECT'),
-                value: subject,
-              },
-            ],
-            color: colors.success,
-          },
-        ],
+        content: `${emojis.success} ${t(this, 'remind me.strings.SUCCESS_TITLE', {
+          command: slashCmd('reminder list'),
+        })}`,
+        embeds: (await renderReminder.call(this, reminder)).embeds,
       });
     } catch (error) {
-      await this.editReply(UnknownError(this, String(error)));
+      await this.editReply(UnknownError(this, error));
     }
   },
 });

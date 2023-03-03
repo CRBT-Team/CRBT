@@ -1,14 +1,16 @@
-import { colors, emojis } from '$lib/env';
+import { colors, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
-import { ExtractedReminder, extractReminder } from '$lib/functions/extractReminder';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
 import { Client, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
-import { getReminderSubject } from '../../modules/tools/reminder_list';
+import {
+  ExtractedReminder,
+  extractReminder,
+  getReminderSubject,
+} from '../../modules/tools/reminders/_helpers';
 
 export interface LowBudgetMessage {
   authorId: string;
@@ -29,17 +31,15 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   const message = {
     embeds: [
       {
-        title: `${emojis.reminder} ${t(reminder.locale, 'REMINDER')}`,
-        description: strings.REMINDER_DESCRIPTION.replace(
-          '{TIME}',
-          timestampMention(reminder.expiresAt, 'D')
-        ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
-        fields: [
-          {
-            name: t(reminder.locale, 'SUBJECT'),
-            value: getReminderSubject(reminder, client, 0),
-          },
-        ],
+        author: {
+          name: t(reminder.locale, 'REMINDER'),
+          icon_url: icons.reminder,
+        },
+        title: getReminderSubject(reminder, client, 0),
+        // description: strings.REMINDER_DESCRIPTION.replace(
+        //   '{TIME}',
+        //   timestampMention(reminder.expiresAt, 'D')
+        // ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
         color: await getColor(data.user),
       },
       ...renderLowBudgetMessage(data),
