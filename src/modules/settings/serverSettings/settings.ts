@@ -87,38 +87,32 @@ export async function renderSettingsMenu(
         },
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
         description: t(this, 'SETTINGS_DESCRIPTION'),
-        fields: [
-          {
-            name: `${t(this, 'STATUS')}`,
-            value: Object.values(EditableFeatures)
-              .filter((feature) =>
-                feature === EditableFeatures.economy
-                  ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
-                  : true
-              )
-              .map((feature) => {
-                const props = resolveSettingsProps(this, feature, settings);
-                const featureSettings = featureSettingsMenus[feature];
-                let { icon: i, value } = featureSettings.getOverviewValue(props);
-                if (props.errors.length) {
-                  (i = '⚠️'), (value = t(this, 'ATTENTION_REQUIRED'));
-                }
-                i ??= props.isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off;
+        fields: Object.values(EditableFeatures)
+          .filter((feature) =>
+            feature === EditableFeatures.economy
+              ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
+              : true
+          )
+          .map((feature) => {
+            const props = resolveSettingsProps(this, feature, settings);
+            const featureSettings = featureSettingsMenus[feature];
+            let { icon: i, value } = featureSettings.getOverviewValue(props);
+            if (props.errors.length) {
+              (i = '⚠️'), (value = t(this, 'ATTENTION_REQUIRED'));
+            }
+            i ??= props.isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off;
 
-                return `${i} **${t(this, feature)}**\n${emojis.angle} ${value}`;
-              })
-              .join('\n\n'),
-          },
-        ],
+            return {
+              name: `${i} **${t(this, feature)}**`,
+              value: value,
+              inline: true,
+            };
+          }),
         color: await getColor(this.guild),
       },
     ],
     components: components(
-      row(
-        new FeatureSelectMenu()
-          .setPlaceholder(t(this, 'SETTINGS_SELECT_MENU_PLACEHOLDER'))
-          .setOptions(options)
-      )
+      row(new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(options))
     ),
     ephemeral: true,
   };
