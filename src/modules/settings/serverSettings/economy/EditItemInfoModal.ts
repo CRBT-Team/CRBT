@@ -11,8 +11,15 @@ export const EditItemInfoModal = ModalComponent({
       await this.guild.emojis.fetch()
     );
     const price = parseInt(this.fields.getTextInputValue('price'));
-    if (isNaN(price)) {
+    if (price !== null && isNaN(price)) {
       return CRBTError(this, 'The price can only be a valid number without decimals.');
+    }
+
+    if (price < 0 || price > Number.MAX_SAFE_INTEGER) {
+      return CRBTError(
+        this,
+        `The price cannot be set below 0 or be higher than ${Number.MAX_SAFE_INTEGER}.`
+      );
     }
 
     if (mode === 'setup') {

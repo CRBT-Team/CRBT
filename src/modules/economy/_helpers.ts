@@ -32,12 +32,15 @@ export interface EconomyCommand {
 export function currencyFormat(
   amount: { money: number } | number,
   economy: Partial<Economy>,
-  locale = 'en-US'
+  locale = 'en-US',
+  zeroEqualsFree = true
 ) {
   amount = typeof amount === 'object' ? amount.money : amount;
-  return `${economy.currencySymbol} ${amount.toLocaleString(locale)} ${
-    amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-  }`;
+  return zeroEqualsFree && amount === 0
+    ? 'Free'
+    : `${economy.currencySymbol} ${amount.toLocaleString(locale)} ${
+        amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
+      }`;
 }
 
 export function formatItemValue(itemType: ItemTypes, itemValue?: string) {

@@ -14,6 +14,13 @@ export const EditItemStockModal = ModalComponent({
       return CRBTError(this, 'The stock must be a number, without decimals.');
     }
 
+    if (stock < 1 || stock > Number.MAX_SAFE_INTEGER) {
+      return CRBTError(
+        this,
+        `The stock cannot be set below 1 or be higher than ${Number.MAX_SAFE_INTEGER}.`
+      );
+    }
+
     if (mode === 'setup') {
       const newData = {
         ...newItemCache.get(this.message.id),

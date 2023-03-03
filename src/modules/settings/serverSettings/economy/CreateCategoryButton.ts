@@ -1,7 +1,7 @@
 import { prisma } from '$lib/db';
 import { ButtonComponent } from 'purplet';
 import { getSettings } from '../_helpers';
-import { renderItemCategory } from './CategorySelectMenu';
+import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 
 export const CreateCategoryButton = ButtonComponent({
   async handle() {
@@ -18,6 +18,6 @@ export const CreateCategoryButton = ButtonComponent({
 
     const { economy } = await getSettings(this.guildId, true);
 
-    await this.editReply(await renderItemCategory.call(this, category, economy));
+    await this.editReply(await renderItemCategoryEditMenu.call(this, category, economy));
   },
 });

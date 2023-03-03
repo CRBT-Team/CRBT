@@ -18,11 +18,11 @@ export const CategorySelectMenu = SelectMenuComponent({
     const { economy } = await getSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === id);
 
-    await this.update(await renderItemCategory.call(this, category, economy));
+    await this.update(await renderItemCategoryEditMenu.call(this, category, economy));
   },
 });
 
-export async function renderItemCategory(
+export async function renderItemCategoryEditMenu(
   this: Interaction,
   category: EconomyItemCategory & {
     items: EconomyItem[];

@@ -19,7 +19,7 @@ export const EditItemStockButton = ButtonComponent({
           customId: 'stock',
           value: itemInfo?.stock?.toString() || undefined,
           minLength: 1,
-          maxLength: 9,
+          maxLength: 16,
           placeholder: 'You may only use numbers. (leave blank to reset)',
           label: 'Stock',
           style: 'SHORT',

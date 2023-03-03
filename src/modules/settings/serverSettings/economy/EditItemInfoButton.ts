@@ -58,7 +58,7 @@ export const EditItemInfoButton = ButtonComponent({
           value: itemInfo?.price !== undefined ? itemInfo.price.toString() : '0',
           required: true,
           minLength: 1,
-          maxLength: 9,
+          maxLength: 16,
           placeholder: 'You may only use numbers.',
           label: 'Price',
           style: 'SHORT',

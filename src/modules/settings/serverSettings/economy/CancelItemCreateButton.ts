@@ -1,6 +1,6 @@
 import { ButtonComponent } from 'purplet';
 import { getSettings } from '../_helpers';
-import { renderItemCategory } from './CategorySelectMenu';
+import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 import { newItemCache } from './CreateItemPart1';
 
 export const CancelItemCreateButton = ButtonComponent({
@@ -9,6 +9,6 @@ export const CancelItemCreateButton = ButtonComponent({
     const { economy } = await getSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === categoryId);
 
-    await this.update(await renderItemCategory.call(this, category, economy));
+    await this.update(await renderItemCategoryEditMenu.call(this, category, economy));
   },
 });
