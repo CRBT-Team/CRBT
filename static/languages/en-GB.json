@@ -12,7 +12,7 @@
   "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
   "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
   "ERROR_INVALID_URL": "Invalid URL.",
-  "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
+  "ERROR_INVALID_COLOR": "Invalid colour. Use a preset or a valid HEX code.",
   "BACK": "Back",
   "JUMP_TO_MSG": "Jump to message",
   "CANCEL": "Cancel",
@@ -127,12 +127,12 @@
       "white": "White"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
+      "NO_DISCORD_COLOR": "You couldn't find a profile colour to sync. To set one, edit your Discord Profile."
     },
     "strings": {
       "EMBED_TITLE": "Accent colour updated.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
+      "EMBED_SYNC_INFO": "Your CRBT accent colour is now synced to your Discord profile colour.",
+      "EMBED_DESCRIPTION": "This colour is used in CRBT's replies to you and in the display of your user information."
     }
   },
   "remind me": {
@@ -338,7 +338,7 @@
   "ERROR_NO_MESSAGE": "You must set a message first.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
   "FIELD_SELECT_MENU": "Edit fields",
-  "COLOR_PRESET_SELECT_MENU": "Color presets",
+  "COLOR_PRESET_SELECT_MENU": "Colour presets",
   "MANUAL_COLOR_EDIT_BUTTON": "Use a HEX colour",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
   "FIELDS_CONTENT": "Message Content",
@@ -513,7 +513,7 @@
   "DISABLE": "Disable",
   "ENABLE_FEATURE": "Enable feature",
   "DISABLE_FEATURE": "Disable feature",
-  "ACCENT_COLOR": "Accent Color",
+  "ACCENT_COLOR": "Accent Colour",
   "MODERATION_LOGS": "Moderation Notifications",
   "MODERATION_REPORTS": "Moderation Reports",
   "SERVER_THEME": "Theming",
@@ -529,7 +529,7 @@
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize Polls, Giveaways, and more with themes! Auto Theming picks the primary color from your server's icon. Or, you can select a color preset or HEX code.\nCurrently set to **{color}**.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize Polls, Giveaways, and more with themes! Auto Theming picks the primary colour from your server's icon. Or, you can select a colour preset or HEX code.\nCurrently set to **{color}**.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Get realtime notifications in a chosen channel for all moderator actions taken using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Members can report a message or user to a chosen channel using Moderation Reports by right-clicking or long-pressing them.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
@@ -582,7 +582,7 @@
   "POSITION": "Position",
   "HUMANS": "Human(s)",
   "BOTS": "Bot(s)",
-  "COLOR": "Color",
+  "COLOR": "Colour",
   "ROLE_INFO_POSITION": "{position} out of {roles} roles",
   "ROLE_INFO_HOISTED": "Displays separately from online members",
   "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
