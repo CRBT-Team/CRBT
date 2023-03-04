@@ -11,7 +11,7 @@
   "DONATE": "Wesprzyj",
   "ERROR_ADMIN_ONLY": "Musisz być administratorem żeby użyj tej komendy.",
   "ERROR_MISSING_PERMISSIONS": "Potrzebujesz uprawnie(ń) nia {PERMISSIONS} żeby użyć tej komendy.",
-  "ERROR_INVALID_URL": "Invalid URL.",
+  "ERROR_INVALID_URL": "Nieprawidłowy URL.",
   "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
   "BACK": "Wróć",
   "JUMP_TO_MSG": "Skocz do wiadomości",
