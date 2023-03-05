@@ -11,8 +11,9 @@ export default ChatCommand({
   name: 'modlogs user',
   description: "View a user's Moderation History.",
   allowInDMs: false,
-  options: new OptionBuilder().user('user', 'Whose Moderation History to get.', {
+  options: new OptionBuilder().user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
     nameLocalizations: getAllLanguages('USER', localeLower),
+    descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
   }),
   async handle({ user }) {
     await this.deferReply();

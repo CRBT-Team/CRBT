@@ -1,7 +1,9 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { deepMerge } from '$lib/functions/deepMerge';
+import { t } from '$lib/language';
 import {
   CamelCaseFeatures,
   EditableFeatures,
@@ -9,7 +11,6 @@ import {
   FullSettings,
   SettingsMenus,
 } from '$lib/types/settings';
-import { Prisma } from '@prisma/client';
 import { economySettings } from './economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
@@ -44,7 +45,7 @@ export const defaultSettings: FullSettings = {
     items: [],
     categories: [],
     commands: {
-      serverId: null,
+      id: null,
       workStrings: [
         'You washed and properly cleaned a car, which got you {money}.',
         'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
@@ -59,6 +60,17 @@ export const defaultSettings: FullSettings = {
     },
   },
 };
+
+export function getSettingsHeader(locale: string, accentColor: number, path: string[]) {
+  return {
+    author: {
+      name: `CRBT - ${t(locale, 'SETTINGS_TITLE')}`,
+      icon_url: icon(accentColor, 'settings', 'image'),
+    },
+    title: path.join(' / '),
+    color: accentColor,
+  };
+}
 
 export function resolveSettingsProps(
   i: FeatureSettingsProps['i'],
@@ -84,22 +96,30 @@ export function resolveSettingsProps(
   };
 }
 
-export const include: Prisma.serversInclude = {
+export const include = {
   modules: true,
   economy: {
     include: {
       commands: true,
       items: true,
+      categories: {
+        include: {
+          items: true,
+        },
+      },
     },
   },
 };
 
-export async function getSettings(guildId: string) {
-  const data = await fetchWithCache<FullSettings>(`${guildId}:settings`, () =>
-    prisma.servers.findFirst({
-      where: { id: guildId },
-      include,
-    })
+export async function getSettings(guildId: string, force = false) {
+  const data = await fetchWithCache<FullSettings>(
+    `${guildId}:settings`,
+    () =>
+      prisma.servers.findFirst({
+        where: { id: guildId },
+        include,
+      }),
+    force
   );
 
   const merged = deepMerge(defaultSettings, data);
@@ -134,6 +154,9 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
         [key]: value,
       };
     }, {});
+
+  console.log(query('create'));
+  console.log(query('update'));
 
   return fetchWithCache(
     `${guildId}:settings`,

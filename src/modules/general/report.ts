@@ -40,7 +40,7 @@ export default ChatCommand({
           new TextInputComponent()
             .setCustomId('issue_description')
             .setLabel(t(this, 'DESCRIPTION'))
-            .setPlaceholder(t(this, 'REPORT_MDOAL_DESCRIPTION_PLACEHOLDER'))
+            .setPlaceholder(t(this, 'MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER'))
             .setStyle('PARAGRAPH')
             .setMinLength(10)
             .setMaxLength(512)

@@ -1,6 +1,6 @@
 import { Poll } from '@prisma/client';
 import { Client, TextChannel } from 'discord.js';
-import { endPoll } from '../../modules/polls/poll';
+import { endPoll } from '../../modules/polls/functions/endPoll';
 
 export async function handlePoll(poll: Poll, client: Client) {
   const [channelId, messageId] = poll.id.split('/');

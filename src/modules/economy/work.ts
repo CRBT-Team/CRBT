@@ -25,9 +25,9 @@ export const work: EconomyCommand = {
       select: { workExp: true, lastWork: true },
     });
 
-    const level = Math.round(Math.log((userData.workExp || 0) / 100));
+    const level = Math.round(Math.log((userData?.workExp || 0) / 100));
     const cooldown = 60 * 1000 * 5 + level * 0.1;
-    const lastWork = userData.lastWork?.getTime() ?? Date.now() - cooldown;
+    const lastWork = userData?.lastWork?.getTime() || Date.now() - cooldown;
     const timeDiff = Date.now() - lastWork;
 
     if (timeDiff && timeDiff < cooldown) {

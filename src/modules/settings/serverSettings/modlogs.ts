@@ -11,9 +11,7 @@ import { saveServerSettings } from './_helpers';
 
 export const modlogsSettings: SettingsMenus = {
   getOverviewValue: ({ settings, i }) => ({
-    value: t(i, 'SETTINGS_SENDING_IN', {
-      channel: channelMention(settings.modLogsChannel),
-    }),
+    value: channelMention(settings.modLogsChannel),
   }),
   getErrors({ guild, settings, isEnabled, i }) {
     const channelId = settings.modLogsChannel;

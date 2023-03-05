@@ -19,9 +19,9 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('USER', localeLower),
   description: t('en-US', 'user_info.description'),
   descriptionLocalizations: getAllLanguages('user_info.description'),
-  options: new OptionBuilder().user('user', t('en-US', 'user_info.options.user.description'), {
+  options: new OptionBuilder().user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
     nameLocalizations: getAllLanguages('USER', localeLower),
-    descriptionLocalizations: getAllLanguages('user_info.options.user.description'),
+    descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
   }),
   async handle({ user }) {
     const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;

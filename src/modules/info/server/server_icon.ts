@@ -19,9 +19,9 @@ export default ChatCommand({
   name: 'server icon',
   description: t('en-US', 'server_icon.description'),
   options: new OptionBuilder()
-    .string('id', t('en-US', 'server_icon.options.id.description'), {
+    .string('id', t('en-US', 'SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('ID', localeLower),
-      descriptionLocalizations: getAllLanguages('server_icon.options.id.description'),
+      descriptionLocalizations: getAllLanguages('SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'),
     })
     .string('size', t('en-US', 'avatar.meta.options.size.description'), {
       nameLocalizations: getAllLanguages('SIZE', localeLower),

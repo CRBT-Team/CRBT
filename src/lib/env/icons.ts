@@ -27,4 +27,5 @@ export default {
   invite: 'https://crbt.app/assets/logos/crbt.png',
   success: 'https://cdn.discordapp.com/emojis/1030989528950906940.png?size=96&quality=lossless',
   giveaway: 'https://cdn.discordapp.com/emojis/1000761543350296626.png',
+  reminder: 'https://cdn.discordapp.com/emojis/1030989518192513034.png',
 };

@@ -23,10 +23,14 @@ export default ChatCommand({
   name: 'server info',
   description: t('en-US', 'server_info.description'),
   descriptionLocalizations: getAllLanguages('server_info.description'),
-  options: new OptionBuilder().string('id', t('en-US', 'server_info.options.id.description'), {
-    nameLocalizations: getAllLanguages('ID', localeLower),
-    descriptionLocalizations: getAllLanguages('server_info.options.id.description'),
-  }),
+  options: new OptionBuilder().string(
+    'id',
+    t('en-US', 'SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'),
+    {
+      nameLocalizations: getAllLanguages('ID', localeLower),
+      descriptionLocalizations: getAllLanguages('SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'),
+    }
+  ),
   async handle({ id }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
       return await CRBTError(this, {

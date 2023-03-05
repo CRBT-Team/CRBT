@@ -11,8 +11,8 @@
   "DONATE": "Поддержать",
   "ERROR_ADMIN_ONLY": "Вы должны быть администратором, чтобы использовать эту команду.",
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
-  "ERROR_INVALID_URL": "Предоставленная ссылка недействительна.",
-  "ERROR_INVALID_COLOR": "Выбранный цвет недействителен. Используйте корректный HEX цвет или один из предложенных шаблонов.",
+  "ERROR_INVALID_URL": "Неправильный URL.",
+  "ERROR_INVALID_COLOR": "Неправильный цвет. Используйте пресет или правильный HEX код.",
   "BACK": "Вернуться",
   "JUMP_TO_MSG": "Перейти к сообщению",
   "CANCEL": "Отменить",
@@ -24,9 +24,9 @@
   "SAVE": "Сохранить изменения",
   "SEND": "Отправить",
   "DONE": "Готово",
-  "ON": "On",
-  "OFF": "Off",
-  "NEW": "New",
+  "ON": "Вкл.",
+  "OFF": "Выкл.",
+  "NEW": "Новый",
   "ADD_REMINDER": "Добавить напоминание",
   "OPEN_DMS": "Открыть ЛС",
   "PREVIEW": "Предпросмотр",
@@ -35,7 +35,7 @@
   "YES": "Да",
   "NO": "Нет",
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Этот компонент может использовать только первоначальный пользователь команды.",
   "TEXT_CHANNEL": "Текстовый канал",
   "TEXT_CHANNELS": "Text Channel(s)",
   "VOICE_CHANNEL": "Голосовой канал",
@@ -47,9 +47,9 @@
   "CATEGORY": "Категория",
   "CATEGORIES": "Category(ies)",
   "RULES_CHANNEL": "Канал правил",
-  "RULES_CHANNELS": "Rules Channel(s)",
+  "RULES_CHANNELS": "Правила канал(ов)",
   "THREAD_CHANNEL": "Ветка",
-  "THREAD_CHANNELS": "Thread(s)",
+  "THREAD_CHANNELS": "Ветки",
   "FORUM_CHANNEL": "Форум",
   "FORUM_CHANNELS": "Forum Channel(s)",
   "FORUM_POST": "Пост на форуме",
@@ -77,11 +77,11 @@
   "MEDIUM": "Средний",
   "LARGE": "Большой",
   "LARGEST": "Огромный",
-  "SERVER_BOOSTING": "Server Boosting",
+  "SERVER_BOOSTING": "Буст сервера",
   "UnknownError": {
     "strings": {
       "TITLE": "Произошла неизвестная ошибка.",
-      "DESCRIPTION": "Об этом нам сообщили автоматически. Вот что говорит ошибка:\n{MESSAGE}"
+      "DESCRIPTION": "Мы уже получили авторепорт о ней. Вот что говорит ошибка:\n{MESSAGE}"
     }
   },
   "CooldownError": {
@@ -98,7 +98,7 @@
       "options": [
         {
           "name": "цвет",
-          "description": "What to change your accent color to. Use a suggestion or a HEX color."
+          "description": "Выберите из предложенных, иди введите HEX код."
         }
       ]
     },
@@ -127,12 +127,12 @@
       "white": "Белый"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You don't have a profile color to sync from! To set one, go to your Discord Profile settings."
+      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
     },
     "strings": {
       "EMBED_TITLE": "Пользовательский цвет обновлён.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
-      "EMBED_DESCRIPTION": "It will be used in CRBT's replies to you, and when someone views information about you."
+      "EMBED_SYNC_INFO": "Ваш CRBT цвет теперь синхронизирован с цветом вашего профиля Discord.",
+      "EMBED_DESCRIPTION": "Этот цвет используется в ответах CRBT на вас и при отображении информации о вашем профиле."
     }
   },
   "remind me": {
@@ -141,7 +141,7 @@
       "options": [
         {
           "name": "когда",
-          "description": "Когда вам напомнить."
+          "description": "Укажите дату и время."
         },
         {
           "name": "тема",
@@ -149,25 +149,21 @@
         },
         {
           "name": "адресат",
-          "description": "Where to send the reminder. Sends to DMs by default."
+          "description": "Канал для отправки напоминания. Используется ЛС по умолчанию."
         }
       ]
     },
     "errors": {
-      "PAST": "Нельзя установить напоминание в прошлом.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format.",
-      "TOO_LONG": "Вы не можете установить напоминание более чем на 2 года.",
-      "REMINDERS_MAX_LIMIT": "Вы не можете установить более 10 напоминаний одновременно."
+      "PAST": "Напоминания нельзя задавать на прошедшее время.",
+      "INVALID_FORMAT": "Введённое вами время имеет недопустимый формат.",
+      "TOO_LONG": "Напоминания не могут быть заданы более чем на 2 года вперед.",
+      "REMINDERS_MAX_LIMIT": "Достигнут предел 10 напоминаний."
     },
     "strings": {
-      "SUCCESS_TITLE": "Напоминание установлено!",
-      "SUCCESS_CHANNEL": "Вы получите напоминание в {CHANNEL}",
-      "SUCCESS_DM": "Вы получите уведомление в ЛС",
-      "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT": "Установка напоминания CRBT.",
-      "GCALENDAR_EVENT_DM": "Напоминание также будет отправлено в ЛС.",
-      "GCALENDAR_EVENT_CHANNEL": "Напоминание также будет отправлено в {CHANNEL} на {SERVER}.",
-      "REMINDER_DESCRIPTION": "Установлено на {TIME} ({RELATIVE_TIME})"
+      "SUCCESS_TITLE": "Напоминание задано! Используйте {command} для управления вашими напоминаниями.",
+      "BUTTON_GCALENDAR": "Добавить в Google Календарь",
+      "GCALENDAR_EVENT": "Напоминание CRBT.",
+      "GCALENDAR_EVENT_CHANNEL": "Вы также получите напоминание в {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -180,7 +176,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Returns CRBT's latency information."
+      "description": "Отправляет информацию о задержках CRBT."
     }
   },
   "crbt info": {
@@ -188,47 +184,42 @@
       "description": "Получить информацию о CRBT."
     }
   },
-  "IMAGE": "Image",
+  "IMAGE": "Изображение",
   "poll": {
     "meta": {
-      "description": "Create a poll.",
+      "description": "Создать опрос.",
       "options": {
         "title": {
           "description": "О чем ваш опрос?"
         },
         "end_date": {
-          "description": "When it should end."
+          "description": "Когда он должен закончиться?"
         },
         "choice": {
-          "description": "Выбор, который может сделать пользователь. Желательно сделать его коротким."
+          "description": "Один их вариантов опроса."
         },
         "image": {
-          "description": "Append an image."
-        },
-        "multichoice": {
-          "description": "Allow members to vote for multiple choices."
+          "description": "Добавить изображение."
         }
       }
     },
     "errors": {
       "CHOICE_EMPTY": "Выбор не может быть пустым (без учета эмодзи).",
-      "POLL_DATA_NOT_ALLOWED": "Только автор опроса и модераторы чата (владеющие разрешением \"Управлять сообщениями\") могут просматривать данные и параметры голосования."
+      "POLL_DATA_NOT_ALLOWED": "Только модераторы чата (с возможностью \"Управлять сообщениями\") и создатель опроса могут использовать это меню."
     },
     "strings": {
-      "POLL_DESCRIPTION": "The poll will end {TIME}.\nIts creator can view vote details using the {ICON} button below.",
+      "POLL_DESCRIPTION": "Закончится в {TIME}.\nСоздатель может просматривать данные голосованя с помощью кнопки {ICON}.",
       "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
-      "POLL_FOOTER_VOTES": "Всего голосов: {VOTES}",
-      "POLL_FOOTER_CREATOR": "Started by {USER}",
+      "POLL_FOOTER_CREATOR": "{user} создал(а) голосование",
       "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "SUCCESS_TITLE": "Опрос создан!",
-      "SUCCESS_DESCRIPTION": "It will end {TIME}, but you can prematurely end it with the {ICON} menu. From there, you can also edit or delete it, or view the votes.",
+      "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "POLL_DATA_OPTIONS": "Poll • Data and Options",
-      "POLL_DATA_NOVOTES": "Пока нет голосов",
-      "POLL_DATA_FOOTER": "Note: Data does not update live. Use the button again to refresh the data.",
+      "POLL_DATA_NOVOTES": "No votes",
+      "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
       "BUTTON_END_POLL": "Завершить опрос",
       "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Опрос окончен.",
-      "POLL_HEADER_ENDED": "Завершено",
       "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
       "POLL_RESULTS_TITLE": "Результаты опроса!",
       "POLL_RESULTS_DESCRIPTION_TIE": "Варианты \"{OPTION1}\" и \"{OPTION2}\" имеют равное число голосов: {VOTES}",
@@ -237,21 +228,15 @@
     }
   },
   "banner": {
-    "description": "Get a user's profile banner.",
-    "options": {
-      "user": {
-        "description": "The user whose banner to get."
-      }
-    }
+    "description": "Get a user's profile banner."
   },
+  "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord user or user ID.",
+  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord server ID.",
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's display avatar.",
+      "description": "Get a user's avatar.",
       "options": {
-        "user": {
-          "description": "The user to get the avatar of."
-        },
         "size": {
           "description": "The size of the avatar to get."
         },
@@ -276,7 +261,7 @@
       "name": "Добавить сообщение в закладки"
     },
     "errors": {
-      "DMS_DISABLED": "Вы должны включить ЛС или разблокировать CRBT, чтобы добавить сообщение в закладки."
+      "DMS_DISABLED": "Enable your DMs or unblock CRBT in order to bookmark messages."
     },
     "strings": {
       "BOOKMARK_AUTHOR": "{USER} (сохранил сообщение)",
@@ -335,25 +320,25 @@
   "MOD_VERB_REPORT": "Пожаловался",
   "DESCRIPTION": "Описание",
   "EXPIRES_AT": "Истекает в",
-  "MODERATION_LOGS_VIEW_EMPTY": "*История модерации не найдена.*",
-  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "Просмотр, редактирование или удаление страйка",
-  "MODERATION_LOGS_VIEW_TITLE": "История модерации на сервере {SERVER}",
+  "MODERATION_LOGS_VIEW_EMPTY": "*No Moderation History found.*",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete an entry",
+  "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
   "MODERATOR": "Модератор",
   "REPORTED_BY": "Сообщил",
   "JOIN_MESSAGE": "Приветственное сообщение",
   "LEAVE_MESSAGE": "Прощальное сообщение",
   "JOIN_CHANNEL": "Канал приветствий",
   "LEAVE_CHANNEL": "Канал прощаний",
-  "CRBTSCRIPT_GUIDE": "Открыть гайд по CRBTscript",
+  "CRBTSCRIPT_GUIDE": "CRBTscript guide",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
   "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на сервере <server.name>!",
-  "ERROR_NO_MESSAGE": "Для начала, задайте сообщение при помощи команды {COMMAND}.",
+  "ERROR_NO_MESSAGE": "You must set a message first.",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> покинул сервер.",
-  "FIELD_SELECT_MENU": "Выберите поле для редактирования",
-  "COLOR_PRESET_SELECT_MENU": "Выберите пресет цвета",
+  "FIELD_SELECT_MENU": "Edit fields",
+  "COLOR_PRESET_SELECT_MENU": "Color presets",
   "MANUAL_COLOR_EDIT_BUTTON": "Используйте HEX-код цвета",
   "MARKDOWN_CRBTSCRIPT_SUPPORT": "Поддерживаются Markdown и CRBTscript.",
   "FIELDS_CONTENT": "Message Content",
@@ -381,9 +366,9 @@
   "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "HELP": "Help",
   "help": {
-    "description": "Возвращает краткое руководство по CRBT."
+    "description": "Returns help to use CRBT."
   },
-  "HELP_DESCRIPTION": "Type {prefix} in the chat and click {botIcon} tco get a list of Slash Commands.\nYou can also right click or long press a message or a user for quick actions.\n\nCRBT comes with handy and powerful features, such as creating reminders ({reminder}), announcing new and leaving members ({settings}), getting Discord and web info ({infoCommands}, etc.)...\n\n...with more to come! Stay up to date on CRBT by joining [our server]({link}).",
+  "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Нравится CRBT?",
   "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
   "GIVEAWAY": "Раздача",
@@ -465,29 +450,29 @@
         "description": "What to translate."
       },
       "target": {
-        "name": "цель",
-        "description": "Язык, на который нужно перевести."
+        "name": "to",
+        "description": "Language to translate to."
       },
       "source": {
-        "name": "источник",
-        "description": "Исходный язык для перевода."
+        "name": "from",
+        "description": "Language to translate from."
       }
     }
   },
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Переведено с {source} на {target}",
-  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Выберите язык, на который нужно перевести.",
-  "REMINDER_LIST_TITLE": "{user} - CRBT Напоминания ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "You don't have any reminders set. Use {command} to set one!",
-  "REMINDER_LIST_DESCRIPTION": "Вы можете установить новое напоминание, используя {command}.",
+  "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
+  "REMINDER_LIST_TITLE": "{user} - Reminders ({number})",
+  "REMINDER_LIST_NO_REMINDERS": "No reminders set. Use {command} to set one!",
+  "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Место назначения:",
   "DMS": "DMs",
-  "REMINDER_LIST_SELECT_MENU_PLACEHOLDER": "Выберите напоминание для редактирования или удаления.",
+  "REMINDERS": "Reminders",
   "REMINDER": "Напоминание",
   "REMINDER_EDIT_MODAL_TITLE": "Редактирование Напоминания",
   "SUBJECT": "Тема",
   "WHEN_TO_SEND": "Когда отправить",
-  "DELETE_CONFIRMATION_TITLE": "Are you sure you want to delete it, forever?!",
+  "DELETE_CONFIRMATION_TITLE": "Do you want to delete it, forever?!",
   "REMINDER_MESSAGE_TITLE": "[Сообщение от {user}]",
   "reminder_list": {
     "description": "Get a list of your reminders."
@@ -502,34 +487,34 @@
       }
     }
   },
-  "PICK_RESULT": "\"{value}\" was picked out of the {number} choices.",
+  "PICK_RESULT": "\"{value}\" picked out of {number} choices.",
   "privacy": {
     "name": "конфиденциальность",
-    "description": "Проверьте настройки конфиденциальности CRBT и отредактируйте их."
+    "description": "Review and edit your privacy settings."
   },
   "SILENT_LEAVES": "Беззвучный выход",
   "SILENT_JOINS": "Беззвучное присоединение",
   "TELEMETRY": "Командная телеметрия",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT will not announce when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT will not announce when you leave a server.",
-  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT регистрирует использование команд, как описано в нашей политике конфиденциальности. Отключение его приведет только к тому, что они не будут отправлены.",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT won't announce when you join a server.",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT won't announce when you leave a server.",
+  "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
   "YOUR_CRBT_DATA": "Ваши данные CRBT",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "Basic data you submit and more is used for CRBT's features. You may download or delete of your data. Beware, the latter erases everything about you on CRBT (including Reminders, Economy and more!!).",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
   "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
   "settings": {
-    "description": "Настроить параметры CRBT на этом сервере."
+    "description": "Configure CRBT's Server Settings."
   },
   "ATTENTION_REQUIRED": "Требуется внимание",
   "OVERVIEW": "Общий обзор",
   "SETTINGS_TITLE": "Server Settings",
-  "SETTINGS_SELECT_MENU_PLACEHOLDER": "Выберите параметр.",
-  "SETTINGS_DESCRIPTION": "Используйте меню выбора ниже, чтобы обновить параметры для этого сервера.",
+  "FEATURES": "Features",
+  "SETTINGS_DESCRIPTION": "Set up or edit CRBT's features with the select menu below.",
   "ENABLE": "Включить",
   "DISABLE": "Выключить",
   "ENABLE_FEATURE": "Enable feature",
   "DISABLE_FEATURE": "Disable feature",
   "ACCENT_COLOR": "Цвет Акцента",
-  "MODERATION_LOGS": "Журнал Модерации",
+  "MODERATION_LOGS": "Moderation Notifications",
   "MODERATION_REPORTS": "Отчёты Модерации",
   "SERVER_THEME": "Theming",
   "AUTOMATIC_THEMING": "Auto Theming",
@@ -544,22 +529,22 @@
   "CHANNEL": "Канал",
   "EDIT_SOMETHING": "Редактировать {feature}",
   "SETTINGS_COLOR_SET_TO": "Установить {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize your Polls, Giveaways and more by setting a theme! Auto Theming lets CRBT always take the primary color from the server's icon, or you can pick a color manually using a HEX code or one of the presets.\n\nIt is currently set to **{color}**.",
-  "SETTINGS_MODLOGS_DESCRIPTION": "Moderation logs allow you to get realtime notifications in the chosen channel for every moderation action a moderator takes using CRBT.",
-  "SETTINGS_MODREPORTS_DESCRIPTION": "Moderation Reports let your members to report a message or a user (by right-clicking or long-pressing them) to the chosen channel.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize Polls, Giveaways, and more with themes! Auto Theming picks the primary color from your server's icon. Or, you can select a color preset or HEX code.\nCurrently set to **{color}**.",
+  "SETTINGS_MODLOGS_DESCRIPTION": "Get realtime notifications in a chosen channel for all moderator actions taken using CRBT.",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "Members can report a message or user to a chosen channel using Moderation Reports by right-clicking or long-pressing them.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
     "name": "поиск",
-    "description": "Поиск чего-либо в одном из предоставленных поисковиков.",
+    "description": "Search anything on the web.",
     "options": {
       "query": {
         "name": "запрос",
-        "description": "Что искать."
+        "description": "Your search query."
       },
       "site": {
         "name": "сайт",
-        "description": "Какой поисковик использовать."
+        "description": "Available search engines."
       },
       "anonymous": {
         "name": "анонимно",
@@ -581,18 +566,18 @@
   "PAGINATION_PAGE_OUT_OF": "Страница {page}/{pages}",
   "SEARCH_TITLE": "{engine} по запросу \"{query}\"",
   "VIEW_MESSAGE_BELOW": "View message below",
-  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled on the server!",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "You may enable it using {command}.",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "You can ask an admin of the server to enable it using {command}.",
+  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "Use {command} to enable it.",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "Ask a server administrator to enable it using {command}.",
   "MODREPORTS_MODAL_TITLE": "Report {user}",
-  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe your report and add details to go with it.",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe and detail your report.",
   "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
   "BAN_USER": "Ban User",
   "DELETE_MESSAGE": "Delete Message",
-  "MODREPORTS_SUCCESS_TITLE": "Your report was successfully sent to {server}'s moderators.",
-  "MODREPORTS_SUCCESS_DESCRIPTION": "This report was added to {user}'s moderation history. People with access to the chosen Moderation Reports channel will be able to review your report and act accordingly.",
+  "MODREPORTS_SUCCESS_TITLE": "Your report was sent to {server}'s moderators.",
+  "MODREPORTS_SUCCESS_DESCRIPTION": "It was added to {user}'s Moderation History. Review and action can be taken by those with access to the Moderation Reports channel.",
   "ROLE_INFO_TITLE": "{role} - Role info",
   "POSITION": "Position",
   "HUMANS": "Human(s)",
@@ -602,9 +587,9 @@
   "ROLE_INFO_HOISTED": "Displays separately from online members",
   "ROLE_INFO_MENTIONABLE": "Anyone can @mention this role",
   "ROLE_INFO_MANAGED": "Managed",
-  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Role automatically added to Server Boosters.",
-  "ROLE_INFO_MANAGED_BOT": "Role managed by {bot}.",
-  "ROLE_INFO_MANAGED_INTEGRATION": "Role managed by an external integration.",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Automatically added to Server Boosters.",
+  "ROLE_INFO_MANAGED_BOT": "Managed by {bot}.",
+  "ROLE_INFO_MANAGED_INTEGRATION": "Managed by an external integration.",
   "role_info": {
     "description": "Get information about a server role.",
     "options": {
@@ -614,25 +599,15 @@
     }
   },
   "server_info": {
-    "description": "Get information about a Discord server.",
-    "options": {
-      "id": {
-        "description": "ID of the server to get information from."
-      }
-    }
+    "description": "Get information about a Discord server."
   },
-  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "The ID you have used is either invalid, or I'm not part of this server.",
+  "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "Invalid ID used or I'm not part of this server.",
   "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
   "server_icon": {
-    "description": "Get a Discord server's icon.",
-    "options": {
-      "id": {
-        "description": "ID of the server whose icon to get."
-      }
-    }
+    "description": "Get a Discord server's icon."
   },
-  "USER_BANNER_ERROR_NO_BANNER_SELF": "You do not have a profile banner!",
-  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user does not have a profile banner!",
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "You don't have a profile banner.",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user doesn't have a profile banner.",
   "AGE_RESTRICTED": "Age-Restricted",
   "TAGS": "Tags",
   "BITRATE": "Bitrate",
@@ -645,7 +620,7 @@
     "description": "Get information about a server channel.",
     "options": {
       "channel": {
-        "description": "What channel to get info from."
+        "description": "Any channel in the server."
       }
     }
   },
@@ -659,13 +634,13 @@
     "description": "Get information about an emoji.",
     "options": {
       "emoji": {
-        "description": "The emoji to get info from. Default and custom emoji are supported."
+        "description": "Default and custom emoji are supported."
       }
     }
   },
   "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Can't find this emoji.",
-  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Try again using a default {standardEmoji} or custom {customEmoji} emoji.",
-  "EMOJI_INFO_CLONE_SUCCESS": "Successfully added {emoji} to the server!",
+  "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Use a default {standardEmoji} or custom {customEmoji} emoji instead.",
+  "EMOJI_INFO_CLONE_SUCCESS": "Added {emoji} to the server.",
   "INVITE_INFO": "Invite info",
   "INVITE": "Invite",
   "INVITE_INFO_LANDING_CHANNEL": "Landing channel",
@@ -675,7 +650,7 @@
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
-  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired, and that everyone can access it.",
+  "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired and that it is public.",
   "invite_info": {
     "description": "Get information about a Discord invite.",
     "options": {
@@ -688,18 +663,12 @@
   "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
   "REPORT_MODAL_TITLE": "New Report",
   "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
-  "REPORT_MDOAL_DESCRIPTION_PLACEHOLDER": "Describe your report in detail.",
   "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
   "report": {
-    "description": "Report a CRBT-related issue, bug, typo, etc."
+    "description": "Report a CRBT-related issue."
   },
   "user_info": {
-    "description": "Get a user's Discord information.",
-    "options": {
-      "user": {
-        "description": "User to get info from."
-      }
-    }
+    "description": "Get a user's Discord information."
   }
 }
