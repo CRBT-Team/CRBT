@@ -7,6 +7,7 @@ import { CommandInteraction, Interaction } from 'discord.js';
 import { balance } from './balance';
 import { daily } from './daily';
 import { give } from './give';
+import { inventory } from './inventory/inventory';
 import { leaderboard } from './leaderboard';
 import { shop } from './shop/shop';
 import { work } from './work';
@@ -18,6 +19,7 @@ export const economyCommands = {
   leaderboard: leaderboard,
   work: work,
   shop: shop,
+  inventory: inventory,
 };
 
 interface EconomyCommandMetaProps {
@@ -110,7 +112,7 @@ export async function upsertServerMember(
 }
 
 export async function getServerMember(userId: string, guildId: string, force = false) {
-  const memberId = `${guildId}_${userId}`;
+  const memberId = `${userId}_${guildId}`;
 
   return await fetchWithCache(
     `member:${memberId}`,
