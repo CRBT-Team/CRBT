@@ -9,7 +9,7 @@
   "ADD_TO_SERVER": "Ajouter au serveur",
   "DISCORD_SERVER": "Serveur Discord",
   "DONATE": "Faire un don",
-  "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
+  "PERMISSION_ADMINISTRATOR": "Administrator",
   "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
   "ERROR_INVALID_URL": "URL invalide.",
   "ERROR_INVALID_COLOR": "Couleur invalide. Utilisez un préréglage ou un code HEX valide.",
@@ -27,7 +27,7 @@
   "ON": "Activé(e)",
   "OFF": "Désactivé(e)",
   "NEW": "Nouveau",
-  "ADD_REMINDER": "Envoyer un rappel",
+  "SET_REMINDER": "Set Reminder",
   "OPEN_DMS": "Ouvrir les MP",
   "PREVIEW": "Aperçu",
   "EXPORT": "Exporter",
@@ -36,24 +36,18 @@
   "NO": "Non",
   "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur original de la commande peut utiliser ce composant.",
-  "TEXT_CHANNEL": "Salon textuel",
-  "TEXT_CHANNELS": "Salon(s) textuel(s)",
-  "VOICE_CHANNEL": "Salon vocal",
-  "VOICE_CHANNELS": "Salon(s) vocal(aux)",
-  "STAGE_CHANNEL": "Salon de conférence",
-  "STAGE_CHANNELS": "Salon(s) de conférence",
-  "ANNOUNCEMENT_CHANNEL": "Salon d'annonce",
-  "ANNOUNCEMENT_CHANNELS": "Salon(s) d'annonce",
+  "TEXT_CHANNEL": "Text",
+  "VOICE_CHANNEL": "Voice",
+  "STAGE_CHANNEL": "Stage",
+  "ANNOUNCEMENT_CHANNEL": "Announcement",
   "CATEGORY": "Catégorie",
-  "CATEGORIES": "Catégorie(s)",
-  "RULES_CHANNEL": "Salon des règles",
-  "RULES_CHANNELS": "Salon(s) des règles",
-  "THREAD_CHANNEL": "Fil",
-  "THREAD_CHANNELS": "Fil(s)",
-  "FORUM_CHANNEL": "Salon de forum",
-  "FORUM_CHANNELS": "Salon(s) forum",
-  "FORUM_POST": "Post de forum",
-  "FORUM_POSTS": "Post(s) de forum",
+  "CATEGORIES": "Categories",
+  "RULES_CHANNEL": "Rules",
+  "THREAD": "Thread",
+  "THREADS": "Thread(s)",
+  "FORUM_CHANNEL": "Forum",
+  "POST": "Post",
+  "POSTS": "Post(s)",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Membres",
@@ -67,6 +61,7 @@
   "STATIC": "Fixe(s)",
   "ANIMATED": "Animé(es)",
   "END_DATE": "Date de fin",
+  "END_NOW": "End now",
   "POLL": "Sondage",
   "CHOICE": "Choix",
   "TITLE": "Titre",
@@ -85,46 +80,29 @@
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "Un instant !",
-      "DESCRIPTION": "Vous pourrez utiliser {TYPE} dans {TIME}...",
-      "COMMAND": "cette commande",
-      "COMPONENT": "ce bouton"
-    }
+    "TITLE": "Hold it!",
+    "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
     "meta": {
       "description": "Changez votre couleur d'accentuation CRBT.",
       "options": [
         {
-          "name": "couleur",
           "description": "Choisissez une suggestion ou un code HEX."
         }
       ]
     },
     "colorNames": {
       "sync": "Synchroniser la couleur de profil Discord",
-      "lightred": "Rouge clair",
       "red": "Rouge",
-      "darkred": "Rouge foncé",
       "orange": "Orange",
       "yellow": "Jaune",
-      "lightgreen": "Vert clair",
       "green": "Vert",
-      "darkgreen": "Vert foncé",
-      "cyan": "Cyan",
-      "lightblue": "Bleu clair",
       "blue": "Bleu",
-      "darkblue": "Bleu foncé",
       "blurple": "Bleu-violet",
-      "lightpurple": "Violet clair",
       "purple": "Violet",
-      "darkpurple": "Violet foncé",
       "pink": "Rose",
-      "brown": "Marron",
-      "black": "Noir",
-      "gray": "Gris",
-      "white": "Blanc"
+      "gray": "Gris"
     },
     "errors": {
       "NO_DISCORD_COLOR": "Aucune couleur de profil à synchroniser. Pour en définir une, modifiez votre profil Discord."
@@ -144,11 +122,9 @@
           "description": "Choisissez une date ou une heure relative."
         },
         {
-          "name": "sujet",
           "description": "Ce dont vous voulez être rappelé."
         },
         {
-          "name": "destination",
           "description": "Un salon où envoyer le rappel, par MPs par défaut."
         }
       ]
@@ -162,8 +138,7 @@
     "strings": {
       "SUCCESS_TITLE": "Rappel créé ! Utilisez {command} pour gérer vos rappels.",
       "BUTTON_GCALENDAR": "Ajouter à Google Agenda",
-      "GCALENDAR_EVENT": "Rappel CRBT.",
-      "GCALENDAR_EVENT_CHANNEL": "Vous serez également rappelé dans {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "et",
@@ -209,22 +184,17 @@
     },
     "strings": {
       "POLL_DESCRIPTION": "Se termine {TIME}.\nLe créateur peut afficher les données de vote avec le bouton {ICON}.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_CREATOR": "{user} a créé un sondage",
-      "POLL_SELECT_MENU_VOTE": "Voter",
       "SUCCESS_TITLE": "Sondage créé !",
       "SUCCESS_DESCRIPTION": "Vous pouvez voir les votes, éditer, supprimer ou terminer votre sondage plus tôt avec le bouton {ICON}.",
-      "POLL_DATA_OPTIONS": "Sondage • Données et options",
+      "DATA_AND_OPTIONS": "Data and Options",
       "POLL_DATA_NOVOTES": "Aucun vote",
       "POLL_DATA_FOOTER": "Ces données ne sont pas mises à jour en direct. Rafraîchissez-les en utilisant le bouton à nouveau.",
-      "BUTTON_END_POLL": "Terminer le sondage",
       "SUCCESS_POLL_DELETED": "Sondage supprimé.",
       "SUCCESS_POLL_ENDED": "Sondage terminé.",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION_TIE": "Les choix \"{OPTION1}\" et \"{OPTION2}\" ont fini à égalité avec {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "Le choix \"{OPTION}\" a gagné avec {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "sur {TOTAL} !\nCliquez sur le bouton ci-dessous pour afficher les résultats."
+      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -325,14 +295,11 @@
   "MODERATION_LOGS_VIEW_TITLE": "Historique de Modération dans {SERVER}",
   "MODERATOR": "Modérateur",
   "REPORTED_BY": "Signalé par ",
-  "JOIN_MESSAGE": "Message de bienvenue",
-  "LEAVE_MESSAGE": "Message de départ",
-  "JOIN_CHANNEL": "Salon de bienvenue",
-  "LEAVE_CHANNEL": "Salon de départ",
+  "JOIN_MESSAGE": "Welcome Message",
+  "LEAVE_MESSAGE": "Farewell Message",
   "CRBTSCRIPT_GUIDE": "Guide CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifier ce message pour personnaliser le {TYPE} en utilisant le menu de sélection ci-dessous.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Aperçu",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le {TYPE} lorsqu'il sera envoyé dans {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
   "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message.",
@@ -363,14 +330,13 @@
   "ROLE": "Rôle(s)",
   "MAJOR_PERMS": "Permissions principales sur ce serveur",
   "NO_PERMS": "*Aucune permission*",
-  "ADMIN_ALL_PERMS": "Administrateur (toutes les permissions)",
   "HELP": "Aide",
   "help": {
     "description": "Besoin d'aide pour utiliser CRBT ?"
   },
   "HELP_DESCRIPTION": "Tapez {prefix} et cliquez sur {botIcon} pour une liste des commandes, ou faites un clic droit/appui long sur un message ou un utilisateur pour des actions rapides.\nCRBT intégre des fonctionnalités pratiques telles que les rappels ({reminder}), les messages de bienvenue/d'adieu ({settings}), l'obtention d'informations ({infoCommands}), et plus à venir !",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
-  "HELP_AD_DESCRIPTION": "Ajoutez-moi à votre serveur !",
+  "HELP_AD_DESCRIPTION": "Add it to your server!",
   "GIVEAWAY": "Concours",
   "giveaway": {
     "description": "Créez un concours.",
@@ -442,6 +408,8 @@
   "ROLL_RESULTS_TITLE": "Vos dés donnent un résultat de {result}.",
   "ROLL_RESULTS_FOOTER": "Vos lancers : {results}.",
   "TRANSLATE": "traduire",
+  "TO": "To",
+  "FROM": "From",
   "translate": {
     "description": "Traduisez du texte dans une autre langue.",
     "options": {
@@ -450,11 +418,9 @@
         "description": "Le texte à traduire."
       },
       "target": {
-        "name": "vers",
         "description": "La langue dans laquelle traduire."
       },
       "source": {
-        "name": "de",
         "description": "Langue depuis laquelle traduire."
       }
     }
@@ -462,8 +428,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} n'est pas une langue valide.",
   "TRANSLATE_RESULT": "Traduction {source} vers {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Traduire vers",
-  "REMINDER_LIST_TITLE": "{user} - Rappels ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Aucun rappel défini. Utilisez {command} pour en définir un !",
+  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
   "REMINDER_LIST_DESCRIPTION": "Créez un nouveau rappel avec {command}.",
   "REMINDER_DESTINATION": "Destination :",
   "DMS": "MP",
@@ -670,5 +635,10 @@
   },
   "user_info": {
     "description": "Obtenir les informations Discord sur un utilisateur."
-  }
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
+  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
+  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}."
 }
