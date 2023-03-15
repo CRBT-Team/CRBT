@@ -9,7 +9,7 @@
   "ADD_TO_SERVER": "Добавить на сервер",
   "DISCORD_SERVER": "Сервер Discord",
   "DONATE": "Поддержать",
-  "ERROR_ADMIN_ONLY": "Вы должны быть администратором, чтобы использовать эту команду.",
+  "PERMISSION_ADMINISTRATOR": "Administrator",
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
   "ERROR_INVALID_URL": "Неправильный URL.",
   "ERROR_INVALID_COLOR": "Неправильный цвет. Используйте пресет или правильный HEX код.",
@@ -27,7 +27,7 @@
   "ON": "Вкл.",
   "OFF": "Выкл.",
   "NEW": "Новый",
-  "ADD_REMINDER": "Добавить напоминание",
+  "SET_REMINDER": "Set Reminder",
   "OPEN_DMS": "Открыть ЛС",
   "PREVIEW": "Предпросмотр",
   "EXPORT": "Экспортировать",
@@ -36,24 +36,18 @@
   "NO": "Нет",
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Этот компонент может использовать только первоначальный пользователь команды.",
-  "TEXT_CHANNEL": "Текстовый канал",
-  "TEXT_CHANNELS": "Text Channel(s)",
-  "VOICE_CHANNEL": "Голосовой канал",
-  "VOICE_CHANNELS": "Voice Channel(s)",
-  "STAGE_CHANNEL": "Трибуна",
-  "STAGE_CHANNELS": "Stage Channel(s)",
-  "ANNOUNCEMENT_CHANNEL": "Канал объявлений",
-  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
+  "TEXT_CHANNEL": "Text",
+  "VOICE_CHANNEL": "Voice",
+  "STAGE_CHANNEL": "Stage",
+  "ANNOUNCEMENT_CHANNEL": "Announcement",
   "CATEGORY": "Категория",
-  "CATEGORIES": "Category(ies)",
-  "RULES_CHANNEL": "Канал правил",
-  "RULES_CHANNELS": "Правила канал(ов)",
-  "THREAD_CHANNEL": "Ветка",
-  "THREAD_CHANNELS": "Ветки",
-  "FORUM_CHANNEL": "Форум",
-  "FORUM_CHANNELS": "Forum Channel(s)",
-  "FORUM_POST": "Пост на форуме",
-  "FORUM_POSTS": "Forum Post(s)",
+  "CATEGORIES": "Categories",
+  "RULES_CHANNEL": "Rules",
+  "THREAD": "Thread",
+  "THREADS": "Thread(s)",
+  "FORUM_CHANNEL": "Forum",
+  "POST": "Post",
+  "POSTS": "Post(s)",
   "WEBSOCKET": "Веб-сокет",
   "INTERACTION": "Взаимодействие",
   "MEMBERS": "Участники",
@@ -67,6 +61,7 @@
   "STATIC": "Статичный",
   "ANIMATED": "Анимированный",
   "END_DATE": "Дата окончания",
+  "END_NOW": "End now",
   "POLL": "Опрос",
   "CHOICE": "Выбор",
   "TITLE": "Заголовок",
@@ -85,46 +80,29 @@
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "Подождите!",
-      "DESCRIPTION": "Вы сможете использовать {TYPE} через {TIME}...",
-      "COMMAND": "команда",
-      "COMPONENT": "компонент"
-    }
+    "TITLE": "Hold it!",
+    "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
     "meta": {
       "description": "Изменить цвет акцента CRBT.",
       "options": [
         {
-          "name": "цвет",
           "description": "Выберите из предложенных, иди введите HEX код."
         }
       ]
     },
     "colorNames": {
       "sync": "Синхронизировать Цвет Профиля Discord",
-      "lightred": "Светло-красный",
       "red": "Красный",
-      "darkred": "Тёмно-красный",
       "orange": "Оранжевый",
       "yellow": "Жёлтый",
-      "lightgreen": "Светло-зелёный",
       "green": "Зелёный",
-      "darkgreen": "Тёмно-зелёный",
-      "cyan": "Бирюзовый",
-      "lightblue": "Светло-синий",
       "blue": "Синий",
-      "darkblue": "Тёмно-синий",
       "blurple": "Синелетовый",
-      "lightpurple": "Светло-фиолетовый",
       "purple": "Фиолетовый",
-      "darkpurple": "Тёмно-фиолетовый",
       "pink": "Розовый",
-      "brown": "Коричневый",
-      "black": "Чёрный",
-      "gray": "Серый",
-      "white": "Белый"
+      "gray": "Серый"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
@@ -144,11 +122,9 @@
           "description": "Укажите дату и время."
         },
         {
-          "name": "тема",
           "description": "О чем напомнить."
         },
         {
-          "name": "адресат",
           "description": "Канал для отправки напоминания. Используется ЛС по умолчанию."
         }
       ]
@@ -162,8 +138,7 @@
     "strings": {
       "SUCCESS_TITLE": "Напоминание задано! Используйте {command} для управления вашими напоминаниями.",
       "BUTTON_GCALENDAR": "Добавить в Google Календарь",
-      "GCALENDAR_EVENT": "Напоминание CRBT.",
-      "GCALENDAR_EVENT_CHANNEL": "Вы также получите напоминание в {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "и",
@@ -209,22 +184,17 @@
     },
     "strings": {
       "POLL_DESCRIPTION": "Закончится в {TIME}.\nСоздатель может просматривать данные голосованя с помощью кнопки {ICON}.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} голос(ов)",
       "POLL_FOOTER_CREATOR": "{user} создал(а) голосование",
-      "POLL_SELECT_MENU_VOTE": "Проголосовать",
       "SUCCESS_TITLE": "Опрос создан!",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
-      "POLL_DATA_OPTIONS": "Poll • Data and Options",
+      "DATA_AND_OPTIONS": "Data and Options",
       "POLL_DATA_NOVOTES": "No votes",
       "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
-      "BUTTON_END_POLL": "Завершить опрос",
       "SUCCESS_POLL_DELETED": "Опрос удалён.",
       "SUCCESS_POLL_ENDED": "Опрос окончен.",
       "POLL_DESCRIPTION_ENDED": "Опрос окончен. Вы больше не можете в нем голосовать.",
       "POLL_RESULTS_TITLE": "Результаты опроса!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "Варианты \"{OPTION1}\" и \"{OPTION2}\" имеют равное число голосов: {VOTES}",
-      "POLL_RESULTS_DESCRIPTION_WIN": "Вариант \"{OPTION}\" выиграл с количеством голосов: {VOTES}",
-      "POLL_RESULTS_DESCRIPTION_REST": "из {TOTAL}!\nНажмите на кнопку ниже, чтобы просмотреть все результаты."
+      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -325,14 +295,11 @@
   "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
   "MODERATOR": "Модератор",
   "REPORTED_BY": "Сообщил",
-  "JOIN_MESSAGE": "Приветственное сообщение",
-  "LEAVE_MESSAGE": "Прощальное сообщение",
-  "JOIN_CHANNEL": "Канал приветствий",
-  "LEAVE_CHANNEL": "Канал прощаний",
+  "JOIN_MESSAGE": "Welcome Message",
+  "LEAVE_MESSAGE": "Farewell Message",
   "CRBTSCRIPT_GUIDE": "CRBTscript guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Отредактируйте это сообщение, используя меню выбора ниже, чтобы изменить {TYPE}.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Ваше сообщение не должно быть пустым!",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Предпросмотр",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Так будет выглядеть {TYPE} при отправке в {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Приветствуем <user.name> на сервере <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first.",
@@ -363,14 +330,13 @@
   "ROLE": "Роль",
   "MAJOR_PERMS": "Основные права на этом сервере",
   "NO_PERMS": "*No permissions*",
-  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "HELP": "Help",
   "help": {
     "description": "Returns help to use CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Нравится CRBT?",
-  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
+  "HELP_AD_DESCRIPTION": "Add it to your server!",
   "GIVEAWAY": "Раздача",
   "giveaway": {
     "description": "Создать раздачу.",
@@ -442,6 +408,8 @@
   "ROLL_RESULTS_TITLE": "Результат ваших бросков — {result}.",
   "ROLL_RESULTS_FOOTER": "Ваши броски: {results}.",
   "TRANSLATE": "перевод",
+  "TO": "To",
+  "FROM": "From",
   "translate": {
     "description": "Перевести текст на другой язык.",
     "options": {
@@ -450,11 +418,9 @@
         "description": "What to translate."
       },
       "target": {
-        "name": "to",
         "description": "Language to translate to."
       },
       "source": {
-        "name": "from",
         "description": "Language to translate from."
       }
     }
@@ -462,8 +428,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Переведено с {source} на {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
-  "REMINDER_LIST_TITLE": "{user} - Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set. Use {command} to set one!",
+  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
   "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Место назначения:",
   "DMS": "DMs",
@@ -670,5 +635,10 @@
   },
   "user_info": {
     "description": "Get a user's Discord information."
-  }
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
+  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
+  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}."
 }
