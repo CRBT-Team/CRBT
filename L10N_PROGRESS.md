@@ -36,7 +36,7 @@
 - [0] Report Message
 - [0] Report User
 - [x] /reminder new
-- [~] /reminder list
+- [x] /reminder list
 - [x] /report
 - [ ] /rng
 - [x] /role info
@@ -45,10 +45,10 @@
 - [0] /server icon
 - [~] /server info
 - [x] /settings
-- [~] Set Reminder
+- [x] Set Reminder
 - [0] /timeout
 - [x] /translate
-- [~] Translate Message
+- [x] Translate Message
 - [x] /user info
 - [~] User Info
 - [0] /warn

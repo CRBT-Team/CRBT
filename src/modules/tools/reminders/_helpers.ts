@@ -26,13 +26,13 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
   if (reminder.id.endsWith('BIRTHDAY')) {
     const [userId, username] = reminder.subject.split('-');
     const user = client.users.cache.get(userId);
-    return t(
+    return `🎂 ${t(
       reminder.locale,
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE',
       {
         USER: user?.username ?? `${username}`,
       }
-    );
+    )}`;
   }
   if (reminder.id.includes('MESSAGEREMINDER')) {
     const [username, ...subject] = reminder.subject.split('--');

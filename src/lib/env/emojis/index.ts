@@ -68,7 +68,7 @@ const emojis = {
   channels: {
     text: '<:text_channel:970653903681114182>',
     voice: '<:voice_channel:970653903869861888>',
-    news: '<:news_channel:970653903819513905>',
+    announcement: '<:news_channel:970653903819513905>',
     forum: '<:forum_channel:970653903613997106>',
     rules: '<:rules_channel:970653903622373417>',
     nsfw: '<:nsfw_channel:970653903395913779>',

@@ -56,9 +56,7 @@ export async function renderJoinLeavePreview(
       ...(parsedMessage.content ? { content: parsedMessage.content } : {}),
       embeds: [
         {
-          title: t(this.guildLocale, 'JOINLEAVE_PREVIEW_EMBED_TITLE', {
-            TYPE: t(this.guildLocale, type),
-          }),
+          title: `${t(this, type)} - ${t(this, 'PREVIEW')}`,
           color: await getColor(this.guild),
         },
         ...(message.embed ? [parsedMessage.embed] : []),
@@ -68,9 +66,7 @@ export async function renderJoinLeavePreview(
     await this.reply({
       embeds: [
         {
-          title: t(this, 'JOINLEAVE_PREVIEW_EMBED_TITLE', {
-            TYPE: t(this, type),
-          }),
+          title: `${t(this, type)} - ${t(this, 'PREVIEW')}`,
           description: t(this, 'JOINLEAVE_PREVIEW_EMBED_DESCRIPTION', {
             TYPE: t(this, type).toLocaleLowerCase(this.locale),
             CHANNEL: channel.toString(),

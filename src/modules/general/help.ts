@@ -4,6 +4,7 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
+import { MessageFlags } from 'discord-api-types/v10';
 import { MessageButton } from 'discord.js';
 import { ChatCommand, components, row } from 'purplet';
 
@@ -28,9 +29,11 @@ export default ChatCommand({
             botIcon: '<:CRBT:860947227887403048>',
             reminder: slashCmd('reminder new'),
             settings: slashCmd('settings'),
-            infoCommands: [slashCmd('search'), slashCmd('user info'), slashCmd('define')].join(
-              ', '
-            ),
+            infoCommands: new Intl.ListFormat(this.locale, { type: 'conjunction' }).format([
+              slashCmd('search'),
+              slashCmd('user info'),
+              slashCmd('emoji info'),
+            ]),
             link: links.discord,
           }),
           image: { url: introImage },
@@ -45,6 +48,7 @@ export default ChatCommand({
             : [],
         },
       ],
+      flags: MessageFlags.Ephemeral,
       components: showAdButton
         ? components(
             row(

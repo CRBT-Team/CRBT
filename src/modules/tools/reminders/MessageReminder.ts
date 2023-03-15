@@ -2,6 +2,7 @@ import { colors, emojis } from '$lib/env';
 import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
@@ -26,11 +27,19 @@ export default MessageContextCommand({
 
     messageCache.set(message.id, message);
 
+    const locale = this.locale.split('-')[0];
+
+    await import(`dayjs/locale/${locale}.js`);
+
+    const now = dayjs().locale(locale);
+
     await this.reply({
       embeds: [
         {
-          title: `${emojis.pending} Choose when to be reminded of this message.`,
-          description: `You can edit this later with ${slashCmd('reminder list')}`,
+          title: `${emojis.pending} ${t(this, 'SET_REMINDER_EMBED_TITLE')}`,
+          description: t(this, 'SET_REMINDER_EMBED_DESCRIPTION', {
+            command: slashCmd('reminder list'),
+          }),
           color: colors.yellow,
         },
       ],
@@ -38,19 +47,22 @@ export default MessageContextCommand({
       components: components(
         row(
           new SelectTimeMenu(message.id).setOptions(
-            [
-              '10-minutes',
-              '30-minutes',
-              '1-hour',
-              '3-hours',
-              '6-hours',
-              '12-hours',
-              '1-day',
-              '3-days',
-              '1-week',
-            ].map((h) => ({
-              label: h.replace('-', ' '),
-              value: h,
+            (
+              [
+                ['10m', now.add(10, 'm')],
+                ['30m', now.add(30, 'm')],
+                ['1h', now.add(1, 'h')],
+                ['3h', now.add(3, 'h')],
+                ['12h', now.add(12, 'h')],
+                ['1d', now.add(1, 'd')],
+                ['3d', now.add(3, 'd')],
+                ['1w', now.add(1, 'w')],
+                ['2w', now.add(2, 'w')],
+                ['1M', now.add(1, 'M')],
+              ] as [string, dayjs.Dayjs][]
+            ).map(([value, name]) => ({
+              label: name.fromNow(),
+              value: value,
             }))
           )
         )
@@ -73,9 +85,9 @@ export const SelectTimeMenu = SelectMenuComponent({
       embed?.fields[0].name ||
       ''
     )?.slice(0, 60)}...`;
+
     const details = budgetify(message);
-    const [length, unit] = this.values[0].split('-');
-    const expiresAt = dayjs().add(Number(length), unit);
+    const expiresAt = dayjs().add(ms(this.values[0]));
 
     try {
       const reminder = await dbTimeout(TimeoutTypes.Reminder, {

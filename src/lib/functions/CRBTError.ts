@@ -151,13 +151,9 @@ export async function CooldownError(
     embeds: [
       handleError(context, {
         embed: {
-          title: t(context.locale, 'CooldownError.strings.TITLE'),
-          description: t(context.locale, 'CooldownError.strings.DESCRIPTION', {
-            TYPE:
-              context.type === 'APPLICATION_COMMAND'
-                ? t(context.locale, 'CooldownError.strings.COMMAND')
-                : t(context.locale, 'CooldownError.strings.COMPONENT'),
-            TIME: `${timestampMention(relativetime, 'R')}...`,
+          title: t(context.locale, 'CooldownError.TITLE'),
+          description: t(context.locale, 'CooldownError.DESCRIPTION', {
+            time: timestampMention(relativetime, 'R'),
           }),
         },
       }),
@@ -168,7 +164,7 @@ export async function CooldownError(
             row(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
-                .setLabel(t(context, 'ADD_REMINDER'))
+                .setLabel(t(context, 'SET_REMINDER'))
                 .setEmoji(emojis.reminder)
             )
           )

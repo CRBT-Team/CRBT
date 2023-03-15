@@ -32,7 +32,7 @@ export const PollMenuButton = ButtonComponent({
       this.reply({
         embeds: [
           {
-            title: strings.POLL_DATA_OPTIONS,
+            title: `${t(this, 'POLL')} - ${strings.DATA_AND_OPTIONS}`,
             description: `your current vote is "${choicesNames[choiceId]}"`,
           },
         ],
@@ -57,16 +57,15 @@ export const PollMenuButton = ButtonComponent({
     this.reply({
       embeds: [
         {
-          title: strings.POLL_DATA_OPTIONS,
+          title: `${t(this, 'POLL')} - ${strings.DATA_AND_OPTIONS}`,
           fields: choices.map((choice, index) => ({
-            name: `${choicesNames[index]} (${choice.length})`,
-            value:
-              choice.length > 0
-                ? trimArray(
-                    choice.map((id) => `<@${id}>`),
-                    15
-                  ).join(', ')
-                : strings.POLL_DATA_NOVOTES,
+            name: choicesNames[index],
+            value: choice.length
+              ? trimArray(
+                  choice.map((id) => `<@${id}>`),
+                  15
+                ).join(', ')
+              : strings.POLL_DATA_NOVOTES,
           })),
           footer: {
             text: strings.POLL_DATA_FOOTER,
@@ -81,7 +80,7 @@ export const PollMenuButton = ButtonComponent({
             .setEmoji(emojis.buttons.pencil)
             .setStyle('SECONDARY'),
           new EndPollButton(this.message.id)
-            .setLabel(strings.BUTTON_END_POLL)
+            .setLabel(t(this, 'END_NOW'))
             .setStyle('DANGER')
             .setEmoji(emojis.buttons.cross),
           new CancelPollButton(this.message.id)

@@ -76,9 +76,9 @@ export function renderStrike(
       'f'
     )} • ${action} ${expires}`,
     value: dedent`
-    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`).toLocaleLowerCase(
-      locale
-    )} ${target}
+    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`, {
+      target: '',
+    }).toLocaleLowerCase(locale)} ${target}
     ${reason}
     `,
   };
