@@ -9,7 +9,7 @@
   "ADD_TO_SERVER": "सर्वर को ऐड करे ",
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
   "DONATE": "दान करे",
-  "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
+  "PERMISSION_ADMINISTRATOR": "Administrator",
   "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
   "ERROR_INVALID_URL": "Invalid URL.",
   "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
@@ -27,7 +27,7 @@
   "ON": "On",
   "OFF": "Off",
   "NEW": "New",
-  "ADD_REMINDER": "रिमाइंडर सेट करे",
+  "SET_REMINDER": "Set Reminder",
   "OPEN_DMS": "DMs खोले |",
   "PREVIEW": "प्रीव्यू",
   "EXPORT": "एक्सपोर्ट",
@@ -36,24 +36,18 @@
   "NO": "नहीं",
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल जिन्होंने कमांड का उपयोग किया है इस component को उपयोग कर सकते हैं |",
-  "TEXT_CHANNEL": "टेक्स्ट चैनल ",
-  "TEXT_CHANNELS": "टेक्स्ट चैनल ",
-  "VOICE_CHANNEL": "वोइस चैनल",
-  "VOICE_CHANNELS": "वॉयस चैनल ",
-  "STAGE_CHANNEL": "स्टेज चैनल",
-  "STAGE_CHANNELS": "स्टेज चैनल ",
-  "ANNOUNCEMENT_CHANNEL": "अनाउंसमेंट चैनल",
-  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
+  "TEXT_CHANNEL": "Text",
+  "VOICE_CHANNEL": "Voice",
+  "STAGE_CHANNEL": "Stage",
+  "ANNOUNCEMENT_CHANNEL": "Announcement",
   "CATEGORY": "केटेगरी",
-  "CATEGORIES": "Category(ies)",
-  "RULES_CHANNEL": "रूल्स चैनल",
-  "RULES_CHANNELS": "Rules Channel(s)",
-  "THREAD_CHANNEL": "थ्रेड ",
-  "THREAD_CHANNELS": "Thread(s)",
-  "FORUM_CHANNEL": "फोरम चैनल",
-  "FORUM_CHANNELS": "Forum Channel(s)",
-  "FORUM_POST": "फोरम पोस्ट",
-  "FORUM_POSTS": "Forum Post(s)",
+  "CATEGORIES": "Categories",
+  "RULES_CHANNEL": "Rules",
+  "THREAD": "Thread",
+  "THREADS": "Thread(s)",
+  "FORUM_CHANNEL": "Forum",
+  "POST": "Post",
+  "POSTS": "Post(s)",
   "WEBSOCKET": "वेब सॉकेट",
   "INTERACTION": "Interaction",
   "MEMBERS": "सदस्यों",
@@ -67,6 +61,7 @@
   "STATIC": "Static",
   "ANIMATED": "Animated",
   "END_DATE": "अंतिम तिथि",
+  "END_NOW": "End now",
   "POLL": "पोल",
   "CHOICE": "विकल्प",
   "TITLE": "टाइटल",
@@ -85,46 +80,29 @@
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "होल्ड करो! ",
-      "DESCRIPTION": "आप इसे {TYPE} को {TIME} के बाद इस्तेमाल करेंगे... ",
-      "COMMAND": "कमांड ",
-      "COMPONENT": "कॉम्पोनेन्ट"
-    }
+    "TITLE": "Hold it!",
+    "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
     "meta": {
       "description": "CRBT का रंग बदले ",
       "options": [
         {
-          "name": "रंग ",
           "description": "Choose a suggestion or a HEX code."
         }
       ]
     },
     "colorNames": {
       "sync": "डिस्कोर्ड प्रोफाइल कलर को सिंक करे |",
-      "lightred": "Light Red",
       "red": "लाल ",
-      "darkred": "Dark Red",
       "orange": "संतरा ",
       "yellow": "पीला",
-      "lightgreen": "Light Green",
       "green": "हरा ",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
       "blue": "नीला",
-      "darkblue": "Dark Blue",
       "blurple": "Blurple",
-      "lightpurple": "Light Purple",
       "purple": "बैंगनी",
-      "darkpurple": "Dark Purple",
       "pink": "गुलाबी",
-      "brown": "भूरा",
-      "black": "काला",
-      "gray": "ग्रे",
-      "white": "सफेद"
+      "gray": "ग्रे"
     },
     "errors": {
       "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
@@ -144,11 +122,9 @@
           "description": "Choose a date or relative time."
         },
         {
-          "name": "विषय",
           "description": "किस बारे में याद दिलाए? "
         },
         {
-          "name": "जगह ",
           "description": "A channel to send the reminder, in DMs by default."
         }
       ]
@@ -162,8 +138,7 @@
     "strings": {
       "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
       "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT": "CRBT Reminder.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "और",
@@ -209,22 +184,17 @@
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_CREATOR": "{user} created a poll",
-      "POLL_SELECT_MENU_VOTE": "Vote",
       "SUCCESS_TITLE": "Poll created!",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
-      "POLL_DATA_OPTIONS": "Poll • Data and Options",
+      "DATA_AND_OPTIONS": "Data and Options",
       "POLL_DATA_NOVOTES": "No votes",
       "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
-      "BUTTON_END_POLL": "End Poll",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
       "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" और \"{OPTION2}\" {VOTES} के साथ टाई हो गया |",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results."
+      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -325,14 +295,11 @@
   "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
   "MODERATOR": "Moderator",
   "REPORTED_BY": "Reported by",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
+  "JOIN_MESSAGE": "Welcome Message",
+  "LEAVE_MESSAGE": "Farewell Message",
   "CRBTSCRIPT_GUIDE": "CRBTscript guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first.",
@@ -363,14 +330,13 @@
   "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "NO_PERMS": "*No permissions*",
-  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "HELP": "Help",
   "help": {
     "description": "Returns help to use CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
+  "HELP_AD_DESCRIPTION": "Add it to your server!",
   "GIVEAWAY": "Giveaway",
   "giveaway": {
     "description": "Create a giveaway.",
@@ -442,6 +408,8 @@
   "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
   "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
   "TRANSLATE": "translate",
+  "TO": "To",
+  "FROM": "From",
   "translate": {
     "description": "Translate text to another language.",
     "options": {
@@ -450,11 +418,9 @@
         "description": "What to translate."
       },
       "target": {
-        "name": "to",
         "description": "Language to translate to."
       },
       "source": {
-        "name": "from",
         "description": "Language to translate from."
       }
     }
@@ -462,8 +428,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
-  "REMINDER_LIST_TITLE": "{user} - Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set. Use {command} to set one!",
+  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
   "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Destination:",
   "DMS": "DMs",
@@ -670,5 +635,10 @@
   },
   "user_info": {
     "description": "Get a user's Discord information."
-  }
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
+  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
+  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}."
 }
