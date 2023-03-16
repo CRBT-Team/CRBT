@@ -38,13 +38,13 @@
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur original de la commande peut utiliser ce composant.",
   "TEXT_CHANNEL": "Textuel",
   "VOICE_CHANNEL": "Vocal",
-  "STAGE_CHANNEL": "Stage",
-  "ANNOUNCEMENT_CHANNEL": "Announcement",
+  "STAGE_CHANNEL": "Conférence",
+  "ANNOUNCEMENT_CHANNEL": "Annonces",
   "CATEGORY": "Catégorie",
-  "CATEGORIES": "Categories",
-  "RULES_CHANNEL": "Rules",
-  "THREAD": "Thread",
-  "THREADS": "Thread(s)",
+  "CATEGORIES": "Catégories",
+  "RULES_CHANNEL": "Règles",
+  "THREAD": "Fil",
+  "THREADS": "Fil(s)",
   "FORUM_CHANNEL": "Forum",
   "POST": "Post",
   "POSTS": "Post(s)",
@@ -61,7 +61,7 @@
   "STATIC": "Fixe(s)",
   "ANIMATED": "Animé(es)",
   "END_DATE": "Date de fin",
-  "END_NOW": "End now",
+  "END_NOW": "Terminer maintenant",
   "POLL": "Sondage",
   "CHOICE": "Choix",
   "TITLE": "Titre",
@@ -80,8 +80,8 @@
     }
   },
   "CooldownError": {
-    "TITLE": "Hold it!",
-    "DESCRIPTION": "You may try again {time}."
+    "TITLE": "Un instant !",
+    "DESCRIPTION": "Vous pouvez réessayer {time}."
   },
   "color set": {
     "meta": {
@@ -138,7 +138,7 @@
     "strings": {
       "SUCCESS_TITLE": "Rappel créé ! Utilisez {command} pour gérer vos rappels.",
       "BUTTON_GCALENDAR": "Ajouter à Google Agenda",
-      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "Vous serez également rappelé dans {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "et",
@@ -187,14 +187,14 @@
       "POLL_FOOTER_CREATOR": "{user} a créé un sondage",
       "SUCCESS_TITLE": "Sondage créé !",
       "SUCCESS_DESCRIPTION": "Vous pouvez voir les votes, éditer, supprimer ou terminer votre sondage plus tôt avec le bouton {ICON}.",
-      "DATA_AND_OPTIONS": "Data and Options",
+      "DATA_AND_OPTIONS": "Données et options",
       "POLL_DATA_NOVOTES": "Aucun vote",
       "POLL_DATA_FOOTER": "Ces données ne sont pas mises à jour en direct. Rafraîchissez-les en utilisant le bouton à nouveau.",
       "SUCCESS_POLL_DELETED": "Sondage supprimé.",
       "SUCCESS_POLL_ENDED": "Sondage terminé.",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
+      "POLL_RESULTS_DESCRIPTION": "Le(s) choix \"{options}\" a/ont gagné avec {votes} vote(s)/{total} !"
     }
   },
   "banner": {
@@ -202,7 +202,7 @@
   },
   "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "Un utilisateur Discord ou son identifiant.",
   "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "Un identifiant de serveur Discord.",
-  "REASON_DESCRIPTION": "Davantage de contexte pour l'Histoire de Modération.",
+  "REASON_DESCRIPTION": "Davantage de contexte pour l'Historique de Modération.",
   "avatar": {
     "meta": {
       "description": "Obtenir l'avatar d'un utilisateur.",
@@ -295,10 +295,10 @@
   "MODERATION_LOGS_VIEW_TITLE": "Historique de Modération dans {SERVER}",
   "MODERATOR": "Modérateur",
   "REPORTED_BY": "Signalé par ",
-  "JOIN_MESSAGE": "Welcome Message",
-  "LEAVE_MESSAGE": "Farewell Message",
+  "JOIN_MESSAGE": "Message de bienvenue",
+  "LEAVE_MESSAGE": "Message de départ",
   "CRBTSCRIPT_GUIDE": "Guide CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Commencez à éditer ce message en utilisant le menu déroulant ci-dessous !",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le {TYPE} lorsqu'il sera envoyé dans {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
@@ -336,7 +336,7 @@
   },
   "HELP_DESCRIPTION": "Tapez {prefix} et cliquez sur {botIcon} pour une liste des commandes, ou faites un clic droit/appui long sur un message ou un utilisateur pour des actions rapides.\nCRBT intégre des fonctionnalités pratiques telles que les rappels ({reminder}), les messages de bienvenue/d'adieu ({settings}), l'obtention d'informations ({infoCommands}), et plus à venir !",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
-  "HELP_AD_DESCRIPTION": "Add it to your server!",
+  "HELP_AD_DESCRIPTION": "Invitez CRBT sur votre serveur !",
   "GIVEAWAY": "Concours",
   "giveaway": {
     "description": "Créez un concours.",
@@ -408,8 +408,8 @@
   "ROLL_RESULTS_TITLE": "Vos dés donnent un résultat de {result}.",
   "ROLL_RESULTS_FOOTER": "Vos lancers : {results}.",
   "TRANSLATE": "traduire",
-  "TO": "To",
-  "FROM": "From",
+  "TO": "À",
+  "FROM": "De",
   "translate": {
     "description": "Traduisez du texte dans une autre langue.",
     "options": {
@@ -428,7 +428,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} n'est pas une langue valide.",
   "TRANSLATE_RESULT": "Traduction {source} vers {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Traduire vers",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
+  "REMINDER_LIST_NO_REMINDERS": "Aucun rappel défini.",
   "REMINDER_LIST_DESCRIPTION": "Créez un nouveau rappel avec {command}.",
   "REMINDER_DESTINATION": "Destination :",
   "DMS": "MP",
@@ -636,9 +636,9 @@
   "user_info": {
     "description": "Obtenir les informations Discord sur un utilisateur."
   },
-  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
-  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
-  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
-  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
-  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}."
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "Aucun texte ou image à traduire n'a été trouvé.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Utilisez {command} pour traduire du texte.",
+  "OCR_ERROR_MESSAGE": "Aucun texte reconnu. Réessayez avec une image plus lisible.",
+  "SET_REMINDER_EMBED_TITLE": "Quand faut-il vous en rappeler ?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}."
 }
