@@ -15,13 +15,13 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
     const showAdButton = !this.guild || this.guild.ownerId !== this.user.id;
-    const introImage = 'https://i.imgur.com/rUHqMcy.gif';
+    const introImage = 'https://s.clembs.com/w81xzTb.gif';
 
     await this.reply({
       embeds: [
         {
           author: {
-            name: `${this.client.user.username} ${t(this, 'HELP')}`,
+            name: `${this.client.user.username} - ${t(this, 'HELP')}`,
             iconURL: avatar(this.client.user, 64),
           },
           description: t(this, 'HELP_DESCRIPTION', {
