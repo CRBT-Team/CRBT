@@ -18,10 +18,10 @@
 - [~] /clear
 - [ ] /coinflip
 - [x] /color set
-- [ ] /convert
+- [0] /convert
 - [x] /crbt info
 - [~] /emoji info
-- [ ] Get JSON
+- [~] Get JSON
 - [~] /giveaway
 - [x] /help
 - [~] /invite info

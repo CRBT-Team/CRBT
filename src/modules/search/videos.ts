@@ -61,23 +61,23 @@ export async function handleVideosSearch(
             },
             fields: [
               {
-                name: 'Uploaded',
+                name: t(this, 'CREATED_ON'),
                 value: `${
                   video.uploadedAt
                     ? timestampMention(
                         dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))),
                         'R'
                       )
-                    : 'At an unknown date'
-                } by **[${video.author.name}](${video.author.url})**`,
+                    : '??'
+                } • **[${video.author.name}](${video.author.url})**`,
               },
               {
-                name: 'Views',
+                name: t(this, 'VIEWS'),
                 value: video.views.toLocaleString(this.locale),
                 inline: true,
               },
               {
-                name: 'Duration',
+                name: t(this, 'DURATION'),
                 value: `\`${video.duration}\``,
                 inline: true,
               },

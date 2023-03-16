@@ -4,7 +4,7 @@ import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
@@ -28,10 +28,10 @@ export async function handleUrbanDictionary(
     const post = list[page - 1];
 
     if (!list || !post) {
-      return createCRBTError(
-        this,
-        `Couldn't find the definition of \`${query}\`. Try again later.`
-      );
+      return createCRBTError(this, {
+        title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+        description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
+      });
     }
 
     const accentColor = await getColor(this.user);
@@ -53,10 +53,10 @@ export async function handleUrbanDictionary(
               post.author
             }](https://www.urbandictionary.com/author.php/author=${encodeURIComponent(
               post.author
-            )})** • ${icon(accentColor, 'thumbsup')} **${post.thumbs_up}** ${icon(
+            )})** • ${timestampMention(new Date(post.written_on), 'R')}\n${icon(
               accentColor,
-              'thumbsdown'
-            )} **${post.thumbs_down}**`,
+              'thumbsup'
+            )} **${post.thumbs_up}** ${icon(accentColor, 'thumbsdown')} **${post.thumbs_down}**`,
             url: post.permalink,
             fields: [
               {
@@ -77,14 +77,6 @@ export async function handleUrbanDictionary(
                     },
                   ]
                 : []),
-              {
-                name: 'Written',
-                value: `${timestampMention(new Date(post.written_on))}\n${timestampMention(
-                  new Date(post.written_on),
-                  'R'
-                )}`,
-                inline: true,
-              },
             ],
             color: accentColor,
             footer: {

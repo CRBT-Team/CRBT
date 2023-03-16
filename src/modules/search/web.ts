@@ -5,8 +5,8 @@ import { t } from '$lib/language';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { SafeSearchType, search } from 'duck-duck-scrape';
 import { decode } from 'html-entities';
-import fetch from 'node-fetch';
 import { escapeMarkdown } from 'purplet';
+import { fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
@@ -56,9 +56,8 @@ export async function handleDuckDuckGo(
 
     if (req.noResults || res.length === 0) {
       return createCRBTError(this, {
-        title: 'Uh-oh, there are no results for your query.',
-        description:
-          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of age-restricted channels.',
+        title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+        description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
       });
     }
 

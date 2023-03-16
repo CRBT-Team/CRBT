@@ -1,5 +1,5 @@
 import getColors from 'get-image-colors';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 
 export async function imgDominantColor(imageUrl: string) {
   const buffer = await (await fetch(imageUrl)).arrayBuffer();

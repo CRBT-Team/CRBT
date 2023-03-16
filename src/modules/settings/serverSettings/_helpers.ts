@@ -45,7 +45,6 @@ export const defaultSettings: FullSettings = {
     items: [],
     categories: [],
     commands: {
-      id: null,
       workStrings: [
         'You washed and properly cleaned a car, which got you {money}.',
         'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',

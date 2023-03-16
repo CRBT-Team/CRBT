@@ -16,7 +16,7 @@ export async function handleImageSearch(
     const res = await fetchResults(this, opts, () =>
       imageSearch(query, {
         additional_params: {},
-        safe: !(this.channel.type === 'GUILD_TEXT' && this.channel.nsfw),
+        safe: 'nsfw' in this.channel ? !this.channel.nsfw : true,
       })
     );
 
@@ -25,9 +25,8 @@ export async function handleImageSearch(
 
     if (!pages) {
       return createCRBTError(this, {
-        title: 'Uh-oh, there are no results for your query.',
-        description:
-          'Try checking for spelling, or something more broad.\nNSFW results are hidden outside of age-restricted channels.',
+        title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+        description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
       });
     }
 
