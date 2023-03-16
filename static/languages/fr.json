@@ -643,7 +643,7 @@
   "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}.",
   "MORE_ELEMENTS": "+ {number} autres...",
   "SEARCH_ERROR_NO_RESULTS_TITLE": "Aucun résultat trouvé.",
-  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden out of age-restricted channels.",
-  "DURATION": "Duration",
-  "VIEWS": "Views"
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Regardez vos erreurs d'orthographe ou pour un sujet plus large.\nLes résultats NSFW sont cachés en dehors des salons soumis à une limite d'âge.",
+  "DURATION": "Durée",
+  "VIEWS": "Vues"
 }
