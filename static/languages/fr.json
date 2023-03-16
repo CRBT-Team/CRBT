@@ -640,5 +640,10 @@
   "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Utilisez {command} pour traduire du texte.",
   "OCR_ERROR_MESSAGE": "Aucun texte reconnu. Réessayez avec une image plus lisible.",
   "SET_REMINDER_EMBED_TITLE": "Quand faut-il vous en rappeler ?",
-  "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}."
+  "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}.",
+  "MORE_ELEMENTS": "+ {number} more...",
+  "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden out of age-restricted channels.",
+  "DURATION": "Duration",
+  "VIEWS": "Views"
 }
