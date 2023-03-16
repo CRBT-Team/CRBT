@@ -41,7 +41,7 @@ export type FullSettings = Partial<
     modules?: Partial<serverModules>;
     economy?: Partial<
       Economy & {
-        commands: EconomyCommands;
+        commands: Partial<EconomyCommands>;
         items: EconomyItem[];
         categories: (EconomyItemCategory & {
           items: EconomyItem[];

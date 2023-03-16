@@ -87,7 +87,10 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   const emoji = {
     static: allEmojis.filter((e) => !e.animated).size,
     animated: allEmojis.filter((e) => e.animated).size,
-    previews: trimArray(allEmojis.map((e) => e.toString())).join('  '),
+    previews: trimArray(
+      allEmojis.map((e) => e.toString()),
+      this.locale
+    ).join('  '),
   };
 
   const formattedChannelsArray = Object.keys(channels)
@@ -135,15 +138,19 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
 
   fields.push({
     name: `${t(this, 'MEMBERS')} • ${formatNum(guild.memberCount)}`,
-    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} ${t(this, 'HUMANS')} • ${
-      emojis.bot
-    } ${formatNum(bots.size)} ${t(this, 'BOTS')}`,
+    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} ${t(
+      this,
+      'HUMANS'
+    ).toLocaleLowerCase(this.locale)} • ${emojis.bot} ${formatNum(bots.size)} ${t(
+      this,
+      'BOTS'
+    ).toLocaleLowerCase(this.locale)}`,
   });
 
   if (roles.length > 0) {
     fields.push({
       name: `${t(this, 'ROLES')} • ${formatNum(roles.length)}`,
-      value: roles.length < 10 ? roles.join('  ') : trimArray(roles, 10).join('  '),
+      value: roles.length < 10 ? roles.join('  ') : trimArray(roles, this.locale, 10).join('  '),
     });
   }
 
