@@ -5,6 +5,7 @@ import { t } from '$lib/language';
 import { Poll } from '@prisma/client';
 import { Message, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
+import { parseOptionName } from '../_helpers';
 
 export const endPoll = async (poll: Poll, pollMsg: Message) => {
   const choices = poll.choices as string[][];
@@ -25,7 +26,7 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
           options: new Intl.ListFormat(poll.locale, {
             type: 'conjunction',
             style: 'long',
-          }).format(ranking.map((s) => s.name)),
+          }).format(ranking.map((s) => parseOptionName(s.name))),
           votes: ranking[0].votes.toLocaleString(poll.locale),
           total: totalVotes.toLocaleString(poll.locale),
         }),
