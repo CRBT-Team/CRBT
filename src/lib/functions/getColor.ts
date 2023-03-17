@@ -3,7 +3,8 @@ import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
 import { APIUser } from 'discord-api-types/v10';
 import { Guild, User } from 'discord.js';
-import { getSettings } from '../../modules/settings/serverSettings/_helpers';
+import { getSettings, saveServerSettings } from '../../modules/settings/serverSettings/_helpers';
+import { imgDominantColor } from './imgDominantColor';
 // import { imgDominantColor } from './imgDominantColor';
 
 export async function getColor(thing: User | Guild | APIUser): Promise<number> {
@@ -30,31 +31,17 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
   } else {
     const { accentColor, automaticTheming, iconHash } = await getSettings(thing.id);
 
-    // if (automaticTheming && (!accentColor || !iconHash || thing.icon !== iconHash)) {
-    //   const guildIcon = thing.iconURL({ format: 'png' });
-    //   const dominantColor = (await imgDominantColor(guildIcon)).num();
+    if (automaticTheming && (!accentColor || !iconHash || thing.icon !== iconHash)) {
+      const guildIcon = thing.iconURL({ format: 'png' });
+      const dominantColor = (await imgDominantColor(guildIcon)).num();
 
-    //   await fetchWithCache(
-    //     `${thing.id}:settings`,
-    //     () =>
-    //       prisma.servers.upsert({
-    //         where: { id: thing.id },
-    //         create: {
-    //           id: thing.id,
-    //           iconHash: thing.icon,
-    //           accentColor: dominantColor,
-    //         },
-    //         update: {
-    //           iconHash: thing.icon,
-    //           accentColor: dominantColor,
-    //         },
-    //         include,
-    //       }),
-    //     true
-    //   );
+      await saveServerSettings(thing.id, {
+        iconHash: thing.icon,
+        accentColor: dominantColor,
+      });
 
-    //   return dominantColor;
-    // }
+      return dominantColor;
+    }
 
     return accentColor;
   }

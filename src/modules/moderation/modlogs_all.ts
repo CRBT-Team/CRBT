@@ -66,7 +66,7 @@ export function renderStrike(
       ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
       : '';
   const reason = `**${t(locale, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON')}:** ${
-    strike.details ? '[Message from user]' : strike.reason ?? '*None specified*'
+    strike.details ? '[Message from user]' : strike.reason ?? `*${t(locale, 'NONE')}*`
   }`;
   const target = strike.type !== 'CLEAR' ? `<@${strike.targetId}>` : `<#${strike.targetId}>`;
 
@@ -76,9 +76,9 @@ export function renderStrike(
       'f'
     )} • ${action} ${expires}`,
     value: dedent`
-    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`).toLocaleLowerCase(
-      locale
-    )} ${target}
+    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`, {
+      target: '',
+    }).toLocaleLowerCase(locale)} ${target}
     ${reason}
     `,
   };
@@ -132,7 +132,10 @@ export async function renderModlogs(
         description: !data || data.length === 0 ? t(this, 'MODERATION_LOGS_VIEW_EMPTY') : '',
         fields: results.map((strike) => renderStrike(strike, this.locale, data)),
         footer: {
-          text: `${data.length} entries total • Page ${page + 1}/${pages}`,
+          text: `${data.length} entries total • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+            page: page + 1,
+            pages,
+          })}`,
         },
         color: await getColor(user ?? this.guild),
       },
@@ -284,12 +287,12 @@ async function renderStrikePage(
                 : [
                     new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, uId })
                       .setEmoji(emojis.buttons.pencil)
-                      .setLabel('Edit Reason')
+                      .setLabel(t(this, 'EDIT'))
                       .setStyle('PRIMARY'),
                   ]),
               new DeleteButton({ sId, page, uId })
                 .setEmoji(emojis.buttons.trash_bin)
-                .setLabel('Delete Strike')
+                .setLabel(t(this, 'DELETE'))
                 .setStyle('DANGER'),
             ]
           : [])
@@ -352,8 +355,10 @@ export const DeleteButton = ButtonComponent({
       ],
       components: components(
         row(
-          new ConfirmDeleteButton({ uId, sId, page }).setLabel('Yes').setStyle('DANGER'),
-          new GoToPage({ page: 0, uId }).setLabel('Cancel').setStyle('SECONDARY')
+          new ConfirmDeleteButton({ uId, sId, page })
+            .setLabel(t(this, 'CONFIRM'))
+            .setStyle('DANGER'),
+          new GoToPage({ page: 0, uId }).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY')
         )
       ),
     });

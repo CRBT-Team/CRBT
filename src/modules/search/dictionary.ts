@@ -1,8 +1,8 @@
-import { slashCmd } from '$lib/functions/commandMention';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import { readFileSync } from 'fs';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 import { handleDuckDuckGo } from './web';
 import { createSearchResponse, fetchResults } from './_response';
@@ -18,24 +18,23 @@ export async function handleDictionary(
 
     if (!res.ok) {
       if (opts.page === -1) {
-        return createCRBTError(
-          this,
-          `I couldn't find this word on the dictionary. Try searching it on Urban Dictionary (${slashCmd(
-            'urban'
-          )}).`
-        );
+        return createCRBTError(this, {
+          title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+          description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
+        });
       } else {
         return handleDuckDuckGo.call(this, opts);
       }
     }
     const def = (await res.json())[0];
 
+    //TODO: localize this
     return createSearchResponse(this, opts, {
       embeds: [
         {
           title: `${def.meanings.length === 1 ? 'Definition' : 'Definitions'} for "${def.word}"`,
           fields: [
-            { name: 'Phonetics', value: def.phonetic ?? '*None available*', inline: true },
+            { name: 'Phonetics', value: def.phonetic ?? `*${t(this, 'NONE')}*`, inline: true },
             def.meanings.map((meaning, i) => ({
               name: `**${i + 1}. *${meaning.partOfSpeech}***`,
               value:
@@ -56,7 +55,11 @@ export async function handleDictionary(
               inline: false,
             })),
           ],
-          footer: { text: 'Powered by Google Dictionary' },
+          footer: {
+            text: t(this, 'POWERED_BY', {
+              provider: 'Google Dictionary',
+            }),
+          },
         },
       ],
       files:

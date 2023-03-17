@@ -3,20 +3,8 @@ import { prisma } from '$lib/db';
 import { channels, clients } from '$lib/env';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
-import { balance } from '../economy/balance';
-import { daily } from '../economy/daily';
-import { give } from '../economy/give';
-import { leaderboard } from '../economy/leaderboard';
-import { work } from '../economy/work';
+// import { economyCommands } from '../economy/_helpers';
 // import { customCmds } from '../customCommands/commands';
-
-export const economyCommands = {
-  balance,
-  daily,
-  give,
-  leaderboard,
-  work,
-};
 
 export default OnEvent('interactionCreate', async (i) => {
   if (!i.isCommand() && !i.isContextMenu()) return;
@@ -31,9 +19,9 @@ export default OnEvent('interactionCreate', async (i) => {
     .filter(Boolean)
     .join(' ');
 
-  if (i.isCommand() && Object.keys(economyCommands).includes(commandName)) {
-    return economyCommands[commandName].handle.call(i);
-  }
+  // if (i.isCommand() && Object.keys(economyCommands).includes(commandName)) {
+  //   return economyCommands[commandName].handle.call(i);
+  // }
 
   // if (i.isCommand() && customCmds.has(i.commandName)) {
   //   const cmd = customCmds.get(i.commandName);

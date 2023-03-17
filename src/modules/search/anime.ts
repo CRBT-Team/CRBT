@@ -3,8 +3,8 @@ import { t } from '$lib/language';
 import { createLinkButton, timestampMention } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import { CommandInteraction, EmbedFieldData, MessageComponentInteraction } from 'discord.js';
-import fetch from 'node-fetch';
 import { components, row } from 'purplet';
+import { fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
@@ -83,7 +83,10 @@ export async function handleAnimeMangas(
     );
 
     if (!res || res.errors || !res.data || res.data.Page.media.length === 0) {
-      return createCRBTError(this, `No anime found with this title.`);
+      return createCRBTError(this, {
+        title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+        description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
+      });
     }
 
     const result = res.data.Page.media[opts.page - 1];
@@ -93,6 +96,7 @@ export async function handleAnimeMangas(
 
     if (result.startDate) {
       const strings = {
+        //TODO: localize this
         MANGAtrue: 'Released',
         MANGAfalse: 'First release',
         ANIMEtrue: 'Aired',

@@ -1,5 +1,5 @@
 import { localeLower } from '$lib/functions/localeLower';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleModerationAction, ModerationContext } from './_base';
@@ -10,12 +10,14 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('KICK', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'Who to kick.', {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
-    .string('reason', 'More context for the Moderation History.', {
+    .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     }),
   handle({ user, reason }) {

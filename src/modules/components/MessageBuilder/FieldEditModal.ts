@@ -9,7 +9,8 @@ import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { saveColorSettings } from '../../settings/serverSettings/accentColor';
+import { renderFeatureSettings } from '../../settings/serverSettings/settings';
+import { saveServerSettings } from '../../settings/serverSettings/_helpers';
 
 export const FieldEditModal = ModalComponent({
   async handle({
@@ -17,16 +18,23 @@ export const FieldEditModal = ModalComponent({
     type,
   }: {
     fieldName: string;
-    type: MessageBuilderTypes | EditableFeatures.accentColor;
+    type: MessageBuilderTypes | EditableFeatures.automaticTheming;
   }) {
     let value: string = this.fields.getTextInputValue('VALUE');
 
-    if (type === EditableFeatures.accentColor) {
+    if (type === EditableFeatures.automaticTheming) {
       value = value.toLowerCase().replace('#', '');
       if (!value.match(/^[0-9a-f]{6}$/)) {
         return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
       }
-      return await saveColorSettings.call(this, parseInt(value, 16));
+
+      await saveServerSettings(this.guildId, {
+        accentColor: parseInt(value, 16),
+      });
+
+      return await this.update(
+        await renderFeatureSettings.call(this, EditableFeatures.automaticTheming)
+      );
     }
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);

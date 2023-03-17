@@ -8,18 +8,20 @@ import { getAllLanguages, t } from '$lib/language';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import canvas from 'canvas';
 import dedent from 'dedent';
-import { APIRole, PermissionFlagsBits, Routes } from 'discord-api-types/v10';
+import { APIRole, MessageFlags, PermissionFlagsBits, Routes } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
-import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
+import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
+import { ShareResponseBtn } from '../components/ShareResult';
 
 export default ChatCommand({
   name: 'role info',
+  nameLocalizations: getAllLanguages('ROLE', localeLower),
   description: t('en-US', 'role_info.description'),
   descriptionLocalizations: getAllLanguages('role_info.description'),
   allowInDMs: false,
   options: new OptionBuilder().role('role', t('en-US', 'role_info.options.role.description'), {
     nameLocalizations: getAllLanguages('ROLE', localeLower),
-    descriptionLocalizations: getAllLanguages('role_info.options.role.description', localeLower),
+    descriptionLocalizations: getAllLanguages('role_info.options.role.description'),
     required: true,
   }),
   async handle({ role }) {
@@ -101,7 +103,7 @@ export default ChatCommand({
             {
               name: t(this, 'MAJOR_PERMS'),
               value: hasPerms(role.permissions, PermissionFlagsBits.Administrator, true)
-                ? t(this, 'ADMIN_ALL_PERMS')
+                ? t(this, 'PERMISSION_ADMINISTRATOR')
                 : perms.length
                 ? perms.join(', ')
                 : t(this, 'NO_PERMS'),
@@ -113,6 +115,8 @@ export default ChatCommand({
           color: role.color || (await getColor(this.guild)),
         },
       ],
+      flags: MessageFlags.Ephemeral,
+      components: components(row(ShareResponseBtn(this, false))),
       files: !(role.icon || role.color) ? [] : [new MessageAttachment(img.toBuffer(), 'role.png')],
     });
   },

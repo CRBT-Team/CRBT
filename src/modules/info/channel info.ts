@@ -27,6 +27,7 @@ dayjs.extend(duration);
 
 export default ChatCommand({
   name: 'channel info',
+  nameLocalizations: getAllLanguages('CHANNEL', localeLower),
   description: t('en-US', 'channel_info.description'),
   descriptionLocalizations: getAllLanguages('channel_info.description'),
   allowInDMs: false,
@@ -83,7 +84,7 @@ export default ChatCommand({
         | APIGuildForumChannel;
 
       authorIcon = icons.channels.text_thread;
-      title = parent ? t(this, 'THREAD_CHANNEL') : t(this, 'FORUM_POST');
+      title = parent ? t(this, 'THREAD') : t(this, 'POST');
 
       const autoArchives = new Date(
         created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000
@@ -119,7 +120,7 @@ export default ChatCommand({
       fields.push(
         {
           name: 'Region Override',
-          value: channel.rtc_region ? capitalCase(channel.rtc_region) : 'Automatic',
+          value: channel.rtc_region ? capitalCase(channel.rtc_region) : t(this, 'AUTO'),
           inline: true,
         },
         {
@@ -128,7 +129,7 @@ export default ChatCommand({
           inline: true,
         },
         {
-          name: 'Bitrate',
+          name: t(this, 'BITRATE'),
           value: `${channel.bitrate / 1000}kbps`,
           inline: true,
         }
@@ -169,10 +170,9 @@ export default ChatCommand({
       };
 
       fields.push({
-        name: `${t(
-          this,
-          channel.type === ChannelType.GuildForum ? 'FORUM_POSTS' : 'THREAD_CHANNELS'
-        )} (${threads.length})`,
+        name: `${t(this, channel.type === ChannelType.GuildForum ? 'POSTS' : 'THREADS')} (${
+          threads.length
+        })`,
         value: threads
           .map((t) => `${t} (${threadDuration[t.thread_metadata.auto_archive_duration]})`)
           .join(', '),

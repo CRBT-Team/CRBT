@@ -1,31 +1,45 @@
-import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { Reminder, ReminderTypes } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
+import { ReminderTypes } from '@prisma/client';
 import dayjs from 'dayjs';
 import { Message } from 'discord.js';
 import { randomBytes } from 'node:crypto';
 import { components, MessageContextCommand, row, SelectMenuComponent } from 'purplet';
+import { renderReminder } from './reminder_list';
+import { getUserReminders } from './_helpers';
 
 export const messageCache = new Map<string, Message>();
 
 export default MessageContextCommand({
   name: 'Set Reminder',
   async handle(message) {
+    const userReminders = await getUserReminders(this.user.id);
+
+    if (userReminders.length >= 10) {
+      return CRBTError(this, t(this, 'remind me.errors.REMINDERS_MAX_LIMIT'));
+    }
+
     messageCache.set(message.id, message);
+
+    const locale = this.locale.split('-')[0];
+
+    await import(`dayjs/locale/${locale}.js`);
+
+    const now = dayjs().locale(locale);
 
     await this.reply({
       embeds: [
         {
-          title: `${emojis.pending} Choose when to be reminded of this message.`,
-          description: `You can edit this later with ${slashCmd('reminder list')}`,
+          title: `${emojis.pending} ${t(this, 'SET_REMINDER_EMBED_TITLE')}`,
+          description: t(this, 'SET_REMINDER_EMBED_DESCRIPTION', {
+            command: slashCmd('reminder list'),
+          }),
           color: colors.yellow,
         },
       ],
@@ -33,19 +47,22 @@ export default MessageContextCommand({
       components: components(
         row(
           new SelectTimeMenu(message.id).setOptions(
-            [
-              '10-minutes',
-              '30-minutes',
-              '1-hour',
-              '3-hours',
-              '6-hours',
-              '12-hours',
-              '1-day',
-              '3-days',
-              '1-week',
-            ].map((h) => ({
-              label: h.replace('-', ' '),
-              value: h,
+            (
+              [
+                ['10m', now.add(10, 'm')],
+                ['30m', now.add(30, 'm')],
+                ['1h', now.add(1, 'h')],
+                ['3h', now.add(3, 'h')],
+                ['12h', now.add(12, 'h')],
+                ['1d', now.add(1, 'd')],
+                ['3d', now.add(3, 'd')],
+                ['1w', now.add(1, 'w')],
+                ['2w', now.add(2, 'w')],
+                ['1M', now.add(1, 'M')],
+              ] as [string, dayjs.Dayjs][]
+            ).map(([value, name]) => ({
+              label: name.fromNow(),
+              value: value,
             }))
           )
         )
@@ -56,24 +73,11 @@ export default MessageContextCommand({
 
 export const SelectTimeMenu = SelectMenuComponent({
   async handle(mId: string) {
-    const message = messageCache.get(mId);
-
     await this.deferUpdate();
 
+    const message = messageCache.get(mId);
     const url = message.url.replace(/https:\/\/((canary|ptb)\.)?discord\.com\/channels\//, '');
-
-    const { strings, errors } = t(this, 'remind me');
-
-    const userReminders = await prisma.reminder.findMany({
-      where: { userId: this.user.id },
-    });
-
-    if (userReminders.length >= 10) {
-      return CRBTError(this, errors.REMINDERS_MAX_LIMIT);
-    }
-
     const embed = message.embeds.find((e) => e.title || e.description || e.fields[0].name);
-
     const subject = `${(
       message.content ||
       embed?.title ||
@@ -82,13 +86,11 @@ export const SelectTimeMenu = SelectMenuComponent({
       ''
     )?.slice(0, 60)}...`;
 
-    const [length, unit] = this.values[0].split('-');
-    const expiresAt = dayjs().add(Number(length), unit);
-
     const details = budgetify(message);
+    const expiresAt = dayjs().add(ms(this.values[0]));
 
     try {
-      const reminder: Reminder = {
+      const reminder = await dbTimeout(TimeoutTypes.Reminder, {
         userId: this.user.id,
         destination: 'dm',
         expiresAt: expiresAt.toDate(),
@@ -97,35 +99,15 @@ export const SelectTimeMenu = SelectMenuComponent({
         subject: `${message.author.tag}--${subject}`,
         details: JSON.stringify(details),
         type: ReminderTypes.MESSAGE,
-      };
+      });
 
-      await dbTimeout(TimeoutTypes.Reminder, reminder);
-
-      const formattedExpires = `${timestampMention(expiresAt, 'T')} • ${timestampMention(
-        expiresAt,
-        'R'
-      )}`;
+      await getUserReminders(this.user.id, true);
 
       await this.editReply({
-        embeds: [
-          {
-            title: `${emojis.success} ${strings.SUCCESS_TITLE}`,
-            description: `${strings.SUCCESS_DM}\n${formattedExpires}`,
-            fields: [
-              {
-                name: t(this, 'SUBJECT'),
-                value: subject,
-              },
-            ],
-            color: colors.success,
-          },
-          ...renderLowBudgetMessage({
-            details,
-            channel: this.channel,
-            guild: this.guild,
-            author: message.author,
-          }),
-        ],
+        content: `${emojis.success} ${t(this, 'remind me.strings.SUCCESS_TITLE', {
+          command: slashCmd('reminder list'),
+        })}`,
+        embeds: (await renderReminder.call(this, reminder)).embeds,
         components: [],
       });
     } catch (error) {

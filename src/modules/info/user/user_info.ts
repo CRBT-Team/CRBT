@@ -16,9 +16,12 @@ import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_n
 
 export default ChatCommand({
   name: 'user info',
-  description: "Get a user's Discord information.",
-  options: new OptionBuilder().user('user', 'User to get info from. Leave blank to get yours.', {
+  nameLocalizations: getAllLanguages('USER', localeLower),
+  description: t('en-US', 'user_info.description'),
+  descriptionLocalizations: getAllLanguages('user_info.description'),
+  options: new OptionBuilder().user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
     nameLocalizations: getAllLanguages('USER', localeLower),
+    descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
   }),
   async handle({ user }) {
     const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
@@ -132,7 +135,7 @@ export async function renderUser(
       {
         name: t(ctx.locale, 'MAJOR_PERMS'),
         value: hasPerms(member.permissions, PermissionFlagsBits.Administrator, true)
-          ? t(ctx, 'ADMIN_ALL_PERMS')
+          ? t(ctx, 'PERMISSION_ADMINISTRATOR')
           : perms.length
           ? perms.join(', ')
           : t(ctx, 'NO_PERMS'),

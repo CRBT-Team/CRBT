@@ -1,5 +1,4 @@
 import { colors, emojis, links } from '$lib/env';
-import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
@@ -13,9 +12,10 @@ import {
 } from '@purplet/utils';
 import canvas from 'canvas';
 import dedent from 'dedent';
+import { ChannelType, RESTGetAPIGuildChannelsResult, Routes } from 'discord-api-types/v10';
 import { EmbedFieldData, Guild, Interaction, MessageAttachment } from 'discord.js';
 import { resolve } from 'path';
-import { ChatCommand, components, OptionBuilder } from 'purplet';
+import { ChatCommand, components, getRestClient, OptionBuilder } from 'purplet';
 import { NavBarContext } from '../user/_navbar';
 import { getTabs, serverNavBar } from './_navbar';
 
@@ -23,10 +23,14 @@ export default ChatCommand({
   name: 'server info',
   description: t('en-US', 'server_info.description'),
   descriptionLocalizations: getAllLanguages('server_info.description'),
-  options: new OptionBuilder().string('id', t('en-US', 'server_info.options.id.description'), {
-    nameLocalizations: getAllLanguages('ID', localeLower),
-    descriptionLocalizations: getAllLanguages('server_info.options.id.description'),
-  }),
+  options: new OptionBuilder().string(
+    'id',
+    t('en-US', 'SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'),
+    {
+      nameLocalizations: getAllLanguages('ID', localeLower),
+      descriptionLocalizations: getAllLanguages('SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION'),
+    }
+  ),
   async handle({ id }) {
     if ((!this.guild && !id) || (id && !this.client.guilds.cache.has(id)))
       return await CRBTError(this, {
@@ -36,9 +40,11 @@ export default ChatCommand({
         }),
       });
 
+    await this.deferReply();
+
     const guild = !id ? await this.guild.fetch() : await this.client.guilds.fetch(id);
 
-    await this.reply(
+    await this.editReply(
       await renderServerInfo.call(this, guild, {
         userId: this.user.id,
         targetId: this.guildId,
@@ -49,31 +55,48 @@ export default ChatCommand({
 
 export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: NavBarContext) {
   const allChannels = guild.channels.cache.filter((c) => !c.isThread());
+  const apiGuildChannels = (await getRestClient().get(
+    Routes.guildChannels(this.guildId)
+  )) as RESTGetAPIGuildChannelsResult;
   const stickers = guild.stickers.cache;
   const allEmojis = guild.emojis.cache;
   const roles = guild.roles.cache
     .sort((a, b) => a.position - b.position)
     .filter((r) => r.id !== r.guild.id)
     .map((r) => (r.guild.id === this.guild.id ? r.toString() : `\`${r.name}\``));
-  const events = guild.scheduledEvents.cache;
   const { format: formatNum } = new Intl.NumberFormat(this.locale);
   const bots = guild.members.cache.filter((m) => m.user.bot);
 
   const channels = {
-    text: allChannels.filter((c) => c.type === 'GUILD_TEXT').size,
-    voice: allChannels.filter((c) => c.type === 'GUILD_VOICE').size,
-    stage: allChannels.filter((c) => c.type === 'GUILD_STAGE_VOICE').size,
-    announcement: allChannels.filter((c) => c.type === 'GUILD_NEWS').size,
-    category: allChannels.filter((c) => c.type === 'GUILD_CATEGORY').size,
+    text: apiGuildChannels.filter((c) => c.type === ChannelType.GuildText).length,
+    voice: apiGuildChannels.filter((c) => c.type === ChannelType.GuildVoice).length,
+    stage: apiGuildChannels.filter((c) => c.type === ChannelType.GuildStageVoice).length,
+    announcement: apiGuildChannels.filter((c) => c.type === ChannelType.GuildAnnouncement).length,
+    category: apiGuildChannels.filter((c) => c.type === ChannelType.GuildCategory).length,
+    forum: apiGuildChannels.filter((c) => c.type === ChannelType.GuildForum).length,
   };
+
+  const formatChannel = (channelType: keyof typeof channels | string) =>
+    !channels[channelType]
+      ? null
+      : `${emojis.channels[channelType]} ${channels[channelType]} ${t(
+          this,
+          channelType === 'category' ? 'CATEGORY' : (`${channelType.toUpperCase()}_CHANNEL` as any)
+        )}`;
 
   const emoji = {
     static: allEmojis.filter((e) => !e.animated).size,
     animated: allEmojis.filter((e) => e.animated).size,
-    previews: chunks(trimArray(allEmojis.map((e) => e.toString())), 5)
-      .map((e) => e.join('  '))
-      .join('\n'),
+    previews: trimArray(
+      allEmojis.map((e) => e.toString()),
+      this.locale
+    ).join('  '),
   };
+
+  const formattedChannelsArray = Object.keys(channels)
+    .map(formatChannel)
+    .filter(Boolean)
+    .join(' • ');
 
   const fields: EmbedFieldData[] = [
     {
@@ -92,24 +115,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     },
     {
       name: `${t(this, 'CHANNELS')} • ${formatNum(allChannels.size)}`,
-      value: dedent`
-      ${emojis.channels.category} ${formatNum(channels.category)} ${t(this, 'CATEGORIES')}
-      ${emojis.channels.text} ${formatNum(channels.text)} ${t(this, 'TEXT_CHANNELS')}
-      ${emojis.channels.voice} ${formatNum(channels.voice)} ${t(this, 'VOICE_CHANNELS')}
-      ${
-        channels.announcement > 0
-          ? `${emojis.channels.news} ${formatNum(channels.announcement)} ${t(
-              this,
-              'ANNOUNCEMENT_CHANNELS'
-            )}`
-          : ''
-      } ${
-        channels.stage > 0
-          ? `${emojis.channels.stage} ${formatNum(channels.stage)} ${t(this, 'STAGE_CHANNELS')}`
-          : ''
-      }
-      `,
-      inline: true,
+      value: formattedChannelsArray,
     },
   ];
 
@@ -117,35 +123,34 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
     fields.push({
       name: `${t(this, 'EMOJIS')} • ${formatNum(allEmojis.size)}`,
       value: dedent`
-      ${formatNum(emoji.static)} ${t(this, 'STATIC')} • ${formatNum(emoji.animated)} ${t(
-        this,
-        'ANIMATED'
-      )}
-      
+      ${formatNum(emoji.static)} ${t(this, 'STATIC').toLocaleLowerCase(this.locale)} • ${formatNum(
+        emoji.animated
+      )} ${t(this, 'ANIMATED').toLocaleLowerCase(this.locale)}
       ${emoji.previews}`,
-      inline: true,
     });
   }
   if (stickers.size > 0) {
     fields.push({
       name: t(this, 'STICKERS'),
       value: `${emojis.sticker} ${formatNum(stickers.size)}`,
-      inline: true,
     });
   }
 
   fields.push({
     name: `${t(this, 'MEMBERS')} • ${formatNum(guild.memberCount)}`,
-    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} ${t(this, 'HUMANS')}\n${
-      emojis.bot
-    } ${formatNum(bots.size)} ${t(this, 'BOTS')}`,
-    inline: true,
+    value: `${emojis.members} ${formatNum(guild.memberCount - bots.size)} ${t(
+      this,
+      'HUMANS'
+    ).toLocaleLowerCase(this.locale)} • ${emojis.bot} ${formatNum(bots.size)} ${t(
+      this,
+      'BOTS'
+    ).toLocaleLowerCase(this.locale)}`,
   });
 
   if (roles.length > 0) {
     fields.push({
       name: `${t(this, 'ROLES')} • ${formatNum(roles.length)}`,
-      value: roles.length < 10 ? roles.join('  ') : trimArray(roles, 10).join('  '),
+      value: roles.length < 10 ? roles.join('  ') : trimArray(roles, this.locale, 10).join('  '),
     });
   }
 

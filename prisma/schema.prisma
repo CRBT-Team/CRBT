@@ -141,57 +141,51 @@ model Achievement {
 }
 
 model Economy {
-  serverId               String                @id
-  currencyNameSingular   String?               @map("currency_name_singular")
-  currencyNamePlural     String?               @map("currency_name_plural")
-  currencySymbol         String?               @map("currency_symbol")
-  transactionLogsChannel String?               @map("logs_channel")
-  commands               EconomyCommands?
-  server                 servers?              @relation(fields: [serverId], references: [id])
-  items                  EconomyItem[]
-  categories             EconomyItemCategory[]
-}
-
-model EconomyCommands {
-  serverId      String   @id
-  workCooldown  Int
-  workStrings   String[]
-  workReward    String
-  dailyReward   String
-  weeklyRewards String[]
-  Economy       Economy? @relation(fields: [serverId], references: [serverId])
+  id                          String                @id
+  currency_name_singular      String?
+  currency_name_plural        String?
+  currency_symbol             String?
+  transaction_logs_channel_id String?
+  server                      servers?              @relation(fields: [id], references: [id])
+  work_cooldown               Int
+  work_strings                String[]
+  work_reward                 String
+  daily_reward                String
+  weekly_rewards              String[]
+  items                       EconomyItem[]
+  categories                  EconomyItemCategory[]
 }
 
 model EconomyItem {
-  id             Int                 @id @default(autoincrement())
-  serverId       String              @map("server_id")
-  name           String
-  icon           String?
-  description    String?
-  price          Int
-  categoryId     Int
-  category       EconomyItemCategory @relation(fields: [categoryId], references: [id])
-  type           ItemTypes
-  stock          Int
+  id              String              @id
+  guild_id        String
+  name            String
+  icon            String?
+  description     String?
+  price           Int
+  category_id     String
+  category        EconomyItemCategory @relation(fields: [category_id], references: [id])
+  type            ItemTypes
+  stock           Int?
   // for items limited in time
-  availableUntil DateTime?           @map("available_until") @db.Timestamptz(6)
+  available_until DateTime?           @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
-  value          String?
+  value           String?
   // who's currently using the item
-  activeMembers  ServerMember[]      @relation("active_items")
+  activeMembers   ServerMember[]      @relation("active_items")
   // who has the item
-  owners         ServerMember[]      @relation("items")
+  owners          ServerMember[]      @relation("items")
   // which economy does the item belong to
-  economy        Economy             @relation(fields: [serverId], references: [serverId])
+  economy         Economy             @relation(fields: [guild_id], references: [id])
 }
 
 model EconomyItemCategory {
-  id       Int           @id @default(autoincrement())
-  serverId String
+  id       String        @id
+  guild_id String
   items    EconomyItem[]
   label    String
   emoji    String?
-  economy  Economy       @relation(fields: [serverId], references: [serverId])
+  economy  Economy       @relation(fields: [guild_id], references: [id])
 }
 
 model Token {
@@ -208,12 +202,6 @@ enum ModerationStrikeTypes {
   TIMEOUT
   WARN
   REPORT
-}
-
-enum EconomyCommandTypes {
-  work
-  hourly
-  crime
 }
 
 enum ItemTypes {

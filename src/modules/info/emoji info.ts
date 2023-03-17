@@ -30,19 +30,20 @@ export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
     .replace(/:/g, '')}`;
 
   return {
-    Twemoji: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
-    Apple: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/apple/325/${emojipediaCode}.png`,
-    'Google Noto Color Emoji': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/google/350/${emojipediaCode}.png`,
-    'Microsoft Fluent Emoji 3D': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
-    'Microsoft Fluent Emoji Flat': `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
-    Samsung: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
-    WhatsApp: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
-    Facebook: `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
+    Twemoji: `https://em-content.zobj.net/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
+    Apple: `https://em-content.zobj.net/thumbs/${size}/apple/325/${emojipediaCode}.png`,
+    'Google Noto Color Emoji': `https://em-content.zobj.net/thumbs/${size}/google/350/${emojipediaCode}.png`,
+    'Microsoft Fluent Emoji 3D': `https://em-content.zobj.net/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
+    'Microsoft Fluent Emoji Flat': `https://em-content.zobj.net/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
+    Samsung: `https://em-content.zobj.net/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
+    WhatsApp: `https://em-content.zobj.net/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
+    Facebook: `https://em-content.zobj.net/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
   };
 }
 
 export default ChatCommand({
   name: 'emoji info',
+  nameLocalizations: getAllLanguages('EMOJI', localeLower),
   description: t('en-US', 'emoji_info.description'),
   descriptionLocalizations: getAllLanguages('emoji_info.description'),
   options: new OptionBuilder().string('emoji', t('en-US', 'emoji_info.options.emoji.description'), {

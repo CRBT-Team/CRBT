@@ -15,6 +15,7 @@ import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
 
 export default ChatCommand({
   name: 'invite info',
+  nameLocalizations: getAllLanguages('INVITE', localeLower),
   description: t('en-US', 'invite_info.description'),
   descriptionLocalizations: getAllLanguages('invite_info.description'),
   options: new OptionBuilder().string(

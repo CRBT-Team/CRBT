@@ -12,7 +12,9 @@ export default ChatCommand({
   nameLocalizations: getAllLanguages('PING', localeLower),
   descriptionLocalizations: getAllLanguages('ping.meta.description'),
   async handle() {
-    await this.deferReply();
+    await this.deferReply({
+      ephemeral: true,
+    });
 
     setTimeout(async () => {
       const uptime = dayjs().subtract(this.client.uptime);

@@ -5,6 +5,7 @@ import { colors, emojis } from '$lib/env';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
+import chroma from 'chroma-js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 
 export const colorset = ChatCommand({
@@ -18,68 +19,70 @@ export const colorset = ChatCommand({
       autocomplete({ color }) {
         return colorAutocomplete.call(this, color);
       },
-      nameLocalizations: getAllLanguages('color set.meta.options.0.name' as any, localeLower),
+      nameLocalizations: getAllLanguages('COLOR', localeLower),
       descriptionLocalizations: getAllLanguages('color set.meta.options.0.description' as any),
       required: true,
     }
   ),
-  async handle({ color: colorHex }) {
-    const { strings, errors } = t(this, 'color set');
+  async handle({ color: colorRaw }) {
+    colorRaw = colorRaw.toLowerCase().replace(/ |#/g, '');
 
-    const user = await this.user.fetch();
-    colorHex = colorHex.toLowerCase().replace(/ |#/g, '');
+    console.log(chroma.valid(parseInt(colorRaw) ?? colorRaw));
 
-    const color = colors[colorHex] ?? parseInt(colorHex, 16);
+    if (colors[colorRaw] === undefined && !chroma.valid(parseInt(colorRaw) ?? colorRaw)) {
+      return CRBTError(this, t(this, 'ERROR_INVALID_COLOR'));
+    }
 
-    if (/^[0-9a-f]{6}$/.test(colorHex) || colors[colorHex]) {
-      if (color === colors.default) {
-        cache.del(`${this.user.id}:color`);
-        await prisma.user.upsert({
-          create: { id: this.user.id, accentColor: null },
-          update: { accentColor: null },
-          where: { id: this.user.id },
-        });
-      } else {
-        cache.set(`${user.id}:color`, color);
-        await prisma.user.upsert({
-          update: { accentColor: color },
-          create: { id: this.user.id, accentColor: color },
-          where: { id: user.id },
-        });
+    const color: number = colors[colorRaw] ?? chroma(parseInt(colorRaw) ?? colorRaw).num();
+
+    if (color === colors.default) {
+      cache.del(`${this.user.id}:color`);
+      await prisma.user.upsert({
+        create: { id: this.user.id, accentColor: null },
+        update: { accentColor: null },
+        where: { id: this.user.id },
+      });
+    } else {
+      cache.set(`${this.user.id}:color`, color);
+      await prisma.user.upsert({
+        update: { accentColor: color },
+        create: { id: this.user.id, accentColor: color },
+        where: { id: this.user.id },
+      });
+    }
+
+    if (color === colors.sync) {
+      const user = await this.user.fetch();
+      if (!user.hexAccentColor) {
+        CRBTError(this, t(this, 'color set.errors.NO_DISCORD_COLOR'));
+        return;
       }
-      await this.reply({
+
+      this.reply({
         embeds: [
           {
-            title: `${emojis.success} ${strings.EMBED_TITLE}`,
-            description: strings.EMBED_DESCRIPTION,
-            color,
+            title: `${emojis.success} ${t(this, 'color set.strings.EMBED_TITLE')}`,
+            description: `${t(this, 'color set.strings.EMBED_SYNC_INFO')} ${t(
+              this,
+              'color set.strings.EMBED_DESCRIPTION'
+            )}`,
+            color: user.accentColor,
           },
         ],
         ephemeral: true,
       });
-    } else if (color === 0) {
-      if (!user.hexAccentColor) {
-        await CRBTError(this, errors.NO_DISCORD_COLOR);
-      } else {
-        cache.set(`color_${user.id}`, 'profile');
-        await prisma.user.upsert({
-          update: { accentColor: color },
-          create: { id: this.user.id, accentColor: color },
-          where: { id: user.id },
-        });
-        await this.reply({
-          embeds: [
-            {
-              title: `${emojis.success} ${strings.EMBED_TITLE}`,
-              color: user.accentColor,
-              description: `${strings.EMBED_SYNC_INFO} ${strings.EMBED_DESCRIPTION}`,
-            },
-          ],
-          ephemeral: true,
-        });
-      }
-    } else {
-      await CRBTError(this, t(this, 'ERROR_INVALID_COLOR'));
+      return;
     }
+
+    this.reply({
+      embeds: [
+        {
+          title: `${emojis.success} ${t(this, 'color set.strings.EMBED_TITLE')}`,
+          description: t(this, 'color set.strings.EMBED_DESCRIPTION'),
+          color,
+        },
+      ],
+      ephemeral: true,
+    });
   },
 });

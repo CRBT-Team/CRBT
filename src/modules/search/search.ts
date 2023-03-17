@@ -83,8 +83,6 @@ export default ChatCommand({
       userId: this.user.id,
     };
 
-    console.log(opts);
-
     const res = await searchEngines[site].handle.call(this, opts);
 
     await this.editReply(res);

@@ -1,30 +1,31 @@
-import {
-  Economy,
-  EconomyCommands,
-  EconomyItem,
-  EconomyItemCategory,
-  serverModules,
-  servers,
-} from '@prisma/client';
+// import {
+//   Economy,
+//   // EconomyCommands,
+//   EconomyItem,
+//   EconomyItemCategory,
+//   serverModules,
+//   servers,
+// } from '@prisma/client';
+import { serverModules, servers } from '@prisma/client';
 import { APIEmbed } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
 
 export enum EditableFeatures {
-  accentColor = 'ACCENT_COLOR',
+  automaticTheming = 'SERVER_THEME',
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
-  economy = 'ECONOMY',
+  // economy = 'ECONOMY',
 }
 
 export enum CamelCaseFeatures {
-  ACCENT_COLOR = 'accentColor',
+  SERVER_THEME = 'automaticTheming',
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
   MODERATION_REPORTS = 'moderationReports',
-  ECONOMY = 'economy',
+  // ECONOMY = 'economy',
 }
 
 export interface FeatureSettingsProps {
@@ -38,18 +39,25 @@ export interface FeatureSettingsProps {
 
 export type FullSettings = Partial<
   servers & {
-    modules?: serverModules;
-    economy?: Partial<
-      Economy & {
-        commands: EconomyCommands;
-        items: EconomyItem[];
-        categories: EconomyItemCategory[];
-      }
-    >;
+    modules?: Partial<serverModules>;
+    // economy?: Partial<
+    //   Economy & {
+    //     commands: Partial<EconomyCommands>;
+    //     items: EconomyItem[];
+    //     categories: (EconomyItemCategory & {
+    //       items: EconomyItem[];
+    //     })[];
+    //   }
+    // >;
   }
 >;
 
 export interface SettingsMenus {
+  newLabel?: boolean;
+  getOverviewValue(props: FeatureSettingsProps): {
+    icon?: string;
+    value: string;
+  };
   getErrors?(props: Omit<FeatureSettingsProps, 'errors'>): string[];
   getSelectMenu(props: FeatureSettingsProps): Partial<MessageSelectOptionData>;
   getMenuDescription(props: FeatureSettingsProps): Partial<APIEmbed>;

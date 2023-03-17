@@ -1,7 +1,8 @@
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { t } from '$lib/language';
 import convert from 'convert-units';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 import { createSearchResponse } from './_response';
 
@@ -21,7 +22,10 @@ export async function handleWeather(
     const city = locationRes[0];
 
     if (!locationReq.ok || !city || !locationRes) {
-      return createCRBTError(this, 'This city could not be found.');
+      return createCRBTError(this, {
+        title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
+        description: t(this, 'SEARCH_ERROR_NO_RESULTS_DESCRIPTION'),
+      });
     }
 
     const weatherReq = await fetch(
@@ -36,6 +40,7 @@ export async function handleWeather(
           title: `${city.display_name}`,
           fields: [
             {
+              //TODO: localize this
               name: 'Temperature',
               value: `${weatherRes.current_weather.temperature}°C • ${convert(
                 weatherRes.current_weather.temperature

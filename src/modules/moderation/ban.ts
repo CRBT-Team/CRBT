@@ -2,7 +2,7 @@ import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { createCRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
-import { getAllLanguages } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleModerationAction, ModerationContext } from './_base';
@@ -13,29 +13,32 @@ export default ChatCommand({
   description: 'Ban a server member.',
   allowInDMs: false,
   options: new OptionBuilder()
-    .user('user', 'Who to ban.', {
+    .user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('USER', localeLower),
+      descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
-    .string('reason', 'More context for the Moderation History.', {
+    .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
+      descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     })
     .integer('delete_messages', 'The amount of messages to delete.')
-    .string('duration', 'Temporarily ban the user until a point in time.', {
-      autocomplete({ duration }) {
-        return timeAutocomplete.call(this, duration, '10y', '1m');
+    .string('end_date', 'When their ban expires, optionally.', {
+      nameLocalizations: getAllLanguages('END_DATE', localeLower),
+      autocomplete({ end_date }) {
+        return timeAutocomplete.call(this, end_date, '10y', '1m');
       },
     }),
-  handle({ delete_messages, duration, reason, user }) {
+  handle({ delete_messages, end_date, reason, user }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
       moderator: this.user,
       target: user,
       type: 'BAN',
-      expiresAt: duration ? new Date(Date.now() + ms(duration)) : null,
+      expiresAt: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
-      duration,
+      duration: end_date,
       messagesDeleted: delete_messages,
     });
   },
@@ -46,7 +49,7 @@ export function ban(
   member: GuildMember,
   { duration, reason, messagesDeleted }: ModerationContext
 ) {
-  if (duration && !isValidTime(duration) && ms(duration) > ms('3y')) {
+  if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(this, 'Invalid duration or exceeds 3 years');
   }
 

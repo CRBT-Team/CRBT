@@ -31,10 +31,10 @@ export const FieldSelectMenu = SelectMenuComponent({
               .setPlaceholder(t(this, 'COLOR_PRESET_SELECT_MENU'))
               .setOptions(
                 colorsMap
-                  .filter((color) => !color.private && color.value)
+                  .filter(({ value }) => value !== colors.sync)
                   .map((colorObj) => ({
-                    label: colorObj.fullName,
-                    value: colorObj.value.toString(16),
+                    label: t(this, `color set.colorNames.${colorObj.key}` as any),
+                    value: colorObj.value.toString(),
                     emoji: colorObj.emoji,
                   }))
               )
