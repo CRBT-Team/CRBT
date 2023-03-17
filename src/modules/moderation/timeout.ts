@@ -1,7 +1,9 @@
+import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
+import { createCRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
-import { ms } from '$lib/functions/ms';
+import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
-import { GuildMember } from 'discord.js';
+import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { handleModerationAction, ModerationContext } from './_base';
 
@@ -16,16 +18,10 @@ export default ChatCommand({
       descriptionLocalizations: getAllLanguages('USER_TYPE_COMMAND_OPTION_DESCRIPTION'),
       required: true,
     })
-    .string('duration', 'How long they should be timed out for.', {
-      choices: {
-        '60s': '60 seconds',
-        '5m': '5 minutes',
-        '10m': '10 minutes',
-        '1h': '1 hour',
-        '1d': '1 day',
-        '1w': '1 week',
-        '1m': '1 month',
-        '28d': 'Max (28 days)',
+    .string('end_date', 'When should their timeout expire?', {
+      nameLocalizations: getAllLanguages('END_DATE', localeLower),
+      async autocomplete({ end_date }) {
+        return await timeAutocomplete.call(this, end_date, '28d', '1m');
       },
       required: true,
     })
@@ -34,19 +30,27 @@ export default ChatCommand({
       descriptionLocalizations: getAllLanguages('REASON_DESCRIPTION'),
       maxLength: 256,
     }),
-  handle({ user, reason, duration }) {
+  handle({ user, reason, end_date }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
       moderator: this.user,
       target: user,
       type: 'TIMEOUT',
-      expiresAt: new Date(Date.now() + ms(duration)),
+      expiresAt: new Date(Date.now() + ms(end_date)),
       reason,
-      duration,
+      duration: end_date,
     });
   },
 });
 
-export function timeout(member: GuildMember, { duration, reason }: ModerationContext) {
+export function timeout(
+  this: Interaction,
+  member: GuildMember,
+  { duration, reason }: ModerationContext
+) {
+  if (duration && !isValidTime(duration) && ms(duration) > ms('28d')) {
+    return createCRBTError(this, 'Invalid duration or exceeds 28 days');
+  }
+
   member.timeout(ms(duration), reason);
 }

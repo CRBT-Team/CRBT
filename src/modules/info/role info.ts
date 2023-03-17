@@ -103,7 +103,7 @@ export default ChatCommand({
             {
               name: t(this, 'MAJOR_PERMS'),
               value: hasPerms(role.permissions, PermissionFlagsBits.Administrator, true)
-                ? t(this, 'ADMIN_ALL_PERMS')
+                ? t(this, 'PERMISSION_ADMINISTRATOR')
                 : perms.length
                 ? perms.join(', ')
                 : t(this, 'NO_PERMS'),

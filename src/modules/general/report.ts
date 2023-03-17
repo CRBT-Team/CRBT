@@ -5,8 +5,8 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { ButtonStyle, ComponentType, Routes } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, MessageAttachment, TextInputComponent } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand, getRestClient, ModalComponent, OptionBuilder, row } from 'purplet';
+import { fetch } from 'undici';
 import pjson from '../../../package.json';
 
 export default ChatCommand({

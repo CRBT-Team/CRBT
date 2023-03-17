@@ -183,7 +183,12 @@ export const ReportModal = ModalComponent({
 export const DismissReportBtn = ButtonComponent({
   async handle({ reportId }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)) {
-      return CRBTError(this, t(this, 'ERROR_ADMIN_ONLY'));
+      return CRBTError(
+        this,
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          permissions: t(this, 'PERMISSION_ADMINISTRATOR'),
+        })
+      );
     }
 
     await prisma.moderationStrikes.delete({

@@ -1,5 +1,5 @@
 import { ButtonComponent } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 import { newItemCache } from './CreateItemPart1';
 

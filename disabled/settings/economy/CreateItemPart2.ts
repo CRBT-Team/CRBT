@@ -5,8 +5,11 @@ import { EditableFeatures } from '$lib/types/settings';
 import { ItemTypes } from '@prisma/client';
 import { MessageComponentInteraction, MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { formatItemValue } from '../../../economy/_helpers';
-import { getSettings, getSettingsHeader } from '../_helpers';
+import { formatItemValue } from '../../../src/modules/economy/_helpers';
+import {
+  getSettings,
+  getSettingsHeader,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemPart1, newItemCache } from './CreateItemPart1';
 import { CreateItemPart3 } from './CreateItemPart3';

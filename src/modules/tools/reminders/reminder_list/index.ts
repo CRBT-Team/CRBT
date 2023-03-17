@@ -40,16 +40,15 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
   const reminders = await getUserReminders(this.user.id);
   console.log(reminder);
   const data = await extractReminder(reminder, this.client);
-  const created = snowflakeToDate(data.messageId);
+  const created = data.messageId ? snowflakeToDate(data.messageId) : null;
 
   return {
     embeds: [
       {
         author: {
-          name: t(this, 'REMINDER_LIST_TITLE', {
-            user: this.user.tag,
-            number: reminders.length.toLocaleString(this.locale),
-          }),
+          name: `${this.user.tag} - ${t(this, 'REMINDERS')} (${reminders.length.toLocaleString(
+            this.locale
+          )})`,
           icon_url: avatar(this.user, 64),
         },
         title: getReminderSubject(reminder, this.client),
@@ -58,10 +57,9 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         ${t(this, 'REMINDER_DESTINATION')} ${
           data.raw.destination === 'dm' ? t(this, 'DMS') : `${data.channel}`
         }
-        ${t(this, 'CREATED_ON')} ${timestampMention(created, 'D')} • ${timestampMention(
-          created,
-          'R'
-        )}`,
+        ${t(this, 'CREATED_ON')} ${created ? timestampMention(created, 'D') : '??'} • ${
+          created ? timestampMention(created, 'R') : '??'
+        }`,
         color: await getColor(this.user),
       },
       ...renderLowBudgetMessage(data),
@@ -97,15 +95,11 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
               dates: `${dayjs(data.expiresAt).format('YYYYMMDD')}/${dayjs(data.expiresAt)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
-              details: `${t(this, 'remind me.strings.GCALENDAR_EVENT')} ${t(
-                this,
-                'remind me.strings.GCALENDAR_EVENT_CHANNEL',
-                {
-                  destination: reminder.destination
-                    ? t(this, 'DMS')
-                    : `#${data.channel.name} • ${data.channel.guild.name}`,
-                }
-              )}`,
+              details: t(this, 'remind me.strings.GCALENDAR_EVENT_DESCRIPTION', {
+                destination: reminder.destination
+                  ? t(this, 'DMS')
+                  : `#${data.channel.name} • ${data.channel.guild.name}`,
+              }),
               location: data.url,
             })}`
           )
@@ -121,17 +115,16 @@ export async function renderList(this: Interaction) {
     embeds: [
       {
         author: {
-          name: t(this, 'REMINDER_LIST_TITLE', {
-            user: this.user.tag,
-            number: reminders.length.toLocaleString(this.locale),
-          }),
+          name: `${this.user.tag} - ${t(this, 'REMINDERS')} (${reminders.length.toLocaleString(
+            this.locale
+          )})`,
           icon_url: avatar(this.user, 64),
         },
-        description: t(
+        description: `${!reminders.length ? t(this, 'REMINDER_LIST_NO_REMINDERS') : ''} ${t(
           this,
-          !reminders.length ? 'REMINDER_LIST_NO_REMINDERS' : 'REMINDER_LIST_DESCRIPTION',
+          'REMINDER_LIST_DESCRIPTION',
           { command: slashCmd('reminder new') }
-        ),
+        )}`,
         fields: reminders.map((r) => ({
           name: getReminderSubject(r, this.client),
           value: dedent`

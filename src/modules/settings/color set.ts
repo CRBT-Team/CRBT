@@ -19,7 +19,7 @@ export const colorset = ChatCommand({
       autocomplete({ color }) {
         return colorAutocomplete.call(this, color);
       },
-      nameLocalizations: getAllLanguages('color set.meta.options.0.name' as any, localeLower),
+      nameLocalizations: getAllLanguages('COLOR', localeLower),
       descriptionLocalizations: getAllLanguages('color set.meta.options.0.description' as any),
       required: true,
     }

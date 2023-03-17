@@ -6,7 +6,7 @@ import { handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'warn',
-  description: 'Warn a server member and add to their Moderation History.',
+  description: 'Warn a server member.',
   nameLocalizations: getAllLanguages('WARN', localeLower),
   allowInDMs: false,
   options: new OptionBuilder()

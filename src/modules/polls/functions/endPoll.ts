@@ -3,9 +3,9 @@ import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { Poll } from '@prisma/client';
-import dedent from 'dedent';
 import { Message, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
+import { parseOptionName } from '../_helpers';
 
 export const endPoll = async (poll: Poll, pollMsg: Message) => {
   const choices = poll.choices as string[][];
@@ -22,25 +22,14 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
     embeds: [
       {
         title: `${emojis.tada} ${t(poll.locale, 'poll.strings.POLL_RESULTS_TITLE')}`,
-        description: dedent`
-        ${
-          winners.length > 1
-            ? t(poll.locale, 'poll.strings.POLL_RESULTS_DESCRIPTION_TIE', {
-                OPTION1: ranking[0].name,
-                OPTION2: winners
-                  .slice(1)
-                  .map((winner) => winner.name)
-                  .join(', '),
-                VOTES: ranking[0].votes.toLocaleString(poll.locale),
-              })
-            : t(poll.locale, 'poll.strings.POLL_RESULTS_DESCRIPTION_WIN', {
-                OPTION: `${ranking[0].name}`,
-                VOTES: ranking[0].votes.toLocaleString(poll.locale),
-              })
-        } ${t(poll.locale, 'poll.strings.POLL_RESULTS_DESCRIPTION_REST', {
-          TOTAL: totalVotes.toLocaleString(poll.locale),
-        })}
-        `,
+        description: t(poll.locale, 'poll.strings.POLL_RESULTS_DESCRIPTION', {
+          options: new Intl.ListFormat(poll.locale, {
+            type: 'conjunction',
+            style: 'long',
+          }).format(ranking.map((s) => parseOptionName(s.name))),
+          votes: ranking[0].votes.toLocaleString(poll.locale),
+          total: totalVotes.toLocaleString(poll.locale),
+        }),
         color: colors.success,
       },
     ],

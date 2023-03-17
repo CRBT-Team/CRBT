@@ -7,6 +7,7 @@ import { Poll } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import { Interaction, MessageEmbed, MessageOptions } from 'discord.js';
 import { getSettings } from '../../settings/serverSettings/_helpers';
+import { parseOptionName } from '../_helpers';
 
 export async function handleVote(
   this: Interaction,
@@ -79,7 +80,7 @@ export async function renderPoll(
           if (percentage === Infinity) percentage = 100;
           const label = options
             ? options.choices[index]
-            : previousEmbed.fields[index].name.split(' • ').slice(0, -1).join(' • ');
+            : parseOptionName(previousEmbed.fields[index].name);
 
           return {
             name: `${label} • ${percentage}% (${votes.toLocaleString(this.locale)})`,

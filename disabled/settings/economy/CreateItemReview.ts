@@ -4,8 +4,11 @@ import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { timestampMention } from '@purplet/utils';
 import { ButtonComponent, components, row } from 'purplet';
-import { currencyFormat, formatItemValue } from '../../../economy/_helpers';
-import { getSettings, getSettingsHeader } from '../_helpers';
+import { currencyFormat, formatItemValue } from '../../../src/modules/economy/_helpers';
+import {
+  getSettings,
+  getSettingsHeader,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemPart1, newItemCache } from './CreateItemPart1';
 import { CreateItemPart2 } from './CreateItemPart2';

@@ -1,7 +1,7 @@
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { EditCurrencyModal } from './EditCurrencyModal';
 
 export const EditCurrencyButton = ButtonComponent({

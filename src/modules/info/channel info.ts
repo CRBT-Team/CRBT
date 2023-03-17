@@ -84,7 +84,7 @@ export default ChatCommand({
         | APIGuildForumChannel;
 
       authorIcon = icons.channels.text_thread;
-      title = parent ? t(this, 'THREAD_CHANNEL') : t(this, 'FORUM_POST');
+      title = parent ? t(this, 'THREAD') : t(this, 'POST');
 
       const autoArchives = new Date(
         created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000
@@ -170,10 +170,9 @@ export default ChatCommand({
       };
 
       fields.push({
-        name: `${t(
-          this,
-          channel.type === ChannelType.GuildForum ? 'FORUM_POSTS' : 'THREAD_CHANNELS'
-        )} (${threads.length})`,
+        name: `${t(this, channel.type === ChannelType.GuildForum ? 'POSTS' : 'THREADS')} (${
+          threads.length
+        })`,
         value: threads
           .map((t) => `${t} (${threadDuration[t.thread_metadata.auto_archive_duration]})`)
           .join(', '),

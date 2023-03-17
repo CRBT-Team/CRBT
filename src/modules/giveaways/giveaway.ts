@@ -6,6 +6,7 @@ import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
+import { trimArray } from '$lib/functions/trimArray';
 import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
@@ -48,11 +49,16 @@ export default ChatCommand({
     }),
   async handle({ prize, end_date, winners }) {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
-      return CRBTError(this, 'The "Manage Server" permission is required to create giveaways.');
+      return CRBTError(
+        this,
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          permissions: '"Manage Server"',
+        })
+      );
     }
 
     if (!isValidTime(end_date) && ms(end_date) > ms('1M')) {
-      return CRBTError(this, 'Invalid duration or exceeds 1 month in the future.');
+      return CRBTError(this, 'Invalid duration or exceeds 1 month.');
     }
 
     winners ||= 1;
@@ -161,11 +167,17 @@ export const GwayOptionsButton = ButtonComponent({
     await this.reply({
       embeds: [
         {
-          title: 'CRBT Giveaway • Data and Options',
+          title: `${t(this, 'GIVEAWAY')} - ${strings.DATA_AND_OPTIONS}`,
           fields: [
             {
               name: `Entrants (${gwayData.participants.length})`,
-              value: gwayData.participants.map((id) => `<@${id}>`).join(', ') || 'None',
+              value: gwayData.participants.length
+                ? trimArray(
+                    gwayData.participants.map((id) => `<@${id}>`),
+                    this.locale,
+                    15
+                  ).join(', ')
+                : `*${t(this, 'NONE')}*`,
             },
           ],
           footer: {
@@ -177,11 +189,11 @@ export const GwayOptionsButton = ButtonComponent({
       components: components(
         row(
           new EndGwayButton(this.message.id)
-            .setLabel('End Giveaway')
+            .setLabel(t(this, 'END_NOW'))
             .setEmoji(emojis.buttons.cross)
             .setStyle('DANGER'),
           new CancelGwayButton(this.message.id)
-            .setLabel('Cancel Giveaway')
+            .setLabel(t(this, 'CANCEL'))
             .setEmoji(emojis.buttons.trash_bin)
             .setStyle('DANGER')
         )

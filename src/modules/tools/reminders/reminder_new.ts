@@ -32,14 +32,14 @@ export default ChatCommand({
       required: true,
     })
     .string('subject', t('en-US', 'remind me.meta.options.1.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.1.name' as any, localeLower),
+      nameLocalizations: getAllLanguages('SUBJECT', localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.1.description' as any),
       required: true,
       minLength: 1,
       maxLength: 512,
     })
     .channel('destination', t('en-US', 'remind me.meta.options.2.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.2.name' as any, localeLower),
+      nameLocalizations: getAllLanguages('REMINDER_DESTINATION', localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.2.description' as any),
       channelTypes: [ChannelType.GuildText, ChannelType.GuildAnnouncement],
     }),

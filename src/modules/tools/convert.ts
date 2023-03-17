@@ -1,10 +1,12 @@
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
+import { localeLower } from '$lib/functions/localeLower';
+import { getAllLanguages, t } from '$lib/language';
 import { capitalCase } from 'change-case-all';
 import convert, { Unit } from 'convert-units';
 import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
 import { ChatCommand, OptionBuilder } from 'purplet';
+import { fetch } from 'undici';
 import Currencies from '../../../static/misc/currencies.json';
 
 const units = convert().list();
@@ -24,10 +26,11 @@ const allUnits = [...currencies, ...units] as {
 
 export default ChatCommand({
   name: 'convert',
-  description: 'Convert between two units of measure.',
+  description: 'Convert two units of measure.',
   options: new OptionBuilder()
     .number('amount', 'The amount to convert.', { required: true })
     .string('from', 'The unit to convert from.', {
+      nameLocalizations: getAllLanguages('FROM', localeLower),
       autocomplete({ from }) {
         from = from?.toLowerCase();
         const filtered = allUnits.filter(
@@ -45,6 +48,7 @@ export default ChatCommand({
       required: true,
     })
     .string('to', 'The unit to convert to.', {
+      nameLocalizations: getAllLanguages('TO', localeLower),
       autocomplete({ from, to }) {
         const fromType = allUnits.find(({ abbr }) => abbr === from)?.measure;
 
@@ -67,13 +71,13 @@ export default ChatCommand({
     if (allUnits.find(({ abbr }) => abbr === from) === undefined) {
       return CRBTError(
         this,
-        `"${from}" is not a valid unit. Please use the autocomplete to select a valid unit.`
+        `"${from}" is not a valid unit. Choose valid units from the autocomplete.`
       );
     }
     if (allUnits.find(({ abbr }) => abbr === to) === undefined) {
       return CRBTError(
         this,
-        `"${to}" is not a valid unit. Please use the autocomplete to select a valid unit.`
+        `"${to}" is not a valid unit. Choose valid units from the autocomplete.`
       );
     }
 
@@ -91,13 +95,16 @@ export default ChatCommand({
 
         await this.reply({
           embeds: [
-            new MessageEmbed()
-              .setAuthor({ name: `${amount} ${from} currently exchanges for` })
-              .setTitle(`${result} ${to}`)
-              .setFooter({
-                text: `Data may be inaccurate.\nSource: exchangerate.host • Last updated ${date}`,
-              })
-              .setColor(await getColor(this.user)),
+            {
+              author: { name: `${amount} ${from} currently exchanges for` },
+              title: `${result} ${to}`,
+              footer: {
+                text: `${t(this, 'POWERED_BY', {
+                  provider: 'exchangerate.host',
+                })} • Last updated ${date}`,
+              },
+              color: await getColor(this.user),
+            },
           ],
         });
       } catch (error) {

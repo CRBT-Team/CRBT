@@ -24,20 +24,21 @@ export default ChatCommand({
       maxLength: 256,
     })
     .integer('delete_messages', 'The amount of messages to delete.')
-    .string('duration', 'Temporarily ban the user until a point in time.', {
-      autocomplete({ duration }) {
-        return timeAutocomplete.call(this, duration, '10y', '1m');
+    .string('end_date', 'When their ban expires, optionally.', {
+      nameLocalizations: getAllLanguages('END_DATE', localeLower),
+      autocomplete({ end_date }) {
+        return timeAutocomplete.call(this, end_date, '10y', '1m');
       },
     }),
-  handle({ delete_messages, duration, reason, user }) {
+  handle({ delete_messages, end_date, reason, user }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
       moderator: this.user,
       target: user,
       type: 'BAN',
-      expiresAt: duration ? new Date(Date.now() + ms(duration)) : null,
+      expiresAt: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
-      duration,
+      duration: end_date,
       messagesDeleted: delete_messages,
     });
   },
@@ -48,7 +49,7 @@ export function ban(
   member: GuildMember,
   { duration, reason, messagesDeleted }: ModerationContext
 ) {
-  if (duration && !isValidTime(duration) && ms(duration) > ms('3y')) {
+  if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(this, 'Invalid duration or exceeds 3 years');
   }
 

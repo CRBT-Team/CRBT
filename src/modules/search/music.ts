@@ -6,8 +6,8 @@ import {
   MessageComponentInteraction,
   MessageEmbed,
 } from 'discord.js';
-import fetch, { Headers } from 'node-fetch';
 import { components, row } from 'purplet';
+import { fetch, Headers } from 'undici';
 import { SearchCmdOpts } from './search';
 
 export async function handleMusicSearch(

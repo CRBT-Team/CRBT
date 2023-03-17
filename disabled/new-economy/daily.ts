@@ -45,7 +45,7 @@ export const daily: EconomyCommand = {
             userId: this.user.id,
           })
             .setStyle('SECONDARY')
-            .setLabel(t(this, 'ADD_REMINDER'))
+            .setLabel(t(this, 'SET_REMINDER'))
             .setEmoji(emojis.reminder)
         )
       ),

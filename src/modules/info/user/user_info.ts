@@ -135,7 +135,7 @@ export async function renderUser(
       {
         name: t(ctx.locale, 'MAJOR_PERMS'),
         value: hasPerms(member.permissions, PermissionFlagsBits.Administrator, true)
-          ? t(ctx, 'ADMIN_ALL_PERMS')
+          ? t(ctx, 'PERMISSION_ADMINISTRATOR')
           : perms.length
           ? perms.join(', ')
           : t(ctx, 'NO_PERMS'),

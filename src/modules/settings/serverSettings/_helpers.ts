@@ -11,7 +11,7 @@ import {
   FullSettings,
   SettingsMenus,
 } from '$lib/types/settings';
-import { economySettings } from './economy';
+// import { economySettings } from '../../../../disabled/settings/economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
@@ -23,7 +23,7 @@ export const featureSettingsMenus: Record<EditableFeatures, SettingsMenus> = {
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.moderationLogs]: modlogsSettings,
   [EditableFeatures.moderationReports]: modReportsSettings,
-  [EditableFeatures.economy]: economySettings,
+  // [EditableFeatures.economy]: economySettings,
 };
 
 export const defaultSettings: FullSettings = {
@@ -38,27 +38,26 @@ export const defaultSettings: FullSettings = {
     moderationLogs: false,
     moderationReports: false,
   },
-  economy: {
-    currencyNamePlural: 'Coins',
-    currencyNameSingular: 'Coin',
-    currencySymbol: '🪙',
-    items: [],
-    categories: [],
-    commands: {
-      id: null,
-      workStrings: [
-        'You washed and properly cleaned a car, which got you {money}.',
-        'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
-        'You washed and properly cleaned a car, which got you {money}.',
-        'You washed and properly cleaned a car, which got you {money}.',
-        'You washed and properly cleaned a car, which got you {money}.',
-      ],
-      workCooldown: 300000,
-      workReward: '<random(100, 300)>',
-      weeklyRewards: ['150', '150', '200', '350', '350', 'booster', '500'],
-      dailyReward: '<random(50,150)>',
-    },
-  },
+  // economy: {
+  //   currencyNamePlural: 'Coins',
+  //   currencyNameSingular: 'Coin',
+  //   currencySymbol: '🪙',
+  //   items: [],
+  //   categories: [],
+  //   commands: {
+  //     workStrings: [
+  //       'You washed and properly cleaned a car, which got you {money}.',
+  //       'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
+  //       'You washed and properly cleaned a car, which got you {money}.',
+  //       'You washed and properly cleaned a car, which got you {money}.',
+  //       'You washed and properly cleaned a car, which got you {money}.',
+  //     ],
+  //     workCooldown: 300000,
+  //     workReward: '<random(100, 300)>',
+  //     weeklyRewards: ['150', '150', '200', '350', '350', 'booster', '500'],
+  //     dailyReward: '<random(50,150)>',
+  //   },
+  // },
 };
 
 export function getSettingsHeader(locale: string, accentColor: number, path: string[]) {
@@ -98,17 +97,17 @@ export function resolveSettingsProps(
 
 export const include = {
   modules: true,
-  economy: {
-    include: {
-      commands: true,
-      items: true,
-      categories: {
-        include: {
-          items: true,
-        },
-      },
-    },
-  },
+  // economy: {
+  //   include: {
+  //     commands: true,
+  //     items: true,
+  //     categories: {
+  //       include: {
+  //         items: true,
+  //       },
+  //     },
+  //   },
+  // },
 };
 
 export async function getSettings(guildId: string, force = false) {

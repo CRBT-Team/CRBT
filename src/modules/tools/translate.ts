@@ -33,24 +33,24 @@ export default ChatCommand({
       descriptionLocalizations: getAllLanguages('translate.options.text.description'),
       required: true,
     })
-    .string('target', t('en-US', 'translate.options.target.description'), {
-      nameLocalizations: getAllLanguages('translate.options.target.name', localeLower),
+    .string('to', t('en-US', 'translate.options.target.description'), {
+      nameLocalizations: getAllLanguages('TO', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.target.description'),
       autocomplete({ target }) {
         return languagesAutocomplete.call(this, target);
       },
     })
-    .string('source', t('en-US', 'translate.options.source.name'), {
-      nameLocalizations: getAllLanguages('translate.options.source.name', localeLower),
+    .string('from', t('en-US', 'translate.options.source.description'), {
+      nameLocalizations: getAllLanguages('FROM', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.source.description'),
       autocomplete({ source }) {
         return languagesAutocomplete.call(this, source);
       },
     }),
-  async handle({ text, target, source }) {
+  async handle({ text, to, from }) {
     await this.deferReply();
     try {
-      const result = await translate.call(this, text, { to: target, from: source });
+      const result = await translate.call(this, text, { to, from });
 
       if (result) await this.editReply(result);
     } catch (e) {
@@ -73,8 +73,10 @@ export const ctxCommand = MessageContextCommand({
 
     if (!message.content && !image && !embedsWithText.length) {
       return CRBTError(this, {
-        title: "This message doesn't have any text or images to translate!",
-        description: `You can translate any other text with ${slashCmd('translate')}.`,
+        title: t(this, 'TRANSLATE_MESSAGE_NO_CONTENT_TITLE'),
+        description: t(this, 'TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION', {
+          command: slashCmd('translate'),
+        }),
       });
     }
 
@@ -132,11 +134,7 @@ export const ctxCommand = MessageContextCommand({
         const [content, error] = await useOcrScan(image);
 
         if (error) {
-          return await CRBTError(this, {
-            title: 'No text was recognized from this image.',
-            description:
-              'Try again using a different image, and make sure that the text is legible.',
-          });
+          return await CRBTError(this, t(this, 'OCR_ERROR_MESSAGE'));
         }
 
         return this.editReply(await translate.call(this, content));
