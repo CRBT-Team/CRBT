@@ -5,7 +5,10 @@ import { EditableFeatures } from '$lib/types/settings';
 import { timestampMention } from '@purplet/utils';
 import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { getSettings, getSettingsHeader } from '../_helpers';
+import {
+  getSettings,
+  getSettingsHeader,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { newItemCache } from './CreateItemPart1';
 import { CreateItemPart2 } from './CreateItemPart2';

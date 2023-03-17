@@ -7,7 +7,7 @@ import { EconomyItem } from '@prisma/client';
 import { Dayjs } from 'dayjs';
 import { ModalComponent } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { handleCreateItemPart3 } from './CreateItemPart3';
 import { renderItem } from './renderItem';

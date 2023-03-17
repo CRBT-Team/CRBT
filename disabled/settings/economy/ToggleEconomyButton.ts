@@ -1,9 +1,12 @@
 import { EditableFeatures } from '$lib/types/settings';
 import { Routes } from 'discord-api-types/v10';
 import { ButtonComponent, getRestClient } from 'purplet';
-import { economyCommands } from '../../../economy/_helpers';
-import { renderFeatureSettings } from '../settings';
-import { getSettings, saveServerSettings } from '../_helpers';
+import { economyCommands } from '../../../src/modules/economy/_helpers';
+import { renderFeatureSettings } from '../../../src/modules/settings/serverSettings/settings';
+import {
+  getSettings,
+  saveServerSettings,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 
 export const ToggleEconomyButton = ButtonComponent({
   async handle(isEnabled: boolean) {
@@ -32,7 +35,7 @@ export const ToggleEconomyButton = ButtonComponent({
 
 async function addEconomyGuildCommands(guildId: string, applicationId: string) {
   const {
-    economy: { categories, currencyNamePlural, currencyNameSingular },
+    economy: { categories, currency_name_plural, currency_name_singular },
   } = await getSettings(guildId);
   const promises: Promise<any>[] = [];
 
@@ -42,8 +45,8 @@ async function addEconomyGuildCommands(guildId: string, applicationId: string) {
     }
 
     const commandMeta = command.getMeta({
-      plural: currencyNamePlural,
-      singular: currencyNameSingular,
+      plural: currency_name_plural,
+      singular: currency_name_singular,
     });
 
     promises.push(

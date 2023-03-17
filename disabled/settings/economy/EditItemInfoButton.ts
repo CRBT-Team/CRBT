@@ -3,7 +3,7 @@ import { t } from '$lib/language';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { EditItemInfoModal } from './EditItemInfoModal';
 

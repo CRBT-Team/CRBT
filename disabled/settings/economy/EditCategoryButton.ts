@@ -2,7 +2,7 @@ import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { t } from '$lib/language';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { EditCategoryModal } from './EditCategoryModal';
 
 export const EditCategoryButton = ButtonComponent({

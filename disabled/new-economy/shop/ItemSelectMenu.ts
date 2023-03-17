@@ -1,5 +1,5 @@
 import { SelectMenuComponent } from 'purplet';
-import { renderItem } from '../../settings/serverSettings/economy/renderItem';
+import { renderItem } from '../../../../disabled/settings/economy/renderItem';
 import { getSettings } from '../../settings/serverSettings/_helpers';
 
 export const ItemSelectMenu = SelectMenuComponent({

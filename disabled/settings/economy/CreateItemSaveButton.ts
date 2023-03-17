@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { ButtonComponent } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { renderItem } from './renderItem';
 

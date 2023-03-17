@@ -7,9 +7,12 @@ import { EconomyItem, EconomyItemCategory } from '@prisma/client';
 import dedent from 'dedent';
 import { Interaction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
-import { ItemSelectMenu } from '../../../economy/shop/ItemSelectMenu';
-import { currencyFormat, formatItemValue } from '../../../economy/_helpers';
-import { getSettings, getSettingsHeader } from '../_helpers';
+import { ItemSelectMenu } from '../../../src/modules/economy/shop/ItemSelectMenu';
+import { currencyFormat, formatItemValue } from '../../../src/modules/economy/_helpers';
+import {
+  getSettings,
+  getSettingsHeader,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 import { CreateItemPart1 } from './CreateItemPart1';
 import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCategoryButton } from './EditCategoryButton';

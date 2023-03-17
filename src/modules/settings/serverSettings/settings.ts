@@ -7,7 +7,6 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
-import { ServerFlags } from '$lib/util/serverFlags';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
@@ -53,11 +52,11 @@ export async function renderSettingsMenu(
   const settings = await getSettings(this.guild.id);
 
   const options = Object.values(EditableFeatures)
-    .filter((feature) =>
-      feature === EditableFeatures.economy
-        ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
-        : true
-    )
+    // .filter((feature) =>
+    //   feature === EditableFeatures.economy
+    //     ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
+    //     : true
+    // )
     .map((feature) => {
       const props = resolveSettingsProps(this, feature, settings);
       const featureSettings = featureSettingsMenus[feature];
@@ -88,11 +87,11 @@ export async function renderSettingsMenu(
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
         description: t(this, 'SETTINGS_DESCRIPTION'),
         fields: Object.values(EditableFeatures)
-          .filter((feature) =>
-            feature === EditableFeatures.economy
-              ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
-              : true
-          )
+          // .filter((feature) =>
+          //   feature === EditableFeatures.economy
+          //     ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
+          //     : true
+          // )
           .map((feature) => {
             const props = resolveSettingsProps(this, feature, settings);
             const featureSettings = featureSettingsMenus[feature];

@@ -2,14 +2,17 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { EditableFeatures } from '$lib/types/settings';
 import { ModalComponent } from 'purplet';
-import { renderFeatureSettings } from '../settings';
-import { getSettings, saveServerSettings } from '../_helpers';
+import { renderFeatureSettings } from '../../../src/modules/settings/serverSettings/settings';
+import {
+  getSettings,
+  saveServerSettings,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 
 export const EditCurrencyModal = ModalComponent({
   async handle(h: null) {
     const { economy } = await getSettings(this.guildId);
     const currencySymbol = await parseEmojiString(
-      this.fields.getTextInputValue('currencySymbol') || economy.currencySymbol,
+      this.fields.getTextInputValue('currencySymbol') || economy.currency_symbol,
       await this.guild.emojis.fetch()
     );
 
@@ -21,11 +24,11 @@ export const EditCurrencyModal = ModalComponent({
     }
 
     const newEconomy = {
-      currencySymbol,
-      currencyNameSingular:
-        this.fields.getTextInputValue('currencyNameSingular') ?? economy.currencyNameSingular,
-      currencyNamePlural:
-        this.fields.getTextInputValue('currencyNamePlural') ?? economy.currencyNamePlural,
+      currency_symbol: currencySymbol,
+      currency_name_singular:
+        this.fields.getTextInputValue('currencyNameSingular') ?? economy.currency_name_singular,
+      currency_name_plural:
+        this.fields.getTextInputValue('currencyNamePlural') ?? economy.currency_name_plural,
     };
 
     await saveServerSettings(this.guildId, {

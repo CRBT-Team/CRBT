@@ -2,8 +2,11 @@ import { emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { EditableFeatures } from '$lib/types/settings';
 import { ButtonComponent, components, row } from 'purplet';
-import { BackSettingsButton } from '../settings';
-import { getSettings, getSettingsHeader } from '../_helpers';
+import { BackSettingsButton } from '../../../src/modules/settings/serverSettings/settings';
+import {
+  getSettings,
+  getSettingsHeader,
+} from '../../../src/modules/settings/serverSettings/_helpers';
 import { CategorySelectMenu } from './CategorySelectMenu';
 import { CreateCategoryButton } from './CreateCategoryButton';
 

@@ -4,7 +4,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { handleCreateItemPart1, newItemCache } from './CreateItemPart1';
 import { renderItem } from './renderItem';
 

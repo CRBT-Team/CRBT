@@ -2,7 +2,7 @@ import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 
 export const EditCategoryModal = ModalComponent({

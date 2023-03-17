@@ -1,12 +1,14 @@
 import { prisma } from '$lib/db';
-import { clients, servers } from '$lib/env';
+// import { clients, servers } from '$lib/env';
+import { clients } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { AnyTimeout, TimeoutTypes } from '$lib/types/timeouts';
-import { Routes } from 'discord-api-types/v10';
+// import { Routes } from 'discord-api-types/v10';
 import { ApplicationCommand, Client, Collection } from 'discord.js';
-import { getRestClient, OnEvent } from 'purplet';
-import { economyCommands } from '../economy/_helpers';
-import { getSettings } from '../settings/serverSettings/_helpers';
+// import { getRestClient, OnEvent } from 'purplet';
+import { OnEvent } from 'purplet';
+// import { economyCommands } from '../economy/_helpers';
+// import { getSettings } from '../settings/serverSettings/_helpers';
 
 export let allCommands: Collection<string, ApplicationCommand>;
 
@@ -16,13 +18,13 @@ export default OnEvent('ready', async (client) => {
     type: 'WATCHING',
   });
 
-  await Promise.all(await loadEconomyCommands(client)).then(async () => {
-    allCommands = await client.application.commands.fetch({
-      guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
-    });
+  // await Promise.all(await loadEconomyCommands(client)).then(async () => {
+  //   allCommands = await client.application.commands.fetch({
+  //     guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
+  //   });
 
-    console.log(`Loaded ${allCommands.size} commands`);
-  });
+  //   console.log(`Loaded ${allCommands.size} commands`);
+  // });
 
   loadTimeouts(client);
 });
@@ -37,31 +39,31 @@ function loadTimeouts(client: Client) {
   });
 }
 
-async function loadEconomyCommands(client: Client): Promise<Promise<any>[]> {
-  const promises: Promise<any>[] = [];
+// async function loadEconomyCommands(client: Client): Promise<Promise<any>[]> {
+//   const promises: Promise<any>[] = [];
 
-  if (client.user.id !== clients.crbt.id) {
-    const { modules, economy } = await getSettings(servers.community);
+//   if (client.user.id !== clients.crbt.id) {
+//     const { modules, economy } = await getSettings(servers.community);
 
-    if (modules.economy) {
-      Object.entries(economyCommands).map(([name, command]) => {
-        if (!economy.categories.length && name === 'shop') {
-          return;
-        }
+//     if (modules.economy) {
+//       Object.entries(economyCommands).map(([name, command]) => {
+//         if (!economy.categories.length && name === 'shop') {
+//           return;
+//         }
 
-        const commandMeta = command.getMeta({
-          plural: economy.currencyNamePlural,
-          singular: economy.currencyNameSingular,
-        });
+//         const commandMeta = command.getMeta({
+//           plural: economy.currency_name_plural,
+//           singular: economy.currency_name_singular,
+//         });
 
-        promises.push(
-          getRestClient().post(
-            Routes.applicationGuildCommands(client.application.id, servers.community),
-            { body: commandMeta }
-          )
-        );
-      });
-    }
-  }
-  return promises;
-}
+//         promises.push(
+//           getRestClient().post(
+//             Routes.applicationGuildCommands(client.application.id, servers.community),
+//             { body: commandMeta }
+//           )
+//         );
+//       });
+//     }
+//   }
+//   return promises;
+// }

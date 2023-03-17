@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { ButtonComponent } from 'purplet';
-import { getSettings } from '../_helpers';
+import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
 import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 
 export const CreateCategoryButton = ButtonComponent({
@@ -9,7 +9,7 @@ export const CreateCategoryButton = ButtonComponent({
 
     const category = await prisma.economyItemCategory.create({
       data: {
-        serverId: this.guildId,
+        guild_id: this.guildId,
         label: 'New Category',
         emoji: '📁',
       },
