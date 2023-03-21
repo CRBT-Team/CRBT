@@ -11,6 +11,7 @@ import {
   FullSettings,
   SettingsMenus,
 } from '$lib/types/settings';
+import { serverAnalyzeSettings } from './analyze';
 // import { economySettings } from '../../../../disabled/settings/economy';
 import { joinLeaveSettings } from './joinLeave';
 import { modlogsSettings } from './modlogs';
@@ -23,6 +24,7 @@ export const featureSettingsMenus: Record<EditableFeatures, SettingsMenus> = {
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.moderationLogs]: modlogsSettings,
   [EditableFeatures.moderationReports]: modReportsSettings,
+  [EditableFeatures.serverAnalysis]: serverAnalyzeSettings,
   // [EditableFeatures.economy]: economySettings,
 };
 

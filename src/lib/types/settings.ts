@@ -16,6 +16,7 @@ export enum EditableFeatures {
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
+  serverAnalysis = 'SERVER_ANALYSIS',
   // economy = 'ECONOMY',
 }
 
@@ -25,6 +26,7 @@ export enum CamelCaseFeatures {
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
   MODERATION_REPORTS = 'moderationReports',
+  SERVER_ANALYSIS = 'serverAnalysis',
   // ECONOMY = 'economy',
 }
 
