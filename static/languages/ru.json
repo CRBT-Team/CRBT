@@ -9,7 +9,7 @@
   "ADD_TO_SERVER": "Добавить на сервер",
   "DISCORD_SERVER": "Сервер Discord",
   "DONATE": "Поддержать",
-  "PERMISSION_ADMINISTRATOR": "Administrator",
+  "PERMISSION_ADMINISTRATOR": "Администратор",
   "ERROR_MISSING_PERMISSIONS": "Для использования этой команды вам нужны права {PERMISSIONS}.",
   "ERROR_INVALID_URL": "Неправильный URL.",
   "ERROR_INVALID_COLOR": "Неправильный цвет. Используйте пресет или правильный HEX код.",
