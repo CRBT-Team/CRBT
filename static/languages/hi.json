@@ -1,8 +1,8 @@
 {
   "ID": "ID",
   "CREATED_ON": "को बना था ",
-  "MEMBER_COUNT": "Member count",
-  "SERVER_COUNT": "Server count",
+  "MEMBER_COUNT": "मेम्बर की संख्या ",
+  "SERVER_COUNT": "सर्वर की संख्या ",
   "PING": "पिंग",
   "UPTIME": "{time} से ऑनलाइन ",
   "WEBSITE": "वेबसाइट ",
@@ -11,8 +11,8 @@
   "DONATE": "दान करे",
   "PERMISSION_ADMINISTRATOR": "Administrator",
   "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
-  "ERROR_INVALID_URL": "Invalid URL.",
-  "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
+  "ERROR_INVALID_URL": "गलत URL",
+  "ERROR_INVALID_COLOR": "रंग अमान्य है | Preset या मान्य HEX कोड इस्तेमाल कीजिए |",
   "BACK": "वापस जाएं",
   "JUMP_TO_MSG": "मेसेज पर जाएं",
   "CANCEL": "रद्द करें",
@@ -81,14 +81,14 @@
   },
   "CooldownError": {
     "TITLE": "Hold it!",
-    "DESCRIPTION": "You may try again {time}."
+    "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
     "meta": {
       "description": "CRBT का रंग बदले ",
       "options": [
         {
-          "description": "Choose a suggestion or a HEX code."
+          "description": "Suggestion या HEX कोड चुने |"
         }
       ]
     },
