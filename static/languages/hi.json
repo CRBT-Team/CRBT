@@ -105,7 +105,7 @@
       "gray": "ग्रे"
     },
     "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
+      "NO_DISCORD_COLOR": "आप profile कलर को sync करने के लिए मिल नहीं पाए | सेट करने के लिए, आपके Discord Profile को एडिट करे |"
     },
     "strings": {
       "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
