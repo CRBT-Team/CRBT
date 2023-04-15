@@ -20,11 +20,11 @@ import { themeSettings } from './theming';
 
 export const featureSettingsMenus: Record<EditableFeatures, SettingsMenus> = {
   [EditableFeatures.automaticTheming]: themeSettings,
+  [EditableFeatures.serverAnalysis]: serverAnalyzeSettings,
   [EditableFeatures.joinMessage]: joinLeaveSettings,
   [EditableFeatures.leaveMessage]: joinLeaveSettings,
   [EditableFeatures.moderationLogs]: modlogsSettings,
   [EditableFeatures.moderationReports]: modReportsSettings,
-  [EditableFeatures.serverAnalysis]: serverAnalyzeSettings,
   // [EditableFeatures.economy]: economySettings,
 };
 

@@ -32,7 +32,13 @@ export default defineConfig({
   },
   discord: {
     commandGuilds: process.argv.includes('--dev')
-      ? [servers.community] // CRBT Commnity
+      ? [
+          servers.community,
+          '516410163230539837',
+          '403966971147845636',
+          '939464042173583381',
+          '738747595438030888',
+        ] // CRBT Commnity
       : [],
     //@ts-ignore
     clientOptions: {

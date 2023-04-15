@@ -645,5 +645,6 @@
   "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
   "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden out of age-restricted channels.",
   "DURATION": "Duration",
-  "VIEWS": "Views"
+  "VIEWS": "Views",
+  "SERVER_ANALYSIS": "Server Analysis"
 }

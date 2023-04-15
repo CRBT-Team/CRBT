@@ -10,6 +10,7 @@ import { invisibleChar } from '$lib/util/invisibleChar';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   CommandInteraction,
+  GuildMember,
   MessageComponentInteraction,
   ModalSubmitInteraction,
 } from 'discord.js';
@@ -29,7 +30,7 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
-    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
+    if (!hasPerms(this.member as GuildMember, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
         t(this.locale, 'ERROR_MISSING_PERMISSIONS', {
@@ -102,7 +103,9 @@ export async function renderSettingsMenu(
             i ??= props.isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off;
 
             return {
-              name: `${i} **${t(this, feature)}**`,
+              name: `${i} **${t(this, feature)}** ${
+                featureSettings.newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
+              }`,
               value: value,
               inline: true,
             };

@@ -37,7 +37,8 @@ export const serverAnalyzeSettings: SettingsMenus = {
     };
   },
   getOverviewValue: () => ({
-    value: 'Server Analysis [NEW]',
+    value: 'Free tier',
+    icon: '✨',
   }),
   newLabel: true,
   getSelectMenu() {

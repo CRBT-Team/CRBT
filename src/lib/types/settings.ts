@@ -12,21 +12,21 @@ import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'disc
 
 export enum EditableFeatures {
   automaticTheming = 'SERVER_THEME',
+  serverAnalysis = 'SERVER_ANALYSIS',
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
   moderationLogs = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
-  serverAnalysis = 'SERVER_ANALYSIS',
   // economy = 'ECONOMY',
 }
 
 export enum CamelCaseFeatures {
   SERVER_THEME = 'automaticTheming',
+  SERVER_ANALYSIS = 'serverAnalysis',
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
   MODERATION_REPORTS = 'moderationReports',
-  SERVER_ANALYSIS = 'serverAnalysis',
   // ECONOMY = 'economy',
 }
 
@@ -56,7 +56,7 @@ export type FullSettings = Partial<
 
 export interface SettingsMenus {
   newLabel?: boolean;
-  getOverviewValue(props: FeatureSettingsProps): {
+  getOverviewValue?: (props: FeatureSettingsProps) => {
     icon?: string;
     value: string;
   };
