@@ -94,7 +94,6 @@ model moderationStrikes {
 
 model User {
   id           String         @id
-  guildedId    String?        @unique @map("guilded_id")
   accentColor  Int?           @map("accent_color")
   crbtBadges   String[]       @map("crbt_badges")
   telemetry    Boolean        @default(true)
