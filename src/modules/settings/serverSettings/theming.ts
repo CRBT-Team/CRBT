@@ -11,7 +11,6 @@ import { renderFeatureSettings } from './settings';
 import { saveServerSettings } from './_helpers';
 
 export const themeSettings: SettingsMenus = {
-  newLabel: true,
   getOverviewValue: ({ settings, i }) => ({
     icon: '🎨',
     value: settings.automaticTheming
