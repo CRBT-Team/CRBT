@@ -4,60 +4,70 @@ const { TypeError } = require('../errors');
 const { MessageComponentTypes, Events } = require('../util/Constants');
 
 /**
- * Represents an interactive component of a Message or Modal. It should not be necessary to construct this directly.
- * See {@link MessageComponent}
+ * Represents an interactive component of a Message or Modal. It should not be necessary to
+ * construct this directly. See {@link MessageComponent}
  */
 class BaseMessageComponent {
   /**
    * Options for a BaseMessageComponent
+   *
    * @typedef {Object} BaseMessageComponentOptions
    * @property {MessageComponentTypeResolvable} type The type of this component
    */
 
   /**
    * Data that can be resolved into options for a component. This can be:
-   * * MessageActionRowOptions
-   * * MessageButtonOptions
-   * * MessageSelectMenuOptions
-   * * TextInputComponentOptions
-   * @typedef {MessageActionRowOptions|MessageButtonOptions|MessageSelectMenuOptions} MessageComponentOptions
+   *
+   * - MessageActionRowOptions
+   * - MessageButtonOptions
+   * - MessageSelectMenuOptions
+   * - TextInputComponentOptions
+   *
+   * @typedef {MessageActionRowOptions | MessageButtonOptions | MessageSelectMenuOptions} MessageComponentOptions
    */
 
   /**
    * Components that can be sent in a payload. These can be:
-   * * MessageActionRow
-   * * MessageButton
-   * * MessageSelectMenu
-   * * TextInputComponent
-   * @typedef {MessageActionRow|MessageButton|MessageSelectMenu} MessageComponent
+   *
+   * - MessageActionRow
+   * - MessageButton
+   * - MessageSelectMenu
+   * - TextInputComponent
+   *
+   * @typedef {MessageActionRow | MessageButton | MessageSelectMenu} MessageComponent
    * @see {@link https://discord.com/developers/docs/interactions/message-components#component-object-component-types}
    */
 
   /**
    * Data that can be resolved to a MessageComponentType. This can be:
-   * * MessageComponentType
-   * * string
-   * * number
-   * @typedef {string|number|MessageComponentType} MessageComponentTypeResolvable
+   *
+   * - MessageComponentType
+   * - String
+   * - Number
+   *
+   * @typedef {string | number | MessageComponentType} MessageComponentTypeResolvable
    */
 
   /**
-   * @param {BaseMessageComponent|BaseMessageComponentOptions} [data={}] The options for this component
+   * @param {BaseMessageComponent | BaseMessageComponentOptions} [data={}] The options for this
+   *   component. Default is `{}`
    */
   constructor(data) {
     /**
      * The type of this component
-     * @type {?MessageComponentType}
+     *
+     * @type {MessageComponentType | null}
      */
     this.type = 'type' in data ? BaseMessageComponent.resolveType(data.type) : null;
   }
 
   /**
    * Constructs a component based on the type of the incoming data
-   * @param {MessageComponentOptions} data Data for a MessageComponent
-   * @param {Client|WebhookClient} [client] Client constructing this component
-   * @returns {?(MessageComponent|ModalComponent)}
+   *
    * @private
+   * @param {MessageComponentOptions} data Data for a MessageComponent
+   * @param {Client | WebhookClient} [client] Client constructing this component
+   * @returns {?(MessageComponent | ModalComponent)}
    */
   static create(data, client) {
     let component;
@@ -92,7 +102,10 @@ class BaseMessageComponent {
       }
       default:
         if (client) {
-          client.emit(Events.DEBUG, `[BaseMessageComponent] Received component with unknown type: ${data.type}`);
+          client.emit(
+            Events.DEBUG,
+            `[BaseMessageComponent] Received component with unknown type: ${data.type}`
+          );
         } else {
           throw new TypeError('INVALID_TYPE', 'data.type', 'valid MessageComponentType');
         }
@@ -102,9 +115,10 @@ class BaseMessageComponent {
 
   /**
    * Resolves the type of a component
+   *
+   * @private
    * @param {MessageComponentTypeResolvable} type The type to resolve
    * @returns {MessageComponentType}
-   * @private
    */
   static resolveType(type) {
     return typeof type === 'string' ? type : MessageComponentTypes[type];
