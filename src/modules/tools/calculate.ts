@@ -27,8 +27,8 @@ export default ChatCommand({
       await this.reply({
         embeds: [
           {
-            author: { name: expression },
-            title: `= ${result}`,
+            author: { name: `${expression} =` },
+            title: `${result}`,
             color: await getColor(this.user),
           },
         ],
