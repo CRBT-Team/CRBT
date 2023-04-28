@@ -103,7 +103,7 @@ export async function renderSettingsMenu(
 
             return {
               name: `${i} **${t(this, feature)}**`,
-              value: value,
+              value: value ?? `*${t(this, 'NONE')}*`,
               inline: true,
             };
           }),
