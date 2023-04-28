@@ -1,21 +1,23 @@
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
-import { MessageFlags } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 
 export const ExportAllData = ButtonComponent({
   async handle() {
+    await this.deferReply({
+      ephemeral: true,
+    });
+
     const userData = await prisma.user.findFirst({
       where: { id: this.user.id },
       include: { reminders: true },
     });
 
-    await this.reply({
+    await this.editReply({
       files: [
         new MessageAttachment(Buffer.from(JSON.stringify(userData, null, 2))).setName('data.json'),
       ],
-      flags: MessageFlags.Ephemeral,
     });
   },
 });
