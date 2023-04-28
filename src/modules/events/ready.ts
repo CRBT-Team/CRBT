@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 // import { clients, servers } from '$lib/env';
-import { clients } from '$lib/env';
+import { clients, servers } from '$lib/env';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { AnyTimeout, TimeoutTypes } from '$lib/types/timeouts';
 // import { Routes } from 'discord-api-types/v10';
@@ -19,11 +19,11 @@ export default OnEvent('ready', async (client) => {
   });
 
   // await Promise.all(await loadEconomyCommands(client)).then(async () => {
-  //   allCommands = await client.application.commands.fetch({
-  //     guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
-  //   });
+  allCommands = await client.application.commands.fetch({
+    guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
+  });
 
-  //   console.log(`Loaded ${allCommands.size} commands`);
+  console.log(`Loaded ${allCommands.size} commands`);
   // });
 
   loadTimeouts(client);
