@@ -51,7 +51,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
           )})`,
           icon_url: avatar(this.user, 64),
         },
-        title: getReminderSubject(reminder, this.client),
+        title: getReminderSubject(reminder, this.client, 0),
         description: dedent`
         ${timestampMention(data.expiresAt, 'R')}
         ${t(this, 'REMINDER_DESTINATION')} ${
