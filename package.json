@@ -1,11 +1,12 @@
 {
   "name": "crbt",
-  "version": "11.10.5",
+  "version": "11.11.0",
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
     "start": "node patches/apply-patches && prisma generate && purplet build && node dist/bot.mjs",
     "dev": "node patches/apply-patches && purplet build && node dist/bot.mjs --dev",
+    "dev:np": "purplet build && node dist/bot.mjs --dev",
     "db": "supabase start",
     "build": "purplet build",
     "generate": "prisma generate"
@@ -26,7 +27,7 @@
     "convert-units": "^2.3.4",
     "dayjs": "^1.10.7",
     "dedent": "^0.7.0",
-    "discord.js": "13",
+    "discord.js": "13.15.1",
     "dotenv": "^10.0.0",
     "duck-duck-scrape": "^2.2.3",
     "expr-eval": "^2.0.2",
