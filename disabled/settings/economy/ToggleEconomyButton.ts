@@ -1,12 +1,12 @@
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { Routes } from 'discord-api-types/v10';
 import { ButtonComponent, getRestClient } from 'purplet';
 import { economyCommands } from '../../../src/modules/economy/_helpers';
-import { renderFeatureSettings } from '../../../src/modules/settings/serverSettings/settings';
+import { renderFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
 import {
-  getSettings,
+  getGuildSettings,
   saveServerSettings,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+} from '../../../src/modules/settings/server-settings/_helpers';
 
 export const ToggleEconomyButton = ButtonComponent({
   async handle(isEnabled: boolean) {
@@ -28,7 +28,7 @@ export const ToggleEconomyButton = ButtonComponent({
 
     await Promise.all(promises).then(
       async () =>
-        await this.editReply(await renderFeatureSettings.call(this, EditableFeatures.economy))
+        await this.editReply(await renderFeatureSettings.call(this, EditableGuildFeatures.economy))
     );
   },
 });
@@ -36,7 +36,7 @@ export const ToggleEconomyButton = ButtonComponent({
 async function addEconomyGuildCommands(guildId: string, applicationId: string) {
   const {
     economy: { categories, currency_name_plural, currency_name_singular },
-  } = await getSettings(guildId);
+  } = await getGuildSettings(guildId);
   const promises: Promise<any>[] = [];
 
   Object.entries(economyCommands).map(([name, command]) => {

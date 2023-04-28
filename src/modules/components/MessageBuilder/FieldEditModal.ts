@@ -2,15 +2,15 @@ import { cache } from '$lib/cache';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
-import { EditableFeatures } from '$lib/types/settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { renderFeatureSettings } from '../../settings/serverSettings/settings';
-import { saveServerSettings } from '../../settings/serverSettings/_helpers';
+import { renderFeatureSettings } from '../../settings/server-settings/settings';
+import { saveServerSettings } from '../../settings/server-settings/_helpers';
 
 export const FieldEditModal = ModalComponent({
   async handle({
@@ -18,11 +18,11 @@ export const FieldEditModal = ModalComponent({
     type,
   }: {
     fieldName: string;
-    type: MessageBuilderTypes | EditableFeatures.automaticTheming;
+    type: MessageBuilderTypes | EditableGuildFeatures.automaticTheming;
   }) {
     let value: string = this.fields.getTextInputValue('VALUE');
 
-    if (type === EditableFeatures.automaticTheming) {
+    if (type === EditableGuildFeatures.automaticTheming) {
       value = value.toLowerCase().replace('#', '');
       if (!value.match(/^[0-9a-f]{6}$/)) {
         return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
@@ -33,7 +33,7 @@ export const FieldEditModal = ModalComponent({
       });
 
       return await this.update(
-        await renderFeatureSettings.call(this, EditableFeatures.automaticTheming)
+        await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming)
       );
     }
 

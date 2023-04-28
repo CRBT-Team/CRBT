@@ -1,12 +1,12 @@
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { EditCurrencyModal } from './EditCurrencyModal';
 
 export const EditCurrencyButton = ButtonComponent({
   async handle() {
-    const { economy } = await getSettings(this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
 
     await this.showModal(
       new EditCurrencyModal().setTitle('Edit Currency').setComponents(

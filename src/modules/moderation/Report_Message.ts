@@ -12,7 +12,7 @@ import { ModerationStrikeTypes } from '@prisma/client';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message, MessageEmbedOptions } from 'discord.js';
 import { ButtonComponent, components, MessageContextCommand, row } from 'purplet';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { ActionSelectMenu, DismissReportBtn } from './Report_User';
 import { checkModerationPermission } from './_base';
 
@@ -22,7 +22,7 @@ export default MessageContextCommand({
   name: 'Report Message',
   async handle(message) {
     const user = message.author;
-    const { modules, modReportsChannel } = await getSettings(this.guildId);
+    const { modules, modReportsChannel } = await getGuildSettings(this.guildId);
 
     if (!modules?.moderationReports && !modReportsChannel) {
       return CRBTError(this, {

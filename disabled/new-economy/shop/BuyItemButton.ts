@@ -3,7 +3,7 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { getSettings } from '../../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../settings/serverSettings/_helpers';
 import { BackButton } from './shop';
 
 export const BuyItemButton = ButtonComponent({
@@ -40,7 +40,7 @@ export const BuyItemButton = ButtonComponent({
     );
     const item = inventory.items.find((i) => i.id === itemId);
 
-    await getSettings(this.guildId, true);
+    await getGuildSettings(this.guildId, true);
 
     await this.editReply({
       content: `${emojis.success} Transaction complete! To use your item, open your inventory.`,

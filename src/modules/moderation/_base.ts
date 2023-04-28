@@ -21,7 +21,7 @@ import {
   TextChannel,
   User,
 } from 'discord.js';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { ban } from './ban';
 import { kick } from './kick';
 import { timeout } from './timeout';
@@ -132,7 +132,7 @@ export async function handleModerationAction(
       });
     }
 
-    const { modules, modLogsChannel } = await getSettings(guild.id);
+    const { modules, modLogsChannel } = await getGuildSettings(guild.id);
 
     if (modules.moderationLogs && modLogsChannel) {
       const channel = (await guild.client.channels.fetch(modLogsChannel)) as TextChannel;

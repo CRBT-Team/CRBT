@@ -30,7 +30,7 @@ export default OnEvent('guildMemberRemove', async (member) => {
     const serverData = (await prisma.servers.findFirst({
       where: { id: guild.id },
       select: { leaveChannel: true, leaveMessage: true },
-    })) as RawServerLeave;
+    })) as unknown as RawServerLeave;
 
     if (!serverData) return;
 

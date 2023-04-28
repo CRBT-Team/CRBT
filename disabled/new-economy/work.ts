@@ -4,7 +4,7 @@ import { CooldownError } from '$lib/functions/CRBTError';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/serverSettings/_helpers';
 import { EconomyCommand, upsertServerMember } from './_helpers';
 
 export const work: EconomyCommand = {
@@ -60,7 +60,7 @@ export const work: EconomyCommand = {
 
     const income = economyGain();
     const expGain = Math.floor(Math.random() * 100) + 100;
-    const { economy } = await getSettings(this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
     // const possibleStrings = jobStrings[job.type].strings;
     // const string = possibleStrings[Math.floor(Math.random() * possibleStrings.length)];
 

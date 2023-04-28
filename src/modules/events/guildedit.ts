@@ -1,11 +1,11 @@
 import { imgDominantColor } from '$lib/functions/imgDominantColor';
 import { OnEvent } from 'purplet';
-import { getSettings, saveServerSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings, saveServerSettings } from '../settings/server-settings/_helpers';
 
 export default OnEvent('guildUpdate', async (oldGuild, newGuild) => {
   if (oldGuild.icon === newGuild.icon) return;
 
-  const { automaticTheming } = await getSettings(newGuild.id);
+  const { automaticTheming } = await getGuildSettings(newGuild.id);
 
   if (!automaticTheming) return;
 

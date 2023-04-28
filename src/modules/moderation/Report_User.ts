@@ -24,13 +24,13 @@ import {
   SelectMenuComponent,
   UserContextCommand,
 } from 'purplet';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { checkModerationPermission, handleModerationAction } from './_base';
 
 export default UserContextCommand({
   name: 'Report User',
   async handle(user) {
-    const { modules, modReportsChannel } = await getSettings(this.guildId);
+    const { modules, modReportsChannel } = await getGuildSettings(this.guildId);
 
     if (!modules?.moderationReports && !modReportsChannel) {
       return CRBTError(this, {
@@ -121,7 +121,7 @@ export const ReportModal = ModalComponent({
       color: await getColor(this.guild),
     };
 
-    const { modReportsChannel } = await getSettings(this.guildId);
+    const { modReportsChannel } = await getGuildSettings(this.guildId);
     const reportsChannel = this.guild.channels.cache.get(
       modReportsChannel
     ) as GuildTextBasedChannel;

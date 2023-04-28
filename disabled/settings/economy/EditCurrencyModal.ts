@@ -1,16 +1,16 @@
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { ModalComponent } from 'purplet';
-import { renderFeatureSettings } from '../../../src/modules/settings/serverSettings/settings';
+import { renderFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
 import {
-  getSettings,
+  getGuildSettings,
   saveServerSettings,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+} from '../../../src/modules/settings/server-settings/_helpers';
 
 export const EditCurrencyModal = ModalComponent({
   async handle(h: null) {
-    const { economy } = await getSettings(this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
     const currencySymbol = await parseEmojiString(
       this.fields.getTextInputValue('currencySymbol') || economy.currency_symbol,
       await this.guild.emojis.fetch()
@@ -53,6 +53,6 @@ export const EditCurrencyModal = ModalComponent({
     //   true
     // );
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.economy));
+    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.economy));
   },
 });

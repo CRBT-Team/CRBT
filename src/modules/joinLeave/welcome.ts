@@ -49,7 +49,7 @@ async function welcome(member?: GuildMember) {
   const serverData = (await prisma.servers.findFirst({
     where: { id: guild.id },
     select: { joinChannel: true, joinMessage: true },
-  })) as RawServerJoin;
+  })) as unknown as RawServerJoin;
 
   if (!serverData) return;
 

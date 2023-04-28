@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { ButtonComponent } from 'purplet';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 
 export const CreateCategoryButton = ButtonComponent({
@@ -16,7 +16,7 @@ export const CreateCategoryButton = ButtonComponent({
       include: { items: true },
     });
 
-    const { economy } = await getSettings(this.guildId, true);
+    const { economy } = await getGuildSettings(this.guildId, true);
 
     await this.editReply(await renderItemCategoryEditMenu.call(this, category, economy));
   },

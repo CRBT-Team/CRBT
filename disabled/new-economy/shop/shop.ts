@@ -1,7 +1,7 @@
 import { getColor } from '$lib/functions/getColor';
 import { Interaction, MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { getSettings } from '../../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../settings/serverSettings/_helpers';
 import { EconomyCommand } from '../_helpers';
 import { CategorySelectMenu, renderCategoryShopPage } from './CategorySelectMenu';
 
@@ -22,7 +22,7 @@ export const shop: EconomyCommand = {
 };
 
 export async function renderShopFrontPage(this: Interaction) {
-  const { economy } = await getSettings(this.guildId);
+  const { economy } = await getGuildSettings(this.guildId);
 
   return {
     embeds: [
@@ -60,7 +60,7 @@ export async function renderShopFrontPage(this: Interaction) {
 export const BackButton = ButtonComponent({
   async handle(categoryId: number | undefined) {
     if (categoryId) {
-      const { economy } = await getSettings(this.guildId);
+      const { economy } = await getGuildSettings(this.guildId);
       const category = economy.categories.find((c) => c.id === categoryId);
 
       return await this.update(await renderCategoryShopPage.call(this, category, economy));

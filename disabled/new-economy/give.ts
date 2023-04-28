@@ -3,7 +3,7 @@ import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getAllLanguages, t } from '$lib/language';
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/serverSettings/_helpers';
 import { currencyFormat, EconomyCommand } from './_helpers';
 
 export const give: EconomyCommand = {
@@ -41,7 +41,7 @@ export const give: EconomyCommand = {
     }
 
     try {
-      const { economy } = await getSettings(this.guildId);
+      const { economy } = await getGuildSettings(this.guildId);
       const userData = await prisma.serverMember.findFirst({
         where: {
           AND: { serverId: this.guildId, userId: this.user.id },

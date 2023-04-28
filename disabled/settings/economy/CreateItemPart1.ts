@@ -1,15 +1,15 @@
 import { emojis } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { EconomyItem } from '@prisma/client';
 import { MessageButton, MessageComponentInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { currencyFormat } from '../../../src/modules/economy/_helpers';
 import {
-  getSettings,
-  getSettingsHeader,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+  getGuildSettings,
+  getGuildSettingsHeader,
+} from '../../../src/modules/settings/server-settings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemPart2 } from './CreateItemPart2';
 import { EditItemInfoButton } from './EditItemInfoButton';
@@ -24,15 +24,15 @@ export const CreateItemPart1 = ButtonComponent({
 
 export async function handleCreateItemPart1(this: MessageComponentInteraction, categoryId: number) {
   await this.deferUpdate();
-  const { economy, accentColor } = await getSettings(this.guildId);
+  const { economy, accentColor } = await getGuildSettings(this.guildId);
   const buildingItem = newItemCache.get(this.message.id);
 
   await this.editReply({
     embeds: [
       {
-        ...getSettingsHeader(this.locale, accentColor, [
+        ...getGuildSettingsHeader(this.locale, accentColor, [
           this.guild.name,
-          t(this, EditableFeatures.economy),
+          t(this, EditableGuildFeatures.economy),
           `Editing ${buildingItem?.name || 'New Item'}`,
           'Information',
         ]),

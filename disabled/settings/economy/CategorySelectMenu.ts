@@ -2,7 +2,7 @@ import { emojis } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableFeatures, FullSettings } from '$lib/types/settings';
+import { EditableGuildFeatures, FullGuildSettings } from '$lib/types/guild-settings';
 import { EconomyItem, EconomyItemCategory } from '@prisma/client';
 import dedent from 'dedent';
 import { Interaction } from 'discord.js';
@@ -10,9 +10,9 @@ import { components, row, SelectMenuComponent } from 'purplet';
 import { ItemSelectMenu } from '../../../src/modules/economy/shop/ItemSelectMenu';
 import { currencyFormat, formatItemValue } from '../../../src/modules/economy/_helpers';
 import {
-  getSettings,
-  getSettingsHeader,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+  getGuildSettings,
+  getGuildSettingsHeader,
+} from '../../../src/modules/settings/server-settings/_helpers';
 import { CreateItemPart1 } from './CreateItemPart1';
 import { EditCategoriesButton } from './EditCategoriesButton';
 import { EditCategoryButton } from './EditCategoryButton';
@@ -20,7 +20,7 @@ import { EditCategoryButton } from './EditCategoryButton';
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const id = parseInt(this.values[0]);
-    const { economy } = await getSettings(this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === id);
 
     await this.update(await renderItemCategoryEditMenu.call(this, category, economy));
@@ -32,14 +32,14 @@ export async function renderItemCategoryEditMenu(
   category: EconomyItemCategory & {
     items: EconomyItem[];
   },
-  economy: FullSettings['economy']
+  economy: FullGuildSettings['economy']
 ) {
   return {
     embeds: [
       {
-        ...getSettingsHeader(this.locale, await getColor(this.guild), [
+        ...getGuildSettingsHeader(this.locale, await getColor(this.guild), [
           this.guild.name,
-          t(this, EditableFeatures.economy),
+          t(this, EditableGuildFeatures.economy),
           category.label,
         ]),
         fields: category.items.map((i) => ({

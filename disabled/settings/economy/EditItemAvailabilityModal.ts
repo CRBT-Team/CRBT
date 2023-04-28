@@ -7,7 +7,7 @@ import { EconomyItem } from '@prisma/client';
 import { Dayjs } from 'dayjs';
 import { ModalComponent } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { handleCreateItemPart3 } from './CreateItemPart3';
 import { renderItem } from './renderItem';
@@ -64,7 +64,7 @@ export const EditItemAvailabilityModal = ModalComponent({
         true
       );
 
-      const { economy } = await getSettings(this.guildId, true);
+      const { economy } = await getGuildSettings(this.guildId, true);
 
       return this.update(await renderItem.call(this, newData, economy, 'edit'));
     }

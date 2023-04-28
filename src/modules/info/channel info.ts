@@ -21,7 +21,7 @@ import {
 } from 'discord-api-types/v10';
 import { EmbedFieldData, TextChannel } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
 
 dayjs.extend(duration);
 
@@ -214,7 +214,7 @@ export default ChatCommand({
           description:
             `${
               channel.nsfw
-                ? icon((await getSettings(this.guildId)).accentColor, 'toggleon')
+                ? icon((await getGuildSettings(this.guildId)).accentColor, 'toggleon')
                 : emojis.toggle.off
             } ${t(this, 'AGE_RESTRICTED')}\n` +
             ('topic' in channel && channel.topic

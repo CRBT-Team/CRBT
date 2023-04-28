@@ -4,7 +4,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { handleCreateItemPart1, newItemCache } from './CreateItemPart1';
 import { renderItem } from './renderItem';
 
@@ -56,7 +56,7 @@ export const EditItemInfoModal = ModalComponent({
         true
       );
 
-      const { economy } = await getSettings(this.guildId, true);
+      const { economy } = await getGuildSettings(this.guildId, true);
 
       return this.update(await renderItem.call(this, newData, economy, 'edit'));
     }

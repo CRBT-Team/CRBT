@@ -1,14 +1,14 @@
 import { emojis } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { timestampMention } from '@purplet/utils';
 import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import {
-  getSettings,
-  getSettingsHeader,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+  getGuildSettings,
+  getGuildSettingsHeader,
+} from '../../../src/modules/settings/server-settings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { newItemCache } from './CreateItemPart1';
 import { CreateItemPart2 } from './CreateItemPart2';
@@ -27,15 +27,15 @@ export async function handleCreateItemPart3(
 ) {
   await this.deferUpdate();
 
-  const { economy, accentColor } = await getSettings(this.guildId);
+  const { economy, accentColor } = await getGuildSettings(this.guildId);
   const buildingItem = newItemCache.get(this.message.id);
 
   await this.editReply({
     embeds: [
       {
-        ...getSettingsHeader(this.locale, accentColor, [
+        ...getGuildSettingsHeader(this.locale, accentColor, [
           this.guild.name,
-          t(this, EditableFeatures.economy),
+          t(this, EditableGuildFeatures.economy),
           `Editing ${buildingItem!.name}`,
           'Availability',
         ]),

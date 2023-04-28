@@ -1,25 +1,25 @@
 import { emojis } from '$lib/env';
 import { t } from '$lib/language';
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { ButtonComponent, components, row } from 'purplet';
-import { BackSettingsButton } from '../../../src/modules/settings/serverSettings/settings';
+import { BackSettingsButton } from '../../../src/modules/settings/server-settings/settings';
 import {
-  getSettings,
-  getSettingsHeader,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+  getGuildSettings,
+  getGuildSettingsHeader,
+} from '../../../src/modules/settings/server-settings/_helpers';
 import { CategorySelectMenu } from './CategorySelectMenu';
 import { CreateCategoryButton } from './CreateCategoryButton';
 
 export const EditCategoriesButton = ButtonComponent({
   async handle() {
-    const { economy, accentColor } = await getSettings(this.guildId);
+    const { economy, accentColor } = await getGuildSettings(this.guildId);
 
     await this.update({
       embeds: [
         {
-          ...getSettingsHeader(this.locale, accentColor, [
+          ...getGuildSettingsHeader(this.locale, accentColor, [
             this.guild.name,
-            t(this, EditableFeatures.economy),
+            t(this, EditableGuildFeatures.economy),
             'Shop',
           ]),
           fields: economy.categories.map((c) => ({
@@ -31,7 +31,7 @@ export const EditCategoriesButton = ButtonComponent({
       ],
       components: components(
         row(
-          new BackSettingsButton(EditableFeatures.economy)
+          new BackSettingsButton(EditableGuildFeatures.economy)
             .setEmoji(emojis.buttons.left_arrow)
             .setStyle('SECONDARY'),
           new CreateCategoryButton().setStyle('PRIMARY').setLabel('Create Category')

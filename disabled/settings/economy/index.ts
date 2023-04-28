@@ -4,7 +4,7 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { SettingsMenus } from '$lib/types/settings';
+import { SettingsMenus } from '$lib/types/guild-settings';
 import { CustomEmojiRegex } from '@purplet/utils';
 import dedent from 'dedent';
 import { components, row } from 'purplet';

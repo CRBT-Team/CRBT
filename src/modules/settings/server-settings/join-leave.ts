@@ -2,8 +2,12 @@ import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
+import {
+  CamelCaseGuildFeatures,
+  EditableGuildFeatures,
+  SettingsMenus,
+} from '$lib/types/guild-settings';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
-import { CamelCaseFeatures, EditableFeatures, SettingsMenus } from '$lib/types/settings';
 import { channelMention } from '@purplet/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
@@ -12,21 +16,21 @@ import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage, renderJoinLeavePreview } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
 import { renderFeatureSettings } from './settings';
-import { getSettings, saveServerSettings } from './_helpers';
+import { getGuildSettings, saveServerSettings } from './_helpers';
 
 export const joinLeaveSettings: SettingsMenus = {
   getOverviewValue({ feature, settings, i, isEnabled }) {
     const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+      settings[feature === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
     return {
       value: channelMention(channelId),
     };
   },
   getErrors({ guild, settings, feature, i }) {
-    const isEnabled = settings.modules[CamelCaseFeatures[feature]];
+    const isEnabled = settings.modules[CamelCaseGuildFeatures[feature]];
     const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+      settings[feature === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channel = guild.channels.cache.get(channelId);
 
     const errors: string[] = [];
@@ -37,7 +41,7 @@ export const joinLeaveSettings: SettingsMenus = {
     if (isEnabled && !channelId) {
       errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
-    if (isEnabled && !settings[CamelCaseFeatures[feature]]) {
+    if (isEnabled && !settings[CamelCaseGuildFeatures[feature]]) {
       errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
 
@@ -45,7 +49,7 @@ export const joinLeaveSettings: SettingsMenus = {
   },
   getMenuDescription({ settings, feature, isEnabled, i }) {
     const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+      settings[feature === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
 
     return {
       fields: [
@@ -69,7 +73,7 @@ export const joinLeaveSettings: SettingsMenus = {
   },
   getSelectMenu: ({ settings, feature, i, isEnabled }) => {
     const channelId =
-      settings[feature === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
+      settings[feature === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel'];
     const channel = i.guild.channels.cache.get(channelId);
 
     return {
@@ -119,14 +123,14 @@ const customId = 'h_edit_';
 export const EditJoinLeaveChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (
     i.isChannelSelect() &&
-    [EditableFeatures.joinMessage, EditableFeatures.leaveMessage].includes(
+    [EditableGuildFeatures.joinMessage, EditableGuildFeatures.leaveMessage].includes(
       i.customId.replace(customId, '') as any
     )
   ) {
-    const type = i.customId.replace(customId, '') as EditableFeatures;
+    const type = i.customId.replace(customId, '') as EditableGuildFeatures;
     const channel = i.channels.first();
 
-    const propName = type === EditableFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
+    const propName = type === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
 
     await saveServerSettings(i.guildId, {
       [propName]: channel.id,
@@ -138,8 +142,8 @@ export const EditJoinLeaveChannelSelectMenu = OnEvent('interactionCreate', async
 
 export const EditJoinLeaveMessageBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
-    const data = (await getSettings(this.guild.id))[
-      CamelCaseFeatures[type]
+    const data = (await getGuildSettings(this.guild.id))[
+      CamelCaseGuildFeatures[type]
     ] as any as JoinLeaveData;
 
     const builder = MessageBuilder({
@@ -156,7 +160,7 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
 
 export const TestJoinLeaveBtn = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {
-    const data = (await getSettings(this.guild.id)) as any as RawServerJoin | RawServerLeave;
+    const data = (await getGuildSettings(this.guild.id)) as any as RawServerJoin | RawServerLeave;
 
     await renderJoinLeavePreview.call(this, type, data);
   },

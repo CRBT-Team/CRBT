@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { ButtonComponent } from 'purplet';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { renderItem } from './renderItem';
 
@@ -30,7 +30,7 @@ export const CreateItemSaveButton = ButtonComponent({
     });
     newItemCache.delete(this.message.id);
 
-    const { economy } = await getSettings(this.guildId, true);
+    const { economy } = await getGuildSettings(this.guildId, true);
 
     await this.editReply(await renderItem.call(this, newItem, economy, 'edit'));
   },

@@ -7,7 +7,7 @@ import { GuildMember, GuildTextBasedChannel, MessageButton, MessageEmbed } from 
 import { components, row } from 'purplet';
 import { ExportJSONButton } from '../../joinLeave/components/ExportJSONButton';
 import { ImportJSONButton } from '../../joinLeave/components/ImportJSONButton';
-import { BackSettingsButton } from '../../settings/serverSettings/settings';
+import { BackSettingsButton } from '../../settings/server-settings/settings';
 import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';

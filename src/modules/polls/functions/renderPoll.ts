@@ -6,7 +6,7 @@ import { t } from '$lib/language';
 import { Poll } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import { Interaction, MessageEmbed, MessageOptions } from 'discord.js';
-import { getSettings } from '../../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../settings/server-settings/_helpers';
 import { parseOptionName } from '../_helpers';
 
 export async function handleVote(
@@ -56,7 +56,7 @@ export async function renderPoll(
   previousEmbed?: MessageEmbed | null,
   options?: PollRenderProps
 ): Promise<Omit<MessageOptions, 'flags'>> {
-  const { accentColor } = await getSettings(this.guildId);
+  const { accentColor } = await getGuildSettings(this.guildId);
   const totalVotes = poll.choices.flat().length;
   const choices = poll.choices as string[][];
 

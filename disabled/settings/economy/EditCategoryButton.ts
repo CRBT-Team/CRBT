@@ -2,14 +2,14 @@ import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { t } from '$lib/language';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { EditCategoryModal } from './EditCategoryModal';
 
 export const EditCategoryButton = ButtonComponent({
   async handle(categoryId: number) {
     const {
       economy: { categories },
-    } = await getSettings(this.guildId);
+    } = await getGuildSettings(this.guildId);
     const category = categories.find(({ id }) => id === categoryId);
 
     await this.showModal(

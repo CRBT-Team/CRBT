@@ -4,7 +4,7 @@ import {
   MessageEmbedOptions,
   ModalSubmitInteraction,
 } from 'discord.js';
-import { EditableFeatures } from './settings';
+import { EditableGuildFeatures } from './guild-settings';
 
 export interface BaseMessageData {
   content?: string;
@@ -12,12 +12,12 @@ export interface BaseMessageData {
 }
 
 export enum MessageBuilderTypes {
-  joinMessage = EditableFeatures.joinMessage,
-  leaveMessage = EditableFeatures.leaveMessage,
+  joinMessage = EditableGuildFeatures.joinMessage,
+  leaveMessage = EditableGuildFeatures.leaveMessage,
 }
 
 export interface JoinLeaveData extends BaseMessageData {
-  type: EditableFeatures.joinMessage | EditableFeatures.leaveMessage;
+  type: EditableGuildFeatures.joinMessage | EditableGuildFeatures.leaveMessage;
   script?: string;
 }
 

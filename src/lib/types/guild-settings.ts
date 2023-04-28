@@ -10,7 +10,7 @@ import { serverModules, servers } from '@prisma/client';
 import { APIEmbed } from 'discord-api-types/v10';
 import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
 
-export enum EditableFeatures {
+export enum EditableGuildFeatures {
   automaticTheming = 'SERVER_THEME',
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
@@ -19,7 +19,7 @@ export enum EditableFeatures {
   // economy = 'ECONOMY',
 }
 
-export enum CamelCaseFeatures {
+export enum CamelCaseGuildFeatures {
   SERVER_THEME = 'automaticTheming',
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
@@ -30,14 +30,14 @@ export enum CamelCaseFeatures {
 
 export interface FeatureSettingsProps {
   guild: Guild;
-  settings: FullSettings;
-  feature: EditableFeatures;
+  settings: FullGuildSettings;
+  feature: EditableGuildFeatures;
   i?: Interaction;
   errors?: string[];
   isEnabled: boolean;
 }
 
-export type FullSettings = Partial<
+export type FullGuildSettings = Partial<
   servers & {
     modules?: Partial<serverModules>;
     // economy?: Partial<

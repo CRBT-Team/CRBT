@@ -3,7 +3,7 @@ import { t } from '$lib/language';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
 import { ItemEditProps } from '.';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { EditItemInfoModal } from './EditItemInfoModal';
 
@@ -11,7 +11,7 @@ export const EditItemInfoButton = ButtonComponent({
   async handle({ id, mode, cId }: ItemEditProps) {
     const {
       economy: { items },
-    } = await getSettings(this.guildId);
+    } = await getGuildSettings(this.guildId);
     const itemInfo =
       id && mode === 'edit' ? items.find((i) => i.id === id) : newItemCache.get(this.message.id);
 

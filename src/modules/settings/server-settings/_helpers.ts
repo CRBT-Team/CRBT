@@ -5,28 +5,28 @@ import { icon } from '$lib/env/emojis';
 import { deepMerge } from '$lib/functions/deepMerge';
 import { t } from '$lib/language';
 import {
-  CamelCaseFeatures,
-  EditableFeatures,
+  CamelCaseGuildFeatures,
+  EditableGuildFeatures,
   FeatureSettingsProps,
-  FullSettings,
+  FullGuildSettings,
   SettingsMenus,
-} from '$lib/types/settings';
+} from '$lib/types/guild-settings';
 // import { economySettings } from '../../../../disabled/settings/economy';
-import { joinLeaveSettings } from './joinLeave';
+import { joinLeaveSettings } from './join-leave';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
 import { themeSettings } from './theming';
 
-export const featureSettingsMenus: Record<EditableFeatures, SettingsMenus> = {
-  [EditableFeatures.automaticTheming]: themeSettings,
-  [EditableFeatures.joinMessage]: joinLeaveSettings,
-  [EditableFeatures.leaveMessage]: joinLeaveSettings,
-  [EditableFeatures.moderationLogs]: modlogsSettings,
-  [EditableFeatures.moderationReports]: modReportsSettings,
-  // [EditableFeatures.economy]: economySettings,
+export const featureGuildSettingsMenus: Record<EditableGuildFeatures, SettingsMenus> = {
+  [EditableGuildFeatures.automaticTheming]: themeSettings,
+  [EditableGuildFeatures.joinMessage]: joinLeaveSettings,
+  [EditableGuildFeatures.leaveMessage]: joinLeaveSettings,
+  [EditableGuildFeatures.moderationLogs]: modlogsSettings,
+  [EditableGuildFeatures.moderationReports]: modReportsSettings,
+  // [EditableGuildFeatures.economy]: economySettings,
 };
 
-export const defaultSettings: FullSettings = {
+export const defaultGuildSettings: FullGuildSettings = {
   accentColor: colors.default,
   flags: 0,
   automaticTheming: true,
@@ -60,7 +60,7 @@ export const defaultSettings: FullSettings = {
   // },
 };
 
-export function getSettingsHeader(locale: string, accentColor: number, path: string[]) {
+export function getGuildSettingsHeader(locale: string, accentColor: number, path: string[]) {
   return {
     author: {
       name: `CRBT - ${t(locale, 'SETTINGS_TITLE')}`,
@@ -73,17 +73,18 @@ export function getSettingsHeader(locale: string, accentColor: number, path: str
 
 export function resolveSettingsProps(
   i: FeatureSettingsProps['i'],
-  feature: EditableFeatures,
-  settings: FullSettings
+  feature: EditableGuildFeatures,
+  settings: FullGuildSettings
 ): FeatureSettingsProps {
-  const camelCasedKey = CamelCaseFeatures[feature];
+  const camelCasedKey = CamelCaseGuildFeatures[feature];
   const guild = i.guild;
   const isEnabled =
     (Object.keys(settings.modules).includes(camelCasedKey)
       ? settings.modules[camelCasedKey]
       : settings[camelCasedKey]) || undefined;
   const errors =
-    featureSettingsMenus[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) || [];
+    featureGuildSettingsMenus[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) ||
+    [];
 
   return {
     feature,
@@ -110,8 +111,8 @@ export const include = {
   // },
 };
 
-export async function getSettings(guildId: string, force = false) {
-  const data = await fetchWithCache<FullSettings>(
+export async function getGuildSettings(guildId: string, force = false) {
+  const data = await fetchWithCache<FullGuildSettings>(
     `${guildId}:settings`,
     () =>
       prisma.servers.findFirst({
@@ -121,11 +122,11 @@ export async function getSettings(guildId: string, force = false) {
     force
   );
 
-  const merged = deepMerge(defaultSettings, data);
+  const merged = deepMerge(defaultGuildSettings, data);
   return merged;
 }
 
-export async function saveServerSettings(guildId: string, newSettings: Partial<FullSettings>) {
+export async function saveServerSettings(guildId: string, newSettings: Partial<FullGuildSettings>) {
   const query = (type: 'update' | 'create') =>
     Object.entries(newSettings).reduce((acc, [key, value]) => {
       if (typeof value === 'object') {
@@ -172,5 +173,5 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
         include: include,
       }),
     true
-  ) as FullSettings;
+  ) as FullGuildSettings;
 }

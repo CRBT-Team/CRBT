@@ -4,7 +4,7 @@ import { emojis } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableFeatures, FullSettings } from '$lib/types/settings';
+import { EditableGuildFeatures, FullGuildSettings } from '$lib/types/guild-settings';
 import { EconomyItem, ItemTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
@@ -13,7 +13,7 @@ import { components, row } from 'purplet';
 import { BuyItemButton } from '../../../src/modules/economy/shop/BuyItemButton';
 import { BackButton } from '../../../src/modules/economy/shop/shop';
 import { currencyFormat } from '../../../src/modules/economy/_helpers';
-import { getSettingsHeader } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettingsHeader } from '../../../src/modules/settings/server-settings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
 import { EditItemInfoButton } from './EditItemInfoButton';
@@ -21,7 +21,7 @@ import { EditItemInfoButton } from './EditItemInfoButton';
 export async function renderItem(
   this: Interaction,
   item: EconomyItem,
-  economy: FullSettings['economy'],
+  economy: FullGuildSettings['economy'],
   mode: 'edit' | 'shop'
 ) {
   const fullItem = await fetchWithCache(`economyItem:${item.id}`, () =>
@@ -94,9 +94,9 @@ export async function renderItem(
 
   const header =
     mode === 'edit'
-      ? getSettingsHeader(this.locale, await getColor(this.guild), [
+      ? getGuildSettingsHeader(this.locale, await getColor(this.guild), [
           this.guild.name,
-          t(this, EditableFeatures.economy),
+          t(this, EditableGuildFeatures.economy),
           category.label,
           item.name,
         ])

@@ -2,7 +2,7 @@ import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
-import { getSettings } from '../../../src/modules/settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { renderItemCategoryEditMenu } from './CategorySelectMenu';
 
 export const EditCategoryModal = ModalComponent({
@@ -11,7 +11,7 @@ export const EditCategoryModal = ModalComponent({
 
     const {
       economy: { categories },
-    } = await getSettings(this.guildId);
+    } = await getGuildSettings(this.guildId);
     const category = categories.find(({ id }) => id === categoryId);
     const newCategoryEmoji = await parseEmojiString(
       this.fields.getTextInputValue('emoji') || category.emoji,
@@ -34,7 +34,7 @@ export const EditCategoryModal = ModalComponent({
       include: { items: true },
     });
 
-    const newSettings = await getSettings(this.guildId, true);
+    const newSettings = await getGuildSettings(this.guildId, true);
 
     await this.editReply(await renderItemCategoryEditMenu.call(this, newCategory, newSettings));
   },

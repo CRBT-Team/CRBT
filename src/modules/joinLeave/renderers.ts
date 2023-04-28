@@ -2,8 +2,8 @@ import { colors } from '$lib/env';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
+import { CamelCaseGuildFeatures, EditableGuildFeatures } from '$lib/types/guild-settings';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
-import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
 import {
   CommandInteraction,
   GuildMember,
@@ -34,12 +34,12 @@ export async function renderJoinLeavePreview(
   type: JoinLeaveData['type'],
   data: RawServerJoin | RawServerLeave
 ) {
-  const message: JoinLeaveData = data[CamelCaseFeatures[type]];
+  const message: JoinLeaveData = data[CamelCaseGuildFeatures[type]];
 
   console.log(data);
 
   const channelId: string =
-    type === EditableFeatures.joinMessage ? data['joinChannel'] : data['leaveChannel'];
+    type === EditableGuildFeatures.joinMessage ? data['joinChannel'] : data['leaveChannel'];
 
   try {
     const channel = this.guild.channels.resolve(channelId) as TextChannel;

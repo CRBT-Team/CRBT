@@ -1,5 +1,5 @@
-import { MessageBuilderTypes } from '$lib/types/MessageBuilder';
-import { CamelCaseFeatures } from '$lib/types/settings';
+import { CamelCaseGuildFeatures } from '$lib/types/guild-settings';
+import { MessageBuilderTypes } from '$lib/types/messageBuilder';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 import { ImportJSONModal } from './ImportJSONModal';
@@ -16,7 +16,9 @@ export const ImportJSONButton = ButtonComponent({
             .setStyle('PARAGRAPH')
             .setMinLength(29)
             .setMaxLength(4000)
-            .setPlaceholder(`Paste the contents of the ${CamelCaseFeatures[type]}.json file here.`)
+            .setPlaceholder(
+              `Paste the contents of the ${CamelCaseGuildFeatures[type]}.json file here.`
+            )
             .setRequired(true)
         )
       );

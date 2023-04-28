@@ -3,7 +3,7 @@ import { avatar } from '$lib/functions/avatar';
 import { UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/serverSettings/_helpers';
 import { EconomyCommand } from './_helpers';
 
 export const balance: EconomyCommand = {
@@ -33,7 +33,7 @@ export const balance: EconomyCommand = {
       const rank = leaderboard.findIndex(({ userId }) => userId === user.id);
       console.log(rank);
 
-      const { economy } = await getSettings(this.guildId);
+      const { economy } = await getGuildSettings(this.guildId);
       const { money } = leaderboard[rank] || { money: 0 };
 
       this.reply({

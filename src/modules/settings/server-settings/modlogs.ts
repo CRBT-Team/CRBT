@@ -1,7 +1,7 @@
 import { emojis } from '$lib/env';
 import { icon } from '$lib/env/emojis';
 import { t } from '$lib/language';
-import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { EditableGuildFeatures, SettingsMenus } from '$lib/types/guild-settings';
 import { channelMention } from '@purplet/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
@@ -9,12 +9,12 @@ import { components, OnEvent, row } from 'purplet';
 import { renderFeatureSettings } from './settings';
 import { saveServerSettings } from './_helpers';
 
-export const modReportsSettings: SettingsMenus = {
+export const modlogsSettings: SettingsMenus = {
   getOverviewValue: ({ settings, i }) => ({
-    value: channelMention(settings.modReportsChannel),
+    value: channelMention(settings.modLogsChannel),
   }),
   getErrors({ guild, settings, isEnabled, i }) {
-    const channelId = settings.modReportsChannel;
+    const channelId = settings.modLogsChannel;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
     const errors: string[] = [];
@@ -28,21 +28,9 @@ export const modReportsSettings: SettingsMenus = {
 
     return errors;
   },
-  getSelectMenu: ({ settings, guild, isEnabled, i }) => {
-    const channel = guild.channels.cache.find((c) => c.id === settings.modReportsChannel);
-
-    return {
-      emoji: isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off,
-      description: isEnabled
-        ? t(i, 'SETTINGS_SENDING_IN', {
-            channel: `#${channel?.name}`,
-          })
-        : null,
-    };
-  },
   getMenuDescription({ settings, isEnabled, i }) {
     return {
-      description: t(i, 'SETTINGS_MODREPORTS_DESCRIPTION'),
+      description: t(i, 'SETTINGS_MODLOGS_DESCRIPTION'),
       fields: [
         {
           name: t(i, 'STATUS'),
@@ -51,16 +39,28 @@ export const modReportsSettings: SettingsMenus = {
             : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
           inline: true,
         },
-        ...(settings.modReportsChannel
+        ...(settings.modLogsChannel
           ? [
               {
                 name: t(i, 'CHANNEL'),
-                value: `<#${settings.modReportsChannel}>`,
+                value: `<#${settings.modLogsChannel}>`,
                 inline: true,
               },
             ]
           : []),
       ],
+    };
+  },
+  getSelectMenu({ settings, guild, isEnabled, i }) {
+    const channel = guild.channels.cache.find((c) => c.id === settings.modLogsChannel);
+
+    return {
+      emoji: isEnabled ? icon(settings.accentColor, 'toggleon') : emojis.toggle.off,
+      description: isEnabled
+        ? t(i, 'SETTINGS_SENDING_IN', {
+            channel: `#${channel.name}`,
+          })
+        : null,
     };
   },
   getComponents: ({ backBtn, toggleBtn, i, isEnabled }) =>
@@ -84,16 +84,16 @@ export const modReportsSettings: SettingsMenus = {
     ),
 };
 
-const customId = 'hreportsselect';
+const customId = 'hlogsselect';
 
-export const EditReportsChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
+export const EditLogsChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
   if (i.isChannelSelect() && i.customId === customId) {
     const channel = i.channels.first();
 
     await saveServerSettings(i.guildId, {
-      modReportsChannel: channel.id,
+      modLogsChannel: channel.id,
     });
 
-    i.update(await renderFeatureSettings.call(i, EditableFeatures.moderationReports));
+    i.update(await renderFeatureSettings.call(i, EditableGuildFeatures.moderationLogs));
   }
 });

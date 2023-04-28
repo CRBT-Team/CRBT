@@ -8,7 +8,7 @@ import { ApplicationCommand, Client, Collection } from 'discord.js';
 // import { getRestClient, OnEvent } from 'purplet';
 import { OnEvent } from 'purplet';
 // import { economyCommands } from '../economy/_helpers';
-// import { getSettings } from '../settings/serverSettings/_helpers';
+// import { getGuildSettings } from '../settings/serverSettings/_helpers';
 
 export let allCommands: Collection<string, ApplicationCommand>;
 
@@ -43,7 +43,7 @@ function loadTimeouts(client: Client) {
 //   const promises: Promise<any>[] = [];
 
 //   if (client.user.id !== clients.crbt.id) {
-//     const { modules, economy } = await getSettings(servers.community);
+//     const { modules, economy } = await getGuildSettings(servers.community);
 
 //     if (modules.economy) {
 //       Object.entries(economyCommands).map(([name, command]) => {

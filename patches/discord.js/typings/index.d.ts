@@ -1212,7 +1212,7 @@ export class Guild extends AnonymousGuild {
   public fetchWebhooks(): Promise<Collection<Snowflake, Webhook>>;
   public fetchWelcomeScreen(): Promise<WelcomeScreen>;
   public fetchWidget(): Promise<Widget>;
-  public fetchWidgetSettings(): Promise<GuildWidgetSettings>;
+  public fetchWidgetGuildSettings(): Promise<GuildWidgetGuildSettings>;
   public leave(): Promise<Guild>;
   public disableInvites(disabled?: boolean): Promise<Guild>;
   public setAFKChannel(afkChannel: VoiceChannelResolvable | null, reason?: string): Promise<Guild>;
@@ -1266,7 +1266,10 @@ export class Guild extends AnonymousGuild {
     reason?: string
   ): Promise<Guild>;
   public setPremiumProgressBarEnabled(enabled?: boolean, reason?: string): Promise<Guild>;
-  public setWidgetSettings(settings: GuildWidgetSettingsData, reason?: string): Promise<Guild>;
+  public setWidgetGuildSettings(
+    settings: GuildWidgetGuildSettingsData,
+    reason?: string
+  ): Promise<Guild>;
   public toJSON(): unknown;
 }
 
@@ -6171,7 +6174,7 @@ export interface GuildCreateOptions {
   verificationLevel?: VerificationLevel | number;
 }
 
-export interface GuildWidgetSettings {
+export interface GuildWidgetGuildSettings {
   enabled: boolean;
   channel: NonThreadGuildBasedChannel | null;
 }
@@ -6285,7 +6288,7 @@ export interface GuildPruneMembersOptions {
   roles?: RoleResolvable[];
 }
 
-export interface GuildWidgetSettingsData {
+export interface GuildWidgetGuildSettingsData {
   enabled: boolean;
   channel: GuildChannelResolvable | null;
 }

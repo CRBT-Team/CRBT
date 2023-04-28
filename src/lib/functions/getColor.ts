@@ -3,7 +3,10 @@ import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
 import { APIUser } from 'discord-api-types/v10';
 import { Guild, User } from 'discord.js';
-import { getSettings, saveServerSettings } from '../../modules/settings/serverSettings/_helpers';
+import {
+  getGuildSettings,
+  saveServerSettings,
+} from '../../modules/settings/server-settings/_helpers';
 import { imgDominantColor } from './imgDominantColor';
 // import { imgDominantColor } from './imgDominantColor';
 
@@ -29,7 +32,7 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
       return accentColor ?? colors.default;
     }
   } else {
-    const { accentColor, automaticTheming, iconHash } = await getSettings(thing.id);
+    const { accentColor, automaticTheming, iconHash } = await getGuildSettings(thing.id);
 
     if (automaticTheming && (!accentColor || !iconHash || thing.icon !== iconHash)) {
       const guildIcon = thing.iconURL({ format: 'png' });

@@ -3,9 +3,8 @@ import { icon } from '$lib/env/emojis';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { CamelCaseFeatures, EditableFeatures } from '$lib/types/settings';
+import { CamelCaseGuildFeatures, EditableGuildFeatures } from '$lib/types/guild-settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -15,17 +14,17 @@ import {
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
 import {
-  featureSettingsMenus,
-  getSettings,
-  getSettingsHeader,
+  featureGuildSettingsMenus,
+  getGuildSettings,
+  getGuildSettingsHeader,
   resolveSettingsProps,
   saveServerSettings,
 } from './_helpers';
 
 export default ChatCommand({
-  name: 'settings',
+  name: 'server settings',
   description: t('en-US', 'settings.description'),
-  nameLocalizations: getAllLanguages('SETTINGS', localeLower),
+  // nameLocalizations: getAllLanguages('SETTINGS', localeLower),
   descriptionLocalizations: getAllLanguages('settings.description'),
   allowInDMs: false,
   async handle() {
@@ -42,24 +41,24 @@ export default ChatCommand({
       ephemeral: true,
     });
 
-    await this.editReply(await renderSettingsMenu.call(this));
+    await this.editReply(await renderGuildSettingsMenu.call(this));
   },
 });
 
-export async function renderSettingsMenu(
+export async function renderGuildSettingsMenu(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction
 ) {
-  const settings = await getSettings(this.guild.id);
+  const settings = await getGuildSettings(this.guild.id);
 
-  const options = Object.values(EditableFeatures)
+  const options = Object.values(EditableGuildFeatures)
     // .filter((feature) =>
-    //   feature === EditableFeatures.economy
+    //   feature === EditableGuildFeatures.economy
     //     ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
     //     : true
     // )
     .map((feature) => {
       const props = resolveSettingsProps(this, feature, settings);
-      const featureSettings = featureSettingsMenus[feature];
+      const featureSettings = featureGuildSettingsMenus[feature];
 
       return {
         label:
@@ -86,15 +85,15 @@ export async function renderSettingsMenu(
         },
         title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
         description: t(this, 'SETTINGS_DESCRIPTION'),
-        fields: Object.values(EditableFeatures)
+        fields: Object.values(EditableGuildFeatures)
           // .filter((feature) =>
-          //   feature === EditableFeatures.economy
+          //   feature === EditableGuildFeatures.economy
           //     ? (Number(settings.flags) & ServerFlags.HasEconomy) === ServerFlags.HasEconomy
           //     : true
           // )
           .map((feature) => {
             const props = resolveSettingsProps(this, feature, settings);
-            const featureSettings = featureSettingsMenus[feature];
+            const featureSettings = featureGuildSettingsMenus[feature];
             let { icon: i, value } = featureSettings.getOverviewValue(props);
             if (props.errors.length) {
               (i = '⚠️'), (value = t(this, 'ATTENTION_REQUIRED'));
@@ -119,7 +118,7 @@ export async function renderSettingsMenu(
 
 export const FeatureSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
-    const featureId = this.values[0] as EditableFeatures;
+    const featureId = this.values[0] as EditableGuildFeatures;
 
     this.update(await renderFeatureSettings.call(this, featureId));
   },
@@ -127,10 +126,10 @@ export const FeatureSelectMenu = SelectMenuComponent({
 
 export async function renderFeatureSettings(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
-  feature: EditableFeatures
+  feature: EditableGuildFeatures
 ): Promise<any> {
-  const { getComponents, getMenuDescription, newLabel } = featureSettingsMenus[feature];
-  const settings = await getSettings(this.guildId);
+  const { getComponents, getMenuDescription, newLabel } = featureGuildSettingsMenus[feature];
+  const settings = await getGuildSettings(this.guildId);
   const props = resolveSettingsProps(this, feature, settings);
   const { isEnabled, errors } = props;
 
@@ -149,7 +148,7 @@ export async function renderFeatureSettings(
     content: invisibleChar,
     embeds: [
       {
-        ...getSettingsHeader(this.locale, settings.accentColor, [
+        ...getGuildSettingsHeader(this.locale, settings.accentColor, [
           this.guild.name,
           `${t(this, feature)} ${
             newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
@@ -181,21 +180,21 @@ export async function renderFeatureSettings(
 export const BackSettingsButton = ButtonComponent({
   async handle(feature: string | null) {
     if (feature) {
-      return this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
+      return this.update(await renderFeatureSettings.call(this, feature as EditableGuildFeatures));
     }
-    return this.update(await renderSettingsMenu.call(this));
+    return this.update(await renderGuildSettingsMenu.call(this));
   },
 });
 
 export const ToggleFeatureBtn = ButtonComponent({
   async handle({ feature, state }: { feature: string; state: boolean }) {
-    const Feature = CamelCaseFeatures[feature];
+    const Feature = CamelCaseGuildFeatures[feature];
     const newState = { [Feature]: state };
 
     await saveServerSettings(this.guildId, {
       modules: newState,
     });
 
-    this.update(await renderFeatureSettings.call(this, feature as EditableFeatures));
+    this.update(await renderFeatureSettings.call(this, feature as EditableGuildFeatures));
   },
 });

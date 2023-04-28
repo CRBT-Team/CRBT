@@ -6,7 +6,7 @@ import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { CommandInteraction, Interaction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { getSettings } from '../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../settings/serverSettings/_helpers';
 import { currencyFormat, EconomyCommand } from './_helpers';
 
 export const leaderboard: EconomyCommand = {
@@ -48,7 +48,7 @@ async function renderLeaderboard(this: Interaction, page: number) {
     this instanceof CommandInteraction
   );
 
-  const { economy } = await getSettings(this.guildId);
+  const { economy } = await getGuildSettings(this.guildId);
   const userData = leaderboard.find(({ userId }) => userId === this.user.id);
   const self = this;
 

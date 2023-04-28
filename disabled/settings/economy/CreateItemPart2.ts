@@ -1,15 +1,15 @@
 import { emojis } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableFeatures } from '$lib/types/settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { ItemTypes } from '@prisma/client';
 import { MessageComponentInteraction, MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { formatItemValue } from '../../../src/modules/economy/_helpers';
 import {
-  getSettings,
-  getSettingsHeader,
-} from '../../../src/modules/settings/serverSettings/_helpers';
+  getGuildSettings,
+  getGuildSettingsHeader,
+} from '../../../src/modules/settings/server-settings/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { CreateItemPart1, newItemCache } from './CreateItemPart1';
 import { CreateItemPart3 } from './CreateItemPart3';
@@ -26,7 +26,7 @@ export const CreateItemPart2 = ButtonComponent({
 export async function handleCreateItemPart2(this: MessageComponentInteraction) {
   await this.deferUpdate();
 
-  const { economy, accentColor } = await getSettings(this.guildId);
+  const { economy, accentColor } = await getGuildSettings(this.guildId);
   const buildingItem = newItemCache.get(this.message.id);
   const lastRow = [
     new CancelItemCreateButton(buildingItem.categoryId)
@@ -45,9 +45,9 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
   await this.editReply({
     embeds: [
       {
-        ...getSettingsHeader(this.locale, accentColor, [
+        ...getGuildSettingsHeader(this.locale, accentColor, [
           this.guild.name,
-          t(this, EditableFeatures.economy),
+          t(this, EditableGuildFeatures.economy),
           `Editing ${buildingItem!.name}`,
           'Value',
         ]),

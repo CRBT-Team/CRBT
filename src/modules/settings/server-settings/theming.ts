@@ -3,7 +3,7 @@ import { colors } from '$lib/env';
 import emojis, { icon } from '$lib/env/emojis';
 import { imgDominantColor } from '$lib/functions/imgDominantColor';
 import { t } from '$lib/language';
-import { EditableFeatures, SettingsMenus } from '$lib/types/settings';
+import { EditableGuildFeatures, SettingsMenus } from '$lib/types/guild-settings';
 import chroma from 'chroma-js';
 import { ButtonComponent, components, row, SelectMenuComponent } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
@@ -64,7 +64,7 @@ export const themeSettings: SettingsMenus = {
             `${t(i, 'AUTOMATIC_THEMING')}: ${t(i, settings.automaticTheming ? 'ON' : 'OFF')}`
           ),
         new ManualColorEditButton({
-          type: EditableFeatures.automaticTheming,
+          type: EditableGuildFeatures.automaticTheming,
           value: settings.accentColor,
         })
           .setDisabled(settings.automaticTheming)
@@ -107,7 +107,7 @@ export const ToggleAutoThemeBtn = ButtonComponent({
       });
     }
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.automaticTheming));
+    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
   },
 });
 
@@ -119,6 +119,6 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
       accentColor: color,
     });
 
-    this.update(await renderFeatureSettings.call(this, EditableFeatures.automaticTheming));
+    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
   },
 });

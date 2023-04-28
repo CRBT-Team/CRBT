@@ -1,11 +1,11 @@
 import { emojis } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
-import { FullSettings } from '$lib/types/settings';
+import { FullGuildSettings } from '$lib/types/guild-settings';
 import { EconomyItem, EconomyItemCategory } from '@prisma/client';
 import { Interaction } from 'discord.js';
 import { components, row, SelectMenuComponent } from 'purplet';
-import { getSettings } from '../../settings/serverSettings/_helpers';
+import { getGuildSettings } from '../../../src/modules/settings/server-settings/_helpers';
 import { ItemSelectMenu } from './ItemSelectMenu';
 import { BackButton } from './shop';
 import { renderItemEmbedField } from './_helpers';
@@ -13,7 +13,7 @@ import { renderItemEmbedField } from './_helpers';
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const id = parseInt(this.values[0]);
-    const { economy } = await getSettings(this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === id);
 
     await this.update(await renderCategoryShopPage.call(this, category, economy));
@@ -25,7 +25,7 @@ export async function renderCategoryShopPage(
   category: EconomyItemCategory & {
     items: EconomyItem[];
   },
-  economy: FullSettings['economy']
+  economy: FullGuildSettings['economy']
 ) {
   return {
     embeds: [
