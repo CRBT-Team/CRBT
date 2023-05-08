@@ -155,9 +155,6 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
       };
     }, {});
 
-  console.log(query('create'));
-  console.log(query('update'));
-
   return fetchWithCache(
     `${guildId}:settings`,
     () =>

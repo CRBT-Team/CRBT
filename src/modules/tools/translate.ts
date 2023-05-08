@@ -113,12 +113,9 @@ export const ctxCommand = MessageContextCommand({
         ),
       }));
 
-      console.log(translatedEmbeds);
-
       if (message.content) {
         const successMessage = await translate.call(this, message.content);
         if (embedsWithText.length) {
-          console.log(translatedEmbeds);
           return Promise.all(translatedEmbeds).then((embeds) =>
             this.editReply({
               ...successMessage.embeds,

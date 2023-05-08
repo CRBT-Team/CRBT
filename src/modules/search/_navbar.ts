@@ -39,9 +39,6 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: SearchTabBtn
     userId: this.user.id,
   };
 
-  console.log(JSON.stringify(fromCache));
-  console.log(JSON.stringify(opts));
-
   if (isOriginalUser) {
     await this.deferUpdate();
   } else {

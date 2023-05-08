@@ -38,7 +38,6 @@ export const BackButton = ButtonComponent({
 
 export async function renderReminder(this: Interaction, reminder: Reminder) {
   const reminders = await getUserReminders(this.user.id);
-  console.log(reminder);
   const data = await extractReminder(reminder, this.client);
   const created = data.messageId ? snowflakeToDate(data.messageId) : null;
 

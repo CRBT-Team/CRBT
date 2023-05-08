@@ -27,8 +27,6 @@ export const colorset = ChatCommand({
   async handle({ color: colorRaw }) {
     colorRaw = colorRaw.toLowerCase().replace(/ |#/g, '');
 
-    console.log(chroma.valid(parseInt(colorRaw) ?? colorRaw));
-
     if (colors[colorRaw] === undefined && !chroma.valid(parseInt(colorRaw) ?? colorRaw)) {
       return CRBTError(this, t(this, 'ERROR_INVALID_COLOR'));
     }
