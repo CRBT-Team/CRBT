@@ -1,5 +1,7 @@
 import { emojis } from '$lib/env';
-import { Channel, Message, MessageOptions } from 'discord.js';
+import { slashCmd } from '$lib/functions/commandMention';
+import { userMention } from '@purplet/utils';
+import { Channel, Message, MessageInteraction, MessageOptions } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
 
 export function ShareResponseBtn(i: { locale: string; channel: Channel }, compact = true) {
@@ -13,9 +15,12 @@ export function ShareResponseBtn(i: { locale: string; channel: Channel }, compac
 export const ShareResponseBtnShell = ButtonComponent({
   async handle() {
     const { content, embeds, attachments, components } = this.message as Message;
+    const commandName = (this.message.interaction as MessageInteraction).commandName;
 
     const newMessage: MessageOptions = {
-      ...(content ? { content } : {}),
+      content: `${userMention(this.user.id)} used ${slashCmd(
+        commandName
+      )} and shared its result.\n\n${content}`,
       embeds,
       attachments: Array.from(attachments.values()),
       components: components
