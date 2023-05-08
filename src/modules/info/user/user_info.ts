@@ -9,9 +9,16 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
-import { APIUser, PermissionFlagsBits, Routes, UserFlags } from 'discord-api-types/v10';
+import {
+  APIUser,
+  MessageFlags,
+  PermissionFlagsBits,
+  Routes,
+  UserFlags,
+} from 'discord-api-types/v10';
 import { EmbedFieldData, GuildMember, Interaction, UserContextMenuInteraction } from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, UserContextCommand } from 'purplet';
+import { ShareResponseBtn } from '../../components/ShareResult';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -120,13 +127,6 @@ export async function renderUser(
     const roles = member.roles.cache.filter((r) => r.id !== ctx.guild.id);
     const perms = keyPerms(member.permissions);
 
-    if (member.nickname) {
-      fields.push({
-        name: t(ctx, 'SERVER_NICKNAME'),
-        value: member.nickname,
-      });
-    }
-
     fields.push(
       {
         name: `${t(ctx, 'ROLES')} • ${roles.size}`,
@@ -162,9 +162,12 @@ export async function renderUser(
     embeds: [
       {
         author: {
-          name: `${user.username}#${user.discriminator} - ${t(ctx.locale, 'USER_INFO')}`,
+          name: `${
+            user.display_name ? `@${user.username}` : `${user.username}#${user.discriminator}`
+          } - ${t(ctx.locale, 'USER_INFO')}`,
           icon_url: avatar(member ?? user, 64),
         },
+        title: member?.nickname ? member.nickname : user.global_name ?? user.username,
         description: userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '',
         fields,
         image: {
@@ -176,8 +179,10 @@ export async function renderUser(
         color: await getColor(user),
       },
     ],
+    flags: MessageFlags.Ephemeral,
     components: components(
-      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member))
+      navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member)),
+      ShareResponseBtn(ctx, false)
     ),
   };
 }

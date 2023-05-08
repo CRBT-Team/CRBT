@@ -5,7 +5,7 @@ export interface UserOrMemberWithBannerLike {
   discriminator?: string;
   user?: {
     id?: string;
-    discriminator?: string;
+    username?: string;
     banner?: string;
   };
   banner?: string;
