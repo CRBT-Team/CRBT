@@ -37,7 +37,7 @@ export async function handleWeather(
     return createSearchResponse(this, opts, {
       embeds: [
         {
-          title: `${city.display_name}`,
+          title: `Weather in ${city.display_name}`,
           fields: [
             {
               //TODO: localize this
