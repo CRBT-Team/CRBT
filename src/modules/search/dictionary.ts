@@ -13,10 +13,12 @@ export async function handleDictionary(
 ) {
   try {
     const res = await fetchResults(this, opts, () =>
-      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`)
+      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`).then(
+        (r) => r.json()
+      )
     );
 
-    if (!res.ok) {
+    if (!res) {
       if (opts.page === -1) {
         return createCRBTError(this, {
           title: t(this, 'SEARCH_ERROR_NO_RESULTS_TITLE'),
@@ -26,7 +28,7 @@ export async function handleDictionary(
         return handleDuckDuckGo.call(this, opts);
       }
     }
-    const def = (await res.json())[0];
+    const def = res[0];
 
     //TODO: localize this
     return createSearchResponse(this, opts, {
