@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node patches/apply-patches && prisma generate && purplet build && node dist/bot.mjs",
     "dev": "node patches/apply-patches && purplet build && node dist/bot.mjs --dev",
+    "patch": "node patches/apply-patches",
     "dev:np": "purplet build && node dist/bot.mjs --dev",
     "db": "supabase start",
     "build": "purplet build",
@@ -48,7 +49,7 @@
     "@types/dedent": "^0.7.0",
     "@types/get-image-colors": "^4.0.2",
     "@types/node": "^18.11.9",
-    "discord-api-types": "^0.37.18",
+    "discord-api-types": "^0.37.41",
     "prettier": "^2.4.1",
     "prettier-plugin-jsdoc": "^0.3.24",
     "prettier-plugin-organize-imports": "^2.3.4",
