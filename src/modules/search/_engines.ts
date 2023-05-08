@@ -26,9 +26,7 @@ export interface SearchEngine {
   noPagination?: boolean;
 }
 
-export const searchEngines: {
-  [k: string]: SearchEngine;
-} = {
+export const searchEngines: Record<string, SearchEngine> = {
   web: {
     handle: handleDuckDuckGo,
     emoji: '🔎',
@@ -36,12 +34,12 @@ export const searchEngines: {
   },
   images: {
     handle: handleImageSearch,
-    emoji: '🖼️',
+    emoji: '📷',
     provider: 'Google Images',
   },
   videos: {
     handle: handleVideosSearch,
-    emoji: '🎥',
+    emoji: '📺',
     provider: 'YouTube',
   },
   // music: {
@@ -53,8 +51,8 @@ export const searchEngines: {
   // },
   weather: {
     handle: handleWeather,
-    emoji: '☀️',
-    provider: 'Open-Meteo.com & OpenStreetMap',
+    emoji: '⛅',
+    provider: 'Weather',
     hide: true,
     noPagination: true,
   },
