@@ -241,7 +241,7 @@
   "calc": {
     "meta": {
       "name": "calculate",
-      "description": "Calculate a mathematical expression.",
+      "description": "एक mathematical expression को calculate करे |",
       "options": [
         {
           "name": "expression",
