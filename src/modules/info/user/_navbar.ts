@@ -74,7 +74,7 @@ export const PfpBtn = ButtonComponent({
     if (this.user.id !== opts.userId) {
       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
-    const u = await this.client.users.fetch(opts.targetId);
+    const u = (await getRestClient().get(Routes.user(opts.targetId))) as APIUser;
     const m =
       this.guild && this.guild.members.cache.has(u.id)
         ? await this.guild.members.fetch(u.id)
@@ -89,9 +89,16 @@ export const UserPfpBtn = ButtonComponent({
     if (this.user.id !== opts.userId) {
       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
-    const u = await this.client.users.fetch(opts.targetId);
+    const u = (await getRestClient().get(Routes.user(opts.targetId))) as APIUser;
+    const m =
+      this.guild && this.guild.members.cache.has(u.id)
+        ? await this.guild.members.fetch(u.id)
+        : null;
+    const res = await renderPfp('user', u, this, opts, m);
 
-    await this.update(await renderPfp('user', u, this, opts));
+    console.log(res);
+
+    await this.update(res);
   },
 });
 
@@ -100,9 +107,11 @@ export const UserBannerBtn = ButtonComponent({
     if (this.user.id !== opts.userId) {
       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
-    const u = await this.client.users.fetch(opts.targetId);
+    const u = (await getRestClient().get(Routes.user(opts.targetId))) as APIUser;
     const m =
-      this.guild && this.guild.members.cache.has(u.id) ? await this.guild.members.fetch(u) : null;
+      this.guild && this.guild.members.cache.has(u.id)
+        ? await this.guild.members.fetch(u.id)
+        : null;
 
     //@ts-ignore
     await this.update(await renderBanner('user', u, this, opts, m));

@@ -1,9 +1,18 @@
 import { avatar } from '$lib/functions/avatar';
+import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { ButtonInteraction, GuildMember, Interaction, MessageButton, User } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row, UserContextCommand } from 'purplet';
+import { APIUser, Routes } from 'discord-api-types/v10';
+import { ButtonInteraction, GuildMember, Interaction, MessageButton } from 'discord.js';
+import {
+  ChatCommand,
+  components,
+  getRestClient,
+  OptionBuilder,
+  row,
+  UserContextCommand,
+} from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 const { ctxMeta } = t('en-US', 'avatar');
@@ -48,7 +57,7 @@ export const defaultPfp = ChatCommand({
     const m = user
       ? (this.options.getMember('user') as GuildMember) ?? null
       : (this.member as GuildMember);
-    const u = user ?? this.user;
+    const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
 
     await this.reply(
       await renderPfp(
@@ -71,10 +80,12 @@ export const ctxDefaultPfp = UserContextCommand({
   ...ctxMeta,
   async handle(user) {
     const m = this.options.getMember('user') as GuildMember;
+    const u = (await getRestClient().get(Routes.user(user.id))) as APIUser;
+
     await this.reply({
       ...(await renderPfp(
         'default',
-        user,
+        u,
         this,
         {
           targetId: user.id,
@@ -90,7 +101,7 @@ export const ctxDefaultPfp = UserContextCommand({
 
 export async function renderPfp(
   type: 'default' | 'user',
-  user: User,
+  user: APIUser,
   ctx: Interaction,
   navCtx: NavBarContext,
   member?: GuildMember
@@ -109,9 +120,13 @@ export async function renderPfp(
     embeds: [
       {
         author: {
-          name: `${user.tag} - ${t(ctx, type === 'default' ? 'AVATAR' : 'USER_AVATAR')}`,
+          name: `${formatUsername(user)} - ${t(
+            ctx,
+            type === 'default' ? 'AVATAR' : 'USER_AVATAR'
+          )}`,
           icon_url: av,
         },
+        title: formatDisplayName(user, member),
         image: {
           url: av,
         },
@@ -123,7 +138,7 @@ export async function renderPfp(
         navCtx,
         ctx.locale,
         type === 'default' ? 'avatar' : 'user_avatar',
-        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user.toJSON(), member)
+        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user, member)
       ),
       row(
         new MessageButton({

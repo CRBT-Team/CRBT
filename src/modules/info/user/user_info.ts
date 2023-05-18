@@ -1,7 +1,8 @@
-import { prisma } from '$lib/db';
 import { badges, emojis } from '$lib/env';
+import { icon } from '$lib/env/emojis';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
+import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
@@ -9,6 +10,7 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
+import dedent from 'dedent';
 import {
   APIUser,
   MessageFlags,
@@ -16,9 +18,16 @@ import {
   Routes,
   UserFlags,
 } from 'discord-api-types/v10';
-import { EmbedFieldData, GuildMember, Interaction, UserContextMenuInteraction } from 'discord.js';
+import {
+  EmbedFieldData,
+  GuildMember,
+  Interaction,
+  MessageComponentInteraction,
+  UserContextMenuInteraction,
+} from 'discord.js';
 import { ChatCommand, components, getRestClient, OptionBuilder, UserContextCommand } from 'purplet';
 import { ShareResponseBtn } from '../../components/ShareResult';
+import { getUser } from '../../settings/user-settings/_helpers';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -106,20 +115,26 @@ export async function renderUser(
   navCtx: NavBarContext,
   member?: GuildMember
 ) {
-  const crbtUser = await prisma.user.findFirst({
-    where: { id: user.id },
-    select: { crbtBadges: true },
-  });
-
-  const userBadges = getBadgeEmojis(user.public_flags, crbtUser?.crbtBadges);
+  const crbtUser = await getUser(user.id);
+  const userBadges = getBadgeEmojis(user.flags, crbtUser.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
   const createdAt = snowflakeToDate(user.id);
+  const color =
+    ctx instanceof MessageComponentInteraction ? ctx.message.embeds[0].color : await getColor(user);
 
   const fields: EmbedFieldData[] = [
     {
-      name: t(ctx, 'ID'),
-      value: user.id,
+      name: 'Identity',
+      value: dedent`
+      Unique username: **${
+        user.discriminator === '0' ? user.username : `${user.username}#${user.discriminator}`
+      }**
+      Global display name: **${user.display_name ?? user.username}**
+      ${member?.nickname ? `Server nickname: **${member.nickname}**\n` : ''}
+      ${
+        user.discriminator === '0' ? icon(color, 'toggleon') : emojis.toggle.off
+      } **Uses [the new username system](https://dis.gd/usernames)**`,
     },
   ];
 
@@ -162,12 +177,10 @@ export async function renderUser(
     embeds: [
       {
         author: {
-          name: `${
-            user.display_name ? `@${user.username}` : `${user.username}#${user.discriminator}`
-          } - ${t(ctx.locale, 'USER_INFO')}`,
+          name: `${formatUsername(user)} - ${t(ctx.locale, 'USER_INFO')}`,
           icon_url: avatar(member ?? user, 64),
         },
-        title: member?.nickname ? member.nickname : user.global_name ?? user.username,
+        title: formatDisplayName(user, member),
         description: userBadges.length > 0 ? `${userBadges.join('‎ ')}${invisibleChar}` : '',
         fields,
         image: {
@@ -176,7 +189,10 @@ export async function renderUser(
         thumbnail: {
           url: avatar(member ?? user, size ?? 256, format),
         },
-        color: await getColor(user),
+        footer: {
+          text: `${t(ctx, 'ID')}: ${user.id}`,
+        },
+        color: color,
       },
     ],
     flags: MessageFlags.Ephemeral,

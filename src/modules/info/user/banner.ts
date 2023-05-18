@@ -1,11 +1,13 @@
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { createCRBTError } from '$lib/functions/CRBTError';
+import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { GuildMember, Interaction, MessageButton, MessageEmbed, User } from 'discord.js';
-import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { APIUser, Routes } from 'discord-api-types/v10';
+import { GuildMember, Interaction, MessageButton } from 'discord.js';
+import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
 import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
 
 export default ChatCommand({
@@ -42,12 +44,12 @@ export default ChatCommand({
     const m = user
       ? (this.options.getMember('user') as GuildMember) ?? null
       : (this.member as GuildMember);
-    user ??= this.user;
+    const u = (await getRestClient().get(Routes.user((user ?? this.user).id))) as APIUser;
 
     await this.reply(
       await renderBanner(
         'user',
-        user,
+        u,
         this,
         {
           targetId: user.id,
@@ -63,7 +65,7 @@ export default ChatCommand({
 
 export async function renderBanner(
   type: 'default' | 'user' = 'user',
-  user: User,
+  user: APIUser,
   ctx: Interaction,
   navCtx: NavBarContext,
   member?: GuildMember
@@ -71,7 +73,7 @@ export async function renderBanner(
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
 
-  const b = banner(await user.fetch(), size ?? 2048, format);
+  const b = banner(user, size ?? 2048, format);
 
   if (!ctx.isButton() && !b)
     return createCRBTError(
@@ -88,20 +90,22 @@ export async function renderBanner(
 
   return {
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: `${user.tag} - ${t(ctx, 'USER_BANNER')}`,
-          iconURL: avatar(member ?? user, 64),
-        })
-        .setImage(b)
-        .setColor(color),
+      {
+        author: {
+          name: `${formatUsername(user)} - ${t(ctx, 'USER_BANNER')}`,
+          icon_url: avatar(member ?? user, 64),
+        },
+        title: formatDisplayName(user, member),
+        image: { url: b },
+        color: color,
+      },
     ],
     components: components(
       navBar(
         navCtx,
         ctx.locale,
         type === 'default' ? 'banner' : 'user_banner',
-        getTabs('user_banner', user.toJSON(), member)
+        getTabs('user_banner', user, member)
       ),
       row(
         new MessageButton({

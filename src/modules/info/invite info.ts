@@ -1,5 +1,6 @@
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
@@ -53,7 +54,7 @@ export default ChatCommand({
       {
         name: t(this, 'INVITE_INFO_INVITER'),
         value: inviter
-          ? `${inviter.username}#${inviter.discriminator} (${inviter.id})`
+          ? `${formatUsername(inviter)} (${inviter.id})`
           : t(this, 'CUSTOM_INVITE_LINK'),
         inline: true,
       },

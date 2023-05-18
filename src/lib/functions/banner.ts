@@ -2,7 +2,7 @@ import { CDNImageFormat, CDNImageSize, formatUserBannerURL } from '@purplet/util
 
 export interface UserOrMemberWithBannerLike {
   id?: string;
-  discriminator?: string;
+  username?: string;
   user?: {
     id?: string;
     username?: string;

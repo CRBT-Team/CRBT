@@ -34,6 +34,9 @@ export async function resolveUserSettingsProps(
     avatar: '',
     id: user.id,
     discriminator: '',
+    global_name: '',
+    display_name: '',
+    avatar_decoration: '',
   });
   const errors = userSettingsMenus[menu].getErrors?.({ accentColor, menu, user, i }) || [];
 
