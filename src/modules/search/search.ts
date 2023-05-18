@@ -13,15 +13,7 @@ export interface SearchCmdOpts {
   userId: string;
 }
 
-function getChoices(lang = 'en-US') {
-  return Object.keys(searchEngines).reduce(
-    (acc, id) => ({
-      ...acc,
-      [id]: `${searchEngines[id].emoji} ${t(lang, `SEARCH_ENGINES.${id}` as any)}`,
-    }),
-    {}
-  );
-}
+const queryRegex = new RegExp(`(${Object.keys(searchEngines).join('|')}):(.*)`);
 
 export default ChatCommand({
   name: 'search',
@@ -36,40 +28,50 @@ export default ChatCommand({
       async autocomplete({ query }) {
         if (query) {
           const res = await duckduckAutocomplete(query, this.locale);
+          const manualSiteTyped = queryRegex.test(query);
+          const site = manualSiteTyped ? query.split(':')[0] : returnFeaturedItem(query);
+          query = manualSiteTyped ? query.split(':').slice(1).join(':') : query;
+
           return [
-            {
-              name: query,
-              value: query,
-            },
-            ...res.map((r) => ({
-              name: r.phrase,
-              value: r.phrase,
-            })),
+            ...(site !== 'web'
+              ? [
+                  {
+                    name: `${searchEngines[site].emoji} Search "${query}" on ${searchEngines[site].provider}`,
+                    value: `${site}:${query}`,
+                  },
+                ]
+              : [
+                  {
+                    name: `${searchEngines['web'].emoji} ${query}`,
+                    value: `web:${query}`,
+                  },
+                ]),
+            ...(manualSiteTyped
+              ? []
+              : res.map((r) => ({
+                  name: `${searchEngines['web'].emoji} ${r.phrase}`,
+                  value: `web:${r.phrase}`,
+                }))),
+            ...Object.entries(searchEngines)
+              .filter(([key, _]) => key !== site && key !== 'web')
+              .map(([key, { provider, emoji }]) => ({
+                name: `${emoji} Search "${query}" on ${provider}`,
+                value: `${key}:${query}`,
+              })),
           ];
         } else {
           return [];
         }
       },
     })
-    .string('site', t('en-US', 'search.options.site.description'), {
-      nameLocalizations: getAllLanguages('search.options.site.name', localeLower),
-      descriptionLocalizations: getAllLanguages('search.options.site.description'),
-      choices: getChoices(),
-      // choiceLocalizations: {
-      //   fr: getChoices('fr'),
-      // },
-      // Object.keys(languages).reduce(
-      //   (acc, lang) => ({ ...acc, [lang]: getChoices(lang) }),
-      //   {}
-      // ),
-    })
     .boolean('anonymous', t('en-US', 'search.options.anonymous.description'), {
       nameLocalizations: getAllLanguages('search.options.anonymous.name', localeLower),
       descriptionLocalizations: getAllLanguages('search.options.anonymous.description'),
     }),
-  async handle({ query, anonymous, site }) {
+  async handle({ query, anonymous }) {
     anonymous ??= false;
-    site ??= returnFeaturedItem(query);
+    const site = queryRegex.test(query) ? query.split(':')[0] : returnFeaturedItem(query);
+    query = queryRegex.test(query) ? query.split(':').slice(1).join(':') : query;
 
     await this.deferReply({
       ephemeral: anonymous,
