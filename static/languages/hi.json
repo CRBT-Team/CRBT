@@ -76,11 +76,11 @@
   "UnknownError": {
     "strings": {
       "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "DESCRIPTION": "यह मेसेज automatically रिपोर्ट किया गया था | यह error कहती है की :"
     }
   },
   "CooldownError": {
-    "TITLE": "Hold it!",
+    "TITLE": "होल्ड करो! ",
     "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
@@ -109,7 +109,7 @@
     },
     "strings": {
       "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "आपका CRBT accent कलर Discord प्रोफाइल कलर से sync किया है |",
       "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
     }
   },
