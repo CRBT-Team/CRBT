@@ -1,4 +1,4 @@
-import { icon } from '$lib/env/emojis';
+import { emojis } from '$lib/env';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
@@ -53,10 +53,9 @@ export async function handleUrbanDictionary(
               post.author
             }](https://www.urbandictionary.com/author.php/author=${encodeURIComponent(
               post.author
-            )})** • ${timestampMention(new Date(post.written_on), 'R')}\n${icon(
-              accentColor,
-              'thumbsup'
-            )} **${post.thumbs_up}** ${icon(accentColor, 'thumbsdown')} **${post.thumbs_down}**`,
+            )})** • ${timestampMention(new Date(post.written_on), 'R')}\n${emojis.thumbsup} **${
+              post.thumbs_up
+            }** ${emojis.thumbsdown} **${post.thumbs_down}**`,
             url: post.permalink,
             fields: [
               {

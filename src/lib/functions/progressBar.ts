@@ -1,18 +1,6 @@
-import { emojis as envEmojis } from '$lib/env';
-import { icon } from '$lib/env/emojis';
+import { emojis } from '$lib/env';
 
-export function progressBar(percentage: number, accentColor: number) {
-  const emojis = {
-    progress: {
-      ...envEmojis.progress,
-      fill: icon(accentColor, 'progressfill'),
-      fillcut: icon(accentColor, 'progressfillcut'),
-      fillend: icon(accentColor, 'progressfillend'),
-      fillstart: icon(accentColor, 'progressfillstart'),
-      fillstartcut: icon(accentColor, 'progressfillstartcut'),
-    },
-  };
-
+export function progressBar(percentage: number) {
   return (
     `${emojis.progress.fill}.`.repeat(Math.round(percentage / 10)) +
     `${emojis.progress.empty}.`.repeat(10 - Math.round(percentage / 10))

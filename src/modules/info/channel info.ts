@@ -1,5 +1,4 @@
 import { emojis, icons } from '$lib/env';
-import { icon } from '$lib/env/emojis';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
@@ -21,7 +20,6 @@ import {
 } from 'discord-api-types/v10';
 import { EmbedFieldData, TextChannel } from 'discord.js';
 import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
-import { getGuildSettings } from '../settings/server-settings/_helpers';
 
 dayjs.extend(duration);
 
@@ -212,11 +210,10 @@ export default ChatCommand({
             icon_url: authorIcon,
           },
           description:
-            `${
-              channel.nsfw
-                ? icon((await getGuildSettings(this.guildId)).accentColor, 'toggleon')
-                : emojis.toggle.off
-            } ${t(this, 'AGE_RESTRICTED')}\n` +
+            `${channel.nsfw ? emojis.toggle.on : emojis.toggle.off} ${t(
+              this,
+              'AGE_RESTRICTED'
+            )}\n` +
             ('topic' in channel && channel.topic
               ? channel.topic.length > 512
                 ? `${channel.topic.slice(0, 512)}...`

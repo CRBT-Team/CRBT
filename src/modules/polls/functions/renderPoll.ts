@@ -84,7 +84,7 @@ export async function renderPoll(
 
           return {
             name: `${label} • ${percentage}% (${votes.toLocaleString(this.locale)})`,
-            value: progressBar(percentage, accentColor),
+            value: progressBar(percentage),
             inline: false,
           };
         }),

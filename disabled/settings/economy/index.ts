@@ -1,10 +1,9 @@
 import { emojis, links } from '$lib/env';
-import { icon } from '$lib/env/emojis';
 import { slashCmd } from '$lib/functions/commandMention';
 import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { SettingsMenus } from '$lib/types/guild-settings';
+import { SettingsMenuProps } from '$lib/types/guild-settings';
 import { CustomEmojiRegex } from '@purplet/utils';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
@@ -18,7 +17,7 @@ export interface ItemEditProps {
   cId?: number;
 }
 
-export const economySettings: SettingsMenus = {
+export const economySettings: SettingsMenuProps = {
   getOverviewValue: ({ settings: { economy } }) => ({
     value: `${economy.currencySymbol} ${economy.currencyNamePlural} • ${economy.items.length} items`,
   }),
@@ -31,7 +30,7 @@ export const economySettings: SettingsMenus = {
       description: economy.currencyNamePlural,
     };
   },
-  getMenuDescription({ settings: { economy, accentColor }, isEnabled, i }) {
+  renderMenuMessage({ settings: { economy, accentColor }, isEnabled, i }) {
     return {
       description: dedent`
       **⚠️ Economy is currently in alpha. If you're seeing this, you've got early access!**
@@ -42,7 +41,7 @@ export const economySettings: SettingsMenus = {
         {
           name: t(i, 'STATUS'),
           value: isEnabled
-            ? `${icon(accentColor, 'toggleon')} ${t(i, 'ENABLED')}`
+            ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
             : `${emojis.toggle.off} ${t(i, 'ENABLED')}`,
         },
         {

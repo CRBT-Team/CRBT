@@ -1,39 +1,4 @@
-import { getEmojiObject } from '$lib/functions/getEmojiObject';
-import { formatEmojiURL } from '@purplet/utils';
-import chroma from 'chroma-js';
-import colors from '../colors';
-import { blue } from './blue';
-import { blurple } from './blurple';
-import { gray } from './gray';
-import { green } from './green';
-import { orange } from './orange';
-import { pink } from './pink';
-import { purple } from './purple';
-import { red } from './red';
-import { yellow } from './yellow';
-
-export type ThemedEmojis = {
-  thumbsup: string;
-  thumbsdown: string;
-  toggleon: string;
-  settings: string;
-  progressfill: string;
-  progressfillstart: string;
-  progressfillend: string;
-  progressfillcut: string;
-  progressfillstartcut: string;
-};
-
-const emojis = {
-  red: red,
-  orange: orange,
-  yellow: yellow,
-  blue: blue,
-  green: green,
-  blurple: blurple,
-  purple: purple,
-  pink: pink,
-  gray: gray,
+export default {
   angle: '<:angle:1076872815858425976>',
   error: '<:error:1035880321901674596> ',
   success: '<:success:1035880323482931230>',
@@ -47,11 +12,21 @@ const emojis = {
   menu: '<:menu:970980242925711402>',
   tada: '<:tada:1000761543350296626>',
   lock: '<:locked:1003323812651212860>',
+  thumbsup: '<:thumbsup:1065298485865365587>',
+  thumbsdown: '<:thumbsdown:1065281274329182319>',
   toggle: {
     on: '<:toggleon:1035314618983256215>',
     off: '<:toggleoff:1035314620434493520>',
     fon: '<:forcedon:866042868766736394>',
     foff: '<:forcedoff:866042899501940757>',
+  },
+  features: {
+    JOIN_LEAVE: '👋',
+    ECONOMY: '🪙',
+    PRIVACY: '🕵️',
+    MODERATION: '🔨',
+    SERVER_THEME: '🎨',
+    ACCENT_COLOR: '🎨',
   },
   buttons: {
     pencil: '<:pencil_white:970980243013779536>',
@@ -131,58 +106,13 @@ const emojis = {
     goodmeal: '<:good_meal:768948885162295326>',
   },
   progress: {
+    fill: '<:progressfill:1073973533308362873>',
+    fillcut: '<:progressfillcut:1073973534788952184>',
+    fillend: '<:progressfillend:1073973537573974086>',
+    fillstart: '<:progressfillstart:1073973540317040660>',
+    fillstartcut: '<:progressfillstartcut:1073973541831200798>',
     empty: '<:progressempty:1076874029274767411>',
     emptystart: '<:progressemptystart:1076874032697319484>',
     emptyend: '<:progressemptyend:1076874030465953902>',
   },
 };
-
-export default emojis;
-
-export function icon(
-  accentColor: number,
-  icon: keyof typeof emojis['red'],
-  type: 'emoji' | 'image' = 'emoji'
-) {
-  const [accentH, accentS, accentL] = chroma(accentColor || colors.default).hsl();
-
-  const color = colors.accents
-    .map(
-      ([name, [hue, sat, lum]]) =>
-        ({
-          name,
-          hue,
-          sat,
-          lum,
-        } as { name: string; hue: number; sat: number; lum: number })
-    )
-    .reduce((a, b) => {
-      let aScore = Math.abs(a.hue - accentH);
-      let bScore = Math.abs(b.hue - accentH);
-
-      if (accentL > 0.5) {
-        aScore -= a.lum + accentL;
-      }
-      if (accentL > 0.5) {
-        bScore -= b.lum + accentL;
-      }
-      if (accentS > 0.5) {
-        aScore -= a.sat + accentS;
-      }
-      if (accentS > 0.5) {
-        bScore -= b.sat + accentS;
-      }
-
-      return bScore < aScore ? b : a;
-    }).name;
-
-  const emoji = emojis[color]?.[icon] as string;
-
-  if (type === 'emoji') {
-    return emoji;
-  }
-  if (type === 'image') {
-    const { id } = getEmojiObject(emoji);
-    return formatEmojiURL(id);
-  }
-}

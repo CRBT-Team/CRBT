@@ -1,4 +1,6 @@
 export default {
+  settings:
+    'https://cdn.discordapp.com/attachments/945417344656752712/1112742568652984420/CRBT_Settings.png',
   welcome:
     'https://cdn.discordapp.com/attachments/949329946399109161/1028417292297576448/unknown.png',
   eightball: 'https://cdn.discordapp.com/emojis/1030989514145021993.png?size=96&quality=lossless',
