@@ -1,15 +1,12 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
-import { icon } from '$lib/env/emojis';
 import { deepMerge } from '$lib/functions/deepMerge';
-import { t } from '$lib/language';
 import {
-  CamelCaseGuildFeatures,
   EditableGuildFeatures,
-  FeatureSettingsProps,
   FullGuildSettings,
-  SettingsMenus,
+  SettingFunctionProps,
+  SettingsMenuProps,
 } from '$lib/types/guild-settings';
 // import { economySettings } from '../../../../disabled/settings/economy';
 import { joinLeaveSettings } from './join-leave';
@@ -17,14 +14,15 @@ import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
 import { themeSettings } from './theming';
 
-export const featureGuildSettingsMenus: Record<EditableGuildFeatures, SettingsMenus> = {
-  [EditableGuildFeatures.automaticTheming]: themeSettings,
-  [EditableGuildFeatures.joinMessage]: joinLeaveSettings,
-  [EditableGuildFeatures.leaveMessage]: joinLeaveSettings,
-  [EditableGuildFeatures.moderationLogs]: modlogsSettings,
-  [EditableGuildFeatures.moderationReports]: modReportsSettings,
-  // [EditableGuildFeatures.economy]: economySettings,
-};
+export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
+  [EditableGuildFeatures.automaticTheming, themeSettings],
+  [EditableGuildFeatures.joinLeave, joinLeaveSettings],
+  [EditableGuildFeatures.joinMessage, { ...joinLeaveSettings, isSubMenu: true }],
+  [EditableGuildFeatures.leaveMessage, { ...joinLeaveSettings, isSubMenu: true }],
+  [EditableGuildFeatures.moderationLogs, modlogsSettings],
+  [EditableGuildFeatures.moderationReports, modReportsSettings],
+  // [EditableGuildFeatures.moderation, moderationSettings],
+]);
 
 export const defaultGuildSettings: FullGuildSettings = {
   accentColor: colors.default,
@@ -60,39 +58,16 @@ export const defaultGuildSettings: FullGuildSettings = {
   // },
 };
 
-export function getGuildSettingsHeader(locale: string, accentColor: number, path: string[]) {
-  return {
-    author: {
-      name: `CRBT - ${t(locale, 'SETTINGS_TITLE')}`,
-      icon_url: icon(accentColor, 'settings', 'image'),
-    },
-    title: path.join(' / '),
-    color: accentColor,
-  };
-}
-
 export function resolveSettingsProps(
-  i: FeatureSettingsProps['i'],
-  feature: EditableGuildFeatures,
+  i: SettingFunctionProps['i'],
+  menu: SettingsMenuProps,
   settings: FullGuildSettings
-): FeatureSettingsProps {
-  const camelCasedKey = CamelCaseGuildFeatures[feature];
-  const guild = i.guild;
-  const isEnabled =
-    (Object.keys(settings.modules).includes(camelCasedKey)
-      ? settings.modules[camelCasedKey]
-      : settings[camelCasedKey]) || undefined;
-  const errors =
-    featureGuildSettingsMenus[feature].getErrors?.({ feature, guild, isEnabled, settings, i }) ||
-    [];
-
+): SettingFunctionProps {
   return {
-    feature,
+    guild: i.guild,
+    errors: menu.getErrors?.({ guild: i.guild, i, settings }) || [],
     settings,
-    guild,
-    errors,
     i,
-    isEnabled,
   };
 }
 

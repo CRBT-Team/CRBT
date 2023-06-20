@@ -2,7 +2,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { ModalComponent } from 'purplet';
-import { renderFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
+import { guildFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
 import {
   getGuildSettings,
   saveServerSettings,
@@ -53,6 +53,6 @@ export const EditCurrencyModal = ModalComponent({
     //   true
     // );
 
-    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.economy));
+    this.update(await guildFeatureSettings.call(this, EditableGuildFeatures.economy));
   },
 });

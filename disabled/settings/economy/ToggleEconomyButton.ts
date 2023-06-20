@@ -2,7 +2,7 @@ import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { Routes } from 'discord-api-types/v10';
 import { ButtonComponent, getRestClient } from 'purplet';
 import { economyCommands } from '../../../src/modules/economy/_helpers';
-import { renderFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
+import { guildFeatureSettings } from '../../../src/modules/settings/server-settings/settings';
 import {
   getGuildSettings,
   saveServerSettings,
@@ -28,7 +28,7 @@ export const ToggleEconomyButton = ButtonComponent({
 
     await Promise.all(promises).then(
       async () =>
-        await this.editReply(await renderFeatureSettings.call(this, EditableGuildFeatures.economy))
+        await this.editReply(await guildFeatureSettings.call(this, EditableGuildFeatures.economy))
     );
   },
 });

@@ -1,68 +1,46 @@
 import { colorsMap } from '$lib/autocomplete/colorAutocomplete';
-import { colors } from '$lib/env';
-import emojis, { icon } from '$lib/env/emojis';
+import { colors, emojis } from '$lib/env';
 import { imgDominantColor } from '$lib/functions/imgDominantColor';
 import { t } from '$lib/language';
-import { EditableGuildFeatures, SettingsMenus } from '$lib/types/guild-settings';
+import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-settings';
 import chroma from 'chroma-js';
 import { ButtonComponent, components, row, SelectMenuComponent } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
-import { renderFeatureSettings } from './settings';
+import { guildFeatureSettings } from './settings';
 import { saveServerSettings } from './_helpers';
 
-export const themeSettings: SettingsMenus = {
-  getOverviewValue: ({ settings, i }) => ({
-    icon: '🎨',
-    value: settings.automaticTheming
-      ? t(i, 'AUTOMATIC_THEMING')
-      : chroma(settings.accentColor).hex(),
-  }),
-  getSelectMenu: ({ settings, i }) => ({
-    description: t(i, 'SETTINGS_COLOR_SET_TO', {
-      color: settings.automaticTheming
-        ? t(i, 'AUTOMATIC_THEMING')
-        : chroma(settings.accentColor).hex(),
-    }),
-    emoji: '🎨',
-  }),
-  getMenuDescription: ({ settings, i }) => ({
-    description: t(i, 'SETTINGS_COLOR_DESCRIPTION', {
-      color: settings.automaticTheming
-        ? t(i, 'AUTOMATIC_THEMING')
-        : chroma(settings.accentColor).hex(),
-    }),
-    thumbnail: {
-      url: i.guild.iconURL(),
-    },
-    fields: [
+export const themeSettings: SettingsMenuProps = {
+  description: (l) => t(l, 'SETTINGS_COLOR_DESCRIPTION'),
+  renderMenuMessage: ({ settings, i, backBtn }) => ({
+    embeds: [
       {
-        name: 'Icons preview',
-        value: [
-          icon(settings.accentColor, 'toggleon'),
-          ' ',
-          icon(settings.accentColor, 'thumbsup'),
-          ' ',
-          icon(settings.accentColor, 'thumbsdown'),
-          ' ',
-          icon(settings.accentColor, 'progressfillstart'),
-          icon(settings.accentColor, 'progressfill'),
-          icon(settings.accentColor, 'progressfill'),
-          icon(settings.accentColor, 'progressfillcut'),
-          emojis.progress.empty,
-          emojis.progress.emptyend,
-        ].join(''),
+        fields: [
+          {
+            name: t(i, 'SETTINGS_COLOR_SET_TO'),
+            value: settings.automaticTheming
+              ? `🔁 ${t(i, 'AUTO')}`
+              : colorsMap.find((c) => c.value === settings.accentColor)
+              ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
+                  i,
+                  `color set.colorNames.${
+                    colorsMap.find((c) => c.value === settings.accentColor).key
+                  }` as any
+                )}`
+              : chroma(settings.accentColor).hex(),
+          },
+        ],
+        thumbnail: {
+          url: i.guild.iconURL(),
+        },
       },
     ],
-  }),
-  getComponents: ({ i, backBtn, settings, isEnabled }) =>
-    components(
+    components: components(
       row(
         backBtn,
-        new ToggleAutoThemeBtn(!isEnabled)
+        new ToggleAutoThemeBtn(!settings.automaticTheming)
           .setStyle('SECONDARY')
-          .setLabel(
-            `${t(i, 'AUTOMATIC_THEMING')}: ${t(i, settings.automaticTheming ? 'ON' : 'OFF')}`
-          ),
+          .setEmoji(settings.automaticTheming ? emojis.toggle.on : emojis.toggle.off)
+          .setLabel(t(i, 'AUTOMATIC_THEMING')),
         new ManualColorEditButton({
           type: EditableGuildFeatures.automaticTheming,
           value: settings.accentColor,
@@ -88,6 +66,7 @@ export const themeSettings: SettingsMenus = {
           )
       )
     ),
+  }),
 };
 
 export const ToggleAutoThemeBtn = ButtonComponent({
@@ -107,7 +86,7 @@ export const ToggleAutoThemeBtn = ButtonComponent({
       });
     }
 
-    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
+    this.update(await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
   },
 });
 
@@ -119,6 +98,6 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
       accentColor: color,
     });
 
-    this.update(await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
+    this.update(await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));
   },
 });

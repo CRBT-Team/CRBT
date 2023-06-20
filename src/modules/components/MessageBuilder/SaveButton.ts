@@ -2,7 +2,7 @@ import { cache } from '$lib/cache';
 import { CamelCaseGuildFeatures } from '$lib/types/guild-settings';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { ButtonComponent } from 'purplet';
-import { renderFeatureSettings } from '../../settings/server-settings/settings';
+import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { getGuildSettings, saveServerSettings } from '../../settings/server-settings/_helpers';
 
 export const SaveButton = ButtonComponent({
@@ -18,6 +18,6 @@ export const SaveButton = ButtonComponent({
 
     cache.del(`${type}_BUILDER:${this.guildId}`);
 
-    await this.update(await renderFeatureSettings.call(this, type));
+    await this.update(await guildFeatureSettings.call(this, type));
   },
 });

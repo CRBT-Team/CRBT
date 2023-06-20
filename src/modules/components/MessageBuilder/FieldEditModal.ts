@@ -9,7 +9,7 @@ import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { renderFeatureSettings } from '../../settings/server-settings/settings';
+import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { saveServerSettings } from '../../settings/server-settings/_helpers';
 
 export const FieldEditModal = ModalComponent({
@@ -33,7 +33,7 @@ export const FieldEditModal = ModalComponent({
       });
 
       return await this.update(
-        await renderFeatureSettings.call(this, EditableGuildFeatures.automaticTheming)
+        await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming)
       );
     }
 

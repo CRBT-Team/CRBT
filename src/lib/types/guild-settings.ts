@@ -7,13 +7,14 @@
 //   servers,
 // } from '@prisma/client';
 import { serverModules, servers } from '@prisma/client';
-import { APIEmbed } from 'discord-api-types/v10';
-import { Guild, Interaction, MessageButton, MessageSelectOptionData } from 'discord.js';
+import { Guild, Interaction, MessageButton, MessageEditOptions } from 'discord.js';
 
 export enum EditableGuildFeatures {
   automaticTheming = 'SERVER_THEME',
   joinMessage = 'JOIN_MESSAGE',
   leaveMessage = 'LEAVE_MESSAGE',
+  joinLeave = 'JOIN_LEAVE',
+  moderation = 'MODERATION',
   moderationLogs = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
   // economy = 'ECONOMY',
@@ -25,16 +26,16 @@ export enum CamelCaseGuildFeatures {
   LEAVE_MESSAGE = 'leaveMessage',
   MODERATION_LOGS = 'moderationLogs',
   MODERATION_REPORTS = 'moderationReports',
+  JOIN_LEAVE = 'joinLeave',
+  MODERATION = 'moderation',
   // ECONOMY = 'economy',
 }
 
-export interface FeatureSettingsProps {
+export interface SettingFunctionProps {
   guild: Guild;
   settings: FullGuildSettings;
-  feature: EditableGuildFeatures;
   i?: Interaction;
   errors?: string[];
-  isEnabled: boolean;
 }
 
 export type FullGuildSettings = Partial<
@@ -52,16 +53,12 @@ export type FullGuildSettings = Partial<
   }
 >;
 
-export interface SettingsMenus {
+export interface SettingsMenuProps {
   newLabel?: boolean;
-  getOverviewValue(props: FeatureSettingsProps): {
-    icon?: string;
-    value: string;
-  };
-  getErrors?(props: Omit<FeatureSettingsProps, 'errors'>): string[];
-  getSelectMenu(props: FeatureSettingsProps): Partial<MessageSelectOptionData>;
-  getMenuDescription(props: FeatureSettingsProps): Partial<APIEmbed>;
-  getComponents(
-    props: FeatureSettingsProps & { backBtn: MessageButton; toggleBtn: MessageButton }
-  ): any[];
+  isSubMenu?: boolean;
+  description: (locale: string) => string;
+  getErrors?(props: Omit<SettingFunctionProps, 'errors'>): string[];
+  renderMenuMessage(
+    props: SettingFunctionProps & { backBtn: MessageButton }
+  ): Partial<MessageEditOptions>;
 }
