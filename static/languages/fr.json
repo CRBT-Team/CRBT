@@ -84,16 +84,8 @@
     "DESCRIPTION": "Vous pouvez réessayer {time}."
   },
   "color set": {
-    "meta": {
-      "description": "Changez votre couleur d'accentuation CRBT.",
-      "options": [
-        {
-          "description": "Choisissez une suggestion ou un code HEX."
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "Synchroniser la couleur de profil Discord",
+      "sync": "Sync to your profile color",
       "red": "Rouge",
       "orange": "Orange",
       "yellow": "Jaune",
@@ -104,12 +96,8 @@
       "pink": "Rose",
       "gray": "Gris"
     },
-    "errors": {
-      "NO_DISCORD_COLOR": "Aucune couleur de profil à synchroniser. Pour en définir une, modifiez votre profil Discord."
-    },
     "strings": {
-      "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
-      "EMBED_SYNC_INFO": "Votre couleur d'accentuation CRBT est maintenant synchronisée avec votre couleur de profil Discord.",
+      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
       "EMBED_DESCRIPTION": "Cette couleur est utilisée lorsque CRBT vous répond et dans l'affichage de vos infos utilisateur."
     }
   },
