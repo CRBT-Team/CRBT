@@ -57,7 +57,8 @@ export default ChatCommand({
             `${string.replace(
               '<PURPLETS>',
               `${emojis.purplet} **${income} Purplets**`
-            )}\nYou earned ${expGain} Job XP (${LevelReqs[job.level + 1] - job.exp - expGain
+            )}\nYou earned ${expGain} Job XP (${
+              LevelReqs[job.level + 1] - job.exp - expGain
             } left to become ${LevelNames[job.level + 1]}).`
           )
           .setColor(`#${colors.success}`),

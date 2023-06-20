@@ -2,11 +2,11 @@ import { jobs } from '$lib/env';
 import { ms } from '$lib/functions/ms';
 
 export const LevelReqs = {
-  1: 0,
-  2: 800,
-  3: 2400,
-  4: 4800,
-},
+    1: 0,
+    2: 800,
+    3: 2400,
+    4: 4800,
+  },
   LevelNames = {
     1: 'Beginner',
     2: 'Apprentice',
