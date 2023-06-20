@@ -4,13 +4,13 @@ import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { trimArray } from '$lib/functions/trimArray';
 import { getAllLanguages, t } from '$lib/language';
+import canvas, { GlobalFonts } from '@napi-rs/canvas';
 import {
   formatGuildBannerURL,
   formatGuildIconURL,
   timestampMention,
   userMention,
 } from '@purplet/utils';
-import canvas from 'canvas';
 import dedent from 'dedent';
 import { ChannelType, RESTGetAPIGuildChannelsResult, Routes } from 'discord-api-types/v10';
 import { EmbedFieldData, Guild, Interaction, MessageAttachment } from 'discord.js';
@@ -182,7 +182,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
   //     true
   //   );
   // }
-  canvas.registerFont(resolve('static/misc/ggsans.otf'), { family: 'ggsans' });
+  GlobalFonts.registerFromPath(resolve('static/misc/ggsans.otf'), 'ggsans');
 
   const img = canvas.createCanvas(512, 512);
   const ctx = img.getContext('2d');
@@ -215,7 +215,7 @@ export async function renderServerInfo(this: Interaction, guild: Guild, navCtx: 
         fields,
       },
     ],
-    files: guild.icon ? [] : [new MessageAttachment(img.toBuffer(), 'icon.png')],
+    files: guild.icon ? [] : [new MessageAttachment(img.toBuffer('image/png'), 'icon.png')],
     components: components(
       serverNavBar(navCtx, this.locale, 'server_info', getTabs('server_info', guild))
     ),

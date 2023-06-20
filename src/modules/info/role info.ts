@@ -1,12 +1,11 @@
 import { emojis } from '$lib/env';
-import { icon } from '$lib/env/emojis';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { keyPerms } from '$lib/functions/keyPerms';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
+import canvas from '@napi-rs/canvas';
 import { snowflakeToDate, timestampMention } from '@purplet/utils';
-import canvas from 'canvas';
 import dedent from 'dedent';
 import { APIRole, MessageFlags, PermissionFlagsBits, Routes } from 'discord-api-types/v10';
 import { MessageAttachment } from 'discord.js';
@@ -59,14 +58,11 @@ export default ChatCommand({
           description:
             (managed ? `**${managed}**\n` : '') +
             dedent`
-          ${role.mentionable ? icon(role.color, 'toggleon') : emojis.toggle.off} ${t(
+          ${role.mentionable ? emojis.toggle.on : emojis.toggle.off} ${t(
               this,
               'ROLE_INFO_MENTIONABLE'
             )}
-          ${role.hoist ? icon(role.color, 'toggleon') : emojis.toggle.off} ${t(
-              this,
-              'ROLE_INFO_HOISTED'
-            )}
+          ${role.hoist ? emojis.toggle.on : emojis.toggle.off} ${t(this, 'ROLE_INFO_HOISTED')}
           `,
           fields: [
             {
@@ -117,7 +113,9 @@ export default ChatCommand({
       ],
       flags: MessageFlags.Ephemeral,
       components: components(row(ShareResponseBtn(this, false))),
-      files: !(role.icon || role.color) ? [] : [new MessageAttachment(img.toBuffer(), 'role.png')],
+      files: !(role.icon || role.color)
+        ? []
+        : [new MessageAttachment(img.toBuffer('image/png'), 'role.png')],
     });
   },
 });
