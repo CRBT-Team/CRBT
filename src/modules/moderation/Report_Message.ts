@@ -34,7 +34,7 @@ export default MessageContextCommand({
             ? 'ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN'
             : `ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR`,
           {
-            command: slashCmd('settings'),
+            command: slashCmd('server settings'),
           }
         ),
       });

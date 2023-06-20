@@ -28,7 +28,7 @@ export default ChatCommand({
             prefix: '`/`',
             botIcon: '<:CRBT:860947227887403048>',
             reminder: slashCmd('reminder new'),
-            settings: slashCmd('settings'),
+            settings: slashCmd('server settings'),
             infoCommands: new Intl.ListFormat(this.locale, { type: 'conjunction' }).format([
               slashCmd('search'),
               slashCmd('user info'),

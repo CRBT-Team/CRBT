@@ -39,7 +39,7 @@ export const botJoin = OnEvent('guildCreate', async (guild) => {
             crbt: guild.client.user.username,
             serverCount: guild.client.guilds.cache.size.toLocaleString(locale),
             help: slashCmd('help'),
-            settings: slashCmd('settings'),
+            settings: slashCmd('server settings'),
           }),
           image: {
             url: icons.welcome,
