@@ -36,15 +36,15 @@ export default ChatCommand({
     .string('to', t('en-US', 'translate.options.target.description'), {
       nameLocalizations: getAllLanguages('TO', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.target.description'),
-      autocomplete({ target }) {
-        return languagesAutocomplete.call(this, target);
+      autocomplete({ to }) {
+        return languagesAutocomplete.call(this, to);
       },
     })
     .string('from', t('en-US', 'translate.options.source.description'), {
       nameLocalizations: getAllLanguages('FROM', localeLower),
       descriptionLocalizations: getAllLanguages('translate.options.source.description'),
-      autocomplete({ source }) {
-        return languagesAutocomplete.call(this, source);
+      autocomplete({ from }) {
+        return languagesAutocomplete.call(this, from);
       },
     }),
   async handle({ text, to, from }) {
@@ -147,10 +147,30 @@ async function translate(
   text: string,
   opts?: { to?: string; from?: string }
 ) {
-  const to = opts?.to ?? this.locale.split('-')[0];
-  const from = opts?.from ?? 'auto';
+  const intl = new Intl.DisplayNames(this.locale, {
+    type: 'language',
+    fallback: 'code',
+    style: 'long',
+    languageDisplay: 'standard',
+  });
 
-  if (!languages.all.find((code) => code === from)) {
+  const languageNames = languages.all.map((code) => ({
+    name: upperCaseFirst(intl.of(code)),
+    value: code,
+  }));
+
+  const to = languageNames.find(
+    ({ name, value }) =>
+      name.toLowerCase().startsWith((opts?.to || this.locale.split('-')[0]).toLowerCase()) ||
+      value.toLowerCase() === (opts?.to || this.locale.split('-')[0]).toLowerCase()
+  )?.value;
+  const from = languageNames.find(
+    ({ name, value }) =>
+      name.toLowerCase().startsWith((opts?.from ?? 'auto').toLowerCase()) ||
+      value.toLowerCase() === (opts?.from ?? 'auto').toLowerCase()
+  )?.value;
+
+  if (!to) {
     CRBTError(
       this,
       t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
@@ -159,7 +179,7 @@ async function translate(
     );
     return;
   }
-  if (!languages.all.find((code) => code === to)) {
+  if (!from) {
     CRBTError(
       this,
       t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
@@ -172,14 +192,6 @@ async function translate(
   const [translated, source, target] = await useTranslate(text, {
     source: from,
     target: to,
-  });
-
-  const color = await getColor(this.user);
-  const intl = new Intl.DisplayNames(this.locale, {
-    languageDisplay: 'standard',
-    style: 'long',
-    type: 'language',
-    fallback: 'code',
   });
 
   return {
@@ -199,7 +211,7 @@ async function translate(
             value: translated,
           },
         ],
-        color,
+        color: await getColor(this.user),
       },
     ],
     components: components(
