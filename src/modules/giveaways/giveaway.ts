@@ -35,7 +35,7 @@ export default ChatCommand({
     })
     .string('end_date', t('en-US', 'END_DATE').toLowerCase(), {
       nameLocalizations: getAllLanguages('END_DATE', localeLower),
-      descriptionLocalizations: getAllLanguages('giveaway.options.end_date.description'),
+      descriptionLocalizations: getAllLanguages('poll.meta.options.end_date.description'),
       autocomplete({ end_date }) {
         return timeAutocomplete.call(this, end_date, '2M', '20s');
       },
