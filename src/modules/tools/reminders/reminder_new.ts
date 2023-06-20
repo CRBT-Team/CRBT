@@ -58,7 +58,12 @@ export default ChatCommand({
     }
 
     if (expiresAt.isAfter(now.add(ms('2y1s')))) {
-      return CRBTError(this, errors.TOO_LONG);
+      return CRBTError(
+        this,
+        t(this, 'ERROR_INVALID_DURATION', {
+          relativeTime: '2 years',
+        })
+      );
     }
 
     if (destination) {

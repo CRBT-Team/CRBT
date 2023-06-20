@@ -49,7 +49,12 @@ export function timeout(
   { duration, reason }: ModerationContext
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('28d')) {
-    return createCRBTError(this, 'Invalid duration or exceeds 28 days');
+    return createCRBTError(
+      this,
+      t(this, 'ERROR_INVALID_DURATION', {
+        relativeTime: '28 days',
+      })
+    );
   }
 
   member.timeout(ms(duration), reason);

@@ -12,7 +12,12 @@ import {
 } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { ButtonInteraction, Interaction, MessageButton, SelectMenuInteraction } from 'discord.js';
+import {
+  BaseSelectMenuInteraction,
+  ButtonInteraction,
+  Interaction,
+  MessageButton,
+} from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
@@ -137,15 +142,13 @@ async function renderUnicodeEmoji(
         },
         fields: [
           {
-            name: t(this, 'UNICODE'),
+            name: 'Unicode',
             value: emojiData.codes,
             inline: true,
           },
           {
             name: t(this, 'AVAILABLE_SINCE'),
-            value: `**[${t(this, 'UNICODE')} ${emojiData.unicode}](https://emojipedia.org/unicode-${
-              emojiData.unicode
-            })**`,
+            value: `**[Unicode ${emojiData.unicode}](https://emojipedia.org/unicode-${emojiData.unicode})**`,
             inline: true,
           },
           {
@@ -163,7 +166,7 @@ async function renderUnicodeEmoji(
             : await getColor(this.user),
       },
     ],
-    ...(this instanceof SelectMenuInteraction
+    ...(this instanceof BaseSelectMenuInteraction
       ? {}
       : {
           components: components(

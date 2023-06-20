@@ -13,6 +13,7 @@ import {
 } from 'discord.js';
 import { components, getDiscordClient, row } from 'purplet';
 import { RemindButton } from '../../modules/components/RemindButton';
+import { slashCmd } from './commandMention';
 
 function handleError(
   i: Interaction,
@@ -117,7 +118,10 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
     },
     embed: {
       title: strings.TITLE,
-      description: strings.DESCRIPTION.replace('{MESSAGE}', `\`\`\`\n${error}\`\`\``),
+      description: strings.DESCRIPTION.replace('{reportCommand}', slashCmd('report')).replace(
+        '{MESSAGE}',
+        `\`\`\`\n${error}\`\`\``
+      ),
     },
   });
 

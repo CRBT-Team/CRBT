@@ -43,9 +43,9 @@ export async function renderMenuButton(
     return {
       embeds: [
         {
-          title: `${t(this, 'POLL')} - ${strings.DATA_AND_OPTIONS}`,
-          description: `Vote using the buttons below.`,
-          color: this.message.embeds[0].color,
+          title: `${t(this, 'POLL')} - ${message.embeds[0].title}`,
+          description: `You can change your vote using the buttons below.`,
+          color: message.embeds[0].color,
         },
       ],
       flags: MessageFlags.Ephemeral,

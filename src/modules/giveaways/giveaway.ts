@@ -62,7 +62,12 @@ export default ChatCommand({
     }
 
     if (!isValidTime(end_date) && ms(end_date) > ms('1M')) {
-      return CRBTError(this, 'Invalid duration or exceeds 1 month.');
+      return CRBTError(
+        this,
+        t(this, 'ERROR_INVALID_DURATION', {
+          relativeTime: '1 month',
+        })
+      );
     }
 
     winners ||= 1;

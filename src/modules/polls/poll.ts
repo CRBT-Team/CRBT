@@ -63,7 +63,12 @@ export default ChatCommand({
   async handle({ title, end_date, choice1, choice2, choice3, choice4 }) {
     // let image = untypedImage as MessageAttachment;
     if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
-      return CRBTError(this, 'Invalid duration or exceeds 3 weeks.');
+      return CRBTError(
+        this,
+        t(this, 'ERROR_INVALID_DURATION', {
+          relativeTime: '3 weeks',
+        })
+      );
     }
 
     await this.deferReply({

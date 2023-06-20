@@ -50,7 +50,12 @@ export function ban(
   { duration, reason, messagesDeleted }: ModerationContext
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
-    return createCRBTError(this, 'Invalid duration or exceeds 3 years');
+    return createCRBTError(
+      this,
+      t(this, 'ERROR_INVALID_DURATION', {
+        relativeTime: '10 years',
+      })
+    );
   }
 
   member.ban({
