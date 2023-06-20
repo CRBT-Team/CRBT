@@ -133,7 +133,7 @@ export const EditJoinLeaveChannelButton = ButtonComponent({
       components: components(
         row(
           new MessageSelectMenu()
-            .setCustomId(`${customId}_${type}`)
+            .setCustomId(`${customId}${type}`)
             .setType('CHANNEL_SELECT')
             .setPlaceholder(t(this, 'JOIN_MESSAGE'))
             .setChannelTypes(
