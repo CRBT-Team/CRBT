@@ -179,10 +179,7 @@ export async function renderModlogs(
           .setDisabled(page >= pages - 1)
       )
     ),
-    flags:
-      // this instanceof ContextMenuInteraction ?
-      MessageFlags.Ephemeral,
-    // : 0,
+    flags: MessageFlags.Ephemeral,
   };
 }
 
@@ -299,6 +296,7 @@ async function renderStrikePage(
           : [])
       )
     ),
+    flags: MessageFlags.Ephemeral,
   };
 }
 
