@@ -26,7 +26,7 @@ export const endPoll = async (poll: Poll, pollMsg: Message) => {
           options: new Intl.ListFormat(poll.locale, {
             type: 'conjunction',
             style: 'long',
-          }).format(ranking.map((s) => parseOptionName(s.name))),
+          }).format(winners.map((s) => `"${parseOptionName(s.name)}"`)),
           votes: ranking[0].votes.toLocaleString(poll.locale),
           total: totalVotes.toLocaleString(poll.locale),
         }),
