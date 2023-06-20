@@ -10,20 +10,18 @@
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
   "DONATE": "दान करे",
   "PERMISSION_ADMINISTRATOR": "Administrator",
-  "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
+  "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
   "ERROR_INVALID_URL": "गलत URL",
   "ERROR_INVALID_COLOR": "रंग अमान्य है | Preset या मान्य HEX कोड इस्तेमाल कीजिए |",
+  "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
   "BACK": "वापस जाएं",
   "JUMP_TO_MSG": "मेसेज पर जाएं",
   "CANCEL": "रद्द करें",
   "CONFIRM": "सहमत करे",
   "DELETE": "डिलीट करें",
   "EDIT": "बदले",
-  "PREVIOUS": "पिछला",
-  "NEXT": "अगला",
   "SAVE": "Save Changes",
   "SEND": "भेजें",
-  "DONE": "समाप्त",
   "ON": "चालू",
   "OFF": "बंद",
   "NEW": "नया",
@@ -35,7 +33,7 @@
   "YES": "हाँ",
   "NO": "नहीं",
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल जिन्होंने कमांड का उपयोग किया है इस component को उपयोग कर सकते हैं |",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
   "TEXT_CHANNEL": "टेक्स्ट",
   "VOICE_CHANNEL": "वॉइस",
   "STAGE_CHANNEL": "स्टेज",
@@ -75,12 +73,12 @@
   "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "यह मेसेज ऑटोमेटिकली रिपोर्ट किया गया था | यह एरर कहती है की: {MESSAGE}"
+      "TITLE": "Unknown error.",
+      "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "TITLE": "होल्ड करो! ",
+    "TITLE": "You're too *fast*!",
     "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
@@ -167,8 +165,7 @@
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)",
-      "POLL_DATA_NOT_ALLOWED": "सिर्फ chat moderators (\"मैनेज मैसेज\" permission) और पोल क्रिएटर यह menu इस्तेमाल कर सकते है | "
+      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)"
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
@@ -177,12 +174,12 @@
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "DATA_AND_OPTIONS": "Data और Options",
       "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
+      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
       "SUCCESS_POLL_DELETED": "पोल हट गया |",
       "SUCCESS_POLL_ENDED": "पोल खत्म |",
       "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
       "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
-      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
+      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -236,19 +233,6 @@
           "description": "The expression to calculate."
         }
       ]
-    }
-  },
-  "role-selectors": {
-    "errors": {
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "आप रोल को हटा नहीं सकते |"
-    },
-    "strings": {
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
     }
   },
   "AVATAR": "Avatar",
@@ -330,13 +314,10 @@
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "description": "What to give away."
-      },
-      "end_date": {
-        "description": "When to end the giveaway."
+        "description": "What are you giving away?"
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "How many people can win the giveaway?"
       }
     }
   },
@@ -580,7 +561,6 @@
     }
   },
   "EMOJI_INFO": "एमोजी की जानकारी",
-  "UNICODE": "यूनिकोड",
   "EMOJI": "इमोजी",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
@@ -615,9 +595,9 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "आपका रिपोर्ट दर्ज हो गया !",
-  "REPORT_SUCCESS_DESCRIPTION": "यह **[म्युनिटी सर्वर] ({server})** पे भेज दिया गया है, जहा पर लोग समस्या की बातचीत की जाईगी | आपको अपने DMs पे अपडेट किया जायेगा |",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[CRBT Community]({server})**, where members can discuss the issue.",
   "REPORT_MODAL_TITLE": "नई रिपोर्ट",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "आपकी क्या समस्या है ?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What did you encounter?",
   "IMAGE_OPTION_DESCRIPTION": "उसके ऊपर चित्र डाले |",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "सिर्फ आप इमेज को अपलोड कर सकते है |",
   "report": {
@@ -626,14 +606,14 @@
   "user_info": {
     "description": "Get a user's Discord information."
   },
-  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate were found.",
   "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
   "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
   "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
   "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}.",
   "MORE_ELEMENTS": "+ {number} more...",
   "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
-  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden out of age-restricted channels.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
   "DURATION": "Duration",
   "VIEWS": "Views"
 }
