@@ -123,7 +123,7 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
                     .setStyle('PRIMARY')
                     .setDisabled(page - 1 <= 0),
                   // Previous page
-                  new ChangeSearchButton({ newPage: page - 1 })
+                  new ChangeSearchButton({ newPage: page - 1, shit: false })
                     .setEmoji(emojis.buttons.left_arrow)
                     .setStyle('PRIMARY')
                     .setDisabled(page - 1 <= 0),
