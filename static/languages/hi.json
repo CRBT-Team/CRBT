@@ -184,14 +184,14 @@
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_FOOTER_CREATOR": "{user} created a poll",
-      "SUCCESS_TITLE": "Poll created!",
+      "POLL_FOOTER_CREATOR": "{user} ने पोल बनाया |",
+      "SUCCESS_TITLE": "पोल बन गया |",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
-      "DATA_AND_OPTIONS": "Data and Options",
+      "DATA_AND_OPTIONS": "Data और Options",
       "POLL_DATA_NOVOTES": "No votes",
       "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
+      "SUCCESS_POLL_DELETED": "पोल हट गया |",
+      "SUCCESS_POLL_ENDED": "पोल खत्म |",
       "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
       "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
       "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
@@ -201,7 +201,7 @@
     "description": "Get a user's profile banner."
   },
   "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord user or user ID.",
-  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord server ID.",
+  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "एक discord server ID |",
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
@@ -223,7 +223,7 @@
     }
   },
   "crbt_introduction": {
-    "EMBED_TITLE": "Thank you for inviting CRBT!",
+    "EMBED_TITLE": "CRBT को invite करने के लिए धन्यवाद |",
     "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
   },
   "bookmark": {
@@ -231,10 +231,10 @@
       "name": "Bookmark Message"
     },
     "errors": {
-      "DMS_DISABLED": "Enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "DMs को enable करे या फिर CRBT को अनब्लॉक करे ताकि आप मेसेज को बुकमार्क करे |"
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
+      "BOOKMARK_AUTHOR": "{USER} (ने मैसेज को बुकमार्क कर दिया)",
       "SUCCESS_MESSAGE": "Sent this message by DM!"
     }
   },
@@ -302,8 +302,8 @@
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "आपका मैसेज खाली नहीं हो सकता |",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
+  "ERROR_NO_MESSAGE": "पहले मेसेज को सेट करे |",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ने server छोड़ दिया |",
   "FIELD_SELECT_MENU": "Edit fields",
   "COLOR_PRESET_SELECT_MENU": "Color presets",
   "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
@@ -322,7 +322,7 @@
   "FIELDS_URL": "Embed Title URL",
   "SETTINGS": "Settings",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
-  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "BIRTHDAY_LIST_CONTENT": "{USER} का जन्मदिन ",
   "JOINED_DISCORD": "Discord member since",
   "JOINED_SERVER": "Server member since",
   "SERVER_NICKNAME": "Server nickname",
@@ -330,13 +330,13 @@
   "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "NO_PERMS": "*No permissions*",
-  "HELP": "Help",
+  "HELP": "सहायता",
   "help": {
     "description": "Returns help to use CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Add it to your server!",
+  "HELP_AD_DESCRIPTION": "इसे अपने server में add करे |",
   "GIVEAWAY": "Giveaway",
   "giveaway": {
     "description": "Create a giveaway.",
@@ -353,7 +353,7 @@
     }
   },
   "WINNERS": "Winners",
-  "PRIZE": "Prize",
+  "PRIZE": "इनाम ",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
@@ -380,23 +380,23 @@
   ],
   "8BALL_ANSWERS_NEUTRAL": [
     "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "मुझसे बाद में पूछना |",
+    "यह बात अभी न बताना ही अच्छा होगा |",
+    "अभी भविष्यवाणी नहीं कर सकता |",
+    "ध्यान लगाओ और दुबारा पूछो |"
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
+    "उस पर भरोसा मत करना |",
+    "मेरा जवाब है नहीं |",
     "My sources say no.",
     "Outlook not so good.",
     "Very doubtful."
   ],
-  "COMMENT": "comment",
+  "COMMENT": "कमेंट ",
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
   "roll": {
     "name": "roll",
-    "description": "Roll a dice. Supports RPG dice notation.",
+    "description": "Dice को roll करो | RPG dice notation को सपोर्ट करता है |",
     "options": {
       "dice": {
         "name": "dice",
