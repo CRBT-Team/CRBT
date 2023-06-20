@@ -159,28 +159,28 @@
       "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
-  "IMAGE": "Image",
+  "IMAGE": "चित्र",
   "poll": {
     "meta": {
-      "description": "Create a poll.",
+      "description": "एक पोल बनाएं |",
       "options": {
         "title": {
           "description": "आपका पोल किस बारे में है ?"
         },
         "end_date": {
-          "description": "When does it end?"
+          "description": "यह कैसे समाप्त होता है?"
         },
         "choice": {
-          "description": "One of the poll's choices."
+          "description": "पोल की एक choice |"
         },
         "image": {
-          "description": "Append an image."
+          "description": "उसके ऊपर चित्र डाले |"
         }
       }
     },
     "errors": {
       "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) and the poll creator can use this menu."
+      "POLL_DATA_NOT_ALLOWED": "सिर्फ chat moderators (\"मैनेज मैसेज\" permission) और पोल क्रिएटर यह menu इस्तेमाल कर सकते है | "
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
