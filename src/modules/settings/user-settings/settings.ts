@@ -1,15 +1,16 @@
-import emojis, { icon } from '$lib/env/emojis';
+import { emojis, icons } from '$lib/env';
+import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
-import { UserSettingsMenus } from '$lib/types/user-settings';
+import { EditableUserSettings } from '$lib/types/user-settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
-import { Interaction } from 'discord.js';
+import { EmbedFieldData, Interaction, MessageSelectOptionData } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import { getUser, resolveUserSettingsProps, userSettingsMenus } from './_helpers';
+import { getUser, resolveUserSettingsProps, UserSettingsMenus } from './_helpers';
 
 export default ChatCommand({
   name: 'user settings',
-  description: "Customize CRBT's User Settings.",
+  description: 'Customize your CRBT settings.',
   async handle() {
     await this.deferReply({
       ephemeral: true,
@@ -21,60 +22,50 @@ export default ChatCommand({
 
 export async function renderUserSettingsMenu(this: Interaction) {
   const user = await getUser(this.guild.id);
+  const embedFields: EmbedFieldData[] = [];
+  const selectMenuOptions: MessageSelectOptionData[] = [];
   const accentColor = await getColor(this.user);
-  const userSettingsProps = await Promise.all(
-    Object.values(UserSettingsMenus).map((m) => resolveUserSettingsProps(this, m, user))
-  );
 
-  const options = Object.values(UserSettingsMenus)
-    .map((menu) => {
-      const props = userSettingsProps.find((v) => v.menu === menu);
-      const featureSettings = userSettingsMenus[menu];
+  UserSettingsMenus.forEach((menu, menuId) => {
+    if (menu.isSubMenu) return;
 
-      return {
-        label:
-          t(this, menu) +
-          (featureSettings.newLabel ? ` [${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''),
-        value: menu,
-        ...(props.errors.length > 0
-          ? {
-              emoji: '⚠️',
-              description: t(this, 'ATTENTION_REQUIRED'),
-            }
-          : featureSettings.getSelectMenu(props)),
-      };
-    })
-    .filter(Boolean);
+    const props = resolveUserSettingsProps(this, menu, user, accentColor);
+
+    let icon = props.errors.length ? '⚠️' : emojis.features?.[menuId] ?? '';
+    let description = props.errors.length
+      ? t(this, 'ATTENTION_REQUIRED')
+      : menu.description(this.locale);
+
+    embedFields.push({
+      name: `${icon} ${t(this, menuId)}`,
+      value: description,
+    });
+
+    selectMenuOptions.push({
+      label: `${t(this, menuId)} ${menu.newLabel ? `[✨ ${t(this, 'NEW')}]` : ''}`,
+      value: menuId,
+      emoji: icon,
+      description: props.errors.length ? t(this, 'ATTENTION_REQUIRED') : '',
+    });
+  });
 
   return {
     content: invisibleChar,
     embeds: [
       {
         author: {
-          name: `CRBT - ${t(this, 'SETTINGS_TITLE')}`,
-          iconURL: icon(accentColor, 'settings', 'image'),
+          name: `${this.user.username} - ${t(this, 'USER_SETTINGS_TITLE')}`,
+          iconURL: icons.settings,
         },
-        title: `${this.guild.name} / ${t(this, 'OVERVIEW')}`,
-        description: t(this, 'SETTINGS_DESCRIPTION'),
-        fields: Object.values(UserSettingsMenus).map((menu) => {
-          const props = userSettingsProps.find((v) => v.menu === menu);
-          const menuSettings = userSettingsMenus[menu];
-          let { icon: i, value } = menuSettings.getOverviewValue(props);
-          if (props.errors.length) {
-            (i = '⚠️'), (value = t(this, 'ATTENTION_REQUIRED'));
-          }
-
-          return {
-            name: `${i} **${t(this, menu)}**`,
-            value: value ?? `*${t(this, 'NONE')}*`,
-            inline: true,
-          };
-        }),
-        color: await getColor(this.guild),
+        title: t(this, 'OVERVIEW'),
+        description: t(this, 'USER_SETTINGS_DESCRIPTION'),
+        fields: embedFields,
+        thumbnail: { url: avatar(this.user) },
+        color: await getColor(this.user),
       },
     ],
     components: components(
-      row(new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(options))
+      row(new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(selectMenuOptions))
     ),
     ephemeral: true,
   };
@@ -82,65 +73,49 @@ export async function renderUserSettingsMenu(this: Interaction) {
 
 export const FeatureSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
-    const featureId = this.values[0] as UserSettingsMenus;
+    const featureId = this.values[0] as EditableUserSettings;
 
-    this.update(await renderFeatureSettings.call(this, featureId));
+    this.update(await userFeatureSettings.call(this, featureId));
   },
 });
 
-export async function renderFeatureSettings(
+export async function userFeatureSettings(
   this: Interaction,
-  menu: UserSettingsMenus
+  menuId: EditableUserSettings
 ): Promise<any> {
-  const { getComponents, getMenuDescription, newLabel } = userSettingsMenus[menu];
+  const menu = UserSettingsMenus.get(menuId);
   const user = await getUser(this.guild.id);
-  const accentColor = await getColor(this.user);
-  const props = await resolveUserSettingsProps(this, menu, user);
-  const { errors } = props;
-
+  const color = await getColor(this.user);
+  const props = resolveUserSettingsProps(this, menu, user, color);
   const backBtn = new BackSettingsButton(null)
     // .setLabel(t(this, 'SETTINGS'))
     .setEmoji(emojis.buttons.left_arrow)
     .setStyle('SECONDARY');
-
-  const embed = getMenuDescription(props);
+  const message = menu.renderMenuMessage({ ...props, backBtn });
 
   return {
     content: invisibleChar,
+    components: message.components,
     embeds: [
       {
-        // ...getGuildSettingsHeader(this.locale, accentColor, [
-        //   this.guild.name,
-        //   `${t(this, menu)} ${
-        //     newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
-        //   }`,
-        // ]),
-        color: await getColor(this.guild),
-        ...embed,
-        fields:
-          errors.length > 0
-            ? [
-                {
-                  name: `${t(this, 'STATUS')} • ${t(this, 'SETTINGS_ERRORS_FOUND', {
-                    number: errors.length.toLocaleString(this.locale),
-                  })}`,
-                  value: errors.map((error) => `⚠️ **${error}**`).join('\n'),
-                },
-              ]
-            : embed?.fields,
+        author: {
+          name: `${this.guild.name} - ${t(this, 'USER_SETTINGS_TITLE')}`,
+          icon_url: icons.settings,
+        },
+        title: `${t(this, menuId)} ${menu.newLabel ? `[${t(this, 'NEW')}]` : ''}`,
+        description: menu.description(this.locale),
+        color,
+        ...message.embeds[0],
       },
+      ...message.embeds.slice(1),
     ],
-    components: getComponents({
-      ...props,
-      backBtn,
-    }),
   };
 }
 
 export const BackSettingsButton = ButtonComponent({
   async handle(feature: string | null) {
     if (feature) {
-      return this.update(await renderFeatureSettings.call(this, feature as UserSettingsMenus));
+      return this.update(await userFeatureSettings.call(this, feature as EditableUserSettings));
     }
     return this.update(await renderUserSettingsMenu.call(this));
   },

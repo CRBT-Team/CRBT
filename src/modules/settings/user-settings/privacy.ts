@@ -1,10 +1,11 @@
-import { links } from '$lib/env';
-import emojis, { icon } from '$lib/env/emojis';
+import { prisma } from '$lib/db';
+import { colors, emojis, icons, links } from '$lib/env';
 import { t } from '$lib/language';
-import { UserSettingsMenusProps } from '$lib/types/user-settings';
-import { components, row } from 'purplet';
-import { ConfirmDataDeletion, ExportAllData } from '../privacy/manage-data';
-import { ToggleSettingBtn } from '../privacy/privacy';
+import { EditableUserSettings, UserSettingsMenusProps } from '$lib/types/user-settings';
+import { MessageAttachment } from 'discord.js';
+import { ButtonComponent, components, row } from 'purplet';
+import { userFeatureSettings } from './settings';
+import { getUser } from './_helpers';
 
 const privacyPreferences = [
   ['telemetry', 'TELEMETRY'],
@@ -13,48 +14,132 @@ const privacyPreferences = [
 ];
 
 export const privacySettings: UserSettingsMenusProps = {
-  getMenuDescription({ accentColor, i }) {
-    return {
-      author: {
-        name: `CRBT - ${t(i, 'PRIVACY_SETTINGS_TITLE')}`,
-        icon_url: icon(accentColor, 'settings', 'image'),
+  description: () => `You can review our **[Privacy Policy on the website](${links.policy})**.`,
+  renderMenuMessage: ({ i, accentColor, user, backBtn }) => ({
+    embeds: [
+      {
+        fields: [
+          ...privacyPreferences.map(([id, stringId]) => ({
+            name: t(i, stringId as any),
+            value: t(i, `PRIVACY_${stringId}_DESCRIPTION` as any),
+          })),
+          {
+            name: t(i, 'YOUR_CRBT_DATA'),
+            value: t(i, 'PRIVACY_CRBT_DATA_DESCRIPTION'),
+          },
+        ],
+        color: accentColor,
       },
-      description: `You can review our **[Privacy Policy on the website](${links.policy})**.`,
-      fields: [
-        ...privacyPreferences.map(([id, stringId]) => ({
-          name: t(i, stringId as any),
-          value: t(i, `PRIVACY_${stringId}_DESCRIPTION` as any),
-        })),
-        {
-          name: t(i, 'YOUR_CRBT_DATA'),
-          value: t(i, 'PRIVACY_CRBT_DATA_DESCRIPTION'),
-        },
-      ],
-      color: accentColor,
-    };
-  },
-  getComponents({ i, user, accentColor }) {
-    return components(
+    ],
+    components: components(
       row(
+        backBtn,
         ...privacyPreferences.map(([id, stringId]) =>
           new ToggleSettingBtn({ setting: id, newState: !user[id] })
             .setLabel(t(i, stringId as any))
             .setStyle('SECONDARY')
-            .setEmoji(user[id] ? icon(accentColor, 'toggleon') : emojis.toggle.off)
+            .setEmoji(user[id] ? emojis.toggle.on : emojis.toggle.off)
         )
       ),
       row(
         new ExportAllData().setStyle('PRIMARY').setLabel('Download my data'),
         new ConfirmDataDeletion().setStyle('DANGER').setLabel('Delete my data')
       )
-    );
-  },
-  getSelectMenu: ({ user, accentColor }) => ({
-    label: 'Privacy',
-    description: `Telemetry turned ${user.telemetry ? 'on' : 'off'}`,
-    emoji: user.telemetry ? icon(accentColor, 'toggleon') : emojis.toggle.off,
-  }),
-  getOverviewValue: () => ({
-    value: 'undefined',
+    ),
   }),
 };
+
+export const ToggleSettingBtn = ButtonComponent({
+  async handle({ setting, newState }: { setting: string; newState: boolean }) {
+    await prisma.user.upsert({
+      where: { id: this.user.id },
+      create: { [setting]: newState, id: this.user.id },
+      update: { [setting]: newState },
+    });
+
+    await getUser(this.user.id, true);
+
+    await this.reply(await userFeatureSettings.call(this, EditableUserSettings.privacy));
+  },
+});
+
+export const ExportAllData = ButtonComponent({
+  async handle() {
+    await this.deferReply({
+      ephemeral: true,
+    });
+
+    const userData = await prisma.user.findFirst({
+      where: { id: this.user.id },
+      include: { reminders: true },
+    });
+
+    await this.editReply({
+      files: [
+        new MessageAttachment(Buffer.from(JSON.stringify(userData, null, 2))).setName('data.json'),
+      ],
+    });
+  },
+});
+
+export const ConfirmDataDeletion = ButtonComponent({
+  async handle() {
+    this.reply({
+      embeds: [
+        {
+          author: {
+            name: 'Are you sure that you want all of your data deleted forever?',
+          },
+          description:
+            'This includes the **entirety** of your reminders, settings, badges and other data. All will be gone, **FOREVER**!',
+          color: colors.red,
+        },
+      ],
+      components: components(
+        row(
+          new DeleteAllData().setLabel('Yes, delete it all!').setStyle('DANGER'),
+          new CancelButton().setLabel('Nevermind').setStyle('SECONDARY')
+        )
+      ),
+      ephemeral: true,
+    });
+  },
+});
+
+export const CancelButton = ButtonComponent({
+  async handle() {
+    this.update({
+      embeds: [
+        {
+          author: {
+            name: 'Operation cancelled.',
+            iconURL: icons.information,
+          },
+          color: colors.gray,
+        },
+      ],
+      components: [],
+    });
+  },
+});
+
+export const DeleteAllData = ButtonComponent({
+  async handle() {
+    await prisma.user.delete({
+      where: { id: this.user.id },
+      include: {
+        reminders: true,
+      },
+    });
+
+    await this.update({
+      embeds: [
+        {
+          title: `${emojis.success} All of your CRBT data has successfully been deleted.`,
+          color: colors.success,
+        },
+      ],
+      components: [],
+    });
+  },
+});

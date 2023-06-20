@@ -2,19 +2,18 @@ import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors } from '$lib/env';
 import { deepMerge } from '$lib/functions/deepMerge';
-import { getColor } from '$lib/functions/getColor';
 import {
+  EditableUserSettings,
   FullUser,
-  UserSettingsMenus,
-  UserSettingsMenusFunctionProps,
+  UserSettingFunctionProps,
   UserSettingsMenusProps,
 } from '$lib/types/user-settings';
 import { privacySettings } from './privacy';
 
-export const userSettingsMenus: Record<UserSettingsMenus, UserSettingsMenusProps> = {
+export const UserSettingsMenus = new Map<EditableUserSettings, UserSettingsMenusProps>([
   // [UserSettingsMenus.accentColor]: accentColorSettings,
-  [UserSettingsMenus.privacy]: privacySettings,
-};
+  [EditableUserSettings.privacy, privacySettings],
+]);
 
 export const defaultUserSettings: FullUser = {
   accentColor: colors.default,
@@ -24,27 +23,16 @@ export const defaultUserSettings: FullUser = {
   telemetry: true,
 };
 
-export async function resolveUserSettingsProps(
-  i: UserSettingsMenusFunctionProps['i'],
-  menu: UserSettingsMenus,
-  user: FullUser
-): Promise<UserSettingsMenusFunctionProps> {
-  const accentColor = await getColor({
-    username: '',
-    avatar: '',
-    id: user.id,
-    discriminator: '',
-    global_name: '',
-    display_name: '',
-    avatar_decoration: '',
-  });
-  const errors = userSettingsMenus[menu].getErrors?.({ accentColor, menu, user, i }) || [];
-
+export function resolveUserSettingsProps(
+  i: UserSettingFunctionProps['i'],
+  menu: UserSettingsMenusProps,
+  user: FullUser,
+  accentColor: number
+): UserSettingFunctionProps {
   return {
-    menu,
     user,
     accentColor,
-    errors,
+    errors: menu.getErrors?.({ user, i, accentColor }) || [],
     i,
   };
 }
