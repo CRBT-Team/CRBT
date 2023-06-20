@@ -84,16 +84,8 @@
     "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
-    "meta": {
-      "description": "Zmień kolor akcentu CRBT.",
-      "options": [
-        {
-          "description": "Choose a suggestion or a HEX code."
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "Synchronizuj kolor profilu Discorda",
+      "sync": "Sync to your profile color",
       "red": "Czerwony",
       "orange": "Pomarańcz",
       "yellow": "Żółty",
@@ -104,12 +96,8 @@
       "pink": "Różowy",
       "gray": "Szary"
     },
-    "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
-    },
     "strings": {
-      "EMBED_TITLE": "Accent color updated.",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
       "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
     }
   },
