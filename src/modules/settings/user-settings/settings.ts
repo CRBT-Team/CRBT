@@ -1,5 +1,6 @@
 import { emojis, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { EditableUserSettings } from '$lib/types/user-settings';
@@ -21,7 +22,7 @@ export default ChatCommand({
 });
 
 export async function renderUserSettingsMenu(this: Interaction) {
-  const user = await getUser(this.guild.id);
+  const user = await getUser(this.user.id, true);
   const embedFields: EmbedFieldData[] = [];
   const selectMenuOptions: MessageSelectOptionData[] = [];
   const accentColor = await getColor(this.user);
@@ -54,7 +55,7 @@ export async function renderUserSettingsMenu(this: Interaction) {
     embeds: [
       {
         author: {
-          name: `${this.user.username} - ${t(this, 'USER_SETTINGS_TITLE')}`,
+          name: `${formatUsername(this.user)} - ${t(this, 'USER_SETTINGS_TITLE')}`,
           iconURL: icons.settings,
         },
         title: t(this, 'OVERVIEW'),
@@ -84,7 +85,7 @@ export async function userFeatureSettings(
   menuId: EditableUserSettings
 ): Promise<any> {
   const menu = UserSettingsMenus.get(menuId);
-  const user = await getUser(this.guild.id);
+  const user = await getUser(this.user.id);
   const color = await getColor(this.user);
   const props = resolveUserSettingsProps(this, menu, user, color);
   const backBtn = new BackSettingsButton(null)
@@ -99,7 +100,7 @@ export async function userFeatureSettings(
     embeds: [
       {
         author: {
-          name: `${this.guild.name} - ${t(this, 'USER_SETTINGS_TITLE')}`,
+          name: `${formatUsername(this.user)} - ${t(this, 'USER_SETTINGS_TITLE')}`,
           icon_url: icons.settings,
         },
         title: `${t(this, menuId)} ${menu.newLabel ? `[${t(this, 'NEW')}]` : ''}`,
