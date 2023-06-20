@@ -76,7 +76,7 @@
   "UnknownError": {
     "strings": {
       "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "यह मेसेज automatically रिपोर्ट किया गया था | यह error कहती है की :"
+      "DESCRIPTION": "यह मेसेज ऑटोमेटिकली रिपोर्ट किया गया था | यह एरर कहती है की: {MESSAGE}"
     }
   },
   "CooldownError": {
@@ -85,7 +85,7 @@
   },
   "color set": {
     "meta": {
-      "description": "CRBT का रंग बदले ",
+      "description": "CRBT का रंग बदले |",
       "options": [
         {
           "description": "Suggestion या HEX कोड चुने |"
@@ -292,7 +292,7 @@
   "EXPIRES_AT": "Expires at",
   "MODERATION_LOGS_VIEW_EMPTY": "*Moderation की हिस्ट्री नहीं मिली |*",
   "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "व्यू, एडिट या एंट्री को डिलीट करे ",
-  "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की Moderation हिस्ट्री ",
+  "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की मॉडरेशन हिस्ट्री ",
   "MODERATOR": "Moderator",
   "REPORTED_BY": "Reported by",
   "JOIN_MESSAGE": "स्वागत संदेश",
@@ -336,7 +336,7 @@
   },
   "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "इसे अपने server में add करे |",
+  "HELP_AD_DESCRIPTION": "इसे अपने सर्वर ऐड करे |",
   "GIVEAWAY": "Giveaway",
   "giveaway": {
     "description": "Create a giveaway.",
