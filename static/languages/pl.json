@@ -10,20 +10,18 @@
   "DISCORD_SERVER": "Serwer Discord",
   "DONATE": "Wesprzyj",
   "PERMISSION_ADMINISTRATOR": "Administrator",
-  "ERROR_MISSING_PERMISSIONS": "Potrzebujesz uprawnie(ń) nia {PERMISSIONS} żeby użyć tej komendy.",
+  "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
   "ERROR_INVALID_URL": "Nieprawidłowy URL.",
   "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
+  "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
   "BACK": "Wróć",
   "JUMP_TO_MSG": "Skocz do wiadomości",
   "CANCEL": "Anuluj",
   "CONFIRM": "Potwierdź",
   "DELETE": "Usuń",
   "EDIT": "Edytuj",
-  "PREVIOUS": "Poprzednie",
-  "NEXT": "Dalej",
   "SAVE": "Zapisz zmiany",
   "SEND": "Wyślij",
-  "DONE": "Gotowe",
   "ON": "Włączone",
   "OFF": "Wyłączone",
   "NEW": "Nowe",
@@ -35,7 +33,7 @@
   "YES": "Tak",
   "NO": "Nie",
   "ERROR_INVALID_CHANNEL": "Musisz podać poprawny {types} kanał.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Tylko oryginalny użytkownik polecenia może użyć tego komponentu.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
   "TEXT_CHANNEL": "Text",
   "VOICE_CHANNEL": "Voice",
   "STAGE_CHANNEL": "Stage",
@@ -75,12 +73,12 @@
   "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "TITLE": "Unknown error.",
+      "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "TITLE": "Hold it!",
+    "TITLE": "You're too *fast*!",
     "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
@@ -167,8 +165,7 @@
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) and the poll creator can use this menu."
+      "CHOICE_EMPTY": "A choice cannot be empty (excluding emoji)."
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
@@ -177,12 +174,12 @@
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "DATA_AND_OPTIONS": "Data and Options",
       "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
+      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
       "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION": "\"{options}\" has/have won with {votes} vote(s)/{total}!"
+      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -236,19 +233,6 @@
           "description": "The expression to calculate."
         }
       ]
-    }
-  },
-  "role-selectors": {
-    "errors": {
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "You can only select this role once, and you can't remove it."
-    },
-    "strings": {
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
     }
   },
   "AVATAR": "Avatar",
@@ -330,13 +314,10 @@
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "description": "What to give away."
-      },
-      "end_date": {
-        "description": "When to end the giveaway."
+        "description": "What are you giving away?"
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "How many people can win the giveaway?"
       }
     }
   },
@@ -580,7 +561,6 @@
     }
   },
   "EMOJI_INFO": "Emoji info",
-  "UNICODE": "Unicode",
   "EMOJI": "Emojis",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
@@ -615,9 +595,9 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "Report sent!",
-  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[CRBT Community]({server})**, where members can discuss the issue.",
   "REPORT_MODAL_TITLE": "New Report",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What did you encounter?",
   "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
   "report": {
@@ -626,14 +606,14 @@
   "user_info": {
     "description": "Get a user's Discord information."
   },
-  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate was found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate were found.",
   "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
   "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
   "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
   "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}.",
   "MORE_ELEMENTS": "+ {number} more...",
   "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
-  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden out of age-restricted channels.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
   "DURATION": "Duration",
   "VIEWS": "Views"
 }
