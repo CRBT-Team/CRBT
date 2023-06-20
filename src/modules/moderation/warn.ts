@@ -1,3 +1,4 @@
+import { formatUsername } from '$lib/functions/formatUsername';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { TextInputComponent } from 'discord.js';
@@ -36,7 +37,7 @@ export const CtxCommand = UserContextCommand({
   async handle(user) {
     return this.showModal(
       new WarnModal(user.id)
-        .setTitle(`Warn ${user.tag}`)
+        .setTitle(`Warn ${formatUsername(user)}`)
         .setComponents(
           row(
             new TextInputComponent()

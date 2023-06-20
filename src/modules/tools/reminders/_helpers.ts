@@ -1,6 +1,7 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { t } from '$lib/language';
 import { LowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { Reminder } from '@prisma/client';
@@ -30,7 +31,7 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
       reminder.locale,
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE',
       {
-        USER: user?.username ?? `${username}`,
+        USER: user ? formatUsername(user) : `${username}`,
       }
     )}`;
   }

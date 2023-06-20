@@ -3,6 +3,7 @@ import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
@@ -125,7 +126,7 @@ export async function handleModerationAction(
             title: `${emojis.success} Successfully ${t(
               this.guildLocale,
               `MOD_VERB_${type}`
-            ).toLocaleLowerCase(this.guildLocale)} ${target.tag}`,
+            ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
             color: colors.success,
           },
         ],
@@ -168,7 +169,7 @@ export async function handleModerationAction(
             embeds: [
               {
                 author: {
-                  name: `${target.tag} was ${t(
+                  name: `${formatUsername(target)} was ${t(
                     this.guildLocale,
                     `MOD_VERB_${type}`
                   ).toLocaleLowerCase(this.locale)}`,

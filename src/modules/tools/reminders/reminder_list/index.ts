@@ -1,6 +1,7 @@
 import { emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { getAllLanguages, t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
@@ -45,9 +46,10 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
     embeds: [
       {
         author: {
-          name: `${this.user.tag} - ${t(this, 'REMINDERS')} (${reminders.length.toLocaleString(
-            this.locale
-          )})`,
+          name: `${formatUsername(this.user)} - ${t(
+            this,
+            'REMINDERS'
+          )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
         title: getReminderSubject(reminder, this.client, 0),
@@ -114,9 +116,10 @@ export async function renderList(this: Interaction) {
     embeds: [
       {
         author: {
-          name: `${this.user.tag} - ${t(this, 'REMINDERS')} (${reminders.length.toLocaleString(
-            this.locale
-          )})`,
+          name: `${formatUsername(this.user)} - ${t(
+            this,
+            'REMINDERS'
+          )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
         description: `${!reminders.length ? t(this, 'REMINDER_LIST_NO_REMINDERS') : ''} ${t(

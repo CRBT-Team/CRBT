@@ -3,6 +3,7 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -118,7 +119,7 @@ export async function renderModlogs(
       {
         author: user
           ? {
-              name: `${user.tag} - ${t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+              name: `${formatUsername(user)} - ${t(this, 'MODERATION_LOGS_VIEW_TITLE', {
                 SERVER: this.guild.name,
               })}`,
               iconURL: avatar(user),

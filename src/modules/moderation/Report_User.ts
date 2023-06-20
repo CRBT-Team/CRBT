@@ -4,6 +4,7 @@ import { colors, emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
@@ -56,7 +57,7 @@ export default UserContextCommand({
     }
 
     await this.showModal(
-      new ReportModal(user.id).setTitle(`Report ${user.tag}`).setComponents(
+      new ReportModal(user.id).setTitle(`Report ${formatUsername(user)}`).setComponents(
         row(
           new TextInputComponent({
             customId: 'description',
@@ -97,8 +98,8 @@ export const ReportModal = ModalComponent({
     const reportEmbed: MessageEmbedOptions = {
       author: {
         name: t(this.guildLocale, 'MODREPORTS_EMBED_TITLE', {
-          target: user.tag,
-          user: this.user.tag,
+          target: formatUsername(user),
+          user: formatUsername(this.user),
         }),
         icon_url: avatar(user),
       },
@@ -211,7 +212,7 @@ export const DismissReportBtn = ButtonComponent({
             customId: 'lol',
             style: 'SECONDARY',
             disabled: true,
-            label: `Report deleted by ${this.user.tag}`,
+            label: `Report deleted by ${formatUsername(this.user)}`,
           })
         )
       ),
@@ -239,7 +240,9 @@ export const ActionSelectMenu = SelectMenuComponent({
         row(
           new MessageButton()
             .setCustomId('who_reads_this')
-            .setLabel(`User was ${t(this.guildLocale, `MOD_VERB_${type}`)} by ${this.user.tag}`)
+            .setLabel(
+              `User was ${t(this.guildLocale, `MOD_VERB_${type}`)} by ${formatUsername(this.user)}`
+            )
             .setStyle('SECONDARY')
             .setDisabled()
         )

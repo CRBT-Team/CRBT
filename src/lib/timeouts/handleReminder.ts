@@ -1,5 +1,6 @@
 import { colors, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
@@ -88,7 +89,7 @@ export function renderLowBudgetMessage({
   return [
     {
       author: {
-        name: author.tag,
+        name: formatUsername(author),
         icon_url: avatar(author),
       },
       description: details.content,

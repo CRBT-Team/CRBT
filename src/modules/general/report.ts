@@ -1,6 +1,7 @@
 import { channels, clients, colors, emojis, links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { ButtonStyle, ComponentType, Routes } from 'discord-api-types/v10';
@@ -112,7 +113,7 @@ export const Modal = ModalComponent({
             embeds: [
               {
                 author: {
-                  name: `${this.user.tag} filed a bug report`,
+                  name: `${formatUsername(this.user)} filed a bug report`,
                   icon_url: avatar(this.user),
                 },
                 title,

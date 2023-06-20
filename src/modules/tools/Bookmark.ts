@@ -1,6 +1,7 @@
 import { colors } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { t } from '$lib/language';
 import { GuildChannel, MessageButton, MessageEmbed } from 'discord.js';
 import { components, MessageContextCommand, row } from 'purplet';
@@ -17,7 +18,7 @@ export default MessageContextCommand({
         embeds: [
           new MessageEmbed()
             .setAuthor({
-              name: strings.BOOKMARK_AUTHOR.replace('{USER}', message.author.tag),
+              name: strings.BOOKMARK_AUTHOR.replace('{USER}', formatUsername(message.author)),
               iconURL: avatar(message.author, 64),
             })
             .setDescription(message.content)

@@ -2,6 +2,7 @@ import { colors, emojis } from '$lib/env';
 import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
@@ -96,7 +97,7 @@ export const SelectTimeMenu = SelectMenuComponent({
         expiresAt: expiresAt.toDate(),
         locale: this.locale,
         id: `${url}-${randomBytes(6)}`,
-        subject: `${message.author.tag}--${subject}`,
+        subject: `${formatUsername(message.author)}--${subject}`,
         details: JSON.stringify(details),
         type: ReminderTypes.MESSAGE,
       });
