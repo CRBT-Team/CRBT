@@ -84,16 +84,8 @@
     "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
-    "meta": {
-      "description": "CRBT का रंग बदले |",
-      "options": [
-        {
-          "description": "Suggestion या HEX कोड चुने |"
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "डिस्कोर्ड प्रोफाइल कलर को सिंक करे |",
+      "sync": "Sync to your profile color",
       "red": "लाल ",
       "orange": "संतरा ",
       "yellow": "पीला",
@@ -104,12 +96,8 @@
       "pink": "गुलाबी",
       "gray": "ग्रे"
     },
-    "errors": {
-      "NO_DISCORD_COLOR": "आप profile कलर को sync करने के लिए मिल नहीं पाए | सेट करने के लिए, आपके Discord Profile को एडिट करे |"
-    },
     "strings": {
-      "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
-      "EMBED_SYNC_INFO": "आपका CRBT accent कलर Discord प्रोफाइल कलर से sync किया है |",
+      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
       "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
     }
   },
@@ -201,7 +189,7 @@
     "description": "Get a user's profile banner."
   },
   "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord user or user ID.",
-  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "एक discord server ID |",
+  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "एक Discord सर्वर ID |",
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
@@ -216,7 +204,7 @@
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "अवतार और बैनर "
     },
     "strings": {
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
@@ -231,7 +219,7 @@
       "name": "Bookmark Message"
     },
     "errors": {
-      "DMS_DISABLED": "DMs को enable करे या फिर CRBT को अनब्लॉक करे ताकि आप मेसेज को बुकमार्क करे |"
+      "DMS_DISABLED": "DMs को इनेबल करे या फिर CRBT को अनब्लॉक करे ताकि आप मेसेज को बुकमार्क करे |"
     },
     "strings": {
       "BOOKMARK_AUTHOR": "{USER} (ने मैसेज को बुकमार्क कर दिया)",
@@ -241,7 +229,7 @@
   "calc": {
     "meta": {
       "name": "calculate",
-      "description": "एक mathematical expression को calculate करे |",
+      "description": "एक मैथमेटिकल एक्कोसप्रेशन को कैलकुलेट करे |",
       "options": [
         {
           "name": "expression",
@@ -274,13 +262,13 @@
   "BANNER": "Banner",
   "WARN": "वार्न ",
   "KICK": "किक ",
-  "BAN": "बैन ",
+  "BAN": "बैन",
   "UNBAN": "Unban",
-  "TIMEOUT": "टाइमआउट ",
+  "TIMEOUT": "टाइमआउट",
   "TEMPBAN": "Temporary ban",
   "CLEAR": "साफ़ ",
-  "REPORT": "रिपोर्ट ",
-  "REASON": "कारण ",
+  "REPORT": "रिपोर्ट",
+  "REASON": "कारण",
   "MOD_VERB_BAN": "Banned",
   "MOD_VERB_TEMPBAN": "Temporarily banned",
   "MOD_VERB_CLEAR": "Cleared messages in {target}",
@@ -290,9 +278,9 @@
   "MOD_VERB_REPORT": "Reported",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
-  "MODERATION_LOGS_VIEW_EMPTY": "*Moderation की हिस्ट्री नहीं मिली |*",
-  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "व्यू, एडिट या एंट्री को डिलीट करे ",
-  "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की मॉडरेशन हिस्ट्री ",
+  "MODERATION_LOGS_VIEW_EMPTY": "*मॉडरेशन की हिस्ट्री नहीं मिली |*",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "व्यू, एडिट या एंट्री को डिलीट करे",
+  "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की मॉडरेशन हिस्ट्री",
   "MODERATOR": "Moderator",
   "REPORTED_BY": "Reported by",
   "JOIN_MESSAGE": "स्वागत संदेश",
@@ -584,21 +572,21 @@
   "SLOWMODE": "Slowmode",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
-    "description": "Get information about a server channel.",
+    "description": "सर्वर चैनल की इनफार्मेशन की जानकारी प्राप्त करे |",
     "options": {
       "channel": {
         "description": "Any channel in the server."
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
-  "UNICODE": "Unicode",
+  "EMOJI_INFO": "एमोजी की जानकारी",
+  "UNICODE": "यूनिकोड",
   "EMOJI": "इमोजी",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
-  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "एमोजीपीडिया में देखे",
   "emoji_info": {
-    "description": "Get information about an emoji.",
+    "description": "एमोजी के बारे में जानकारी प्राप्त करे |",
     "options": {
       "emoji": {
         "description": "Default and custom emoji are supported."
