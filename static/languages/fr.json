@@ -10,10 +10,10 @@
   "DISCORD_SERVER": "Serveur Discord",
   "DONATE": "Faire un don",
   "PERMISSION_ADMINISTRATOR": "Administrateur",
-  "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
+  "ERROR_MISSING_PERMISSIONS": "Vous n'avez pas les permissions requises : {PERMISSIONS}.",
   "ERROR_INVALID_URL": "URL invalide.",
   "ERROR_INVALID_COLOR": "Couleur invalide. Utilisez un préréglage ou un code HEX valide.",
-  "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
+  "ERROR_INVALID_DURATION": "Format de durée invalide, ou dépasse {relativeTime} dans le futur.",
   "BACK": "Retour",
   "JUMP_TO_MSG": "Aller au message",
   "CANCEL": "Annuler",
@@ -33,7 +33,7 @@
   "YES": "Oui",
   "NO": "Non",
   "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur de cette commande peut utiliser ce composant.",
   "TEXT_CHANNEL": "Textuel",
   "VOICE_CHANNEL": "Vocal",
   "STAGE_CHANNEL": "Conférence",
@@ -73,17 +73,17 @@
   "SERVER_BOOSTING": "Boosts de serveur",
   "UnknownError": {
     "strings": {
-      "TITLE": "Unknown error.",
-      "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
+      "TITLE": "Erreur inconnue.",
+      "DESCRIPTION": "Une exception inconnue est survenue et nous a été envoyée pour examen, mais vous pouvez la {reportCommand}.\nVoici ce que l'erreur dit :\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "TITLE": "You're too *fast*!",
+    "TITLE": "Vous êtes trop *rapide* !",
     "DESCRIPTION": "Vous pouvez réessayer {time}."
   },
   "color set": {
     "colorNames": {
-      "sync": "Sync to your profile color",
+      "sync": "Synchroniser avec votre couleur de bannière",
       "red": "Rouge",
       "orange": "Orange",
       "yellow": "Jaune",
@@ -95,7 +95,7 @@
       "gray": "Gris"
     },
     "strings": {
-      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "Synchronisée avec votre couleur de bannière Discord.",
       "EMBED_DESCRIPTION": "Cette couleur est utilisée lorsque CRBT vous répond et dans l'affichage de vos infos utilisateur."
     }
   },
@@ -174,12 +174,12 @@
       "SUCCESS_DESCRIPTION": "Vous pouvez voir les votes, éditer, supprimer ou terminer votre sondage plus tôt avec le bouton {ICON}.",
       "DATA_AND_OPTIONS": "Données et options",
       "POLL_DATA_NOVOTES": "Aucun vote",
-      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
+      "POLL_DATA_FOOTER": "Rafraîchissez ces données en utilisant le bouton à nouveau.",
       "SUCCESS_POLL_DELETED": "Sondage supprimé.",
       "SUCCESS_POLL_ENDED": "Sondage terminé.",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
+      "POLL_RESULTS_DESCRIPTION": "Le(s) choix {options} a/ont gagné avec {votes} vote(s)/{total} !"
     }
   },
   "banner": {
@@ -314,10 +314,10 @@
     "description": "Créez un concours.",
     "options": {
       "prize": {
-        "description": "What are you giving away?"
+        "description": "Que mettez-vous en jeu ?"
       },
       "winners": {
-        "description": "How many people can win the giveaway?"
+        "description": "Combien de personnes peuvent gagner le concours ?"
       }
     }
   },
@@ -595,9 +595,9 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "Signalement envoyé !",
-  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[CRBT Community]({server})**, where members can discuss the issue.",
+  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé à la **[Communauté CRBT]({server})**, où les membres peuvent discuter du problème.",
   "REPORT_MODAL_TITLE": "Nouveau rapport",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What did you encounter?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Qu'avez-vous rencontré ?",
   "IMAGE_OPTION_DESCRIPTION": "Ajouter une image.",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "Vous ne pouvez envoyer que des images.",
   "report": {
@@ -606,14 +606,14 @@
   "user_info": {
     "description": "Obtenir les informations Discord sur un utilisateur."
   },
-  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate were found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "Aucun texte ou image à traduire n'a été trouvé.",
   "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Utilisez {command} pour traduire du texte.",
   "OCR_ERROR_MESSAGE": "Aucun texte reconnu. Réessayez avec une image plus lisible.",
   "SET_REMINDER_EMBED_TITLE": "Quand faut-il vous en rappeler ?",
   "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}.",
   "MORE_ELEMENTS": "+ {number} autres...",
   "SEARCH_ERROR_NO_RESULTS_TITLE": "Aucun résultat trouvé.",
-  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Regardez vos erreurs d'orthographe ou pour un sujet plus large.\nLes résultats NSFW sont cachés en dehors des salons soumis à une limite d'âge.",
   "DURATION": "Durée",
   "VIEWS": "Vues"
 }
