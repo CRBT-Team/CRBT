@@ -1,6 +1,7 @@
 import { t } from '$lib/language';
 import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { editableList, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { EditableUserSettings } from '$lib/types/user-settings';
 import chroma from 'chroma-js';
 import { TextInputComponent } from 'discord.js';
 import { ButtonComponent, row } from 'purplet';
@@ -11,7 +12,10 @@ export const ManualColorEditButton = ButtonComponent({
     type,
     value,
   }: {
-    type: MessageBuilderTypes | EditableGuildFeatures.automaticTheming;
+    type:
+      | MessageBuilderTypes
+      | EditableGuildFeatures.automaticTheming
+      | EditableUserSettings.accentColor;
     value: number;
   }) {
     const [id, maxLength] = editableList.find(([id]) => id === 'color')!;

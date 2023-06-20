@@ -3,10 +3,12 @@ import { Interaction, MessageButton, MessageEditOptions } from 'discord.js';
 
 export enum EditableUserSettings {
   privacy = 'PRIVACY',
+  accentColor = 'ACCENT_COLOR',
 }
 
 export enum CamelCaseUserFeatures {
   PRIVACY = 'privacy',
+  ACCENT_COLOR = 'accentColor',
 }
 
 export interface UserSettingFunctionProps {

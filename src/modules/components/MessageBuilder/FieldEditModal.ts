@@ -1,9 +1,11 @@
-import { cache } from '$lib/cache';
+import { cache, fetchWithCache } from '$lib/cache';
+import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseCRBTscript } from '$lib/functions/parseCRBTscript';
 import { t } from '$lib/language';
 import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { MessageBuilderData, MessageBuilderTypes } from '$lib/types/messageBuilder';
+import { EditableUserSettings } from '$lib/types/user-settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
@@ -11,6 +13,7 @@ import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { saveServerSettings } from '../../settings/server-settings/_helpers';
+import { userFeatureSettings } from '../../settings/user-settings/settings';
 
 export const FieldEditModal = ModalComponent({
   async handle({
@@ -18,7 +21,10 @@ export const FieldEditModal = ModalComponent({
     type,
   }: {
     fieldName: string;
-    type: MessageBuilderTypes | EditableGuildFeatures.automaticTheming;
+    type:
+      | MessageBuilderTypes
+      | EditableGuildFeatures.automaticTheming
+      | EditableUserSettings.accentColor;
   }) {
     let value: string = this.fields.getTextInputValue('VALUE');
 
@@ -34,6 +40,28 @@ export const FieldEditModal = ModalComponent({
 
       return await this.update(
         await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming)
+      );
+    }
+    if (type === EditableUserSettings.accentColor) {
+      value = value.toLowerCase().replace('#', '');
+      if (!value.match(/^[0-9a-f]{6}$/)) {
+        return CRBTError(this, { title: t(this, 'ERROR_INVALID_COLOR') });
+      }
+
+      cache.set(`color:${this.user.id}`, value);
+      await fetchWithCache(
+        `user:${this.user.id}`,
+        () =>
+          prisma.user.upsert({
+            create: { id: this.user.id, accentColor: parseInt(value, 16) },
+            update: { accentColor: parseInt(value, 16) },
+            where: { id: this.user.id },
+          }),
+        true
+      );
+
+      return await this.update(
+        await userFeatureSettings.call(this, EditableUserSettings.accentColor)
       );
     }
 

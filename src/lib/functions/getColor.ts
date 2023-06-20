@@ -14,7 +14,7 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
   const isUser = 'username' in thing;
 
   if (isUser) {
-    const accentColor = await fetchWithCache(`${thing.id}:color`, () =>
+    const accentColor = await fetchWithCache(`color:${thing.id}`, () =>
       prisma.user
         .findFirst({
           where: { id: thing.id },

@@ -8,10 +8,11 @@ import {
   UserSettingFunctionProps,
   UserSettingsMenusProps,
 } from '$lib/types/user-settings';
+import { userAccentColorSettings } from './accent-color';
 import { privacySettings } from './privacy';
 
 export const UserSettingsMenus = new Map<EditableUserSettings, UserSettingsMenusProps>([
-  // [UserSettingsMenus.accentColor]: accentColorSettings,
+  [EditableUserSettings.accentColor, userAccentColorSettings],
   [EditableUserSettings.privacy, privacySettings],
 ]);
 
