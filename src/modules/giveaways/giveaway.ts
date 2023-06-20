@@ -48,6 +48,10 @@ export default ChatCommand({
       maxValue: 40,
     }),
   async handle({ prize, end_date, winners }) {
+    await this.deferReply({
+      ephemeral: true,
+    });
+
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
@@ -76,7 +80,7 @@ export default ChatCommand({
             title: prize,
             description: dedent`
             Ends ${timestampMention(end)} • ${timestampMention(end, 'R')}
-            Hosted by ${this.user}`,
+            Hosted by <@${this.user.id}>`,
             fields: [
               {
                 name: 'Entrants',
@@ -111,7 +115,7 @@ export default ChatCommand({
 
       activeGiveaways.set(`${this.channel.id}/${msg.id}`, data);
 
-      await this.reply({
+      await this.editReply({
         embeds: [
           {
             title: `${emojis.success} Giveaway started!`,
@@ -124,10 +128,9 @@ export default ChatCommand({
             color: colors.success,
           },
         ],
-        ephemeral: true,
       });
     } catch (error) {
-      this.reply(UnknownError(this, String(error)));
+      this.editReply(UnknownError(this, String(error)));
     }
   },
 });
