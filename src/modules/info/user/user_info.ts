@@ -1,5 +1,4 @@
 import { badges, emojis } from '$lib/env';
-import { icon } from '$lib/env/emojis';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
 import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername';
@@ -127,13 +126,11 @@ export async function renderUser(
     {
       name: 'Identity',
       value: dedent`
-      Unique username: **${
-        user.discriminator === '0' ? user.username : `${user.username}#${user.discriminator}`
-      }**
+      Unique username: **${formatUsername(user)}**
       Global display name: **${user.display_name ?? user.username}**
       ${member?.nickname ? `Server nickname: **${member.nickname}**\n` : ''}
       ${
-        user.discriminator === '0' ? icon(color, 'toggleon') : emojis.toggle.off
+        user.discriminator === '0' ? emojis.toggle.on : emojis.toggle.off
       } **Uses [the new username system](https://dis.gd/usernames)**`,
     },
   ];

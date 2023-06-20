@@ -1,6 +1,7 @@
 import { GuildMember, GuildTextBasedChannel, PartialGuildMember } from 'discord.js';
 import { avatar } from './avatar';
 import { banner } from './banner';
+import { formatUsername } from './formatUsername';
 
 export interface CRBTscriptParserArgs {
   channel: GuildTextBasedChannel;
@@ -14,7 +15,7 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
   const values: [string | RegExp, string | ((values?: string) => string)][] = [
     ['<user.name>', member.user.username],
     ['<user.discrim>', member.user.discriminator],
-    ['<user.tag>', member.user.tag],
+    ['<user.tag>', formatUsername(member.user)],
     ['<user.id>', member.id],
     ['<user.avatar>', () => avatar(member.user)],
     ['<user.banner>', () => banner(member.user) ?? 'null'],

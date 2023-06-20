@@ -1,7 +1,7 @@
 import { APIUser } from 'discord-api-types/v10';
-import { GuildMember } from 'discord.js';
+import { GuildMember, User } from 'discord.js';
 
-export function formatUsername(user: APIUser) {
+export function formatUsername(user: APIUser | User) {
   return user.discriminator === '0' ? user.username : `${user.username}#${user.discriminator}`;
 }
 
