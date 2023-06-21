@@ -209,11 +209,11 @@
   },
   "crbt_introduction": {
     "EMBED_TITLE": "CRBT को invite करने के लिए धन्यवाद |",
-    "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
+    "EMBED_DESCRIPTION": "अब {crbt} {serverCount} सर्वर्स में है |\nशुरू करने के लिए, कमांड्स की लिस्ट की जानकारी के लिए {help} को इस्तेमाल करे |\nआप CRBT को कॉन्फ़िगर करने के लिए {settings} का कमांड इस्तेमाल करे |"
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "बुकमार्क मेसेज"
     },
     "errors": {
       "DMS_DISABLED": "DMs को इनेबल करे या फिर CRBT को अनब्लॉक करे ताकि आप मेसेज को बुकमार्क करे |"
@@ -225,17 +225,17 @@
   },
   "calc": {
     "meta": {
-      "name": "calculate",
+      "name": "कैलकुलेट",
       "description": "एक मैथमेटिकल एक्कोसप्रेशन को कैलकुलेट करे |",
       "options": [
         {
-          "name": "expression",
+          "name": "एक्सप्रेशन",
           "description": "The expression to calculate."
         }
       ]
     }
   },
-  "AVATAR": "Avatar",
+  "AVATAR": "अवतार",
   "USER_INFO": "User की जानकारी ",
   "BOT_INFO": "Bot ki जानकारी ",
   "SERVER_AVATAR": "Server Avatar",
@@ -247,16 +247,16 @@
   "WARN": "वार्न ",
   "KICK": "किक ",
   "BAN": "बैन",
-  "UNBAN": "Unban",
+  "UNBAN": "बैन हटाए",
   "TIMEOUT": "टाइमआउट",
   "TEMPBAN": "टेम्पररी बैन",
   "CLEAR": "साफ़ ",
   "REPORT": "रिपोर्ट",
   "REASON": "कारण",
-  "MOD_VERB_BAN": "Banned",
-  "MOD_VERB_TEMPBAN": "Temporarily banned",
-  "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
+  "MOD_VERB_BAN": "बैन हो गए",
+  "MOD_VERB_TEMPBAN": "टेम्पररी बैन हो गए",
+  "MOD_VERB_CLEAR": "{target} में मेसेज क्लियर हो गए",
+  "MOD_VERB_KICK": "किक कर दिया",
   "MOD_VERB_TIMEOUT": "टाइम्ड आउट",
   "MOD_VERB_WARN": "Warned",
   "MOD_VERB_REPORT": "Reported",
@@ -297,8 +297,8 @@
   "BIRTHDAY_LIST_CONTENT": "{USER} का जन्मदिन ",
   "JOINED_DISCORD": "Discord member since",
   "JOINED_SERVER": "Server member since",
-  "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
+  "SERVER_NICKNAME": "सर्वर निकनेम",
+  "ROLES": "रोल्(स)",
   "ROLE": "रोल",
   "MAJOR_PERMS": "इस सर्वर के मेजर परमिशन",
   "NO_PERMS": "*कोई परमिशन नहीं*",
@@ -306,42 +306,42 @@
   "help": {
     "description": "Returns help to use CRBT."
   },
-  "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
-  "HELP_AD_TITLE": "Like CRBT?",
+  "HELP_DESCRIPTION": "कमांड्स लिस्ट के लिए, {prefix} को टाइप करे और {botIcon} पर क्लिक करे, या फिर जल्ती एक्शन के लिए मेसेज या यूजर को राईट-क्लिक/लॉन्ग-प्रेस करे |\nCRBT के पास काम के फीचर्स है जैसे रिमाइंडर्स ({reminder}), वेलकम/फेयरवेल मेसेज ({settings}), जानकारी प्राप्त के लिए ({infoCommands}) और चीज़े आएगी |",
+  "HELP_AD_TITLE": "CRBT पसंद है ?",
   "HELP_AD_DESCRIPTION": "इसे अपने सर्वर ऐड करे |",
-  "GIVEAWAY": "Giveaway",
+  "GIVEAWAY": "गिवअवे ",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "एक गिवअवे बनाए |",
     "options": {
       "prize": {
-        "description": "What are you giving away?"
+        "description": "क्या आप देने वाले हो ?"
       },
       "winners": {
-        "description": "How many people can win the giveaway?"
+        "description": "कितने लोग गिवअवे में जीत सकते है?"
       }
     }
   },
-  "WINNERS": "Winners",
+  "WINNERS": "विजय",
   "PRIZE": "इनाम ",
   "8ball": {
-    "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "name": "8बॉल ",
+    "description": "8बॉल से सवाल पूछे |",
     "options": {
       "question": {
-        "description": "What to ask."
+        "description": "क्या पूछना है?"
       }
     }
   },
-  "8BALL": "8-Ball",
+  "8BALL": "8-बॉल",
   "ANSWER": "जवाब",
   "QUESTION": "सवाल",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
     "Without a doubt.",
-    "Yes, definitely.",
+    "हाँ - बिल्कुल |",
     "You may rely on it.",
-    "As I see it, yes.",
+    "मुझे ऐसा लगता है |",
     "Most likely.",
     "Outlook good.",
     "हाँ",
