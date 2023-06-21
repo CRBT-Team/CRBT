@@ -336,14 +336,14 @@
   "ANSWER": "जवाब",
   "QUESTION": "सवाल",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
+    "अवश्य |",
     "It is decidedly so.",
-    "Without a doubt.",
+    "ज़रूर |",
     "हाँ - बिल्कुल |",
-    "You may rely on it.",
+    "आप चाहें तो उसपर भरोसा कर सकते हैं |",
     "मुझे ऐसा लगता है |",
-    "Most likely.",
-    "Outlook good.",
+    "ऐसा होने की काफ़ी पोस्सिबिलिटी है |",
+    "उम्मीद है |",
     "हाँ",
     "Signs point to yes."
   ],
@@ -397,7 +397,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
+  "REMINDER_LIST_NO_REMINDERS": "कोई रिमाइंडर सेट नहीं है |",
   "REMINDER_LIST_DESCRIPTION": "इस {command} को इस्तेमाल करके एक नया रिमाइंडर सेट करे |",
   "REMINDER_DESTINATION": "जगह",
   "DMS": "DMs",
@@ -407,7 +407,7 @@
   "SUBJECT": "विषय",
   "WHEN_TO_SEND": "कहा से भेजे",
   "DELETE_CONFIRMATION_TITLE": "क्या आप इसे हमेशा के लिए हटाया जाए?!",
-  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "REMINDER_MESSAGE_TITLE": "[{user} से मेसेज है]",
   "reminder_list": {
     "description": "आपकी रिमाइंडर्स की लिस्ट प्राप्त करे |"
   },
