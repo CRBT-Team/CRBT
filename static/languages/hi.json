@@ -333,8 +333,8 @@
     }
   },
   "8BALL": "8-Ball",
-  "ANSWER": "Answer",
-  "QUESTION": "Question",
+  "ANSWER": "जवाब",
+  "QUESTION": "सवाल",
   "8BALL_ANSWERS_POSITIVE": [
     "It is certain.",
     "It is decidedly so.",
@@ -344,11 +344,11 @@
     "As I see it, yes.",
     "Most likely.",
     "Outlook good.",
-    "Yes.",
+    "हाँ",
     "Signs point to yes."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
+    "पता नहीं चल पाया, फिर से प्रयास करें |",
     "मुझसे बाद में पूछना |",
     "यह बात अभी न बताना ही अच्छा होगा |",
     "अभी भविष्यवाणी नहीं कर सकता |",
@@ -357,8 +357,8 @@
   "8BALL_ANSWERS_NEGATIVE": [
     "उस पर भरोसा मत करना |",
     "मेरा जवाब है नहीं |",
-    "My sources say no.",
-    "Outlook not so good.",
+    "मेरे सूत्रों के अनुसार ऐसा नहीं है |",
+    "ज्यादा उम्मीद नहीं है |",
     "Very doubtful."
   ],
   "COMMENT": "कमेंट ",
@@ -376,15 +376,15 @@
   "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
   "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
   "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
-  "TRANSLATE": "translate",
+  "TRANSLATE": "ट्रांसलेट",
   "TO": "To",
   "FROM": "From",
   "translate": {
-    "description": "Translate text to another language.",
+    "description": "टेक्स्ट को दूसरे भाषा से ट्रांसलेट करे |",
     "options": {
       "text": {
-        "name": "text",
-        "description": "What to translate."
+        "name": "टेक्स्ट",
+        "description": "क्या ट्रांसलेट करना है?"
       },
       "target": {
         "description": "Language to translate to."
@@ -398,36 +398,36 @@
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
   "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
-  "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
-  "REMINDER_DESTINATION": "Destination:",
+  "REMINDER_LIST_DESCRIPTION": "इस {command} को इस्तेमाल करके एक नया रिमाइंडर सेट करे |",
+  "REMINDER_DESTINATION": "जगह",
   "DMS": "DMs",
-  "REMINDERS": "Reminders",
-  "REMINDER": "Reminder",
-  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
-  "SUBJECT": "Subject",
-  "WHEN_TO_SEND": "When to send",
-  "DELETE_CONFIRMATION_TITLE": "Do you want to delete it, forever?!",
+  "REMINDERS": "रिमाइंडर्स ",
+  "REMINDER": "रिमाइंडर",
+  "REMINDER_EDIT_MODAL_TITLE": "रिमाइंडर को एडिट करे |",
+  "SUBJECT": "विषय",
+  "WHEN_TO_SEND": "कहा से भेजे",
+  "DELETE_CONFIRMATION_TITLE": "क्या आप इसे हमेशा के लिए हटाया जाए?!",
   "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
   "reminder_list": {
-    "description": "Get a list of your reminders."
+    "description": "आपकी रिमाइंडर्स की लिस्ट प्राप्त करे |"
   },
   "pick": {
     "name": "pick",
     "description": "Pick something at random.",
     "options": {
       "values": {
-        "name": "values",
+        "name": "मूल्य",
         "description": "The values to pick from, separated by commas."
       }
     }
   },
   "PICK_RESULT": "\"{value}\" picked out of {number} choices.",
-  "PRIVACY": "Privacy",
+  "PRIVACY": "प्राइवसी",
   "SILENT_LEAVES": "Silent leaving",
   "SILENT_JOINS": "Silent joining",
-  "TELEMETRY": "Command Telemetry",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT won't announce when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT won't announce when you leave a server.",
+  "TELEMETRY": "कमांड तेलेमेंट्री",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "चालू होने पर, आप सर्वर में आते हो तो CRBT अनाउंस नहीं करेगा |",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "चालू होने पर, आप सर्वर छोड़ते हो तो CRBT अनाउंस नहीं करेगा |",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
   "YOUR_CRBT_DATA": "Your CRBT data",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
