@@ -10,7 +10,7 @@
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
   "DONATE": "दान करे",
   "PERMISSION_ADMINISTRATOR": "Administrator",
-  "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
+  "ERROR_MISSING_PERMISSIONS": "आपके पास यह दिया हुआ परमिशन नहीं है: {PERMISSIONS}",
   "ERROR_INVALID_URL": "गलत URL",
   "ERROR_INVALID_COLOR": "रंग अमान्य है | Preset या मान्य HEX कोड इस्तेमाल कीजिए |",
   "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
@@ -57,9 +57,9 @@
   "ADDED": "Added",
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
-  "ANIMATED": "Animated",
+  "ANIMATED": "एनिमेटेड",
   "END_DATE": "अंतिम तिथि",
-  "END_NOW": "End now",
+  "END_NOW": "खत्म करे",
   "POLL": "पोल",
   "CHOICE": "विकल्प",
   "TITLE": "टाइटल",
@@ -70,20 +70,20 @@
   "MEDIUM": "मध्यम",
   "LARGE": "बड़ा",
   "LARGEST": "सबसे बड़ा",
-  "SERVER_BOOSTING": "Server Boosting",
+  "SERVER_BOOSTING": "सर्वर बूस्टिंग",
   "UnknownError": {
     "strings": {
-      "TITLE": "Unknown error.",
+      "TITLE": "अननोन एरर",
       "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "TITLE": "You're too *fast*!",
+    "TITLE": "आप बहुत *फ़ास्ट* हो!",
     "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
     "colorNames": {
-      "sync": "Sync to your profile color",
+      "sync": "प्रोफाइल कलर को सिंक करे",
       "red": "लाल ",
       "orange": "संतरा ",
       "yellow": "पीला",
@@ -95,7 +95,7 @@
       "gray": "ग्रे"
     },
     "strings": {
-      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "Discord प्रोफाइल कलर को सिंक कर दिया |",
       "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
     }
   },
@@ -116,15 +116,15 @@
       ]
     },
     "errors": {
-      "PAST": "Reminders cannot be set in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format.",
-      "TOO_LONG": "Reminders cannot be set for more than 2 years in the future.",
-      "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached."
+      "PAST": "पिछले समह के लिए रिमाइंडर सेट नहीं हो सकता |",
+      "INVALID_FORMAT": "आपने जो टाइम इंटर किया वो सही फॉर्मेट में नहीं है |",
+      "TOO_LONG": "रिमाइंडर्स 2 साल से ज्यादा फ्यूचर में सेट नहीं हो सकता |",
+      "REMINDERS_MAX_LIMIT": "10 रिमाइंडर्स की मैक्सिमम लिमिट पूरी हो गयी |"
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
-      "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
+      "SUCCESS_TITLE": "रिमाइंडर सेट हो गया! रिमाइंडर्स को मैनेज करने के लिए इस {command} को इस्तेमाल करे |",
+      "BUTTON_GCALENDAR": "गूगल कैलेंडर में ऐड हो गया |",
+      "GCALENDAR_EVENT_DESCRIPTION": "आपको CRBT से भी {destination} में याद दिलाया जायेगा |"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "और",
@@ -183,9 +183,9 @@
     }
   },
   "banner": {
-    "description": "Get a user's profile banner."
+    "description": "यूजर की प्रोफाइल बैनर को प्राप्त करे |"
   },
-  "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord user or user ID.",
+  "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "डिस्कोर्ड यूजर या यूजर ID |",
   "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "एक Discord सर्वर ID |",
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
@@ -204,7 +204,7 @@
       "name": "अवतार और बैनर "
     },
     "strings": {
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "डाउनलोड ({SIZE}पिक्सेल - {FORMAT})"
     }
   },
   "crbt_introduction": {
@@ -508,22 +508,22 @@
   "MODREPORTS_MODAL_TITLE": "रिपोर्ट {user}",
   "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "रिपोर्ट को डिटेल में समझाएं |",
   "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
-  "KICK_USER": "Kick User",
-  "WARN_USER": "Warn User",
-  "BAN_USER": "Ban User",
-  "DELETE_MESSAGE": "Delete Message",
-  "MODREPORTS_SUCCESS_TITLE": "Your report was sent to {server}'s moderators.",
+  "KICK_USER": "यूजर को किक करे",
+  "WARN_USER": "यूजर को चेतानवी दे",
+  "BAN_USER": "यूजर को बैन करे |",
+  "DELETE_MESSAGE": "मेसेज को डिलीट करे",
+  "MODREPORTS_SUCCESS_TITLE": "आपकी रिपोर्ट {server} के मॉडरेटर को भेजा गया है |",
   "MODREPORTS_SUCCESS_DESCRIPTION": "It was added to {user}'s Moderation History. Review and action can be taken by those with access to the Moderation Reports channel.",
-  "ROLE_INFO_TITLE": "{role} - Role info",
-  "POSITION": "Position",
+  "ROLE_INFO_TITLE": "{role} - रोल की जानकारी",
+  "POSITION": "पोजीशन",
   "HUMANS": "इंसान ",
   "BOTS": "बोट(स)",
   "COLOR": "रंग ",
   "ROLE_INFO_POSITION": "{position} out of {roles} roles",
   "ROLE_INFO_HOISTED": "Displays separately from online members",
   "ROLE_INFO_MENTIONABLE": "कोई भी इस रोल को @mention कर सकते है |\n",
-  "ROLE_INFO_MANAGED": "Managed",
-  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Automatically added to Server Boosters.",
+  "ROLE_INFO_MANAGED": "मैनेज्ड",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "सर्वर बूस्टर्स में ऑटोमेटिकली ऐड किया है |",
   "ROLE_INFO_MANAGED_BOT": "Managed by {bot}.",
   "ROLE_INFO_MANAGED_INTEGRATION": "Managed by an external integration.",
   "role_info": {
@@ -604,16 +604,16 @@
     "description": "Report a CRBT-related issue."
   },
   "user_info": {
-    "description": "Get a user's Discord information."
+    "description": "यूजर की Discord जानकारी प्राप्त करे |"
   },
-  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate were found.",
-  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
-  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
-  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "ट्रांसलेट करने के लिए टेक्स्ट या इमेज नहीं मिला |",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "ट्रांसलेट करने के लिए इस {command} को इस्तेमाल करे |",
+  "OCR_ERROR_MESSAGE": "टेक्स्ट पहचान नहीं कर पाए | सही से इमेज डाल के दुबारा प्रयास करे |",
+  "SET_REMINDER_EMBED_TITLE": "कब आपको याद दिलाया जाए?",
   "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}.",
   "MORE_ELEMENTS": "+ {number} more...",
-  "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
+  "SEARCH_ERROR_NO_RESULTS_TITLE": "कोई रिजल्ट नहीं मिला।",
   "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
   "DURATION": "Duration",
-  "VIEWS": "Views"
+  "VIEWS": "व्यूज"
 }
