@@ -429,9 +429,9 @@
   "PRIVACY_SILENT_JOINS_DESCRIPTION": "चालू होने पर, आप सर्वर में आते हो तो CRBT अनाउंस नहीं करेगा |",
   "PRIVACY_SILENT_LEAVES_DESCRIPTION": "चालू होने पर, आप सर्वर छोड़ते हो तो CRBT अनाउंस नहीं करेगा |",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
-  "YOUR_CRBT_DATA": "Your CRBT data",
+  "YOUR_CRBT_DATA": "आपका CRBT डाटा",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
-  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
+  "PRIVACY_SETTINGS_TITLE": "प्राइवेसी सेटिंग्स",
   "settings": {
     "description": "Configure CRBT's Server Settings."
   },
@@ -459,54 +459,54 @@
   "ENABLED": "Enabled",
   "DISABLED": "Disabled",
   "SETTINGS_SENDING_IN": "Sending in {channel}",
-  "EDIT_MESSAGE": "Edit Message",
-  "EDIT_CHANNEL": "Edit Channel",
-  "CHANNEL": "Channel",
-  "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Color theme",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize the look of Polls, Giveaways and more. Pick a color manually, or let CRBT extract the main color from your server's icon.",
-  "SETTINGS_JOIN_LEAVE_DESCRIPTION": "Automatically send messages to welcome new members, and announce when members leave your server.",
+  "EDIT_MESSAGE": "एडिट मेसेज",
+  "EDIT_CHANNEL": "एडिट चैनल",
+  "CHANNEL": "चैनल",
+  "EDIT_SOMETHING": "एडिट {feature}",
+  "SETTINGS_COLOR_SET_TO": "कलर थीम",
+  "SETTINGS_COLOR_DESCRIPTION": "पोल्स, गिवअवे और चीजों की लुक को कस्टमाइज करे | मैन्युअली कलर को चुने, या फिर CRBT को आपके सर्वर की आइकॉन की मुख्य रंग को एक्सट्रेक्ट करने दे |",
+  "SETTINGS_JOIN_LEAVE_DESCRIPTION": "नए मेम्बेर्स को मेसेज ऑटोमेटिकली भेजे और जब मेम्बेर्स आपके सर्वर छोड़ देंगे तो अन्नोउंस करे |",
   "SETTINGS_MODLOGS_DESCRIPTION": "Get realtime notifications in a chosen channel for all moderator actions taken using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Members can report a message or user to a chosen channel using Moderation Reports by right-clicking or long-pressing them.",
-  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
-  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "चैनल नहीं मिला | मेसेज भेजना जारी रखने के लिए CRBT में एडिट करे |",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "फीचर पूरी तरह से कांफिगुर नहीं है | नीचे बटन्स को इस्तेमाल करके सेटअप को खत्म करे |",
   "search": {
-    "name": "search",
-    "description": "Search anything on the web.",
+    "name": "सर्च",
+    "description": "वेब में कुछ भी सर्च करे |",
     "options": {
       "query": {
-        "name": "query",
-        "description": "Your search query."
+        "name": "क्वेरी",
+        "description": "आपकी सर्च क्वेरी |"
       },
       "site": {
-        "name": "site",
+        "name": "साइट",
         "description": "Available search engines."
       },
       "anonymous": {
         "name": "anonymous",
-        "description": "Search without sending a public messsage."
+        "description": "बिना पब्लिक मेसेज भेजे हुए सर्च करे |"
       }
     }
   },
   "SEARCH_ENGINES": {
-    "web": "Web",
-    "images": "Images",
-    "videos": "Videos",
-    "weather": "Weather",
-    "dictionary": "Dictionary",
-    "urban": "Urban Dictionary",
-    "anime": "Anime & Manga"
+    "web": "वेब",
+    "images": "इमेजिस",
+    "videos": "वीडियो",
+    "weather": "मौसम",
+    "dictionary": "डिक्शनरी",
+    "urban": "अर्बन डिक्शनरी",
+    "anime": "एनीमे और माँगा"
   },
   "POWERED_BY": "Powered by {provider}",
   "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage}/{results} results.",
-  "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
+  "PAGINATION_PAGE_OUT_OF": "पेज {page}/{pages}",
   "SEARCH_TITLE": "{engine} results for \"{query}\"",
-  "VIEW_MESSAGE_BELOW": "View message below",
-  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled.",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "Use {command} to enable it.",
+  "VIEW_MESSAGE_BELOW": "नीचे मेसेज देखे",
+  "ERROR_MODULE_DISABLED_TITLE": "यह मॉड्यूल इनेबल नहीं है |",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "इनेबल करने के लिए इस {command} को इस्तेमाल करे |",
   "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "Ask a server administrator to enable it using {command}.",
-  "MODREPORTS_MODAL_TITLE": "Report {user}",
-  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe and detail your report.",
+  "MODREPORTS_MODAL_TITLE": "रिपोर्ट {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "रिपोर्ट को डिटेल में समझाएं |",
   "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
   "KICK_USER": "Kick User",
   "WARN_USER": "Warn User",
