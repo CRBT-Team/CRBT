@@ -9,25 +9,23 @@
   "ADD_TO_SERVER": "Add to Server",
   "DISCORD_SERVER": "Discord Server",
   "DONATE": "Donate",
-  "ERROR_ADMIN_ONLY": "You must be an administrator to use this command.",
-  "ERROR_MISSING_PERMISSIONS": "You need the {PERMISSIONS} permission(s) to use this command.",
+  "PERMISSION_ADMINISTRATOR": "Administrator",
+  "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
   "ERROR_INVALID_URL": "Invalid URL.",
   "ERROR_INVALID_COLOR": "Invalid colour. Use a preset or a valid HEX code.",
+  "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
   "BACK": "Back",
   "JUMP_TO_MSG": "Jump to message",
   "CANCEL": "Cancel",
   "CONFIRM": "Confirm",
   "DELETE": "Delete",
   "EDIT": "Edit",
-  "PREVIOUS": "Previous",
-  "NEXT": "Next",
   "SAVE": "Save Changes",
   "SEND": "Send",
-  "DONE": "Done",
   "ON": "On",
   "OFF": "Off",
   "NEW": "New",
-  "ADD_REMINDER": "Add Reminder",
+  "SET_REMINDER": "Set Reminder",
   "OPEN_DMS": "Open DMs",
   "PREVIEW": "Preview",
   "EXPORT": "Export",
@@ -35,25 +33,19 @@
   "YES": "Yes",
   "NO": "No",
   "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only the command's original user may use this component.",
-  "TEXT_CHANNEL": "Text Channel",
-  "TEXT_CHANNELS": "Text Channel(s)",
-  "VOICE_CHANNEL": "Voice Channel",
-  "VOICE_CHANNELS": "Voice Channel(s)",
-  "STAGE_CHANNEL": "Stage Channel",
-  "STAGE_CHANNELS": "Stage Channel(s)",
-  "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
+  "TEXT_CHANNEL": "Text",
+  "VOICE_CHANNEL": "Voice",
+  "STAGE_CHANNEL": "Stage",
+  "ANNOUNCEMENT_CHANNEL": "Announcement",
   "CATEGORY": "Category",
-  "CATEGORIES": "Category(ies)",
-  "RULES_CHANNEL": "Rules Channel",
-  "RULES_CHANNELS": "Rules Channel(s)",
-  "THREAD_CHANNEL": "Thread",
-  "THREAD_CHANNELS": "Thread(s)",
-  "FORUM_CHANNEL": "Forum Channel",
-  "FORUM_CHANNELS": "Forum Channel(s)",
-  "FORUM_POST": "Forum Post",
-  "FORUM_POSTS": "Forum Post(s)",
+  "CATEGORIES": "Categories",
+  "RULES_CHANNEL": "Rules",
+  "THREAD": "Thread",
+  "THREADS": "Thread(s)",
+  "FORUM_CHANNEL": "Forum",
+  "POST": "Post",
+  "POSTS": "Post(s)",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Members",
@@ -67,6 +59,7 @@
   "STATIC": "Static",
   "ANIMATED": "Animated",
   "END_DATE": "End date",
+  "END_NOW": "End now",
   "POLL": "Poll",
   "CHOICE": "Choice",
   "TITLE": "Title",
@@ -80,58 +73,29 @@
   "SERVER_BOOSTING": "Server Boosting",
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "TITLE": "Unknown error.",
+      "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "Hold it!",
-      "DESCRIPTION": "You will be able to use this {TYPE} in {TIME}...",
-      "COMMAND": "command",
-      "COMPONENT": "component"
-    }
+    "TITLE": "You're too *fast*!",
+    "DESCRIPTION": "You may try again {time}."
   },
   "color set": {
-    "meta": {
-      "description": "Change your CRBT accent colour.",
-      "options": [
-        {
-          "name": "colour",
-          "description": "Choose a suggestion or a HEX code."
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "Sync Discord Profile Colour",
-      "lightred": "Light Red",
+      "sync": "Sync to your profile color",
       "red": "Red",
-      "darkred": "Dark Red",
       "orange": "Orange",
       "yellow": "Yellow",
-      "lightgreen": "Light Green",
       "green": "Green",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
       "blue": "Blue",
-      "darkblue": "Dark Blue",
       "blurple": "Blurple",
-      "lightpurple": "Light Purple",
       "purple": "Purple",
-      "darkpurple": "Dark Purple",
       "pink": "Pink",
-      "brown": "Brown",
-      "black": "Black",
-      "gray": "Grey",
-      "white": "White"
-    },
-    "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile colour to sync. To set one, edit your Discord Profile."
+      "gray": "Grey"
     },
     "strings": {
-      "EMBED_TITLE": "Accent colour updated.",
-      "EMBED_SYNC_INFO": "Your CRBT accent colour is now synced to your Discord profile colour.",
+      "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
       "EMBED_DESCRIPTION": "This colour is used in CRBT's replies to you and in the display of your user information."
     }
   },
@@ -144,11 +108,9 @@
           "description": "Choose a date or relative time."
         },
         {
-          "name": "subject",
           "description": "What to be reminded about."
         },
         {
-          "name": "destination",
           "description": "A channel to send the reminder, in DMs by default."
         }
       ]
@@ -162,8 +124,7 @@
     "strings": {
       "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
       "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT": "CRBT Reminder.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "You will be also reminded by CRBT in {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "and",
@@ -204,27 +165,21 @@
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "A choice cannot be empty (excluding emojis).",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) and the poll creator can use this menu."
+      "CHOICE_EMPTY": "A choice cannot be empty (excluding emojis)."
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_CREATOR": "{user} created a poll",
-      "POLL_SELECT_MENU_VOTE": "Vote",
       "SUCCESS_TITLE": "Poll created!",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
-      "POLL_DATA_OPTIONS": "Poll • Data and Options",
+      "DATA_AND_OPTIONS": "Data and Options",
       "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
-      "BUTTON_END_POLL": "End Poll",
+      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
       "SUCCESS_POLL_DELETED": "Poll deleted.",
       "SUCCESS_POLL_ENDED": "Poll ended.",
       "POLL_DESCRIPTION_ENDED": "This poll has ended, so you can no longer vote.",
       "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" and \"{OPTION2}\" have tied with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results."
+      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
@@ -280,19 +235,6 @@
       ]
     }
   },
-  "role-selectors": {
-    "errors": {
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "This role can only be selected once and is impossible to remove."
-    },
-    "strings": {
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
-    }
-  },
   "AVATAR": "Avatar",
   "USER_INFO": "User Info",
   "BOT_INFO": "Bot Info",
@@ -325,14 +267,11 @@
   "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
   "MODERATOR": "Moderator",
   "REPORTED_BY": "Reported by",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
+  "JOIN_MESSAGE": "Welcome Message",
+  "LEAVE_MESSAGE": "Farewell Message",
   "CRBTSCRIPT_GUIDE": "CRBTscript guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "You must set a message first.",
@@ -363,26 +302,22 @@
   "ROLE": "Role",
   "MAJOR_PERMS": "Major permissions in this server",
   "NO_PERMS": "*No permissions*",
-  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
   "HELP": "Help",
   "help": {
     "description": "Returns help to use CRBT."
   },
   "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
   "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
+  "HELP_AD_DESCRIPTION": "Add it to your server!",
   "GIVEAWAY": "Giveaway",
   "giveaway": {
     "description": "Create a giveaway.",
     "options": {
       "prize": {
-        "description": "What to give away."
-      },
-      "end_date": {
-        "description": "When to end the giveaway."
+        "description": "What are you giving away?"
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "How many people can win the giveaway?"
       }
     }
   },
@@ -442,6 +377,8 @@
   "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
   "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
   "TRANSLATE": "translate",
+  "TO": "To",
+  "FROM": "From",
   "translate": {
     "description": "Translate text to another language.",
     "options": {
@@ -450,11 +387,9 @@
         "description": "What to translate."
       },
       "target": {
-        "name": "to",
         "description": "Language to translate to."
       },
       "source": {
-        "name": "from",
         "description": "Language to translate from."
       }
     }
@@ -462,8 +397,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
-  "REMINDER_LIST_TITLE": "{user} - Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set. Use {command} to set one!",
+  "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
   "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Destination:",
   "DMS": "DMs",
@@ -488,10 +422,7 @@
     }
   },
   "PICK_RESULT": "\"{value}\" picked out of {number} choices.",
-  "privacy": {
-    "name": "privacy",
-    "description": "Review and edit your privacy settings."
-  },
+  "PRIVACY": "Privacy",
   "SILENT_LEAVES": "Silent leaving",
   "SILENT_JOINS": "Silent joining",
   "TELEMETRY": "Command Telemetry",
@@ -506,9 +437,11 @@
   },
   "ATTENTION_REQUIRED": "Attention Required",
   "OVERVIEW": "Overview",
+  "USER_SETTINGS_TITLE": "User Settings",
   "SETTINGS_TITLE": "Server Settings",
   "FEATURES": "Features",
-  "SETTINGS_DESCRIPTION": "Set up or edit CRBT's features with the select menu below.",
+  "USER_SETTINGS_DESCRIPTION": "Manage your info, privacy, and feature settings to make CRBT your own.",
+  "SETTINGS_DESCRIPTION": "Manage CRBT features and privacy settings to make your server work the way you want.",
   "ENABLE": "Enable",
   "DISABLE": "Disable",
   "ENABLE_FEATURE": "Enable feature",
@@ -518,6 +451,8 @@
   "MODERATION_REPORTS": "Moderation Reports",
   "SERVER_THEME": "Theming",
   "AUTOMATIC_THEMING": "Auto Theming",
+  "JOIN_LEAVE": "Welcome & Farewell",
+  "MODERATION": "Moderation",
   "ECONOMY": "Economy",
   "STATUS": "Status",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
@@ -528,8 +463,9 @@
   "EDIT_CHANNEL": "Edit Channel",
   "CHANNEL": "Channel",
   "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize Polls, Giveaways, and more with themes! Auto Theming picks the primary colour from your server's icon. Or, you can select a colour preset or HEX code.\nCurrently set to **{color}**.",
+  "SETTINGS_COLOR_SET_TO": "Color theme",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize the look of Polls, Giveaways and more. Pick a color manually, or let CRBT extract the main color from your server's icon.",
+  "SETTINGS_JOIN_LEAVE_DESCRIPTION": "Automatically send messages to welcome new members, and announce when members leave your server.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Get realtime notifications in a chosen channel for all moderator actions taken using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Members can report a message or user to a chosen channel using Moderation Reports by right-clicking or long-pressing them.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
@@ -613,7 +549,7 @@
   "BITRATE": "Bitrate",
   "KBPS": "{number}kbps",
   "VIDEO_QUALITY": "Video Quality",
-  "AUTO": "Auto",
+  "AUTO": "Automatic",
   "SLOWMODE": "Slowmode",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
@@ -625,7 +561,6 @@
     }
   },
   "EMOJI_INFO": "Emoji info",
-  "UNICODE": "Unicode",
   "EMOJI": "Emojis",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
@@ -660,9 +595,9 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "Report sent!",
-  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[Community server]({server})**, where members can discuss the issue.\nYou'll be updated about it through your DMs.",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[CRBT Community]({server})**, where members can discuss the issue.",
   "REPORT_MODAL_TITLE": "New Report",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What's the problem?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What did you encounter?",
   "IMAGE_OPTION_DESCRIPTION": "Append an image to it.",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "You may only upload images.",
   "report": {
@@ -670,5 +605,15 @@
   },
   "user_info": {
     "description": "Get a user's Discord information."
-  }
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "No text or images to translate were found.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Use {command} to translate any text.",
+  "OCR_ERROR_MESSAGE": "No text recognized. Try again with a more legible image.",
+  "SET_REMINDER_EMBED_TITLE": "When should you be reminded?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}.",
+  "MORE_ELEMENTS": "+ {number} more...",
+  "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
+  "DURATION": "Duration",
+  "VIEWS": "Views"
 }
