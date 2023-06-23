@@ -48,7 +48,7 @@
   "POSTS": "पोस्ट",
   "WEBSOCKET": "वेब सॉकेट",
   "INTERACTION": "Interaction",
-  "MEMBERS": "सदस्यों",
+  "MEMBERS": "मेम्बेर्स",
   "STICKERS": "स्टिकर्स",
   "SERVERS": "सर्वर्स",
   "NONE": "None",
@@ -67,7 +67,7 @@
   "SIZE": "साइज़",
   "FORMAT": "फॉर्मेट",
   "SMALL": "छोटा",
-  "MEDIUM": "मध्यम",
+  "MEDIUM": "मीडियम",
   "LARGE": "बड़ा",
   "LARGEST": "सबसे बड़ा",
   "SERVER_BOOSTING": "सर्वर बूस्टिंग",
@@ -84,13 +84,13 @@
   "color set": {
     "colorNames": {
       "sync": "प्रोफाइल कलर को सिंक करे",
-      "red": "लाल ",
+      "red": "लाल",
       "orange": "संतरा ",
       "yellow": "पीला",
-      "green": "हरा ",
+      "green": "हरा",
       "blue": "नीला",
       "blurple": "Blurple",
-      "purple": "बैंगनी",
+      "purple": "पर्पल",
       "pink": "गुलाबी",
       "gray": "ग्रे"
     },
@@ -560,7 +560,7 @@
       }
     }
   },
-  "EMOJI_INFO": "एमोजी की जानकारी",
+  "EMOJI_INFO": "Emoji info",
   "EMOJI": "इमोजी",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
