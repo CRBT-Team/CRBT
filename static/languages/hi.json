@@ -4,12 +4,12 @@
   "MEMBER_COUNT": "मेम्बर की संख्या ",
   "SERVER_COUNT": "सर्वर की संख्या ",
   "PING": "पिंग",
-  "UPTIME": "{time} से ऑनलाइन ",
+  "UPTIME": "से ऑनलाइन हैं",
   "WEBSITE": "वेबसाइट ",
-  "ADD_TO_SERVER": "सर्वर को ऐड करे ",
+  "ADD_TO_SERVER": "सर्वर में ऐड करे ",
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
   "DONATE": "दान करे",
-  "PERMISSION_ADMINISTRATOR": "Administrator",
+  "PERMISSION_ADMINISTRATOR": "एडमिनिस्ट्रेटर",
   "ERROR_MISSING_PERMISSIONS": "आपके पास यह दिया हुआ परमिशन नहीं है: {PERMISSIONS}",
   "ERROR_INVALID_URL": "गलत URL",
   "ERROR_INVALID_COLOR": "रंग अमान्य है | Preset या मान्य HEX कोड इस्तेमाल कीजिए |",
@@ -45,16 +45,16 @@
   "THREADS": "थ्रेडस",
   "FORUM_CHANNEL": "फोरम",
   "POST": "पोस्ट",
-  "POSTS": "पोस्ट",
+  "POSTS": "पोस्ट(स)",
   "WEBSOCKET": "वेब सॉकेट",
-  "INTERACTION": "Interaction",
+  "INTERACTION": "इंटरेक्शन",
   "MEMBERS": "मेम्बेर्स",
   "STICKERS": "स्टिकर्स",
   "SERVERS": "सर्वर्स",
   "NONE": "None",
   "CHANNELS": "चैनल्स",
   "EMOJIS": "इमोजी",
-  "ADDED": "Added",
+  "ADDED": "एडेड",
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
   "ANIMATED": "एनिमेटेड",
@@ -89,7 +89,7 @@
       "yellow": "पीला",
       "green": "हरा",
       "blue": "नीला",
-      "blurple": "Blurple",
+      "blurple": "ब्लरपल",
       "purple": "पर्पल",
       "pink": "गुलाबी",
       "gray": "ग्रे"
@@ -137,7 +137,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Returns CRBT's latency information."
+      "description": "CRBT की लेटेंसी की जानकारी लौटाता है |"
     }
   },
   "crbt info": {
@@ -145,7 +145,7 @@
       "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
-  "IMAGE": "चित्र",
+  "IMAGE": "इमेज",
   "poll": {
     "meta": {
       "description": "एक पोल बनाएं |",
@@ -157,10 +157,10 @@
           "description": "यह कैसे समाप्त होता है?"
         },
         "choice": {
-          "description": "पोल की एक choice |"
+          "description": "One of the poll's choices."
         },
         "image": {
-          "description": "उसके ऊपर चित्र डाले |"
+          "description": "उसके ऊपर इमेज डाले |"
         }
       }
     },
@@ -174,7 +174,7 @@
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "DATA_AND_OPTIONS": "Data और Options",
       "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
+      "POLL_DATA_FOOTER": "इस बटन को दुबारा इस्तेमाल करके इस डाटा को रिफ्रेश करे |",
       "SUCCESS_POLL_DELETED": "पोल हट गया |",
       "SUCCESS_POLL_ENDED": "पोल खत्म |",
       "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
@@ -190,7 +190,7 @@
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's avatar.",
+      "description": "यूजर की अवतार प्राप्त करे |",
       "options": {
         "size": {
           "description": "The size of the avatar to get."
@@ -220,7 +220,7 @@
     },
     "strings": {
       "BOOKMARK_AUTHOR": "{USER} (ने मैसेज को बुकमार्क कर दिया)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "SUCCESS_MESSAGE": "डायरेक्ट मेसेजेस से इस मेसेज को भेजा गया |"
     }
   },
   "calc": {
@@ -258,17 +258,17 @@
   "MOD_VERB_CLEAR": "{target} में मेसेज क्लियर हो गए",
   "MOD_VERB_KICK": "किक कर दिया",
   "MOD_VERB_TIMEOUT": "टाइम्ड आउट",
-  "MOD_VERB_WARN": "Warned",
-  "MOD_VERB_REPORT": "Reported",
+  "MOD_VERB_WARN": "वार्न किया",
+  "MOD_VERB_REPORT": "रिपोर्ट किया",
   "DESCRIPTION": "डिस्क्रिप्शन",
   "EXPIRES_AT": "Expires at",
   "MODERATION_LOGS_VIEW_EMPTY": "*मॉडरेशन की हिस्ट्री नहीं मिली |*",
   "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "व्यू, एडिट या एंट्री को डिलीट करे",
   "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की मॉडरेशन हिस्ट्री",
   "MODERATOR": "मॉडरेटर",
-  "REPORTED_BY": "Reported by",
+  "REPORTED_BY": "ने रिपोर्ट किया",
   "JOIN_MESSAGE": "स्वागत संदेश",
-  "LEAVE_MESSAGE": "Farewell Message",
+  "LEAVE_MESSAGE": "फेयरवेल मेसेज",
   "CRBTSCRIPT_GUIDE": "CRBT-स्क्रिप्ट गाइड ",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "आपका मैसेज खाली नहीं हो सकता |",
@@ -276,11 +276,11 @@
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
   "ERROR_NO_MESSAGE": "पहले मेसेज को सेट करे |",
   "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ने server छोड़ दिया |",
-  "FIELD_SELECT_MENU": "Edit fields",
-  "COLOR_PRESET_SELECT_MENU": "Color presets",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
-  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Message Content",
+  "FIELD_SELECT_MENU": "फ़ील्ड्स को एडिट करे",
+  "COLOR_PRESET_SELECT_MENU": "कलर प्रेसेट्स",
+  "MANUAL_COLOR_EDIT_BUTTON": "HEX कलर को इस्तेमाल करे ",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "मार्कडाउन और CRBT स्क्रिप्ट सपोर्टेड है |",
+  "FIELDS_CONTENT": "मेसेज कंटेंट",
   "FIELDS_AUTHOR": "Embed Author",
   "FIELDS_AUTHOR_NAME": "Embed Author Name",
   "FIELDS_AUTHOR_URL": "Embed Author URL",
@@ -365,10 +365,10 @@
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
   "roll": {
     "name": "roll",
-    "description": "Dice को roll करो | RPG dice notation को सपोर्ट करता है |",
+    "description": "डाइस को रोल करो | RPG डाइस नोटेशन को सपोर्ट करता है |",
     "options": {
       "dice": {
-        "name": "dice",
+        "name": "डाइस",
         "description": "What dice to roll. Use 'd6' for a 6-sided die."
       }
     }
@@ -560,13 +560,13 @@
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
+  "EMOJI_INFO": "इमोजी की जानकारी",
   "EMOJI": "इमोजी",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
-  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "एमोजीपीडिया में देखे",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "इमोजीपीडिया में देखे",
   "emoji_info": {
-    "description": "एमोजी के बारे में जानकारी प्राप्त करे |",
+    "description": "इमोजी के बारे में जानकारी प्राप्त करे |",
     "options": {
       "emoji": {
         "description": "Default and custom emoji are supported."
@@ -601,7 +601,7 @@
   "IMAGE_OPTION_DESCRIPTION": "उसके ऊपर चित्र डाले |",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "सिर्फ आप इमेज को अपलोड कर सकते है |",
   "report": {
-    "description": "Report a CRBT-related issue."
+    "description": "CRBT के रिलेटेड इशू को रिपोर्ट करे |"
   },
   "user_info": {
     "description": "यूजर की Discord जानकारी प्राप्त करे |"
