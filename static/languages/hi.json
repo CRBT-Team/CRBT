@@ -1,33 +1,31 @@
 {
   "ID": "ID",
   "CREATED_ON": "को बना था ",
-  "MEMBER_COUNT": "Member count",
-  "SERVER_COUNT": "Server count",
+  "MEMBER_COUNT": "मेम्बर की संख्या ",
+  "SERVER_COUNT": "सर्वर की संख्या ",
   "PING": "पिंग",
-  "UPTIME": "{time} से ऑनलाइन ",
+  "UPTIME": "से ऑनलाइन हैं",
   "WEBSITE": "वेबसाइट ",
-  "ADD_TO_SERVER": "सर्वर को ऐड करे ",
+  "ADD_TO_SERVER": "सर्वर में ऐड करे ",
   "DISCORD_SERVER": "डिस्कॉर्ड सर्वर ",
   "DONATE": "दान करे",
-  "ERROR_ADMIN_ONLY": "इस कमांड को इस्तेमाल करने के लिए आपके पास एडमिनिस्ट्रेटर होना चाहिए |",
-  "ERROR_MISSING_PERMISSIONS": "इस कमांड को इस्तेमाल करने के लिए आपको <PERMISSIONS> अनुमति(याँ) की आवश्यकता है |",
-  "ERROR_INVALID_URL": "Invalid URL.",
-  "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
+  "PERMISSION_ADMINISTRATOR": "एडमिनिस्ट्रेटर",
+  "ERROR_MISSING_PERMISSIONS": "आपके पास यह दिया हुआ परमिशन नहीं है: {PERMISSIONS}",
+  "ERROR_INVALID_URL": "गलत URL",
+  "ERROR_INVALID_COLOR": "रंग अमान्य है | Preset या मान्य HEX कोड इस्तेमाल कीजिए |",
+  "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
   "BACK": "वापस जाएं",
   "JUMP_TO_MSG": "मेसेज पर जाएं",
   "CANCEL": "रद्द करें",
   "CONFIRM": "सहमत करे",
   "DELETE": "डिलीट करें",
   "EDIT": "बदले",
-  "PREVIOUS": "पिछला",
-  "NEXT": "अगला",
   "SAVE": "Save Changes",
   "SEND": "भेजें",
-  "DONE": "समाप्त",
-  "ON": "On",
-  "OFF": "Off",
-  "NEW": "New",
-  "ADD_REMINDER": "रिमाइंडर सेट करे",
+  "ON": "चालू",
+  "OFF": "बंद",
+  "NEW": "नया",
+  "SET_REMINDER": "रिमाइंडर सेट करे",
   "OPEN_DMS": "DMs खोले |",
   "PREVIEW": "प्रीव्यू",
   "EXPORT": "एक्सपोर्ट",
@@ -35,38 +33,33 @@
   "YES": "हाँ",
   "NO": "नहीं",
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "केवल जिन्होंने कमांड का उपयोग किया है इस component को उपयोग कर सकते हैं |",
-  "TEXT_CHANNEL": "टेक्स्ट चैनल ",
-  "TEXT_CHANNELS": "टेक्स्ट चैनल ",
-  "VOICE_CHANNEL": "वोइस चैनल",
-  "VOICE_CHANNELS": "वॉयस चैनल ",
-  "STAGE_CHANNEL": "स्टेज चैनल",
-  "STAGE_CHANNELS": "स्टेज चैनल ",
-  "ANNOUNCEMENT_CHANNEL": "अनाउंसमेंट चैनल",
-  "ANNOUNCEMENT_CHANNELS": "Announcement Channel(s)",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
+  "TEXT_CHANNEL": "टेक्स्ट",
+  "VOICE_CHANNEL": "वॉइस",
+  "STAGE_CHANNEL": "स्टेज",
+  "ANNOUNCEMENT_CHANNEL": "Announcement",
   "CATEGORY": "केटेगरी",
-  "CATEGORIES": "Category(ies)",
-  "RULES_CHANNEL": "रूल्स चैनल",
-  "RULES_CHANNELS": "Rules Channel(s)",
-  "THREAD_CHANNEL": "थ्रेड ",
-  "THREAD_CHANNELS": "Thread(s)",
-  "FORUM_CHANNEL": "फोरम चैनल",
-  "FORUM_CHANNELS": "Forum Channel(s)",
-  "FORUM_POST": "फोरम पोस्ट",
-  "FORUM_POSTS": "Forum Post(s)",
+  "CATEGORIES": "केटेगरी",
+  "RULES_CHANNEL": "नियम",
+  "THREAD": "थ्रेड ",
+  "THREADS": "थ्रेडस",
+  "FORUM_CHANNEL": "फोरम",
+  "POST": "पोस्ट",
+  "POSTS": "पोस्ट(स)",
   "WEBSOCKET": "वेब सॉकेट",
-  "INTERACTION": "Interaction",
-  "MEMBERS": "सदस्यों",
+  "INTERACTION": "इंटरेक्शन",
+  "MEMBERS": "मेम्बेर्स",
   "STICKERS": "स्टिकर्स",
   "SERVERS": "सर्वर्स",
   "NONE": "None",
   "CHANNELS": "चैनल्स",
   "EMOJIS": "इमोजी",
-  "ADDED": "Added",
+  "ADDED": "एडेड",
   "OWNED_BY": "Owned by",
   "STATIC": "Static",
-  "ANIMATED": "Animated",
+  "ANIMATED": "एनिमेटेड",
   "END_DATE": "अंतिम तिथि",
+  "END_NOW": "खत्म करे",
   "POLL": "पोल",
   "CHOICE": "विकल्प",
   "TITLE": "टाइटल",
@@ -74,64 +67,35 @@
   "SIZE": "साइज़",
   "FORMAT": "फॉर्मेट",
   "SMALL": "छोटा",
-  "MEDIUM": "मध्यम",
+  "MEDIUM": "मीडियम",
   "LARGE": "बड़ा",
   "LARGEST": "सबसे बड़ा",
-  "SERVER_BOOSTING": "Server Boosting",
+  "SERVER_BOOSTING": "सर्वर बूस्टिंग",
   "UnknownError": {
     "strings": {
-      "TITLE": "An unknown error occured.",
-      "DESCRIPTION": "It was automatically reported to us. Here is what the error says:\n{MESSAGE}"
+      "TITLE": "अननोन एरर",
+      "DESCRIPTION": "An unknown exception was caught and sent to us for review, but you can {reportCommand} it.\nHere is what the error says:\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "होल्ड करो! ",
-      "DESCRIPTION": "आप इसे {TYPE} को {TIME} के बाद इस्तेमाल करेंगे... ",
-      "COMMAND": "कमांड ",
-      "COMPONENT": "कॉम्पोनेन्ट"
-    }
+    "TITLE": "आप बहुत *फ़ास्ट* हो!",
+    "DESCRIPTION": "आप फिर से कोशिश करे {time} |"
   },
   "color set": {
-    "meta": {
-      "description": "CRBT का रंग बदले ",
-      "options": [
-        {
-          "name": "रंग ",
-          "description": "Choose a suggestion or a HEX code."
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "डिस्कोर्ड प्रोफाइल कलर को सिंक करे |",
-      "lightred": "Light Red",
-      "red": "लाल ",
-      "darkred": "Dark Red",
+      "sync": "प्रोफाइल कलर को सिंक करे",
+      "red": "लाल",
       "orange": "संतरा ",
       "yellow": "पीला",
-      "lightgreen": "Light Green",
-      "green": "हरा ",
-      "darkgreen": "Dark Green",
-      "cyan": "Cyan",
-      "lightblue": "Light Blue",
+      "green": "हरा",
       "blue": "नीला",
-      "darkblue": "Dark Blue",
-      "blurple": "Blurple",
-      "lightpurple": "Light Purple",
-      "purple": "बैंगनी",
-      "darkpurple": "Dark Purple",
+      "blurple": "ब्लरपल",
+      "purple": "पर्पल",
       "pink": "गुलाबी",
-      "brown": "भूरा",
-      "black": "काला",
-      "gray": "ग्रे",
-      "white": "सफेद"
-    },
-    "errors": {
-      "NO_DISCORD_COLOR": "You couldn't find a profile color to sync. To set one, edit your Discord Profile."
+      "gray": "ग्रे"
     },
     "strings": {
-      "EMBED_TITLE": "एक्सेंट कलर अपडेट किया गया |",
-      "EMBED_SYNC_INFO": "Your CRBT accent color is now synced to your Discord profile color.",
+      "EMBED_SYNC_INFO": "Discord प्रोफाइल कलर को सिंक कर दिया |",
       "EMBED_DESCRIPTION": "This color is used in CRBT's replies to you and in the display of your user information."
     }
   },
@@ -144,26 +108,23 @@
           "description": "Choose a date or relative time."
         },
         {
-          "name": "विषय",
           "description": "किस बारे में याद दिलाए? "
         },
         {
-          "name": "जगह ",
           "description": "A channel to send the reminder, in DMs by default."
         }
       ]
     },
     "errors": {
-      "PAST": "Reminders cannot be set in the past.",
-      "INVALID_FORMAT": "The time you entered is in an invalid format.",
-      "TOO_LONG": "Reminders cannot be set for more than 2 years in the future.",
-      "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached."
+      "PAST": "पिछले समह के लिए रिमाइंडर सेट नहीं हो सकता |",
+      "INVALID_FORMAT": "आपने जो टाइम इंटर किया वो सही फॉर्मेट में नहीं है |",
+      "TOO_LONG": "रिमाइंडर्स 2 साल से ज्यादा फ्यूचर में सेट नहीं हो सकता |",
+      "REMINDERS_MAX_LIMIT": "10 रिमाइंडर्स की मैक्सिमम लिमिट पूरी हो गयी |"
     },
     "strings": {
-      "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
-      "BUTTON_GCALENDAR": "Add to Google Calendar",
-      "GCALENDAR_EVENT": "CRBT Reminder.",
-      "GCALENDAR_EVENT_CHANNEL": "You will be also reminded in {destination}."
+      "SUCCESS_TITLE": "रिमाइंडर सेट हो गया! रिमाइंडर्स को मैनेज करने के लिए इस {command} को इस्तेमाल करे |",
+      "BUTTON_GCALENDAR": "गूगल कैलेंडर में ऐड हो गया |",
+      "GCALENDAR_EVENT_DESCRIPTION": "आपको CRBT से भी {destination} में याद दिलाया जायेगा |"
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "और",
@@ -176,7 +137,7 @@
   },
   "ping": {
     "meta": {
-      "description": "Returns CRBT's latency information."
+      "description": "CRBT की लेटेंसी की जानकारी लौटाता है |"
     }
   },
   "crbt info": {
@@ -184,58 +145,52 @@
       "description": "CRBT के बारे में  जानकारी लीजिए |"
     }
   },
-  "IMAGE": "Image",
+  "IMAGE": "इमेज",
   "poll": {
     "meta": {
-      "description": "Create a poll.",
+      "description": "एक पोल बनाएं |",
       "options": {
         "title": {
           "description": "आपका पोल किस बारे में है ?"
         },
         "end_date": {
-          "description": "When does it end?"
+          "description": "यह कैसे समाप्त होता है?"
         },
         "choice": {
           "description": "One of the poll's choices."
         },
         "image": {
-          "description": "Append an image."
+          "description": "उसके ऊपर इमेज डाले |"
         }
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)",
-      "POLL_DATA_NOT_ALLOWED": "Only chat moderators (\"Manage Messages\" permission) and the poll creator can use this menu."
+      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)"
     },
     "strings": {
       "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
-      "POLL_FOOTER_CREATOR": "{user} created a poll",
-      "POLL_SELECT_MENU_VOTE": "Vote",
-      "SUCCESS_TITLE": "Poll created!",
+      "POLL_FOOTER_CREATOR": "{user} ने पोल बनाया |",
+      "SUCCESS_TITLE": "पोल बन गया |",
       "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
-      "POLL_DATA_OPTIONS": "Poll • Data and Options",
+      "DATA_AND_OPTIONS": "Data और Options",
       "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "This data doesn't update live. Refresh it by using the button again.",
-      "BUTTON_END_POLL": "End Poll",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
+      "POLL_DATA_FOOTER": "इस बटन को दुबारा इस्तेमाल करके इस डाटा को रिफ्रेश करे |",
+      "SUCCESS_POLL_DELETED": "पोल हट गया |",
+      "SUCCESS_POLL_ENDED": "पोल खत्म |",
       "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
       "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
-      "POLL_RESULTS_DESCRIPTION_TIE": "\"{OPTION1}\" और \"{OPTION2}\" {VOTES} के साथ टाई हो गया |",
-      "POLL_RESULTS_DESCRIPTION_WIN": "\"{OPTION}\" has won with {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "out of {TOTAL}!\nClick the button below to view the full results."
+      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
     }
   },
   "banner": {
-    "description": "Get a user's profile banner."
+    "description": "यूजर की प्रोफाइल बैनर को प्राप्त करे |"
   },
-  "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord user or user ID.",
-  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "A Discord server ID.",
+  "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "डिस्कोर्ड यूजर या यूजर ID |",
+  "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "एक Discord सर्वर ID |",
   "REASON_DESCRIPTION": "More context for the Moderation History.",
   "avatar": {
     "meta": {
-      "description": "Get a user's avatar.",
+      "description": "यूजर की अवतार प्राप्त करे |",
       "options": {
         "size": {
           "description": "The size of the avatar to get."
@@ -246,194 +201,174 @@
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "अवतार और बैनर "
     },
     "strings": {
-      "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
+      "DOWNLOAD": "डाउनलोड ({SIZE}पिक्सेल - {FORMAT})"
     }
   },
   "crbt_introduction": {
-    "EMBED_TITLE": "Thank you for inviting CRBT!",
-    "EMBED_DESCRIPTION": "{crbt} is now in {serverCount} servers!\nTo get started, use {help} for a brief list of commands. \nYou can configure CRBT using the {settings} command."
+    "EMBED_TITLE": "CRBT को invite करने के लिए धन्यवाद |",
+    "EMBED_DESCRIPTION": "अब {crbt} {serverCount} सर्वर्स में है |\nशुरू करने के लिए, कमांड्स की लिस्ट की जानकारी के लिए {help} को इस्तेमाल करे |\nआप CRBT को कॉन्फ़िगर करने के लिए {settings} का कमांड इस्तेमाल करे |"
   },
   "bookmark": {
     "ctxMeta": {
-      "name": "Bookmark Message"
+      "name": "बुकमार्क मेसेज"
     },
     "errors": {
-      "DMS_DISABLED": "Enable your DMs or unblock CRBT in order to bookmark messages."
+      "DMS_DISABLED": "DMs को इनेबल करे या फिर CRBT को अनब्लॉक करे ताकि आप मेसेज को बुकमार्क करे |"
     },
     "strings": {
-      "BOOKMARK_AUTHOR": "{USER} (Bookmarked message)",
-      "SUCCESS_MESSAGE": "Sent this message by DM!"
+      "BOOKMARK_AUTHOR": "{USER} (ने मैसेज को बुकमार्क कर दिया)",
+      "SUCCESS_MESSAGE": "डायरेक्ट मेसेजेस से इस मेसेज को भेजा गया |"
     }
   },
   "calc": {
     "meta": {
-      "name": "calculate",
-      "description": "Calculate a mathematical expression.",
+      "name": "कैलकुलेट",
+      "description": "एक मैथमेटिकल एक्कोसप्रेशन को कैलकुलेट करे |",
       "options": [
         {
-          "name": "expression",
+          "name": "एक्सप्रेशन",
           "description": "The expression to calculate."
         }
       ]
     }
   },
-  "role-selectors": {
-    "errors": {
-      "ROLES_DO_NOT_EXIST": "One or more of the selected roles have been removed. Contact an admin to resolve the issue.",
-      "BUTTON_ROLES_ONCE": "आप रोल को हटा नहीं सकते |"
-    },
-    "strings": {
-      "SELECT_MENU_ROLES_SUCCESS": "Successfully updated your roles.",
-      "BUTTON_ROLES_ADD": "Added {ROLE} to your roles.",
-      "BUTTON_ROLES_ADD_AGAIN": "Select it again to remove it.",
-      "BUTTON_ROLES_REMOVE": "Removed {ROLE} from your roles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Select it again to add it."
-    }
-  },
-  "AVATAR": "Avatar",
-  "USER_INFO": "User Info",
-  "BOT_INFO": "Bot Info",
+  "AVATAR": "अवतार",
+  "USER_INFO": "User की जानकारी ",
+  "BOT_INFO": "Bot ki जानकारी ",
   "SERVER_AVATAR": "Server Avatar",
-  "USER_AVATAR": "User Avatar",
-  "USER_BANNER": "User Banner",
-  "SERVER_INFO": "Server info",
+  "USER_AVATAR": "User Avatar ",
+  "USER_BANNER": "User banner",
+  "SERVER_INFO": "Server की जानकारी ",
   "ICON": "Icon",
   "BANNER": "Banner",
-  "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
-  "UNBAN": "Unban",
-  "TIMEOUT": "Timeout",
-  "TEMPBAN": "Temporary ban",
-  "CLEAR": "Clear",
-  "REPORT": "Report",
-  "REASON": "Reason",
-  "MOD_VERB_BAN": "Banned",
-  "MOD_VERB_TEMPBAN": "Temporarily banned",
-  "MOD_VERB_CLEAR": "Cleared messages in {target}",
-  "MOD_VERB_KICK": "Kicked",
-  "MOD_VERB_TIMEOUT": "Timed out",
-  "MOD_VERB_WARN": "Warned",
-  "MOD_VERB_REPORT": "Reported",
-  "DESCRIPTION": "Description",
+  "WARN": "वार्न ",
+  "KICK": "किक ",
+  "BAN": "बैन",
+  "UNBAN": "बैन हटाए",
+  "TIMEOUT": "टाइमआउट",
+  "TEMPBAN": "टेम्पररी बैन",
+  "CLEAR": "साफ़ ",
+  "REPORT": "रिपोर्ट",
+  "REASON": "कारण",
+  "MOD_VERB_BAN": "बैन हो गए",
+  "MOD_VERB_TEMPBAN": "टेम्पररी बैन हो गए",
+  "MOD_VERB_CLEAR": "{target} में मेसेज क्लियर हो गए",
+  "MOD_VERB_KICK": "किक कर दिया",
+  "MOD_VERB_TIMEOUT": "टाइम्ड आउट",
+  "MOD_VERB_WARN": "वार्न किया",
+  "MOD_VERB_REPORT": "रिपोर्ट किया",
+  "DESCRIPTION": "डिस्क्रिप्शन",
   "EXPIRES_AT": "Expires at",
-  "MODERATION_LOGS_VIEW_EMPTY": "*No Moderation History found.*",
-  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete an entry",
-  "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
-  "MODERATOR": "Moderator",
-  "REPORTED_BY": "Reported by",
-  "JOIN_MESSAGE": "Welcome message",
-  "LEAVE_MESSAGE": "Farewell message",
-  "JOIN_CHANNEL": "Welcome channel",
-  "LEAVE_CHANNEL": "Farewell channel",
-  "CRBTSCRIPT_GUIDE": "CRBTscript guide",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Edit this message to customize the {TYPE} using the select menu below.",
-  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Preview",
+  "MODERATION_LOGS_VIEW_EMPTY": "*मॉडरेशन की हिस्ट्री नहीं मिली |*",
+  "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "व्यू, एडिट या एंट्री को डिलीट करे",
+  "MODERATION_LOGS_VIEW_TITLE": "{SERVER} की मॉडरेशन हिस्ट्री",
+  "MODERATOR": "मॉडरेटर",
+  "REPORTED_BY": "ने रिपोर्ट किया",
+  "JOIN_MESSAGE": "स्वागत संदेश",
+  "LEAVE_MESSAGE": "फेयरवेल मेसेज",
+  "CRBTSCRIPT_GUIDE": "CRBT-स्क्रिप्ट गाइड ",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
+  "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "आपका मैसेज खाली नहीं हो सकता |",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Welcome <user.name> to <server.name>!",
-  "ERROR_NO_MESSAGE": "You must set a message first.",
-  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> has left the server.",
-  "FIELD_SELECT_MENU": "Edit fields",
-  "COLOR_PRESET_SELECT_MENU": "Color presets",
-  "MANUAL_COLOR_EDIT_BUTTON": "Use HEX color",
-  "MARKDOWN_CRBTSCRIPT_SUPPORT": "Markdown and CRBTscript are supported.",
-  "FIELDS_CONTENT": "Message Content",
-  "FIELDS_AUTHOR": "Embed Author",
-  "FIELDS_AUTHOR_NAME": "Embed Author Name",
-  "FIELDS_AUTHOR_URL": "Embed Author URL",
-  "FIELDS_AUTHOR_ICON": "Embed Author Icon",
-  "FIELDS_TITLE": "Embed Title",
-  "FIELDS_DESCRIPTION": "Embed Description",
-  "FIELDS_FOOTER": "Embed Footer",
-  "FIELDS_COLOR": "Embed Color",
-  "FIELDS_IMAGE": "Embed Image",
-  "FIELDS_THUMBNAIL": "Embed Thumbnail",
-  "FIELDS_URL": "Embed Title URL",
-  "SETTINGS": "Settings",
+  "ERROR_NO_MESSAGE": "पहले मेसेज को सेट करे |",
+  "LEAVE_MESSAGE_DEFAULT_TITLE": "<user.name> ने server छोड़ दिया |",
+  "FIELD_SELECT_MENU": "फ़ील्ड्स को एडिट करे",
+  "COLOR_PRESET_SELECT_MENU": "कलर प्रेसेट्स",
+  "MANUAL_COLOR_EDIT_BUTTON": "HEX कलर को इस्तेमाल करे ",
+  "MARKDOWN_CRBTSCRIPT_SUPPORT": "मार्कडाउन और CRBT स्क्रिप्ट सपोर्टेड है |",
+  "FIELDS_CONTENT": "मेसेज कंटेंट",
+  "FIELDS_AUTHOR": "एम्बेड ऑथर",
+  "FIELDS_AUTHOR_NAME": "एम्बेड ऑथर नेम",
+  "FIELDS_AUTHOR_URL": "एम्बेड ऑथर URL",
+  "FIELDS_AUTHOR_ICON": "एम्बेड ऑथर आइकॉन",
+  "FIELDS_TITLE": "एम्बेड टाइटल",
+  "FIELDS_DESCRIPTION": "एम्बेड डिस्क्रिप्शन",
+  "FIELDS_FOOTER": "एम्बेड फूटर",
+  "FIELDS_COLOR": "एम्बेड कलर",
+  "FIELDS_IMAGE": "एम्बेड इमेज",
+  "FIELDS_THUMBNAIL": "एम्बेड थंबनेल",
+  "FIELDS_URL": "एम्बेड टाइटल URL",
+  "SETTINGS": "सेटिंग्स",
   "BIRTHDAY_REMINDER_MESSAGE": "Wish {USER} a happy birthday!",
-  "BIRTHDAY_LIST_CONTENT": "{USER}'s birthday",
+  "BIRTHDAY_LIST_CONTENT": "{USER} का जन्मदिन ",
   "JOINED_DISCORD": "Discord member since",
   "JOINED_SERVER": "Server member since",
-  "SERVER_NICKNAME": "Server nickname",
-  "ROLES": "Role(s)",
-  "ROLE": "Role",
-  "MAJOR_PERMS": "Major permissions in this server",
-  "NO_PERMS": "*No permissions*",
-  "ADMIN_ALL_PERMS": "Administrator (all permissions)",
-  "HELP": "Help",
+  "SERVER_NICKNAME": "सर्वर निकनेम",
+  "ROLES": "रोल्(स)",
+  "ROLE": "रोल",
+  "MAJOR_PERMS": "इस सर्वर के मेजर परमिशन",
+  "NO_PERMS": "*कोई परमिशन नहीं*",
+  "HELP": "सहायता",
   "help": {
     "description": "Returns help to use CRBT."
   },
-  "HELP_DESCRIPTION": "Type {prefix} click {botIcon} for a commands list, or right-click/long-press a message or user for quick actions.\nCRBT has handy features such as reminders ({reminder}), Welcome/Farewell messages ({settings}), getting info ({infoCommands}), and more to come!",
-  "HELP_AD_TITLE": "Like CRBT?",
-  "HELP_AD_DESCRIPTION": "Consider adding it to your server!",
-  "GIVEAWAY": "Giveaway",
+  "HELP_DESCRIPTION": "कमांड्स लिस्ट के लिए, {prefix} को टाइप करे और {botIcon} पर क्लिक करे, या फिर जल्ती एक्शन के लिए मेसेज या यूजर को राईट-क्लिक/लॉन्ग-प्रेस करे |\nCRBT के पास काम के फीचर्स है जैसे रिमाइंडर्स ({reminder}), वेलकम/फेयरवेल मेसेज ({settings}), जानकारी प्राप्त के लिए ({infoCommands}) और चीज़े आएगी |",
+  "HELP_AD_TITLE": "CRBT पसंद है ?",
+  "HELP_AD_DESCRIPTION": "इसे अपने सर्वर ऐड करे |",
+  "GIVEAWAY": "गिवअवे ",
   "giveaway": {
-    "description": "Create a giveaway.",
+    "description": "एक गिवअवे बनाए |",
     "options": {
       "prize": {
-        "description": "What to give away."
-      },
-      "end_date": {
-        "description": "When to end the giveaway."
+        "description": "क्या आप देने वाले हो ?"
       },
       "winners": {
-        "description": "How many people can win the giveaway."
+        "description": "कितने लोग गिवअवे में जीत सकते है?"
       }
     }
   },
-  "WINNERS": "Winners",
-  "PRIZE": "Prize",
+  "WINNERS": "विजय",
+  "PRIZE": "इनाम ",
   "8ball": {
-    "name": "8ball",
-    "description": "Ask a question to 8-Ball.",
+    "name": "8बॉल ",
+    "description": "8बॉल से सवाल पूछे |",
     "options": {
       "question": {
-        "description": "What to ask."
+        "description": "क्या पूछना है?"
       }
     }
   },
-  "8BALL": "8-Ball",
-  "ANSWER": "Answer",
-  "QUESTION": "Question",
+  "8BALL": "8-बॉल",
+  "ANSWER": "जवाब",
+  "QUESTION": "सवाल",
   "8BALL_ANSWERS_POSITIVE": [
-    "It is certain.",
+    "अवश्य |",
     "It is decidedly so.",
-    "Without a doubt.",
-    "Yes, definitely.",
-    "You may rely on it.",
-    "As I see it, yes.",
-    "Most likely.",
-    "Outlook good.",
-    "Yes.",
+    "ज़रूर |",
+    "हाँ - बिल्कुल |",
+    "आप चाहें तो उसपर भरोसा कर सकते हैं |",
+    "मुझे ऐसा लगता है |",
+    "ऐसा होने की काफ़ी पोस्सिबिलिटी है |",
+    "उम्मीद है |",
+    "हाँ",
     "Signs point to yes."
   ],
   "8BALL_ANSWERS_NEUTRAL": [
-    "Reply hazy, try again.",
-    "Ask again later.",
-    "Better not tell you now.",
-    "Cannot predict now.",
-    "Concentrate and ask again."
+    "पता नहीं चल पाया, फिर से प्रयास करें |",
+    "मुझसे बाद में पूछना |",
+    "यह बात अभी न बताना ही अच्छा होगा |",
+    "अभी भविष्यवाणी नहीं कर सकता |",
+    "ध्यान लगाओ और दुबारा पूछो |"
   ],
   "8BALL_ANSWERS_NEGATIVE": [
-    "Don't count on it.",
-    "My reply is no.",
-    "My sources say no.",
-    "Outlook not so good.",
+    "उस पर भरोसा मत करना |",
+    "मेरा जवाब है नहीं |",
+    "मेरे सूत्रों के अनुसार ऐसा नहीं है |",
+    "ज्यादा उम्मीद नहीं है |",
     "Very doubtful."
   ],
-  "COMMENT": "comment",
+  "COMMENT": "कमेंट ",
   "COMMENT_DESCRIPTION": "A comment to display to provide additional context.",
   "roll": {
     "name": "roll",
-    "description": "Roll a dice. Supports RPG dice notation.",
+    "description": "डाइस को रोल करो | RPG डाइस नोटेशन को सपोर्ट करता है |",
     "options": {
       "dice": {
-        "name": "dice",
+        "name": "डाइस",
         "description": "What dice to roll. Use 'd6' for a 6-sided die."
       }
     }
@@ -441,20 +376,20 @@
   "ROLL_ERROR_TOO_MANY_DICE": "You can't roll more than 100 dice at once.",
   "ROLL_RESULTS_TITLE": "Your rolls result to {result}.",
   "ROLL_RESULTS_FOOTER": "Your rolls: {results}.",
-  "TRANSLATE": "translate",
+  "TRANSLATE": "ट्रांसलेट",
+  "TO": "To",
+  "FROM": "से",
   "translate": {
-    "description": "Translate text to another language.",
+    "description": "टेक्स्ट को दूसरे भाषा से ट्रांसलेट करे |",
     "options": {
       "text": {
-        "name": "text",
-        "description": "What to translate."
+        "name": "टेक्स्ट",
+        "description": "क्या ट्रांसलेट करना है?"
       },
       "target": {
-        "name": "to",
         "description": "Language to translate to."
       },
       "source": {
-        "name": "from",
         "description": "Language to translate from."
       }
     }
@@ -462,136 +397,137 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} is not a valid language.",
   "TRANSLATE_RESULT": "Translated from {source} to {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Translate to",
-  "REMINDER_LIST_TITLE": "{user} - Reminders ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "No reminders set. Use {command} to set one!",
-  "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
-  "REMINDER_DESTINATION": "Destination:",
+  "REMINDER_LIST_NO_REMINDERS": "कोई रिमाइंडर सेट नहीं है |",
+  "REMINDER_LIST_DESCRIPTION": "इस {command} को इस्तेमाल करके एक नया रिमाइंडर सेट करे |",
+  "REMINDER_DESTINATION": "जगह",
   "DMS": "DMs",
-  "REMINDERS": "Reminders",
-  "REMINDER": "Reminder",
-  "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
-  "SUBJECT": "Subject",
-  "WHEN_TO_SEND": "When to send",
-  "DELETE_CONFIRMATION_TITLE": "Do you want to delete it, forever?!",
-  "REMINDER_MESSAGE_TITLE": "[Message from {user}]",
+  "REMINDERS": "रिमाइंडर्स ",
+  "REMINDER": "रिमाइंडर",
+  "REMINDER_EDIT_MODAL_TITLE": "रिमाइंडर को एडिट करे |",
+  "SUBJECT": "विषय",
+  "WHEN_TO_SEND": "कहा से भेजे",
+  "DELETE_CONFIRMATION_TITLE": "क्या आप इसे हमेशा के लिए हटाया जाए?!",
+  "REMINDER_MESSAGE_TITLE": "[{user} से मेसेज है]",
   "reminder_list": {
-    "description": "Get a list of your reminders."
+    "description": "आपकी रिमाइंडर्स की लिस्ट प्राप्त करे |"
   },
   "pick": {
     "name": "pick",
     "description": "Pick something at random.",
     "options": {
       "values": {
-        "name": "values",
+        "name": "मूल्य",
         "description": "The values to pick from, separated by commas."
       }
     }
   },
   "PICK_RESULT": "\"{value}\" picked out of {number} choices.",
-  "privacy": {
-    "name": "privacy",
-    "description": "Review and edit your privacy settings."
-  },
+  "PRIVACY": "प्राइवसी",
   "SILENT_LEAVES": "Silent leaving",
   "SILENT_JOINS": "Silent joining",
-  "TELEMETRY": "Command Telemetry",
-  "PRIVACY_SILENT_JOINS_DESCRIPTION": "When on, CRBT won't announce when you join a server.",
-  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT won't announce when you leave a server.",
+  "TELEMETRY": "कमांड तेलेमेंट्री",
+  "PRIVACY_SILENT_JOINS_DESCRIPTION": "चालू होने पर, आप सर्वर में आते हो तो CRBT अनाउंस नहीं करेगा |",
+  "PRIVACY_SILENT_LEAVES_DESCRIPTION": "चालू होने पर, आप सर्वर छोड़ते हो तो CRBT अनाउंस नहीं करेगा |",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
-  "YOUR_CRBT_DATA": "Your CRBT data",
+  "YOUR_CRBT_DATA": "आपका CRBT डाटा",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
-  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
+  "PRIVACY_SETTINGS_TITLE": "प्राइवेसी सेटिंग्स",
   "settings": {
     "description": "Configure CRBT's Server Settings."
   },
   "ATTENTION_REQUIRED": "Attention Required",
-  "OVERVIEW": "Overview",
-  "SETTINGS_TITLE": "Server Settings",
-  "FEATURES": "Features",
-  "SETTINGS_DESCRIPTION": "Set up or edit CRBT's features with the select menu below.",
-  "ENABLE": "Enable",
-  "DISABLE": "Disable",
-  "ENABLE_FEATURE": "Enable feature",
-  "DISABLE_FEATURE": "Disable feature",
-  "ACCENT_COLOR": "Accent Color",
-  "MODERATION_LOGS": "Moderation Notifications",
-  "MODERATION_REPORTS": "Moderation Reports",
-  "SERVER_THEME": "Theming",
-  "AUTOMATIC_THEMING": "Auto Theming",
-  "ECONOMY": "Economy",
-  "STATUS": "Status",
+  "OVERVIEW": "ओवरव्यू",
+  "USER_SETTINGS_TITLE": "यूजर सेटिंग्स",
+  "SETTINGS_TITLE": "सर्वर सेटिंग्स",
+  "FEATURES": "फीचर्स",
+  "USER_SETTINGS_DESCRIPTION": "Manage your info, privacy, and feature settings to make CRBT your own.",
+  "SETTINGS_DESCRIPTION": "Manage CRBT features and privacy settings to make your server work the way you want.",
+  "ENABLE": "इनेबल ",
+  "DISABLE": "डिसएबल",
+  "ENABLE_FEATURE": "इनेबल फीचर",
+  "DISABLE_FEATURE": "डिसएबल फीचर",
+  "ACCENT_COLOR": "एक्सेंट कलर",
+  "MODERATION_LOGS": "मॉडरेशन नोटिफिकेशन",
+  "MODERATION_REPORTS": "मॉडरेशन रिपोर्ट्स",
+  "SERVER_THEME": "थेमिंग",
+  "AUTOMATIC_THEMING": "ऑटो थेमिंग",
+  "JOIN_LEAVE": "वेलकम & फेयरवेल",
+  "MODERATION": "मॉडरेशन",
+  "ECONOMY": "इकॉनमी",
+  "STATUS": "स्टेटस",
   "SETTINGS_ERRORS_FOUND": "{number} errors found",
-  "ENABLED": "Enabled",
-  "DISABLED": "Disabled",
-  "SETTINGS_SENDING_IN": "Sending in {channel}",
-  "EDIT_MESSAGE": "Edit Message",
-  "EDIT_CHANNEL": "Edit Channel",
-  "CHANNEL": "Channel",
-  "EDIT_SOMETHING": "Edit {feature}",
-  "SETTINGS_COLOR_SET_TO": "Set to {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize Polls, Giveaways, and more with themes! Auto Theming picks the primary color from your server's icon. Or, you can select a color preset or HEX code.\nCurrently set to **{color}**.",
+  "ENABLED": "इनेबल किया गया",
+  "DISABLED": "डिसएबल किया गया",
+  "SETTINGS_SENDING_IN": "{channel} में भेजा जा रहा है",
+  "EDIT_MESSAGE": "एडिट मेसेज",
+  "EDIT_CHANNEL": "एडिट चैनल",
+  "CHANNEL": "चैनल",
+  "EDIT_SOMETHING": "एडिट {feature}",
+  "SETTINGS_COLOR_SET_TO": "कलर थीम",
+  "SETTINGS_COLOR_DESCRIPTION": "पोल्स, गिवअवे और चीजों की लुक को कस्टमाइज करे | मैन्युअली कलर को चुने, या फिर CRBT को आपके सर्वर की आइकॉन की मुख्य रंग को एक्सट्रेक्ट करने दे |",
+  "SETTINGS_JOIN_LEAVE_DESCRIPTION": "नए मेम्बेर्स को मेसेज ऑटोमेटिकली भेजे और जब मेम्बेर्स आपके सर्वर छोड़ देंगे तो अन्नोउंस करे |",
   "SETTINGS_MODLOGS_DESCRIPTION": "Get realtime notifications in a chosen channel for all moderator actions taken using CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Members can report a message or user to a chosen channel using Moderation Reports by right-clicking or long-pressing them.",
-  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
-  "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
+  "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "चैनल नहीं मिला | मेसेज भेजना जारी रखने के लिए CRBT में एडिट करे |",
+  "SETTINGS_ERROR_CONFIG_NOT_DONE": "फीचर पूरी तरह से कांफिगुर नहीं है | नीचे बटन्स को इस्तेमाल करके सेटअप को खत्म करे |",
   "search": {
-    "name": "search",
-    "description": "Search anything on the web.",
+    "name": "सर्च",
+    "description": "वेब में कुछ भी सर्च करे |",
     "options": {
       "query": {
-        "name": "query",
-        "description": "Your search query."
+        "name": "क्वेरी",
+        "description": "आपकी सर्च क्वेरी |"
       },
       "site": {
-        "name": "site",
+        "name": "साइट",
         "description": "Available search engines."
       },
       "anonymous": {
         "name": "anonymous",
-        "description": "Search without sending a public messsage."
+        "description": "बिना पब्लिक मेसेज भेजे हुए सर्च करे |"
       }
     }
   },
   "SEARCH_ENGINES": {
-    "web": "Web",
-    "images": "Images",
-    "videos": "Videos",
-    "weather": "Weather",
-    "dictionary": "Dictionary",
-    "urban": "Urban Dictionary",
-    "anime": "Anime & Manga"
+    "web": "वेब",
+    "images": "इमेजिस",
+    "videos": "वीडियो",
+    "weather": "मौसम",
+    "dictionary": "डिक्शनरी",
+    "urban": "अर्बन डिक्शनरी",
+    "anime": "एनीमे और माँगा"
   },
   "POWERED_BY": "Powered by {provider}",
   "PAGINATION_MULTIPLE_RESULTS": "Showing {resultsPerPage}/{results} results.",
-  "PAGINATION_PAGE_OUT_OF": "Page {page}/{pages}",
+  "PAGINATION_PAGE_OUT_OF": "पेज {page}/{pages}",
   "SEARCH_TITLE": "{engine} results for \"{query}\"",
-  "VIEW_MESSAGE_BELOW": "View message below",
-  "ERROR_MODULE_DISABLED_TITLE": "This module is not enabled.",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "Use {command} to enable it.",
-  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "Ask a server administrator to enable it using {command}.",
-  "MODREPORTS_MODAL_TITLE": "Report {user}",
-  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "Describe and detail your report.",
-  "MODREPORTS_EMBED_TITLE": "{target} was reported by {user}",
-  "KICK_USER": "Kick User",
-  "WARN_USER": "Warn User",
-  "BAN_USER": "Ban User",
-  "DELETE_MESSAGE": "Delete Message",
-  "MODREPORTS_SUCCESS_TITLE": "Your report was sent to {server}'s moderators.",
+  "VIEW_MESSAGE_BELOW": "नीचे मेसेज देखे",
+  "ERROR_MODULE_DISABLED_TITLE": "यह मॉड्यूल इनेबल नहीं है |",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_ADMIN": "इनेबल करने के लिए इस {command} को इस्तेमाल करे |",
+  "ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR": "इस {command} को इनेबल करने के लिए सर्वर एडमिनिस्ट्रेटर से पूछे |",
+  "MODREPORTS_MODAL_TITLE": "रिपोर्ट {user}",
+  "MODREPORTS_MODAL_DESCRIPTION_PLACEHOLDER": "रिपोर्ट को डिटेल में समझाएं |",
+  "MODREPORTS_EMBED_TITLE": "{user} ने {target} को रिपोर्ट किया है",
+  "KICK_USER": "यूजर को किक करे",
+  "WARN_USER": "यूजर को चेतानवी दे",
+  "BAN_USER": "यूजर को बैन करे |",
+  "DELETE_MESSAGE": "मेसेज को डिलीट करे",
+  "MODREPORTS_SUCCESS_TITLE": "आपकी रिपोर्ट {server} के मॉडरेटर को भेजा गया है |",
   "MODREPORTS_SUCCESS_DESCRIPTION": "It was added to {user}'s Moderation History. Review and action can be taken by those with access to the Moderation Reports channel.",
-  "ROLE_INFO_TITLE": "{role} - Role info",
-  "POSITION": "Position",
+  "ROLE_INFO_TITLE": "{role} - रोल की जानकारी",
+  "POSITION": "पोजीशन",
   "HUMANS": "इंसान ",
   "BOTS": "बोट(स)",
   "COLOR": "रंग ",
   "ROLE_INFO_POSITION": "{position} out of {roles} roles",
   "ROLE_INFO_HOISTED": "Displays separately from online members",
   "ROLE_INFO_MENTIONABLE": "कोई भी इस रोल को @mention कर सकते है |\n",
-  "ROLE_INFO_MANAGED": "Managed",
-  "ROLE_INFO_PREMIUM_SUBSCRIBER": "Automatically added to Server Boosters.",
-  "ROLE_INFO_MANAGED_BOT": "Managed by {bot}.",
-  "ROLE_INFO_MANAGED_INTEGRATION": "Managed by an external integration.",
+  "ROLE_INFO_MANAGED": "मैनेज्ड",
+  "ROLE_INFO_PREMIUM_SUBSCRIBER": "सर्वर बूस्टर्स में ऑटोमेटिकली ऐड किया है |",
+  "ROLE_INFO_MANAGED_BOT": "{bot} मैनेज कर रहे है |",
+  "ROLE_INFO_MANAGED_INTEGRATION": "एक्सटर्नल इंटीग्रेशन मैनेज कर रहे है |",
   "role_info": {
-    "description": "Get information about a server role.",
+    "description": "सर्वर रोल के बारे में जानकारी प्राप्त करे |",
     "options": {
       "role": {
         "description": "What role to get info from."
@@ -599,39 +535,38 @@
     }
   },
   "server_info": {
-    "description": "Get information about a Discord server."
+    "description": "डिस्कोर्ड सर्वर के बारे में जानकारी प्राप्त करे |"
   },
   "SERVER_INFO_ERROR_INVALID_SERVER_TITLE": "Invalid ID used or I'm not part of this server.",
   "SERVER_INFO_ERROR_INVALID_SERVER_DESCRIPTION": "You can **[invite me to it]({link})**, if you have permission to.",
   "server_icon": {
-    "description": "Get a Discord server's icon."
+    "description": "डिस्कोर्ड सर्वर की आइकॉन को प्राप्त करे |"
   },
-  "USER_BANNER_ERROR_NO_BANNER_SELF": "You don't have a profile banner.",
-  "USER_BANNER_ERROR_NO_BANNER_OTHER": "This user doesn't have a profile banner.",
-  "AGE_RESTRICTED": "Age-Restricted",
-  "TAGS": "Tags",
-  "BITRATE": "Bitrate",
+  "USER_BANNER_ERROR_NO_BANNER_SELF": "आपके पास प्रोफाइल बैनर नहीं है |",
+  "USER_BANNER_ERROR_NO_BANNER_OTHER": "इस यूजर के पास प्रोफाइल बैनर नहीं है |",
+  "AGE_RESTRICTED": "ऐज-रिस्ट्रिक्टेड",
+  "TAGS": "टैग्स",
+  "BITRATE": "बिटरेट",
   "KBPS": "{number}kbps",
   "VIDEO_QUALITY": "Video Quality",
-  "AUTO": "Auto",
+  "AUTO": "Automatic",
   "SLOWMODE": "Slowmode",
   "PARENT_CHANNEL": "Parent channel",
   "channel_info": {
-    "description": "Get information about a server channel.",
+    "description": "सर्वर चैनल की इनफार्मेशन की जानकारी प्राप्त करे |",
     "options": {
       "channel": {
         "description": "Any channel in the server."
       }
     }
   },
-  "EMOJI_INFO": "Emoji info",
-  "UNICODE": "Unicode",
+  "EMOJI_INFO": "इमोजी की जानकारी",
   "EMOJI": "इमोजी",
   "AVAILABLE_SINCE": "Available since",
   "CLONE_TO_THIS_SERVER": "Clone to this server",
-  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "View on Emojipedia",
+  "EMOJI_INFO_EMOJIPEDIA_BUTTON": "इमोजीपीडिया में देखे",
   "emoji_info": {
-    "description": "Get information about an emoji.",
+    "description": "इमोजी के बारे में जानकारी प्राप्त करे |",
     "options": {
       "emoji": {
         "description": "Default and custom emoji are supported."
@@ -660,15 +595,25 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "आपका रिपोर्ट दर्ज हो गया !",
-  "REPORT_SUCCESS_DESCRIPTION": "यह **[म्युनिटी सर्वर] ({server})** पे भेज दिया गया है, जहा पर लोग समस्या की बातचीत की जाईगी | आपको अपने DMs पे अपडेट किया जायेगा |",
+  "REPORT_SUCCESS_DESCRIPTION": "It was sent to the **[CRBT Community]({server})**, where members can discuss the issue.",
   "REPORT_MODAL_TITLE": "नई रिपोर्ट",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "आपकी क्या समस्या है ?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "What did you encounter?",
   "IMAGE_OPTION_DESCRIPTION": "उसके ऊपर चित्र डाले |",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "सिर्फ आप इमेज को अपलोड कर सकते है |",
   "report": {
-    "description": "Report a CRBT-related issue."
+    "description": "CRBT के रिलेटेड इशू को रिपोर्ट करे |"
   },
   "user_info": {
-    "description": "Get a user's Discord information."
-  }
+    "description": "यूजर की Discord जानकारी प्राप्त करे |"
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "ट्रांसलेट करने के लिए टेक्स्ट या इमेज नहीं मिला |",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "ट्रांसलेट करने के लिए इस {command} को इस्तेमाल करे |",
+  "OCR_ERROR_MESSAGE": "टेक्स्ट पहचान नहीं कर पाए | सही से इमेज डाल के दुबारा प्रयास करे |",
+  "SET_REMINDER_EMBED_TITLE": "कब आपको याद दिलाया जाए?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Edit this at any time with {command}.",
+  "MORE_ELEMENTS": "+ {number} more...",
+  "SEARCH_ERROR_NO_RESULTS_TITLE": "कोई रिजल्ट नहीं मिला।",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
+  "DURATION": "Duration",
+  "VIEWS": "व्यूज"
 }

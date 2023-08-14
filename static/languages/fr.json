@@ -9,25 +9,23 @@
   "ADD_TO_SERVER": "Ajouter au serveur",
   "DISCORD_SERVER": "Serveur Discord",
   "DONATE": "Faire un don",
-  "ERROR_ADMIN_ONLY": "Vous devez être administrateur pour utiliser cette commande.",
-  "ERROR_MISSING_PERMISSIONS": "Vous avez besoin de la/des permission(s) {PERMISSIONS} pour utiliser cette commande.",
+  "PERMISSION_ADMINISTRATOR": "Administrateur",
+  "ERROR_MISSING_PERMISSIONS": "Vous n'avez pas les permissions requises : {PERMISSIONS}.",
   "ERROR_INVALID_URL": "URL invalide.",
   "ERROR_INVALID_COLOR": "Couleur invalide. Utilisez un préréglage ou un code HEX valide.",
+  "ERROR_INVALID_DURATION": "Format de durée invalide, ou dépasse {relativeTime} dans le futur.",
   "BACK": "Retour",
   "JUMP_TO_MSG": "Aller au message",
   "CANCEL": "Annuler",
   "CONFIRM": "Confirmer",
   "DELETE": "Supprimer",
   "EDIT": "Modifier",
-  "PREVIOUS": "Précédent",
-  "NEXT": "Suivant",
   "SAVE": "Enregistrer",
   "SEND": "Envoyer",
-  "DONE": "Valider",
   "ON": "Activé(e)",
   "OFF": "Désactivé(e)",
   "NEW": "Nouveau",
-  "ADD_REMINDER": "Envoyer un rappel",
+  "SET_REMINDER": "Créer un rappel",
   "OPEN_DMS": "Ouvrir les MP",
   "PREVIEW": "Aperçu",
   "EXPORT": "Exporter",
@@ -35,25 +33,19 @@
   "YES": "Oui",
   "NO": "Non",
   "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
-  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur original de la commande peut utiliser ce composant.",
-  "TEXT_CHANNEL": "Salon textuel",
-  "TEXT_CHANNELS": "Salon(s) textuel(s)",
-  "VOICE_CHANNEL": "Salon vocal",
-  "VOICE_CHANNELS": "Salon(s) vocal(aux)",
-  "STAGE_CHANNEL": "Salon de conférence",
-  "STAGE_CHANNELS": "Salon(s) de conférence",
-  "ANNOUNCEMENT_CHANNEL": "Salon d'annonce",
-  "ANNOUNCEMENT_CHANNELS": "Salon(s) d'annonce",
+  "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur de cette commande peut utiliser ce composant.",
+  "TEXT_CHANNEL": "Textuel",
+  "VOICE_CHANNEL": "Vocal",
+  "STAGE_CHANNEL": "Conférence",
+  "ANNOUNCEMENT_CHANNEL": "Annonces",
   "CATEGORY": "Catégorie",
-  "CATEGORIES": "Catégorie(s)",
-  "RULES_CHANNEL": "Salon des règles",
-  "RULES_CHANNELS": "Salon(s) des règles",
-  "THREAD_CHANNEL": "Fil",
-  "THREAD_CHANNELS": "Fil(s)",
-  "FORUM_CHANNEL": "Salon de forum",
-  "FORUM_CHANNELS": "Salon(s) forum",
-  "FORUM_POST": "Post de forum",
-  "FORUM_POSTS": "Post(s) de forum",
+  "CATEGORIES": "Catégories",
+  "RULES_CHANNEL": "Règles",
+  "THREAD": "Fil",
+  "THREADS": "Fil(s)",
+  "FORUM_CHANNEL": "Forum",
+  "POST": "Post",
+  "POSTS": "Post(s)",
   "WEBSOCKET": "WebSocket",
   "INTERACTION": "Interaction",
   "MEMBERS": "Membres",
@@ -67,6 +59,7 @@
   "STATIC": "Fixe(s)",
   "ANIMATED": "Animé(es)",
   "END_DATE": "Date de fin",
+  "END_NOW": "Terminer maintenant",
   "POLL": "Sondage",
   "CHOICE": "Choix",
   "TITLE": "Titre",
@@ -80,58 +73,29 @@
   "SERVER_BOOSTING": "Boosts de serveur",
   "UnknownError": {
     "strings": {
-      "TITLE": "Une erreur inconnue s'est produite.",
-      "DESCRIPTION": "Elle nous a automatiquement été signalée. Voici ce que l'erreur dit :\n{MESSAGE}"
+      "TITLE": "Erreur inconnue.",
+      "DESCRIPTION": "Une exception inconnue est survenue et nous a été envoyée pour examen, mais vous pouvez la {reportCommand}.\nVoici ce que l'erreur dit :\n{MESSAGE}"
     }
   },
   "CooldownError": {
-    "strings": {
-      "TITLE": "Un instant !",
-      "DESCRIPTION": "Vous pourrez utiliser {TYPE} dans {TIME}...",
-      "COMMAND": "cette commande",
-      "COMPONENT": "ce bouton"
-    }
+    "TITLE": "Vous êtes trop *rapide* !",
+    "DESCRIPTION": "Vous pouvez réessayer {time}."
   },
   "color set": {
-    "meta": {
-      "description": "Changez votre couleur d'accentuation CRBT.",
-      "options": [
-        {
-          "name": "couleur",
-          "description": "Choisissez une suggestion ou un code HEX."
-        }
-      ]
-    },
     "colorNames": {
-      "sync": "Synchroniser la couleur de profil Discord",
-      "lightred": "Rouge clair",
+      "sync": "Synchroniser avec votre couleur de bannière",
       "red": "Rouge",
-      "darkred": "Rouge foncé",
       "orange": "Orange",
       "yellow": "Jaune",
-      "lightgreen": "Vert clair",
       "green": "Vert",
-      "darkgreen": "Vert foncé",
-      "cyan": "Cyan",
-      "lightblue": "Bleu clair",
       "blue": "Bleu",
-      "darkblue": "Bleu foncé",
       "blurple": "Bleu-violet",
-      "lightpurple": "Violet clair",
       "purple": "Violet",
-      "darkpurple": "Violet foncé",
       "pink": "Rose",
-      "brown": "Marron",
-      "black": "Noir",
-      "gray": "Gris",
-      "white": "Blanc"
-    },
-    "errors": {
-      "NO_DISCORD_COLOR": "Aucune couleur de profil à synchroniser. Pour en définir une, modifiez votre profil Discord."
+      "gray": "Gris"
     },
     "strings": {
-      "EMBED_TITLE": "Couleur d'accentuation mise à jour.",
-      "EMBED_SYNC_INFO": "Votre couleur d'accentuation CRBT est maintenant synchronisée avec votre couleur de profil Discord.",
+      "EMBED_SYNC_INFO": "Synchronisée avec votre couleur de bannière Discord.",
       "EMBED_DESCRIPTION": "Cette couleur est utilisée lorsque CRBT vous répond et dans l'affichage de vos infos utilisateur."
     }
   },
@@ -144,11 +108,9 @@
           "description": "Choisissez une date ou une heure relative."
         },
         {
-          "name": "sujet",
           "description": "Ce dont vous voulez être rappelé."
         },
         {
-          "name": "destination",
           "description": "Un salon où envoyer le rappel, par MPs par défaut."
         }
       ]
@@ -162,8 +124,7 @@
     "strings": {
       "SUCCESS_TITLE": "Rappel créé ! Utilisez {command} pour gérer vos rappels.",
       "BUTTON_GCALENDAR": "Ajouter à Google Agenda",
-      "GCALENDAR_EVENT": "Rappel CRBT.",
-      "GCALENDAR_EVENT_CHANNEL": "Vous serez également rappelé dans {destination}."
+      "GCALENDAR_EVENT_DESCRIPTION": "Vous serez également rappelé dans {destination}."
     },
     "keywordsDetection__KEEPLOWERCASE": {
       "AND": "et",
@@ -204,27 +165,21 @@
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "Un choix ne peut pas être vide (sans compter les émojis).",
-      "POLL_DATA_NOT_ALLOWED": "Seuls les modérateurs du chat (permission \"Gérer les messages\") et le créateur du sondage peuvent utiliser ce menu."
+      "CHOICE_EMPTY": "Un choix ne peut pas être vide (sans compter les émojis)."
     },
     "strings": {
       "POLL_DESCRIPTION": "Se termine {TIME}.\nLe créateur peut afficher les données de vote avec le bouton {ICON}.",
-      "POLL_OPTION_RESULT": "{PERCENTAGE}% • {VOTES} vote(s)",
       "POLL_FOOTER_CREATOR": "{user} a créé un sondage",
-      "POLL_SELECT_MENU_VOTE": "Voter",
       "SUCCESS_TITLE": "Sondage créé !",
       "SUCCESS_DESCRIPTION": "Vous pouvez voir les votes, éditer, supprimer ou terminer votre sondage plus tôt avec le bouton {ICON}.",
-      "POLL_DATA_OPTIONS": "Sondage • Données et options",
+      "DATA_AND_OPTIONS": "Données et options",
       "POLL_DATA_NOVOTES": "Aucun vote",
-      "POLL_DATA_FOOTER": "Ces données ne sont pas mises à jour en direct. Rafraîchissez-les en utilisant le bouton à nouveau.",
-      "BUTTON_END_POLL": "Terminer le sondage",
+      "POLL_DATA_FOOTER": "Rafraîchissez ces données en utilisant le bouton à nouveau.",
       "SUCCESS_POLL_DELETED": "Sondage supprimé.",
       "SUCCESS_POLL_ENDED": "Sondage terminé.",
       "POLL_DESCRIPTION_ENDED": "Le sondage est terminé. Vous ne pouvez plus voter dessus.",
       "POLL_RESULTS_TITLE": "C'est dans la boîte !",
-      "POLL_RESULTS_DESCRIPTION_TIE": "Les choix \"{OPTION1}\" et \"{OPTION2}\" ont fini à égalité avec {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_WIN": "Le choix \"{OPTION}\" a gagné avec {VOTES} vote(s)",
-      "POLL_RESULTS_DESCRIPTION_REST": "sur {TOTAL} !\nCliquez sur le bouton ci-dessous pour afficher les résultats."
+      "POLL_RESULTS_DESCRIPTION": "Le(s) choix {options} a/ont gagné avec {votes} vote(s)/{total} !"
     }
   },
   "banner": {
@@ -232,7 +187,7 @@
   },
   "USER_TYPE_COMMAND_OPTION_DESCRIPTION": "Un utilisateur Discord ou son identifiant.",
   "SERVER_ID_TYPE_COMMAND_OPTION_DESCRIPTION": "Un identifiant de serveur Discord.",
-  "REASON_DESCRIPTION": "Davantage de contexte pour l'Histoire de Modération.",
+  "REASON_DESCRIPTION": "Davantage de contexte pour l'Historique de Modération.",
   "avatar": {
     "meta": {
       "description": "Obtenir l'avatar d'un utilisateur.",
@@ -280,19 +235,6 @@
       ]
     }
   },
-  "role-selectors": {
-    "errors": {
-      "ROLES_DO_NOT_EXIST": "Un ou plusieurs des rôles sélectionnés ont été supprimés. Contactez un administrateur pour résoudre le problème.",
-      "BUTTON_ROLES_ONCE": "Vous ne pouvez pas retirer ce rôle."
-    },
-    "strings": {
-      "SELECT_MENU_ROLES_SUCCESS": "Vos rôles ont été mis à jour avec succès.",
-      "BUTTON_ROLES_ADD": "Le rôle {ROLE} vous a été ajouté.",
-      "BUTTON_ROLES_ADD_AGAIN": "Sélectionnez-le à nouveau pour le retirer.",
-      "BUTTON_ROLES_REMOVE": "{ROLE} a été retiré de vos rôles.",
-      "BUTTON_ROLES_REMOVE_AGAIN": "Sélectionnez-le à nouveau pour l'ajouter."
-    }
-  },
   "AVATAR": "Avatar",
   "USER_INFO": "Infos utilisateur",
   "BOT_INFO": "Infos du bot",
@@ -327,12 +269,9 @@
   "REPORTED_BY": "Signalé par ",
   "JOIN_MESSAGE": "Message de bienvenue",
   "LEAVE_MESSAGE": "Message de départ",
-  "JOIN_CHANNEL": "Salon de bienvenue",
-  "LEAVE_CHANNEL": "Salon de départ",
   "CRBTSCRIPT_GUIDE": "Guide CRBTscript",
-  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Modifier ce message pour personnaliser le {TYPE} en utilisant le menu de sélection ci-dessous.",
+  "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Commencez à éditer ce message en utilisant le menu déroulant ci-dessous !",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Votre message ne doit pas être vide !",
-  "JOINLEAVE_PREVIEW_EMBED_TITLE": "{TYPE} - Aperçu",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "Voici à quoi ressemblera le {TYPE} lorsqu'il sera envoyé dans {CHANNEL}.",
   "JOIN_MESSAGE_DEFAULT_TITLE": "Bienvenue <user.name> sur <server.name> !",
   "ERROR_NO_MESSAGE": "Vous devez d'abord définir un message.",
@@ -363,26 +302,22 @@
   "ROLE": "Rôle(s)",
   "MAJOR_PERMS": "Permissions principales sur ce serveur",
   "NO_PERMS": "*Aucune permission*",
-  "ADMIN_ALL_PERMS": "Administrateur (toutes les permissions)",
   "HELP": "Aide",
   "help": {
     "description": "Besoin d'aide pour utiliser CRBT ?"
   },
   "HELP_DESCRIPTION": "Tapez {prefix} et cliquez sur {botIcon} pour une liste des commandes, ou faites un clic droit/appui long sur un message ou un utilisateur pour des actions rapides.\nCRBT intégre des fonctionnalités pratiques telles que les rappels ({reminder}), les messages de bienvenue/d'adieu ({settings}), l'obtention d'informations ({infoCommands}), et plus à venir !",
   "HELP_AD_TITLE": "Vous aimez CRBT ?",
-  "HELP_AD_DESCRIPTION": "Ajoutez-moi à votre serveur !",
+  "HELP_AD_DESCRIPTION": "Invitez CRBT sur votre serveur !",
   "GIVEAWAY": "Concours",
   "giveaway": {
     "description": "Créez un concours.",
     "options": {
       "prize": {
-        "description": "Quoi donner au concours."
-      },
-      "end_date": {
-        "description": "Quand mettre fin au concours."
+        "description": "Que mettez-vous en jeu ?"
       },
       "winners": {
-        "description": "Combien de personnes peuvent gagner."
+        "description": "Combien de personnes peuvent gagner le concours ?"
       }
     }
   },
@@ -442,6 +377,8 @@
   "ROLL_RESULTS_TITLE": "Vos dés donnent un résultat de {result}.",
   "ROLL_RESULTS_FOOTER": "Vos lancers : {results}.",
   "TRANSLATE": "traduire",
+  "TO": "À",
+  "FROM": "De",
   "translate": {
     "description": "Traduisez du texte dans une autre langue.",
     "options": {
@@ -450,11 +387,9 @@
         "description": "Le texte à traduire."
       },
       "target": {
-        "name": "vers",
         "description": "La langue dans laquelle traduire."
       },
       "source": {
-        "name": "de",
         "description": "Langue depuis laquelle traduire."
       }
     }
@@ -462,8 +397,7 @@
   "TRANSLATE_ERROR_INVALID_LANGUAGE": "{language} n'est pas une langue valide.",
   "TRANSLATE_RESULT": "Traduction {source} vers {target}",
   "TRANSLATE_SELECT_MENU_PLACEHOLDER": "Traduire vers",
-  "REMINDER_LIST_TITLE": "{user} - Rappels ({number})",
-  "REMINDER_LIST_NO_REMINDERS": "Aucun rappel défini. Utilisez {command} pour en définir un !",
+  "REMINDER_LIST_NO_REMINDERS": "Aucun rappel défini.",
   "REMINDER_LIST_DESCRIPTION": "Créez un nouveau rappel avec {command}.",
   "REMINDER_DESTINATION": "Destination :",
   "DMS": "MP",
@@ -488,10 +422,7 @@
     }
   },
   "PICK_RESULT": "\"{value}\" sélectionné sur {number} choix.",
-  "privacy": {
-    "name": "confidentialité",
-    "description": "Consultez et modifiez vos paramètres de confidentialité."
-  },
+  "PRIVACY": "Confidentialité",
   "SILENT_LEAVES": "Quitter en mode silencieux",
   "SILENT_JOINS": "Rejoindre en mode silencieux",
   "TELEMETRY": "Télémétrie de commandes",
@@ -506,9 +437,11 @@
   },
   "ATTENTION_REQUIRED": "Attention requise",
   "OVERVIEW": "Vue d'ensemble",
+  "USER_SETTINGS_TITLE": "Paramètres utilisateur",
   "SETTINGS_TITLE": "Réglages du serveur",
   "FEATURES": "Fonctionnalités",
-  "SETTINGS_DESCRIPTION": "Configurez ou modifiez les fonctionnalités de CRBT avec le menu déroulant ci-dessous.",
+  "USER_SETTINGS_DESCRIPTION": "Gérez vos informations, votre vie privée et les paramètres de fonctionnalités pour faire de CRBT le vôtre.",
+  "SETTINGS_DESCRIPTION": "Gérez les fonctionnalités de CRBT et les paramètres de confidentialité pour que votre serveur fonctionne comme vous le souhaitez.",
   "ENABLE": "Activer",
   "DISABLE": "Désactiver",
   "ENABLE_FEATURE": "Activer cette fonctionnalité",
@@ -518,6 +451,8 @@
   "MODERATION_REPORTS": "Signalements",
   "SERVER_THEME": "Thème du Serveur",
   "AUTOMATIC_THEMING": "Thème automatique",
+  "JOIN_LEAVE": "Bienvenus et départs",
+  "MODERATION": "Modération",
   "ECONOMY": "Économie",
   "STATUS": "État",
   "SETTINGS_ERRORS_FOUND": "{number} erreurs détectées",
@@ -528,8 +463,9 @@
   "EDIT_CHANNEL": "Modifier le salon",
   "CHANNEL": "Salon",
   "EDIT_SOMETHING": "Modifier {feature}",
-  "SETTINGS_COLOR_SET_TO": "Couleur réglée sur {color}",
-  "SETTINGS_COLOR_DESCRIPTION": "Personnalisez les sondages, les cadeaux et plus encore avec les thèmes ! Le Thème Automatique sélectionne la couleur principale de l'icône de votre serveur. Ou, vous pouvez choisir un préréglage de couleur ou un code HEX.\nActuellement réglé sur **{color}**.",
+  "SETTINGS_COLOR_SET_TO": "Couleur du thème",
+  "SETTINGS_COLOR_DESCRIPTION": "Personnalisez l'apparence des Sondages, des Concours et plus encore. Choisissez une couleur manuellement, ou laissez CRBT extraire la couleur principale de l'icône de votre serveur.",
+  "SETTINGS_JOIN_LEAVE_DESCRIPTION": "Envoyez automatiquement des messages pour accueillir les nouveaux membres et annoncez quand les membres quittent votre serveur.",
   "SETTINGS_MODLOGS_DESCRIPTION": "Recevez des notifications en temps réel dans un salon pour toutes les actions de modération effectuées avec CRBT.",
   "SETTINGS_MODREPORTS_DESCRIPTION": "Les membres peuvent signaler un message ou un utilisateur à un salon en utilisant les Signalements en faisant un clic droit/appuyant longuement dessus.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Salon introuvable. Modifiez-le pour que CRBT puisse continuer à y envoyer des messages.",
@@ -625,7 +561,6 @@
     }
   },
   "EMOJI_INFO": "Info sur l'emoji",
-  "UNICODE": "Unicode",
   "EMOJI": "Émoji(s)",
   "AVAILABLE_SINCE": "Disponible depuis",
   "CLONE_TO_THIS_SERVER": "Cloner sur ce serveur",
@@ -660,9 +595,9 @@
     }
   },
   "REPORT_SUCCESS_TITLE": "Signalement envoyé !",
-  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé au **[serveur communautaire]({server})**, où les membres peuvent discuter du problème.\nVous serez mis à jour à ce sujet par l'intermédiaire de vos DM.",
+  "REPORT_SUCCESS_DESCRIPTION": "Il a été envoyé à la **[Communauté CRBT]({server})**, où les membres peuvent discuter du problème.",
   "REPORT_MODAL_TITLE": "Nouveau rapport",
-  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Quel est le problème ?",
+  "REPORT_MDOAL_TITLE_PLACEHOLDER": "Qu'avez-vous rencontré ?",
   "IMAGE_OPTION_DESCRIPTION": "Ajouter une image.",
   "ERROR_ATTACHMENT_INVALID_TYPE_IMAGE": "Vous ne pouvez envoyer que des images.",
   "report": {
@@ -670,5 +605,15 @@
   },
   "user_info": {
     "description": "Obtenir les informations Discord sur un utilisateur."
-  }
+  },
+  "TRANSLATE_MESSAGE_NO_CONTENT_TITLE": "Aucun texte ou image à traduire n'a été trouvé.",
+  "TRANSLATE_MESSAGE_NO_CONTENT_DESCRIPTION": "Utilisez {command} pour traduire du texte.",
+  "OCR_ERROR_MESSAGE": "Aucun texte reconnu. Réessayez avec une image plus lisible.",
+  "SET_REMINDER_EMBED_TITLE": "Quand faut-il vous en rappeler ?",
+  "SET_REMINDER_EMBED_DESCRIPTION": "Modifiez-le à souhait avec {command}.",
+  "MORE_ELEMENTS": "+ {number} autres...",
+  "SEARCH_ERROR_NO_RESULTS_TITLE": "Aucun résultat trouvé.",
+  "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Regardez vos erreurs d'orthographe ou pour un sujet plus large.\nLes résultats NSFW sont cachés en dehors des salons soumis à une limite d'âge.",
+  "DURATION": "Durée",
+  "VIEWS": "Vues"
 }
