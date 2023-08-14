@@ -1,14 +1,15 @@
+import { createCRBTError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { banner } from '$lib/functions/banner';
-import { createCRBTError } from '$lib/functions/CRBTError';
 import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { APIUser, Routes } from 'discord-api-types/v10';
+import { APIUser, MessageFlags, Routes } from 'discord-api-types/v10';
 import { GuildMember, Interaction, MessageButton } from 'discord.js';
-import { ChatCommand, components, getRestClient, OptionBuilder, row } from 'purplet';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
+import { ChatCommand, OptionBuilder, components, getRestClient, row } from 'purplet';
+import { ShareResponseBtn } from '../../components/ShareResult';
+import { AvatarFormats, AvatarSizes, NavBarContext, getTabs, navBar } from './_navbar';
 
 export default ChatCommand({
   name: 'banner',
@@ -52,13 +53,13 @@ export default ChatCommand({
         u,
         this,
         {
-          targetId: user.id,
+          targetId: u.id,
           userId: this.user.id,
           format: format as any,
           size: (size ?? '3') as any,
         },
-        m
-      )
+        m,
+      ),
     );
   },
 });
@@ -68,7 +69,7 @@ export async function renderBanner(
   user: APIUser,
   ctx: Interaction,
   navCtx: NavBarContext,
-  member?: GuildMember
+  member?: GuildMember,
 ) {
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
@@ -82,8 +83,8 @@ export async function renderBanner(
         ctx,
         user.id === ctx.user.id
           ? 'USER_BANNER_ERROR_NO_BANNER_SELF'
-          : 'USER_BANNER_ERROR_NO_BANNER_OTHER'
-      )
+          : 'USER_BANNER_ERROR_NO_BANNER_OTHER',
+      ),
     );
 
   const color = ctx.isButton() ? ctx.message.embeds[0].color : await getColor(user);
@@ -100,12 +101,13 @@ export async function renderBanner(
         color: color,
       },
     ],
+    flags: MessageFlags.Ephemeral,
     components: components(
       navBar(
         navCtx,
         ctx.locale,
         type === 'default' ? 'banner' : 'user_banner',
-        getTabs('user_banner', user, member)
+        getTabs('user_banner', user, member),
       ),
       row(
         new MessageButton({
@@ -115,8 +117,9 @@ export async function renderBanner(
             SIZE: `${size ?? 2048}`,
             FORMAT: b.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG',
           }),
-        })
-      )
+        }),
+        ShareResponseBtn(ctx, false),
+      ),
     ),
   };
 }
