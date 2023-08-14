@@ -1,14 +1,14 @@
 import { cache } from '$lib/cache';
 import { colors, emojis } from '$lib/env';
-import { chunks } from '$lib/functions/chunks';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { chunks } from '$lib/functions/chunks';
 import { t } from '$lib/language';
 import { MessageFlags, Routes } from 'discord-api-types/v10';
 import { ButtonInteraction } from 'discord.js';
 import { ButtonComponent, components, getRestClient, row } from 'purplet';
+import { searchEngines } from './_engines';
 import { returnFeaturedItem } from './featured';
 import { SearchCmdOpts } from './search';
-import { searchEngines } from './_engines';
 
 export interface SearchTabBtnProps {
   site?: string;
@@ -55,12 +55,11 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: SearchTabBtn
       ],
       components: components(
         ...this.message.components.map((r) =>
-          row().addComponents(r.components.map((b) => ({ ...b, disabled: true })))
-        )
+          row().addComponents(r.components.map((b) => ({ ...b, disabled: true }))),
+        ),
       ),
     });
   }
-  // console.log(await this.fetchReply());
 
   await this.editReply(await searchEngines[opts.site].handle.call(this, opts));
 }
@@ -88,14 +87,14 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
   const arr = chunks(
     [
       Object.entries(searchEngines).find(
-        ([v, { hide }]) => v === currentSite && v !== featured && hide
+        ([v, { hide }]) => v === currentSite && v !== featured && hide,
       ),
       searchEngines[featured].hide
         ? Object.entries(searchEngines).find(([v]) => v === featured)
         : null,
       ...Object.entries(searchEngines).filter(([v, { hide }]) => !hide),
     ].filter(Boolean),
-    5
+    5,
   );
 
   const result = components(
@@ -106,9 +105,9 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
             .setLabel(t(locale, `SEARCH_ENGINES.${engineSite}` as any))
             .setEmoji(emoji)
             .setStyle('SECONDARY')
-            .setDisabled(engineSite === currentSite)
-        )
-      )
+            .setDisabled(engineSite === currentSite),
+        ),
+      ),
     ),
     ...(searchEngines[currentSite].noPagination && opts.anonymous
       ? []
@@ -145,9 +144,9 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
                     .setLabel(searchEngines[currentSite].noPagination ? 'Delete Search' : '')
                     .setEmoji(emojis.buttons.trash_bin)
                     .setStyle('DANGER'),
-                ])
+                ]),
           ),
-        ])
+        ]),
   );
 
   return result;

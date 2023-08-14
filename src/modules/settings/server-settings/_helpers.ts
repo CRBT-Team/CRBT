@@ -147,8 +147,6 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
     include: include,
   };
 
-  console.log(fullQuery);
-
   return fetchWithCache(
     `${guildId}:settings`,
     () =>

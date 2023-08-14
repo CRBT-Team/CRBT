@@ -11,8 +11,8 @@ import { ImageUrlRegex, UrlRegex } from '$lib/util/regex';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { ModalComponent } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
-import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { saveServerSettings } from '../../settings/server-settings/_helpers';
+import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { userFeatureSettings } from '../../settings/user-settings/settings';
 
 export const FieldEditModal = ModalComponent({
@@ -39,7 +39,7 @@ export const FieldEditModal = ModalComponent({
       });
 
       return await this.update(
-        await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming)
+        await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming),
       );
     }
     if (type === EditableUserSettings.accentColor) {
@@ -57,11 +57,11 @@ export const FieldEditModal = ModalComponent({
             update: { accentColor: parseInt(value, 16) },
             where: { id: this.user.id },
           }),
-        true
+        true,
       );
 
       return await this.update(
-        await userFeatureSettings.call(this, EditableUserSettings.accentColor)
+        await userFeatureSettings.call(this, EditableUserSettings.accentColor),
       );
     }
 
@@ -117,12 +117,6 @@ export const FieldEditModal = ModalComponent({
       embed && !!(embed.author?.name || embed.description || embed.title || embed.footer?.text);
 
     const noTextInMessage = content !== invisibleChar && !(content || textInEmbed);
-
-    // console.log('noTextInMessage', noTextInMessage);
-    // console.log('doesEmbedHaveText', textInEmbed);
-    // console.log('isContentInvisible', content === invisibleChar);
-    // console.log('isThereAnyContent', !!content);
-    // console.log('whatsTheContent', JSON.stringify(content));
 
     if (noTextInMessage) {
       return CRBTError(this, { title: t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY') });

@@ -7,14 +7,14 @@ import {
   MessageComponentInteraction,
 } from 'discord.js';
 import { components } from 'purplet';
+import { NavBarProps, navbar } from './_navbar';
 import { SearchCmdOpts } from './search';
-import { navbar, NavBarProps } from './_navbar';
 
 export async function createSearchResponse(
   i: MessageComponentInteraction | CommandInteraction,
   opts: SearchCmdOpts,
   baseResponse: InteractionReplyOptions | InteractionUpdateOptions,
-  props: Pick<NavBarProps, 'pages'> = { pages: 1 }
+  props: Pick<NavBarProps, 'pages'> = { pages: 1 },
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
   const nav = navbar(opts, { userId: i.user.id, locale: i.locale, ...props });
 
@@ -24,7 +24,7 @@ export async function createSearchResponse(
       baseResponse.embeds.map(async (e) => ({
         ...e,
         color: e.color ?? (await getColor(i.user)),
-      }))
+      })),
     ),
     components: baseResponse.components ? components(...baseResponse.components, ...nav) : nav,
     ephemeral: opts.anonymous,
@@ -35,9 +35,11 @@ export async function createSearchResponse(
 export async function fetchResults<T>(
   i: { fetchReply: () => Promise<{ id: string }> },
   opts: SearchCmdOpts,
-  getResults: () => Promise<T>
+  getResults: () => Promise<T>,
 ): Promise<T> {
-  cache.set(`search:${(await i.fetchReply()).id}`, opts);
+  const messageId = (await i.fetchReply()).id;
+
+  cache.set(`search:${messageId}`, opts);
 
   return fetchWithCache(`${opts.site}:${opts.query}`, getResults);
 }

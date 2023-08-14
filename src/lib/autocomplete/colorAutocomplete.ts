@@ -21,8 +21,6 @@ export async function colorAutocomplete(this: AutocompleteInteraction, color: st
     }))
     .filter(({ name }) => name.toLowerCase().includes(color));
 
-  console.log(presetResults);
-
   return presetResults.length
     ? presetResults
     : chroma.valid(parseInt(color) ?? color)

@@ -8,7 +8,6 @@ export const EditPollModal = ModalComponent({
     const choices = this.components.slice(1).map((_, i) => {
       return this.fields.getTextInputValue(`poll_option_${i}`);
     });
-    console.log(choices);
 
     const msg = await this.channel.messages.fetch(msgId);
     const poll = await getPollData(this.channelId, msgId);
