@@ -3,19 +3,19 @@ import { t } from '$lib/language';
 import { CommandInteraction, MessageAttachment, MessageComponentInteraction } from 'discord.js';
 import { readFileSync } from 'fs';
 import { fetch } from 'undici';
+import { createSearchResponse, fetchResults } from './_response';
 import { SearchCmdOpts } from './search';
 import { handleDuckDuckGo } from './web';
-import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDictionary(
   this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
+  opts: SearchCmdOpts,
 ) {
   try {
     const res = await fetchResults(this, opts, () =>
       fetch(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURI(opts.query)}`).then(
-        (r) => r.json()
-      )
+        (r) => r.json(),
+      ),
     );
 
     if (!res) {
@@ -29,15 +29,22 @@ export async function handleDictionary(
       }
     }
     const def = res[0];
+    console.log(def);
 
     //TODO: localize this
     return createSearchResponse(this, opts, {
       embeds: [
         {
-          title: `${def.meanings.length === 1 ? 'Definition' : 'Definitions'} for "${def.word}"`,
+          author: def.sourceUrls?.[0]
+            ? {
+                name: def.sourceUrls[0],
+                url: def.sourceUrls[0],
+              }
+            : null,
+          title: `${def.meanings?.length === 1 ? 'Definition' : 'Definitions'} for "${def.word}"`,
           fields: [
             { name: 'Phonetics', value: def.phonetic ?? `*${t(this, 'NONE')}*`, inline: true },
-            def.meanings.map((meaning, i) => ({
+            def.meanings?.map((meaning, i) => ({
               name: `**${i + 1}. *${meaning.partOfSpeech}***`,
               value:
                 meaning.definitions[0].definition +
@@ -45,7 +52,7 @@ export async function handleDictionary(
                 (meaning.definitions[0].example
                   ? `*"${meaning.definitions[0].example.replaceAll(
                       def.word,
-                      `**${def.word}**`
+                      `**${def.word}**`,
                     )}"*` + `\n\n`
                   : '') +
                 (meaning.definitions[0].synonyms.length > 0
@@ -58,9 +65,11 @@ export async function handleDictionary(
             })),
           ],
           footer: {
-            text: t(this, 'POWERED_BY', {
-              provider: 'Google Dictionary',
-            }),
+            text: def.sourceUrls?.[0]
+              ? ''
+              : t(this, 'POWERED_BY', {
+                  provider: 'Google Dictionary',
+                }),
           },
         },
       ],
@@ -71,7 +80,7 @@ export async function handleDictionary(
                 await fetch(`${def.phonetics[0].audio}`)
                   .then((res) => res.arrayBuffer())
                   .then((buffer) => Buffer.from(buffer)),
-                'Pronounciation.mp3'
+                'Pronounciation.mp3',
               ),
             ]
           : null,
@@ -82,7 +91,7 @@ export async function handleDictionary(
 }
 
 export const englishDictionary = readFileSync('./src/lib/util/words-en-US.txt', 'utf8').split(
-  '\r\n'
+  '\r\n',
 );
 
 // export default ChatCommand({
