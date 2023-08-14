@@ -24,10 +24,10 @@ import {
   MessageComponentInteraction,
   UserContextMenuInteraction,
 } from 'discord.js';
-import { ChatCommand, components, getRestClient, OptionBuilder, UserContextCommand } from 'purplet';
+import { ChatCommand, OptionBuilder, UserContextCommand, components, getRestClient } from 'purplet';
 import { ShareResponseBtn } from '../../components/ShareResult';
 import { getUser } from '../../settings/user-settings/_helpers';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
+import { AvatarFormats, AvatarSizes, NavBarContext, getTabs, navBar } from './_navbar';
 
 export default ChatCommand({
   name: 'user info',
@@ -50,8 +50,8 @@ export default ChatCommand({
           targetId: u.id,
           userId: this.user.id,
         },
-        m
-      )
+        m,
+      ),
     );
   },
 });
@@ -69,7 +69,7 @@ export const ctxCommand = UserContextCommand({
           targetId: user.id,
           userId: this.user.id,
         },
-        member
+        member,
       )),
       ephemeral: true,
     });
@@ -112,7 +112,7 @@ export async function renderUser(
   ctx: Interaction,
   user: APIUser,
   navCtx: NavBarContext,
-  member?: GuildMember
+  member?: GuildMember,
 ) {
   const crbtUser = await getUser(user.id);
   const userBadges = getBadgeEmojis(user.flags, crbtUser.crbtBadges);
@@ -126,12 +126,19 @@ export async function renderUser(
     {
       name: 'Identity',
       value: dedent`
-      Unique username: **${formatUsername(user)}**
-      Global display name: **${user.display_name ?? user.username}**
-      ${member?.nickname ? `Server nickname: **${member.nickname}**\n` : ''}
+      ${t(ctx, 'IDENTITY_UNIQUE_USERNAME', {
+        username: `**${formatUsername(user)}**`,
+      })}
+      ${t(ctx, 'IDENTITY_GLOBAL_NAME', {
+        globalName: `**${user.display_name ?? user.username}**`,
+      })}
       ${
-        user.discriminator === '0' ? emojis.toggle.on : emojis.toggle.off
-      } **Uses [the new username system](https://dis.gd/usernames)**`,
+        member?.nickname
+          ? t(ctx, 'IDENTITY_SERVER_NICKNAME', {
+              nickname: `**${member.nickname}**`,
+            })
+          : ''
+      }`,
     },
   ];
 
@@ -161,7 +168,7 @@ export async function renderUser(
         name: t(ctx, 'JOINED_SERVER'),
         value: `${timestampMention(member.joinedAt)}\n${timestampMention(member.joinedAt, 'R')}`,
         inline: true,
-      }
+      },
     );
   } else {
     fields.push({
@@ -195,7 +202,7 @@ export async function renderUser(
     flags: MessageFlags.Ephemeral,
     components: components(
       navBar(navCtx, ctx.locale, 'userinfo', getTabs('userinfo', user, member)),
-      ShareResponseBtn(ctx, false)
+      ShareResponseBtn(ctx, false),
     ),
   };
 }

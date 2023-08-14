@@ -1,7 +1,7 @@
 import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
-import { CRBTError, createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError, createCRBTError } from '$lib/functions/CRBTError';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { localeLower } from '$lib/functions/localeLower';
@@ -11,12 +11,10 @@ import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { Giveaway } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
-import dayjs from 'dayjs';
-import dedent from 'dedent';
+import { timestampMention, userMention } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { Message, MessageButton, MessageComponentInteraction, MessageEmbed } from 'discord.js';
-import { ButtonComponent, ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { Message, MessageButton, MessageComponentInteraction } from 'discord.js';
+import { ButtonComponent, ChatCommand, OptionBuilder, components, row } from 'purplet';
 
 const activeGiveaways = new Map<string, Giveaway>();
 
@@ -57,7 +55,7 @@ export default ChatCommand({
         this,
         t(this, 'ERROR_MISSING_PERMISSIONS', {
           permissions: '"Manage Server"',
-        })
+        }),
       );
     }
 
@@ -66,7 +64,7 @@ export default ChatCommand({
         this,
         t(this, 'ERROR_INVALID_DURATION', {
           relativeTime: '1 month',
-        })
+        }),
       );
     }
 
@@ -80,15 +78,11 @@ export default ChatCommand({
           {
             author: {
               name: t(this.guildLocale, 'GIVEAWAY'),
-              iconURL: icons.giveaway,
             },
             title: prize,
-            description: dedent`
-            Ends ${timestampMention(end)} • ${timestampMention(end, 'R')}
-            Hosted by <@${this.user.id}>`,
             fields: [
               {
-                name: 'Entrants',
+                name: t(this.guildLocale, 'PARTICIPANTS'),
                 value: '0',
                 inline: true,
               },
@@ -97,22 +91,36 @@ export default ChatCommand({
                 value: winners.toLocaleString(this.guildLocale),
                 inline: true,
               },
+              {
+                name: t(this.guildLocale, 'HOST'),
+                value: userMention(this.user),
+              },
+              {
+                name: t(this.guildLocale, 'END_DATE'),
+                value: `${timestampMention(end)} • ${timestampMention(end, 'R')}`,
+              },
             ],
+            thumbnail: {
+              url: icons.giveaway,
+            },
             color: await getColor(this.guild),
           },
         ],
         components: components(
           row(
-            new EnterGwayButton().setStyle('PRIMARY').setEmoji(emojis.tada).setLabel('Enter'),
-            new GwayOptionsButton().setEmoji(emojis.buttons.menu).setStyle('SECONDARY')
-          )
+            new EnterGwayButton()
+              .setStyle('PRIMARY')
+              .setEmoji(emojis.tada)
+              .setLabel(t(this.guildLocale, 'ENTER_GIVEAWAY')),
+            new GwayOptionsButton().setEmoji(emojis.buttons.menu).setStyle('SECONDARY'),
+          ),
         ),
       });
 
       const data = await dbTimeout(TimeoutTypes.Giveaway, {
         id: `${this.channel.id}/${msg.id}`,
-        expiresAt: end,
-        serverId: this.guildId,
+        endDate: end,
+        guildId: this.guildId,
         locale: this.guildLocale,
         hostId: this.user.id,
         participants: [],
@@ -123,13 +131,11 @@ export default ChatCommand({
       await this.editReply({
         embeds: [
           {
-            title: `${emojis.success} Giveaway started!`,
-            description: `It will end  ${timestampMention(
-              end,
-              'R'
-            )}, but you can prematurely end it by using the ${
-              emojis.menu
-            } menu. From this menu, you can also cancel it or view the entrants.`,
+            title: `${emojis.success} ${t(this, 'GIVEAWAY_SUCCESS_TITLE')}`,
+            description: t(this, 'GIVEAWAY_SUCCESS_TITLE', {
+              relativeTime: timestampMention(end, 'R'),
+              icon: emojis.menu,
+            }),
             color: colors.success,
           },
         ],
@@ -166,7 +172,9 @@ export const GwayOptionsButton = ButtonComponent({
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
-        'Only managers ("Manage Server" permission) can manage this giveaway.'
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Server',
+        }),
       );
     }
 
@@ -178,13 +186,18 @@ export const GwayOptionsButton = ButtonComponent({
           title: `${t(this, 'GIVEAWAY')} - ${strings.DATA_AND_OPTIONS}`,
           fields: [
             {
-              name: `Entrants (${gwayData.participants.length})`,
+              name: `${t(this, 'PARTICIPANTS')} (${gwayData.participants.length})`,
               value: gwayData.participants.length
-                ? trimArray(
-                    gwayData.participants.map((id) => `<@${id}>`),
-                    this.locale,
-                    15
-                  ).join(', ')
+                ? new Intl.ListFormat(this.locale, {
+                    type: 'conjunction',
+                    style: 'long',
+                  }).format(
+                    trimArray(
+                      gwayData.participants.map((id) => `<@${id}>`),
+                      this.locale,
+                      15,
+                    ),
+                  )
                 : `*${t(this, 'NONE')}*`,
             },
           ],
@@ -203,8 +216,8 @@ export const GwayOptionsButton = ButtonComponent({
           new CancelGwayButton(this.message.id)
             .setLabel(t(this, 'CANCEL'))
             .setEmoji(emojis.buttons.trash_bin)
-            .setStyle('DANGER')
-        )
+            .setStyle('DANGER'),
+        ),
       ),
       ephemeral: true,
     });
@@ -224,7 +237,7 @@ export const CancelGwayButton = ButtonComponent({
       await this.update({
         embeds: [
           {
-            title: `${emojis.success} Giveaway deleted.`,
+            title: `${emojis.success} ${t(this, 'GIVEAWAY_DELETED')}`,
             color: colors.success,
           },
         ],
@@ -248,7 +261,7 @@ export const EndGwayButton = ButtonComponent({
     await this.update({
       embeds: [
         {
-          title: `${emojis.success} Ended giveaway`,
+          title: `${emojis.success} ${t(this, 'GIVEAWAY_ENDED')}`,
           color: colors.success,
         },
       ],
@@ -269,7 +282,7 @@ export const ExitGwayButton = ButtonComponent({
     await this.update({
       embeds: [
         {
-          title: `${emojis.success} You left the giveaway.`,
+          title: `${emojis.success} ${t(this, 'LEAVE_GIVEAWAY_SUCCESS')}`,
           color: colors.success,
         },
       ],
@@ -285,7 +298,7 @@ export const ExitGwayButton = ButtonComponent({
               ...msg.embeds[0].fields[0],
               value: msg.embeds[0].fields[0].value.replace(
                 /\d+/,
-                (match) => `${parseInt(match) - 1}`
+                (match) => `${parseInt(match) - 1}`,
               ),
             },
             ...(msg.embeds[0].fields.slice(1) as any[]),
@@ -302,14 +315,14 @@ export const EnterGwayButton = ButtonComponent({
 
     if (giveaway.participants.includes(this.user.id)) {
       return this.reply({
-        ...createCRBTError(this, 'You have already entered this giveaway.'),
+        ...createCRBTError(this, t(this, 'GIVEAWAY_ALREADY_ENTERED')),
         components: components(
           row(
             new ExitGwayButton(this.message.id)
-              .setLabel('Leave Giveaway')
+              .setLabel(t(this, 'LEAVE_GIVEAWAY'))
               .setEmoji(emojis.buttons.cross)
-              .setStyle('DANGER')
-          )
+              .setStyle('DANGER'),
+          ),
         ),
       });
     }
@@ -327,7 +340,7 @@ export const EnterGwayButton = ButtonComponent({
               ...this.message.embeds[0].fields[0],
               value: this.message.embeds[0].fields[0].value.replace(
                 /\d+/,
-                (match) => `${parseInt(match) + 1}`
+                (match) => `${parseInt(match) + 1}`,
               ),
             },
             ...(this.message.embeds[0].fields.slice(1) as any[]),
@@ -346,21 +359,29 @@ export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
 
   await gwayMsg.edit({
     embeds: [
-      new MessageEmbed({
+      {
         ...gwayMsg.embeds[0],
-      })
-        .setAuthor({
-          name: 'Giveaway Ended',
-          iconURL: icons.giveaway,
-        })
-        .setDescription(
-          `Ended <t:${dayjs().unix()}> (<t:${dayjs().unix()}:R>)\n${
-            winners.length === 1
-              ? `Winner: <@${winners[0]}>`
-              : `Winners: ${winners.map((id) => `<@${id}>`).join(', ')}`
-          }\n${gwayMsg.embeds[0].description.split('\n').at(-1)}`
-        )
-        .setColor(colors.gray),
+        author: {
+          name: t(this, 'GIVEAWAY_ENDED'),
+        },
+        fields: [
+          {
+            name: t(giveaway.locale, 'WINNERS'),
+            value: new Intl.ListFormat(giveaway.locale, {
+              type: 'conjunction',
+              style: 'long',
+            }).format(winners.map((id) => `<@${id}>`)),
+            inline: false,
+          },
+          ...gwayMsg.embeds[0].fields.slice(2, -1),
+          {
+            name: t(giveaway.locale, 'END_DATE'),
+            value: `${timestampMention(new Date())} • ${timestampMention(new Date(), 'R')}`,
+            inline: true,
+          },
+        ],
+        color: colors.gray,
+      },
     ],
     components: [],
   });
@@ -371,21 +392,25 @@ export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
     },
     content: winners.map((id) => `<@${id}>`).join(' '),
     embeds: [
-      new MessageEmbed()
-        .setAuthor({
-          name: 'Congratulations!',
-          iconURL: icons.giveaway,
-        })
-        .setDescription(`${winners.map((id) => `<@${id}>`).join(', ')} won **${prize}**!`)
-        .setColor(colors.success),
+      {
+        title: `${emojis.tada} ${t(giveaway.locale, 'CONGRATULATIONS')}`,
+        description: t(giveaway.locale, 'GIVEAWAY_RESULTS_DESCRIPTION', {
+          users: new Intl.ListFormat(giveaway.locale, {
+            type: 'conjunction',
+            style: 'long',
+          }).format(winners.map((id) => `<@${id}>`)),
+          prize: `**${prize}**`,
+        }),
+        color: colors.success,
+      },
     ],
     components: components(
       row(
         new MessageButton()
           .setStyle('LINK')
           .setURL(gwayMsg.url)
-          .setLabel(t(giveaway.locale, 'JUMP_TO_MSG'))
-      )
+          .setLabel(t(giveaway.locale, 'JUMP_TO_MSG')),
+      ),
     ),
   });
 

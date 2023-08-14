@@ -242,6 +242,10 @@
   "USER_AVATAR": "User Avatar",
   "USER_BANNER": "User Banner",
   "SERVER_INFO": "Server info",
+  "IDENTITY": "Identity",
+  "IDENTITY_UNIQUE_USERNAME": "Unique username: {username}",
+  "IDENTITY_GLOBAL_NAME": "Global display name: {globalName}",
+  "IDENTITY_SERVER_NICKNAME": "Server nickname: {nickname}",
   "ICON": "Icon",
   "BANNER": "Banner",
   "WARN": "Warn",
@@ -321,8 +325,20 @@
       }
     }
   },
+  "PARTICIPANTS": "Participants",
   "WINNERS": "Winners",
   "PRIZE": "Prize",
+  "HOST": "Host",
+  "ENTER_GIVEAWAY": "Enter Giveaway",
+  "GIVEAWAY_SUCCESS_TITLE": "Giveaway started!",
+  "GIVEAWAY_SUCCESS_DESCRIPTION": "It will end {relativeTime}, but you can prematurely end it using the {icon} menu. From there, you can also cancel the giveaway or view the participants.",
+  "GIVEAWAY_DELETED": "Giveaway deleted.",
+  "GIVEAWAY_ENDED": "Giveaway ended",
+  "LEAVE_GIVEAWAY": "Leave Giveaway",
+  "LEAVE_GIVEAWAY_SUCCESS": "You left the giveaway.",
+  "GIVEAWAY_ALREADY_ENTERED": "You've already entered this giveaway.",
+  "CONGRATULATIONS": "Congratulations!",
+  "GIVEAWAY_RESULTS_DESCRIPTION": "{users} have won {prize}!",
   "8ball": {
     "name": "8ball",
     "description": "Ask a question to 8-Ball.",
@@ -431,7 +447,10 @@
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
   "YOUR_CRBT_DATA": "Your CRBT data",
   "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
-  "PRIVACY_SETTINGS_TITLE": "Privacy Settings",
+  "PRIVACY_DOWNLOAD_MY_DATA": "Download my data",
+  "PRIVACY_DELETE_MY_DATA": "Delete my data",
+  "PRIVACY_DESCRIPTION": "CRBT is transparent about the way it collects and uses your data.",
+  "PRIVACY_POLICY_LINK": "Read our Privacy Policy.",
   "settings": {
     "description": "Configure CRBT's Server Settings."
   },

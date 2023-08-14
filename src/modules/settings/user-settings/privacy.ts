@@ -4,8 +4,8 @@ import { t } from '$lib/language';
 import { EditableUserSettings, UserSettingsMenusProps } from '$lib/types/user-settings';
 import { MessageAttachment } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
-import { userFeatureSettings } from './settings';
 import { getUser } from './_helpers';
+import { userFeatureSettings } from './settings';
 
 const privacyPreferences = [
   ['telemetry', 'TELEMETRY'],
@@ -14,7 +14,8 @@ const privacyPreferences = [
 ];
 
 export const privacySettings: UserSettingsMenusProps = {
-  description: () => `You can review our **[Privacy Policy on the website](${links.policy})**.`,
+  description: (l) =>
+    `${t(l, 'PRIVACY_DESCRIPTION')} **[${t(l, 'PRIVACY_POLICY_LINK')}](${links.policy})**`,
   renderMenuMessage: ({ i, accentColor, user, backBtn }) => ({
     embeds: [
       {
@@ -38,13 +39,13 @@ export const privacySettings: UserSettingsMenusProps = {
           new ToggleSettingBtn({ setting: id, newState: !user[id] })
             .setLabel(t(i, stringId as any))
             .setStyle('SECONDARY')
-            .setEmoji(user[id] ? emojis.toggle.on : emojis.toggle.off)
-        )
+            .setEmoji(user[id] ? emojis.toggle.on : emojis.toggle.off),
+        ),
       ),
       row(
-        new ExportAllData().setStyle('PRIMARY').setLabel('Download my data'),
-        new ConfirmDataDeletion().setStyle('DANGER').setLabel('Delete my data')
-      )
+        new ExportAllData().setStyle('PRIMARY').setLabel(t(this, 'PRIVACY_DOWNLOAD_MY_DATA')),
+        new ConfirmDataDeletion().setStyle('DANGER').setLabel(t(this, 'PRIVACY_DELETE_MY_DATA')),
+      ),
     ),
   }),
 };
@@ -98,8 +99,8 @@ export const ConfirmDataDeletion = ButtonComponent({
       components: components(
         row(
           new DeleteAllData().setLabel('Yes, delete it all!').setStyle('DANGER'),
-          new CancelButton().setLabel('Nevermind').setStyle('SECONDARY')
-        )
+          new CancelButton().setLabel('Nevermind').setStyle('SECONDARY'),
+        ),
       ),
       ephemeral: true,
     });
