@@ -8,8 +8,9 @@ import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
-import { CustomEmojiRegex, timestampMention } from '@purplet/utils';
-import { ChatCommand, components, OptionBuilder, row } from 'purplet';
+import { Poll } from '@prisma/client';
+import { CustomEmojiRegex, dateToSnowflake, timestampMention } from '@purplet/utils';
+import { ChatCommand, OptionBuilder, components, row } from 'purplet';
 import { PollMenuButton } from './components/PollMenuButton';
 import { VoteButton } from './components/VoteButton';
 import { renderPoll } from './functions/renderPoll';
@@ -35,7 +36,7 @@ for (let i = 1; i <= 4; i++) {
   options.string(`choice${i}`, t('en-US', 'poll.meta.options.choice.description'), {
     nameLocalizations: getAllLanguages(
       'CHOICE',
-      (str, locale) => `${localeLower(str, locale)}${i}`
+      (str, locale) => `${localeLower(str, locale)}${i}`,
     ),
     descriptionLocalizations: getAllLanguages('poll.meta.options.choice.description'),
     maxLength: 45,
@@ -67,7 +68,7 @@ export default ChatCommand({
         this,
         t(this, 'ERROR_INVALID_DURATION', {
           relativeTime: '3 weeks',
-        })
+        }),
       );
     }
 
@@ -85,12 +86,15 @@ export default ChatCommand({
       }
 
       const pollData = {
-        expiresAt: new Date(Date.now() + ms(end_date)),
+        id: dateToSnowflake(new Date()),
+        title,
+        channelId: this.channelId,
+        endDate: new Date(Date.now() + ms(end_date)),
         locale: this.guildLocale,
         creatorId: this.user.id,
-        serverId: this.guild.id,
+        guildId: this.guild.id,
         choices: pollChoices.map((_) => []),
-      };
+      } as Poll;
 
       const msg = await this.channel.send({
         ...(await renderPoll.call(this, pollData, null, {
@@ -109,7 +113,7 @@ export default ChatCommand({
                 .setEmoji(choiceEmoji);
             }),
             new PollMenuButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY'),
-          ])
+          ]),
         ),
       });
 
@@ -117,10 +121,10 @@ export default ChatCommand({
         `poll:${this.channel.id}/${msg.id}`,
         () =>
           dbTimeout(TimeoutTypes.Poll, {
-            id: `${this.channel.id}/${msg.id}`,
             ...pollData,
+            messageId: msg.id,
           }),
-        true
+        true,
       );
 
       await this.editReply({
