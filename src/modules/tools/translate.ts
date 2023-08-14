@@ -1,10 +1,10 @@
 import { languagesAutocomplete } from '$lib/autocomplete/languagesAutocomplete';
-import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import googleTranslateApi from '@vitalets/google-translate-api';
+import { translate as googleTranslate } from '@vitalets/google-translate-api';
 import { upperCaseFirst } from 'change-case-all';
 import {
   CommandInteraction,
@@ -14,11 +14,11 @@ import {
 import { ocrSpace } from 'ocr-space-api-wrapper';
 import {
   ChatCommand,
-  components,
   MessageContextCommand,
   OptionBuilder,
-  row,
   SelectMenuComponent,
+  components,
+  row,
 } from 'purplet';
 import languages from '../../../static/misc/langs.json';
 
@@ -68,7 +68,7 @@ export const ctxCommand = MessageContextCommand({
         message.embeds.find((e) => e.thumbnail)?.thumbnail?.url;
 
     const embedsWithText = message.embeds.filter(
-      (e) => e.title || e.author?.name || e.footer?.text || e.description || e.fields?.length
+      (e) => e.title || e.author?.name || e.footer?.text || e.description || e.fields?.length,
     );
 
     if (!message.content && !image && !embedsWithText.length) {
@@ -109,7 +109,7 @@ export const ctxCommand = MessageContextCommand({
             ...f,
             name: await simpleTr(f.name),
             value: await simpleTr(f.value),
-          }))
+          })),
         ),
       }));
 
@@ -120,7 +120,7 @@ export const ctxCommand = MessageContextCommand({
             this.editReply({
               ...successMessage.embeds,
               embeds,
-            })
+            }),
           );
         } else {
           return this.editReply(successMessage);
@@ -145,7 +145,7 @@ export const ctxCommand = MessageContextCommand({
 async function translate(
   this: CommandInteraction | ContextMenuInteraction | MessageComponentInteraction,
   text: string,
-  opts?: { to?: string; from?: string }
+  opts?: { to?: string; from?: string },
 ) {
   const intl = new Intl.DisplayNames(this.locale, {
     type: 'language',
@@ -162,12 +162,12 @@ async function translate(
   const to = languageNames.find(
     ({ name, value }) =>
       name.toLowerCase().startsWith((opts?.to || this.locale.split('-')[0]).toLowerCase()) ||
-      value.toLowerCase() === (opts?.to || this.locale.split('-')[0]).toLowerCase()
+      value.toLowerCase() === (opts?.to || this.locale.split('-')[0]).toLowerCase(),
   )?.value;
   const from = languageNames.find(
     ({ name, value }) =>
       name.toLowerCase().startsWith((opts?.from ?? 'auto').toLowerCase()) ||
-      value.toLowerCase() === (opts?.from ?? 'auto').toLowerCase()
+      value.toLowerCase() === (opts?.from ?? 'auto').toLowerCase(),
   )?.value;
 
   if (!to) {
@@ -175,7 +175,7 @@ async function translate(
       this,
       t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
         language: from,
-      })
+      }),
     );
     return;
   }
@@ -184,7 +184,7 @@ async function translate(
       this,
       t(this, 'TRANSLATE_ERROR_INVALID_LANGUAGE', {
         language: to,
-      })
+      }),
     );
     return;
   }
@@ -225,9 +225,9 @@ async function translate(
                 value: code,
                 default: code === to,
               };
-            })
-          )
-      )
+            }),
+          ),
+      ),
     ),
   };
 }
@@ -245,7 +245,7 @@ export const TargetLangSelectMenu = SelectMenuComponent({
       await translate.call(this, sourceText, {
         to: lang,
         from: sourceLang,
-      })
+      }),
     );
   },
 });
@@ -255,26 +255,24 @@ export async function useTranslate(
   opts?: {
     source?: string;
     target?: string;
-  }
+  },
 ) {
   opts.source ??= 'auto';
   opts.target ??= 'en';
 
   const {
-    from: {
-      language: { iso: source },
-    },
-    text: translated,
-  } = await googleTranslateApi(text, { to: opts.target, from: opts.source });
+    raw: { src },
+    text: output,
+  } = await googleTranslate(text, { to: opts.target, from: opts.source });
 
-  return [translated, source, opts.target];
+  return [output, src, opts.target];
 }
 
 export async function useOcrScan(
   imageUrl: string,
-  lang: string = 'eng'
+  lang: string = 'eng',
 ): Promise<[string, boolean]> {
-  const req = await ocrSpace(imageUrl, {
+  const req = ocrSpace(imageUrl, {
     apiKey: process.env.OCR_TOKEN,
     OCREngine: '3',
   });
@@ -287,7 +285,7 @@ export async function useOcrScan(
     req.IsErroredOnProcessing ||
     !req.ParsedResults.length ||
     !req.ParsedResults[0].ParsedText ||
-    req.ParsedResults?.ErrorMessage
+    req.ErrorMessage
   ) {
     error = true;
   }
