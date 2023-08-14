@@ -11,14 +11,12 @@ export default {
   reminder: '<:reminder_circle:1035314614835105863>',
   menu: '<:menu:970980242925711402>',
   tada: '<:tada_deluxe:1036304075794419817>',
-  lock: '<:locked:1003323812651212860>',
+  lock: '<:lock:1140726694232211516>',
   thumbsup: '<:thumbsup:1065298485865365587>',
   thumbsdown: '<:thumbsdown:1065281274329182319>',
   toggle: {
     on: '<:toggleon:1035314618983256215>',
     off: '<:toggleoff:1035314620434493520>',
-    fon: '<:forcedon:866042868766736394>',
-    foff: '<:forcedoff:866042899501940757>',
   },
   features: {
     JOIN_LEAVE: '👋',
@@ -62,12 +60,6 @@ export default {
     '2': '<:boosting_lvl2:970653903442042930>',
     '3': '<:boosting_lvl3:970653903559483452>',
   },
-  status: {
-    dnd: '<:DND:782585535008735233>',
-    idle: '<:Idle:782585660682928149>',
-    online: '<:Online:782585660334669854>',
-    invisible: '<:Invisible:782585661185589270>',
-  },
   badges: {
     houses: {
       balance: '<:balance:585763004574859273>',
@@ -78,7 +70,7 @@ export default {
     developer: '<:verifiedbotdev:853277205264859156>',
     partner: '<:DiscordPartner:843189287552942142>',
     earlySupporter: '<:supporter:585763690868113455>',
-    verifiedBot: '<:verifiedbot1:986381257095143454><:verifiedbot2:986381298136395836>',
+    verifiedBot: '<:verifiedbot1:1140729944486461561><:verifiedbot2:1140729949536403517>',
     cerifiedMod: '<:certified_mod:970980243131224075>',
     boost: '<:boosting:970653903400103977>',
     discordStaff: '<:DiscordStaff:843179936771604503>',
