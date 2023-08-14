@@ -37,6 +37,9 @@ async function getAllEntries(this: Interaction, filterTargetId?: string) {
       () =>
         prisma.oldModerationStrikes.findMany({
           where: { serverId: this.guild.id },
+          orderBy: {
+            createdAt: 'desc',
+          },
         }),
       !(
         this instanceof ButtonInteraction &&
@@ -47,12 +50,14 @@ async function getAllEntries(this: Interaction, filterTargetId?: string) {
   ).map((e) => formatOldModEntry(e));
 
   const data = [
-    ...oldData,
     ...(await fetchWithCache(
       `mod_history:${this.guildId}`,
       () =>
         prisma.moderationEntry.findMany({
           where: { guildId: this.guild.id },
+          orderBy: {
+            id: 'desc',
+          },
         }),
       !(
         this instanceof ButtonInteraction &&
@@ -60,6 +65,7 @@ async function getAllEntries(this: Interaction, filterTargetId?: string) {
         this.component.style === 'PRIMARY'
       ),
     )),
+    ...oldData,
   ].filter((a) => (filterTargetId ? a.targetId === filterTargetId : a));
 
   return data;
@@ -200,7 +206,7 @@ export async function renderModlogs(
               ? [{ label: 'h', value: 'h' }]
               : results.map((s, i) => ({
                   label: t(this, 'ENTRY_NO', { number: data.indexOf(s) + 1 }),
-                  description: `${dayjs(s.type).format('YYYY-MM-DD')} • ${t(
+                  description: `${dayjs(snowflakeToDate(s.id)).format('YYYY-MM-DD')} • ${t(
                     this.guildLocale,
                     moderationVerbStrings[s.type],
                   )}`,
