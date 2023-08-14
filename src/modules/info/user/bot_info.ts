@@ -16,13 +16,13 @@ import {
 } from 'discord.js';
 import { components, row } from 'purplet';
 import pjson from '../../../../package.json';
+import { NavBarContext, getTabs, navBar } from './_navbar';
 import { getBadgeEmojis } from './user_info';
-import { getTabs, navBar, NavBarContext } from './_navbar';
 
 export async function renderBotInfo(
   this: Interaction,
   navCtx: NavBarContext,
-  integration: Integration | ClientApplication
+  integration: Integration | ClientApplication,
 ) {
   const isSelf = integration.id === this.client.user.id || integration instanceof ClientApplication;
   const app = isSelf ? (integration as ClientApplication) : integration.application;
@@ -80,7 +80,7 @@ export async function renderBotInfo(
         name: t(this, 'UPTIME'),
         value: `${timestampMention(onlineSince)} • ${timestampMention(onlineSince, 'R')}`,
         inline: true,
-      }
+      },
     );
   }
 
@@ -114,6 +114,7 @@ export async function renderBotInfo(
       },
     ],
     components: components(
+      navBar(navCtx, this.locale, 'botinfo', getTabs('botinfo', bot.toJSON(), true as any)),
       row(
         ...(!isSelf
           ? [
@@ -121,7 +122,7 @@ export async function renderBotInfo(
                 .setStyle('LINK')
                 .setLabel(t(this, 'ADD_TO_SERVER'))
                 .setURL(
-                  `https://discord.com/api/oauth2/authorize?client_id=${bot.id}&scope=applications.commands%20bot&permissions=0`
+                  `https://discord.com/api/oauth2/authorize?client_id=${bot.id}&scope=applications.commands%20bot&permissions=0`,
                 ),
             ]
           : [
@@ -129,14 +130,12 @@ export async function renderBotInfo(
                 .setStyle('LINK')
                 .setLabel(t(this, 'ADD_TO_SERVER'))
                 .setURL(links.invite),
-              new MessageButton().setStyle('LINK').setLabel(t(this, 'DONATE')).setURL(links.donate),
               new MessageButton()
                 .setStyle('LINK')
                 .setLabel(t(this, 'DISCORD_SERVER'))
                 .setURL(links.discord),
-            ])
+            ]),
       ),
-      navBar(navCtx, this.locale, 'botinfo', getTabs('botinfo', bot.toJSON(), true as any))
     ),
   };
 }
