@@ -362,7 +362,7 @@ export const endGiveaway = async (giveaway: Giveaway, gwayMsg: Message) => {
       {
         ...gwayMsg.embeds[0],
         author: {
-          name: t(this, 'GIVEAWAY_ENDED'),
+          name: t(giveaway.locale, 'GIVEAWAY_ENDED'),
         },
         fields: [
           {
