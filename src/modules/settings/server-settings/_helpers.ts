@@ -102,25 +102,30 @@ export async function getGuildSettings(guildId: string, force = false) {
 }
 
 export async function saveServerSettings(guildId: string, newSettings: Partial<FullGuildSettings>) {
+  function isTopLevel(key: string | keyof FullGuildSettings) {
+    return !Object.keys(include).includes(key);
+  }
+
   const query = (type: 'update' | 'create') =>
     Object.entries(newSettings).reduce((acc, [key, value]) => {
       if (typeof value === 'object') {
         return {
           ...acc,
-          [key]:
-            type === 'create'
-              ? {
-                  connectOrCreate: {
-                    where: { id: guildId },
-                    create: value,
-                  },
-                }
-              : {
-                  upsert: {
-                    create: value,
-                    update: value,
-                  },
+          [key]: isTopLevel(key)
+            ? value
+            : type === 'create'
+            ? {
+                connectOrCreate: {
+                  where: { id: guildId },
+                  create: value,
                 },
+              }
+            : {
+                upsert: {
+                  create: value,
+                  update: value,
+                },
+              },
         };
       }
 
@@ -130,19 +135,25 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
       };
     }, {});
 
+  const fullQuery = {
+    where: { id: guildId },
+    create: {
+      id: guildId,
+      ...query('create'),
+    },
+    update: {
+      ...query('update'),
+    },
+    include: include,
+  };
+
+  console.log(fullQuery);
+
   return fetchWithCache(
     `${guildId}:settings`,
     () =>
       prisma.guild.upsert({
-        where: { id: guildId },
-        create: {
-          id: guildId,
-          ...query('create'),
-        },
-        update: {
-          ...query('update'),
-        },
-        include: include,
+        ...fullQuery,
       }),
     true,
   ) as FullGuildSettings;
