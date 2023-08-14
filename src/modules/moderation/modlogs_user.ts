@@ -9,7 +9,8 @@ import { renderModlogs } from './modlogs_all';
 
 export default ChatCommand({
   name: 'modlogs user',
-  description: "View a user's Moderation History.",
+  description: t('en-US', 'modlogs_user.description'),
+  descriptionLocalizations: getAllLanguages('modlogs_user.description'),
   allowInDMs: false,
   options: new OptionBuilder().user('user', t('en-US', 'USER_TYPE_COMMAND_OPTION_DESCRIPTION'), {
     nameLocalizations: getAllLanguages('USER', localeLower),
@@ -40,7 +41,7 @@ export const viewModLogsCtxCommand = UserContextCommand({
 
 async function viewModLogs(
   this: CommandInteraction | ContextMenuInteraction | ButtonInteraction,
-  user: User
+  user: User,
 ) {
   if (
     user.id !== this.user.id &&
@@ -48,7 +49,7 @@ async function viewModLogs(
   ) {
     return createCRBTError(
       this,
-      t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')
+      t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server'),
     );
   }
 

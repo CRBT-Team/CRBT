@@ -11,6 +11,7 @@
   "DONATE": "Donate",
   "PERMISSION_ADMINISTRATOR": "Administrator",
   "ERROR_MISSING_PERMISSIONS": "You don't have the required permissions: {PERMISSIONS}.",
+  "ERROR_BOT_MISSING_PERMISSIONS": "I don't have the required permissions: {permissions}.",
   "ERROR_INVALID_URL": "Invalid URL.",
   "ERROR_INVALID_COLOR": "Invalid color. Use a preset or a valid HEX code.",
   "ERROR_INVALID_DURATION": "Invalid duration format, or it exceeds {relativeTime} in the future.",
@@ -266,6 +267,15 @@
   "MOD_VERB_REPORT": "Reported",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
+  "modlogs_all": {
+    "description": "View the server's Moderation History."
+  },
+  "modlogs_user": {
+    "description": "View a user's Moderation History."
+  },
+  "ENTRY_NO": "Entry #{number}",
+  "ENTRY": "Entry",
+  "MODERATION_LOGS_ENTRIES_TOTAL": "{entries} entries total.",
   "MODERATION_LOGS_VIEW_EMPTY": "*No Moderation History found.*",
   "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete an entry",
   "MODERATION_LOGS_VIEW_TITLE": "Moderation History in {SERVER}",
@@ -592,6 +602,7 @@
       }
     }
   },
+  "MESSAGE_FROM_USER": "Message from user",
   "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Can't find this emoji.",
   "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Use a default {standardEmoji} or custom {customEmoji} emoji instead.",
   "EMOJI_INFO_CLONE_SUCCESS": "Added {emoji} to the server.",
@@ -603,6 +614,8 @@
   "SERVER_INVITE": "Server invite",
   "GROUP_DM_INVITE": "Group DM invite",
   "UNNAMED": "Unnamed",
+  "MORE_INFO": "More info",
+  "LANDING_CHANNEL": "Landing channel",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Invalid Discord invite.",
   "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Make sure it hasn't expired and that it is public.",
   "invite_info": {

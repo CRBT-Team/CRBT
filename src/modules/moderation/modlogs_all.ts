@@ -6,7 +6,7 @@ import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { ModerationEntry, ModerationStrikeTypes, OldModerationStrikes } from '@prisma/client';
 import { dateToSnowflake, snowflakeToDate, timestampMention } from '@purplet/utils';
@@ -96,7 +96,8 @@ interface PageBtnProps {
 
 export default ChatCommand({
   name: 'modlogs all',
-  description: "View the server's Moderation History.",
+  description: t('en-US', 'modlogs_all.description'),
+  descriptionLocalizations: getAllLanguages('modlogs_all.description'),
   allowInDMs: false,
   async handle() {
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
@@ -123,7 +124,9 @@ export function renderEntry(entry: ModerationEntry, locale: string, entries: Mod
   const reason = `**${t(
     locale,
     entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON',
-  )}:** ${entry.details ? '[Message from user]' : entry.reason ?? `*${t(locale, 'NONE')}*`}`;
+  )}:** ${
+    entry.details ? `[${t(locale, 'MESSAGE_FROM_USER')}]` : entry.reason ?? `*${t(locale, 'NONE')}*`
+  }`;
   const target =
     entry.type !== ModerationAction.ChannelMessageClear
       ? `<@${entry.targetId}>`
@@ -178,7 +181,9 @@ export async function renderModlogs(
         description: !data || data.length === 0 ? t(this, 'MODERATION_LOGS_VIEW_EMPTY') : '',
         fields: results.map((entry) => renderEntry(entry, this.locale, data)),
         footer: {
-          text: `${data.length} entries total • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
+          text: `${t(this, 'MODERATION_LOGS_ENTRIES_TOTAL', {
+            entries: data.length,
+          })} • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
             page: page + 1,
             pages,
           })}`,
@@ -194,7 +199,7 @@ export async function renderModlogs(
             !data || data.length === 0
               ? [{ label: 'h', value: 'h' }]
               : results.map((s, i) => ({
-                  label: `Entry #${data.indexOf(s) + 1}`,
+                  label: t(this, 'ENTRY_NO', { number: data.indexOf(s) + 1 }),
                   description: `${dayjs(s.type).format('YYYY-MM-DD')} • ${t(
                     this.guildLocale,
                     moderationVerbStrings[s.type],
@@ -343,17 +348,19 @@ export const EditButton = ButtonComponent({
     const entry = (await getAllEntries.call(this)).find(({ id }) => id === sId);
 
     await this.showModal(
-      new EditModal({ page, uId, sId }).setTitle(`Edit Entry #${i}`).setComponents(
-        row(
-          new TextInputComponent()
-            .setLabel(t(this, 'REASON'))
-            .setValue(entry.reason ?? '')
-            .setCustomId('reason')
-            .setMaxLength(256)
-            .setStyle('PARAGRAPH')
-            .setRequired(true),
+      new EditModal({ page, uId, sId })
+        .setTitle(`${t(this, 'ENTRY')} - ${t(this, 'EDIT')}`)
+        .setComponents(
+          row(
+            new TextInputComponent()
+              .setLabel(t(this, 'REASON'))
+              .setValue(entry.reason ?? '')
+              .setCustomId('reason')
+              .setMaxLength(256)
+              .setStyle('PARAGRAPH')
+              .setRequired(true),
+          ),
         ),
-      ),
     );
   },
 });
