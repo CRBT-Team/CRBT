@@ -88,15 +88,15 @@ export const SelectTimeMenu = SelectMenuComponent({
     )?.slice(0, 60)}...`;
 
     const details = budgetify(message);
-    const expiresAt = dayjs().add(ms(this.values[0]));
+    const endDate = dayjs().add(ms(this.values[0]));
 
     try {
       const reminder = await dbTimeout(TimeoutTypes.Reminder, {
         userId: this.user.id,
         destination: 'dm',
-        expiresAt: expiresAt.toDate(),
+        endDate: endDate.toDate(),
         locale: this.locale,
-        id: `${url}-${randomBytes(6)}`,
+        id: `MESSAGEREMINDER-${url}-${randomBytes(6)}`,
         subject: `${formatUsername(message.author)}--${subject}`,
         details: JSON.stringify(details),
         type: ReminderTypes.MESSAGE,
