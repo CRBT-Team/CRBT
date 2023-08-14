@@ -50,7 +50,6 @@ export const modReportsSettings: SettingsMenuProps = {
         },
       ],
       components: components(
-        row(backBtn),
         row(
           new MessageSelectMenu()
             .setType('CHANNEL_SELECT')
@@ -66,6 +65,7 @@ export const modReportsSettings: SettingsMenuProps = {
             .setDisabled(!settings.modules.moderationReports)
             .setPlaceholder(t(i, 'EDIT_CHANNEL')),
         ),
+        row(backBtn),
       ),
     };
   },
