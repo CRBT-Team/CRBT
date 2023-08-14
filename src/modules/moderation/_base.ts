@@ -1,14 +1,14 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis, icons } from '$lib/env';
+import { UnknownError, createCRBTError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
-import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
+import { dateToSnowflake, timestampMention } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
@@ -28,23 +28,43 @@ import { kick } from './kick';
 import { timeout } from './timeout';
 
 export interface ModerationContext {
-  target: User | GuildTextBasedChannel;
-  moderator: User;
+  user: User;
   guild: Guild;
-  type: ModerationStrikeTypes;
+  target: User | GuildTextBasedChannel;
   reason?: string;
-  expiresAt?: Date;
+  endDate?: Date;
+  type: ModerationAction;
   messagesDeleted?: number;
   duration?: string;
 }
 
+export enum ModerationAction {
+  UserBan,
+  UserTemporaryBan,
+  ChannelMessageClear,
+  UserKick,
+  UserTimeout,
+  UserWarn,
+  UserReport,
+}
+
+export const moderationVerbStrings = {
+  [ModerationAction.ChannelMessageClear]: 'CLEAR',
+  [ModerationAction.UserBan]: 'BAN',
+  [ModerationAction.UserKick]: 'KICK',
+  [ModerationAction.UserReport]: 'REPORT',
+  [ModerationAction.UserTemporaryBan]: 'TEMPBAN',
+  [ModerationAction.UserTimeout]: 'TIMEOUT',
+  [ModerationAction.UserWarn]: 'WARN',
+};
+
 export const ModerationColors = {
-  BAN: colors.red,
-  TEMPBAN: colors.red,
-  CLEAR: colors.white,
-  KICK: colors.orange,
-  TIMEOUT: colors.yellow,
-  WARN: colors.yellow,
+  [ModerationAction.UserBan]: colors.red,
+  [ModerationAction.UserTemporaryBan]: colors.red,
+  [ModerationAction.ChannelMessageClear]: colors.white,
+  [ModerationAction.UserKick]: colors.orange,
+  [ModerationAction.UserTimeout]: colors.yellow,
+  [ModerationAction.UserWarn]: colors.yellow,
 };
 
 export const ModerationActions: Partial<
@@ -60,9 +80,9 @@ export const ModerationActions: Partial<
 
 export async function handleModerationAction(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
-  ctx: ModerationContext
+  ctx: ModerationContext,
 ) {
-  const { guild, moderator, target, expiresAt, reason, type, messagesDeleted } = ctx;
+  const { guild, user: moderator, target, endDate, reason, type, messagesDeleted } = ctx;
   const { error } = checkModerationPermission.call(this, target, type);
 
   if (error) {
@@ -91,7 +111,7 @@ export async function handleModerationAction(
                 locale: this.guildLocale,
                 message: reason,
                 guildName: guild.name,
-                expiration: expiresAt,
+                endDate,
               }),
               color: ModerationColors[type],
             },
@@ -99,25 +119,25 @@ export async function handleModerationAction(
         })
         .catch((e) => {});
 
-      await prisma.moderationStrikes.create({
+      await prisma.moderationEntry.create({
         data: {
-          createdAt: new Date(),
-          moderatorId: moderator.id,
-          targetId: target.id,
+          id: dateToSnowflake(new Date()),
+          endDate,
           type,
-          expiresAt,
+          userId: moderator.id,
+          targetId: target.id,
           reason,
-          serverId: guild.id,
+          guildId: guild.id,
         },
       });
 
       await fetchWithCache(
         `strikes:${this.guildId}`,
         () =>
-          prisma.moderationStrikes.findMany({
-            where: { serverId: this.guild.id },
+          prisma.moderationEntry.findMany({
+            where: { guildId: this.guild.id },
           }),
-        true
+        true,
       );
 
       await this.editReply({
@@ -125,7 +145,7 @@ export async function handleModerationAction(
           {
             title: `${emojis.success} Successfully ${t(
               this.guildLocale,
-              `MOD_VERB_${type}`
+              `MOD_VERB_${moderationVerbStrings[type]}` as any,
             ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
             color: colors.success,
           },
@@ -133,10 +153,10 @@ export async function handleModerationAction(
       });
     }
 
-    const { modules, modLogsChannel } = await getGuildSettings(guild.id);
+    const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
 
-    if (modules.moderationLogs && modLogsChannel) {
-      const channel = (await guild.client.channels.fetch(modLogsChannel)) as TextChannel;
+    if (modules.moderationNotifications && modLogsChannelId) {
+      const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
 
       const fields = [
         {
@@ -149,15 +169,18 @@ export async function handleModerationAction(
           inline: true,
         },
         {
-          name: t(this.guildLocale, type === 'CLEAR' ? 'CHANNEL' : 'USER'),
+          name: t(
+            this.guildLocale,
+            type === ModerationAction.ChannelMessageClear ? 'CHANNEL' : 'USER',
+          ),
           value: `${target}`,
           inline: true,
         },
-        ...(expiresAt
+        ...(endDate
           ? [
               {
-                name: t(this.guildLocale, 'EXPIRES_AT'),
-                value: `${timestampMention(expiresAt)} • ${timestampMention(expiresAt, 'R')}`,
+                name: t(this.guildLocale, 'END_DATE'),
+                value: `${timestampMention(endDate)} • ${timestampMention(endDate, 'R')}`,
               },
             ]
           : []),
@@ -171,7 +194,7 @@ export async function handleModerationAction(
                 author: {
                   name: `${formatUsername(target)} was ${t(
                     this.guildLocale,
-                    `MOD_VERB_${type}`
+                    `MOD_VERB_${Object.keys(ModerationAction)[type]}` as any,
                   ).toLocaleLowerCase(this.locale)}`,
                   icon_url: avatar(target),
                 },
@@ -197,14 +220,14 @@ export async function handleModerationAction(
       } catch (e) {}
     }
   } catch (e) {
-    (this.replied ? this.editReply : this.reply)(UnknownError(this, e));
+    (this.replied || this.deferred ? this.editReply : this.reply)(UnknownError(this, e));
   }
 }
 
 export function checkModerationPermission(
   this: Interaction,
   target: User | Channel,
-  type: ModerationStrikeTypes,
+  type: ModerationAction,
   {
     allowBots,
     allowSelf,
@@ -217,7 +240,7 @@ export function checkModerationPermission(
     checkHierarchy: true,
     allowSelf: false,
     allowBots: true,
-  }
+  },
 ): { error: any } {
   const member = this.guild.members.cache.get(target.id);
   const isOwner = this.guild.ownerId === this.user.id;
@@ -231,6 +254,8 @@ export function checkModerationPermission(
     REPORT: 0n,
   };
 
+  const verb = Object.keys(ModerationAction)[type].toLowerCase();
+
   if (target instanceof User) {
     // Check member exists
     if (!member) {
@@ -241,28 +266,25 @@ export function checkModerationPermission(
     // Check if user can execute command
     if (!hasPerms(this.memberPermissions, perms[type])) {
       return {
-        error: createCRBTError(
-          this,
-          `You do not have permission to ${type.toLowerCase()} members.`
-        ),
+        error: createCRBTError(this, `You do not have permission to ${verb} members.`),
       };
     }
     // Check if bot can execute command
     if (!hasPerms(this.appPermissions, perms[type])) {
       return {
-        error: createCRBTError(this, `I do not have permission to ${type.toLowerCase()} members.`),
+        error: createCRBTError(this, `I do not have permission to ${verb} members.`),
       };
     }
     // Check if user can ban themselves
     if (!allowSelf && this.user.id === target.id) {
       return {
-        error: createCRBTError(this, `You cannot ${type.toLowerCase()} yourself! (╯°□°）╯︵ ┻━┻`),
+        error: createCRBTError(this, `You cannot ${verb} yourself! (╯°□°）╯︵ ┻━┻`),
       };
     }
     // Check if target isn't the owner
     if (target.id === this.guild.ownerId) {
       return {
-        error: createCRBTError(this, `You cannot ${type.toLowerCase()} the owner of the server.`),
+        error: createCRBTError(this, `You cannot ${verb} the owner of the server.`),
       };
     }
     // Check if target's hoisting role is above the user's
@@ -273,10 +295,7 @@ export function checkModerationPermission(
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
       return {
-        error: createCRBTError(
-          this,
-          `You cannot ${type.toLowerCase()} a user with a roles above yours.`
-        ),
+        error: createCRBTError(this, `You cannot ${verb} a user with a roles above yours.`),
       };
     }
     // Check if target's hoisting role is above the bot's
@@ -286,18 +305,13 @@ export function checkModerationPermission(
       this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
       return {
-        error: createCRBTError(
-          this,
-          `I cannot ${type.toLowerCase()} a user with roles above mine.`
-        ),
+        error: createCRBTError(this, `I cannot ${verb} a user with roles above mine.`),
       };
     }
   }
 
-  if (type === ModerationStrikeTypes.TIMEOUT) {
-    if (member.communicationDisabledUntil) {
-      return { error: createCRBTError(this, 'This user is already timed out.') };
-    }
+  if (type === ModerationAction.UserTimeout && member.communicationDisabledUntil) {
+    return { error: createCRBTError(this, 'This user is already timed out.') };
   }
 
   return { error: null };

@@ -1,15 +1,15 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
-import { avatar } from '$lib/functions/avatar';
 import { CRBTError } from '$lib/functions/CRBTError';
+import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { moderationStrikes } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
+import { ModerationEntry, ModerationStrikeTypes, OldModerationStrikes } from '@prisma/client';
+import { dateToSnowflake, snowflakeToDate, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import dedent from 'dedent';
 import { MessageFlags, PermissionFlagsBits } from 'discord-api-types/v10';
@@ -23,12 +23,70 @@ import {
 import {
   ButtonComponent,
   ChatCommand,
-  components,
   ModalComponent,
-  row,
   SelectMenuComponent,
+  components,
+  row,
 } from 'purplet';
-import { ModerationColors } from './_base';
+import { ModerationAction, ModerationColors, moderationVerbStrings } from './_base';
+
+async function getAllEntries(this: Interaction, filterTargetId?: string) {
+  const oldData = (
+    await fetchWithCache(
+      `strikes:${this.guildId}`,
+      () =>
+        prisma.oldModerationStrikes.findMany({
+          where: { serverId: this.guild.id },
+        }),
+      !(
+        this instanceof ButtonInteraction &&
+        !this.component.label &&
+        this.component.style === 'PRIMARY'
+      ),
+    )
+  ).map((e) => formatOldModEntry(e));
+
+  const data = [
+    ...oldData,
+    ...(await fetchWithCache(
+      `mod_history:${this.guildId}`,
+      () =>
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guild.id },
+        }),
+      !(
+        this instanceof ButtonInteraction &&
+        !this.component.label &&
+        this.component.style === 'PRIMARY'
+      ),
+    )),
+  ].filter((a) => (filterTargetId ? a.targetId === filterTargetId : a));
+
+  return data;
+}
+
+function formatOldModEntry(entry: OldModerationStrikes): ModerationEntry {
+  const enumConvert: Record<ModerationStrikeTypes, ModerationAction> = {
+    BAN: ModerationAction.UserBan,
+    CLEAR: ModerationAction.ChannelMessageClear,
+    KICK: ModerationAction.UserKick,
+    REPORT: ModerationAction.UserReport,
+    TEMPBAN: ModerationAction.UserTemporaryBan,
+    TIMEOUT: ModerationAction.UserTimeout,
+    WARN: ModerationAction.UserWarn,
+  };
+
+  return {
+    id: dateToSnowflake(entry.createdAt),
+    reason: entry.reason,
+    targetId: entry.targetId,
+    type: enumConvert[entry.type],
+    userId: entry.moderatorId,
+    guildId: entry.serverId,
+    endDate: entry.expiresAt,
+    details: entry.details,
+  };
+}
 
 interface PageBtnProps {
   page: number;
@@ -44,7 +102,7 @@ export default ChatCommand({
     if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)) {
       return CRBTError(
         this,
-        t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server')
+        t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server'),
       );
     }
 
@@ -56,28 +114,28 @@ export default ChatCommand({
   },
 });
 
-export function renderStrike(
-  strike: moderationStrikes,
-  locale: string,
-  strikes: moderationStrikes[]
-) {
-  const action = t(locale, strike.type as any);
+export function renderEntry(entry: ModerationEntry, locale: string, entries: ModerationEntry[]) {
+  const action = t(locale, moderationVerbStrings[entry.type]);
   const expires =
-    Date.now() < (strike.expiresAt?.getTime() ?? 0)
-      ? `(Expires ${timestampMention(strike.expiresAt, 'R')}) `
+    Date.now() < (entry.endDate?.getTime() ?? 0)
+      ? `(Expires ${timestampMention(entry.endDate, 'R')}) `
       : '';
-  const reason = `**${t(locale, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON')}:** ${
-    strike.details ? '[Message from user]' : strike.reason ?? `*${t(locale, 'NONE')}*`
-  }`;
-  const target = strike.type !== 'CLEAR' ? `<@${strike.targetId}>` : `<#${strike.targetId}>`;
+  const reason = `**${t(
+    locale,
+    entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON',
+  )}:** ${entry.details ? '[Message from user]' : entry.reason ?? `*${t(locale, 'NONE')}*`}`;
+  const target =
+    entry.type !== ModerationAction.ChannelMessageClear
+      ? `<@${entry.targetId}>`
+      : `<#${entry.targetId}>`;
 
   return {
-    name: `${strikes.indexOf(strike) + 1}. ${timestampMention(
-      strike.createdAt,
-      'f'
+    name: `${entries.indexOf(entry) + 1}. ${timestampMention(
+      snowflakeToDate(entry.id),
+      'f',
     )} • ${action} ${expires}`,
     value: dedent`
-    <@${strike.moderatorId}> ${t(locale, `MOD_VERB_${strike.type}`, {
+    <@${entry.userId}> ${t(locale, `MOD_VERB_${moderationVerbStrings[entry.type]}` as any, {
       target: '',
     }).toLocaleLowerCase(locale)} ${target}
     ${reason}
@@ -90,27 +148,14 @@ export async function renderModlogs(
   page: number = 0,
   filters?: {
     uId?: string;
-  }
+  },
 ) {
   const user = filters?.uId ? this.client.users.cache.get(filters?.uId) : null;
 
-  const data = (
-    await fetchWithCache(
-      `strikes:${this.guildId}`,
-      () =>
-        prisma.moderationStrikes.findMany({
-          where: { serverId: this.guild.id },
-        }),
-      !(
-        this instanceof ButtonInteraction &&
-        !this.component.label &&
-        this.component.style === 'PRIMARY'
-      )
-    )
-  ).filter((a) => (filters?.uId ? a.targetId === filters?.uId : a));
+  const data = await getAllEntries.call(this, filters?.uId);
 
   const results = data
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    // .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
     .slice(page * 5, page * 5 + 5);
   const pages = Math.ceil(data.length / 5);
 
@@ -131,7 +176,7 @@ export async function renderModlogs(
               iconURL: this.guild.iconURL(),
             },
         description: !data || data.length === 0 ? t(this, 'MODERATION_LOGS_VIEW_EMPTY') : '',
-        fields: results.map((strike) => renderStrike(strike, this.locale, data)),
+        fields: results.map((entry) => renderEntry(entry, this.locale, data)),
         footer: {
           text: `${data.length} entries total • ${t(this, 'PAGINATION_PAGE_OUT_OF', {
             page: page + 1,
@@ -143,21 +188,21 @@ export async function renderModlogs(
     ],
     components: components(
       row(
-        new StrikeSelectMenu({ page, uId: filters?.uId })
+        new ModEntrySelectMenu({ page, uId: filters?.uId })
           .setPlaceholder(t(this, 'MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER'))
           .setOptions(
             !data || data.length === 0
               ? [{ label: 'h', value: 'h' }]
               : results.map((s, i) => ({
-                  label: `Strike #${data.indexOf(s) + 1}`,
-                  description: `${dayjs(s.createdAt).format('YYYY-MM-DD')} • ${t(
+                  label: `Entry #${data.indexOf(s) + 1}`,
+                  description: `${dayjs(s.type).format('YYYY-MM-DD')} • ${t(
                     this.guildLocale,
-                    s.type
+                    moderationVerbStrings[s.type],
                   )}`,
                   value: s.id,
-                }))
+                })),
           )
-          .setDisabled(data.length === 0)
+          .setDisabled(data.length === 0),
       ),
       row(
         // new ShowFiltersBtn().setStyle('SECONDARY').setLabel('Show Filters'),
@@ -176,8 +221,8 @@ export async function renderModlogs(
         new GoToPage({ page: pages - 1, uId: user?.id, s: true })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_last)
-          .setDisabled(page >= pages - 1)
-      )
+          .setDisabled(page >= pages - 1),
+      ),
     ),
     flags: MessageFlags.Ephemeral,
   };
@@ -189,32 +234,23 @@ export const GoToPage = ButtonComponent({
   },
 });
 
-export const StrikeSelectMenu = SelectMenuComponent({
+export const ModEntrySelectMenu = SelectMenuComponent({
   async handle({ page, uId }: PageBtnProps) {
-    return this.update(await renderStrikePage.call(this, this.values[0], { page, uId }));
+    return this.update(await renderModEntryPage.call(this, this.values[0], { page, uId }));
   },
 });
 
-async function renderStrikePage(
+async function renderModEntryPage(
   this: SelectMenuInteraction | ModalSubmitInteraction | ButtonInteraction,
   sId: string,
-  { page, uId }: PageBtnProps
+  { page, uId }: PageBtnProps,
 ) {
-  const strikes = (
-    await fetchWithCache(
-      `strikes:${this.guildId}`,
-      () =>
-        prisma.moderationStrikes.findMany({
-          where: { serverId: this.guild.id },
-        }),
-      this instanceof ModalSubmitInteraction
-    )
-  )
-    .filter((a) => (uId ? a.targetId === uId : a))
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  const data = await getAllEntries.call(this, uId);
 
-  const strike: moderationStrikes = strikes.find(({ id }) => id === sId);
-  const target = await this.client.users.fetch(strike.targetId);
+  // .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+  const entry: ModerationEntry = data.find(({ id }) => id === sId);
+  const target = await this.client.users.fetch(entry.targetId);
 
   return {
     embeds: [
@@ -225,50 +261,52 @@ async function renderStrikePage(
           }),
           icon_url: this.guild.iconURL(),
         },
-        title: `Strike #${strikes.indexOf(strike) + 1} • ${t(this, strike.type)}`,
+        title: `Entry #${data.indexOf(entry) + 1} • ${t(this, moderationVerbStrings[entry.type])}`,
         fields: [
           {
-            name: t(this, strike.type === 'REPORT' ? 'DESCRIPTION' : 'REASON'),
-            value: strike.reason ?? `*${t(this, 'NONE')}*`,
+            name: t(this, entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON'),
+            value: entry.reason ?? `*${t(this, 'NONE')}*`,
           },
           {
-            name: t(this, strike.type === 'REPORT' ? 'REPORTED_BY' : 'MODERATOR'),
-            value: `<@${strike.moderatorId}>`,
+            name: t(this, entry.type === ModerationAction.UserReport ? 'REPORTED_BY' : 'MODERATOR'),
+            value: `<@${entry.userId}>`,
             inline: true,
           },
-          ...(strike.type === 'CLEAR'
+          ...(entry.type === ModerationAction.ChannelMessageClear
             ? [
                 {
                   name: t(this, 'CHANNEL'),
-                  value: `<#${strike.targetId}>`,
+                  value: `<#${entry.targetId}>`,
                   inline: true,
                 },
               ]
             : [
                 {
                   name: t(this, 'USER'),
-                  value: `<@${strike.targetId}>`,
+                  value: `<@${entry.targetId}>`,
                   inline: true,
                 },
               ]),
-          ...(strike.expiresAt
+          ...(entry.endDate
             ? [
                 {
-                  name: t(this, 'EXPIRES_AT'),
-                  value: `${timestampMention(strike.expiresAt)} • ${timestampMention(
-                    strike.expiresAt,
-                    'R'
+                  name: t(this, 'END_DATE'),
+                  value: `${timestampMention(entry.endDate)} • ${timestampMention(
+                    entry.endDate,
+                    'R',
                   )}`,
                 },
               ]
             : []),
         ],
         color:
-          strike.type === 'REPORT' ? await getColor(this.guild) : ModerationColors[strike.type],
+          entry.type === ModerationAction.UserReport
+            ? await getColor(this.guild)
+            : ModerationColors[entry.type],
       },
-      ...(strike.details
+      ...(entry.details
         ? renderLowBudgetMessage({
-            details: JSON.parse(strike.details),
+            details: JSON.parse(entry.details),
             channel: this.channel,
             guild: this.guild,
             author: target,
@@ -280,10 +318,10 @@ async function renderStrikePage(
         new GoToPage({ page, uId }).setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
           ? [
-              ...(strike.type === 'REPORT'
+              ...(entry.type === ModerationAction.UserReport
                 ? []
                 : [
-                    new EditButton({ sId, i: strikes.indexOf(strike) + 1, page, uId })
+                    new EditButton({ sId, i: data.indexOf(entry) + 1, page, uId })
                       .setEmoji(emojis.buttons.pencil)
                       .setLabel(t(this, 'EDIT'))
                       .setStyle('PRIMARY'),
@@ -293,8 +331,8 @@ async function renderStrikePage(
                 .setLabel(t(this, 'DELETE'))
                 .setStyle('DANGER'),
             ]
-          : [])
-      )
+          : []),
+      ),
     ),
     flags: MessageFlags.Ephemeral,
   };
@@ -302,26 +340,20 @@ async function renderStrikePage(
 
 export const EditButton = ButtonComponent({
   async handle({ sId, uId, i, page }: PageBtnProps & { sId: string; i: number }) {
-    const strike = (
-      await fetchWithCache(`strikes:${this.guildId}`, () =>
-        prisma.moderationStrikes.findMany({
-          where: { serverId: this.guild.id },
-        })
-      )
-    ).find(({ id }) => id === sId);
+    const entry = (await getAllEntries.call(this)).find(({ id }) => id === sId);
 
     await this.showModal(
-      new EditModal({ page, uId, sId }).setTitle(`Edit Strike #${i}`).setComponents(
+      new EditModal({ page, uId, sId }).setTitle(`Edit Entry #${i}`).setComponents(
         row(
           new TextInputComponent()
             .setLabel(t(this, 'REASON'))
-            .setValue(strike.reason ?? '')
+            .setValue(entry.reason ?? '')
             .setCustomId('reason')
             .setMaxLength(256)
             .setStyle('PARAGRAPH')
-            .setRequired(true)
-        )
-      )
+            .setRequired(true),
+        ),
+      ),
     );
   },
 });
@@ -330,12 +362,21 @@ export const EditModal = ModalComponent({
   async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
     const reason = this.fields.getTextInputValue('reason');
 
-    await prisma.moderationStrikes.update({
+    await prisma.moderationEntry.update({
       where: { id: sId },
       data: { reason },
     });
 
-    await this.update(await renderStrikePage.call(this, sId, { uId, page }));
+    await fetchWithCache(
+      `mod_history:${this.guildId}`,
+      () =>
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guildId },
+        }),
+      true,
+    );
+
+    await this.update(await renderModEntryPage.call(this, sId, { uId, page }));
   },
 });
 
@@ -357,8 +398,8 @@ export const DeleteButton = ButtonComponent({
           new ConfirmDeleteButton({ uId, sId, page })
             .setLabel(t(this, 'CONFIRM'))
             .setStyle('DANGER'),
-          new GoToPage({ page: 0, uId }).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY')
-        )
+          new GoToPage({ page: 0, uId }).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
+        ),
       ),
     });
   },
@@ -366,15 +407,15 @@ export const DeleteButton = ButtonComponent({
 
 export const ConfirmDeleteButton = ButtonComponent({
   async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
-    await prisma.moderationStrikes.delete({ where: { id: sId } });
+    await prisma.moderationEntry.delete({ where: { id: sId } });
 
     await fetchWithCache(
-      `strikes:${this.guildId}`,
+      `mod_history:${this.guildId}`,
       () =>
-        prisma.moderationStrikes.findMany({
-          where: { serverId: this.guild.id },
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guildId },
         }),
-      true
+      true,
     );
 
     await this.update(await renderModlogs.call(this, page, { uId }));

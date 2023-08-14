@@ -3,22 +3,22 @@ import { t } from '$lib/language';
 import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-settings';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
-import { components, OnEvent, row } from 'purplet';
-import { guildFeatureSettings } from './settings';
+import { OnEvent, components, row } from 'purplet';
 import { saveServerSettings } from './_helpers';
+import { guildFeatureSettings } from './settings';
 
 export const modlogsSettings: SettingsMenuProps = {
   description: (l) => t(l, 'SETTINGS_MODLOGS_DESCRIPTION'),
   getErrors({ guild, settings, i }) {
-    const channelId = settings.modLogsChannel;
+    const channelId = settings.modLogsChannelId;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
 
     const errors: string[] = [];
 
-    if (settings.modules.moderationLogs && channelId && !channel) {
+    if (settings.modules.moderationNotifications && channelId && !channel) {
       errors.push(t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND'));
     }
-    if (settings.modules.moderationLogs && !channelId) {
+    if (settings.modules.moderationNotifications && !channelId) {
       errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
     }
 
@@ -32,16 +32,16 @@ export const modlogsSettings: SettingsMenuProps = {
           fields: [
             {
               name: t(i, 'STATUS'),
-              value: settings.modules.moderationLogs
+              value: settings.modules.moderationNotifications
                 ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
                 : `${emojis.toggle.off} ${t(i, 'DISABLED')}`,
               inline: true,
             },
-            ...(settings.modLogsChannel
+            ...(settings.modLogsChannelId
               ? [
                   {
                     name: t(i, 'CHANNEL'),
-                    value: `<#${settings.modLogsChannel}>`,
+                    value: `<#${settings.modLogsChannelId}>`,
                     inline: true,
                   },
                 ]
@@ -60,12 +60,12 @@ export const modlogsSettings: SettingsMenuProps = {
                 ChannelType.GuildAnnouncement,
                 ChannelType.PublicThread,
                 ChannelType.PrivateThread,
-              ] as number[])
+              ] as number[]),
             )
             .setCustomId(customId)
-            .setDisabled(!settings.modules.moderationLogs)
-            .setPlaceholder(t(i, 'EDIT_CHANNEL'))
-        )
+            .setDisabled(!settings.modules.moderationNotifications)
+            .setPlaceholder(t(i, 'EDIT_CHANNEL')),
+        ),
       ),
     };
   },
@@ -78,7 +78,7 @@ export const EditLogsChannelSelectMenu = OnEvent('interactionCreate', async (i) 
     const channel = i.channels.first();
 
     await saveServerSettings(i.guildId, {
-      modLogsChannel: channel.id,
+      modLogsChannelId: channel.id,
     });
 
     i.update(await guildFeatureSettings.call(i, EditableGuildFeatures.moderationLogs));

@@ -27,13 +27,13 @@ export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProp
 export const defaultGuildSettings: FullGuildSettings = {
   accentColor: colors.default,
   flags: 0,
-  automaticTheming: true,
+  isAutoThemingEnabled: true,
   modules: {
     id: null,
     economy: false,
     joinMessage: false,
     leaveMessage: false,
-    moderationLogs: false,
+    moderationNotifications: false,
     moderationReports: false,
   },
   // economy: {
@@ -61,7 +61,7 @@ export const defaultGuildSettings: FullGuildSettings = {
 export function resolveSettingsProps(
   i: SettingFunctionProps['i'],
   menu: SettingsMenuProps,
-  settings: FullGuildSettings
+  settings: FullGuildSettings,
 ): SettingFunctionProps {
   return {
     guild: i.guild,
@@ -90,11 +90,11 @@ export async function getGuildSettings(guildId: string, force = false) {
   const data = await fetchWithCache<FullGuildSettings>(
     `${guildId}:settings`,
     () =>
-      prisma.servers.findFirst({
+      prisma.guild.findFirst({
         where: { id: guildId },
         include,
       }),
-    force
+    force,
   );
 
   const merged = deepMerge(defaultGuildSettings, data);
@@ -133,7 +133,7 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
   return fetchWithCache(
     `${guildId}:settings`,
     () =>
-      prisma.servers.upsert({
+      prisma.guild.upsert({
         where: { id: guildId },
         create: {
           id: guildId,
@@ -144,6 +144,6 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
         },
         include: include,
       }),
-    true
+    true,
   ) as FullGuildSettings;
 }

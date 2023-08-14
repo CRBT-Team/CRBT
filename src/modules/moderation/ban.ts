@@ -5,7 +5,7 @@ import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleModerationAction, ModerationContext } from './_base';
+import { ModerationAction, ModerationContext, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'ban',
@@ -33,10 +33,10 @@ export default ChatCommand({
   handle({ delete_messages, end_date, reason, user }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'BAN',
-      expiresAt: end_date ? new Date(Date.now() + ms(end_date)) : null,
+      type: ModerationAction.UserBan,
+      endDate: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
       duration: end_date,
       messagesDeleted: delete_messages,
@@ -47,14 +47,14 @@ export default ChatCommand({
 export function ban(
   this: Interaction,
   member: GuildMember,
-  { duration, reason, messagesDeleted }: ModerationContext
+  { duration, reason, messagesDeleted }: ModerationContext,
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(
       this,
       t(this, 'ERROR_INVALID_DURATION', {
         relativeTime: '10 years',
-      })
+      }),
     );
   }
 

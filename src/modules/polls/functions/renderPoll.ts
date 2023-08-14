@@ -69,7 +69,7 @@ export async function renderPoll(
       {
         title: options?.title,
         description: t(this.guildLocale, 'poll.strings.POLL_DESCRIPTION', {
-          TIME: timestampMention(poll.expiresAt, 'R'),
+          TIME: timestampMention(poll.endDate, 'R'),
           ICON: emojis.menu,
         }),
         color: accentColor,

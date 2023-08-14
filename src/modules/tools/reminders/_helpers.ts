@@ -16,7 +16,7 @@ export async function getUserReminders(userId: string, force = false) {
           userId: userId,
         },
         orderBy: {
-          expiresAt: 'asc',
+          endDate: 'asc',
         },
       }),
     force
@@ -35,7 +35,7 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
       }
     )}`;
   }
-  if (reminder.id.includes('MESSAGEREMINDER')) {
+  if (reminder.id.startsWith('MESSAGEREMINDER')) {
     const [username, ...subject] = reminder.subject.split('--');
 
     return (

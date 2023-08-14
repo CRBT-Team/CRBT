@@ -31,8 +31,8 @@ export default OnEvent('interactionCreate', async (i) => {
   const isTelemetryEnabled =
     (await fetchWithCache(`tlm:${i.user.id}`, () =>
       prisma.user
-        .findFirst({ where: { id: i.user.id }, select: { telemetry: true } })
-        .then((u) => u.telemetry)
+        .findFirst({ where: { id: i.user.id }, select: { hasTelemetryEnabled: true } })
+        .then((u) => u.hasTelemetryEnabled),
     )) ?? true;
 
   if (!isTelemetryEnabled) return;

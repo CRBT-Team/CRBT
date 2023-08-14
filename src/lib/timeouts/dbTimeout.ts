@@ -33,7 +33,7 @@ export async function dbTimeout<T extends TimeoutTypes>(
     } catch (e) {}
 
     await prisma[type].delete({ where: { id } });
-  }, timeout.expiresAt.getTime() - Date.now());
+  }, timeout.endDate.getTime() - Date.now());
 
   if (loadOnly) return timeout;
 

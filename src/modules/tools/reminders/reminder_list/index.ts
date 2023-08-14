@@ -54,7 +54,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         },
         title: getReminderSubject(reminder, this.client, 0),
         description: dedent`
-        ${timestampMention(data.expiresAt, 'R')}
+        ${timestampMention(data.endDate, 'R')}
         ${t(this, 'REMINDER_DESTINATION')} ${
           data.raw.destination === 'dm' ? t(this, 'DMS') : `${data.channel}`
         }
@@ -93,7 +93,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
             `https://calendar.google.com/calendar/render?${new URLSearchParams({
               action: 'TEMPLATE',
               text: getReminderSubject(reminder, this.client),
-              dates: `${dayjs(data.expiresAt).format('YYYYMMDD')}/${dayjs(data.expiresAt)
+              dates: `${dayjs(data.endDate).format('YYYYMMDD')}/${dayjs(data.endDate)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
               details: t(this, 'remind me.strings.GCALENDAR_EVENT_DESCRIPTION', {
@@ -130,7 +130,7 @@ export async function renderList(this: Interaction) {
         fields: reminders.map((r) => ({
           name: getReminderSubject(r, this.client),
           value: dedent`
-          ${timestampMention(r.expiresAt, 'R')}
+          ${timestampMention(r.endDate, 'R')}
           ${t(this, 'REMINDER_DESTINATION')} ${
             r.destination === 'dm' ? t(this, 'DMS') : `<#${r.destination}>`
           }`,
@@ -148,7 +148,7 @@ export async function renderList(this: Interaction) {
               .addOptions(
                 reminders.map((r) => ({
                   label: getReminderSubject(r, this.client),
-                  description: `${dayjs(r.expiresAt).fromNow()}`,
+                  description: `${dayjs(r.endDate).fromNow()}`,
                   value: r.id,
                 }))
               )

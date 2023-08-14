@@ -2,7 +2,7 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { GuildMember } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleModerationAction, ModerationContext } from './_base';
+import { ModerationAction, ModerationContext, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'kick',
@@ -23,9 +23,9 @@ export default ChatCommand({
   handle({ user, reason }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'KICK',
+      type: ModerationAction.UserKick,
       reason,
     });
   },

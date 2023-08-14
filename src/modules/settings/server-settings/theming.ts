@@ -17,7 +17,7 @@ export const themeSettings: SettingsMenuProps = {
         fields: [
           {
             name: t(i, 'SETTINGS_COLOR_SET_TO'),
-            value: settings.automaticTheming
+            value: settings.isAutoThemingEnabled
               ? `🔁 ${t(i, 'AUTO')}`
               : colorsMap.find((c) => c.value === settings.accentColor)
               ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
@@ -37,15 +37,15 @@ export const themeSettings: SettingsMenuProps = {
     components: components(
       row(
         backBtn,
-        new ToggleAutoThemeBtn(!settings.automaticTheming)
+        new ToggleAutoThemeBtn(!settings.isAutoThemingEnabled)
           .setStyle('SECONDARY')
-          .setEmoji(settings.automaticTheming ? emojis.toggle.on : emojis.toggle.off)
+          .setEmoji(settings.isAutoThemingEnabled ? emojis.toggle.on : emojis.toggle.off)
           .setLabel(t(i, 'AUTOMATIC_THEMING')),
         new ManualColorEditButton({
           type: EditableGuildFeatures.automaticTheming,
           value: settings.accentColor,
         })
-          .setDisabled(settings.automaticTheming)
+          .setDisabled(settings.isAutoThemingEnabled)
           .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
           .setEmoji(emojis.buttons.pencil)
           .setStyle('PRIMARY')
@@ -53,7 +53,7 @@ export const themeSettings: SettingsMenuProps = {
       row(
         new ColorPresetSelectMenu()
           .setPlaceholder(t(i, 'COLOR_PRESET_SELECT_MENU'))
-          .setDisabled(settings.automaticTheming)
+          .setDisabled(settings.isAutoThemingEnabled)
           .setOptions(
             colorsMap
               .filter(({ value }) => value !== colors.sync)
@@ -76,13 +76,13 @@ export const ToggleAutoThemeBtn = ButtonComponent({
       const dominantColor = (await imgDominantColor(guildIcon)).num();
 
       await saveServerSettings(this.guild.id, {
-        automaticTheming: newState,
+        isAutoThemingEnabled: newState,
         iconHash: this.guild.icon,
         accentColor: dominantColor,
       });
     } else {
       await saveServerSettings(this.guildId, {
-        automaticTheming: newState,
+        isAutoThemingEnabled: newState,
       });
     }
 

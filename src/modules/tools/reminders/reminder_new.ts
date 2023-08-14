@@ -49,15 +49,15 @@ export default ChatCommand({
     dayjs.locale(this.locale);
 
     const now = dayjs();
-    let expiresAt: dayjs.Dayjs;
+    let endDate: dayjs.Dayjs;
 
     try {
-      expiresAt = await resolveToDate(when, this.locale);
+      endDate = await resolveToDate(when, this.locale);
     } catch (e) {
       return CRBTError(this, errors.INVALID_FORMAT);
     }
 
-    if (expiresAt.isAfter(now.add(ms('2y1s')))) {
+    if (endDate.isAfter(now.add(ms('2y1s')))) {
       return CRBTError(
         this,
         t(this, 'ERROR_INVALID_DURATION', {
@@ -105,7 +105,7 @@ export default ChatCommand({
     try {
       const reminder = await dbTimeout(TimeoutTypes.Reminder, {
         id: url,
-        expiresAt: expiresAt.toDate(),
+        endDate: endDate.toDate(),
         destination: destination ? destination.id : 'dm',
         userId: this.user.id,
         subject,

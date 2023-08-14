@@ -6,8 +6,8 @@
 //   serverModules,
 //   servers,
 // } from '@prisma/client';
-import { serverModules, servers } from '@prisma/client';
-import { Guild, Interaction, MessageButton, MessageEditOptions } from 'discord.js';
+import { Guild, GuildModules } from '@prisma/client';
+import { Guild as DiscordGuild, Interaction, MessageButton, MessageEditOptions } from 'discord.js';
 
 export enum EditableGuildFeatures {
   automaticTheming = 'SERVER_THEME',
@@ -32,15 +32,15 @@ export enum CamelCaseGuildFeatures {
 }
 
 export interface SettingFunctionProps {
-  guild: Guild;
+  guild: DiscordGuild;
   settings: FullGuildSettings;
   i?: Interaction;
   errors?: string[];
 }
 
 export type FullGuildSettings = Partial<
-  servers & {
-    modules?: Partial<serverModules>;
+  Guild & {
+    modules?: Partial<GuildModules>;
     // economy?: Partial<
     //   Economy & {
     //     commands: Partial<EconomyCommands>;
@@ -59,6 +59,6 @@ export interface SettingsMenuProps {
   description: (locale: string) => string;
   getErrors?(props: Omit<SettingFunctionProps, 'errors'>): string[];
   renderMenuMessage(
-    props: SettingFunctionProps & { backBtn: MessageButton }
+    props: SettingFunctionProps & { backBtn: MessageButton },
   ): Partial<MessageEditOptions>;
 }

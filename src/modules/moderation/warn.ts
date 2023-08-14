@@ -2,8 +2,8 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { TextInputComponent } from 'discord.js';
-import { ChatCommand, ModalComponent, OptionBuilder, row, UserContextCommand } from 'purplet';
-import { handleModerationAction } from './_base';
+import { ChatCommand, ModalComponent, OptionBuilder, UserContextCommand, row } from 'purplet';
+import { ModerationAction, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'warn',
@@ -24,9 +24,9 @@ export default ChatCommand({
   handle({ user, reason }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'WARN',
+      type: ModerationAction.UserWarn,
       reason,
     });
   },
@@ -45,9 +45,9 @@ export const CtxCommand = UserContextCommand({
               .setLabel(t(this, 'REASON'))
               .setMaxLength(256)
               .setRequired(true)
-              .setStyle('PARAGRAPH')
-          )
-        )
+              .setStyle('PARAGRAPH'),
+          ),
+        ),
     );
   },
 });
@@ -59,9 +59,9 @@ export const WarnModal = ModalComponent({
 
     return await handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'WARN',
+      type: ModerationAction.UserWarn,
       reason,
     });
   },

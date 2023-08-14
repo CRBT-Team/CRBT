@@ -5,9 +5,9 @@ import { getGuildSettings, saveServerSettings } from '../settings/server-setting
 export default OnEvent('guildUpdate', async (oldGuild, newGuild) => {
   if (oldGuild.icon === newGuild.icon) return;
 
-  const { automaticTheming } = await getGuildSettings(newGuild.id);
+  const { isAutoThemingEnabled } = await getGuildSettings(newGuild.id);
 
-  if (!automaticTheming) return;
+  if (!isAutoThemingEnabled) return;
 
   const guildIcon = newGuild.iconURL({ format: 'png' });
   const dominantColor = (await imgDominantColor(guildIcon)).num();

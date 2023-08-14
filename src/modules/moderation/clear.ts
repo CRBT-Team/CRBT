@@ -6,7 +6,7 @@ import { getAllLanguages, t } from '$lib/language';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleModerationAction } from './_base';
+import { ModerationAction, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'clear',
@@ -40,14 +40,14 @@ export default ChatCommand({
 
       const { size: messagesDeleted } = await (this.channel as GuildTextBasedChannel).bulkDelete(
         getMessages,
-        false
+        false,
       );
 
       await handleModerationAction.call(this, {
         guild: this.guild,
-        moderator: this.user,
+        user: this.user,
         target: this.channel,
-        type: 'CLEAR',
+        type: ModerationAction.ChannelMessageClear,
         reason,
         messagesDeleted,
       });

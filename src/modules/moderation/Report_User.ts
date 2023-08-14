@@ -1,14 +1,15 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
+import { dateToSnowflake } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   GuildTextBasedChannel,
@@ -19,14 +20,19 @@ import {
 } from 'discord.js';
 import {
   ButtonComponent,
-  components,
   ModalComponent,
-  row,
   SelectMenuComponent,
   UserContextCommand,
+  components,
+  row,
 } from 'purplet';
 import { getGuildSettings } from '../settings/server-settings/_helpers';
-import { checkModerationPermission, handleModerationAction } from './_base';
+import {
+  ModerationAction,
+  checkModerationPermission,
+  handleModerationAction,
+  moderationVerbStrings,
+} from './_base';
 
 export default UserContextCommand({
   name: 'Report User',
@@ -43,12 +49,12 @@ export default UserContextCommand({
             : `ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR`,
           {
             command: slashCmd('server settings'),
-          }
+          },
         ),
       });
     }
 
-    const { error } = checkModerationPermission.call(this, user, ModerationStrikeTypes.REPORT, {
+    const { error } = checkModerationPermission.call(this, user, ModerationAction.UserReport, {
       checkHierarchy: false,
     });
 
@@ -68,9 +74,9 @@ export default UserContextCommand({
             minLength: 10,
             required: true,
             type: 'TEXT_INPUT',
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   },
 });
@@ -84,13 +90,13 @@ export const ReportModal = ModalComponent({
       ephemeral: true,
     });
 
-    const strike = await prisma.moderationStrikes.create({
+    const entry = await prisma.moderationEntry.create({
       data: {
-        createdAt: new Date(),
-        moderatorId: this.user.id,
-        serverId: this.guildId,
+        id: dateToSnowflake(new Date()),
+        userId: this.user.id,
+        guildId: this.guildId,
         targetId: userId,
-        type: ModerationStrikeTypes.REPORT,
+        type: ModerationAction.UserReport,
         reason: description,
       },
     });
@@ -124,7 +130,7 @@ export const ReportModal = ModalComponent({
 
     const { modReportsChannel } = await getGuildSettings(this.guildId);
     const reportsChannel = this.guild.channels.cache.get(
-      modReportsChannel
+      modReportsChannel,
     ) as GuildTextBasedChannel;
 
     try {
@@ -132,7 +138,7 @@ export const ReportModal = ModalComponent({
         embeds: [reportEmbed],
         components: components(
           row(
-            new ActionSelectMenu({ userId, reportId: strike.id })
+            new ActionSelectMenu({ userId, reportId: entry.id })
               .setPlaceholder('Choose an action to take.')
               .setOptions([
                 {
@@ -150,14 +156,14 @@ export const ReportModal = ModalComponent({
                   value: ModerationStrikeTypes.BAN,
                   emoji: emojis.colors.red,
                 },
-              ])
+              ]),
           ),
           row(
-            new DismissReportBtn({ reportId: strike.id })
+            new DismissReportBtn({ reportId: entry.id })
               .setStyle('SECONDARY')
               .setLabel('Delete Report')
-              .setEmoji(emojis.buttons.trash_bin)
-          )
+              .setEmoji(emojis.buttons.trash_bin),
+          ),
         ),
       });
 
@@ -188,21 +194,21 @@ export const DismissReportBtn = ButtonComponent({
         this,
         t(this, 'ERROR_MISSING_PERMISSIONS', {
           permissions: t(this, 'PERMISSION_ADMINISTRATOR'),
-        })
+        }),
       );
     }
 
-    await prisma.moderationStrikes.delete({
+    await prisma.moderationEntry.delete({
       where: { id: reportId },
     });
 
     await fetchWithCache(
       `strikes:${this.guildId}`,
       () =>
-        prisma.moderationStrikes.findMany({
-          where: { serverId: this.guild.id },
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guild.id },
         }),
-      true
+      true,
     );
 
     await this.update({
@@ -213,8 +219,8 @@ export const DismissReportBtn = ButtonComponent({
             style: 'SECONDARY',
             disabled: true,
             label: `Report deleted by ${formatUsername(this.user)}`,
-          })
-        )
+          }),
+        ),
       ),
     });
   },
@@ -223,7 +229,7 @@ export const DismissReportBtn = ButtonComponent({
 export const ActionSelectMenu = SelectMenuComponent({
   async handle({ userId, reportId }) {
     const user = await this.client.users.fetch(userId);
-    const type = this.values[0] as ModerationStrikeTypes;
+    const type = Number(this.values[0]) as ModerationAction;
 
     const { error } = checkModerationPermission.call(this, user, type);
 
@@ -231,7 +237,7 @@ export const ActionSelectMenu = SelectMenuComponent({
       return this.reply(error);
     }
 
-    await prisma.moderationStrikes.delete({
+    await prisma.moderationEntry.delete({
       where: { id: reportId },
     });
 
@@ -241,11 +247,14 @@ export const ActionSelectMenu = SelectMenuComponent({
           new MessageButton()
             .setCustomId('who_reads_this')
             .setLabel(
-              `User was ${t(this.guildLocale, `MOD_VERB_${type}`)} by ${formatUsername(this.user)}`
+              `User was ${t(
+                this.guildLocale,
+                `MOD_VERB_${moderationVerbStrings[type]}` as any,
+              )} by ${formatUsername(this.user)}`,
             )
             .setStyle('SECONDARY')
-            .setDisabled()
-        )
+            .setDisabled(),
+        ),
       ),
     });
 
@@ -253,7 +262,7 @@ export const ActionSelectMenu = SelectMenuComponent({
       type,
       guild: this.guild,
       target: user,
-      moderator: this.user,
+      user: this.user,
       reason: this.message.embeds[0].fields[0].value,
     });
   },
