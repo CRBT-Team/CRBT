@@ -43,8 +43,8 @@ export const privacySettings: UserSettingsMenusProps = {
         ),
       ),
       row(
-        new ExportAllData().setStyle('PRIMARY').setLabel(t(this, 'PRIVACY_DOWNLOAD_MY_DATA')),
-        new ConfirmDataDeletion().setStyle('DANGER').setLabel(t(this, 'PRIVACY_DELETE_MY_DATA')),
+        new ExportAllData().setStyle('PRIMARY').setLabel(t(i, 'PRIVACY_DOWNLOAD_MY_DATA')),
+        new ConfirmDataDeletion().setStyle('DANGER').setLabel(t(i, 'PRIVACY_DELETE_MY_DATA')),
       ),
     ),
   }),
