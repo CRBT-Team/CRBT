@@ -465,6 +465,9 @@
   "settings": {
     "description": "Configure CRBT's Server Settings."
   },
+  "user settings": {
+    "description": "Customize your CRBT settings."
+  },
   "ATTENTION_REQUIRED": "Attention Required",
   "OVERVIEW": "Overview",
   "USER_SETTINGS_TITLE": "User Settings",
