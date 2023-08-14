@@ -72,7 +72,7 @@ export const ExportAllData = ButtonComponent({
 
     const userData = await prisma.user.findFirst({
       where: { id: this.user.id },
-      include: { reminders: true },
+      include: { reminders: true, memberData: true },
     });
 
     await this.editReply({
@@ -130,6 +130,7 @@ export const DeleteAllData = ButtonComponent({
       where: { id: this.user.id },
       include: {
         reminders: true,
+        memberData: true,
       },
     });
 
