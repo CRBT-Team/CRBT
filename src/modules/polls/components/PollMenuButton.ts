@@ -22,7 +22,7 @@ export const PollMenuButton = ButtonComponent({
 export async function renderMenuButton(
   this: ButtonInteraction,
   messageId: string,
-  creatorId?: string
+  creatorId?: string,
 ) {
   const { strings } = t(this, 'poll');
   const pollData = await getPollData(`${this.channel.id}/${messageId}`);
@@ -44,7 +44,7 @@ export async function renderMenuButton(
       embeds: [
         {
           title: `${t(this, 'POLL')} - ${message.embeds[0].title}`,
-          description: `You can change your vote using the buttons below.`,
+          description: t(this, 'POLL_MENU_VOTE_DESCRIPTION'),
           color: message.embeds[0].color,
         },
       ],
@@ -60,8 +60,8 @@ export async function renderMenuButton(
               .setDisabled(index === choiceId)
               .setStyle('PRIMARY')
               .setEmoji(choiceEmoji);
-          })
-        )
+          }),
+        ),
       ),
     };
   }
@@ -76,7 +76,7 @@ export async function renderMenuButton(
             ? trimArray(
                 choice.map((id) => `<@${id}>`),
                 this.locale,
-                15
+                15,
               ).join(', ')
             : strings.POLL_DATA_NOVOTES,
         })),
@@ -99,8 +99,8 @@ export async function renderMenuButton(
         new CancelPollButton(messageId)
           .setLabel(t(this, 'CANCEL'))
           .setStyle('DANGER')
-          .setEmoji(emojis.buttons.trash_bin)
-      )
+          .setEmoji(emojis.buttons.trash_bin),
+      ),
     ),
     ephemeral: true,
   };

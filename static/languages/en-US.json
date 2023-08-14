@@ -183,6 +183,7 @@
       "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
     }
   },
+  "POLL_MENU_VOTE_DESCRIPTION": "Vote for any choice using the buttons below.",
   "banner": {
     "description": "Get a user's profile banner."
   },
