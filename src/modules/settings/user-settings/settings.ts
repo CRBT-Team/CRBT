@@ -2,22 +2,23 @@ import { emojis, icons } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
-import { t } from '$lib/language';
+import { getAllLanguages, t } from '$lib/language';
 import { EditableUserSettings } from '$lib/types/user-settings';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { EmbedFieldData, Interaction, MessageSelectOptionData } from 'discord.js';
-import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
-import { getUser, resolveUserSettingsProps, UserSettingsMenus } from './_helpers';
+import { ButtonComponent, ChatCommand, SelectMenuComponent, components, row } from 'purplet';
+import { UserSettingsMenus, getUser, resolveUserSettingsProps } from './_helpers';
 
 export default ChatCommand({
   name: 'user settings',
-  description: 'Customize your CRBT settings.',
+  description: t('en-US', 'user settings.description'),
+  descriptionLocalizations: getAllLanguages('user settings.description'),
   async handle() {
     await this.deferReply({
       ephemeral: true,
     });
 
-    await this.editReply(await renderUserSettingsMenu.call(this));
+    renderUserSettingsMenu.call(this).then((r) => this.editReply(r));
   },
 });
 
@@ -66,7 +67,9 @@ export async function renderUserSettingsMenu(this: Interaction) {
       },
     ],
     components: components(
-      row(new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(selectMenuOptions))
+      row(
+        new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(selectMenuOptions),
+      ),
     ),
     ephemeral: true,
   };
@@ -74,15 +77,17 @@ export async function renderUserSettingsMenu(this: Interaction) {
 
 export const FeatureSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
+    await this.deferUpdate();
+
     const featureId = this.values[0] as EditableUserSettings;
 
-    this.update(await userFeatureSettings.call(this, featureId));
+    userFeatureSettings.call(this, featureId).then((r) => this.editReply(r));
   },
 });
 
 export async function userFeatureSettings(
   this: Interaction,
-  menuId: EditableUserSettings
+  menuId: EditableUserSettings,
 ): Promise<any> {
   const menu = UserSettingsMenus.get(menuId);
   const user = await getUser(this.user.id);
@@ -115,9 +120,13 @@ export async function userFeatureSettings(
 
 export const BackSettingsButton = ButtonComponent({
   async handle(feature: string | null) {
+    await this.deferUpdate();
+
     if (feature) {
-      return this.update(await userFeatureSettings.call(this, feature as EditableUserSettings));
+      userFeatureSettings
+        .call(this, feature as EditableUserSettings)
+        .then((r) => this.editReply(r));
     }
-    return this.update(await renderUserSettingsMenu.call(this));
+    return renderUserSettingsMenu.call(this).then((r) => this.editReply(r));
   },
 });
