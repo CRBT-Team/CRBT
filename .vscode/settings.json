@@ -6,10 +6,6 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    ".prettierignore": true,
-    ".eslintignore": true,
-    "yarn.lock": true
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "workspace.isHidden": true
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
