@@ -544,6 +544,7 @@
   "DELETE_MESSAGE": "Delete Message",
   "MODREPORTS_SUCCESS_TITLE": "Your report was sent to {server}'s moderators.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "It was added to {user}'s Moderation History. Review and action can be taken by those with access to the Moderation Reports channel.",
+  "MODREPORTS_SELECT_MENU": "Choose an action to take.",
   "ROLE_INFO_TITLE": "{role} - Role info",
   "POSITION": "Position",
   "HUMANS": "Human(s)",

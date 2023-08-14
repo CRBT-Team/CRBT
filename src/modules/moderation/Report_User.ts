@@ -37,9 +37,9 @@ import {
 export default UserContextCommand({
   name: 'Report User',
   async handle(user) {
-    const { modules, modReportsChannel } = await getGuildSettings(this.guildId);
+    const { modules, modReportsChannelId } = await getGuildSettings(this.guildId);
 
-    if (!modules?.moderationReports && !modReportsChannel) {
+    if (!modules?.moderationReports && !modReportsChannelId) {
       return CRBTError(this, {
         title: t(this, 'ERROR_MODULE_DISABLED_TITLE'),
         description: t(
@@ -128,9 +128,9 @@ export const ReportModal = ModalComponent({
       color: await getColor(this.guild),
     };
 
-    const { modReportsChannel } = await getGuildSettings(this.guildId);
+    const { modReportsChannelId } = await getGuildSettings(this.guildId);
     const reportsChannel = this.guild.channels.cache.get(
-      modReportsChannel,
+      modReportsChannelId,
     ) as GuildTextBasedChannel;
 
     try {
@@ -139,7 +139,7 @@ export const ReportModal = ModalComponent({
         components: components(
           row(
             new ActionSelectMenu({ userId, reportId: entry.id })
-              .setPlaceholder('Choose an action to take.')
+              .setPlaceholder(t(this.guildLocale, 'MODREPORTS_SELECT_MENU'))
               .setOptions([
                 {
                   label: t(this.guildLocale, 'WARN_USER'),
