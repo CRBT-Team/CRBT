@@ -1,8 +1,8 @@
 import { CooldownError } from '$lib/functions/CRBTError';
 import { Message, MessageEmbed } from 'discord.js';
 import { ButtonComponent } from 'purplet';
-import { handleVote } from '../functions/renderPoll';
 import { getPollData } from '../_helpers';
+import { handleVote } from '../functions/renderPoll';
 import { renderMenuButton } from './PollMenuButton';
 
 const usersOnCooldown = new Map();
@@ -13,7 +13,7 @@ export const VoteButton = ButtonComponent({
       return this.reply(await CooldownError(this, await usersOnCooldown.get(this.user.id), false));
     }
 
-    const poll = await getPollData(`${this.channel.id}/${messageId ?? this.message.id}`);
+    const poll = await getPollData(this.channel.id, messageId ?? this.message.id);
     const message: Message = messageId
       ? await this.channel.messages.fetch(messageId)
       : (this.message as Message);

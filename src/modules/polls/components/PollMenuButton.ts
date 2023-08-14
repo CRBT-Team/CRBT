@@ -25,7 +25,7 @@ export async function renderMenuButton(
   creatorId?: string,
 ) {
   const { strings } = t(this, 'poll');
-  const pollData = await getPollData(`${this.channel.id}/${messageId}`);
+  const pollData = await getPollData(this.channel.id, messageId);
   const message: Message =
     messageId === this.message.id
       ? (this.message as Message)

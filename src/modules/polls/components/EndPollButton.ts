@@ -1,12 +1,14 @@
 import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { ButtonComponent } from 'purplet';
-import { endPoll } from '../functions/endPoll';
 import { getPollData } from '../_helpers';
+import { endPoll } from '../functions/endPoll';
 
 export const EndPollButton = ButtonComponent({
   async handle(msgId: string) {
-    const pollData = await getPollData(`${this.channel.id}/${msgId}`);
+    const pollData = await getPollData(this.channel.id, msgId);
+
+    await this.deferUpdate();
 
     if (pollData) {
       const msg = await this.channel.messages.fetch(msgId);

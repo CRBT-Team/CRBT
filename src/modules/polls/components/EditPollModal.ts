@@ -1,6 +1,6 @@
 import { components, ModalComponent, row } from 'purplet';
-import { renderPoll } from '../functions/renderPoll';
 import { getPollData } from '../_helpers';
+import { renderPoll } from '../functions/renderPoll';
 
 export const EditPollModal = ModalComponent({
   async handle(msgId: string) {
@@ -11,7 +11,7 @@ export const EditPollModal = ModalComponent({
     console.log(choices);
 
     const msg = await this.channel.messages.fetch(msgId);
-    const poll = await getPollData(`${this.channelId}/${msgId}`);
+    const poll = await getPollData(this.channelId, msgId);
     const pollEmbed = await renderPoll.call(this, poll, null, {
       editedAt: new Date(),
       title,
@@ -27,8 +27,8 @@ export const EditPollModal = ModalComponent({
             ...component,
             label: choices[i],
           })),
-          msg.components[0].components.at(-1)
-        )
+          msg.components[0].components.at(-1),
+        ),
       ),
     });
 
