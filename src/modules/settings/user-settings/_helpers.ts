@@ -21,7 +21,7 @@ export const defaultUserSettings: FullUser = {
   crbtBadges: [],
   silentJoins: false,
   silentLeaves: false,
-  telemetry: true,
+  hasTelemetryEnabled: true,
 };
 
 export function resolveUserSettingsProps(
