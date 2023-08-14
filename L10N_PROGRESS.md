@@ -9,7 +9,7 @@
 - [x] /8ball
 - [x] /avatar
 - [~] Avatar & Banner
-- [~] /ban
+- [0] /ban
 - [x] /banner
 - [~] Bot info
 - [0] Bookmark Message
@@ -20,13 +20,13 @@
 - [x] /crbt info
 - [x] /emoji info
 - [~] Get JSON
-- [~] /giveaway
+- [x] /giveaway
 - [x] /help
 - [x] /invite info
 - [0] /kick
 - [~] Moderation History
-- [~] /modlogs all
-- [~] /modlogs user
+- [x] /modlogs all
+- [x] /modlogs user
 - [x] /pick
 - [x] /ping
 - [x] /poll
