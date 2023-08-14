@@ -42,7 +42,7 @@
     "rawg-api-sdk": "^0.0.3",
     "typescript": "^5.1.6",
     "undici": "^5.23.0",
-    "ytsr": "^3.8.2"
+    "ytsr": "^3.8.4"
   },
   "devDependencies": {
     "@discordjs/rest": "^2.0.0",
