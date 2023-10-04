@@ -47,7 +47,7 @@
 - [x] /translate
 - [x] Translate (w/ images)
 - [x] /user info
-- [x] /user settings
+- [~] /user settings
 - [~] User Info
 - [0] /warn
 - [0] Warn User
