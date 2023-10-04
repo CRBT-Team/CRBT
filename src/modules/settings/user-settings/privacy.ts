@@ -8,7 +8,7 @@ import { getUser } from './_helpers';
 import { userFeatureSettings } from './settings';
 
 const privacyPreferences = [
-  ['telemetry', 'TELEMETRY'],
+  ['hasTelemetryEnabled', 'TELEMETRY'],
   ['silentJoins', 'SILENT_JOINS'],
   ['silentLeaves', 'SILENT_LEAVES'],
 ];
@@ -60,7 +60,7 @@ export const ToggleSettingBtn = ButtonComponent({
 
     await getUser(this.user.id, true);
 
-    await this.reply(await userFeatureSettings.call(this, EditableUserSettings.privacy));
+    await this.update(await userFeatureSettings.call(this, EditableUserSettings.privacy));
   },
 });
 
