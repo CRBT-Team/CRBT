@@ -4,18 +4,19 @@ import { colors, emojis, icons } from '$lib/env';
 import { UnknownError, createCRBTError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
+import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
 import { dateToSnowflake, timestampMention } from '@purplet/utils';
-import { PermissionFlagsBits } from 'discord-api-types/v10';
+import { APIEmbedAuthor, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
   CommandInteraction,
   Guild,
+  GuildBasedChannel,
   GuildMember,
-  GuildTextBasedChannel,
   Interaction,
   MessageComponentInteraction,
   ModalSubmitInteraction,
@@ -30,7 +31,7 @@ import { timeout } from './timeout';
 export interface ModerationContext {
   user: User;
   guild: Guild;
-  target: User | GuildTextBasedChannel;
+  target: User | GuildBasedChannel;
   reason?: string;
   endDate?: Date;
   type: ModerationAction;
@@ -46,9 +47,17 @@ export enum ModerationAction {
   UserTimeout,
   UserWarn,
   UserReport,
+  ChannelLock,
+  ChannelUnlock,
 }
 
-export const moderationVerbStrings = {
+export const ChannelModerationActions = [
+  ModerationAction.ChannelMessageClear,
+  ModerationAction.ChannelLock,
+  ModerationAction.ChannelUnlock,
+];
+
+export const moderationVerbStrings: Record<ModerationAction, string> = {
   [ModerationAction.ChannelMessageClear]: 'CLEAR',
   [ModerationAction.UserBan]: 'BAN',
   [ModerationAction.UserKick]: 'KICK',
@@ -56,15 +65,20 @@ export const moderationVerbStrings = {
   [ModerationAction.UserTemporaryBan]: 'TEMPBAN',
   [ModerationAction.UserTimeout]: 'TIMEOUT',
   [ModerationAction.UserWarn]: 'WARN',
+  [ModerationAction.ChannelLock]: 'LOCK',
+  [ModerationAction.ChannelUnlock]: 'UNLOCK',
 };
 
-export const ModerationColors = {
+export const ModerationColors: Record<ModerationAction, number> = {
   [ModerationAction.UserBan]: colors.red,
   [ModerationAction.UserTemporaryBan]: colors.red,
   [ModerationAction.ChannelMessageClear]: colors.white,
   [ModerationAction.UserKick]: colors.orange,
   [ModerationAction.UserTimeout]: colors.yellow,
   [ModerationAction.UserWarn]: colors.yellow,
+  [ModerationAction.UserReport]: colors.white,
+  [ModerationAction.ChannelLock]: colors.blue,
+  [ModerationAction.ChannelUnlock]: colors.green,
 };
 
 export const ModerationActions: Partial<
@@ -119,27 +133,6 @@ export async function handleModerationAction(
         })
         .catch((e) => {});
 
-      await prisma.moderationEntry.create({
-        data: {
-          id: dateToSnowflake(new Date()),
-          endDate,
-          type,
-          userId: moderator.id,
-          targetId: target.id,
-          reason,
-          guildId: guild.id,
-        },
-      });
-
-      await fetchWithCache(
-        `strikes:${this.guildId}`,
-        () =>
-          prisma.moderationEntry.findMany({
-            where: { guildId: this.guild.id },
-          }),
-        true,
-      );
-
       await this.editReply({
         embeds: [
           {
@@ -153,26 +146,77 @@ export async function handleModerationAction(
       });
     }
 
+    if (type !== ModerationAction.ChannelUnlock) {
+      // Create entry
+      await prisma.moderationEntry.create({
+        data: {
+          id: dateToSnowflake(new Date()),
+          endDate,
+          type,
+          userId: moderator.id,
+          targetId: target.id,
+          reason,
+          guildId: guild.id,
+        },
+      });
+    } else {
+      // If the channel is unlocked, update the previous lock entry
+      const entry = await prisma.moderationEntry.findFirst({
+        where: {
+          AND: {
+            targetId: target.id,
+            guildId: guild.id,
+            type: ModerationAction.ChannelLock,
+          },
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+
+      if (entry) {
+        await prisma.moderationEntry.update({
+          where: {
+            id: entry.id,
+          },
+          data: {
+            endDate: new Date(),
+          },
+        });
+      }
+    }
+
+    // Update cache
+    await fetchWithCache(
+      `mod_history:${this.guildId}`,
+      () =>
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guild.id },
+        }),
+      true,
+    );
+
     const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
 
     if (modules.moderationNotifications && modLogsChannelId) {
       const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
 
       const fields = [
-        {
-          name: t(this.guildLocale, 'REASON'),
-          value: reason ?? '*No reason specified*',
-        },
+        ...(type !== ModerationAction.ChannelUnlock
+          ? [
+              {
+                name: t(this.guildLocale, 'REASON'),
+                value: reason ?? '*No reason specified*',
+              },
+            ]
+          : []),
         {
           name: t(this.guildLocale, 'MODERATOR'),
           value: `${moderator}`,
           inline: true,
         },
         {
-          name: t(
-            this.guildLocale,
-            type === ModerationAction.ChannelMessageClear ? 'CHANNEL' : 'USER',
-          ),
+          name: t(this.guildLocale, ChannelModerationActions.includes(type) ? 'CHANNEL' : 'USER'),
           value: `${target}`,
           inline: true,
         },
@@ -204,13 +248,36 @@ export async function handleModerationAction(
             ],
           });
         } else {
+          let author: APIEmbedAuthor;
+
+          switch (type) {
+            case ModerationAction.ChannelMessageClear: {
+              author = {
+                name: `${messagesDeleted} messages were deleted in #${target.name}`,
+                icon_url: icons.channels.text,
+              };
+              break;
+            }
+            case ModerationAction.ChannelLock: {
+              author = {
+                name: `#${target.name} was locked.`,
+                icon_url: getEmojiURL('🔒'),
+              };
+              break;
+            }
+            case ModerationAction.ChannelUnlock: {
+              author = {
+                name: `#${target.name} was unlocked.`,
+                icon_url: getEmojiURL('🔓'),
+              };
+              break;
+            }
+          }
+
           channel.send({
             embeds: [
               {
-                author: {
-                  name: `${messagesDeleted} messages were deleted in #${target.name}`,
-                  icon_url: icons.channels.text,
-                },
+                author,
                 fields,
                 color: ModerationColors[type],
               },
@@ -303,7 +370,7 @@ export function checkModerationPermission(
     if (
       checkHierarchy &&
       this.client.user.id !== this.guild.ownerId &&
-      this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
+      this.guild.members.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
       return {
         error: createCRBTError(this, `I cannot ${verb} a user with roles above mine.`),
