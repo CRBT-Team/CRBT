@@ -113,7 +113,9 @@ export default ChatCommand({
       );
     }
 
-    await this.deferReply();
+    await this.deferReply({
+      ephemeral: true,
+    });
 
     const res = await renderModlogs.call(this);
 
