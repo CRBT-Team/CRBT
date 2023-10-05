@@ -77,7 +77,7 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
     ['<crbt.joined>', guild.members.me.joinedAt.toISOString()],
     ['<crbt.mention>', `<@${client.user.id}>`],
     ['<crbt.isBot>', 'true'],
-    ['<crbt.roles>', guild.me.roles.cache.map((r) => r.name).join(', ')],
+    ['<crbt.roles>', guild.members.me.roles.cache.map((r) => r.name).join(', ')],
   ];
 
   if (text && typeof text === 'string') {
