@@ -5,7 +5,7 @@ import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
-import { Client, MessageButton } from 'discord.js';
+import { Client, MessageButton, MessageOptions } from 'discord.js';
 import { components, row } from 'purplet';
 import {
   ExtractedReminder,
@@ -50,12 +50,12 @@ export async function handleReminder(reminder: Reminder, client: Client) {
         new MessageButton()
           .setStyle('LINK')
           .setLabel(t(reminder?.locale, 'JUMP_TO_MSG'))
-          .setURL(data.url)
+          .setURL(data.url),
         // new SnoozeButton()
         //   .setStyle('SECONDARY')
         //   .setEmoji(emojis.reminder)
         //   .setLabel(strings.BUTTON_SNOOZE)
-      )
+      ),
     ),
   };
 
@@ -83,7 +83,7 @@ export function renderLowBudgetMessage({
   details,
   guild,
   channel,
-}: Pick<ExtractedReminder, 'author' | 'details' | 'guild' | 'channel'>) {
+}: Pick<ExtractedReminder, 'author' | 'details' | 'guild' | 'channel'>): MessageOptions['embeds'] {
   if (!details) return [];
 
   return [
