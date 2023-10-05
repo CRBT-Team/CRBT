@@ -17,7 +17,8 @@ export const ShareResponseBtnShell = ButtonComponent({
   async handle() {
     const { content, embeds, attachments, components } = this.message as Message;
     const commandName = (this.message.interaction as MessageInteraction).commandName;
-    const command = allCommands.find((c) => c.name === commandName);
+    const rootCmdName = commandName.split(' ')[0];
+    const command = allCommands.find((c) => c.name === rootCmdName);
 
     const newMessage: MessageOptions = {
       content: `${userMention(this.user.id)} used ${
