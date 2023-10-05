@@ -254,7 +254,8 @@ export function checkModerationPermission(
     REPORT: 0n,
   };
 
-  const verb = Object.keys(ModerationAction)[type].toLowerCase();
+  const verb = moderationVerbStrings[type].toLowerCase();
+  // Object.keys(ModerationAction)[type].toLowerCase();
 
   if (target instanceof User) {
     // Check member exists
