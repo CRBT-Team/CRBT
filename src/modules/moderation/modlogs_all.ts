@@ -1,14 +1,18 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
-import { CRBTError } from '$lib/functions/CRBTError';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { getAllLanguages, t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { ModerationEntry, ModerationStrikeTypes, OldModerationStrikes } from '@prisma/client';
+import {
+  ModerationStrikeTypes,
+  ModerationEntry as NewModerationEntry,
+  OldModerationStrikes,
+} from '@prisma/client';
 import { dateToSnowflake, snowflakeToDate, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import dedent from 'dedent';
@@ -29,6 +33,8 @@ import {
   row,
 } from 'purplet';
 import { ModerationAction, ModerationColors, moderationVerbStrings } from './_base';
+
+export type ModerationEntry = NewModerationEntry & { oldId?: string };
 
 async function getAllEntries(this: Interaction, filterTargetId?: string) {
   const oldData = (
@@ -91,6 +97,7 @@ function formatOldModEntry(entry: OldModerationStrikes): ModerationEntry {
     guildId: entry.serverId,
     endDate: entry.expiresAt,
     details: entry.details,
+    oldId: entry.id,
   };
 }
 
@@ -334,12 +341,17 @@ async function renderModEntryPage(
               ...(entry.type === ModerationAction.UserReport
                 ? []
                 : [
-                    new EditButton({ sId, i: data.indexOf(entry) + 1, page, uId })
+                    new EditButton({
+                      sId,
+                      page,
+                      uId,
+                      old: !!entry.oldId,
+                    })
                       .setEmoji(emojis.buttons.pencil)
                       .setLabel(t(this, 'EDIT'))
                       .setStyle('PRIMARY'),
                   ]),
-              new DeleteButton({ sId, page, uId })
+              new DeleteButton({ sId: entry.oldId ?? entry.id, page, uId, old: !!entry.oldId })
                 .setEmoji(emojis.buttons.trash_bin)
                 .setLabel(t(this, 'DELETE'))
                 .setStyle('DANGER'),
@@ -352,11 +364,11 @@ async function renderModEntryPage(
 }
 
 export const EditButton = ButtonComponent({
-  async handle({ sId, uId, i, page }: PageBtnProps & { sId: string; i: number }) {
+  async handle({ sId, uId, old, page }: PageBtnProps & { sId: string; old: boolean }) {
     const entry = (await getAllEntries.call(this)).find(({ id }) => id === sId);
 
     await this.showModal(
-      new EditModal({ page, uId, sId })
+      new EditModal({ page, uId, sId, old })
         .setTitle(`${t(this, 'ENTRY')} - ${t(this, 'EDIT')}`)
         .setComponents(
           row(
@@ -374,29 +386,45 @@ export const EditButton = ButtonComponent({
 });
 
 export const EditModal = ModalComponent({
-  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
+  async handle({ sId, uId, page, old }: PageBtnProps & { sId: string; old: boolean }) {
     const reason = this.fields.getTextInputValue('reason');
 
-    await prisma.moderationEntry.update({
-      where: { id: sId },
-      data: { reason },
-    });
+    if (old) {
+      await prisma.oldModerationStrikes.update({
+        where: { id: sId },
+        data: { reason },
+      });
 
-    await fetchWithCache(
-      `mod_history:${this.guildId}`,
-      () =>
-        prisma.moderationEntry.findMany({
-          where: { guildId: this.guildId },
-        }),
-      true,
-    );
+      await fetchWithCache(
+        `strikes:${this.guildId}`,
+        () =>
+          prisma.oldModerationStrikes.findMany({
+            where: { serverId: this.guildId },
+          }),
+        true,
+      );
+    } else {
+      await prisma.moderationEntry.update({
+        where: { id: sId },
+        data: { reason },
+      });
+
+      await fetchWithCache(
+        `mod_history:${this.guildId}`,
+        () =>
+          prisma.moderationEntry.findMany({
+            where: { guildId: this.guildId },
+          }),
+        true,
+      );
+    }
 
     await this.update(await renderModEntryPage.call(this, sId, { uId, page }));
   },
 });
 
 export const DeleteButton = ButtonComponent({
-  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
+  async handle({ sId, uId, page, old }: PageBtnProps & { sId: string; old: boolean }) {
     const embed = this.message.embeds[0];
 
     await this.update({
@@ -410,7 +438,7 @@ export const DeleteButton = ButtonComponent({
       ],
       components: components(
         row(
-          new ConfirmDeleteButton({ uId, sId, page })
+          new ConfirmDeleteButton({ uId, sId, page, old })
             .setLabel(t(this, 'CONFIRM'))
             .setStyle('DANGER'),
           new GoToPage({ page: 0, uId }).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
@@ -421,18 +449,35 @@ export const DeleteButton = ButtonComponent({
 });
 
 export const ConfirmDeleteButton = ButtonComponent({
-  async handle({ sId, uId, page }: PageBtnProps & { sId: string }) {
-    await prisma.moderationEntry.delete({ where: { id: sId } });
+  async handle({ sId, uId, page, old }: PageBtnProps & { sId: string; old: boolean }) {
+    try {
+      if (old) {
+        await prisma.oldModerationStrikes.delete({ where: { id: sId } });
 
-    await fetchWithCache(
-      `mod_history:${this.guildId}`,
-      () =>
-        prisma.moderationEntry.findMany({
-          where: { guildId: this.guildId },
-        }),
-      true,
-    );
+        await fetchWithCache(
+          `strikes:${this.guildId}`,
+          () =>
+            prisma.oldModerationStrikes.findMany({
+              where: { serverId: this.guildId },
+            }),
+          true,
+        );
+      } else {
+        await prisma.moderationEntry.delete({ where: { id: sId } });
 
-    await this.update(await renderModlogs.call(this, page, { uId }));
+        await fetchWithCache(
+          `mod_history:${this.guildId}`,
+          () =>
+            prisma.moderationEntry.findMany({
+              where: { guildId: this.guildId },
+            }),
+          true,
+        );
+      }
+
+      await this.update(await renderModlogs.call(this, page, { uId }));
+    } catch (e) {
+      UnknownError(this, e);
+    }
   },
 });
