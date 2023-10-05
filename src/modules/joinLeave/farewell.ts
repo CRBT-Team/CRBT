@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
-import { MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
+import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerLeave } from './types';
@@ -36,7 +36,7 @@ export default OnEvent('guildMemberRemove', async (member) => {
 
     const { leaveChannel: channelId, leaveMessage: message } = serverData;
 
-    const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
+    const channel = (await guild.channels.fetch(channelId)) as GuildTextBasedChannel;
 
     const parsedMessage = parseCRBTscriptInMessage(message, {
       channel,
