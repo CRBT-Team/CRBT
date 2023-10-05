@@ -20,16 +20,16 @@ export default OnEvent('guildMemberRemove', async (member) => {
 
     if (preferences && preferences.silentLeaves) return;
 
-    const modules = await prisma.serverModules.findFirst({
+    const modules = await prisma.guildModules.findFirst({
       where: { id: guild.id },
       select: { leaveMessage: true },
     });
 
     if (!modules?.leaveMessage) return;
 
-    const serverData = (await prisma.servers.findFirst({
+    const serverData = (await prisma.guild.findFirst({
       where: { id: guild.id },
-      select: { leaveChannel: true, leaveMessage: true },
+      select: { leaveChannelId: true, leaveMessage: true },
     })) as unknown as RawServerLeave;
 
     if (!serverData) return;

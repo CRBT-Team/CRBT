@@ -39,16 +39,16 @@ async function welcome(member?: GuildMember) {
 
   if (preferences && preferences.silentJoins) return;
 
-  const modules = await prisma.serverModules.findFirst({
+  const modules = await prisma.guildModules.findFirst({
     where: { id: guild.id },
     select: { joinMessage: true },
   });
 
   if (!modules?.joinMessage) return;
 
-  const serverData = (await prisma.servers.findFirst({
+  const serverData = (await prisma.guild.findFirst({
     where: { id: guild.id },
-    select: { joinChannel: true, joinMessage: true },
+    select: { joinChannelId: true, joinMessage: true },
   })) as unknown as RawServerJoin;
 
   if (!serverData) return;
