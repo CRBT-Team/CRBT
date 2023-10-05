@@ -20,6 +20,7 @@ import { MessageFlags, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   ButtonInteraction,
   Interaction,
+  MessageOptions,
   ModalSubmitInteraction,
   SelectMenuInteraction,
   TextInputComponent,
@@ -32,7 +33,12 @@ import {
   components,
   row,
 } from 'purplet';
-import { ModerationAction, ModerationColors, moderationVerbStrings } from './_base';
+import {
+  ChannelModerationActions,
+  ModerationAction,
+  ModerationColors,
+  moderationVerbStrings,
+} from './_base';
 
 export type ModerationEntry = NewModerationEntry & { oldId?: string };
 
@@ -136,22 +142,25 @@ export function renderEntry(entry: ModerationEntry, locale: string, entries: Mod
     Date.now() < (entry.endDate?.getTime() ?? 0)
       ? `(Expires ${timestampMention(entry.endDate, 'R')}) `
       : '';
+  const unlockedOn =
+    entry.type === ModerationAction.ChannelLock && entry.endDate
+      ? `(${t(locale, 'MOD_VERB_UNLOCK')} ${timestampMention(entry.endDate, 'R')}) `
+      : '';
   const reason = `**${t(
     locale,
     entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON',
   )}:** ${
     entry.details ? `[${t(locale, 'MESSAGE_FROM_USER')}]` : entry.reason ?? `*${t(locale, 'NONE')}*`
   }`;
-  const target =
-    entry.type !== ModerationAction.ChannelMessageClear
-      ? `<@${entry.targetId}>`
-      : `<#${entry.targetId}>`;
+  const target = !ChannelModerationActions.includes(entry.type)
+    ? `<@${entry.targetId}>`
+    : `<#${entry.targetId}>`;
 
   return {
     name: `${entries.indexOf(entry) + 1}. ${timestampMention(
       snowflakeToDate(entry.id),
       'f',
-    )} • ${action} ${expires}`,
+    )} • ${action} ${expires}${unlockedOn}`,
     value: dedent`
     <@${entry.userId}> ${t(locale, `MOD_VERB_${moderationVerbStrings[entry.type]}` as any, {
       target: '',
@@ -270,7 +279,18 @@ async function renderModEntryPage(
   // .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const entry: ModerationEntry = data.find(({ id }) => id === sId);
-  const target = await this.client.users.fetch(entry.targetId);
+  let lowBudgetMessage: MessageOptions['embeds'];
+
+  if (entry.details) {
+    const target = await this.client.users.fetch(entry.targetId);
+
+    lowBudgetMessage = renderLowBudgetMessage({
+      details: JSON.parse(entry.details),
+      channel: this.channel,
+      guild: this.guild,
+      author: target,
+    });
+  }
 
   return {
     embeds: [
@@ -281,7 +301,9 @@ async function renderModEntryPage(
           }),
           icon_url: this.guild.iconURL(),
         },
-        title: `Entry #${data.indexOf(entry) + 1} • ${t(this, moderationVerbStrings[entry.type])}`,
+        title: `${t(this, 'ENTRY_NO', {
+          number: data.indexOf(entry) + 1,
+        })} • ${t(this, moderationVerbStrings[entry.type])}`,
         fields: [
           {
             name: t(this, entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON'),
@@ -292,7 +314,7 @@ async function renderModEntryPage(
             value: `<@${entry.userId}>`,
             inline: true,
           },
-          ...(entry.type === ModerationAction.ChannelMessageClear
+          ...(ChannelModerationActions.includes(entry.type)
             ? [
                 {
                   name: t(this, 'CHANNEL'),
@@ -310,7 +332,10 @@ async function renderModEntryPage(
           ...(entry.endDate
             ? [
                 {
-                  name: t(this, 'END_DATE'),
+                  name: t(
+                    this,
+                    entry.type === ModerationAction.ChannelLock ? 'MOD_VERB_UNLOCK' : 'END_DATE',
+                  ),
                   value: `${timestampMention(entry.endDate)} • ${timestampMention(
                     entry.endDate,
                     'R',
@@ -324,14 +349,7 @@ async function renderModEntryPage(
             ? await getColor(this.guild)
             : ModerationColors[entry.type],
       },
-      ...(entry.details
-        ? renderLowBudgetMessage({
-            details: JSON.parse(entry.details),
-            channel: this.channel,
-            guild: this.guild,
-            author: target,
-          })
-        : []),
+      ...(lowBudgetMessage ? lowBudgetMessage : []),
     ],
     components: components(
       row(

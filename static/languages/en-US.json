@@ -258,6 +258,8 @@
   "TEMPBAN": "Temporary ban",
   "CLEAR": "Clear",
   "REPORT": "Report",
+  "LOCK": "Lock",
+  "UNLOCK": "Unlock",
   "REASON": "Reason",
   "MOD_VERB_BAN": "Banned",
   "MOD_VERB_TEMPBAN": "Temporarily banned",
@@ -266,6 +268,8 @@
   "MOD_VERB_TIMEOUT": "Timed out",
   "MOD_VERB_WARN": "Warned",
   "MOD_VERB_REPORT": "Reported",
+  "MOD_VERB_LOCK": "Locked",
+  "MOD_VERB_UNLOCK": "Unlocked",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
   "modlogs_all": {
@@ -652,5 +656,29 @@
   "SEARCH_ERROR_NO_RESULTS_TITLE": "No results found.",
   "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Check for spelling errors or for a broader topic.\nNSFW results are hidden outside of age-restricted channels.",
   "DURATION": "Duration",
-  "VIEWS": "Views"
+  "VIEWS": "Views",
+  "lock": {
+    "description": "Makes a channel read-only for @everyone.",
+    "options": {
+      "channel": {
+        "description": "The channel to lock."
+      }
+    }
+  },
+  "LOCK_SUCCESS_TITLE": "Locked {channel}.",
+  "LOCK_SUCCESS_DESCRIPTION_VOICE": "Users will not be able to connect to this channel.",
+  "LOCK_SUCCESS_DESCRIPTION_TEXT": "Users will not be able to send messages in this channel and its threads, or create new threads.",
+  "LOCK_SUCCESS_DESCRIPTION_FORUM": "Users will not be able to send messages in posts, or create new posts.",
+  "LOCK_SUCCESS_DESCRIPTION_COMMAND": "Use {command} to unlock this channel.",
+  "LOCK_SUCCESS_DESCRIPTION_WARNING": "Administrator, and roles overwriting the channel's permissions will be immune.",
+  "unlock": {
+    "description": "Unlocks a channel's view & connect permissions for @everyone.",
+    "options": {
+      "channel": {
+        "description": "The channel to unlock."
+      }
+    }
+  },
+  "UNLOCK_SUCCESS_TITLE": "Unlocked {channel}.",
+  "UNLOCK_SUCCESS_DESCRIPTION": "All write & connect permissions were restored."
 }
