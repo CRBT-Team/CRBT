@@ -24,9 +24,9 @@
 - [x] /help
 - [x] /invite info
 - [0] /kick
+- [x] /lock
 - [~] Moderation History
-- [x] /modlogs all
-- [x] /modlogs user
+- [~] /moderation history
 - [x] /pick
 - [x] /ping
 - [x] /poll
@@ -46,6 +46,7 @@
 - [0] /timeout
 - [x] /translate
 - [x] Translate (w/ images)
+- [x] /unlock
 - [x] /user info
 - [~] /user settings
 - [~] User Info
