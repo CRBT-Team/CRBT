@@ -23,7 +23,7 @@ export function createModNotification(
       ? [
           {
             name: t(locale, 'REASON'),
-            value: reason ?? '*No reason specified*',
+            value: reason ?? `*${t(locale, 'NONE')}*`,
           },
         ]
       : []),
@@ -34,7 +34,7 @@ export function createModNotification(
     },
     {
       name: t(locale, ChannelModerationActions.includes(type) ? 'CHANNEL' : 'USER'),
-      value: `<@${target.id}>`,
+      value: ChannelModerationActions.includes(type) ? `<#${target.id}>` : `<@${target.id}>`,
       inline: true,
     },
     ...(endDate
@@ -69,21 +69,28 @@ export function createModNotification(
     switch (type) {
       case ModerationAction.ChannelMessageClear: {
         author = {
-          name: `${messagesDeleted} messages were deleted in #${target.name}`,
+          name: t(locale, 'MOD_NOTIFICATION_CLEAR_TITLE', {
+            messages: messagesDeleted,
+            channel: `#${target.name}`,
+          }),
           icon_url: icons.channels.text,
         };
         break;
       }
       case ModerationAction.ChannelLock: {
         author = {
-          name: `#${target.name} was locked.`,
+          name: t(locale, 'MOD_NOTIFICATION_LOCK_TITLE', {
+            channel: `#${target.name}`,
+          }),
           icon_url: getEmojiURL('🔒'),
         };
         break;
       }
       case ModerationAction.ChannelUnlock: {
         author = {
-          name: `#${target.name} was unlocked.`,
+          name: t(locale, 'MOD_NOTIFICATION_UNLOCK_TITLE', {
+            channel: `#${target.name}`,
+          }),
           icon_url: getEmojiURL('🔓'),
         };
         break;
