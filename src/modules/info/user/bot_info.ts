@@ -1,6 +1,7 @@
 import { links } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
+import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { invisibleChar } from '$lib/util/invisibleChar';
@@ -37,7 +38,6 @@ export async function renderBotInfo(
     {
       name: t(this, 'ID'),
       value: app.id,
-      inline: true,
     },
   ];
 
@@ -87,7 +87,6 @@ export async function renderBotInfo(
   fields.push({
     name: t(this, 'CREATED_ON'),
     value: `${timestampMention(app.createdAt)} • ${timestampMention(app.createdAt, 'R')}`,
-    inline: true,
   });
 
   return {
@@ -98,6 +97,7 @@ export async function renderBotInfo(
           icon_url: avatar(bot),
           url: isSelf ? links.baseURL : null,
         },
+        title: formatUsername(bot),
         description:
           (userBadges.length > 0 ? `${userBadges.join(' ')} ${invisibleChar}\n` : '') +
           app.description,

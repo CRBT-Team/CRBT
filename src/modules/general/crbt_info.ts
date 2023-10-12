@@ -29,9 +29,9 @@ export default ChatCommand({
             iconURL: avatar(user),
             url: links.baseURL,
           },
-          description: `v${pjson.version} • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${
-            links.purplet
-          })**`,
+          description: `**[CRBT v${pjson.version}](${
+            links.github
+          })** • **[Purplet ${pjson.dependencies['purplet'].slice(1)}](${links.purplet})**`,
           fields: [
             {
               name: t(this, 'MEMBERS'),
