@@ -5,10 +5,11 @@ import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { OnEvent, components, row } from 'purplet';
 import { saveServerSettings } from './_helpers';
-import { guildFeatureSettings } from './settings';
+import { ToggleFeatureBtn, guildFeatureSettings } from './settings';
 
 export const modlogsSettings: SettingsMenuProps = {
-  description: (l) => t(l, 'SETTINGS_MODLOGS_DESCRIPTION'),
+  mainMenu: EditableGuildFeatures.moderation,
+  description: (l) => t(l, 'SETTINGS_MODLOGS_SHORT_DESCRIPTION'),
   getErrors({ guild, settings, i }) {
     const channelId = settings.modLogsChannelId;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
@@ -61,26 +62,39 @@ export const modlogsSettings: SettingsMenuProps = {
                 ChannelType.PrivateThread,
               ] as number[]),
             )
-            .setCustomId(customId)
+            .setCustomId(modlogsCustomId)
             .setDisabled(!settings.modules.moderationNotifications)
             .setPlaceholder(t(i, 'EDIT_CHANNEL')),
         ),
-        row(backBtn),
+        row(
+          backBtn,
+          new ToggleFeatureBtn({
+            feature: EditableGuildFeatures.moderationNotifications,
+            newState: !settings.modules.moderationNotifications,
+          })
+            .setLabel(settings.modules.moderationNotifications ? t(i, 'DISABLE') : t(i, 'ENABLE'))
+            .setLabel(
+              settings.modules.moderationNotifications
+                ? t(i, 'DISABLE_FEATURE')
+                : t(i, 'ENABLE_FEATURE'),
+            )
+            .setStyle(settings.modules.moderationNotifications ? 'DANGER' : 'SUCCESS'),
+        ),
       ),
     };
   },
 };
 
-const customId = 'hlogsselect';
+export const modlogsCustomId = 'hlogsselect';
 
 export const EditLogsChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
-  if (i.isChannelSelect() && i.customId === customId) {
+  if (i.isChannelSelect() && i.customId === modlogsCustomId) {
     const channel = i.channels.first();
 
     await saveServerSettings(i.guildId, {
       modLogsChannelId: channel.id,
     });
 
-    i.update(await guildFeatureSettings.call(i, EditableGuildFeatures.moderationLogs));
+    i.update(await guildFeatureSettings.call(i, EditableGuildFeatures.moderationNotifications));
   }
 });

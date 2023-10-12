@@ -5,10 +5,11 @@ import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { OnEvent, components, row } from 'purplet';
 import { saveServerSettings } from './_helpers';
-import { guildFeatureSettings } from './settings';
+import { ToggleFeatureBtn, guildFeatureSettings } from './settings';
 
 export const modReportsSettings: SettingsMenuProps = {
-  description: (l) => t(l, 'SETTINGS_MODREPORTS_DESCRIPTION'),
+  mainMenu: EditableGuildFeatures.moderation,
+  description: (l) => t(l, 'SETTINGS_MODREPORTS_SHORT_DESCRIPTION'),
   getErrors({ guild, settings, i }) {
     const channelId = settings.modReportsChannelId;
     const channel = guild.channels.cache.find((c) => c.id === channelId);
@@ -61,20 +62,30 @@ export const modReportsSettings: SettingsMenuProps = {
                 ChannelType.PrivateThread,
               ] as number[]),
             )
-            .setCustomId(customId)
+            .setCustomId(reportsCustomId)
             .setDisabled(!settings.modules.moderationReports)
             .setPlaceholder(t(i, 'EDIT_CHANNEL')),
         ),
-        row(backBtn),
+        row(
+          backBtn,
+          new ToggleFeatureBtn({
+            feature: EditableGuildFeatures.moderationReports,
+            newState: !settings.modules.moderationReports,
+          })
+            .setLabel(
+              settings.modules.moderationReports ? t(i, 'DISABLE_FEATURE') : t(i, 'ENABLE_FEATURE'),
+            )
+            .setStyle(settings.modules.moderationReports ? 'DANGER' : 'SUCCESS'),
+        ),
       ),
     };
   },
 };
 
-const customId = 'hreportsselect';
+export const reportsCustomId = 'hreportsselect';
 
 export const EditReportsChannelSelectMenu = OnEvent('interactionCreate', async (i) => {
-  if (i.isChannelSelect() && i.customId === customId) {
+  if (i.isChannelSelect() && i.customId === reportsCustomId) {
     const channel = i.channels.first();
 
     await saveServerSettings(i.guildId, {
