@@ -24,7 +24,7 @@ export const UserModerationHistory = UserContextCommand({
       );
     }
 
-    const res = await renderModlogs.call(this, 0, { filterId: user.id });
+    const res = await renderModlogs.call(this, 0, { targetId: user.id });
 
     await this.editReply(res);
   },
