@@ -15,7 +15,7 @@ export enum EditableGuildFeatures {
   leaveMessage = 'LEAVE_MESSAGE',
   joinLeave = 'JOIN_LEAVE',
   moderation = 'MODERATION',
-  moderationLogs = 'MODERATION_LOGS',
+  moderationNotifications = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
   // economy = 'ECONOMY',
 }
@@ -24,7 +24,7 @@ export enum CamelCaseGuildFeatures {
   SERVER_THEME = 'automaticTheming',
   JOIN_MESSAGE = 'joinMessage',
   LEAVE_MESSAGE = 'leaveMessage',
-  MODERATION_LOGS = 'moderationLogs',
+  MODERATION_LOGS = 'moderationNotifications',
   MODERATION_REPORTS = 'moderationReports',
   JOIN_LEAVE = 'joinLeave',
   MODERATION = 'moderation',
@@ -55,10 +55,10 @@ export type FullGuildSettings = Partial<
 
 export interface SettingsMenuProps {
   newLabel?: boolean;
-  isSubMenu?: boolean;
+  mainMenu?: EditableGuildFeatures | undefined;
   description: (locale: string) => string;
   getErrors?(props: Omit<SettingFunctionProps, 'errors'>): string[];
   renderMenuMessage(
     props: SettingFunctionProps & { backBtn: MessageButton },
-  ): Partial<MessageEditOptions>;
+  ): Promise<Partial<MessageEditOptions>> | Partial<MessageEditOptions>;
 }
