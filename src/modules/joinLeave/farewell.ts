@@ -8,10 +8,6 @@ import { RawServerLeave } from './types';
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
 
-  // const channel = (await guild.client.channels.fetch('1003652205896806430')) as TextChannel;
-
-  // channel.send(member.id);
-
   try {
     const preferences = await prisma.user.findFirst({
       where: { id: member.id },
@@ -34,7 +30,7 @@ export default OnEvent('guildMemberRemove', async (member) => {
 
     if (!serverData) return;
 
-    const { leaveChannel: channelId, leaveMessage: message } = serverData;
+    const { leaveChannelId: channelId, leaveMessage: message } = serverData;
 
     const channel = (await guild.channels.fetch(channelId)) as GuildTextBasedChannel;
 
