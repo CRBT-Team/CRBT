@@ -19,11 +19,13 @@ import dayjs from 'dayjs';
 import { MessageFlags, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   ButtonInteraction,
+  GuildBasedChannel,
   Interaction,
   MessageOptions,
   ModalSubmitInteraction,
   SelectMenuInteraction,
   TextInputComponent,
+  User,
 } from 'discord.js';
 import {
   ButtonComponent,
@@ -265,25 +267,30 @@ export async function renderModlogs(
           .setOptions(
             !data || data.length === 0
               ? [{ label: 'h', value: 'h' }]
-              : results.map((entry) => {
-                  const index = data.indexOf(entry) + 1;
-                  const date = snowflakeToDate(entry.id);
-                  const target = !ChannelModerationActions.includes(entry.type)
-                    ? `@${this.client.users.cache.get(entry.targetId).username}`
-                    : `#${this.guild.channels.cache.get(entry.targetId).name}`;
+              : await Promise.all(
+                  results.map(async (entry) => {
+                    const index = data.indexOf(entry) + 1;
+                    const date = snowflakeToDate(entry.id);
+                    const target = !ChannelModerationActions.includes(entry.type)
+                      ? await this.client.users.fetch(entry.targetId)
+                      : await this.guild.channels.fetch(entry.targetId);
+                    const targetString = !ChannelModerationActions.includes(entry.type)
+                      ? `@${(target as User)?.username ?? t(this, 'UNKNOWN')}`
+                      : `#${(target as GuildBasedChannel)?.name ?? t(this, 'UNKNOWN')}`;
 
-                  return {
-                    label: `${index}. ${t(
-                      this,
-                      `MOD_VERB_${moderationVerbStrings[entry.type]}` as any,
-                      {
-                        target: '',
-                      },
-                    )} ${target}`,
-                    description: dayjs(date).format('YYYY-MM-DD, HH:mm'),
-                    value: entry.id,
-                  };
-                }),
+                    return {
+                      label: `${index}. ${t(
+                        this,
+                        `MOD_VERB_${moderationVerbStrings[entry.type]}` as any,
+                        {
+                          target: '',
+                        },
+                      )} ${targetString}`,
+                      description: dayjs(date).format('YYYY-MM-DD, HH:mm'),
+                      value: entry.id,
+                    };
+                  }),
+                ),
           )
           .setDisabled(data.length === 0),
       ),
@@ -307,6 +314,7 @@ export async function renderModlogs(
           .setDisabled(page >= pages - 1),
         ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
           ? [
+              //TODO: localize
               new BulkDeleteButton({ page, tId: filters?.targetId })
                 .setLabel('Bulk Delete')
                 .setStyle('DANGER'),
@@ -570,6 +578,7 @@ export const ConfirmDeleteButton = ButtonComponent({
   },
 });
 
+//TODO: implement functionality and localize
 export const BulkDeleteButton = ButtonComponent({
   async handle({ tId, page }: PageBtnProps) {
     await this.update({
