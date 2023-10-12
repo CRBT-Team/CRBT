@@ -18,7 +18,7 @@ import { getGuildSettings, saveServerSettings } from './_helpers';
 import { BackSettingsButton, ToggleFeatureBtn, guildFeatureSettings } from './settings';
 
 export const joinLeaveSettings: SettingsMenuProps = {
-  description: (l) => t(l, 'SETTINGS_JOIN_LEAVE_DESCRIPTION'),
+  description: (l) => t(l, 'SETTINGS_JOIN_LEAVE_SHORT_DESCRIPTION'),
   renderMenuMessage({ settings, i, errors, backBtn }) {
     const { joinMessage: isJoinEnabled, leaveMessage: isLeaveEnabled } = settings.modules;
     const { joinChannelId, leaveChannelId } = settings;
@@ -56,7 +56,7 @@ export const joinLeaveSettings: SettingsMenuProps = {
         row(
           new ToggleFeatureBtn({
             feature: EditableGuildFeatures.joinMessage,
-            state: !isJoinEnabled,
+            newState: !isJoinEnabled,
           })
             .setLabel(t(i, 'JOIN_MESSAGE'))
             .setEmoji(isJoinEnabled ? emojis.toggle.on : emojis.toggle.off)
@@ -75,7 +75,7 @@ export const joinLeaveSettings: SettingsMenuProps = {
         row(
           new ToggleFeatureBtn({
             feature: EditableGuildFeatures.leaveMessage,
-            state: !isLeaveEnabled,
+            newState: !isLeaveEnabled,
           })
             .setLabel(t(i, 'LEAVE_MESSAGE'))
             .setEmoji(isLeaveEnabled ? emojis.toggle.on : emojis.toggle.off)

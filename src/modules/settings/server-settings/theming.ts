@@ -4,16 +4,17 @@ import { imgDominantColor } from '$lib/functions/imgDominantColor';
 import { t } from '$lib/language';
 import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-settings';
 import chroma from 'chroma-js';
-import { ButtonComponent, components, row, SelectMenuComponent } from 'purplet';
+import { ButtonComponent, SelectMenuComponent, components, row } from 'purplet';
 import { ManualColorEditButton } from '../../components/MessageBuilder/ManualColorEditButton';
-import { guildFeatureSettings } from './settings';
 import { saveServerSettings } from './_helpers';
+import { guildFeatureSettings } from './settings';
 
 export const themeSettings: SettingsMenuProps = {
-  description: (l) => t(l, 'SETTINGS_COLOR_DESCRIPTION'),
+  description: (l) => t(l, 'SETTINGS_COLOR_SHORT_DESCRIPTION'),
   renderMenuMessage: ({ settings, i, backBtn }) => ({
     embeds: [
       {
+        description: t(i, 'SETTINGS_COLOR_DESCRIPTION'),
         fields: [
           {
             name: t(i, 'SETTINGS_COLOR_SET_TO'),
@@ -24,7 +25,7 @@ export const themeSettings: SettingsMenuProps = {
                   i,
                   `color set.colorNames.${
                     colorsMap.find((c) => c.value === settings.accentColor).key
-                  }` as any
+                  }` as any,
                 )}`
               : chroma(settings.accentColor).hex(),
           },
@@ -48,7 +49,7 @@ export const themeSettings: SettingsMenuProps = {
           .setDisabled(settings.isAutoThemingEnabled)
           .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
           .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY')
+          .setStyle('PRIMARY'),
       ),
       row(
         new ColorPresetSelectMenu()
@@ -62,9 +63,9 @@ export const themeSettings: SettingsMenuProps = {
                 value: colorObj.value.toString(),
                 emoji: colorObj.emoji,
                 default: settings.accentColor === colorObj.value,
-              }))
-          )
-      )
+              })),
+          ),
+      ),
     ),
   }),
 };
