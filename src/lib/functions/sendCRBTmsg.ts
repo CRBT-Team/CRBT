@@ -17,7 +17,7 @@ export enum OfficialMessageType {
 
 export const actionTypes = { ...OfficialMessageType, ...ModerationAction };
 
-export type ActionTypes = typeof actionTypes[keyof typeof actionTypes];
+export type ActionTypes = ModerationAction | OfficialMessageType;
 
 function getMessageTitle(action: ActionTypes, guildName: string) {
   const messages: Partial<Record<ActionTypes, string>> = {
@@ -26,6 +26,7 @@ function getMessageTitle(action: ActionTypes, guildName: string) {
     [ModerationAction.UserWarn]: `You have been warned from ${guildName}.`,
     [ModerationAction.UserTimeout]: `You have been warned from ${guildName}.`,
     [ModerationAction.UserTemporaryBan]: `You have been temporarily banned from ${guildName}.`,
+    [ModerationAction.UserUnban]: `You have been unbanned from ${guildName}.`,
     LABS: 'Labs notification from the CRBT Team.',
     DEV_NOTICE: 'Message from the CRBT Team',
     BUG_REPORT_DENIED: 'Your bug report was denied.',

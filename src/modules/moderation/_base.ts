@@ -1,16 +1,15 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { colors, emojis, icons } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { UnknownError, createCRBTError } from '$lib/functions/CRBTError';
-import { avatar } from '$lib/functions/avatar';
+import { createModNotification } from '$lib/functions/createModNotification';
 import { formatUsername } from '$lib/functions/formatUsername';
-import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { ModerationStrikeTypes } from '@prisma/client';
-import { dateToSnowflake, timestampMention } from '@purplet/utils';
-import { APIEmbedAuthor, PermissionFlagsBits } from 'discord-api-types/v10';
+import { dateToSnowflake } from '@purplet/utils';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
   CommandInteraction,
@@ -37,6 +36,7 @@ export interface ModerationContext {
   type: ModerationAction;
   messagesDeleted?: number;
   duration?: string;
+  id?: string;
 }
 
 export enum ModerationAction {
@@ -49,6 +49,7 @@ export enum ModerationAction {
   UserReport,
   ChannelLock,
   ChannelUnlock,
+  UserUnban,
 }
 
 export const ChannelModerationActions = [
@@ -67,6 +68,7 @@ export const moderationVerbStrings: Record<ModerationAction, string> = {
   [ModerationAction.UserWarn]: 'WARN',
   [ModerationAction.ChannelLock]: 'LOCK',
   [ModerationAction.ChannelUnlock]: 'UNLOCK',
+  [ModerationAction.UserUnban]: 'UNBAN',
 };
 
 export const ModerationColors: Record<ModerationAction, number> = {
@@ -79,23 +81,23 @@ export const ModerationColors: Record<ModerationAction, number> = {
   [ModerationAction.UserReport]: colors.white,
   [ModerationAction.ChannelLock]: colors.blue,
   [ModerationAction.ChannelUnlock]: colors.green,
+  [ModerationAction.UserUnban]: colors.green,
 };
 
 export const ModerationActions: Partial<
-  Record<
-    ModerationStrikeTypes,
-    (this: Interaction, member: GuildMember, ctx: ModerationContext) => any
-  >
+  Record<ModerationAction, (this: Interaction, member: GuildMember, ctx: ModerationContext) => any>
 > = {
-  BAN: ban,
-  KICK: kick,
-  TIMEOUT: timeout,
+  [ModerationAction.UserBan]: ban,
+  [ModerationAction.UserTemporaryBan]: ban,
+  [ModerationAction.UserKick]: kick,
+  [ModerationAction.UserTimeout]: timeout,
 };
 
 export async function handleModerationAction(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
   ctx: ModerationContext,
 ) {
+  ctx.id = dateToSnowflake(new Date());
   const { guild, user: moderator, target, endDate, reason, type, messagesDeleted } = ctx;
   const { error } = checkModerationPermission.call(this, target, type);
 
@@ -107,14 +109,9 @@ export async function handleModerationAction(
     if (target instanceof User) {
       const member = guild.members.cache.get(target.id);
 
-      const error = ModerationActions[type]?.call(this, member, ctx);
-
-      if (error) {
-        return this.reply(error);
-      }
-
       await this.deferReply();
 
+      // warn the user through their DMs
       await target
         .send({
           embeds: [
@@ -133,6 +130,12 @@ export async function handleModerationAction(
         })
         .catch((e) => {});
 
+      const error = await ModerationActions[type]?.call(this, member, ctx);
+
+      if (error) {
+        return this.reply(error);
+      }
+
       await this.editReply({
         embeds: [
           {
@@ -146,45 +149,17 @@ export async function handleModerationAction(
       });
     }
 
-    if (type !== ModerationAction.ChannelUnlock) {
-      // Create entry
-      await prisma.moderationEntry.create({
-        data: {
-          id: dateToSnowflake(new Date()),
-          endDate,
-          type,
-          userId: moderator.id,
-          targetId: target.id,
-          reason,
-          guildId: guild.id,
-        },
-      });
-    } else {
-      // If the channel is unlocked, update the previous lock entry
-      const entry = await prisma.moderationEntry.findFirst({
-        where: {
-          AND: {
-            targetId: target.id,
-            guildId: guild.id,
-            type: ModerationAction.ChannelLock,
-          },
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      });
-
-      if (entry) {
-        await prisma.moderationEntry.update({
-          where: {
-            id: entry.id,
-          },
-          data: {
-            endDate: new Date(),
-          },
-        });
-      }
-    }
+    await prisma.moderationEntry.create({
+      data: {
+        id: ctx.id,
+        endDate,
+        type,
+        userId: moderator.id,
+        targetId: target.id,
+        reason,
+        guildId: guild.id,
+      },
+    });
 
     // Update cache
     await fetchWithCache(
@@ -200,94 +175,27 @@ export async function handleModerationAction(
 
     if (modules.moderationNotifications && modLogsChannelId) {
       const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
-
-      const fields = [
-        ...(type !== ModerationAction.ChannelUnlock
-          ? [
-              {
-                name: t(this.guildLocale, 'REASON'),
-                value: reason ?? '*No reason specified*',
-              },
-            ]
-          : []),
+      const message = createModNotification(
         {
-          name: t(this.guildLocale, 'MODERATOR'),
-          value: `${moderator}`,
-          inline: true,
+          type,
+          reason,
+          guild,
+          user: moderator,
+          endDate,
+          target,
+          messagesDeleted,
         },
-        {
-          name: t(this.guildLocale, ChannelModerationActions.includes(type) ? 'CHANNEL' : 'USER'),
-          value: `${target}`,
-          inline: true,
-        },
-        ...(endDate
-          ? [
-              {
-                name: t(this.guildLocale, 'END_DATE'),
-                value: `${timestampMention(endDate)} • ${timestampMention(endDate, 'R')}`,
-              },
-            ]
-          : []),
-      ];
+        this.guildLocale,
+      );
 
-      try {
-        if (target instanceof User) {
-          channel.send({
-            embeds: [
-              {
-                author: {
-                  name: `${formatUsername(target)} was ${t(
-                    this.guildLocale,
-                    `MOD_VERB_${Object.keys(ModerationAction)[type]}` as any,
-                  ).toLocaleLowerCase(this.locale)}`,
-                  icon_url: avatar(target),
-                },
-                fields,
-                color: ModerationColors[type],
-              },
-            ],
-          });
-        } else {
-          let author: APIEmbedAuthor;
-
-          switch (type) {
-            case ModerationAction.ChannelMessageClear: {
-              author = {
-                name: `${messagesDeleted} messages were deleted in #${target.name}`,
-                icon_url: icons.channels.text,
-              };
-              break;
-            }
-            case ModerationAction.ChannelLock: {
-              author = {
-                name: `#${target.name} was locked.`,
-                icon_url: getEmojiURL('🔒'),
-              };
-              break;
-            }
-            case ModerationAction.ChannelUnlock: {
-              author = {
-                name: `#${target.name} was unlocked.`,
-                icon_url: getEmojiURL('🔓'),
-              };
-              break;
-            }
-          }
-
-          channel.send({
-            embeds: [
-              {
-                author,
-                fields,
-                color: ModerationColors[type],
-              },
-            ],
-          });
-        }
-      } catch (e) {}
+      await channel.send(message);
     }
   } catch (e) {
-    (this.replied || this.deferred ? this.editReply : this.reply)(UnknownError(this, e));
+    if (this.replied || this.deferred) {
+      this.editReply(UnknownError(this, e));
+    } else {
+      this.reply(UnknownError(this, e));
+    }
   }
 }
 

@@ -34,7 +34,12 @@ function loadTimeouts(client: Client) {
     if (type === TimeoutTypes.Reminder && client.user.id !== clients.crbt.id) return;
 
     (prisma[type as string].findMany() as Promise<AnyTimeout[]>).then((timeouts) =>
-      timeouts.map((t) => dbTimeout(type, t, true))
+      timeouts
+        // load timeouts:
+        // if they have a 'type', they're a moderation entry and only timeouts that haven't expired yet should be loaded
+        // otherwise,  all timeouts should be loaded
+        .filter((t) => ('type' in t ? t.endDate && t.endDate.getTime() > Date.now() : true))
+        .map((t) => dbTimeout(type, t, true)),
     );
   });
 }

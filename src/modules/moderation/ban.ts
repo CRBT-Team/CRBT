@@ -3,6 +3,8 @@ import { createCRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { ModerationAction, ModerationContext, handleModerationAction } from './_base';
@@ -35,7 +37,7 @@ export default ChatCommand({
       guild: this.guild,
       user: this.user,
       target: user,
-      type: ModerationAction.UserBan,
+      type: end_date ? ModerationAction.UserTemporaryBan : ModerationAction.UserBan,
       endDate: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
       duration: end_date,
@@ -44,10 +46,10 @@ export default ChatCommand({
   },
 });
 
-export function ban(
+export async function ban(
   this: Interaction,
   member: GuildMember,
-  { duration, reason, messagesDeleted }: ModerationContext,
+  { duration, reason, messagesDeleted, id }: ModerationContext,
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(
@@ -58,23 +60,24 @@ export function ban(
     );
   }
 
-  member.ban({
-    days: messagesDeleted,
+  await member.ban({
+    deleteMessageSeconds: messagesDeleted,
     reason,
   });
 
   if (duration) {
-    // TODO: add that as well
-    // dbTimeout({
-    //   type: TimeoutTypes.TempBan,
-    //   expiration: new Date(Date.now() + ms(duration)),
-    //   id: this.guildId,
-    //   locale: this.guildLocale,
-    //   data: {
-    //     userId: user.id,
-    //     guildId: this.guildId,
-    //     reason,
-    //   },
-    // });
+    await dbTimeout(
+      TimeoutTypes.TemporaryBan,
+      {
+        id,
+        endDate: new Date(Date.now() + ms(duration)),
+        type: ModerationAction.UserTemporaryBan,
+        userId: this.user.id,
+        guildId: this.guildId,
+        targetId: member.id,
+        reason,
+      },
+      true,
+    );
   }
 }

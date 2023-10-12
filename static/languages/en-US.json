@@ -53,6 +53,7 @@
   "STICKERS": "Stickers",
   "SERVERS": "Servers",
   "NONE": "None",
+  "UNKNOWN": "Unknown",
   "CHANNELS": "Channels",
   "EMOJIS": "Emoji",
   "ADDED": "Added",
@@ -270,6 +271,7 @@
   "MOD_VERB_REPORT": "Reported",
   "MOD_VERB_LOCK": "Locked",
   "MOD_VERB_UNLOCK": "Unlocked",
+  "MOD_VERB_UNBAN": "Unbanned",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expires at",
   "modlogs_all": {
