@@ -25,6 +25,8 @@ export default {
     MODERATION: '🔨',
     SERVER_THEME: '🎨',
     ACCENT_COLOR: '🎨',
+    MODERATION_REPORTS: '📝',
+    MODERATION_LOGS: '🔔',
   },
   buttons: {
     pencil: '<:pencil_white:970980243013779536>',
