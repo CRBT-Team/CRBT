@@ -1,6 +1,6 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { emojis } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
@@ -16,12 +16,14 @@ import {
 } from '@prisma/client';
 import { dateToSnowflake, snowflakeToDate, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
+import dedent from 'dedent';
 import { MessageFlags, PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   ButtonInteraction,
   GuildBasedChannel,
   Interaction,
   MessageOptions,
+  MessageSelectMenu,
   ModalSubmitInteraction,
   SelectMenuInteraction,
   TextInputComponent,
@@ -49,7 +51,10 @@ export type ModerationHistoryFilters = {
   targetId?: string;
 };
 
-async function getAllEntries(this: Interaction, filters?: ModerationHistoryFilters) {
+export async function getAllEntries(
+  this: Interaction,
+  filters?: ModerationHistoryFilters,
+): Promise<ModerationEntry[]> {
   const oldData = (
     await fetchWithCache(
       `strikes:${this.guildId}`,
@@ -88,6 +93,44 @@ async function getAllEntries(this: Interaction, filters?: ModerationHistoryFilte
   ].filter((a) => (filters?.targetId ? a.targetId === filters?.targetId : a));
 
   return data;
+}
+
+async function appendSelectMenuEntries(
+  this: Interaction,
+  selectMenu: MessageSelectMenu,
+  entries: ModerationEntry[],
+) {
+  return selectMenu
+    .setPlaceholder(t(this, 'MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER'))
+    .setOptions(
+      !entries || entries.length === 0
+        ? [{ label: 'h', value: 'h' }]
+        : await Promise.all(
+            entries.map(async (entry) => {
+              const index = entries.indexOf(entry) + 1;
+              const date = snowflakeToDate(entry.id);
+              const target = !ChannelModerationActions.includes(entry.type)
+                ? await this.client.users.fetch(entry.targetId)
+                : await this.guild.channels.fetch(entry.targetId);
+              const targetString = !ChannelModerationActions.includes(entry.type)
+                ? `@${(target as User)?.username ?? t(this, 'UNKNOWN')}`
+                : `#${(target as GuildBasedChannel)?.name ?? t(this, 'UNKNOWN')}`;
+
+              return {
+                label: `${index}. ${t(
+                  this,
+                  `MOD_VERB_${moderationVerbStrings[entry.type]}` as any,
+                  {
+                    target: '',
+                  },
+                )} ${targetString}`,
+                description: dayjs(date).format('YYYY-MM-DD, HH:mm'),
+                value: entry.id,
+              };
+            }),
+          ),
+    )
+    .setDisabled(entries.length === 0);
 }
 
 function formatOldModEntry(entry: OldModerationStrikes): ModerationEntry {
@@ -141,7 +184,9 @@ export default ChatCommand({
     ) {
       return CRBTError(
         this,
-        t(this, 'ERROR_MISSING_PERMISSIONS').replace('{PERMISSIONS}', 'Manage Server'),
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Server',
+        }),
       );
     }
 
@@ -162,21 +207,7 @@ export default ChatCommand({
   },
 });
 
-function renderEntry(entry: ModerationEntry, locale: string, entries: ModerationEntry[]): string {
-  const expires =
-    Date.now() < (entry.endDate?.getTime() ?? 0)
-      ? `(Expires ${timestampMention(entry.endDate, 'R')}) `
-      : '';
-  const unlockedOn =
-    entry.type === ModerationAction.ChannelLock && entry.endDate
-      ? `(${t(locale, 'MOD_VERB_UNLOCK')} ${timestampMention(entry.endDate, 'R')}) `
-      : '';
-  //  const reason = `**${t(
-  //   locale,
-  //    entry.type === ModerationAction.UserReport ? 'DESCRIPTION' : 'REASON',
-  //  )}:** ${
-  //   entry.details ? `[${t(locale, 'MESSAGE_FROM_USER')}]` : entry.reason ?? `*${t(locale, 'NONE')}*`
-  // }`;
+export function formatEntry(entry: ModerationEntry, locale: string, entries: ModerationEntry[]) {
   const target = !ChannelModerationActions.includes(entry.type)
     ? `<@${entry.targetId}>`
     : `<#${entry.targetId}>`;
@@ -185,12 +216,7 @@ function renderEntry(entry: ModerationEntry, locale: string, entries: Moderation
     entry.userId
   }> ${t(locale, `MOD_VERB_${moderationVerbStrings[entry.type]}` as any, {
     target: '',
-  }).toLocaleLowerCase(locale)} ${target} ${expires}`;
-  // value: dedent`
-
-  // ${reason}
-  // `,
-  // };
+  }).toLocaleLowerCase(locale)} ${target}`;
 }
 
 export async function renderModlogs(
@@ -208,7 +234,7 @@ export async function renderModlogs(
     .slice(page * 10, page * 10 + 10);
 
   const grouped = Object.entries(
-    data.reduce((acc, cur) => {
+    results.reduce((acc, cur) => {
       const date = snowflakeToDate(cur.id).toDateString();
 
       if (!acc[date]) {
@@ -221,7 +247,7 @@ export async function renderModlogs(
     }, {} as Record<string, ModerationEntry[]>),
   );
 
-  const pages = Math.ceil(grouped.length / 5);
+  const pages = Math.ceil(results.length / 5);
 
   return {
     embeds: [
@@ -242,13 +268,8 @@ export async function renderModlogs(
         description: !data || data.length === 0 ? t(this, 'MODERATION_LOGS_VIEW_EMPTY') : '',
         fields: grouped.map(([date, entries]) => ({
           name: `${timestampMention(new Date(date), 'D')}`,
-          value: entries.map((entry) => renderEntry(entry, this.locale, data)).join('\n'),
+          value: entries.map((entry) => formatEntry(entry, this.locale, data)).join('\n'),
         })),
-
-        // results.map((entry) => {
-        //          return
-        //        renderEntry(entry, this.locale, data)
-        //    }),
         footer: {
           text: `${t(this, 'MODERATION_LOGS_ENTRIES_TOTAL', {
             entries: data.length,
@@ -262,40 +283,13 @@ export async function renderModlogs(
     ],
     components: components(
       row(
-        new ModEntrySelectMenu({ page, tId: filters?.targetId })
-          .setPlaceholder(t(this, 'MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER'))
-          .setOptions(
-            !data || data.length === 0
-              ? [{ label: 'h', value: 'h' }]
-              : await Promise.all(
-                  results.map(async (entry) => {
-                    const index = data.indexOf(entry) + 1;
-                    const date = snowflakeToDate(entry.id);
-                    const target = !ChannelModerationActions.includes(entry.type)
-                      ? await this.client.users.fetch(entry.targetId)
-                      : await this.guild.channels.fetch(entry.targetId);
-                    const targetString = !ChannelModerationActions.includes(entry.type)
-                      ? `@${(target as User)?.username ?? t(this, 'UNKNOWN')}`
-                      : `#${(target as GuildBasedChannel)?.name ?? t(this, 'UNKNOWN')}`;
-
-                    return {
-                      label: `${index}. ${t(
-                        this,
-                        `MOD_VERB_${moderationVerbStrings[entry.type]}` as any,
-                        {
-                          target: '',
-                        },
-                      )} ${targetString}`,
-                      description: dayjs(date).format('YYYY-MM-DD, HH:mm'),
-                      value: entry.id,
-                    };
-                  }),
-                ),
-          )
-          .setDisabled(data.length === 0),
+        await appendSelectMenuEntries.call(
+          this,
+          new ModEntrySelectMenu({ page, tId: filters?.targetId }),
+          results,
+        ),
       ),
       row(
-        // new ShowFiltersBtn().setStyle('SECONDARY').setLabel('Show Filters'),
         new GoToPage({ page: 0, tId: filters?.targetId, s: false })
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_first)
@@ -312,11 +306,10 @@ export async function renderModlogs(
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_last)
           .setDisabled(page >= pages - 1),
-        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
+        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator) && data.length > 0
           ? [
-              //TODO: localize
               new BulkDeleteButton({ page, tId: filters?.targetId })
-                .setLabel('Bulk Delete')
+                .setLabel(t(this, 'BULK_DELETE'))
                 .setStyle('DANGER'),
             ]
           : []),
@@ -578,16 +571,108 @@ export const ConfirmDeleteButton = ButtonComponent({
   },
 });
 
-//TODO: implement functionality and localize
 export const BulkDeleteButton = ButtonComponent({
   async handle({ tId, page }: PageBtnProps) {
+    await this.deferUpdate();
+
+    const data = await getAllEntries.call(this, { targetId: tId });
+
+    const results = data.slice(page * 25, page * 25 + 25);
+
+    await this.editReply({
+      embeds: [
+        {
+          author: {
+            name: `${t(this, 'MODERATION_LOGS_VIEW_TITLE', {
+              SERVER: this.guild.name,
+            })} - ${t(this, 'BULK_DELETE')}`,
+            icon_url: this.guild.iconURL(),
+          },
+          description: dedent`
+          ${t(this, 'MODERATION_LOGS_BULK_DELETE_DESCRIPTION')}
+          ## ⚠️ **${t(this, 'DELETE_CONFIRMATION_DESCRIPTION')}**`,
+          color: colors.error,
+        },
+        {
+          fields: this.message.embeds[0].fields,
+          color: this.message.embeds[0].color,
+          footer: this.message.embeds[0].footer,
+        },
+      ],
+      components: components(
+        row(
+          await appendSelectMenuEntries.call(
+            this,
+            new BulkDeleteSelectMenu({ page, tId }).setMaxValues(results.length),
+            results,
+          ),
+        ),
+        row(
+          new GoToPage({ page, tId })
+            .setLabel(t(this, 'CANCEL'))
+            .setStyle('SECONDARY')
+            .setEmoji(emojis.buttons.left_arrow),
+        ),
+      ),
+    });
+  },
+});
+
+export const BulkDeleteSelectMenu = SelectMenuComponent({
+  async handle({ tId }: PageBtnProps) {
+    const deletedEntries = [];
+
     await this.update({
       embeds: [
         {
-          title: 'Bulk delete entries',
-          description: `Choose the entries you would like to delete from the Moderation History.`,
+          title: `${emojis.pending} ${t(this, 'MODERATION_LOGS_BULK_DELETE_TITLE')}`,
+          footer: {
+            text: t(this, 'LONG_ACTION_FOOTNOTE'),
+          },
+          color: colors.yellow,
         },
       ],
+      components: [],
+    });
+
+    await Promise.all(
+      this.values.map(async (id) => {
+        try {
+          await prisma.moderationEntry.delete({ where: { id } });
+
+          deletedEntries.push(id);
+        } catch (e) {
+          this.update(UnknownError(this, e));
+        }
+      }),
+    );
+
+    await fetchWithCache(
+      `mod_history:${this.guildId}`,
+      () =>
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guildId },
+        }),
+      true,
+    );
+
+    await this.editReply({
+      embeds: [
+        {
+          title: `${emojis.success} ${t(this, 'MODERATION_LOGS_BULK_DELETE_SUCCESS', {
+            number: deletedEntries.length,
+          })}`,
+          color: colors.success,
+        },
+      ],
+      components: components(
+        row(
+          new GoToPage({ page: 0, tId })
+            .setLabel(t(this, 'BACK'))
+            .setStyle('SECONDARY')
+            .setEmoji(emojis.buttons.left_arrow),
+        ),
+      ),
     });
   },
 });
