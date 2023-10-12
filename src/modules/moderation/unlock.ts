@@ -51,7 +51,7 @@ export default ChatCommand({
       embeds: [
         {
           //TODO: add a better unlock icon
-          title: `🔓 ${t(this, 'LOCK_SUCCESS_TITLE', {
+          title: `🔓 ${t(this, 'UNLOCK_SUCCESS_TITLE', {
             channel: c,
           })}`,
           description: t(this, 'UNLOCK_SUCCESS_DESCRIPTION'),
