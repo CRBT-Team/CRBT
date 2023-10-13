@@ -4,7 +4,7 @@ import { slashCmd } from '$lib/functions/commandMention';
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { translate as googleTranslate } from '@vitalets/google-translate-api';
+import { translate as bingTranslate } from 'bing-translate-api';
 import { upperCaseFirst } from 'change-case-all';
 import {
   CommandInteraction,
@@ -85,48 +85,8 @@ export const ctxCommand = MessageContextCommand({
     });
 
     const target = this.locale.split('-')[0];
-    const simpleTr = async (text: string) => (await useTranslate(text, { target }))?.[0];
 
     try {
-      const translatedEmbeds = embedsWithText.map(async (embed) => ({
-        ...embed,
-        title: embed.title ? await simpleTr(embed.title) : null,
-        description: embed.description ? await simpleTr(embed.description) : null,
-        author: embed.author
-          ? {
-              ...embed.author,
-              name: await simpleTr(embed.author.name),
-            }
-          : null,
-        footer: embed.footer
-          ? {
-              ...embed.footer,
-              text: await simpleTr(embed.footer.text),
-            }
-          : null,
-        fields: await Promise.all(
-          embed.fields.map(async (f) => ({
-            ...f,
-            name: await simpleTr(f.name),
-            value: await simpleTr(f.value),
-          })),
-        ),
-      }));
-
-      if (message.content) {
-        const successMessage = await translate.call(this, message.content);
-        if (embedsWithText.length) {
-          return Promise.all(translatedEmbeds).then((embeds) =>
-            this.editReply({
-              ...successMessage.embeds,
-              embeds,
-            }),
-          );
-        } else {
-          return this.editReply(successMessage);
-        }
-      }
-
       if (image) {
         const [content, error] = await useOcrScan(image);
 
@@ -136,6 +96,60 @@ export const ctxCommand = MessageContextCommand({
 
         return this.editReply(await translate.call(this, content));
       }
+
+      const simpleTr = async (text: string) => (await useTranslate(text, { target }))?.[0];
+
+      const translatedEmbeds = embedsWithText.length
+        ? await Promise.all(
+            embedsWithText.slice(0, 4).map(async (embed) => {
+              embed.title = embed.title ? await simpleTr(embed.title) : null;
+              embed.description = embed.description ? await simpleTr(embed.description) : null;
+              embed.author = embed.author
+                ? {
+                    ...embed.author,
+                    name: await simpleTr(embed.author.name),
+                  }
+                : null;
+              embed.footer = embed.footer
+                ? {
+                    ...embed.footer,
+                    text: await simpleTr(embed.footer.text),
+                  }
+                : null;
+              embed.fields = await Promise.all(
+                embed.fields.map(async (f) => ({
+                  ...f,
+                  name: await simpleTr(f.name),
+                  value: await simpleTr(f.value),
+                })),
+              );
+
+              return embed;
+            }),
+          )
+        : [];
+
+      const intl = new Intl.DisplayNames(this.locale, {
+        type: 'language',
+        fallback: 'code',
+        style: 'long',
+        languageDisplay: 'standard',
+      });
+
+      const translatedContent = message.content
+        ? (await useTranslate(message.content, { target }))[0]
+        : null;
+
+      await this.editReply({
+        content: translatedContent,
+        embeds: [
+          {
+            title: `\`Auto\` → \`${upperCaseFirst(intl.of(target))}\``,
+            color: await getColor(this.user),
+          },
+          ...translatedEmbeds,
+        ],
+      });
     } catch (e) {
       this.editReply(UnknownError(this, e));
     }
@@ -161,13 +175,13 @@ async function translate(
 
   const to = languageNames.find(
     ({ name, value }) =>
-      name.toLowerCase().startsWith((opts?.to || this.locale.split('-')[0]).toLowerCase()) ||
+      name.toLowerCase() === (opts?.to || this.locale.split('-')[0]).toLowerCase() ||
       value.toLowerCase() === (opts?.to || this.locale.split('-')[0]).toLowerCase(),
   )?.value;
   const from = languageNames.find(
     ({ name, value }) =>
-      name.toLowerCase().startsWith((opts?.from ?? 'auto').toLowerCase()) ||
-      value.toLowerCase() === (opts?.from ?? 'auto').toLowerCase(),
+      name.toLowerCase() === (opts?.from ?? 'c').toLowerCase() ||
+      value.toLowerCase() === (opts?.from ?? 'auto-detect').toLowerCase(),
   )?.value;
 
   if (!to) {
@@ -197,10 +211,7 @@ async function translate(
   return {
     embeds: [
       {
-        title: t(this, 'TRANSLATE_RESULT', {
-          source: intl.of(source),
-          target: intl.of(to),
-        }),
+        title: `\`${upperCaseFirst(intl.of(source))}\` → \`${upperCaseFirst(intl.of(target))}\``,
         fields: [
           {
             name: upperCaseFirst(intl.of(source)),
@@ -257,15 +268,16 @@ export async function useTranslate(
     target?: string;
   },
 ) {
-  opts.source ??= 'auto';
+  opts.source ??= 'auto-detect';
   opts.target ??= 'en';
 
-  const {
-    raw: { src },
-    text: output,
-  } = await googleTranslate(text, { to: opts.target, from: opts.source });
+  const { translation, language } = await bingTranslate(text, opts.source, opts.target);
+  // const {
+  //   raw: { src },
+  //   text: output,
+  // } = await googleTranslate(text, { to: opts.target, from: opts.source });
 
-  return [output, src, opts.target];
+  return [translation, language.from, language.to];
 }
 
 export async function useOcrScan(

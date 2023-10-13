@@ -24,6 +24,7 @@
     "@purplet/serialize": "^2.0.0",
     "@purplet/utils": "^1.0.0",
     "@vitalets/google-translate-api": "^9.2.0",
+    "bing-translate-api": "^2.9.1",
     "change-case-all": "^1.0.15",
     "convert-units": "^2.3.4",
     "dayjs": "^1.11.9",
