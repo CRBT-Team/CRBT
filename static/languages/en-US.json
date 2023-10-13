@@ -710,5 +710,6 @@
   "X_SETTINGS": "{number} settings (Theming, Moderation, Economy...)",
   "X_ECONOMY_ITEMS_CATEGORIES": "{categories} Shop categories containing {items} items",
   "X_ACHIEVEMENTS": "{categories} Achievement categories containing {achievements} achievements",
-  "DELETE_DATA_SUCCESS": "All data was successfully deleted."
+  "DELETE_DATA_SUCCESS": "All data was successfully deleted.",
+  "GUILD_NO_DATA": "No data about the server was found."
 }

@@ -3,7 +3,7 @@ import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-settings';
 import dedent from 'dedent';
-import { MessageAttachment } from 'discord.js';
+import { MessageAttachment, MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { GuildSettingMenus, getGuildSettings } from './_helpers';
 import { BackSettingsButton } from './settings';
@@ -11,7 +11,7 @@ import { BackSettingsButton } from './settings';
 export const privacySettings: SettingsMenuProps = {
   newLabel: true,
   description: (l) => t(l, 'SETTINGS_PRIVACY_SHORT_DESCRIPTION'),
-  async renderMenuMessage({ i, guild, backBtn }) {
+  async renderMenuMessage({ i, guild, backBtn, settings }) {
     return {
       embeds: [
         {
@@ -21,11 +21,21 @@ export const privacySettings: SettingsMenuProps = {
       components: components(
         row(
           backBtn,
-          new ExportDataButton().setLabel(t(i, 'DOWNLOAD_ALL_DATA')).setStyle('PRIMARY'),
-          new DeleteDataButton()
-            .setLabel(t(i, 'DELETE_ALL_DATA'))
-            .setStyle('DANGER')
-            .setDisabled(guild.ownerId !== i.user.id),
+          ...(settings.isDefault
+            ? [
+                new MessageButton()
+                  .setCustomId('h')
+                  .setLabel(t(i, 'GUILD_NO_DATA'))
+                  .setStyle('SECONDARY')
+                  .setDisabled(),
+              ]
+            : [
+                new ExportDataButton().setLabel(t(i, 'DOWNLOAD_ALL_DATA')).setStyle('PRIMARY'),
+                new DeleteDataButton()
+                  .setLabel(t(i, 'DELETE_ALL_DATA'))
+                  .setStyle('DANGER')
+                  .setDisabled(guild.ownerId !== i.user.id),
+              ]),
         ),
       ),
     };
@@ -68,15 +78,15 @@ export const DeleteDataButton = ButtonComponent({
           description: dedent`
           ${t(this, 'GUILD_PRIVACY_DELETE_DATA_CONFIRM_DESCRIPTION')}
           - ${t(this, 'X_SETTINGS', {
-            number: Object.keys(modules).length - 1 + GuildSettingMenus.size - 1,
+            number: (Object.keys(modules)?.length || 0) - 1 + GuildSettingMenus.size - 1,
           })}
           - ${t(this, 'ENTIRETY_OF_MODERATION_HISTORY')} (${t(
             this,
             'X_MODERATION_HISTORY_ENTRIES',
-            { number: moderationHistory.length },
+            { number: moderationHistory?.length || 0 },
           )})
-          - ${t(this, 'X_POLLS', { number: polls.length })}
-          - ${t(this, 'X_GIVEAWAYS', { number: giveaways.length })}
+          - ${t(this, 'X_POLLS', { number: polls?.length || 0 })}
+          - ${t(this, 'X_GIVEAWAYS', { number: giveaways?.length || 0 })}
           ### **⚠️ ${t(this, 'DELETE_CONFIRMATION_DESCRIPTION')}**
           `,
           color: colors.error,
@@ -99,23 +109,47 @@ export const ConfirmDeleteButton = ButtonComponent({
   async handle() {
     await this.deferUpdate();
 
+    await prisma.guildMember.deleteMany({
+      where: { guildId: this.guildId },
+    });
+
+    await prisma.guildModules.deleteMany({
+      where: { id: this.guildId },
+    });
+
+    await prisma.economy.deleteMany({
+      where: { id: this.guildId },
+    });
+
     await prisma.guild.delete({
       where: {
         id: this.guildId,
       },
       include: {
         achievements: true,
-        economy: true,
         giveaways: true,
-        modules: true,
         moderationHistory: true,
         polls: true,
-        members: true,
       },
     });
 
+    await getGuildSettings(this.guildId, true);
+
     await this.editReply({
-      embeds: [{}],
+      embeds: [
+        {
+          title: `${emojis.success} ${t(this, 'DELETE_DATA_SUCCESS')}`,
+          color: colors.success,
+        },
+      ],
+      components: components(
+        row(
+          new BackSettingsButton(EditableGuildFeatures.privacy)
+            .setLabel(t(this, 'BACK'))
+            .setEmoji(emojis.buttons.left_arrow)
+            .setStyle('SECONDARY'),
+        ),
+      ),
     });
   },
 });
