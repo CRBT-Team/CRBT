@@ -1,9 +1,10 @@
+import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { t } from '$lib/language';
 import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-settings';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
-import { OnEvent, components, row } from 'purplet';
+import { ButtonComponent, OnEvent, components, row } from 'purplet';
 import { saveServerSettings } from './_helpers';
 import { ToggleFeatureBtn, guildFeatureSettings } from './settings';
 
@@ -25,7 +26,21 @@ export const modlogsSettings: SettingsMenuProps = {
 
     return errors;
   },
-  renderMenuMessage({ settings, i, backBtn }) {
+  async renderMenuMessage({ settings, i, backBtn }) {
+    const isUserOwner = i.guild.ownerId === i.user.id;
+
+    const ownerMemberData = isUserOwner
+      ? (await prisma.guildMember.findFirst({
+          where: {
+            userId: i.user.id,
+            guildId: i.guildId,
+          },
+          select: {
+            moderationNotifications: true,
+          },
+        })) ?? { moderationNotifications: false }
+      : null;
+
     return {
       embeds: [
         {
@@ -79,6 +94,18 @@ export const modlogsSettings: SettingsMenuProps = {
                 : t(i, 'ENABLE_FEATURE'),
             )
             .setStyle(settings.modules.moderationNotifications ? 'DANGER' : 'SUCCESS'),
+          ...(isUserOwner
+            ? [
+                new ToggleDMNotifications({
+                  newState: !ownerMemberData.moderationNotifications,
+                })
+                  .setLabel('Always send Notifications in DMs')
+                  .setEmoji(
+                    ownerMemberData.moderationNotifications ? emojis.toggle.on : emojis.toggle.off,
+                  )
+                  .setStyle('SECONDARY'),
+              ]
+            : []),
         ),
       ),
     };
@@ -97,4 +124,30 @@ export const EditLogsChannelSelectMenu = OnEvent('interactionCreate', async (i) 
 
     i.update(await guildFeatureSettings.call(i, EditableGuildFeatures.moderationNotifications));
   }
+});
+
+export const ToggleDMNotifications = ButtonComponent({
+  async handle({ newState }: { newState: boolean }) {
+    const id = `${this.user.id}_${this.guildId}`;
+
+    await prisma.guildMember.upsert({
+      create: {
+        id,
+        userId: this.user.id,
+        guildId: this.guildId,
+        moderationNotifications: newState,
+        dailyStreak: 0,
+      },
+      where: {
+        id,
+      },
+      update: {
+        moderationNotifications: newState,
+      },
+    });
+
+    await this.update(
+      await guildFeatureSettings.call(this, EditableGuildFeatures.moderationNotifications),
+    );
+  },
 });

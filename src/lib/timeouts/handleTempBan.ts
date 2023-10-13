@@ -53,9 +53,13 @@ export async function handleTempBan(entry: ModerationEntry, client: Client) {
 
     const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
 
-    if (modules.moderationNotifications && modLogsChannelId) {
-      const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
+    const membersWithNotifications = await prisma.guildMember.findMany({
+      where: {
+        moderationNotifications: true,
+      },
+    });
 
+    if (modules.moderationNotifications || membersWithNotifications.length) {
       const message = createModNotification(
         {
           guild,
@@ -67,7 +71,20 @@ export async function handleTempBan(entry: ModerationEntry, client: Client) {
         locale,
       );
 
-      await channel.send(message);
+      // for each member who enabled DM notifications, send them a copy of the modlogs
+      await Promise.all(
+        membersWithNotifications.map(async (member) => {
+          const user = await guild.client.users.fetch(member.userId);
+
+          await user.send(message);
+        }),
+      );
+
+      if (modLogsChannelId) {
+        const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
+
+        await channel.send(message);
+      }
     }
   } catch (e) {
     console.error(e);

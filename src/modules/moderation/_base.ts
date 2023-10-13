@@ -172,9 +172,13 @@ export async function handleModerationAction(
     );
 
     const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
+    const membersWithNotifications = await prisma.guildMember.findMany({
+      where: {
+        moderationNotifications: true,
+      },
+    });
 
-    if (modules.moderationNotifications && modLogsChannelId) {
-      const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
+    if (modules.moderationNotifications || membersWithNotifications.length) {
       const message = createModNotification(
         {
           type,
@@ -188,7 +192,20 @@ export async function handleModerationAction(
         this.guildLocale,
       );
 
-      await channel.send(message);
+      // for each member who enabled DM notifications, send them a copy of the modlogs
+      await Promise.all(
+        membersWithNotifications.map(async (member) => {
+          const user = await guild.client.users.fetch(member.userId);
+
+          await user.send(message);
+        }),
+      );
+
+      if (modLogsChannelId) {
+        const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
+
+        await channel.send(message);
+      }
     }
   } catch (e) {
     if (this.replied || this.deferred) {
