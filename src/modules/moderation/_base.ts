@@ -7,7 +7,6 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
-import { ModerationStrikeTypes } from '@prisma/client';
 import { dateToSnowflake } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
@@ -237,13 +236,17 @@ export function checkModerationPermission(
   const member = this.guild.members.cache.get(target.id);
   const isOwner = this.guild.ownerId === this.user.id;
 
-  const perms: Partial<Record<ModerationStrikeTypes, bigint>> = {
-    BAN: PermissionFlagsBits.BanMembers,
-    KICK: PermissionFlagsBits.KickMembers,
-    CLEAR: PermissionFlagsBits.ManageMessages,
-    TIMEOUT: PermissionFlagsBits.ModerateMembers,
-    WARN: PermissionFlagsBits.ModerateMembers,
-    REPORT: 0n,
+  const perms: Record<ModerationAction, bigint> = {
+    [ModerationAction.UserBan]: PermissionFlagsBits.BanMembers,
+    [ModerationAction.UserTemporaryBan]: PermissionFlagsBits.BanMembers,
+    [ModerationAction.UserKick]: PermissionFlagsBits.KickMembers,
+    [ModerationAction.ChannelMessageClear]: PermissionFlagsBits.ManageMessages,
+    [ModerationAction.UserTimeout]: PermissionFlagsBits.ModerateMembers,
+    [ModerationAction.UserWarn]: PermissionFlagsBits.ModerateMembers,
+    [ModerationAction.UserReport]: 0n,
+    [ModerationAction.ChannelLock]: PermissionFlagsBits.ManageChannels,
+    [ModerationAction.ChannelUnlock]: PermissionFlagsBits.ManageChannels,
+    [ModerationAction.UserUnban]: PermissionFlagsBits.BanMembers,
   };
 
   const verb = moderationVerbStrings[type].toLowerCase();
