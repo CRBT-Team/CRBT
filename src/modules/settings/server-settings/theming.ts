@@ -11,51 +11,53 @@ import { guildFeatureSettings } from './settings';
 
 export const themeSettings: SettingsMenuProps = {
   description: (l) => t(l, 'SETTINGS_COLOR_SHORT_DESCRIPTION'),
-  renderMenuMessage: ({ settings, i, backBtn }) => ({
-    embeds: [
-      {
-        description: t(i, 'SETTINGS_COLOR_DESCRIPTION'),
-        fields: [
-          {
-            name: t(i, 'SETTINGS_COLOR_SET_TO'),
-            value: settings.isAutoThemingEnabled
-              ? `🔁 ${t(i, 'AUTO')}`
-              : colorsMap.find((c) => c.value === settings.accentColor)
-              ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
-                  i,
-                  `color set.colorNames.${
-                    colorsMap.find((c) => c.value === settings.accentColor).key
-                  }` as any,
-                )}`
-              : chroma(settings.accentColor).hex(),
+  renderMenuMessage: ({ settings, i, guild, backBtn }) => {
+    settings.isAutoThemingEnabled = guild.icon ? settings.isAutoThemingEnabled : false;
+
+    console.log(guild.icon);
+
+    return {
+      embeds: [
+        {
+          description: t(i, 'SETTINGS_COLOR_DESCRIPTION'),
+          fields: [
+            {
+              name: t(i, 'SETTINGS_COLOR_SET_TO'),
+              value: settings.isAutoThemingEnabled
+                ? `🔁 ${t(i, 'AUTO')}`
+                : colorsMap.find((c) => c.value === settings.accentColor)
+                ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
+                    i,
+                    `color set.colorNames.${
+                      colorsMap.find((c) => c.value === settings.accentColor).key
+                    }` as any,
+                  )}`
+                : chroma(settings.accentColor).hex(),
+            },
+          ],
+          thumbnail: {
+            url: i.guild.iconURL(),
           },
-        ],
-        thumbnail: {
-          url: i.guild.iconURL(),
         },
-      },
-    ],
-    components: components(
-      row(
-        backBtn,
-        new ToggleAutoThemeBtn(!settings.isAutoThemingEnabled)
-          .setStyle('SECONDARY')
-          .setEmoji(settings.isAutoThemingEnabled ? emojis.toggle.on : emojis.toggle.off)
-          .setLabel(t(i, 'AUTOMATIC_THEMING')),
-        new ManualColorEditButton({
-          type: EditableGuildFeatures.automaticTheming,
-          value: settings.accentColor,
-        })
-          .setDisabled(settings.isAutoThemingEnabled)
-          .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
-          .setEmoji(emojis.buttons.pencil)
-          .setStyle('PRIMARY'),
-      ),
-      row(
-        new ColorPresetSelectMenu()
-          .setPlaceholder(t(i, 'COLOR_PRESET_SELECT_MENU'))
-          .setDisabled(settings.isAutoThemingEnabled)
-          .setOptions(
+      ],
+      components: components(
+        row(
+          backBtn,
+          new ToggleAutoThemeBtn(!settings.isAutoThemingEnabled)
+            .setStyle('SECONDARY')
+            .setEmoji(settings.isAutoThemingEnabled ? emojis.toggle.on : emojis.toggle.off)
+            .setLabel(t(i, 'AUTOMATIC_THEMING'))
+            .setDisabled(!guild.icon || settings.isAutoThemingEnabled),
+          new ManualColorEditButton({
+            type: EditableGuildFeatures.automaticTheming,
+            value: settings.accentColor,
+          })
+            .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
+            .setEmoji(emojis.buttons.pencil)
+            .setStyle('PRIMARY'),
+        ),
+        row(
+          new ColorPresetSelectMenu().setPlaceholder(t(i, 'COLOR_PRESET_SELECT_MENU')).setOptions(
             colorsMap
               .filter(({ value }) => value !== colors.sync)
               .map((colorObj) => ({
@@ -65,9 +67,10 @@ export const themeSettings: SettingsMenuProps = {
                 default: settings.accentColor === colorObj.value,
               })),
           ),
+        ),
       ),
-    ),
-  }),
+    };
+  },
 };
 
 export const ToggleAutoThemeBtn = ButtonComponent({
@@ -97,6 +100,7 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
 
     await saveServerSettings(this.guildId, {
       accentColor: color,
+      isAutoThemingEnabled: false,
     });
 
     this.update(await guildFeatureSettings.call(this, EditableGuildFeatures.automaticTheming));

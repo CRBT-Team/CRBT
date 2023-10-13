@@ -36,6 +36,7 @@ export const FieldEditModal = ModalComponent({
 
       await saveServerSettings(this.guildId, {
         accentColor: parseInt(value, 16),
+        isAutoThemingEnabled: false,
       });
 
       return await this.update(
