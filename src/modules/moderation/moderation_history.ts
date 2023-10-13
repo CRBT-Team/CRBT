@@ -247,7 +247,7 @@ export async function renderModlogs(
     }, {} as Record<string, ModerationEntry[]>),
   );
 
-  const pages = Math.ceil(results.length / 5);
+  const pages = Math.ceil(results.length / 10) || 1;
 
   return {
     embeds: [
@@ -306,11 +306,12 @@ export async function renderModlogs(
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.skip_last)
           .setDisabled(page >= pages - 1),
-        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator) && data.length > 0
+        ...(hasPerms(this.memberPermissions, PermissionFlagsBits.Administrator)
           ? [
               new BulkDeleteButton({ page, tId: filters?.targetId })
                 .setLabel(t(this, 'BULK_DELETE'))
-                .setStyle('DANGER'),
+                .setStyle('DANGER')
+                .setDisabled(data.length > 0),
             ]
           : []),
       ),
