@@ -14,7 +14,7 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
         ...data,
         embed: {
           ...data.embed,
-          color: parseInt(value, 16),
+          color: parseInt(value),
         },
       },
       interaction: this,
