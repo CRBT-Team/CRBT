@@ -13,29 +13,24 @@ import { joinLeaveSettings } from './join-leave';
 import { moderationSettings } from './moderation';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
+import { privacySettings } from './privacy';
 import { themeSettings } from './theming';
 
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
   [EditableGuildFeatures.joinLeave, joinLeaveSettings],
-  [
-    EditableGuildFeatures.joinMessage,
-    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  ],
-  [
-    EditableGuildFeatures.leaveMessage,
-    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  ],
+  // [
+  //   EditableGuildFeatures.joinMessage,
+  //   { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  // ],
+  // [
+  //   EditableGuildFeatures.leaveMessage,
+  //   { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  // ],
   [EditableGuildFeatures.moderation, moderationSettings],
-  [
-    EditableGuildFeatures.moderationNotifications,
-    { ...modlogsSettings, mainMenu: EditableGuildFeatures.moderation },
-  ],
-  [
-    EditableGuildFeatures.moderationReports,
-    { ...modReportsSettings, mainMenu: EditableGuildFeatures.moderation },
-  ],
-  // [EditableGuildFeatures.moderation, moderationSettings],
+  [EditableGuildFeatures.moderationNotifications, modlogsSettings],
+  [EditableGuildFeatures.moderationReports, modReportsSettings],
+  [EditableGuildFeatures.privacy, privacySettings],
 ]);
 
 export const defaultGuildSettings: FullGuildSettings = {
@@ -87,6 +82,9 @@ export function resolveSettingsProps(
 
 export const include = {
   modules: true,
+  polls: true,
+  moderationHistory: true,
+  giveaways: true,
   // economy: {
   //   include: {
   //     commands: true,
@@ -101,15 +99,15 @@ export const include = {
 };
 
 export async function getGuildSettings(guildId: string, force = false) {
-  const data = await fetchWithCache<FullGuildSettings>(
+  const data = (await fetchWithCache(
     `${guildId}:settings`,
     () =>
       prisma.guild.findFirst({
         where: { id: guildId },
-        include,
+        include: include,
       }),
     force,
-  );
+  )) as FullGuildSettings;
 
   const merged = deepMerge(defaultGuildSettings, data);
   return merged;

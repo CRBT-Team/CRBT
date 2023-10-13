@@ -468,7 +468,7 @@
   "PRIVACY_SILENT_LEAVES_DESCRIPTION": "When on, CRBT won't announce when you leave a server.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT logs command usage according to our Privacy Policy. Disabling it stops sending logs.",
   "YOUR_CRBT_DATA": "Your CRBT data",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete your data, but deleting will erase all your data, including Reminders and Economy.",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete all of your data, including Reminders, Settings, Economy and more.",
   "PRIVACY_DOWNLOAD_MY_DATA": "Download my data",
   "PRIVACY_DELETE_MY_DATA": "Delete my data",
   "PRIVACY_DESCRIPTION": "CRBT is transparent about the way it collects and uses your data.",
@@ -517,6 +517,8 @@
   "SETTINGS_MODLOGS_DESCRIPTION": "When enabled, CRBT will send a message to a channel of your choice when a moderator takes action against a member using CRBT.",
   "SETTINGS_MODREPORTS_SHORT_DESCRIPTION": "Allow members to report server messages and users",
   "SETTINGS_MODREPORTS_DESCRIPTION": "When enabled, members can report messages and users by right-clicking or long-pressing them. Reported messages are sent to a channel of your choice and added to the Moderation History.",
+  "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Manage, download or delete your data.",
+  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Polls and Giveaways, Moderation History, Economy and everything else.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
@@ -696,5 +698,17 @@
   "MOD_NOTIFICATION_LOCK_TITLE": "{channel} was locked",
   "MOD_NOTIFICATION_UNLOCK_TITLE": "{channel} was unlocked",
   "MOD_NOTIFICATION_CLEAR_TITLE": "{messages} messages were cleared in {channel}",
-  "BULK_DELETE": "Bulk Delete"
+  "BULK_DELETE": "Bulk Delete",
+  "GUILD_PRIVACY_DELETE_DATA_CONFIRM_TITLE": "Do you really want to delete all of the CRBT data for {guildName}?",
+  "GUILD_PRIVACY_DELETE_DATA_CONFIRM_DESCRIPTION": "By confirming, you will forever delete:",
+  "DELETE_ALL_DATA": "Delete all data",
+  "DOWNLOAD_ALL_DATA": "Download all data",
+  "X_POLLS": "{number} polls",
+  "X_GIVEAWAYS": "{number} giveaways",
+  "ENTIRETY_OF_MODERATION_HISTORY": "The entirety of the server's Moderation History",
+  "X_MODERATION_HISTORY_ENTRIES": "{number} entries",
+  "X_SETTINGS": "{number} settings (Theming, Moderation, Economy...)",
+  "X_ECONOMY_ITEMS_CATEGORIES": "{categories} Shop categories containing {items} items",
+  "X_ACHIEVEMENTS": "{categories} Achievement categories containing {achievements} achievements",
+  "DELETE_DATA_SUCCESS": "All data was successfully deleted."
 }
