@@ -19,14 +19,14 @@ import { themeSettings } from './theming';
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
   [EditableGuildFeatures.joinLeave, joinLeaveSettings],
-  // [
-  //   EditableGuildFeatures.joinMessage,
-  //   { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  // ],
-  // [
-  //   EditableGuildFeatures.leaveMessage,
-  //   { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  // ],
+  [
+    EditableGuildFeatures.joinMessage,
+    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  ],
+  [
+    EditableGuildFeatures.leaveMessage,
+    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  ],
   [EditableGuildFeatures.moderation, moderationSettings],
   [EditableGuildFeatures.moderationNotifications, modlogsSettings],
   [EditableGuildFeatures.moderationReports, modReportsSettings],
@@ -110,7 +110,7 @@ export async function getGuildSettings(guildId: string, force = false) {
   )) as FullGuildSettings;
 
   const merged = deepMerge(defaultGuildSettings, data);
-  return merged;
+  return { ...merged, isDefault: data === null } as FullGuildSettings;
 }
 
 export async function saveServerSettings(guildId: string, newSettings: Partial<FullGuildSettings>) {
