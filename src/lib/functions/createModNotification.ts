@@ -15,7 +15,7 @@ import { formatUsername } from './formatUsername';
 import { getEmojiURL } from './getEmojiURL';
 
 export function createModNotification(
-  { type, reason, endDate, messagesDeleted, user, target }: ModerationContext,
+  { type, reason, endDate, messagesToDelete: messagesDeleted, user, target }: ModerationContext,
   locale: string,
 ) {
   const fields = [

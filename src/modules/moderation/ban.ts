@@ -41,7 +41,7 @@ export default ChatCommand({
       endDate: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
       duration: end_date,
-      messagesDeleted: delete_messages,
+      messagesToDelete: delete_messages,
     });
   },
 });
@@ -49,7 +49,7 @@ export default ChatCommand({
 export async function ban(
   this: Interaction,
   member: GuildMember,
-  { duration, reason, messagesDeleted, id }: ModerationContext,
+  { duration, reason, messagesToDelete: messagesDeleted, id }: ModerationContext,
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(
