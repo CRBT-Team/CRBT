@@ -1,10 +1,17 @@
 import { emojis } from '$lib/env';
+import { CRBTError } from '$lib/functions/CRBTError';
 import { slashCmd } from '$lib/functions/commandMention';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import dedent from 'dedent';
-import { ChannelType } from 'discord-api-types/v10';
-import { ForumChannel, TextChannel, VoiceBasedChannel } from 'discord.js';
+import { ChannelType, PermissionFlagsBits } from 'discord-api-types/v10';
+import {
+  CommandInteraction,
+  ForumChannel,
+  GuildTextBasedChannel,
+  TextChannel,
+  VoiceBasedChannel,
+} from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
 import { ModerationAction, ModerationColors, handleModerationAction } from './_base';
 
@@ -31,35 +38,55 @@ export default ChatCommand({
       maxLength: 256,
     }),
   async handle({ channel, reason }) {
-    await this.deferReply();
-
     const c = (channel ?? this.channel) as TextChannel | VoiceBasedChannel | ForumChannel;
 
-    await c.permissionOverwrites.edit(c.guild.roles.everyone, {
-      SEND_MESSAGES: false,
-      CONNECT: false,
-      SEND_MESSAGES_IN_THREADS: false,
-      CREATE_PUBLIC_THREADS: false,
-      CREATE_PRIVATE_THREADS: false,
-      USE_APPLICATION_COMMANDS: false,
-      START_EMBEDDED_ACTIVITIES: false,
-    });
+    if (
+      [
+        PermissionFlagsBits.SendMessages,
+        PermissionFlagsBits.Connect,
+        PermissionFlagsBits.SendMessagesInThreads,
+        PermissionFlagsBits.CreatePublicThreads,
+        PermissionFlagsBits.CreatePrivateThreads,
+        PermissionFlagsBits.UseApplicationCommands,
+        PermissionFlagsBits.UseEmbeddedActivities,
+      ].some((p) => !c.permissionsFor(c.guild.roles.everyone)?.has(p))
+    ) {
+      return CRBTError(this, {
+        title: t(this, 'LOCK_ERROR_ALREADY_LOCKED_TITLE'),
+        description: t(this, 'LOCK_ERROR_ALREADY_LOCKED_DESCRIPTION'),
+      });
+    }
 
-    await handleModerationAction.call(this, {
+    return handleModerationAction.call(this, {
       guild: this.guild,
       user: this.user,
       target: c,
       type: ModerationAction.ChannelLock,
       reason,
     });
+  },
+});
 
-    await this.editReply({
-      embeds: [
-        {
-          title: `${emojis.lock} ${t(this, 'LOCK_SUCCESS_TITLE', {
-            channel: c,
-          })}`,
-          description: dedent`
+export async function lockChannel(this: CommandInteraction, channel: GuildTextBasedChannel) {
+  const c = channel as TextChannel | VoiceBasedChannel | ForumChannel;
+
+  await c.permissionOverwrites.edit(c.guild.roles.everyone, {
+    SEND_MESSAGES: false,
+    CONNECT: false,
+    SEND_MESSAGES_IN_THREADS: false,
+    CREATE_PUBLIC_THREADS: false,
+    CREATE_PRIVATE_THREADS: false,
+    USE_APPLICATION_COMMANDS: false,
+    START_EMBEDDED_ACTIVITIES: false,
+  });
+
+  await this.editReply({
+    embeds: [
+      {
+        title: `${emojis.lock} ${t(this, 'LOCK_SUCCESS_TITLE', {
+          channel: c,
+        })}`,
+        description: dedent`
 ${t(
   this,
   c.isVoice()
@@ -74,9 +101,8 @@ ${t(this, 'LOCK_SUCCESS_DESCRIPTION_COMMAND', {
 
 ⚠️ ${t(this, 'LOCK_SUCCESS_DESCRIPTION_WARNING')}
 `,
-          color: ModerationColors[ModerationAction.ChannelLock],
-        },
-      ],
-    });
-  },
-});
+        color: ModerationColors[ModerationAction.ChannelLock],
+      },
+    ],
+  });
+}

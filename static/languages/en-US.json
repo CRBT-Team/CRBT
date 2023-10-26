@@ -684,7 +684,9 @@
   "LOCK_SUCCESS_DESCRIPTION_TEXT": "Users will not be able to send messages in this channel and its threads, or create new threads.",
   "LOCK_SUCCESS_DESCRIPTION_FORUM": "Users will not be able to send messages in posts, or create new posts.",
   "LOCK_SUCCESS_DESCRIPTION_COMMAND": "Use {command} to unlock this channel.",
-  "LOCK_SUCCESS_DESCRIPTION_WARNING": "Administrator, and roles overwriting the channel's permissions will be immune.",
+  "LOCK_SUCCESS_DESCRIPTION_WARNING": "Administrators, and roles overwriting the channel's permissions, will be immune.",
+  "LOCK_ERROR_ALREADY_LOCKED_TITLE": "This channel is already locked.",
+  "LOCK_ERROR_ALREADY_LOCKED_DESCRIPTION": "The 'Send Messages', 'Connect' or 'Create Threads/Posts' permission(s) is/are already denied for @everyone.",
   "unlock": {
     "description": "Unlocks a channel's view & connect permissions for @everyone.",
     "options": {
@@ -695,6 +697,8 @@
   },
   "UNLOCK_SUCCESS_TITLE": "Unlocked {channel}.",
   "UNLOCK_SUCCESS_DESCRIPTION": "All write & connect permissions were restored.",
+  "UNLOCK_ERROR_ALREADY_UNLOCKED_TITLE": "This channel is already unlocked.",
+  "UNLOCK_ERROR_ALREADY_UNLOCKED_DESCRIPTION": "The 'Send Messages', 'Connect' or 'Create Threads/Posts' permission(s) is/are already allowed for @everyone.",
   "MOD_NOTIFICATION_LOCK_TITLE": "{channel} was locked",
   "MOD_NOTIFICATION_UNLOCK_TITLE": "{channel} was unlocked",
   "MOD_NOTIFICATION_CLEAR_TITLE": "{messages} messages were cleared in {channel}",
