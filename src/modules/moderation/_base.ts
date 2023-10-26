@@ -8,6 +8,7 @@ import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
 import { dateToSnowflake } from '@purplet/utils';
+import { capitalCase } from 'change-case-all';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
@@ -15,6 +16,7 @@ import {
   Guild,
   GuildBasedChannel,
   GuildMember,
+  GuildTextBasedChannel,
   Interaction,
   MessageComponentInteraction,
   ModalSubmitInteraction,
@@ -23,8 +25,11 @@ import {
 } from 'discord.js';
 import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { ban } from './ban';
+import { clearMessages } from './clear';
 import { kick } from './kick';
+import { lockChannel } from './lock';
 import { timeout } from './timeout';
+import { unlockChannel } from './unlock';
 
 export interface ModerationContext {
   user: User;
@@ -33,7 +38,7 @@ export interface ModerationContext {
   reason?: string;
   endDate?: Date;
   type: ModerationAction;
-  messagesDeleted?: number;
+  messagesToDelete?: number;
   duration?: string;
   id?: string;
 }
@@ -83,69 +88,101 @@ export const ModerationColors: Record<ModerationAction, number> = {
   [ModerationAction.UserUnban]: colors.green,
 };
 
+type UserModerationFunctionProps = (
+  this: CommandInteraction,
+  member: GuildMember,
+  ctx: ModerationContext,
+) => any;
+type ChannelModerationFunctionProps = (
+  this: CommandInteraction,
+  channel: GuildTextBasedChannel,
+  ctx: ModerationContext,
+) => any;
+
 export const ModerationActions: Partial<
-  Record<ModerationAction, (this: Interaction, member: GuildMember, ctx: ModerationContext) => any>
+  Record<ModerationAction, UserModerationFunctionProps | ChannelModerationFunctionProps>
 > = {
   [ModerationAction.UserBan]: ban,
   [ModerationAction.UserTemporaryBan]: ban,
   [ModerationAction.UserKick]: kick,
   [ModerationAction.UserTimeout]: timeout,
+  [ModerationAction.ChannelMessageClear]: clearMessages,
+  [ModerationAction.ChannelLock]: lockChannel,
+  [ModerationAction.ChannelUnlock]: unlockChannel,
 };
 
 export async function handleModerationAction(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
   ctx: ModerationContext,
 ) {
+  await this.deferReply();
+
   ctx.id = dateToSnowflake(new Date());
-  const { guild, user: moderator, target, endDate, reason, type, messagesDeleted } = ctx;
+  const {
+    guild,
+    user: moderator,
+    target,
+    endDate,
+    reason,
+    type,
+    messagesToDelete: messagesDeleted,
+  } = ctx;
   const { error } = checkModerationPermission.call(this, target, type);
 
   if (error) {
-    return this.reply(error);
+    this.editReply(error);
+    return;
   }
 
   try {
-    if (target instanceof User) {
-      const member = guild.members.cache.get(target.id);
+    if (ModerationActions[type]) {
+      if (target instanceof User && !ChannelModerationActions.includes(type)) {
+        // warn the user through their DMs
+        await target
+          .send({
+            embeds: [
+              {
+                ...createCRBTmsg({
+                  source: CRBTMessageSourceType.Moderator,
+                  action: type,
+                  locale: this.guildLocale,
+                  message: reason,
+                  guildName: guild.name,
+                  endDate,
+                }),
+                color: ModerationColors[type],
+              },
+            ],
+          })
+          .catch((e) => {});
 
-      await this.deferReply();
+        const member = guild.members.cache.get(target.id);
+        //@ts-ignore
+        const error = await ModerationActions[type]?.call(this, member, ctx);
 
-      // warn the user through their DMs
-      await target
-        .send({
+        if (error) {
+          return this.editReply(error);
+        }
+
+        await this.editReply({
           embeds: [
             {
-              ...createCRBTmsg({
-                source: CRBTMessageSourceType.Moderator,
-                action: type,
-                locale: this.guildLocale,
-                message: reason,
-                guildName: guild.name,
-                endDate,
-              }),
-              color: ModerationColors[type],
+              title: `${emojis.success} Successfully ${t(
+                this.guildLocale,
+                `MOD_VERB_${moderationVerbStrings[type]}` as any,
+              ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
+              color: colors.success,
             },
           ],
-        })
-        .catch((e) => {});
+        });
+      } else if (target instanceof Channel && ChannelModerationActions.includes(type)) {
+        //@ts-ignore
+        const error = await ModerationActions[type]?.call(this, target, ctx);
 
-      const error = await ModerationActions[type]?.call(this, member, ctx);
-
-      if (error) {
-        return this.reply(error);
+        if (error) {
+          return this.editReply(error);
+        }
       }
-
-      await this.editReply({
-        embeds: [
-          {
-            title: `${emojis.success} Successfully ${t(
-              this.guildLocale,
-              `MOD_VERB_${moderationVerbStrings[type]}` as any,
-            ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
-            color: colors.success,
-          },
-        ],
-      });
     }
 
     await prisma.moderationEntry.create({
@@ -186,7 +223,7 @@ export async function handleModerationAction(
           user: moderator,
           endDate,
           target,
-          messagesDeleted,
+          messagesToDelete: messagesDeleted,
         },
         this.guildLocale,
       );
@@ -207,11 +244,7 @@ export async function handleModerationAction(
       }
     }
   } catch (e) {
-    if (this.replied || this.deferred) {
-      this.editReply(UnknownError(this, e));
-    } else {
-      this.reply(UnknownError(this, e));
-    }
+    this.editReply(UnknownError(this, e));
   }
 }
 
@@ -249,26 +282,37 @@ export function checkModerationPermission(
     [ModerationAction.UserUnban]: PermissionFlagsBits.BanMembers,
   };
 
-  const verb = moderationVerbStrings[type].toLowerCase();
+  const verb = capitalCase(moderationVerbStrings[type]);
   // Object.keys(ModerationAction)[type].toLowerCase();
+
+  // Check if user can execute command
+  if (!hasPerms(this.memberPermissions, perms[type])) {
+    return {
+      error: createCRBTError(
+        this,
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: `${verb} ${target instanceof User ? 'Members' : 'Channels'}`,
+        }),
+      ),
+    };
+  }
+  // Check if bot can execute command
+  if (!hasPerms(this.appPermissions, perms[type])) {
+    return {
+      error: createCRBTError(
+        this,
+        t(this, 'ERROR_BOT_MISSING_PERMISSIONS', {
+          permissions: `${verb} ${target instanceof User ? 'Members' : 'Channels'}`,
+        }),
+      ),
+    };
+  }
 
   if (target instanceof User) {
     // Check member exists
     if (!member) {
       return {
         error: createCRBTError(this, 'The user is not in this server.'),
-      };
-    }
-    // Check if user can execute command
-    if (!hasPerms(this.memberPermissions, perms[type])) {
-      return {
-        error: createCRBTError(this, `You do not have permission to ${verb} members.`),
-      };
-    }
-    // Check if bot can execute command
-    if (!hasPerms(this.appPermissions, perms[type])) {
-      return {
-        error: createCRBTError(this, `I do not have permission to ${verb} members.`),
       };
     }
     // Check if user can ban themselves
@@ -304,10 +348,10 @@ export function checkModerationPermission(
         error: createCRBTError(this, `I cannot ${verb} a user with roles above mine.`),
       };
     }
-  }
 
-  if (type === ModerationAction.UserTimeout && member.communicationDisabledUntil) {
-    return { error: createCRBTError(this, 'This user is already timed out.') };
+    if (type === ModerationAction.UserTimeout && member.communicationDisabledUntil) {
+      return { error: createCRBTError(this, 'This user is already timed out.') };
+    }
   }
 
   return { error: null };
