@@ -26,7 +26,7 @@ export const EditReminderButton = ButtonComponent({
           row(
             new TextInputComponent()
               .setLabel(t(this, 'WHEN_TO_SEND'))
-              .setValue(dayjs(reminder.expiresAt).format('YYYY-MM-DD HH:mm'))
+              .setValue(dayjs(reminder.endDate).format('YYYY-MM-DD HH:mm'))
               .setCustomId('date')
               .setMaxLength(16)
               .setMinLength(16)

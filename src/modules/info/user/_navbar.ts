@@ -57,7 +57,7 @@ export const BotInfoBtn = ButtonComponent({
       return CRBTError(this, t(this, 'ERROR_ONLY_OG_USER_MAY_USE_BTN'));
     }
     const bots = await fetchWithCache(`${this.guild.id}:integrations`, async () =>
-      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON()
+      (await this.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON(),
     );
 
     const bot =
@@ -95,8 +95,6 @@ export const UserPfpBtn = ButtonComponent({
         ? await this.guild.members.fetch(u.id)
         : null;
     const res = await renderPfp('user', u, this, opts, m);
-
-    console.log(res);
 
     await this.update(res);
   },
@@ -141,7 +139,7 @@ export function navBar(
   ctx: NavBarContext,
   locale: string,
   activeTab: Tabs,
-  addTabs?: Set<Omit<Tabs, DefaultTabs>>
+  addTabs?: Set<Omit<Tabs, DefaultTabs>>,
 ) {
   return row(
     new UserInfoBtn(ctx)
@@ -176,6 +174,6 @@ export function navBar(
           .setLabel(t(locale, 'USER_BANNER'))
           .setStyle('SECONDARY')
           .setDisabled(activeTab === 'user_banner')
-      : null
+      : null,
   );
 }

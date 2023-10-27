@@ -8,5 +8,5 @@ export function getEmojiURL(emoji: string): string {
 
   return regex
     ? formatEmojiURL(getEmojiObject(emoji).id)
-    : emojiImg(emojiJSON.find(({ char }) => emoji === char)).Twemoji;
+    : emojiImg(emojiJSON.find(({ char }) => emoji === char))['Twitter / X'];
 }

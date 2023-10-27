@@ -21,7 +21,7 @@ const convertTime12to24 = (time12h: string) => {
 export async function resolveToDate(
   when: Date | string | dayjs.Dayjs | number,
   locale = 'en',
-  allowPast = false
+  allowPast = false,
 ): Promise<dayjs.Dayjs> {
   const { keywordsDetection__KEEPLOWERCASE: keywords } = t(locale, 'remind me');
 
@@ -49,8 +49,6 @@ export async function resolveToDate(
     .replaceAll(`${keywords.IN} `, '')
     .replaceAll('  ', ' ')
     .trim();
-
-  // console.log(when);
 
   if (isValidTime(when)) {
     return now.add(ms(when));

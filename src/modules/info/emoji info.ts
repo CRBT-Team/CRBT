@@ -12,31 +12,30 @@ import {
 } from '@purplet/utils';
 import { capitalCase } from 'change-case-all';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
-import { ButtonInteraction, Interaction, MessageButton } from 'discord.js';
+import { Interaction, MessageButton, MessageComponentInteraction } from 'discord.js';
 import {
   ButtonComponent,
   ChatCommand,
-  components,
   OptionBuilder,
-  row,
   SelectMenuComponent,
+  components,
+  row,
 } from 'purplet';
 import emojiJSON from '../../../static/misc/emoji.json';
 
-export function emojiImg(emojiData: typeof emojiJSON[0], size = '120') {
+export function emojiImg(emojiData: (typeof emojiJSON)[0], size = '120') {
   const emojipediaCode = `${emojiData.name.replace(/ /g, '-')}_${emojiData.codes
     .toLowerCase()
     .replace(/ /g, '-')
     .replace(/:/g, '')}`;
 
   return {
-    Twemoji: `https://em-content.zobj.net/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
     Apple: `https://em-content.zobj.net/thumbs/${size}/apple/325/${emojipediaCode}.png`,
     'Google Noto Color Emoji': `https://em-content.zobj.net/thumbs/${size}/google/350/${emojipediaCode}.png`,
-    'Microsoft Fluent Emoji 3D': `https://em-content.zobj.net/thumbs/${size}/microsoft-teams/337/${emojipediaCode}.png`,
-    'Microsoft Fluent Emoji Flat': `https://em-content.zobj.net/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
     Samsung: `https://em-content.zobj.net/thumbs/${size}/samsung/349/${emojipediaCode}.png`,
+    Microsoft: `https://em-content.zobj.net/thumbs/${size}/microsoft/319/${emojipediaCode}.png`,
     WhatsApp: `https://em-content.zobj.net/thumbs/${size}/whatsapp/326/${emojipediaCode}.png`,
+    'Twitter / X': `https://em-content.zobj.net/thumbs/${size}/twitter/322/${emojipediaCode}.png`,
     Facebook: `https://em-content.zobj.net/thumbs/${size}/facebook/327/${emojipediaCode}.png`,
   };
 }
@@ -82,7 +81,7 @@ export default ChatCommand({
                 name: t(this, 'ADDED'),
                 value: `${timestampMention(emojiData.createdAt)} • ${timestampMention(
                   emojiData.createdAt,
-                  'R'
+                  'R',
                 )}`,
               },
             ],
@@ -99,8 +98,8 @@ export default ChatCommand({
                 new AddEmojiButton(emoji)
                   .setStyle('SECONDARY')
                   .setLabel(t(this, 'CLONE_TO_THIS_SERVER'))
-                  .setEmoji(emojis.buttons.add)
-              )
+                  .setEmoji(emojis.buttons.add),
+              ),
             ),
       });
     } else if (emojiJSON.find((e) => e.char === emoji)) {
@@ -122,7 +121,7 @@ export default ChatCommand({
 async function renderUnicodeEmoji(
   this: Interaction,
   emojiCodes: string,
-  vendor: string = 'Twemoji'
+  vendor: keyof ReturnType<typeof emojiImg> = 'Twitter / X',
 ) {
   const emojiData = emojiJSON.find((e) => e.codes === emojiCodes);
 
@@ -156,33 +155,30 @@ async function renderUnicodeEmoji(
           url: emojiURL,
         },
         color:
-          this instanceof ButtonInteraction
+          this instanceof MessageComponentInteraction
             ? this.message.embeds[0].color
             : await getColor(this.user),
       },
     ],
-    ...(!(this instanceof ButtonInteraction)
-      ? {}
-      : {
-          components: components(
-            row(
-              new EmojiDesignSelect(emojiCodes).setOptions(
-                Object.entries(emojiImg(emojiData)).map(([brand, url]) => ({
-                  label: brand,
-                  value: brand,
-                  default: brand === vendor,
-                }))
-              )
-            ),
-            row(
-              new MessageButton({
-                label: t(this, 'EMOJI_INFO_EMOJIPEDIA_BUTTON'),
-                url: `https://emojipedia.org/${emojiData.char}`,
-                style: 'LINK',
-              })
-            )
-          ),
+
+    components: components(
+      row(
+        new EmojiDesignSelect(emojiCodes).setOptions(
+          Object.entries(emojiImg(emojiData)).map(([brand, url]) => ({
+            label: brand,
+            value: brand,
+            default: brand === vendor,
+          })),
+        ),
+      ),
+      row(
+        new MessageButton({
+          label: t(this, 'EMOJI_INFO_EMOJIPEDIA_BUTTON'),
+          url: `https://emojipedia.org/${emojiData.char}`,
+          style: 'LINK',
         }),
+      ),
+    ),
   };
 }
 
@@ -190,18 +186,28 @@ export const EmojiDesignSelect = SelectMenuComponent({
   async handle(emojiCodes: string) {
     const vendor = this.values[0];
 
-    await this.update(await renderUnicodeEmoji.call(this, emojiCodes, vendor));
+    await this.update(await renderUnicodeEmoji.call(this, emojiCodes, vendor as any));
   },
 });
 
 export const AddEmojiButton = ButtonComponent({
   async handle(emojiString: string) {
-    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageEmojisAndStickers)) {
-      return CRBTError(this, 'You do not have permission to add emojis to this server.');
+    if (!hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuildExpressions)) {
+      return CRBTError(
+        this,
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Expressions',
+        }),
+      );
     }
 
-    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageEmojisAndStickers)) {
-      return CRBTError(this, 'I do not have permission to add emojis to this server.');
+    if (!hasPerms(this.appPermissions, PermissionFlagsBits.ManageGuildExpressions)) {
+      return CRBTError(
+        this,
+        t(this, 'ERROR_BOT_MISSING_PERMISSIONS', {
+          PERMISSIONS: 'Manage Expressions',
+        }),
+      );
     }
 
     const emojiData = {
@@ -222,8 +228,8 @@ export const AddEmojiButton = ButtonComponent({
             .setStyle('SECONDARY')
             .setLabel(t(this, 'CLONE_TO_THIS_SERVER'))
             .setEmoji(emojis.buttons.add)
-            .setDisabled(true)
-        )
+            .setDisabled(true),
+        ),
       ),
     });
 

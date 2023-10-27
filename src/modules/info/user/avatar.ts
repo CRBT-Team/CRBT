@@ -3,17 +3,18 @@ import { formatDisplayName, formatUsername } from '$lib/functions/formatUsername
 import { getColor } from '$lib/functions/getColor';
 import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
-import { APIUser, Routes } from 'discord-api-types/v10';
+import { APIUser, MessageFlags, Routes } from 'discord-api-types/v10';
 import { ButtonInteraction, GuildMember, Interaction, MessageButton } from 'discord.js';
 import {
   ChatCommand,
+  OptionBuilder,
+  UserContextCommand,
   components,
   getRestClient,
-  OptionBuilder,
   row,
-  UserContextCommand,
 } from 'purplet';
-import { AvatarFormats, AvatarSizes, getTabs, navBar, NavBarContext } from './_navbar';
+import { ShareResponseBtn } from '../../components/ShareResult';
+import { AvatarFormats, AvatarSizes, NavBarContext, getTabs, navBar } from './_navbar';
 
 const { ctxMeta } = t('en-US', 'avatar');
 
@@ -70,8 +71,8 @@ export const defaultPfp = ChatCommand({
           format: format as any,
           size: (size ?? '3') as any,
         },
-        m
-      )
+        m,
+      ),
     );
   },
 });
@@ -92,7 +93,7 @@ export const ctxDefaultPfp = UserContextCommand({
           userId: this.user.id,
           size: '3',
         },
-        m
+        m,
       )),
       ephemeral: true,
     });
@@ -104,7 +105,7 @@ export async function renderPfp(
   user: APIUser,
   ctx: Interaction,
   navCtx: NavBarContext,
-  member?: GuildMember
+  member?: GuildMember,
 ) {
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
@@ -122,7 +123,7 @@ export async function renderPfp(
         author: {
           name: `${formatUsername(user)} - ${t(
             ctx,
-            type === 'default' ? 'AVATAR' : 'USER_AVATAR'
+            type === 'default' ? 'AVATAR' : 'USER_AVATAR',
           )}`,
           icon_url: av,
         },
@@ -133,12 +134,13 @@ export async function renderPfp(
         color,
       },
     ],
+    flags: MessageFlags.Ephemeral,
     components: components(
       navBar(
         navCtx,
         ctx.locale,
         type === 'default' ? 'avatar' : 'user_avatar',
-        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user, member)
+        getTabs(type === 'default' ? 'avatar' : 'user_avatar', user, member),
       ),
       row(
         new MessageButton({
@@ -147,11 +149,12 @@ export async function renderPfp(
           label: !av.includes('embed/avatars')
             ? strings.DOWNLOAD.replace('{SIZE}', `${size ?? 2048}`).replace(
                 '{FORMAT}',
-                av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG'
+                av.includes('.gif') ? 'GIF' : format?.toUpperCase() ?? 'PNG',
               )
             : strings.DOWNLOAD.replace('{SIZE}', `256`).replace('{FORMAT}', 'PNG'),
-        })
-      )
+        }),
+        ShareResponseBtn(ctx, false),
+      ),
     ),
   };
 }

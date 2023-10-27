@@ -36,8 +36,6 @@ export async function renderJoinLeavePreview(
 ) {
   const message: JoinLeaveData = data[CamelCaseGuildFeatures[type]];
 
-  console.log(data);
-
   const channelId: string =
     type === EditableGuildFeatures.joinMessage ? data['joinChannel'] : data['leaveChannel'];
 

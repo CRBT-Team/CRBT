@@ -8,6 +8,20 @@ export interface CRBTscriptParserArgs {
   member: GuildMember | PartialGuildMember;
 }
 
+function CRBTscriptfunction(regex: RegExp, callback: (values?: string) => any) {
+  return [
+    regex,
+    (values?: string) => {
+      try {
+        callback(values);
+        return 'true';
+      } catch (e) {
+        return String(e);
+      }
+    },
+  ] as [RegExp, (values?: string) => string];
+}
+
 export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): string {
   const { channel, member } = args;
   const { guild, client } = member;
@@ -25,28 +39,13 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
     ['<user.mention>', `<@${member.id}>`],
     ['<user.isBot>', member.user.bot.toString()],
     ['<user.roles>', member.roles.cache.map((r) => r.name).join(', ')],
-    [
-      new RegExp(/<user\.roles\.add\(([0-9]{18})\)>/g),
-      (roleId) => {
-        try {
-          member.roles.add(roleId);
-          return 'true';
-        } catch (e) {
-          return String(e);
-        }
-      },
-    ],
-    [
-      new RegExp(/<user\.roles\.remove\(([0-9]{18})\)>/g),
-      (roleId) => {
-        try {
-          member.roles.remove(roleId);
-          return 'true';
-        } catch (e) {
-          return String(e);
-        }
-      },
-    ],
+
+    CRBTscriptfunction(new RegExp(/<user\.roles\.add\(([0-9]{18})\)>/g), (roleId) =>
+      member.roles.add(roleId),
+    ),
+    CRBTscriptfunction(new RegExp(/<user\.roles\.remove\(([0-9]{18})\)>/g), (roleId) =>
+      member.roles.remove(roleId),
+    ),
 
     ['<server.name>', guild.name],
     ['<server.id>', guild.id],
@@ -77,7 +76,7 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
     ['<crbt.joined>', guild.members.me.joinedAt.toISOString()],
     ['<crbt.mention>', `<@${client.user.id}>`],
     ['<crbt.isBot>', 'true'],
-    ['<crbt.roles>', guild.me.roles.cache.map((r) => r.name).join(', ')],
+    ['<crbt.roles>', guild.members.me.roles.cache.map((r) => r.name).join(', ')],
   ];
 
   if (text && typeof text === 'string') {

@@ -5,7 +5,7 @@ import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleModerationAction, ModerationContext } from './_base';
+import { ModerationAction, ModerationContext, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'timeout',
@@ -33,10 +33,10 @@ export default ChatCommand({
   handle({ user, reason, end_date }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'TIMEOUT',
-      expiresAt: new Date(Date.now() + ms(end_date)),
+      type: ModerationAction.UserTimeout,
+      endDate: new Date(Date.now() + ms(end_date)),
       reason,
       duration: end_date,
     });
@@ -46,14 +46,14 @@ export default ChatCommand({
 export function timeout(
   this: Interaction,
   member: GuildMember,
-  { duration, reason }: ModerationContext
+  { duration, reason }: ModerationContext,
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('28d')) {
     return createCRBTError(
       this,
       t(this, 'ERROR_INVALID_DURATION', {
         relativeTime: '28 days',
-      })
+      }),
     );
   }
 

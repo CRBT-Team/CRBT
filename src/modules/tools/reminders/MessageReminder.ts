@@ -1,7 +1,7 @@
 import { colors, emojis } from '$lib/env';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
@@ -10,10 +10,10 @@ import { TimeoutTypes } from '$lib/types/timeouts';
 import { ReminderTypes } from '@prisma/client';
 import dayjs from 'dayjs';
 import { Message } from 'discord.js';
-import { randomBytes } from 'node:crypto';
-import { components, MessageContextCommand, row, SelectMenuComponent } from 'purplet';
-import { renderReminder } from './reminder_list';
+import { randomInt } from 'node:crypto';
+import { MessageContextCommand, SelectMenuComponent, components, row } from 'purplet';
 import { getUserReminders } from './_helpers';
+import { renderReminder } from './reminder_list';
 
 export const messageCache = new Map<string, Message>();
 
@@ -64,9 +64,9 @@ export default MessageContextCommand({
             ).map(([value, name]) => ({
               label: name.fromNow(),
               value: value,
-            }))
-          )
-        )
+            })),
+          ),
+        ),
       ),
     });
   },
@@ -77,7 +77,8 @@ export const SelectTimeMenu = SelectMenuComponent({
     await this.deferUpdate();
 
     const message = messageCache.get(mId);
-    const url = message.url.replace(/https:\/\/((canary|ptb)\.)?discord\.com\/channels\//, '');
+    // only keep the channel and message ID
+    const url = message.url.split('/').slice(5).join('/');
     const embed = message.embeds.find((e) => e.title || e.description || e.fields[0].name);
     const subject = `${(
       message.content ||
@@ -88,15 +89,15 @@ export const SelectTimeMenu = SelectMenuComponent({
     )?.slice(0, 60)}...`;
 
     const details = budgetify(message);
-    const expiresAt = dayjs().add(ms(this.values[0]));
+    const endDate = dayjs().add(ms(this.values[0]));
 
     try {
       const reminder = await dbTimeout(TimeoutTypes.Reminder, {
         userId: this.user.id,
         destination: 'dm',
-        expiresAt: expiresAt.toDate(),
+        endDate: endDate.toDate(),
         locale: this.locale,
-        id: `${url}-${randomBytes(6)}`,
+        id: `MSG-${url}-${randomInt(3)}`,
         subject: `${formatUsername(message.author)}--${subject}`,
         details: JSON.stringify(details),
         type: ReminderTypes.MESSAGE,

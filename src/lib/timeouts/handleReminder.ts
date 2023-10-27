@@ -4,8 +4,9 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
+import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
-import { Client, MessageButton } from 'discord.js';
+import { Client, MessageButton, MessageOptions } from 'discord.js';
 import { components, row } from 'purplet';
 import {
   ExtractedReminder,
@@ -25,9 +26,8 @@ export interface LowBudgetMessage {
 }
 
 export async function handleReminder(reminder: Reminder, client: Client) {
-  const { strings } = t(reminder.locale, 'remind me');
-
   const data = await extractReminder(reminder, client);
+  const createdAt = snowflakeToDate(data.id);
 
   const message = {
     embeds: [
@@ -37,25 +37,27 @@ export async function handleReminder(reminder: Reminder, client: Client) {
           icon_url: icons.reminder,
         },
         title: getReminderSubject(reminder, client, 0),
-        // description: strings.REMINDER_DESCRIPTION.replace(
-        //   '{TIME}',
-        //   timestampMention(reminder.expiresAt, 'D')
-        // ).replace('{RELATIVE_TIME}', timestampMention(reminder.expiresAt, 'R')),
+        fields: [
+          {
+            name: t(reminder.locale, 'CREATED_ON'),
+            value: `${timestampMention(createdAt)} • ${timestampMention(createdAt, 'R')}`,
+          },
+        ],
         color: await getColor(data.user),
       },
-      ...renderLowBudgetMessage(data),
+      ...renderLowBudgetMessage(data, reminder.locale),
     ],
     components: components(
       row(
         new MessageButton()
           .setStyle('LINK')
           .setLabel(t(reminder?.locale, 'JUMP_TO_MSG'))
-          .setURL(data.url)
+          .setURL(data.url),
         // new SnoozeButton()
         //   .setStyle('SECONDARY')
         //   .setEmoji(emojis.reminder)
         //   .setLabel(strings.BUTTON_SNOOZE)
-      )
+      ),
     ),
   };
 
@@ -78,12 +80,15 @@ export async function handleReminder(reminder: Reminder, client: Client) {
   }
 }
 
-export function renderLowBudgetMessage({
-  author,
-  details,
-  guild,
-  channel,
-}: Pick<ExtractedReminder, 'author' | 'details' | 'guild' | 'channel'>) {
+export function renderLowBudgetMessage(
+  {
+    author,
+    details,
+    guild,
+    channel,
+  }: Pick<ExtractedReminder, 'author' | 'details' | 'guild' | 'channel'>,
+  locale: string = 'en-US',
+): MessageOptions['embeds'] {
   if (!details) return [];
 
   return [
@@ -94,7 +99,7 @@ export function renderLowBudgetMessage({
       },
       description: details.content,
       footer: {
-        text: `${guild.name} • #${channel.name}`,
+        text: `${'name' in guild ? guild.name : t(locale, 'DMS')} • #${channel.name}`,
       },
       color: author.accentColor ?? colors.blurple,
     },

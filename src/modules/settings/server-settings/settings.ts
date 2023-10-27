@@ -13,10 +13,10 @@ import {
   MessageOptions,
   MessageSelectOptionData,
 } from 'discord.js';
-import { ButtonComponent, ChatCommand, components, row, SelectMenuComponent } from 'purplet';
+import { ButtonComponent, ChatCommand, SelectMenuComponent, components, row } from 'purplet';
 import {
-  getGuildSettings,
   GuildSettingMenus,
+  getGuildSettings,
   resolveSettingsProps,
   saveServerSettings,
 } from '../server-settings/_helpers';
@@ -32,7 +32,7 @@ export default ChatCommand({
         this,
         t(this.locale, 'ERROR_MISSING_PERMISSIONS', {
           PERMISSIONS: 'Manage Server',
-        })
+        }),
       );
     }
 
@@ -50,7 +50,7 @@ export async function guildSettingsOverview(this: Interaction): Promise<MessageO
   const selectMenuOptions: MessageSelectOptionData[] = [];
 
   GuildSettingMenus.forEach((menu, featureId) => {
-    if (menu.isSubMenu) return;
+    if (menu.mainMenu) return;
 
     const props = resolveSettingsProps(this, menu, settings);
 
@@ -60,7 +60,7 @@ export async function guildSettingsOverview(this: Interaction): Promise<MessageO
       : menu.description(this.locale);
 
     embedFields.push({
-      name: `${icon} ${t(this, featureId)}`,
+      name: `${icon} ${t(this, featureId)} ${menu.newLabel ? `\`✨ ${t(this, 'NEW')}\`` : ''}`,
       value: description,
     });
 
@@ -88,7 +88,9 @@ export async function guildSettingsOverview(this: Interaction): Promise<MessageO
       },
     ],
     components: components(
-      row(new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(selectMenuOptions))
+      row(
+        new FeatureSelectMenu().setPlaceholder(t(this, 'FEATURES')).setOptions(selectMenuOptions),
+      ),
     ),
     flags: MessageFlags.Ephemeral,
   };
@@ -96,15 +98,16 @@ export async function guildSettingsOverview(this: Interaction): Promise<MessageO
 
 export async function guildFeatureSettings(
   this: Interaction,
-  featureId: EditableGuildFeatures
+  featureId: EditableGuildFeatures,
 ): Promise<MessageEditOptions> {
   const menu = GuildSettingMenus.get(featureId);
   const settings = await getGuildSettings(this.guildId);
   const props = resolveSettingsProps(this, menu, settings);
-  const backBtn = new BackSettingsButton(null)
+  const backBtn = new BackSettingsButton(menu.mainMenu)
     .setEmoji(emojis.buttons.left_arrow)
+    .setLabel(menu.mainMenu ? t(this, menu.mainMenu) : '')
     .setStyle('SECONDARY');
-  const message = menu.renderMenuMessage({ ...props, backBtn });
+  const message = await menu.renderMenuMessage({ ...props, backBtn });
 
   return {
     content: invisibleChar,
@@ -116,9 +119,7 @@ export async function guildFeatureSettings(
           icon_url: icons.settings,
         },
         description: menu.description(this.locale),
-        title: `${t(this, featureId)} ${
-          menu.newLabel ? `[${t(this, 'NEW').toLocaleUpperCase(this.locale)}]` : ''
-        }`,
+        title: `${t(this, featureId)} ${menu.newLabel ? `\`✨ ${t(this, 'NEW')}\`` : ''}`,
         color: await getColor(this.guild),
         ...message.embeds[0],
       },
@@ -145,12 +146,11 @@ export const FeatureSelectMenu = SelectMenuComponent({
 });
 
 export const ToggleFeatureBtn = ButtonComponent({
-  async handle({ feature, state }: { feature: string; state: boolean }) {
+  async handle({ feature, newState }: { feature: string; newState: boolean }) {
     const Feature = CamelCaseGuildFeatures[feature];
-    const newState = { [Feature]: state };
 
     await saveServerSettings(this.guildId, {
-      modules: newState,
+      modules: { [Feature]: newState },
     });
 
     this.update(await guildFeatureSettings.call(this, feature as EditableGuildFeatures));

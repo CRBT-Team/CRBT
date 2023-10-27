@@ -20,7 +20,7 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
           where: { id: thing.id },
           select: { accentColor: true },
         })
-        .then((t) => t?.accentColor)
+        .then((t) => t?.accentColor),
     );
 
     if (accentColor === 0) {
@@ -32,11 +32,11 @@ export async function getColor(thing: User | Guild | APIUser): Promise<number> {
       return accentColor ?? colors.default;
     }
   } else {
-    const { accentColor, automaticTheming, iconHash } = await getGuildSettings(thing.id);
+    const { accentColor, isAutoThemingEnabled, iconHash } = await getGuildSettings(thing.id);
+    const iconUrl = thing.iconURL({ format: 'png' });
 
-    if (automaticTheming && (!accentColor || !iconHash || thing.icon !== iconHash)) {
-      const guildIcon = thing.iconURL({ format: 'png' });
-      const dominantColor = (await imgDominantColor(guildIcon)).num();
+    if (isAutoThemingEnabled && iconUrl && (!accentColor || !iconHash || thing.icon !== iconHash)) {
+      const dominantColor = (await imgDominantColor(iconUrl)).num();
 
       await saveServerSettings(thing.id, {
         iconHash: thing.icon,

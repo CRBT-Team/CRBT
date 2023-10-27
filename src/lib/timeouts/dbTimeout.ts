@@ -1,21 +1,24 @@
 import { prisma } from '$lib/db';
 import { Timeout, TimeoutTypes } from '$lib/types/timeouts';
 import { getDiscordClient } from 'purplet';
+import { ModerationAction } from '../../modules/moderation/_base';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
 import { handlePoll } from './handlePoll';
 import { handleReminder } from './handleReminder';
+import { handleTempBan } from './handleTempBan';
 
 const handle = {
   poll: handlePoll,
   reminder: handleReminder,
   giveaway: handleGiveaway,
+  [ModerationAction.UserTemporaryBan]: handleTempBan,
 };
 
 export async function dbTimeout<T extends TimeoutTypes>(
   t: T,
   timeout: Timeout[T],
-  loadOnly = false
+  loadOnly = false,
 ): Promise<Timeout[T]> {
   const client = getDiscordClient();
   const { id } = timeout;
@@ -29,18 +32,24 @@ export async function dbTimeout<T extends TimeoutTypes>(
         where: { id },
       });
 
-      handle[type](data, client);
-    } catch (e) {}
+      // if it's a moderationEntry, handle the type of the entry
+      if ('type' in data) {
+        handle[data.type](data, client);
+      } else {
+        handle[type](data, client);
 
-    await prisma[type].delete({ where: { id } });
-  }, timeout.expiresAt.getTime() - Date.now());
+        // if it's not a moderationEntry, delete the timed out element
+        await prisma[type].delete({ where: { id } });
+      }
+    } catch (e) {}
+  }, timeout.endDate.getTime() - Date.now());
 
   if (loadOnly) return timeout;
 
   return await prisma[type].create({
     data: {
       //@ts-ignore
-      ...(({ serverId, userId, ...o }) => o)(timeout),
+      ...(({ guildId, userId, ...o }) => o)(timeout),
       ...('userId' in timeout
         ? {
             user: {
@@ -51,12 +60,12 @@ export async function dbTimeout<T extends TimeoutTypes>(
             },
           }
         : {}),
-      ...('serverId' in timeout
+      ...('guildId' in timeout
         ? {
-            server: {
+            guild: {
               connectOrCreate: {
-                create: { id: timeout.serverId },
-                where: { id: timeout.serverId },
+                create: { id: timeout.guildId },
+                where: { id: timeout.guildId },
               },
             },
           }

@@ -3,9 +3,11 @@ import { createCRBTError } from '$lib/functions/CRBTError';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
+import { dbTimeout } from '$lib/timeouts/dbTimeout';
+import { TimeoutTypes } from '$lib/types/timeouts';
 import { GuildMember, Interaction } from 'discord.js';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { handleModerationAction, ModerationContext } from './_base';
+import { ModerationAction, ModerationContext, handleModerationAction } from './_base';
 
 export default ChatCommand({
   name: 'ban',
@@ -33,48 +35,49 @@ export default ChatCommand({
   handle({ delete_messages, end_date, reason, user }) {
     return handleModerationAction.call(this, {
       guild: this.guild,
-      moderator: this.user,
+      user: this.user,
       target: user,
-      type: 'BAN',
-      expiresAt: end_date ? new Date(Date.now() + ms(end_date)) : null,
+      type: end_date ? ModerationAction.UserTemporaryBan : ModerationAction.UserBan,
+      endDate: end_date ? new Date(Date.now() + ms(end_date)) : null,
       reason,
       duration: end_date,
-      messagesDeleted: delete_messages,
+      messagesToDelete: delete_messages,
     });
   },
 });
 
-export function ban(
+export async function ban(
   this: Interaction,
   member: GuildMember,
-  { duration, reason, messagesDeleted }: ModerationContext
+  { duration, reason, messagesToDelete: messagesDeleted, id }: ModerationContext,
 ) {
   if (duration && !isValidTime(duration) && ms(duration) > ms('10y')) {
     return createCRBTError(
       this,
       t(this, 'ERROR_INVALID_DURATION', {
         relativeTime: '10 years',
-      })
+      }),
     );
   }
 
-  member.ban({
-    days: messagesDeleted,
+  await member.ban({
+    deleteMessageSeconds: messagesDeleted,
     reason,
   });
 
   if (duration) {
-    // TODO: add that as well
-    // dbTimeout({
-    //   type: TimeoutTypes.TempBan,
-    //   expiration: new Date(Date.now() + ms(duration)),
-    //   id: this.guildId,
-    //   locale: this.guildLocale,
-    //   data: {
-    //     userId: user.id,
-    //     guildId: this.guildId,
-    //     reason,
-    //   },
-    // });
+    await dbTimeout(
+      TimeoutTypes.TemporaryBan,
+      {
+        id,
+        endDate: new Date(Date.now() + ms(duration)),
+        type: ModerationAction.UserTemporaryBan,
+        userId: this.user.id,
+        guildId: this.guildId,
+        targetId: member.id,
+        reason,
+      },
+      true,
+    );
   }
 }

@@ -1,19 +1,20 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { colors, emojis, icons } from '$lib/env';
-import { avatar } from '$lib/functions/avatar';
-import { createCRBTError, UnknownError } from '$lib/functions/CRBTError';
+import { colors, emojis } from '$lib/env';
+import { UnknownError, createCRBTError } from '$lib/functions/CRBTError';
+import { createModNotification } from '$lib/functions/createModNotification';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { CRBTMessageSourceType, createCRBTmsg } from '$lib/functions/sendCRBTmsg';
 import { t } from '$lib/language';
-import { ModerationStrikeTypes } from '@prisma/client';
-import { timestampMention } from '@purplet/utils';
+import { dateToSnowflake } from '@purplet/utils';
+import { capitalCase } from 'change-case-all';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import {
   Channel,
   CommandInteraction,
   Guild,
+  GuildBasedChannel,
   GuildMember,
   GuildTextBasedChannel,
   Interaction,
@@ -24,187 +25,233 @@ import {
 } from 'discord.js';
 import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { ban } from './ban';
+import { clearMessages } from './clear';
 import { kick } from './kick';
+import { lockChannel } from './lock';
 import { timeout } from './timeout';
+import { unlockChannel } from './unlock';
 
 export interface ModerationContext {
-  target: User | GuildTextBasedChannel;
-  moderator: User;
+  user: User;
   guild: Guild;
-  type: ModerationStrikeTypes;
+  target: User | GuildBasedChannel;
   reason?: string;
-  expiresAt?: Date;
-  messagesDeleted?: number;
+  endDate?: Date;
+  type: ModerationAction;
+  messagesToDelete?: number;
   duration?: string;
+  id?: string;
 }
 
-export const ModerationColors = {
-  BAN: colors.red,
-  TEMPBAN: colors.red,
-  CLEAR: colors.white,
-  KICK: colors.orange,
-  TIMEOUT: colors.yellow,
-  WARN: colors.yellow,
+export enum ModerationAction {
+  UserBan,
+  UserTemporaryBan,
+  ChannelMessageClear,
+  UserKick,
+  UserTimeout,
+  UserWarn,
+  UserReport,
+  ChannelLock,
+  ChannelUnlock,
+  UserUnban,
+}
+
+export const ChannelModerationActions = [
+  ModerationAction.ChannelMessageClear,
+  ModerationAction.ChannelLock,
+  ModerationAction.ChannelUnlock,
+];
+
+export const moderationVerbStrings: Record<ModerationAction, string> = {
+  [ModerationAction.ChannelMessageClear]: 'CLEAR',
+  [ModerationAction.UserBan]: 'BAN',
+  [ModerationAction.UserKick]: 'KICK',
+  [ModerationAction.UserReport]: 'REPORT',
+  [ModerationAction.UserTemporaryBan]: 'TEMPBAN',
+  [ModerationAction.UserTimeout]: 'TIMEOUT',
+  [ModerationAction.UserWarn]: 'WARN',
+  [ModerationAction.ChannelLock]: 'LOCK',
+  [ModerationAction.ChannelUnlock]: 'UNLOCK',
+  [ModerationAction.UserUnban]: 'UNBAN',
 };
 
+export const ModerationColors: Record<ModerationAction, number> = {
+  [ModerationAction.UserBan]: colors.red,
+  [ModerationAction.UserTemporaryBan]: colors.red,
+  [ModerationAction.ChannelMessageClear]: colors.white,
+  [ModerationAction.UserKick]: colors.orange,
+  [ModerationAction.UserTimeout]: colors.yellow,
+  [ModerationAction.UserWarn]: colors.yellow,
+  [ModerationAction.UserReport]: colors.white,
+  [ModerationAction.ChannelLock]: colors.blue,
+  [ModerationAction.ChannelUnlock]: colors.green,
+  [ModerationAction.UserUnban]: colors.green,
+};
+
+type UserModerationFunctionProps = (
+  this: CommandInteraction,
+  member: GuildMember,
+  ctx: ModerationContext,
+) => any;
+type ChannelModerationFunctionProps = (
+  this: CommandInteraction,
+  channel: GuildTextBasedChannel,
+  ctx: ModerationContext,
+) => any;
+
 export const ModerationActions: Partial<
-  Record<
-    ModerationStrikeTypes,
-    (this: Interaction, member: GuildMember, ctx: ModerationContext) => any
-  >
+  Record<ModerationAction, UserModerationFunctionProps | ChannelModerationFunctionProps>
 > = {
-  BAN: ban,
-  KICK: kick,
-  TIMEOUT: timeout,
+  [ModerationAction.UserBan]: ban,
+  [ModerationAction.UserTemporaryBan]: ban,
+  [ModerationAction.UserKick]: kick,
+  [ModerationAction.UserTimeout]: timeout,
+  [ModerationAction.ChannelMessageClear]: clearMessages,
+  [ModerationAction.ChannelLock]: lockChannel,
+  [ModerationAction.ChannelUnlock]: unlockChannel,
 };
 
 export async function handleModerationAction(
   this: CommandInteraction | MessageComponentInteraction | ModalSubmitInteraction,
-  ctx: ModerationContext
+  ctx: ModerationContext,
 ) {
-  const { guild, moderator, target, expiresAt, reason, type, messagesDeleted } = ctx;
+  await this.deferReply();
+
+  ctx.id = dateToSnowflake(new Date());
+  const {
+    guild,
+    user: moderator,
+    target,
+    endDate,
+    reason,
+    type,
+    messagesToDelete: messagesDeleted,
+  } = ctx;
   const { error } = checkModerationPermission.call(this, target, type);
 
   if (error) {
-    return this.reply(error);
+    this.editReply(error);
+    return;
   }
 
   try {
-    if (target instanceof User) {
-      const member = guild.members.cache.get(target.id);
+    if (ModerationActions[type]) {
+      if (target instanceof User && !ChannelModerationActions.includes(type)) {
+        // warn the user through their DMs
+        await target
+          .send({
+            embeds: [
+              {
+                ...createCRBTmsg({
+                  source: CRBTMessageSourceType.Moderator,
+                  action: type,
+                  locale: this.guildLocale,
+                  message: reason,
+                  guildName: guild.name,
+                  endDate,
+                }),
+                color: ModerationColors[type],
+              },
+            ],
+          })
+          .catch((e) => {});
 
-      const error = ModerationActions[type]?.call(this, member, ctx);
+        const member = guild.members.cache.get(target.id);
+        //@ts-ignore
+        const error = await ModerationActions[type]?.call(this, member, ctx);
 
-      if (error) {
-        return this.reply(error);
-      }
+        if (error) {
+          return this.editReply(error);
+        }
 
-      await this.deferReply();
-
-      await target
-        .send({
+        await this.editReply({
           embeds: [
             {
-              ...createCRBTmsg({
-                source: CRBTMessageSourceType.Moderator,
-                action: type,
-                locale: this.guildLocale,
-                message: reason,
-                guildName: guild.name,
-                expiration: expiresAt,
-              }),
-              color: ModerationColors[type],
+              title: `${emojis.success} Successfully ${t(
+                this.guildLocale,
+                `MOD_VERB_${moderationVerbStrings[type]}` as any,
+              ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
+              color: colors.success,
             },
           ],
-        })
-        .catch((e) => {});
+        });
+      } else if (target instanceof Channel && ChannelModerationActions.includes(type)) {
+        //@ts-ignore
+        const error = await ModerationActions[type]?.call(this, target, ctx);
 
-      await prisma.moderationStrikes.create({
-        data: {
-          createdAt: new Date(),
-          moderatorId: moderator.id,
-          targetId: target.id,
+        if (error) {
+          return this.editReply(error);
+        }
+      }
+    }
+
+    await prisma.moderationEntry.create({
+      data: {
+        id: ctx.id,
+        endDate,
+        type,
+        userId: moderator.id,
+        targetId: target.id,
+        reason,
+        guildId: guild.id,
+      },
+    });
+
+    // Update cache
+    await fetchWithCache(
+      `mod_history:${this.guildId}`,
+      () =>
+        prisma.moderationEntry.findMany({
+          where: { guildId: this.guild.id },
+        }),
+      true,
+    );
+
+    const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
+    const membersWithNotifications = await prisma.guildMember.findMany({
+      where: {
+        moderationNotifications: true,
+      },
+    });
+
+    if (modules.moderationNotifications || membersWithNotifications.length) {
+      const message = createModNotification(
+        {
           type,
-          expiresAt,
           reason,
-          serverId: guild.id,
+          guild,
+          user: moderator,
+          endDate,
+          target,
+          messagesToDelete: messagesDeleted,
         },
-      });
-
-      await fetchWithCache(
-        `strikes:${this.guildId}`,
-        () =>
-          prisma.moderationStrikes.findMany({
-            where: { serverId: this.guild.id },
-          }),
-        true
+        this.guildLocale,
       );
 
-      await this.editReply({
-        embeds: [
-          {
-            title: `${emojis.success} Successfully ${t(
-              this.guildLocale,
-              `MOD_VERB_${type}`
-            ).toLocaleLowerCase(this.guildLocale)} ${formatUsername(target)}`,
-            color: colors.success,
-          },
-        ],
-      });
-    }
+      // for each member who enabled DM notifications, send them a copy of the modlogs
+      await Promise.all(
+        membersWithNotifications.map(async (member) => {
+          const user = await guild.client.users.fetch(member.userId);
 
-    const { modules, modLogsChannel } = await getGuildSettings(guild.id);
+          await user.send(message);
+        }),
+      );
 
-    if (modules.moderationLogs && modLogsChannel) {
-      const channel = (await guild.client.channels.fetch(modLogsChannel)) as TextChannel;
+      if (modLogsChannelId) {
+        const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
 
-      const fields = [
-        {
-          name: t(this.guildLocale, 'REASON'),
-          value: reason ?? '*No reason specified*',
-        },
-        {
-          name: t(this.guildLocale, 'MODERATOR'),
-          value: `${moderator}`,
-          inline: true,
-        },
-        {
-          name: t(this.guildLocale, type === 'CLEAR' ? 'CHANNEL' : 'USER'),
-          value: `${target}`,
-          inline: true,
-        },
-        ...(expiresAt
-          ? [
-              {
-                name: t(this.guildLocale, 'EXPIRES_AT'),
-                value: `${timestampMention(expiresAt)} • ${timestampMention(expiresAt, 'R')}`,
-              },
-            ]
-          : []),
-      ];
-
-      try {
-        if (target instanceof User) {
-          channel.send({
-            embeds: [
-              {
-                author: {
-                  name: `${formatUsername(target)} was ${t(
-                    this.guildLocale,
-                    `MOD_VERB_${type}`
-                  ).toLocaleLowerCase(this.locale)}`,
-                  icon_url: avatar(target),
-                },
-                fields,
-                color: ModerationColors[type],
-              },
-            ],
-          });
-        } else {
-          channel.send({
-            embeds: [
-              {
-                author: {
-                  name: `${messagesDeleted} messages were deleted in #${target.name}`,
-                  icon_url: icons.channels.text,
-                },
-                fields,
-                color: ModerationColors[type],
-              },
-            ],
-          });
-        }
-      } catch (e) {}
+        await channel.send(message);
+      }
     }
   } catch (e) {
-    (this.replied ? this.editReply : this.reply)(UnknownError(this, e));
+    this.editReply(UnknownError(this, e));
   }
 }
 
 export function checkModerationPermission(
   this: Interaction,
   target: User | Channel,
-  type: ModerationStrikeTypes,
+  type: ModerationAction,
   {
     allowBots,
     allowSelf,
@@ -217,19 +264,49 @@ export function checkModerationPermission(
     checkHierarchy: true,
     allowSelf: false,
     allowBots: true,
-  }
+  },
 ): { error: any } {
   const member = this.guild.members.cache.get(target.id);
   const isOwner = this.guild.ownerId === this.user.id;
 
-  const perms: Partial<Record<ModerationStrikeTypes, bigint>> = {
-    BAN: PermissionFlagsBits.BanMembers,
-    KICK: PermissionFlagsBits.KickMembers,
-    CLEAR: PermissionFlagsBits.ManageMessages,
-    TIMEOUT: PermissionFlagsBits.ModerateMembers,
-    WARN: PermissionFlagsBits.ModerateMembers,
-    REPORT: 0n,
+  const perms: Record<ModerationAction, bigint> = {
+    [ModerationAction.UserBan]: PermissionFlagsBits.BanMembers,
+    [ModerationAction.UserTemporaryBan]: PermissionFlagsBits.BanMembers,
+    [ModerationAction.UserKick]: PermissionFlagsBits.KickMembers,
+    [ModerationAction.ChannelMessageClear]: PermissionFlagsBits.ManageMessages,
+    [ModerationAction.UserTimeout]: PermissionFlagsBits.ModerateMembers,
+    [ModerationAction.UserWarn]: PermissionFlagsBits.ModerateMembers,
+    [ModerationAction.UserReport]: 0n,
+    [ModerationAction.ChannelLock]: PermissionFlagsBits.ManageChannels,
+    [ModerationAction.ChannelUnlock]: PermissionFlagsBits.ManageChannels,
+    [ModerationAction.UserUnban]: PermissionFlagsBits.BanMembers,
   };
+
+  const verb = capitalCase(moderationVerbStrings[type]);
+  // Object.keys(ModerationAction)[type].toLowerCase();
+
+  // Check if user can execute command
+  if (!hasPerms(this.memberPermissions, perms[type])) {
+    return {
+      error: createCRBTError(
+        this,
+        t(this, 'ERROR_MISSING_PERMISSIONS', {
+          PERMISSIONS: `${verb} ${target instanceof User ? 'Members' : 'Channels'}`,
+        }),
+      ),
+    };
+  }
+  // Check if bot can execute command
+  if (!hasPerms(this.appPermissions, perms[type])) {
+    return {
+      error: createCRBTError(
+        this,
+        t(this, 'ERROR_BOT_MISSING_PERMISSIONS', {
+          permissions: `${verb} ${target instanceof User ? 'Members' : 'Channels'}`,
+        }),
+      ),
+    };
+  }
 
   if (target instanceof User) {
     // Check member exists
@@ -238,31 +315,16 @@ export function checkModerationPermission(
         error: createCRBTError(this, 'The user is not in this server.'),
       };
     }
-    // Check if user can execute command
-    if (!hasPerms(this.memberPermissions, perms[type])) {
-      return {
-        error: createCRBTError(
-          this,
-          `You do not have permission to ${type.toLowerCase()} members.`
-        ),
-      };
-    }
-    // Check if bot can execute command
-    if (!hasPerms(this.appPermissions, perms[type])) {
-      return {
-        error: createCRBTError(this, `I do not have permission to ${type.toLowerCase()} members.`),
-      };
-    }
     // Check if user can ban themselves
     if (!allowSelf && this.user.id === target.id) {
       return {
-        error: createCRBTError(this, `You cannot ${type.toLowerCase()} yourself! (╯°□°）╯︵ ┻━┻`),
+        error: createCRBTError(this, `You cannot ${verb} yourself! (╯°□°）╯︵ ┻━┻`),
       };
     }
     // Check if target isn't the owner
     if (target.id === this.guild.ownerId) {
       return {
-        error: createCRBTError(this, `You cannot ${type.toLowerCase()} the owner of the server.`),
+        error: createCRBTError(this, `You cannot ${verb} the owner of the server.`),
       };
     }
     // Check if target's hoisting role is above the user's
@@ -273,29 +335,21 @@ export function checkModerationPermission(
       (this.member as GuildMember).roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
       return {
-        error: createCRBTError(
-          this,
-          `You cannot ${type.toLowerCase()} a user with a roles above yours.`
-        ),
+        error: createCRBTError(this, `You cannot ${verb} a user with a roles above yours.`),
       };
     }
     // Check if target's hoisting role is above the bot's
     if (
       checkHierarchy &&
       this.client.user.id !== this.guild.ownerId &&
-      this.guild.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
+      this.guild.members.me.roles.highest.comparePositionTo(member.roles.highest) <= 0
     ) {
       return {
-        error: createCRBTError(
-          this,
-          `I cannot ${type.toLowerCase()} a user with roles above mine.`
-        ),
+        error: createCRBTError(this, `I cannot ${verb} a user with roles above mine.`),
       };
     }
-  }
 
-  if (type === ModerationStrikeTypes.TIMEOUT) {
-    if (member.communicationDisabledUntil) {
+    if (type === ModerationAction.UserTimeout && member.communicationDisabledUntil) {
       return { error: createCRBTError(this, 'This user is already timed out.') };
     }
   }

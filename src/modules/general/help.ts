@@ -10,7 +10,7 @@ import { ChatCommand, components, row } from 'purplet';
 
 export default ChatCommand({
   name: 'help',
-  description: 'Returns a quick help guide for CRBT.',
+  description: t('en-US', 'help.description'),
   nameLocalizations: getAllLanguages('HELP', localeLower),
   descriptionLocalizations: getAllLanguages('help.description'),
   async handle() {
@@ -55,8 +55,8 @@ export default ChatCommand({
               new MessageButton()
                 .setStyle('LINK')
                 .setLabel(t(this, 'ADD_TO_SERVER'))
-                .setURL(links.invite)
-            )
+                .setURL(links.invite),
+            ),
           )
         : null,
     });

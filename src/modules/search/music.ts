@@ -7,12 +7,12 @@ import {
   MessageEmbed,
 } from 'discord.js';
 import { components, row } from 'purplet';
-import { fetch, Headers } from 'undici';
+import { Headers, fetch } from 'undici';
 import { SearchCmdOpts } from './search';
 
 export async function handleMusicSearch(
   this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
+  opts: SearchCmdOpts,
 ) {
   const { query } = opts;
 
@@ -21,8 +21,6 @@ export async function handleMusicSearch(
     query,
     limit: '1',
   })}`;
-
-  console.log(url);
 
   const req = await fetch(url, {
     headers: new Headers({
@@ -45,7 +43,7 @@ export async function handleMusicSearch(
         .setURL(track.external_urls.spotify)
         .addField(
           'Artists',
-          track.artists.map((a) => `**[${a.name}](${a.external_urls.spotify})**`).join(', ')
+          track.artists.map((a) => `**[${a.name}](${a.external_urls.spotify})**`).join(', '),
         )
         .addField('Album', `**[${track.album.name}](${track.album.external_urls.spotify})**`)
         .setThumbnail(track.album.images[0].url)
@@ -56,8 +54,8 @@ export async function handleMusicSearch(
         new MessageButton()
           .setStyle('LINK')
           .setLabel('Open in Spotify')
-          .setURL(track.external_urls.spotify)
-      )
+          .setURL(track.external_urls.spotify),
+      ),
     ),
     files: [new MessageAttachment(Buffer.from(JSON.stringify(res, null, 2)), 'res.json')],
     ephemeral: opts.anonymous,

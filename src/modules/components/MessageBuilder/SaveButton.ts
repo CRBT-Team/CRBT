@@ -2,8 +2,8 @@ import { cache } from '$lib/cache';
 import { CamelCaseGuildFeatures } from '$lib/types/guild-settings';
 import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { ButtonComponent } from 'purplet';
-import { guildFeatureSettings } from '../../settings/server-settings/settings';
 import { getGuildSettings, saveServerSettings } from '../../settings/server-settings/_helpers';
+import { guildFeatureSettings } from '../../settings/server-settings/settings';
 
 export const SaveButton = ButtonComponent({
   async handle(type: JoinLeaveData['type']) {

@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
-import { GuildMember, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
+import { GuildMember, GuildTextBasedChannel, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerJoin } from './types';
@@ -39,25 +39,25 @@ async function welcome(member?: GuildMember) {
 
   if (preferences && preferences.silentJoins) return;
 
-  const modules = await prisma.serverModules.findFirst({
+  const modules = await prisma.guildModules.findFirst({
     where: { id: guild.id },
     select: { joinMessage: true },
   });
 
   if (!modules?.joinMessage) return;
 
-  const serverData = (await prisma.servers.findFirst({
+  const serverData = (await prisma.guild.findFirst({
     where: { id: guild.id },
-    select: { joinChannel: true, joinMessage: true },
+    select: { joinChannelId: true, joinMessage: true },
   })) as unknown as RawServerJoin;
 
   if (!serverData) return;
 
-  const { joinChannel: channelId, joinMessage: message } = serverData;
+  const { joinChannelId: channelId, joinMessage: message } = serverData;
 
   if (!channelId || !message) return;
 
-  const channel = guild.channels.cache.get(channelId) as TextChannel | NewsChannel;
+  const channel = (await guild.channels.fetch(channelId)) as GuildTextBasedChannel;
 
   const parsedMessage = parseCRBTscriptInMessage(message, {
     channel,

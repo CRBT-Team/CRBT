@@ -11,13 +11,13 @@ import {
 } from 'discord.js';
 import { escapeMarkdown } from 'purplet';
 import ytsr, { Video } from 'ytsr';
-import { SearchCmdOpts } from './search';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
+import { SearchCmdOpts } from './search';
 
 export async function handleVideosSearch(
   this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
+  opts: SearchCmdOpts,
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
   const { query, page } = opts;
 
@@ -28,7 +28,7 @@ export async function handleVideosSearch(
         gl: this.locale.split('-')[1] ?? null,
         safeSearch: this.channel.type === 'GUILD_TEXT' && this.channel.nsfw,
         limit: 12,
-      })
+      }),
     );
 
     const res = req.items.filter((i) => i.type === 'video') as Video[];
@@ -66,7 +66,7 @@ export async function handleVideosSearch(
                   video.uploadedAt
                     ? timestampMention(
                         dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))),
-                        'R'
+                        'R',
                       )
                     : '??'
                 } • **[${video.author.name}](${video.author.url})**`,
@@ -94,7 +94,7 @@ export async function handleVideosSearch(
           },
         ],
       },
-      { pages }
+      { pages },
     );
   } catch (e) {
     return UnknownError(this, e);

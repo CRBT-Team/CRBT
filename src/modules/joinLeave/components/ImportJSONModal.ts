@@ -8,7 +8,6 @@ export const ImportJSONModal = ModalComponent({
     const input = this.fields.getTextInputValue('value');
 
     try {
-      console.log('input', input);
       const parsed = JSON.parse(input);
 
       if (!parsed || !('content' in parsed && 'embed' in parsed)) {

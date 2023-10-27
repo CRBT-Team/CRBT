@@ -19,7 +19,7 @@ import {
   VideoQualityMode,
 } from 'discord-api-types/v10';
 import { EmbedFieldData, TextChannel } from 'discord.js';
-import { ChatCommand, getRestClient, OptionBuilder } from 'purplet';
+import { ChatCommand, OptionBuilder, getRestClient } from 'purplet';
 
 dayjs.extend(duration);
 
@@ -35,7 +35,7 @@ export default ChatCommand({
     {
       nameLocalizations: getAllLanguages('CHANNEL', localeLower),
       descriptionLocalizations: getAllLanguages('channel_info.options.channel.description'),
-    }
+    },
   ),
   async handle() {
     const c = this.options.getChannel('channel') || this.channel;
@@ -85,7 +85,7 @@ export default ChatCommand({
       title = parent ? t(this, 'THREAD') : t(this, 'POST');
 
       const autoArchives = new Date(
-        created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000
+        created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000,
       );
 
       fields.push(
@@ -97,8 +97,16 @@ export default ChatCommand({
         {
           name: 'Auto archives on',
           value: `${timestampMention(autoArchives)} • ${timestampMention(autoArchives, 'R')}`,
-        }
+        },
       );
+    } else if (channel.type !== ChannelType.GuildCategory) {
+      const category = categories.find((c) => c.id === channel.parent_id);
+
+      fields.push({
+        name: t(this, 'CATEGORY'),
+        value: category ? category.name : `*${t(this, 'NONE')}*`,
+        inline: true,
+      });
     }
     // Check if it's a text-like channel
     if (channel.type === ChannelType.GuildText) {
@@ -130,7 +138,7 @@ export default ChatCommand({
           name: t(this, 'BITRATE'),
           value: `${channel.bitrate / 1000}kbps`,
           inline: true,
-        }
+        },
       );
     }
 
@@ -157,7 +165,7 @@ export default ChatCommand({
     // Check if it has threads/posts
     if ('default_auto_archive_duration' in channel || 'defaultAutoArchiveDuration' in channel) {
       const threads = (await getRestClient().get(
-        Routes.channelThreads(channel.id, 'public')
+        Routes.channelThreads(channel.id, 'public'),
       )) as APIThreadChannel[];
 
       const threadDuration: Record<ThreadAutoArchiveDuration, string> = {
@@ -187,7 +195,7 @@ export default ChatCommand({
             channel.available_tags
               .map(
                 (tag) =>
-                  `${tag.emoji_id ? `<:a:${tag.emoji_id}>` : tag.emoji_name ?? ''} ${tag.name}`
+                  `${tag.emoji_id ? `<:a:${tag.emoji_id}>` : tag.emoji_name ?? ''} ${tag.name}`,
               )
               .join(', ') || `*${t(this, 'NONE')}*`,
         },
@@ -198,7 +206,7 @@ export default ChatCommand({
               ? 'Date posted'
               : 'Recently Active',
           inline: true,
-        }
+        },
       );
     }
 
@@ -212,7 +220,7 @@ export default ChatCommand({
           description:
             `${channel.nsfw ? emojis.toggle.on : emojis.toggle.off} ${t(
               this,
-              'AGE_RESTRICTED'
+              'AGE_RESTRICTED',
             )}\n` +
             ('topic' in channel && channel.topic
               ? channel.topic.length > 512

@@ -1,7 +1,7 @@
 import { links } from '$lib/env';
-import { ModerationStrikeTypes } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { ModerationAction } from '../../modules/moderation/_base';
 
 export enum CRBTMessageSourceType {
   Moderator = 'MODERATOR',
@@ -15,17 +15,18 @@ export enum OfficialMessageType {
   DeveloperNotice = 'DEV_NOTICE',
 }
 
-export const actionTypes = { ...OfficialMessageType, ...ModerationStrikeTypes };
+export const actionTypes = { ...OfficialMessageType, ...ModerationAction };
 
-export type ActionTypes = typeof actionTypes[keyof typeof actionTypes];
+export type ActionTypes = ModerationAction | OfficialMessageType;
 
 function getMessageTitle(action: ActionTypes, guildName: string) {
   const messages: Partial<Record<ActionTypes, string>> = {
-    BAN: `You have been banned from ${guildName}.`,
-    KICK: `You have been kicked from ${guildName}.`,
-    WARN: `You have been warned from ${guildName}.`,
-    TIMEOUT: `You have been warned from ${guildName}.`,
-    TEMPBAN: `You have been temporarily banned from ${guildName}.`,
+    [ModerationAction.UserBan]: `You have been banned from ${guildName}.`,
+    [ModerationAction.UserKick]: `You have been kicked from ${guildName}.`,
+    [ModerationAction.UserWarn]: `You have been warned from ${guildName}.`,
+    [ModerationAction.UserTimeout]: `You have been warned from ${guildName}.`,
+    [ModerationAction.UserTemporaryBan]: `You have been temporarily banned from ${guildName}.`,
+    [ModerationAction.UserUnban]: `You have been unbanned from ${guildName}.`,
     LABS: 'Labs notification from the CRBT Team.',
     DEV_NOTICE: 'Message from the CRBT Team',
     BUG_REPORT_DENIED: 'Your bug report was denied.',
@@ -40,14 +41,14 @@ export function createCRBTmsg({
   action,
   message,
   guildName,
-  expiration,
+  endDate,
   locale,
 }: {
   source: CRBTMessageSourceType;
   action: ActionTypes;
   message?: string;
   guildName?: string;
-  expiration?: Date;
+  endDate?: Date;
   locale: string;
 }): MessageEmbedOptions {
   const fields: EmbedFieldData[] = [];
@@ -59,10 +60,10 @@ export function createCRBTmsg({
     });
   }
 
-  if (expiration) {
+  if (endDate) {
     fields.push({
-      name: 'Expires on',
-      value: `${timestampMention(expiration)} • ${timestampMention(expiration, 'R')}`,
+      name: 'Ends on',
+      value: `${timestampMention(endDate)} • ${timestampMention(endDate, 'R')}`,
     });
   }
 

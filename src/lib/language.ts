@@ -97,7 +97,7 @@ export function t<K extends StringArgument>(
   stringKey: K,
   interpolations?: K extends DottedLanguageObjectStringPaths
     ? Record<string, { toString: () => string }>
-    : never
+    : never,
 ): K extends TopLevelKeys ? StringsStructure[K] : string {
   const locale = typeof i === 'string' ? i : i.locale;
   const defaultData = accessObjectValue(stringKey, languages['en-US']);
@@ -116,7 +116,7 @@ export function t<K extends StringArgument>(
     return Object.keys(interpolations).reduce(
       (interpolated, key) =>
         interpolated.replace(new RegExp(`{${key}}`, 'g'), `${interpolations[key]}`),
-      string
+      string,
     ) as any;
   } else {
     return string as any;
@@ -127,7 +127,7 @@ export function getAllLanguages<K extends StringArgument>(
   stringKey: K,
   changeString?: K extends DottedLanguageObjectStringPaths
     ? (str: string, lang: string) => string
-    : never
+    : never,
 ): {
   [k: string]: K extends TopLevelKeys ? StringsStructure[K] : string;
 } {

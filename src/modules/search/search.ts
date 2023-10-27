@@ -2,8 +2,8 @@ import { localeLower } from '$lib/functions/localeLower';
 import { getAllLanguages, t } from '$lib/language';
 import { autocomplete as duckduckAutocomplete } from 'duck-duck-scrape';
 import { ChatCommand, OptionBuilder } from 'purplet';
-import { returnFeaturedItem } from './featured';
 import { searchEngines } from './_engines';
+import { returnFeaturedItem } from './featured';
 
 export interface SearchCmdOpts {
   site: string;

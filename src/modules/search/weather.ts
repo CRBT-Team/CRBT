@@ -3,18 +3,18 @@ import { t } from '$lib/language';
 import convert from 'convert-units';
 import { CommandInteraction, MessageComponentInteraction } from 'discord.js';
 import { fetch } from 'undici';
+import { createSearchResponse, fetchResults } from './_response';
 import { SearchCmdOpts } from './search';
-import { createSearchResponse } from './_response';
 
 export async function handleWeather(
   this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
+  opts: SearchCmdOpts,
 ) {
   const query = opts.query.replace('weather', '').replace('in', '').trim();
 
   try {
     const locationReq = await fetch(
-      `https://nominatim.openstreetmap.org/search.php?q=${query}&format=jsonv2`
+      `https://nominatim.openstreetmap.org/search.php?q=${query}&format=jsonv2`,
     );
 
     const locationRes: any = await locationReq.json();
@@ -28,8 +28,10 @@ export async function handleWeather(
       });
     }
 
-    const weatherReq = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`
+    const weatherReq = await fetchResults(this, opts, () =>
+      fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`,
+      ),
     );
 
     const weatherRes: any = await weatherReq.json();
@@ -43,7 +45,7 @@ export async function handleWeather(
               //TODO: localize this
               name: 'Temperature',
               value: `${weatherRes.current_weather.temperature}°C • ${convert(
-                weatherRes.current_weather.temperature
+                weatherRes.current_weather.temperature,
               )
                 .from('C')
                 .to('F')
@@ -53,7 +55,7 @@ export async function handleWeather(
             {
               name: 'Wind speed',
               value: `${weatherRes.current_weather.windspeed} Km/h • ${convert(
-                weatherRes.current_weather.windspeed
+                weatherRes.current_weather.windspeed,
               )
                 .from('km/h')
                 .to('m/h')

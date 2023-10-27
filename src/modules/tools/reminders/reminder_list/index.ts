@@ -48,13 +48,13 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         author: {
           name: `${formatUsername(this.user)} - ${t(
             this,
-            'REMINDERS'
+            'REMINDERS',
           )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
         title: getReminderSubject(reminder, this.client, 0),
         description: dedent`
-        ${timestampMention(data.expiresAt, 'R')}
+        ${timestampMention(data.endDate, 'R')}
         ${t(this, 'REMINDER_DESTINATION')} ${
           data.raw.destination === 'dm' ? t(this, 'DMS') : `${data.channel}`
         }
@@ -63,7 +63,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         }`,
         color: await getColor(this.user),
       },
-      ...renderLowBudgetMessage(data),
+      ...renderLowBudgetMessage(data, this.locale),
     ],
     components: components(
       row(
@@ -75,7 +75,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         new DeleteReminderButton(reminder.id)
           .setLabel(t(this, 'DELETE'))
           .setEmoji(emojis.buttons.trash_bin)
-          .setStyle('DANGER')
+          .setStyle('DANGER'),
       ),
       row(
         ...(data.id.endsWith('BIRTHDAY')
@@ -93,7 +93,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
             `https://calendar.google.com/calendar/render?${new URLSearchParams({
               action: 'TEMPLATE',
               text: getReminderSubject(reminder, this.client),
-              dates: `${dayjs(data.expiresAt).format('YYYYMMDD')}/${dayjs(data.expiresAt)
+              dates: `${dayjs(data.endDate).format('YYYYMMDD')}/${dayjs(data.endDate)
                 .add(1, 'day')
                 .format('YYYYMMDD')}`,
               details: t(this, 'remind me.strings.GCALENDAR_EVENT_DESCRIPTION', {
@@ -102,9 +102,9 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
                   : `#${data.channel.name} • ${data.channel.guild.name}`,
               }),
               location: data.url,
-            })}`
-          )
-      )
+            })}`,
+          ),
+      ),
     ),
   };
 }
@@ -118,19 +118,19 @@ export async function renderList(this: Interaction) {
         author: {
           name: `${formatUsername(this.user)} - ${t(
             this,
-            'REMINDERS'
+            'REMINDERS',
           )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
         description: `${!reminders.length ? t(this, 'REMINDER_LIST_NO_REMINDERS') : ''} ${t(
           this,
           'REMINDER_LIST_DESCRIPTION',
-          { command: slashCmd('reminder new') }
+          { command: slashCmd('reminder new') },
         )}`,
         fields: reminders.map((r) => ({
           name: getReminderSubject(r, this.client),
           value: dedent`
-          ${timestampMention(r.expiresAt, 'R')}
+          ${timestampMention(r.endDate, 'R')}
           ${t(this, 'REMINDER_DESTINATION')} ${
             r.destination === 'dm' ? t(this, 'DMS') : `<#${r.destination}>`
           }`,
@@ -148,11 +148,11 @@ export async function renderList(this: Interaction) {
               .addOptions(
                 reminders.map((r) => ({
                   label: getReminderSubject(r, this.client),
-                  description: `${dayjs(r.expiresAt).fromNow()}`,
+                  description: `${dayjs(r.endDate).fromNow()}`,
                   value: r.id,
-                }))
-              )
-          )
+                })),
+              ),
+          ),
         ),
   };
 }

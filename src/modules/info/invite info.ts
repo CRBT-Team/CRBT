@@ -26,7 +26,7 @@ export default ChatCommand({
       nameLocalizations: getAllLanguages('INVITE', localeLower),
       descriptionLocalizations: getAllLanguages('invite_info.options.invite.description'),
       required: true,
-    }
+    },
   ),
   async handle({ invite }) {
     const inviteCode =
@@ -41,7 +41,7 @@ export default ChatCommand({
           await CRBTError(this, {
             title: t(this, 'INVITE_INFO_ERROR_INVALID_TITLE'),
             description: t(this, 'INVITE_INFO_ERROR_INVALID_DESCRIPTION'),
-          })
+          }),
       )) as APIInvite;
 
     const { expires_at, guild, channel, inviter } = res;
@@ -89,14 +89,14 @@ export default ChatCommand({
     }
 
     fields.push({
-      name: 'Landing channel',
+      name: t(this, 'LANDING_CHANNEL'),
       value: `#${channel.name} (${channel.id})`,
       inline: true,
     });
 
     if (this.client.guilds.cache.has(guild.id)) {
       fields.push({
-        name: 'More info',
+        name: t(this, 'MORE_INFO'),
         value: `${slashCmd('server info')} \`id:${guild.id}\``,
       });
     }

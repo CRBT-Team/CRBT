@@ -25,14 +25,14 @@ export const RemindButton = ButtonComponent({
         destination: 'dm',
         type: ReminderTypes.COMMAND,
       },
-      orderBy: { expiresAt: 'desc' },
+      orderBy: { endDate: 'desc' },
     });
 
-    if (!reminder || Math.abs(reminder.expiresAt.getTime() - relativetime) > 60000) {
+    if (!reminder || Math.abs(reminder.endDate.getTime() - relativetime) > 60000) {
       await dbTimeout(TimeoutTypes.Reminder, {
         userId: this.user.id,
         destination: 'dm',
-        expiresAt: new Date(relativetime),
+        endDate: new Date(relativetime),
         locale: this.locale,
         id: `${this.guildId ?? '@me'}/${this.channelId}/${this.message.id}`,
         subject: 'Command reminder from CRBT.',

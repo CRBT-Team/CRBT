@@ -1,21 +1,21 @@
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
+import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { avatar } from '$lib/functions/avatar';
 import { budgetify } from '$lib/functions/budgetify';
 import { slashCmd } from '$lib/functions/commandMention';
-import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { ModerationStrikeTypes } from '@prisma/client';
+import { dateToSnowflake } from '@purplet/utils';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { GuildTextBasedChannel, Message, MessageEmbedOptions } from 'discord.js';
-import { ButtonComponent, components, MessageContextCommand, row } from 'purplet';
+import { ButtonComponent, MessageContextCommand, components, row } from 'purplet';
 import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { ActionSelectMenu, DismissReportBtn } from './Report_User';
-import { checkModerationPermission } from './_base';
+import { ModerationAction, checkModerationPermission } from './_base';
 
 const messageCache = new Map<string, Message>();
 
@@ -23,9 +23,9 @@ export default MessageContextCommand({
   name: 'Report Message',
   async handle(message) {
     const user = message.author;
-    const { modules, modReportsChannel } = await getGuildSettings(this.guildId);
+    const { modules, modReportsChannelId } = await getGuildSettings(this.guildId);
 
-    if (!modules?.moderationReports && !modReportsChannel) {
+    if (!modules?.moderationReports && !modReportsChannelId) {
       return CRBTError(this, {
         title: t(this, 'ERROR_MODULE_DISABLED_TITLE'),
         description: t(
@@ -35,12 +35,12 @@ export default MessageContextCommand({
             : `ERROR_MODULE_DISABLED_DESCRIPTION_REGULAR`,
           {
             command: slashCmd('server settings'),
-          }
+          },
         ),
       });
     }
 
-    const { error } = checkModerationPermission.call(this, user, ModerationStrikeTypes.REPORT, {
+    const { error } = checkModerationPermission.call(this, user, ModerationAction.UserReport, {
       checkHierarchy: false,
     });
 
@@ -64,13 +64,13 @@ export default MessageContextCommand({
       ''
     )?.slice(0, 60)}...`;
 
-    const strike = await prisma.moderationStrikes.create({
+    const entry = await prisma.moderationEntry.create({
       data: {
-        createdAt: new Date(),
-        moderatorId: this.user.id,
-        serverId: this.guildId,
+        id: dateToSnowflake(new Date()),
+        userId: this.user.id,
+        guildId: this.guildId,
         targetId: user.id,
-        type: ModerationStrikeTypes.REPORT,
+        type: ModerationAction.UserReport,
         reason: description,
         details: JSON.stringify(details),
       },
@@ -104,52 +104,55 @@ export default MessageContextCommand({
     };
 
     const reportsChannel = this.guild.channels.cache.get(
-      modReportsChannel
+      modReportsChannelId,
     ) as GuildTextBasedChannel;
 
     try {
       await reportsChannel.send({
         embeds: [
           reportEmbed,
-          ...renderLowBudgetMessage({
-            details,
-            channel: this.channel,
-            guild: this.guild,
-            author: user,
-          }),
+          ...renderLowBudgetMessage(
+            {
+              details,
+              channel: this.channel,
+              guild: this.guild,
+              author: user,
+            },
+            this.guildLocale,
+          ),
         ],
         components: components(
           row(
-            new ActionSelectMenu({ reportId: strike.id, userId: user.id })
+            new ActionSelectMenu({ reportId: entry.id, userId: user.id })
               .setPlaceholder('Choose an action to take.')
               .setOptions([
                 {
                   label: t(this.guildLocale, 'WARN_USER'),
-                  value: ModerationStrikeTypes.WARN,
+                  value: ModerationAction.UserWarn.toString(),
                   emoji: emojis.colors.yellow,
                 },
                 {
                   label: t(this.guildLocale, 'KICK_USER'),
-                  value: ModerationStrikeTypes.KICK,
+                  value: ModerationAction.UserKick.toString(),
                   emoji: emojis.colors.orange,
                 },
                 {
                   label: t(this.guildLocale, 'BAN_USER'),
-                  value: ModerationStrikeTypes.BAN,
+                  value: ModerationAction.UserBan.toString(),
                   emoji: emojis.colors.red,
                 },
-              ])
+              ]),
           ),
           row(
             new DeleteMsgBtn(message.id)
               .setStyle('PRIMARY')
               .setLabel(t(this.guildLocale, 'DELETE_MESSAGE'))
               .setEmoji(emojis.buttons.trash_bin),
-            new DismissReportBtn({ reportId: strike.id })
+            new DismissReportBtn({ reportId: entry.id })
               .setStyle('SECONDARY')
               .setLabel('Delete Report')
-              .setEmoji(emojis.buttons.trash_bin)
-          )
+              .setEmoji(emojis.buttons.trash_bin),
+          ),
         ),
       });
 

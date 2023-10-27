@@ -7,34 +7,31 @@
 [ ] = Not localizable
 
 - [x] /8ball
-- [~] /avatar
+- [x] /avatar
 - [~] Avatar & Banner
-- [~] /ban
-- [~] /banner
+- [0] /ban
+- [x] /banner
 - [~] Bot info
 - [0] Bookmark Message
 - [x] /calculate
 - [0] /channel info
-- [~] /clear
-- [ ] /coinflip
-- [x] /color set
+- [0] /clear
 - [0] /convert
 - [x] /crbt info
-- [~] /emoji info
+- [x] /emoji info
 - [~] Get JSON
-- [~] /giveaway
+- [x] /giveaway
 - [x] /help
-- [~] /invite info
+- [x] /invite info
 - [0] /kick
-- [0] Moderation History
-- [0] /modlogs all
-- [0] /modlogs user
+- [x] /lock
+- [~] Moderation History
+- [~] /moderation history
 - [x] /pick
 - [x] /ping
-- [~] /poll
-- [~] /privacy
-- [0] Report Message
-- [0] Report User
+- [x] /poll
+- [~] Report Message
+- [~] Report User
 - [x] /reminder new
 - [x] /reminder list
 - [x] /report
@@ -42,14 +39,16 @@
 - [x] /role info
 - [x] /roll
 - [0] /search
-- [0] /server icon
-- [~] /server info
-- [x] /settings
+- [x] /server icon
+- [x] /server info
+- [x] /server settings
 - [x] Set Reminder
 - [0] /timeout
 - [x] /translate
-- [x] Translate Message
+- [x] Translate (w/ images)
+- [x] /unlock
 - [x] /user info
+- [~] /user settings
 - [~] User Info
 - [0] /warn
 - [0] Warn User

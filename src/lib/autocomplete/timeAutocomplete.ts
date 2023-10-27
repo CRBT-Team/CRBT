@@ -11,7 +11,7 @@ export async function timeAutocomplete(
   this: AutocompleteInteraction,
   duration: string,
   max: string = '3y',
-  min: string = '5s'
+  min: string = '5s',
 ): Promise<Choice<string>[]> {
   const locale = this.locale.split('-')[0];
   await import(`dayjs/locale/${locale}.js`);
@@ -36,7 +36,6 @@ export async function timeAutocomplete(
 
   try {
     const relative = await resolveToDate(duration, locale);
-    // console.log(relative);
 
     if (relative.isAfter(now.add(ms(max))))
       throw new Error(`Duration cannot be longer than ${max} in the future`);

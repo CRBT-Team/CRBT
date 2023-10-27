@@ -10,18 +10,18 @@ import { JoinLeaveData } from '$lib/types/messageBuilder';
 import { channelMention } from '@purplet/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
-import { ButtonComponent, components, OnEvent, row } from 'purplet';
+import { ButtonComponent, OnEvent, components, row } from 'purplet';
 import { MessageBuilder } from '../../components/MessageBuilder';
 import { defaultMessage, renderJoinLeavePreview } from '../../joinLeave/renderers';
 import { RawServerJoin, RawServerLeave } from '../../joinLeave/types';
-import { BackSettingsButton, guildFeatureSettings, ToggleFeatureBtn } from './settings';
 import { getGuildSettings, saveServerSettings } from './_helpers';
+import { BackSettingsButton, ToggleFeatureBtn, guildFeatureSettings } from './settings';
 
 export const joinLeaveSettings: SettingsMenuProps = {
-  description: (l) => t(l, 'SETTINGS_JOIN_LEAVE_DESCRIPTION'),
+  description: (l) => t(l, 'SETTINGS_JOIN_LEAVE_SHORT_DESCRIPTION'),
   renderMenuMessage({ settings, i, errors, backBtn }) {
     const { joinMessage: isJoinEnabled, leaveMessage: isLeaveEnabled } = settings.modules;
-    const { joinChannel: joinChannelId, leaveChannel: leaveChannelId } = settings;
+    const { joinChannelId, leaveChannelId } = settings;
 
     return {
       embeds: [
@@ -56,7 +56,7 @@ export const joinLeaveSettings: SettingsMenuProps = {
         row(
           new ToggleFeatureBtn({
             feature: EditableGuildFeatures.joinMessage,
-            state: !isJoinEnabled,
+            newState: !isJoinEnabled,
           })
             .setLabel(t(i, 'JOIN_MESSAGE'))
             .setEmoji(isJoinEnabled ? emojis.toggle.on : emojis.toggle.off)
@@ -70,12 +70,12 @@ export const joinLeaveSettings: SettingsMenuProps = {
             .setLabel(t(i, 'EDIT_CHANNEL'))
             .setEmoji(emojis.buttons.pencil)
             .setStyle('PRIMARY')
-            .setDisabled(!isJoinEnabled)
+            .setDisabled(!isJoinEnabled),
         ),
         row(
           new ToggleFeatureBtn({
             feature: EditableGuildFeatures.leaveMessage,
-            state: !isLeaveEnabled,
+            newState: !isLeaveEnabled,
           })
             .setLabel(t(i, 'LEAVE_MESSAGE'))
             .setEmoji(isLeaveEnabled ? emojis.toggle.on : emojis.toggle.off)
@@ -89,15 +89,15 @@ export const joinLeaveSettings: SettingsMenuProps = {
             .setLabel(t(i, 'EDIT_CHANNEL'))
             .setEmoji(emojis.buttons.pencil)
             .setStyle('PRIMARY')
-            .setDisabled(!isLeaveEnabled)
+            .setDisabled(!isLeaveEnabled),
         ),
-        row(backBtn)
+        row(backBtn),
       ),
     };
   },
   getErrors({ guild, settings, i }) {
     const { joinMessage: isJoinEnabled, leaveMessage: isLeaveEnabled } = settings.modules;
-    const { joinChannel: joinChannelId, leaveChannel: leaveChannelId } = settings;
+    const { joinChannelId, leaveChannelId } = settings;
 
     const joinChannel = guild.channels.cache.get(joinChannelId);
     const leaveChannel = guild.channels.cache.get(leaveChannelId);
@@ -142,14 +142,14 @@ export const EditJoinLeaveChannelButton = ButtonComponent({
                 ChannelType.GuildAnnouncement,
                 ChannelType.PublicThread,
                 ChannelType.PrivateThread,
-              ] as number[])
-            )
+              ] as number[]),
+            ),
         ),
         row(
           new BackSettingsButton(EditableGuildFeatures.joinLeave)
             .setEmoji(emojis.buttons.left_arrow)
-            .setStyle('SECONDARY')
-        )
+            .setStyle('SECONDARY'),
+        ),
       ),
     });
   },
@@ -161,7 +161,7 @@ export const EditJoinLeaveChannelSelectMenu = OnEvent('interactionCreate', async
   if (
     i.isChannelSelect() &&
     [EditableGuildFeatures.joinMessage, EditableGuildFeatures.leaveMessage].includes(
-      i.customId.replace(customId, '') as any
+      i.customId.replace(customId, '') as any,
     )
   ) {
     const type = i.customId.replace(customId, '') as EditableGuildFeatures;

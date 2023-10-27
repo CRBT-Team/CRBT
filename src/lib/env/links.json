@@ -1,12 +1,12 @@
 {
   "baseURL": "https://crbt.app/",
   "policy": "https://crbt.app/policy",
-  "discord": "https://crbt.app/discord",
-  "purplet": "https://purplet.js.org/",
+  "discord": "https://discord.gg/AvwhNtsgAC",
+  "purplet": "https://github.com/CRBT-Team/Purplet",
   "invite": "https://discord.com/oauth2/authorize?client_id=595731552709771264&permissions=8&scope=bot%20applications.commands",
   "CRBTscript": "https://docs.crbt.app/crbtscript/intro",
-  "donate": "https://clembs.com/donate",
-  "premiumPage": "https://crbt.app/plus",
+  "donate": "https://ko-fi.com/clembs",
+  "github": "https://github.com/CRBT-Team/CRBT",
   "external": {
     "topgg": "https://crbt.app/vote",
     "discordbots": "https://discord.bots.gg/bots/595731552709771264"

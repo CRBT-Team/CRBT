@@ -21,7 +21,7 @@ export const EditReminderModal = ModalComponent({
       where: { id: reminderId },
       data: {
         subject: this.fields.getTextInputValue('subject'),
-        expiresAt: date.toDate(),
+        endDate: date.toDate(),
       },
     });
 

@@ -10,30 +10,39 @@ import {
 } from '$lib/types/guild-settings';
 // import { economySettings } from '../../../../disabled/settings/economy';
 import { joinLeaveSettings } from './join-leave';
+import { moderationSettings } from './moderation';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
+import { privacySettings } from './privacy';
 import { themeSettings } from './theming';
 
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
   [EditableGuildFeatures.joinLeave, joinLeaveSettings],
-  [EditableGuildFeatures.joinMessage, { ...joinLeaveSettings, isSubMenu: true }],
-  [EditableGuildFeatures.leaveMessage, { ...joinLeaveSettings, isSubMenu: true }],
-  [EditableGuildFeatures.moderationLogs, modlogsSettings],
+  [
+    EditableGuildFeatures.joinMessage,
+    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  ],
+  [
+    EditableGuildFeatures.leaveMessage,
+    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
+  ],
+  [EditableGuildFeatures.moderation, moderationSettings],
+  [EditableGuildFeatures.moderationNotifications, modlogsSettings],
   [EditableGuildFeatures.moderationReports, modReportsSettings],
-  // [EditableGuildFeatures.moderation, moderationSettings],
+  [EditableGuildFeatures.privacy, privacySettings],
 ]);
 
 export const defaultGuildSettings: FullGuildSettings = {
   accentColor: colors.default,
   flags: 0,
-  automaticTheming: true,
+  isAutoThemingEnabled: true,
   modules: {
     id: null,
     economy: false,
     joinMessage: false,
     leaveMessage: false,
-    moderationLogs: false,
+    moderationNotifications: false,
     moderationReports: false,
   },
   // economy: {
@@ -61,7 +70,7 @@ export const defaultGuildSettings: FullGuildSettings = {
 export function resolveSettingsProps(
   i: SettingFunctionProps['i'],
   menu: SettingsMenuProps,
-  settings: FullGuildSettings
+  settings: FullGuildSettings,
 ): SettingFunctionProps {
   return {
     guild: i.guild,
@@ -73,6 +82,9 @@ export function resolveSettingsProps(
 
 export const include = {
   modules: true,
+  polls: true,
+  moderationHistory: true,
+  giveaways: true,
   // economy: {
   //   include: {
   //     commands: true,
@@ -87,40 +99,45 @@ export const include = {
 };
 
 export async function getGuildSettings(guildId: string, force = false) {
-  const data = await fetchWithCache<FullGuildSettings>(
+  const data = (await fetchWithCache(
     `${guildId}:settings`,
     () =>
-      prisma.servers.findFirst({
+      prisma.guild.findFirst({
         where: { id: guildId },
-        include,
+        include: include,
       }),
-    force
-  );
+    force,
+  )) as FullGuildSettings;
 
   const merged = deepMerge(defaultGuildSettings, data);
-  return merged;
+  return { ...merged, isDefault: data === null } as FullGuildSettings;
 }
 
 export async function saveServerSettings(guildId: string, newSettings: Partial<FullGuildSettings>) {
+  function isTopLevel(key: string | keyof FullGuildSettings) {
+    return !Object.keys(include).includes(key);
+  }
+
   const query = (type: 'update' | 'create') =>
     Object.entries(newSettings).reduce((acc, [key, value]) => {
       if (typeof value === 'object') {
         return {
           ...acc,
-          [key]:
-            type === 'create'
-              ? {
-                  connectOrCreate: {
-                    where: { id: guildId },
-                    create: value,
-                  },
-                }
-              : {
-                  upsert: {
-                    create: value,
-                    update: value,
-                  },
+          [key]: isTopLevel(key)
+            ? value
+            : type === 'create'
+            ? {
+                connectOrCreate: {
+                  where: { id: guildId },
+                  create: value,
                 },
+              }
+            : {
+                upsert: {
+                  create: value,
+                  update: value,
+                },
+              },
         };
       }
 
@@ -130,20 +147,24 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
       };
     }, {});
 
+  const fullQuery = {
+    where: { id: guildId },
+    create: {
+      id: guildId,
+      ...query('create'),
+    },
+    update: {
+      ...query('update'),
+    },
+    include: include,
+  };
+
   return fetchWithCache(
     `${guildId}:settings`,
     () =>
-      prisma.servers.upsert({
-        where: { id: guildId },
-        create: {
-          id: guildId,
-          ...query('create'),
-        },
-        update: {
-          ...query('update'),
-        },
-        include: include,
+      prisma.guild.upsert({
+        ...fullQuery,
       }),
-    true
+    true,
   ) as FullGuildSettings;
 }
