@@ -111,12 +111,15 @@ export default MessageContextCommand({
       await reportsChannel.send({
         embeds: [
           reportEmbed,
-          ...renderLowBudgetMessage({
-            details,
-            channel: this.channel,
-            guild: this.guild,
-            author: user,
-          }),
+          ...renderLowBudgetMessage(
+            {
+              details,
+              channel: this.channel,
+              guild: this.guild,
+              author: user,
+            },
+            this.guildLocale,
+          ),
         ],
         components: components(
           row(

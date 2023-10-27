@@ -48,7 +48,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         author: {
           name: `${formatUsername(this.user)} - ${t(
             this,
-            'REMINDERS'
+            'REMINDERS',
           )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
@@ -63,7 +63,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         }`,
         color: await getColor(this.user),
       },
-      ...renderLowBudgetMessage(data),
+      ...renderLowBudgetMessage(data, this.locale),
     ],
     components: components(
       row(
@@ -75,7 +75,7 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         new DeleteReminderButton(reminder.id)
           .setLabel(t(this, 'DELETE'))
           .setEmoji(emojis.buttons.trash_bin)
-          .setStyle('DANGER')
+          .setStyle('DANGER'),
       ),
       row(
         ...(data.id.endsWith('BIRTHDAY')
@@ -102,9 +102,9 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
                   : `#${data.channel.name} • ${data.channel.guild.name}`,
               }),
               location: data.url,
-            })}`
-          )
-      )
+            })}`,
+          ),
+      ),
     ),
   };
 }
@@ -118,14 +118,14 @@ export async function renderList(this: Interaction) {
         author: {
           name: `${formatUsername(this.user)} - ${t(
             this,
-            'REMINDERS'
+            'REMINDERS',
           )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
         description: `${!reminders.length ? t(this, 'REMINDER_LIST_NO_REMINDERS') : ''} ${t(
           this,
           'REMINDER_LIST_DESCRIPTION',
-          { command: slashCmd('reminder new') }
+          { command: slashCmd('reminder new') },
         )}`,
         fields: reminders.map((r) => ({
           name: getReminderSubject(r, this.client),
@@ -150,9 +150,9 @@ export async function renderList(this: Interaction) {
                   label: getReminderSubject(r, this.client),
                   description: `${dayjs(r.endDate).fromNow()}`,
                   value: r.id,
-                }))
-              )
-          )
+                })),
+              ),
+          ),
         ),
   };
 }

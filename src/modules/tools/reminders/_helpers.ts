@@ -1,10 +1,9 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { UnknownError } from '$lib/functions/CRBTError';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { t } from '$lib/language';
 import { LowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { Reminder } from '@prisma/client';
+import { Reminder, ReminderTypes } from '@prisma/client';
 import { Client, GuildTextBasedChannel } from 'discord.js';
 
 export async function getUserReminders(userId: string, force = false) {
@@ -19,7 +18,7 @@ export async function getUserReminders(userId: string, force = false) {
           endDate: 'asc',
         },
       }),
-    force
+    force,
   );
 }
 
@@ -32,10 +31,10 @@ export function getReminderSubject(reminder: Reminder, client: Client, isListStr
       isListString ? 'BIRTHDAY_LIST_CONTENT' : 'BIRTHDAY_REMINDER_MESSAGE',
       {
         USER: user ? formatUsername(user) : `${username}`,
-      }
+      },
     )}`;
   }
-  if (reminder.id.startsWith('MESSAGEREMINDER')) {
+  if (reminder.id.startsWith('MESSAGEREMINDER') || reminder.id.startsWith('MSG')) {
     const [username, ...subject] = reminder.subject.split('--');
 
     return (
@@ -52,19 +51,31 @@ type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 export type ExtractedReminder = Unpromise<ReturnType<typeof extractReminder>>;
 
 export async function extractReminder(reminder: Reminder, client: Client) {
-  const id = reminder.id.split('-')[0];
-  const [guildId, channelId, messageId] = id.split('/');
-  const guild = client.guilds.cache.get(guildId);
-  const channel = (await client.channels.fetch(channelId).catch((e) => {
-    UnknownError({}, e);
-    return null;
-  })) as GuildTextBasedChannel;
-  const user = await client.users.fetch(reminder.userId).catch((e) => {
-    UnknownError({}, e);
-    return null;
-  });
-  const url = `https://discord.com/channels/${id}`;
+  let id: string;
+  let messageId: string;
+  let channelId: string;
+  let guildId: string;
+
+  if (reminder.type === ReminderTypes.MESSAGE) {
+    id = reminder.id.split('-')[1];
+    [channelId, messageId] = id.split('/');
+  }
+  if (reminder.type === ReminderTypes.NORMAL) {
+    id = reminder.id;
+    [guildId, channelId, messageId] = id.split('/');
+  }
+
+  const channel = (await client.channels
+    .fetch(channelId)
+    .catch((e) => null)) as GuildTextBasedChannel;
+
+  const guild = channel?.guild || { id: '@me' };
+
+  const user = await client.users.fetch(reminder.userId).catch((e) => null);
+
+  const url = `https://discord.com/channels/${guild.id}/${channel?.id ?? channelId}/${messageId}`;
   const details: LowBudgetMessage = reminder.details ? JSON.parse(reminder.details) : null;
+
   const author = details
     ? client.users.cache.get(details.authorId) ??
       (await client.users.fetch(details.authorId).catch((e) => null))
@@ -74,7 +85,7 @@ export async function extractReminder(reminder: Reminder, client: Client) {
     ...reminder,
     raw: reminder,
     subject: getReminderSubject(reminder, client),
-    guildId,
+    guildId: guild.id,
     channelId,
     messageId,
     details,
