@@ -11,6 +11,7 @@
   "DONATE": "Faire un don",
   "PERMISSION_ADMINISTRATOR": "Administrateur",
   "ERROR_MISSING_PERMISSIONS": "Vous n'avez pas les permissions requises : {PERMISSIONS}.",
+  "ERROR_BOT_MISSING_PERMISSIONS": "I don't have the required permissions: {permissions}.",
   "ERROR_INVALID_URL": "URL invalide.",
   "ERROR_INVALID_COLOR": "Couleur invalide. Utilisez un préréglage ou un code HEX valide.",
   "ERROR_INVALID_DURATION": "Format de durée invalide, ou dépasse {relativeTime} dans le futur.",
@@ -32,6 +33,7 @@
   "IMPORT": "Importer",
   "YES": "Oui",
   "NO": "Non",
+  "LONG_ACTION_FOOTNOTE": "This may take a while.",
   "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur de cette commande peut utiliser ce composant.",
   "TEXT_CHANNEL": "Textuel",
@@ -52,6 +54,7 @@
   "STICKERS": "Autocollants",
   "SERVERS": "Serveurs",
   "NONE": "Aucun(e)",
+  "UNKNOWN": "Unknown",
   "CHANNELS": "Salons",
   "EMOJIS": "Émoji(s)",
   "ADDED": "Ajouté(e)",
@@ -182,6 +185,7 @@
       "POLL_RESULTS_DESCRIPTION": "Le(s) choix {options} a/ont gagné avec {votes} vote(s)/{total} !"
     }
   },
+  "POLL_MENU_VOTE_DESCRIPTION": "Vote for any choice using the buttons below.",
   "banner": {
     "description": "Obtenir la bannière de profil d'un utilisateur."
   },
@@ -242,6 +246,10 @@
   "USER_AVATAR": "Avatar utilisateur",
   "USER_BANNER": "Bannière utilisateur",
   "SERVER_INFO": "Infos sur le serveur",
+  "IDENTITY": "Identity",
+  "IDENTITY_UNIQUE_USERNAME": "Unique username: {username}",
+  "IDENTITY_GLOBAL_NAME": "Global display name: {globalName}",
+  "IDENTITY_SERVER_NICKNAME": "Server nickname: {nickname}",
   "ICON": "Icône",
   "BANNER": "Bannière",
   "WARN": "Avertissement",
@@ -252,6 +260,8 @@
   "TEMPBAN": "Bannissement temporaire",
   "CLEAR": "Nettoyage",
   "REPORT": "Signalement",
+  "LOCK": "Lock",
+  "UNLOCK": "Unlock",
   "REASON": "Motif",
   "MOD_VERB_BAN": "Banni(e)(s)",
   "MOD_VERB_TEMPBAN": "Banni temporairement",
@@ -260,11 +270,26 @@
   "MOD_VERB_TIMEOUT": "Exclu(e)",
   "MOD_VERB_WARN": "Averti(e)",
   "MOD_VERB_REPORT": "Signalé(e)",
+  "MOD_VERB_LOCK": "Locked",
+  "MOD_VERB_UNLOCK": "Unlocked",
+  "MOD_VERB_UNBAN": "Unbanned",
   "DESCRIPTION": "Description",
   "EXPIRES_AT": "Expire le",
+  "modlogs_all": {
+    "description": "View the server's Moderation History."
+  },
+  "modlogs_user": {
+    "description": "View a user's Moderation History."
+  },
+  "ENTRY_NO": "Entry #{number}",
+  "ENTRY": "Entry",
+  "MODERATION_LOGS_ENTRIES_TOTAL": "{entries} entries total.",
   "MODERATION_LOGS_VIEW_EMPTY": "*Aucun Historique de Modération trouvé.*",
   "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "Afficher, modifier ou supprimer une entrée",
   "MODERATION_LOGS_VIEW_TITLE": "Historique de Modération dans {SERVER}",
+  "MODERATION_LOGS_BULK_DELETE_DESCRIPTION": "Choose entries to delete from the Moderation History.",
+  "MODERATION_LOGS_BULK_DELETE_TITLE": "Deleting entries...",
+  "MODERATION_LOGS_BULK_DELETE_SUCCESS": "{number} entries were successfully deleted.",
   "MODERATOR": "Modérateur",
   "REPORTED_BY": "Signalé par ",
   "JOIN_MESSAGE": "Message de bienvenue",
@@ -321,8 +346,20 @@
       }
     }
   },
+  "PARTICIPANTS": "Participants",
   "WINNERS": "Nombre de gagnant(e)s",
   "PRIZE": "Prix",
+  "HOST": "Host",
+  "ENTER_GIVEAWAY": "Enter Giveaway",
+  "GIVEAWAY_SUCCESS_TITLE": "Giveaway started!",
+  "GIVEAWAY_SUCCESS_DESCRIPTION": "It will end {relativeTime}, but you can prematurely end it using the {icon} menu. From there, you can also cancel the giveaway or view the participants.",
+  "GIVEAWAY_DELETED": "Giveaway deleted.",
+  "GIVEAWAY_ENDED": "Giveaway ended",
+  "LEAVE_GIVEAWAY": "Leave Giveaway",
+  "LEAVE_GIVEAWAY_SUCCESS": "You left the giveaway.",
+  "GIVEAWAY_ALREADY_ENTERED": "You've already entered this giveaway.",
+  "CONGRATULATIONS": "Congratulations!",
+  "GIVEAWAY_RESULTS_DESCRIPTION": "{users} have won {prize}!",
   "8ball": {
     "name": "boule_de_cristal",
     "description": "Posez une question à la boule de cristal.",
@@ -407,6 +444,7 @@
   "SUBJECT": "Sujet",
   "WHEN_TO_SEND": "Quand l'envoyer",
   "DELETE_CONFIRMATION_TITLE": "Voulez-vous le supprimer pour toujours ?!",
+  "DELETE_CONFIRMATION_DESCRIPTION": "This action cannot be undone!",
   "REMINDER_MESSAGE_TITLE": "[Message de {user}]",
   "reminder_list": {
     "description": "Obtenez une liste de vos rappels."
@@ -430,10 +468,16 @@
   "PRIVACY_SILENT_LEAVES_DESCRIPTION": "Lorsque cette option est active, CRBT n'annoncera pas lorsque vous quittez un serveur.",
   "PRIVACY_TELEMETRY_DESCRIPTION": "CRBT collecte l'utilisation des commandes comme indiqué dans notre politique de confidentialité. Le désactiver cesse d'envoyer des données.",
   "YOUR_CRBT_DATA": "Vos données CRBT",
-  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT utilise votre saisie pour fournir ses fonctionnalités. Vous pouvez télécharger ou supprimer vos données, mais la suppression effacera toutes vos données, y compris vos Rappels et l'Économie.",
-  "PRIVACY_SETTINGS_TITLE": "Réglages de confidentialité",
+  "PRIVACY_CRBT_DATA_DESCRIPTION": "CRBT uses your input to provide features. You can download or delete all of your data, including Reminders, Settings, Economy and more.",
+  "PRIVACY_DOWNLOAD_MY_DATA": "Download my data",
+  "PRIVACY_DELETE_MY_DATA": "Delete my data",
+  "PRIVACY_DESCRIPTION": "CRBT is transparent about the way it collects and uses your data.",
+  "PRIVACY_POLICY_LINK": "Read our Privacy Policy.",
   "settings": {
     "description": "Configurer les paramètres CRBT du serveur."
+  },
+  "user settings": {
+    "description": "Customize your CRBT settings."
   },
   "ATTENTION_REQUIRED": "Attention requise",
   "OVERVIEW": "Vue d'ensemble",
@@ -464,10 +508,17 @@
   "CHANNEL": "Salon",
   "EDIT_SOMETHING": "Modifier {feature}",
   "SETTINGS_COLOR_SET_TO": "Couleur du thème",
+  "SETTINGS_COLOR_SHORT_DESCRIPTION": "Customize the server's accent color for CRBT features.",
   "SETTINGS_COLOR_DESCRIPTION": "Personnalisez l'apparence des Sondages, des Concours et plus encore. Choisissez une couleur manuellement, ou laissez CRBT extraire la couleur principale de l'icône de votre serveur.",
+  "SETTINGS_JOIN_LEAVE_SHORT_DESCRIPTION": "Welcome new members and announce departing members.",
   "SETTINGS_JOIN_LEAVE_DESCRIPTION": "Envoyez automatiquement des messages pour accueillir les nouveaux membres et annoncez quand les membres quittent votre serveur.",
-  "SETTINGS_MODLOGS_DESCRIPTION": "Recevez des notifications en temps réel dans un salon pour toutes les actions de modération effectuées avec CRBT.",
-  "SETTINGS_MODREPORTS_DESCRIPTION": "Les membres peuvent signaler un message ou un utilisateur à un salon en utilisant les Signalements en faisant un clic droit/appuyant longuement dessus.",
+  "SETTINGS_MODERATION_SHORT_DESCRIPTION": "Notifications, Reports and History",
+  "SETTINGS_MODLOGS_SHORT_DESCRIPTION": "Get notifications for moderation actions",
+  "SETTINGS_MODLOGS_DESCRIPTION": "When enabled, CRBT will send a message to a channel of your choice when a moderator takes action against a member using CRBT.",
+  "SETTINGS_MODREPORTS_SHORT_DESCRIPTION": "Allow members to report server messages and users",
+  "SETTINGS_MODREPORTS_DESCRIPTION": "When enabled, members can report messages and users by right-clicking or long-pressing them. Reported messages are sent to a channel of your choice and added to the Moderation History.",
+  "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Manage, download or delete your data.",
+  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Polls and Giveaways, Moderation History, Economy and everything else.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Salon introuvable. Modifiez-le pour que CRBT puisse continuer à y envoyer des messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Cette fonctionnalité n'est pas entièrement configurée. Utilisez les boutons ci-dessous pour terminer la configuration.",
   "search": {
@@ -514,6 +565,7 @@
   "DELETE_MESSAGE": "Supprimer le message",
   "MODREPORTS_SUCCESS_TITLE": "Votre signalement a été envoyé aux modérateurs de {server}.",
   "MODREPORTS_SUCCESS_DESCRIPTION": "Il a été ajouté à l'Historique de Modération de {user}. Les personnes ayant accès au salon des Signalements peuvent le passer en revue et prendre des mesures.",
+  "MODREPORTS_SELECT_MENU": "Choose an action to take.",
   "ROLE_INFO_TITLE": "{role} - Infos sur le rôle",
   "POSITION": "Position",
   "HUMANS": "Humain(s)",
@@ -573,6 +625,7 @@
       }
     }
   },
+  "MESSAGE_FROM_USER": "Message from user",
   "EMOJI_INFO_ERROR_UNKNOWN_TITLE": "Impossible de trouver cet émoji.",
   "EMOJI_INFO_ERROR_UNKNOWN_DESCRIPTION": "Utilisez plutôt un émoji {standardEmoji} par défaut ou {customEmoji} personnalisé.",
   "EMOJI_INFO_CLONE_SUCCESS": "{emoji} a été ajouté au serveur.",
@@ -584,6 +637,8 @@
   "SERVER_INVITE": "Invitation de serveur",
   "GROUP_DM_INVITE": "Invitation à un groupe de MP",
   "UNNAMED": "Sans nom",
+  "MORE_INFO": "More info",
+  "LANDING_CHANNEL": "Salon de destination",
   "INVITE_INFO_ERROR_INVALID_TITLE": "Lien d'invitation invalide.",
   "INVITE_INFO_ERROR_INVALID_DESCRIPTION": "Assurez-vous qu'elle n'a pas expiré et qu'elle est publique.",
   "invite_info": {
@@ -615,5 +670,50 @@
   "SEARCH_ERROR_NO_RESULTS_TITLE": "Aucun résultat trouvé.",
   "SEARCH_ERROR_NO_RESULTS_DESCRIPTION": "Regardez vos erreurs d'orthographe ou pour un sujet plus large.\nLes résultats NSFW sont cachés en dehors des salons soumis à une limite d'âge.",
   "DURATION": "Durée",
-  "VIEWS": "Vues"
+  "VIEWS": "Vues",
+  "lock": {
+    "description": "Makes a channel read-only for @everyone.",
+    "options": {
+      "channel": {
+        "description": "The channel to lock."
+      }
+    }
+  },
+  "LOCK_SUCCESS_TITLE": "Locked {channel}.",
+  "LOCK_SUCCESS_DESCRIPTION_VOICE": "Users will not be able to connect to this channel.",
+  "LOCK_SUCCESS_DESCRIPTION_TEXT": "Users will not be able to send messages in this channel and its threads, or create new threads.",
+  "LOCK_SUCCESS_DESCRIPTION_FORUM": "Users will not be able to send messages in posts, or create new posts.",
+  "LOCK_SUCCESS_DESCRIPTION_COMMAND": "Use {command} to unlock this channel.",
+  "LOCK_SUCCESS_DESCRIPTION_WARNING": "Administrators, and roles overwriting the channel's permissions, will be immune.",
+  "LOCK_ERROR_ALREADY_LOCKED_TITLE": "This channel is already locked.",
+  "LOCK_ERROR_ALREADY_LOCKED_DESCRIPTION": "The 'Send Messages', 'Connect' or 'Create Threads/Posts' permission(s) is/are already denied for @everyone.",
+  "unlock": {
+    "description": "Unlocks a channel's view & connect permissions for @everyone.",
+    "options": {
+      "channel": {
+        "description": "The channel to unlock."
+      }
+    }
+  },
+  "UNLOCK_SUCCESS_TITLE": "Unlocked {channel}.",
+  "UNLOCK_SUCCESS_DESCRIPTION": "All write & connect permissions were restored.",
+  "UNLOCK_ERROR_ALREADY_UNLOCKED_TITLE": "This channel is already unlocked.",
+  "UNLOCK_ERROR_ALREADY_UNLOCKED_DESCRIPTION": "The 'Send Messages', 'Connect' or 'Create Threads/Posts' permission(s) is/are already allowed for @everyone.",
+  "MOD_NOTIFICATION_LOCK_TITLE": "{channel} was locked",
+  "MOD_NOTIFICATION_UNLOCK_TITLE": "{channel} was unlocked",
+  "MOD_NOTIFICATION_CLEAR_TITLE": "{messages} messages were cleared in {channel}",
+  "BULK_DELETE": "Bulk Delete",
+  "GUILD_PRIVACY_DELETE_DATA_CONFIRM_TITLE": "Do you really want to delete all of the CRBT data for {guildName}?",
+  "GUILD_PRIVACY_DELETE_DATA_CONFIRM_DESCRIPTION": "By confirming, you will forever delete:",
+  "DELETE_ALL_DATA": "Delete all data",
+  "DOWNLOAD_ALL_DATA": "Download all data",
+  "X_POLLS": "{number} polls",
+  "X_GIVEAWAYS": "{number} giveaways",
+  "ENTIRETY_OF_MODERATION_HISTORY": "The entirety of the server's Moderation History",
+  "X_MODERATION_HISTORY_ENTRIES": "{number} entries",
+  "X_SETTINGS": "{number} settings (Theming, Moderation, Economy...)",
+  "X_ECONOMY_ITEMS_CATEGORIES": "{categories} Shop categories containing {items} items",
+  "X_ACHIEVEMENTS": "{categories} Achievement categories containing {achievements} achievements",
+  "DELETE_DATA_SUCCESS": "All data was successfully deleted.",
+  "GUILD_NO_DATA": "No data about the server was found."
 }
