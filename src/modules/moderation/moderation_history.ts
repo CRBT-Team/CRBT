@@ -247,7 +247,7 @@ export async function renderModlogs(
     }, {} as Record<string, ModerationEntry[]>),
   );
 
-  const pages = Math.ceil(results.length / 10) || 1;
+  const pages = Math.ceil(data.length / 10) || 1;
 
   return {
     embeds: [
@@ -311,7 +311,7 @@ export async function renderModlogs(
               new BulkDeleteButton({ page, tId: filters?.targetId })
                 .setLabel(t(this, 'BULK_DELETE'))
                 .setStyle('DANGER')
-                .setDisabled(data.length > 0),
+                .setDisabled(!data.length),
             ]
           : []),
       ),
@@ -349,12 +349,15 @@ async function renderModEntryPage(
   if (entry.details) {
     const target = await this.client.users.fetch(entry.targetId);
 
-    lowBudgetMessage = renderLowBudgetMessage({
-      details: JSON.parse(entry.details),
-      channel: this.channel,
-      guild: this.guild,
-      author: target,
-    });
+    lowBudgetMessage = renderLowBudgetMessage(
+      {
+        details: JSON.parse(entry.details),
+        channel: this.channel,
+        guild: this.guild,
+        author: target,
+      },
+      this.locale,
+    );
   }
 
   return {
