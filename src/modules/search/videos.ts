@@ -1,8 +1,7 @@
 import { UnknownError } from '$lib/functions/CRBTError';
-import { ms } from '$lib/functions/ms';
 import { t } from '$lib/language';
+import { youtube } from '@googleapis/youtube';
 import { timestampMention } from '@purplet/utils';
-import dayjs from 'dayjs';
 import {
   CommandInteraction,
   InteractionReplyOptions,
@@ -10,7 +9,6 @@ import {
   MessageComponentInteraction,
 } from 'discord.js';
 import { escapeMarkdown } from 'purplet';
-import ytsr, { Video } from 'ytsr';
 import { searchEngines } from './_engines';
 import { createSearchResponse, fetchResults } from './_response';
 import { SearchCmdOpts } from './search';
@@ -20,18 +18,43 @@ export async function handleVideosSearch(
   opts: SearchCmdOpts,
 ): Promise<InteractionReplyOptions | InteractionUpdateOptions> {
   const { query, page } = opts;
+  const yt = youtube('v3');
 
   try {
-    const req = await fetchResults(this, opts, () =>
-      ytsr(query, {
-        hl: this.locale.split('-')[0],
-        gl: this.locale.split('-')[1] ?? null,
-        safeSearch: this.channel.type === 'GUILD_TEXT' && this.channel.nsfw,
-        limit: 12,
-      }),
+    const req = await fetchResults(
+      this,
+      opts,
+      async () =>
+        await yt.search
+          .list({
+            q: query,
+            key: process.env.YOUTUBE_API_KEY,
+            part: ['snippet'],
+            maxResults: 12,
+            type: ['video'],
+            safeSearch:
+              this.channel.type === 'GUILD_TEXT' && this.channel.nsfw ? 'none' : 'moderate',
+          })
+          .then(async (res) => {
+            // fetch and append video contentDetails and statistics
+            const ids = res.data.items.map((i) => i.id.videoId);
+
+            return await yt.videos.list({
+              key: process.env.YOUTUBE_API_KEY,
+              part: ['snippet', 'contentDetails', 'statistics'],
+              id: ids,
+            });
+          }),
+
+      // ytsr(query, {
+      //     hl: this.locale.split('-')[0],
+      //     gl: this.locale.split('-')[1] ?? null,
+      //     safeSearch: this.channel.type === 'GUILD_TEXT' && this.channel.nsfw,
+      //     limit: 12,
+      //   }),
     );
 
-    const res = req.items.filter((i) => i.type === 'video') as Video[];
+    const res = req.data.items;
     const video = res[page - 1];
     const pages = res.length;
 
@@ -47,38 +70,34 @@ export async function handleVideosSearch(
                 query,
               }),
             },
-            title: escapeMarkdown(video.title),
-            url: video.url,
+            title: escapeMarkdown(video.snippet.title),
+            url: `https://www.youtube.com/watch?v=${video.id}`,
             description:
-              video.description?.length > 150
-                ? `${video.description.slice(0, 150)}...`
-                : video.description,
-            thumbnail: {
-              url: video.author.bestAvatar.url,
-            },
+              video.snippet.description?.length > 150
+                ? `${video.snippet.description.slice(0, 150)}...`
+                : video.snippet.description,
             image: {
-              url: video.bestThumbnail.url,
+              url: video.snippet.thumbnails.high.url,
             },
             fields: [
               {
                 name: t(this, 'CREATED_ON'),
                 value: `${
-                  video.uploadedAt
-                    ? timestampMention(
-                        dayjs().subtract(ms(video.uploadedAt.replace('ago', ''))),
-                        'R',
-                      )
+                  video.snippet.publishedAt
+                    ? timestampMention(new Date(video.snippet.publishedAt).getTime(), 'R')
                     : '??'
-                } • **[${video.author.name}](${video.author.url})**`,
+                } • **[${video.snippet.channelTitle}](https://www.youtube.com/channel/${
+                  video.snippet.channelId
+                })**`,
               },
               {
                 name: t(this, 'VIEWS'),
-                value: video.views.toLocaleString(this.locale),
+                value: Number(video.statistics.viewCount).toLocaleString(this.locale),
                 inline: true,
               },
               {
                 name: t(this, 'DURATION'),
-                value: `\`${video.duration}\``,
+                value: video.contentDetails.duration.replace('PT', '').toLowerCase(),
                 inline: true,
               },
             ],
