@@ -3,8 +3,8 @@
   "CREATED_ON": "Created on",
   "MEMBER_COUNT": "Member count",
   "SERVER_COUNT": "Server count",
-  "PING": "Ping",
-  "UPTIME": "Online since",
+  "PING": "ピン",
+  "UPTIME": "オンラインから",
   "WEBSITE": "WEBサイト",
   "ADD_TO_SERVER": "Add to Server",
   "DISCORD_SERVER": "Discordサーバー",
@@ -65,7 +65,7 @@
   "END_NOW": "End now",
   "POLL": "Poll",
   "CHOICE": "Choice",
-  "TITLE": "Title",
+  "TITLE": "タイトル",
   "USER": "User",
   "SIZE": "Size",
   "FORMAT": "Format",
@@ -89,13 +89,13 @@
       "sync": "Sync to your profile color",
       "red": "赤",
       "orange": "オレンジ",
-      "yellow": "Yellow",
-      "green": "Green",
-      "blue": "Blue",
-      "blurple": "Blurple",
-      "purple": "Purple",
-      "pink": "Pink",
-      "gray": "Gray"
+      "yellow": "黄色",
+      "green": "緑",
+      "blue": "青い",
+      "blurple": "青紫",
+      "purple": "紫",
+      "pink": "ピンク",
+      "gray": "グレー"
     },
     "strings": {
       "EMBED_SYNC_INFO": "Synced to your Discord profile color.",
@@ -107,7 +107,7 @@
       "description": "Set a reminder.",
       "options": [
         {
-          "name": "when",
+          "name": "いつ",
           "description": "Choose a date or relative time."
         },
         {
@@ -197,15 +197,15 @@
       "description": "Get a user's avatar.",
       "options": {
         "size": {
-          "description": "The size of the avatar to get."
+          "description": "The size of the image to get."
         },
         "format": {
-          "description": "The format of the avatar to get."
+          "description": "The format of the image to get."
         }
       }
     },
     "ctxMeta": {
-      "name": "Get Avatar/Banner"
+      "name": "Avatar & Banner"
     },
     "strings": {
       "DOWNLOAD": "Download ({SIZE}px - {FORMAT})"
@@ -253,8 +253,8 @@
   "ICON": "Icon",
   "BANNER": "Banner",
   "WARN": "Warn",
-  "KICK": "Kick",
-  "BAN": "Ban",
+  "KICK": "キック",
+  "BAN": "BAN",
   "UNBAN": "Unban",
   "TIMEOUT": "Timeout",
   "TEMPBAN": "Temporary ban",
@@ -281,8 +281,8 @@
   "modlogs_user": {
     "description": "View a user's Moderation History."
   },
-  "ENTRY_NO": "Entry #{number}",
-  "ENTRY": "Entry",
+  "ENTRY_NO": "エントリ no. {number}",
+  "ENTRY": "エントリ",
   "MODERATION_LOGS_ENTRIES_TOTAL": "{entries} entries total.",
   "MODERATION_LOGS_VIEW_EMPTY": "*No Moderation History found.*",
   "MODERATION_LOGS_VIEW_SELECT_MENU_PLACEHOLDER": "View, edit or delete an entry",
@@ -292,9 +292,9 @@
   "MODERATION_LOGS_BULK_DELETE_SUCCESS": "{number} entries were successfully deleted.",
   "MODERATOR": "Moderator",
   "REPORTED_BY": "Reported by",
-  "JOIN_MESSAGE": "Welcome Message",
-  "LEAVE_MESSAGE": "Farewell Message",
-  "CRBTSCRIPT_GUIDE": "CRBTscript guide",
+  "JOIN_MESSAGE": "ようこそメッセージ",
+  "LEAVE_MESSAGE": "お別れのメッセージ",
+  "CRBTSCRIPT_GUIDE": "CRBTscriptガイド",
   "JOINLEAVE_MESSAGE_DEFAULT_DESCRIPTION": "Start editing this message using the dropdown menu below!",
   "JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY": "Your message mustn't be empty!",
   "JOINLEAVE_PREVIEW_EMBED_DESCRIPTION": "This is what the {TYPE} will look like when sent to {CHANNEL}.",
@@ -437,7 +437,7 @@
   "REMINDER_LIST_NO_REMINDERS": "No reminders set.",
   "REMINDER_LIST_DESCRIPTION": "Set a new reminder using {command}.",
   "REMINDER_DESTINATION": "Destination:",
-  "DMS": "DMs",
+  "DMS": "ダイレクトメッセージ",
   "REMINDERS": "Reminders",
   "REMINDER": "Reminder",
   "REMINDER_EDIT_MODAL_TITLE": "Edit Reminder",
