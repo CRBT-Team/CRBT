@@ -26,6 +26,7 @@
     "@purplet/utils": "^1.0.0",
     "bing-translate-api": "^4.0.0",
     "change-case-all": "^1.0.15",
+    "chroma-js": "^2.4.2",
     "convert-units": "^2.3.4",
     "dayjs": "^1.11.10",
     "dedent": "^0.7.0",
