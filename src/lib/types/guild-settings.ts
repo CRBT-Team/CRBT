@@ -6,7 +6,7 @@
 //   serverModules,
 //   servers,
 // } from '@prisma/client';
-import { Giveaway, Guild, GuildModules, ModerationEntry, Poll } from '@prisma/client';
+import { Giveaway, Guild, GuildModules, ModerationEntry } from '@prisma/client';
 import { Guild as DiscordGuild, Interaction, MessageButton, MessageEditOptions } from 'discord.js';
 import { JoinLeaveData } from './messageBuilder';
 
@@ -44,7 +44,6 @@ export interface SettingFunctionProps {
 export type FullGuildSettings = Partial<
   Guild & {
     modules?: Partial<GuildModules>;
-    polls: Poll[];
     giveaways: Giveaway[];
     moderationHistory: ModerationEntry[];
     joinMessage: JoinLeaveData;

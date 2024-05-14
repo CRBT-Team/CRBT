@@ -1,57 +1,64 @@
-import { timeAutocomplete } from '$lib/autocomplete/timeAutocomplete';
-import { fetchWithCache } from '$lib/cache';
-import { colors, emojis } from '$lib/env';
 import { CRBTError, UnknownError } from '$lib/functions/CRBTError';
 import { findEmojis } from '$lib/functions/findEmojis';
+import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { localeLower } from '$lib/functions/localeLower';
 import { isValidTime, ms } from '$lib/functions/ms';
 import { getAllLanguages, t } from '$lib/language';
-import { dbTimeout } from '$lib/timeouts/dbTimeout';
-import { TimeoutTypes } from '$lib/types/timeouts';
-import { Poll } from '@prisma/client';
-import { CustomEmojiRegex, dateToSnowflake, timestampMention } from '@purplet/utils';
-import { ChatCommand, OptionBuilder, components, row } from 'purplet';
-import { PollMenuButton } from './components/PollMenuButton';
-import { VoteButton } from './components/VoteButton';
-import { renderPoll } from './functions/renderPoll';
+import { CustomEmojiRegex } from '@purplet/utils';
+import { ChatCommand, OptionBuilder } from 'purplet';
+import { fetch } from 'undici';
 
 const options = new OptionBuilder()
   .string('title', t('en-US', 'poll.meta.options.title.description'), {
-    nameLocalizations: getAllLanguages('TITLE', localeLower),
+    nameLocalizations: getAllLanguages('QUESTION', localeLower),
     descriptionLocalizations: getAllLanguages('poll.meta.options.title.description'),
     required: true,
-    minLength: 3,
-    maxLength: 120,
+    minLength: 1,
+    maxLength: 300,
   })
   .string('end_date', t('en-US', 'poll.meta.options.end_date.description'), {
     nameLocalizations: getAllLanguages('END_DATE', localeLower),
     descriptionLocalizations: getAllLanguages('poll.meta.options.end_date.description'),
-    autocomplete({ end_date }) {
-      return timeAutocomplete.call(this, end_date, '3w', '20m');
+    choices: {
+      ['1h']: '1 hour',
+      ['2h']: '2 hours',
+      ['3h']: '3 hours',
+      ['4h']: '4 hours',
+      ['5h']: '5 hours',
+      ['6h']: '6 hours',
+      ['7h']: '7 hours',
+      ['8h']: '8 hours',
+      ['9h']: '9 hours',
+      ['10h']: '10 hours',
+      ['11h']: '11 hours',
+      ['12h']: '12 hours',
+      ['1d']: '1 day',
+      ['2d']: '2 days',
+      ['3d']: '3 days',
+      ['4d']: '4 days',
+      ['5d']: '5 days',
+      ['6d']: '6 days',
+      ['7d']: '1 week',
     },
+    required: true,
+  })
+  .boolean('multiple_choices', 'Allow multiple choices.', {
+    // nameLocalizations: getAllLanguages('MULTICHOICE', localeLower),
+    // descriptionLocalizations: getAllLanguages('poll.meta.options.multichoice.description'),
     required: true,
   });
 
-for (let i = 1; i <= 4; i++) {
-  options.string(`choice${i}`, t('en-US', 'poll.meta.options.choice.description'), {
+for (let i = 1; i <= 10; i++) {
+  options.string(`answer${i}`, t('en-US', 'poll.meta.options.choice.description'), {
     nameLocalizations: getAllLanguages(
-      'CHOICE',
+      'ANSWER',
       (str, locale) => `${localeLower(str, locale)}${i}`,
     ),
     descriptionLocalizations: getAllLanguages('poll.meta.options.choice.description'),
-    maxLength: 45,
-    required: i <= 2,
+    maxLength: 55,
+    required: i <= 1,
   });
 }
-
-//TODO: make this real
-// options.attachment(
-//   'image',
-//   t('en-US', 'poll.meta.options.multichoice.description', {
-//     nameLocalizations: getAllLanguages('IMAGE', (str, locale) => localeLower(str, locale)),
-//     descriptionLocalizations: getAllLanguages('poll.meta.options.multichoice.description'),
-//   })
-// );
 
 export default ChatCommand({
   name: 'poll',
@@ -60,87 +67,85 @@ export default ChatCommand({
   descriptionLocalizations: getAllLanguages('poll.meta.description'),
   allowInDMs: false,
   options,
-  // async handle({ title, end_date, choice1, choice2, choice3, choice4, image: untypedImage }) {
-  async handle({ title, end_date, choice1, choice2, choice3, choice4 }) {
-    // let image = untypedImage as MessageAttachment;
-    if (!isValidTime(end_date) && ms(end_date) > ms('3w')) {
+  async handle({ title, end_date, multiple_choices, ...choicesRaw }) {
+    const choices: string[] = Object.values(choicesRaw).filter(Boolean);
+
+    if (!isValidTime(end_date) && ms(end_date) > ms('7d')) {
       return CRBTError(
         this,
         t(this, 'ERROR_INVALID_DURATION', {
-          relativeTime: '3 weeks',
+          relativeTime: '7 days',
         }),
       );
     }
 
-    await this.deferReply({
-      ephemeral: true,
-    });
+    for (const choice of choices) {
+      if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
+        return CRBTError(this, t(this, 'poll.errors.CHOICE_EMPTY'));
+      }
+    }
 
-    try {
-      const pollChoices: string[] = [choice1, choice2, choice3, choice4].filter(Boolean);
+    const guildEmojis = (await this.guild.fetch()).emojis;
 
-      for (const choice of pollChoices) {
-        if (choice.replace(CustomEmojiRegex, '').trim().length === 0) {
-          return CRBTError(this, t(this, 'poll.errors.CHOICE_EMPTY'));
+    const answers = choices.map((choice) => {
+      const choiceEmoji = findEmojis(choice)[0] || '';
+      const choiceText = choice.replace(choiceEmoji, '');
+      const isCustomEmoji = CustomEmojiRegex.test(choiceEmoji);
+      const { id } = getEmojiObject(choiceEmoji);
+      const isGuildEmoji = guildEmojis.cache.has(id);
+
+      return {
+        poll_media: {
+          text: choiceText.trim(),
+          ...(
+            choiceEmoji
+            ? isCustomEmoji && !isGuildEmoji 
+              ? {} 
+              : { 
+                  emoji: isCustomEmoji 
+                  ? { id }
+                  : { name: choiceEmoji },
+                }
+            : {}
+          ),
         }
       }
+    });
 
-      const pollData = {
-        id: dateToSnowflake(new Date()),
-        title,
-        channelId: this.channelId,
-        endDate: new Date(Date.now() + ms(end_date)),
-        locale: this.guildLocale,
-        creatorId: this.user.id,
-        guildId: this.guild.id,
-        choices: pollChoices.map((_) => []),
-      } as Poll;
 
-      const msg = await this.channel.send({
-        ...(await renderPoll.call(this, pollData, null, {
-          title,
-          choices: pollChoices,
-        })),
-        components: components(
-          row().addComponents([
-            ...pollChoices.map((choice, index) => {
-              const choiceEmoji = findEmojis(choice)[0] || null;
-              const choiceText = choice.replace(CustomEmojiRegex, '');
-
-              return new VoteButton({ choiceId: index.toString() })
-                .setLabel(choiceText)
-                .setStyle('PRIMARY')
-                .setEmoji(choiceEmoji);
-            }),
-            new PollMenuButton(this.user.id).setEmoji(emojis.buttons.menu).setStyle('SECONDARY'),
-          ]),
-        ),
-      });
-
-      await fetchWithCache(
-        `poll:${this.channel.id}/${msg.id}`,
-        () =>
-          dbTimeout(TimeoutTypes.Poll, {
-            ...pollData,
-            messageId: msg.id,
-          }),
-        true,
-      );
-
-      await this.editReply({
-        embeds: [
-          {
-            title: `${emojis.success} ${t(this, 'poll.strings.SUCCESS_TITLE')}`,
-            description: t(this, 'poll.strings.SUCCESS_DESCRIPTION', {
-              TIME: timestampMention(Date.now() + ms(end_date), 'R'),
-              ICON: emojis.menu,
-            }),
-            color: colors.success,
-          },
-        ],
-      });
-    } catch (error) {
-      (this.replied ? this.reply : this.editReply)(UnknownError(this, String(error)));
+    for (const emoji of answers.map(({ poll_media }) => poll_media.emoji?.id)) {
+      if (emoji && !guildEmojis.fetch(emoji)) {
+        return CRBTError(
+          this,
+          'You can only use emojis from this server.'
+        );
+      }
     }
+
+    try {
+      await fetch(`https://discord.com/api/v10/interactions/${this.id}/${this.token}/callback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+        },
+        body: JSON.stringify({
+          type: 4,
+          data: {
+            poll: {
+              question: {
+                text: title,
+              },
+              answers,
+              duration: (ms(end_date) / 1000 / 60 / 60).toFixed(0),
+              allow_multiselect: multiple_choices,
+            }
+          }
+        })
+      });
+    } catch (e) {
+      return UnknownError(this, String(e));
+    }
+    return;
   },
 });

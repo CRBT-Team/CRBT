@@ -64,7 +64,7 @@ export const DeleteDataButton = ButtonComponent({
   async handle() {
     await this.deferUpdate();
 
-    const { moderationHistory, modules, giveaways, polls } = await getGuildSettings(
+    const { moderationHistory, modules, giveaways } = await getGuildSettings(
       this.guildId,
       true,
     );
@@ -85,7 +85,6 @@ export const DeleteDataButton = ButtonComponent({
             'X_MODERATION_HISTORY_ENTRIES',
             { number: moderationHistory?.length || 0 },
           )})
-          - ${t(this, 'X_POLLS', { number: polls?.length || 0 })}
           - ${t(this, 'X_GIVEAWAYS', { number: giveaways?.length || 0 })}
           ### **⚠️ ${t(this, 'DELETE_CONFIRMATION_DESCRIPTION')}**
           `,
@@ -129,7 +128,6 @@ export const ConfirmDeleteButton = ButtonComponent({
         achievements: true,
         giveaways: true,
         moderationHistory: true,
-        polls: true,
       },
     });
 

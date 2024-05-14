@@ -4,12 +4,10 @@ import { getDiscordClient } from 'purplet';
 import { ModerationAction } from '../../modules/moderation/_base';
 import { setLongerTimeout } from '../functions/setLongerTimeout';
 import { handleGiveaway } from './handleGiveaway';
-import { handlePoll } from './handlePoll';
 import { handleReminder } from './handleReminder';
 import { handleTempBan } from './handleTempBan';
 
 const handle = {
-  poll: handlePoll,
   reminder: handleReminder,
   giveaway: handleGiveaway,
   [ModerationAction.UserTemporaryBan]: handleTempBan,
