@@ -14,8 +14,8 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=16.X",
-    "yarn": ">=1.X"
+    "node": ">=20.X",
+    "pnpm": ">=8.X"
   },
   "dependencies": {
     "@googleapis/youtube": "^13.0.0",
