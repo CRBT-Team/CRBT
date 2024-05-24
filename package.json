@@ -44,7 +44,7 @@
     "purplet": "^1.3.4",
     "rawg-api-sdk": "^0.0.3",
     "typescript": "^5.1.6",
-    "undici": "^6.6.0"
+    "undici": "^6.11.1"
   },
   "devDependencies": {
     "@discordjs/rest": "^2.0.0",
