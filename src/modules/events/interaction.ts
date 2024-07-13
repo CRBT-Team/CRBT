@@ -3,7 +3,7 @@ import { prisma } from '$lib/db';
 import { channels, clients } from '$lib/env';
 import { TextChannel } from 'discord.js';
 import { OnEvent } from 'purplet';
-// import { economyCommands } from '../economy/_helpers';
+import { economyCommands } from '../economy/_helpers';
 // import { customCmds } from '../customCommands/commands';
 
 export default OnEvent('interactionCreate', async (i) => {
@@ -19,9 +19,9 @@ export default OnEvent('interactionCreate', async (i) => {
     .filter(Boolean)
     .join(' ');
 
-  // if (i.isCommand() && Object.keys(economyCommands).includes(commandName)) {
-  //   return economyCommands[commandName].handle.call(i);
-  // }
+  if (i.isCommand() && Object.keys(economyCommands).includes(commandName)) {
+    return economyCommands[commandName].handle.call(i);
+  }
 
   // if (i.isCommand() && customCmds.has(i.commandName)) {
   //   const cmd = customCmds.get(i.commandName);

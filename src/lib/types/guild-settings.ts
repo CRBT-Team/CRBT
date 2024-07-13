@@ -1,12 +1,12 @@
-// import {
-//   Economy,
-//   // EconomyCommands,
-//   EconomyItem,
-//   EconomyItemCategory,
-//   serverModules,
-//   servers,
-// } from '@prisma/client';
-import { Giveaway, Guild, GuildModules, ModerationEntry } from '@prisma/client';
+import {
+  Category,
+  Economy,
+  Giveaway,
+  Guild,
+  GuildModules,
+  Item,
+  ModerationEntry,
+} from '@prisma/client';
 import { Guild as DiscordGuild, Interaction, MessageButton, MessageEditOptions } from 'discord.js';
 import { JoinLeaveData } from './messageBuilder';
 
@@ -19,7 +19,7 @@ export enum EditableGuildFeatures {
   moderationNotifications = 'MODERATION_LOGS',
   moderationReports = 'MODERATION_REPORTS',
   privacy = 'PRIVACY',
-  // economy = 'ECONOMY',
+  economy = 'ECONOMY',
 }
 
 export enum CamelCaseGuildFeatures {
@@ -31,7 +31,7 @@ export enum CamelCaseGuildFeatures {
   JOIN_LEAVE = 'joinLeave',
   MODERATION = 'moderation',
   PRIVACY = 'privacy',
-  // ECONOMY = 'economy',
+  ECONOMY = 'economy',
 }
 
 export interface SettingFunctionProps {
@@ -49,15 +49,14 @@ export type FullGuildSettings = Partial<
     joinMessage: JoinLeaveData;
     leaveMessage: JoinLeaveData;
     isDefault: boolean;
-    // economy?: Partial<
-    //   Economy & {
-    //     commands: Partial<EconomyCommands>;
-    //     items: EconomyItem[];
-    //     categories: (EconomyItemCategory & {
-    //       items: EconomyItem[];
-    //     })[];
-    //   }
-    // >;
+    economy?: Partial<
+      Economy & {
+        items: Item[];
+        categories: (Category & {
+          items: Item[];
+        })[];
+      }
+    >;
   }
 >;
 

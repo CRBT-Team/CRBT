@@ -8,7 +8,7 @@ import {
   SettingFunctionProps,
   SettingsMenuProps,
 } from '$lib/types/guild-settings';
-// import { economySettings } from '../../../../disabled/settings/economy';
+import { economySettings } from './economy';
 import { joinLeaveSettings } from './join-leave';
 import { moderationSettings } from './moderation';
 import { modlogsSettings } from './modlogs';
@@ -27,6 +27,7 @@ export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProp
     EditableGuildFeatures.leaveMessage,
     { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
   ],
+  [EditableGuildFeatures.economy, economySettings],
   [EditableGuildFeatures.moderation, moderationSettings],
   [EditableGuildFeatures.moderationNotifications, modlogsSettings],
   [EditableGuildFeatures.moderationReports, modReportsSettings],
@@ -45,26 +46,24 @@ export const defaultGuildSettings: FullGuildSettings = {
     moderationNotifications: false,
     moderationReports: false,
   },
-  // economy: {
-  //   currencyNamePlural: 'Coins',
-  //   currencyNameSingular: 'Coin',
-  //   currencySymbol: '🪙',
-  //   items: [],
-  //   categories: [],
-  //   commands: {
-  //     workStrings: [
-  //       'You washed and properly cleaned a car, which got you {money}.',
-  //       'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
-  //       'You washed and properly cleaned a car, which got you {money}.',
-  //       'You washed and properly cleaned a car, which got you {money}.',
-  //       'You washed and properly cleaned a car, which got you {money}.',
-  //     ],
-  //     workCooldown: 300000,
-  //     workReward: '<random(100, 300)>',
-  //     weeklyRewards: ['150', '150', '200', '350', '350', 'booster', '500'],
-  //     dailyReward: '<random(50,150)>',
-  //   },
-  // },
+  economy: {
+    currencyNamePlural: 'Coins',
+    currencyNameSingular: 'Coin',
+    currencySymbol: '🪙',
+    items: [],
+    categories: [],
+    workStrings: [
+      'You washed and properly cleaned a car, which got you {money}.',
+      'You live streamed that hot new game online, and ads and subs make you earn {money}. GG wp.',
+      'You washed and properly cleaned a car, which got you {money}.',
+      'You washed and properly cleaned a car, which got you {money}.',
+      'You washed and properly cleaned a car, which got you {money}.',
+    ],
+    workCooldown: 300000,
+    workReward: '<random(100, 300)>',
+    weeklyRewards: ['150', '150', '200', '350', '350', 'booster', '500'],
+    dailyReward: '<random(50,150)>',
+  },
 };
 
 export function resolveSettingsProps(
@@ -84,21 +83,20 @@ export const include = {
   modules: true,
   moderationHistory: true,
   giveaways: true,
-  // economy: {
-  //   include: {
-  //     commands: true,
-  //     items: true,
-  //     categories: {
-  //       include: {
-  //         items: true,
-  //       },
-  //     },
-  //   },
-  // },
+  economy: {
+    include: {
+      items: true,
+      categories: {
+        include: {
+          items: true,
+        },
+      },
+    },
+  },
 };
 
 export async function getGuildSettings(guildId: string, force = false) {
-  const data = (await fetchWithCache(
+  const data = await fetchWithCache<FullGuildSettings>(
     `${guildId}:settings`,
     () =>
       prisma.guild.findFirst({
@@ -106,7 +104,7 @@ export async function getGuildSettings(guildId: string, force = false) {
         include: include,
       }),
     force,
-  )) as FullGuildSettings;
+  );
 
   const merged = deepMerge(defaultGuildSettings, data);
   return { ...merged, isDefault: data === null } as FullGuildSettings;
