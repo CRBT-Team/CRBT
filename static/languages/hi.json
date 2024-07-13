@@ -160,32 +160,18 @@
           "description": "यह कैसे समाप्त होता है?"
         },
         "choice": {
-          "description": "One of the poll's choices."
-        },
-        "image": {
-          "description": "उसके ऊपर इमेज डाले |"
+          "description": "One of the poll's answers."
         }
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "विकल्प खाली नहीं हो सकता (इमोजी को छोड़कर)"
+      "CHOICE_EMPTY": "An answer cannot be empty (excluding emoji)."
     },
     "strings": {
-      "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_FOOTER_CREATOR": "{user} ने पोल बनाया |",
-      "SUCCESS_TITLE": "पोल बन गया |",
-      "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "DATA_AND_OPTIONS": "Data और Options",
-      "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "इस बटन को दुबारा इस्तेमाल करके इस डाटा को रिफ्रेश करे |",
-      "SUCCESS_POLL_DELETED": "पोल हट गया |",
-      "SUCCESS_POLL_ENDED": "पोल खत्म |",
-      "POLL_DESCRIPTION_ENDED": "पोल समाप्त हो गया है| आप वोट नहीं डाल सकते|",
-      "POLL_RESULTS_TITLE": "रिजल्ट आ रहे हैं!",
-      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
+      "POLL_DATA_FOOTER": "इस बटन को दुबारा इस्तेमाल करके इस डाटा को रिफ्रेश करे |"
     }
   },
-  "POLL_MENU_VOTE_DESCRIPTION": "Vote for any choice using the buttons below.",
   "banner": {
     "description": "यूजर की प्रोफाइल बैनर को प्राप्त करे |"
   },
@@ -509,7 +495,7 @@
   "EDIT_SOMETHING": "एडिट {feature}",
   "SETTINGS_COLOR_SET_TO": "कलर थीम",
   "SETTINGS_COLOR_SHORT_DESCRIPTION": "Customize the server's accent color for CRBT features.",
-  "SETTINGS_COLOR_DESCRIPTION": "पोल्स, गिवअवे और चीजों की लुक को कस्टमाइज करे | मैन्युअली कलर को चुने, या फिर CRBT को आपके सर्वर की आइकॉन की मुख्य रंग को एक्सट्रेक्ट करने दे |",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize the look of menus related to your server. Pick a color manually, or let CRBT extract the main color from your server's icon.",
   "SETTINGS_JOIN_LEAVE_SHORT_DESCRIPTION": "Welcome new members and announce departing members.",
   "SETTINGS_JOIN_LEAVE_DESCRIPTION": "नए मेम्बेर्स को मेसेज ऑटोमेटिकली भेजे और जब मेम्बेर्स आपके सर्वर छोड़ देंगे तो अन्नोउंस करे |",
   "SETTINGS_MODERATION_SHORT_DESCRIPTION": "Notifications, Reports and History",
@@ -518,7 +504,7 @@
   "SETTINGS_MODREPORTS_SHORT_DESCRIPTION": "Allow members to report server messages and users",
   "SETTINGS_MODREPORTS_DESCRIPTION": "When enabled, members can report messages and users by right-clicking or long-pressing them. Reported messages are sent to a channel of your choice and added to the Moderation History.",
   "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Manage, download or delete your data.",
-  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Polls and Giveaways, Moderation History, Economy and everything else.",
+  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Giveaways, Moderation History, Economy and everything else.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "चैनल नहीं मिला | मेसेज भेजना जारी रखने के लिए CRBT में एडिट करे |",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "फीचर पूरी तरह से कांफिगुर नहीं है | नीचे बटन्स को इस्तेमाल करके सेटअप को खत्म करे |",
   "search": {
@@ -707,7 +693,6 @@
   "GUILD_PRIVACY_DELETE_DATA_CONFIRM_DESCRIPTION": "By confirming, you will forever delete:",
   "DELETE_ALL_DATA": "Delete all data",
   "DOWNLOAD_ALL_DATA": "Download all data",
-  "X_POLLS": "{number} polls",
   "X_GIVEAWAYS": "{number} giveaways",
   "ENTIRETY_OF_MODERATION_HISTORY": "The entirety of the server's Moderation History",
   "X_MODERATION_HISTORY_ENTRIES": "{number} entries",
