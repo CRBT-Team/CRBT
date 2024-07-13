@@ -505,6 +505,8 @@
   "SETTINGS_MODREPORTS_DESCRIPTION": "Lorsque l'option est activée, les membres pourront signaler des messages et des utilisateurs par un clic droit ou un appui long sur eux. Les messages signalés sont envoyés dans le salon de votre choix, et ajoutés à l'Historique de Modération.",
   "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Gérer, télécharger ou supprimer vos données.",
   "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Giveaways, Moderation History, Economy and everything else.",
+  "SETTINGS_ECONOMY_SHORT_DESCRIPTION": "Manage the server's economy.",
+  "SETTINGS_ECONOMY_DESCRIPTION": "CRBT's economy is a fun way to reward members for being active. You can customize the server's shop. WIP!!",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Salon introuvable. Modifiez-le pour que CRBT puisse continuer à y envoyer des messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Cette fonctionnalité n'est pas entièrement configurée. Utilisez les boutons ci-dessous pour terminer la configuration.",
   "search": {
@@ -700,5 +702,12 @@
   "X_ECONOMY_ITEMS_CATEGORIES": "{categories} catégories de la Boutique, contenant {items} articles",
   "X_ACHIEVEMENTS": "{categories} catégories de Succès, contenant {achievements} succès",
   "DELETE_DATA_SUCCESS": "Toutes les données ont bien été supprimées.",
-  "GUILD_NO_DATA": "Aucune donnée sur ce serveur n'a été trouvée."
+  "GUILD_NO_DATA": "Aucune donnée sur ce serveur n'a été trouvée.",
+  "ITEM_TYPE_ROLE": "Rôle(s)",
+  "ITEM_TYPE_WEAPON": "Weapon",
+  "ITEM_TYPE_INCOME_MULTIPLIER": "Income Multiplier",
+  "ITEM_TYPE_WEBHOOK_ACTION": "Webhook Action",
+  "ITEM_TYPE_CRBTSCRIPT": "CRBTscript Action",
+  "ITEM_TYPE_COSMETIC": "Cosmetic",
+  "ITEM_TYPE_OTHER": "Other"
 }
