@@ -70,11 +70,11 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         new BackButton().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         new EditReminderButton(reminder.id)
           .setLabel(t(this, 'EDIT'))
-          .setEmoji(emojis.buttons.pencil)
+          .setEmoji(emojis.buttons.edit)
           .setStyle('PRIMARY'),
         new DeleteReminderButton(reminder.id)
           .setLabel(t(this, 'DELETE'))
-          .setEmoji(emojis.buttons.trash_bin)
+          .setEmoji(emojis.buttons.trash)
           .setStyle('DANGER'),
       ),
       row(

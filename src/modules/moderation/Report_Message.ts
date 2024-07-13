@@ -147,11 +147,11 @@ export default MessageContextCommand({
             new DeleteMsgBtn(message.id)
               .setStyle('PRIMARY')
               .setLabel(t(this.guildLocale, 'DELETE_MESSAGE'))
-              .setEmoji(emojis.buttons.trash_bin),
+              .setEmoji(emojis.buttons.trash),
             new DismissReportBtn({ reportId: entry.id })
               .setStyle('SECONDARY')
               .setLabel('Delete Report')
-              .setEmoji(emojis.buttons.trash_bin),
+              .setEmoji(emojis.buttons.trash),
           ),
         ),
       });

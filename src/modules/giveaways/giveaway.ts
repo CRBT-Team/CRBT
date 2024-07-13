@@ -211,11 +211,11 @@ export const GwayOptionsButton = ButtonComponent({
         row(
           new EndGwayButton(this.message.id)
             .setLabel(t(this, 'END_NOW'))
-            .setEmoji(emojis.buttons.cross)
+            .setEmoji(emojis.buttons.close)
             .setStyle('DANGER'),
           new CancelGwayButton(this.message.id)
             .setLabel(t(this, 'CANCEL'))
-            .setEmoji(emojis.buttons.trash_bin)
+            .setEmoji(emojis.buttons.trash)
             .setStyle('DANGER'),
         ),
       ),
@@ -320,7 +320,7 @@ export const EnterGwayButton = ButtonComponent({
           row(
             new ExitGwayButton(this.message.id)
               .setLabel(t(this, 'LEAVE_GIVEAWAY'))
-              .setEmoji(emojis.buttons.cross)
+              .setEmoji(emojis.buttons.close)
               .setStyle('DANGER'),
           ),
         ),

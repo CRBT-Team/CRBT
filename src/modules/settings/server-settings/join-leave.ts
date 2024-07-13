@@ -63,12 +63,12 @@ export const joinLeaveSettings: SettingsMenuProps = {
             .setStyle('SECONDARY'),
           new EditJoinLeaveMessageBtn(EditableGuildFeatures.joinMessage as never)
             .setLabel(t(i, 'EDIT_MESSAGE'))
-            .setEmoji(emojis.buttons.pencil)
+            .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY')
             .setDisabled(!isJoinEnabled),
           new EditJoinLeaveChannelButton(EditableGuildFeatures.joinMessage)
             .setLabel(t(i, 'EDIT_CHANNEL'))
-            .setEmoji(emojis.buttons.pencil)
+            .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY')
             .setDisabled(!isJoinEnabled),
         ),
@@ -82,12 +82,12 @@ export const joinLeaveSettings: SettingsMenuProps = {
             .setStyle('SECONDARY'),
           new EditJoinLeaveMessageBtn(EditableGuildFeatures.leaveMessage as never)
             .setLabel(t(i, 'EDIT_MESSAGE'))
-            .setEmoji(emojis.buttons.pencil)
+            .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY')
             .setDisabled(!isLeaveEnabled),
           new EditJoinLeaveChannelButton(EditableGuildFeatures.leaveMessage)
             .setLabel(t(i, 'EDIT_CHANNEL'))
-            .setEmoji(emojis.buttons.pencil)
+            .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY')
             .setDisabled(!isLeaveEnabled),
         ),

@@ -162,7 +162,7 @@ export const ReportModal = ModalComponent({
             new DismissReportBtn({ reportId: entry.id })
               .setStyle('SECONDARY')
               .setLabel('Delete Report')
-              .setEmoji(emojis.buttons.trash_bin),
+              .setEmoji(emojis.buttons.trash),
           ),
         ),
       });

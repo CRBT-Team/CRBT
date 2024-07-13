@@ -26,13 +26,13 @@ export const themeSettings: SettingsMenuProps = {
               value: settings.isAutoThemingEnabled
                 ? `🔁 ${t(i, 'AUTO')}`
                 : colorsMap.find((c) => c.value === settings.accentColor)
-                ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
-                    i,
-                    `color set.colorNames.${
-                      colorsMap.find((c) => c.value === settings.accentColor).key
-                    }` as any,
-                  )}`
-                : chroma(settings.accentColor).hex(),
+                  ? `${colorsMap.find((c) => c.value === settings.accentColor).emoji} ${t(
+                      i,
+                      `color set.colorNames.${
+                        colorsMap.find((c) => c.value === settings.accentColor).key
+                      }` as any,
+                    )}`
+                  : chroma(settings.accentColor).hex(),
             },
           ],
           thumbnail: {
@@ -53,7 +53,7 @@ export const themeSettings: SettingsMenuProps = {
             value: settings.accentColor,
           })
             .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
-            .setEmoji(emojis.buttons.pencil)
+            .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY'),
         ),
         row(

@@ -234,17 +234,20 @@ export async function renderModlogs(
     .slice(page * 10, page * 10 + 10);
 
   const grouped = Object.entries(
-    results.reduce((acc, cur) => {
-      const date = snowflakeToDate(cur.id).toDateString();
+    results.reduce(
+      (acc, cur) => {
+        const date = snowflakeToDate(cur.id).toDateString();
 
-      if (!acc[date]) {
-        acc[date] = [];
-      }
+        if (!acc[date]) {
+          acc[date] = [];
+        }
 
-      acc[date].push(cur);
+        acc[date].push(cur);
 
-      return acc;
-    }, {} as Record<string, ModerationEntry[]>),
+        return acc;
+      },
+      {} as Record<string, ModerationEntry[]>,
+    ),
   );
 
   const pages = Math.ceil(data.length / 10) || 1;
@@ -440,12 +443,12 @@ async function renderModEntryPage(
                       tId,
                       old: !!entry.oldId,
                     })
-                      .setEmoji(emojis.buttons.pencil)
+                      .setEmoji(emojis.buttons.edit)
                       .setLabel(t(this, 'EDIT'))
                       .setStyle('PRIMARY'),
                   ]),
               new DeleteButton({ sId: entry.oldId ?? entry.id, page, tId, old: !!entry.oldId })
-                .setEmoji(emojis.buttons.trash_bin)
+                .setEmoji(emojis.buttons.trash)
                 .setLabel(t(this, 'DELETE'))
                 .setStyle('DANGER'),
             ]

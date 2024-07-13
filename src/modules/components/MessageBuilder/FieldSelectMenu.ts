@@ -36,8 +36,8 @@ export const FieldSelectMenu = SelectMenuComponent({
                     label: t(this, `color set.colorNames.${colorObj.key}` as any),
                     value: colorObj.value.toString(),
                     emoji: colorObj.emoji,
-                  }))
-              )
+                  })),
+              ),
           ),
           row(
             new BackButton(type as never)
@@ -49,9 +49,9 @@ export const FieldSelectMenu = SelectMenuComponent({
               value: (messageData.embed?.color || colors.default) as number,
             })
               .setLabel(t(this, 'MANUAL_COLOR_EDIT_BUTTON'))
-              .setEmoji(emojis.buttons.pencil)
-              .setStyle('PRIMARY')
-          )
+              .setEmoji(emojis.buttons.edit)
+              .setStyle('PRIMARY'),
+          ),
         ),
       });
     }
@@ -72,9 +72,9 @@ export const FieldSelectMenu = SelectMenuComponent({
                 .setCustomId(fieldName.toUpperCase())
                 .setStyle(maxLength <= 256 ? 'SHORT' : 'PARAGRAPH')
                 .setMaxLength(maxLength)
-                .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : '')
+                .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : ''),
             );
-          })
+          }),
         );
 
       return this.showModal(modal);
@@ -91,8 +91,8 @@ export const FieldSelectMenu = SelectMenuComponent({
           .setCustomId('VALUE')
           .setStyle(maxLength <= 256 ? 'SHORT' : 'PARAGRAPH')
           .setMaxLength(maxLength)
-          .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : '')
-      )
+          .setPlaceholder(markdownSupport ? t(this, 'MARKDOWN_CRBTSCRIPT_SUPPORT') : ''),
+      ),
     );
 
     return this.showModal(modal);

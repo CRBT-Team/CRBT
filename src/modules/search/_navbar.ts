@@ -142,7 +142,7 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
               : [
                   new DeleteSearchButton(userId)
                     .setLabel(searchEngines[currentSite].noPagination ? 'Delete Search' : '')
-                    .setEmoji(emojis.buttons.trash_bin)
+                    .setEmoji(emojis.buttons.trash)
                     .setStyle('DANGER'),
                 ]),
           ),

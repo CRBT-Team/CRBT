@@ -22,13 +22,13 @@ export const userAccentColorSettings: UserSettingsMenusProps = {
                 user.accentColor === 0
                   ? `🔁 ${t(i, 'color set.strings.EMBED_SYNC_INFO')}`
                   : colorsMap.find((c) => c.value === accentColor)
-                  ? `${colorsMap.find((c) => c.value === accentColor).emoji} ${t(
-                      i,
-                      `color set.colorNames.${
-                        colorsMap.find((c) => c.value === accentColor).key
-                      }` as any
-                    )}`
-                  : chroma(accentColor).hex(),
+                    ? `${colorsMap.find((c) => c.value === accentColor).emoji} ${t(
+                        i,
+                        `color set.colorNames.${
+                          colorsMap.find((c) => c.value === accentColor).key
+                        }` as any,
+                      )}`
+                    : chroma(accentColor).hex(),
             },
           ],
         },
@@ -41,7 +41,7 @@ export const userAccentColorSettings: UserSettingsMenusProps = {
             .setLabel(
               user.accentColor === 0
                 ? t(i, 'color set.strings.EMBED_SYNC_INFO')
-                : t(i, 'color set.colorNames.sync')
+                : t(i, 'color set.colorNames.sync'),
             )
             .setEmoji(user.accentColor === 0 ? emojis.toggle.on : '')
             .setDisabled(user.accentColor === 0),
@@ -50,8 +50,8 @@ export const userAccentColorSettings: UserSettingsMenusProps = {
             value: user.accentColor,
           })
             .setLabel(t(i, 'MANUAL_COLOR_EDIT_BUTTON'))
-            .setEmoji(emojis.buttons.pencil)
-            .setStyle('PRIMARY')
+            .setEmoji(emojis.buttons.edit)
+            .setStyle('PRIMARY'),
         ),
         row(
           new ColorPresetSelectMenu().setPlaceholder(t(i, 'COLOR_PRESET_SELECT_MENU')).setOptions(
@@ -62,9 +62,9 @@ export const userAccentColorSettings: UserSettingsMenusProps = {
                 value: colorObj.value.toString(),
                 emoji: colorObj.emoji,
                 default: user.accentColor === colorObj.value,
-              }))
-          )
-        )
+              })),
+          ),
+        ),
       ),
     };
   },
@@ -82,7 +82,7 @@ export const SyncToProfileColorBtn = ButtonComponent({
           update: { accentColor: colors.sync },
           where: { id: this.user.id },
         }),
-      true
+      true,
     );
 
     this.update(await userFeatureSettings.call(this, EditableUserSettings.accentColor));
@@ -103,7 +103,7 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
           update: { accentColor: color },
           where: { id: this.user.id },
         }),
-      true
+      true,
     );
 
     this.update(await userFeatureSettings.call(this, EditableUserSettings.accentColor));
