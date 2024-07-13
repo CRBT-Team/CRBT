@@ -81,8 +81,8 @@ export default ChatCommand({
         | TextChannel
         | APIGuildForumChannel;
 
-      authorIcon = parent ? icons.channels.thread : icons.channels.post;
-      title = parent ? t(this, 'THREAD') : t(this, 'POST');
+      authorIcon = (parent.type as 'GUILD_FORUM') === 'GUILD_FORUM' ? icons.channels.post : icons.channels.thread;
+      title = (parent.type as 'GUILD_FORUM') === 'GUILD_FORUM' ? t(this, 'POST') : t(this, 'THREAD');
 
       const autoArchives = new Date(
         created.getTime() + (channel.thread_metadata.auto_archive_duration || 0) * 60 * 1000,
@@ -119,9 +119,9 @@ export default ChatCommand({
     }
 
     // Check if it's a voice-like channels (stage, voice)
-    if ('bitrate' in channel) {
+    if (channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice) {
       authorIcon =
-        String(channel.type) === 'GUILD_VOICE' ? icons.channels.voice : icons.channels.stage;
+        channel.type === ChannelType.GuildVoice ? icons.channels.voice : icons.channels.stage;
 
       fields.push(
         {
