@@ -55,8 +55,6 @@
     "@types/node": "^20.14.10",
     "discord-api-types": "^0.37.92",
     "prettier": "^3.3.2",
-    "prettier-plugin-jsdoc": "^0.3.38",
-    "prettier-plugin-organize-imports": "^3.2.4",
     "prisma": "^5.16.2"
   }
 }

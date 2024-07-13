@@ -1,8 +1,4 @@
 {
-  "plugins": [
-    "./node_modules/prettier-plugin-organize-imports",
-    "./node_modules/prettier-plugin-jsdoc"
-  ],
   "arrowParens": "always",
   "singleQuote": true,
   "printWidth": 100,
