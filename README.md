@@ -20,9 +20,9 @@ The perfect just-about-anything Discord bot.
 ### Installation
 
 1. Clone with `git clone https://github.com/CRBT-Team/CRBT`
-2. Install dependencies with `yarn`
-3. Run `yarn dev` to run it locally
-4. Run `yarn build` to build a production-ready bot
+2. Install dependencies with `pnpm install`
+3. Run `pnpm dev` to run it locally
+4. Run `pnpm build` to build a production-ready bot
 
 ### Project Structure
 
