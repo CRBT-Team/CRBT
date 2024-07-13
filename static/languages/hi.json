@@ -505,6 +505,8 @@
   "SETTINGS_MODREPORTS_DESCRIPTION": "When enabled, members can report messages and users by right-clicking or long-pressing them. Reported messages are sent to a channel of your choice and added to the Moderation History.",
   "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Manage, download or delete your data.",
   "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Giveaways, Moderation History, Economy and everything else.",
+  "SETTINGS_ECONOMY_SHORT_DESCRIPTION": "Manage the server's economy.",
+  "SETTINGS_ECONOMY_DESCRIPTION": "CRBT's economy is a fun way to reward members for being active. You can customize the server's shop. WIP!!",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "चैनल नहीं मिला | मेसेज भेजना जारी रखने के लिए CRBT में एडिट करे |",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "फीचर पूरी तरह से कांफिगुर नहीं है | नीचे बटन्स को इस्तेमाल करके सेटअप को खत्म करे |",
   "search": {
@@ -700,5 +702,12 @@
   "X_ECONOMY_ITEMS_CATEGORIES": "{categories} Shop categories containing {items} items",
   "X_ACHIEVEMENTS": "{categories} Achievement categories containing {achievements} achievements",
   "DELETE_DATA_SUCCESS": "All data was successfully deleted.",
-  "GUILD_NO_DATA": "No data about the server was found."
+  "GUILD_NO_DATA": "No data about the server was found.",
+  "ITEM_TYPE_ROLE": "रोल",
+  "ITEM_TYPE_WEAPON": "Weapon",
+  "ITEM_TYPE_INCOME_MULTIPLIER": "Income Multiplier",
+  "ITEM_TYPE_WEBHOOK_ACTION": "Webhook Action",
+  "ITEM_TYPE_CRBTSCRIPT": "CRBTscript Action",
+  "ITEM_TYPE_COSMETIC": "Cosmetic",
+  "ITEM_TYPE_OTHER": "Other"
 }
