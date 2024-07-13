@@ -81,7 +81,7 @@ export default ChatCommand({
         | TextChannel
         | APIGuildForumChannel;
 
-      authorIcon = icons.channels.text_thread;
+      authorIcon = parent ? icons.channels.thread : icons.channels.post;
       title = parent ? t(this, 'THREAD') : t(this, 'POST');
 
       const autoArchives = new Date(
@@ -114,8 +114,8 @@ export default ChatCommand({
         channel.id === this.guild.rulesChannelId
           ? icons.channels.rules
           : channel.nsfw
-          ? icons.channels.nsfw
-          : icons.channels.text;
+            ? icons.channels.nsfw
+            : icons.channels.text;
     }
 
     // Check if it's a voice-like channels (stage, voice)
