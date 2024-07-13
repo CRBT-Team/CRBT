@@ -82,7 +82,6 @@ export function resolveSettingsProps(
 
 export const include = {
   modules: true,
-  polls: true,
   moderationHistory: true,
   giveaways: true,
   // economy: {

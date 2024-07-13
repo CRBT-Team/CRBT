@@ -17,19 +17,6 @@ model Giveaway {
   participants String[]
 }
 
-model Poll {
-  id        String   @id
-  guildId   String   @map("serverId")
-  channelId String?  @map("channel_id")
-  messageId String?  @map("message_id")
-  creatorId String
-  title     String?
-  choices   Json[]
-  endDate   DateTime @map("expires_at") @db.Timestamptz(6)
-  locale    String
-  guild     Guild    @relation(fields: [guildId], references: [id])
-}
-
 model Reminder {
   id          String         @id
   userId      String
@@ -56,7 +43,6 @@ model Guild {
   economy              Economy?
   modules              GuildModules?
   giveaways            Giveaway[]
-  polls                Poll[]
   flags                Int?              @default(0)
   achievements         Achievement[]
   // permissions  ServerPermissions[]
@@ -70,8 +56,6 @@ model Guild {
 //   serverId            String   @id @map("server_id")
 //   server              servers  @relation(fields: [serverId], references: [id])
 //   moderatorRoles      String[] @map("mod_roles")
-//   pollsAllowed        Json[]   @map("polls_allowlist")
-//   pollsDisallowed     Json[]   @map("polls_blocklist")
 //   giveawaysAllowed    Json[]   @map("gways_allowlist")
 //   giveawaysDisallowed Json[]   @map("gways_blocklist")
 // }
