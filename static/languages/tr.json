@@ -160,32 +160,18 @@
           "description": "When does it end?"
         },
         "choice": {
-          "description": "One of the poll's choices."
-        },
-        "image": {
-          "description": "Append an image."
+          "description": "One of the poll's answers."
         }
       }
     },
     "errors": {
-      "CHOICE_EMPTY": "Bir seçim boş olamaz (emoji hariç)."
+      "CHOICE_EMPTY": "An answer cannot be empty (excluding emoji)."
     },
     "strings": {
-      "POLL_DESCRIPTION": "Ends {TIME}.\nThe creator may view vote data with the {ICON} button.",
-      "POLL_FOOTER_CREATOR": "{user} created a poll",
-      "SUCCESS_TITLE": "Poll created!",
-      "SUCCESS_DESCRIPTION": "View votes, edit, delete or end your poll early with the {ICON} button.",
       "DATA_AND_OPTIONS": "Data and Options",
-      "POLL_DATA_NOVOTES": "No votes",
-      "POLL_DATA_FOOTER": "Refresh this data by using the button again.",
-      "SUCCESS_POLL_DELETED": "Poll deleted.",
-      "SUCCESS_POLL_ENDED": "Poll ended.",
-      "POLL_DESCRIPTION_ENDED": "The poll has ended. You can no longer vote on it.",
-      "POLL_RESULTS_TITLE": "The results are in!",
-      "POLL_RESULTS_DESCRIPTION": "{options} has/have won with {votes} vote(s)/{total}!"
+      "POLL_DATA_FOOTER": "Refresh this data by using the button again."
     }
   },
-  "POLL_MENU_VOTE_DESCRIPTION": "Vote for any choice using the buttons below.",
   "banner": {
     "description": "Get a user's profile banner."
   },
@@ -509,7 +495,7 @@
   "EDIT_SOMETHING": "Edit {feature}",
   "SETTINGS_COLOR_SET_TO": "Color theme",
   "SETTINGS_COLOR_SHORT_DESCRIPTION": "Customize the server's accent color for CRBT features.",
-  "SETTINGS_COLOR_DESCRIPTION": "Customize the look of Polls, Giveaways and more. Pick a color manually, or let CRBT extract the main color from your server's icon.",
+  "SETTINGS_COLOR_DESCRIPTION": "Customize the look of menus related to your server. Pick a color manually, or let CRBT extract the main color from your server's icon.",
   "SETTINGS_JOIN_LEAVE_SHORT_DESCRIPTION": "Welcome new members and announce departing members.",
   "SETTINGS_JOIN_LEAVE_DESCRIPTION": "Automatically send messages to welcome new members, and announce when members leave your server.",
   "SETTINGS_MODERATION_SHORT_DESCRIPTION": "Notifications, Reports and History",
@@ -518,7 +504,7 @@
   "SETTINGS_MODREPORTS_SHORT_DESCRIPTION": "Allow members to report server messages and users",
   "SETTINGS_MODREPORTS_DESCRIPTION": "When enabled, members can report messages and users by right-clicking or long-pressing them. Reported messages are sent to a channel of your choice and added to the Moderation History.",
   "SETTINGS_PRIVACY_SHORT_DESCRIPTION": "Manage, download or delete your data.",
-  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Polls and Giveaways, Moderation History, Economy and everything else.",
+  "SETTINGS_PRIVACY_DESCRIPTION": "CRBT stores its own functional data and some Discord data to provide its features. You can download or delete all of the server's data, including running Giveaways, Moderation History, Economy and everything else.",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
   "search": {
@@ -707,7 +693,6 @@
   "GUILD_PRIVACY_DELETE_DATA_CONFIRM_DESCRIPTION": "By confirming, you will forever delete:",
   "DELETE_ALL_DATA": "Delete all data",
   "DOWNLOAD_ALL_DATA": "Download all data",
-  "X_POLLS": "{number} polls",
   "X_GIVEAWAYS": "{number} giveaways",
   "ENTIRETY_OF_MODERATION_HISTORY": "The entirety of the server's Moderation History",
   "X_MODERATION_HISTORY_ENTRIES": "{number} entries",
