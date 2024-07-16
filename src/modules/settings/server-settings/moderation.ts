@@ -10,7 +10,6 @@ import { GuildSettingMenus, resolveSettingsProps } from './_helpers';
 import { FeatureSelectMenu } from './settings';
 
 export const moderationSettings: SettingsMenuProps = {
-  newLabel: true,
   description: (l) => t(l, 'SETTINGS_MODERATION_SHORT_DESCRIPTION'),
   async renderMenuMessage({ settings, i, guild, backBtn }) {
     const channelId = settings.modLogsChannelId;

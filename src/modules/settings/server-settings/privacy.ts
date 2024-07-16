@@ -9,7 +9,6 @@ import { GuildSettingMenus, getGuildSettings } from './_helpers';
 import { BackSettingsButton } from './settings';
 
 export const privacySettings: SettingsMenuProps = {
-  newLabel: true,
   description: (l) => t(l, 'SETTINGS_PRIVACY_SHORT_DESCRIPTION'),
   async renderMenuMessage({ i, guild, backBtn, settings }) {
     return {
@@ -64,10 +63,7 @@ export const DeleteDataButton = ButtonComponent({
   async handle() {
     await this.deferUpdate();
 
-    const { moderationHistory, modules, giveaways } = await getGuildSettings(
-      this.guildId,
-      true,
-    );
+    const { moderationHistory, modules, giveaways } = await getGuildSettings(this.guildId, true);
 
     await this.editReply({
       embeds: [
