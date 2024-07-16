@@ -27,7 +27,7 @@ export interface LowBudgetMessage {
 
 export async function handleReminder(reminder: Reminder, client: Client) {
   const data = await extractReminder(reminder, client);
-  const createdAt = snowflakeToDate(data.id);
+  const createdAt = snowflakeToDate(data.messageId);
 
   const message = {
     embeds: [

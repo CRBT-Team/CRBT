@@ -16,59 +16,53 @@ export default OnEvent('ready', async (client) => {
     type: 'WATCHING',
   });
 
-  await Promise.all(await loadEconomyCommands(client)).then(async () => {
-    allCommands = await client.application.commands.fetch({
-      guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
-    });
+  await loadEconomyCommands(client);
 
-    console.log(`Loaded ${allCommands.size} commands`);
+  allCommands = await client.application.commands.fetch({
+    guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
   });
+
+  console.log(`Loaded ${allCommands.size} commands`);
 
   loadTimeouts(client);
 });
 
 function loadTimeouts(client: Client) {
   Object.values(TimeoutTypes).forEach((type) => {
-    if (type === TimeoutTypes.Reminder && client.user.id !== clients.crbt.id) return;
+    if (client.user.id !== clients.crbt.id) {
+      console.log(`Loading ${type} timeouts`);
+    }
 
-    (prisma[type as string].findMany() as Promise<AnyTimeout[]>).then((timeouts) =>
-      timeouts
-        // load timeouts:
-        // if they have a 'type', they're a moderation entry and only timeouts that haven't expired yet should be loaded
-        // otherwise,  all timeouts should be loaded
-        .filter((t) => ('type' in t ? t.endDate && t.endDate.getTime() > Date.now() : true))
-        .map((t) => dbTimeout(type, t, true)),
-    );
+    (prisma[type as string].findMany() as Promise<AnyTimeout[]>).then((timeouts) => {
+      timeouts.forEach((t) => {
+        if (!!t.endDate) {
+          dbTimeout(type, t, true);
+        }
+      });
+    });
   });
 }
 
-async function loadEconomyCommands(client: Client): Promise<Promise<any>[]> {
-  const promises: Promise<any>[] = [];
+async function loadEconomyCommands(client: Client) {
+  const { modules, economy } = await getGuildSettings(servers.community);
 
-  if (client.user.id !== clients.crbt.id) {
-    const { modules, economy } = await getGuildSettings(servers.community);
+  if (client.user.id !== clients.crbt.id && modules.economy) {
+    return await Promise.all(
+      Object.entries(economyCommands).map(async ([name, command]) => {
+        if (!economy.categories.length && name === 'shop') return;
 
-    if (modules.economy) {
-      Object.entries(economyCommands).map(([name, command]) => {
-        if (!economy.categories.length && name === 'shop') {
-          return;
-        }
-
-        console.log(name)
+        console.log(name);
 
         const commandMeta = command.getMeta({
           plural: economy.currencyNamePlural,
           singular: economy.currencyNameSingular,
         });
 
-        promises.push(
-          getRestClient().post(
-            Routes.applicationGuildCommands(client.application.id, servers.community),
-            { body: commandMeta },
-          ),
+        await getRestClient().post(
+          Routes.applicationGuildCommands(client.application.id, servers.community),
+          { body: commandMeta },
         );
-      });
-    }
+      }),
+    );
   }
-  return promises;
 }

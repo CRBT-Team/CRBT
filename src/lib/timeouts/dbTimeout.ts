@@ -31,7 +31,7 @@ export async function dbTimeout<T extends TimeoutTypes>(
       });
 
       // if it's a moderationEntry, handle the type of the entry
-      if ('type' in data) {
+      if ('targetId' in data) {
         handle[data.type](data, client);
       } else {
         handle[type](data, client);
