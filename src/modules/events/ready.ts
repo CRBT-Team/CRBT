@@ -24,15 +24,15 @@ export default OnEvent('ready', async (client) => {
 
   console.log(`Loaded ${allCommands.size} commands`);
 
-  loadTimeouts(client);
+  if (client.user.id !== clients.crbt.id) {
+    console.log(`Skipping timeouts`);
+  } else {
+    loadTimeouts(client);
+  }
 });
 
 function loadTimeouts(client: Client) {
   Object.values(TimeoutTypes).forEach((type) => {
-    if (client.user.id !== clients.crbt.id) {
-      console.log(`Loading ${type} timeouts`);
-    }
-
     (prisma[type as string].findMany() as Promise<AnyTimeout[]>).then((timeouts) => {
       timeouts.forEach((t) => {
         if (!!t.endDate) {
@@ -51,7 +51,7 @@ async function loadEconomyCommands(client: Client) {
       Object.entries(economyCommands).map(async ([name, command]) => {
         if (!economy.categories.length && name === 'shop') return;
 
-        console.log(name);
+        console.log(`Fetching ${name}`);
 
         const commandMeta = command.getMeta({
           plural: economy.currencyNamePlural,
@@ -62,6 +62,7 @@ async function loadEconomyCommands(client: Client) {
           Routes.applicationGuildCommands(client.application.id, servers.community),
           { body: commandMeta },
         );
+        console.log(`Posted ${name}`);
       }),
     );
   }
