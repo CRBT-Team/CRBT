@@ -13,32 +13,35 @@ export const BuyItemButton = ButtonComponent({
 
     const userId = `${this.user.id}_${this.guildId}`;
 
-    const inventory = await fetchWithCache(`inventory:${userId}`, () =>
-      prisma.guildMember.upsert({
-        where: { id: userId },
-        create: {
-          id: userId,
-          items: {
-            connect: { id: itemId },
+    const inventory = await fetchWithCache(
+      `inventory:${userId}`,
+      () =>
+        prisma.guildMember.upsert({
+          where: { id: userId },
+          create: {
+            id: userId,
+            items: {
+              connect: { id: itemId },
+            },
+            user: {
+              connectOrCreate: {
+                create: { id: this.user.id },
+                where: { id: this.user.id },
+              },
+            },
+            guild: {
+              connect: { id: this.guildId },
+            },
+            dailyStreak: 0,
           },
-          user: {
-            connectOrCreate: {
-              create: { id: this.user.id },
-              where: { id: this.user.id },
+          update: {
+            items: {
+              connect: { id: itemId },
             },
           },
-          guild: {
-            connect: { id: this.guildId },
-          },
-          dailyStreak: 0,
-        },
-        update: {
-          items: {
-            connect: { id: itemId },
-          },
-        },
-        include: { items: true },
-      }),
+          include: { items: true },
+        }),
+      true,
     );
     const item = inventory.items.find((i) => i.id === itemId);
 
