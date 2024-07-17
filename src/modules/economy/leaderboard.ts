@@ -26,7 +26,7 @@ export const leaderboard: EconomyCommand = {
   },
 };
 
-const assignLeaderboardRanks = (leaderboard: { money: number; userId: string }[]) => {
+export const assignLeaderboardRanks = (leaderboard: { money: number; userId: string }[]) => {
   let rank = 1;
   return leaderboard.map((u, i) => {
     if (i > 0 && u.money < leaderboard[i - 1].money) {
@@ -72,7 +72,12 @@ async function renderLeaderboard(this: Interaction, page: number) {
             name: 'Your position',
             value: !userData
               ? 'Not on the leaderboard'
-              : renderUser(userData, leaderboard.indexOf(userData) + 1),
+              : renderUser(
+                  userData,
+                  assignLeaderboardRanks(leaderboard).findIndex(
+                    (u) => u.userId === userData.userId,
+                  ),
+                ),
           },
         ],
         footer: {

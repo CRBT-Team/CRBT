@@ -7,6 +7,8 @@ import { getGuildSettings } from '../settings/server-settings/_helpers';
 import { currencyFormat, EconomyCommand } from './_helpers';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { slashCmd } from '$lib/functions/commandMention';
+import { fetchWithCache } from '$lib/cache';
+import { assignLeaderboardRanks } from './leaderboard';
 
 export const balance: EconomyCommand = {
   getMeta({ singular }) {
@@ -26,13 +28,20 @@ export const balance: EconomyCommand = {
     const user = this.options.getUser('user') ?? this.user;
 
     try {
-      const leaderboard = await prisma.guildMember.findMany({
-        where: { id: `${user.id}_${this.guildId}` },
-        orderBy: { money: 'desc' },
-        select: { userId: true, money: true },
-      });
+      const leaderboard = await fetchWithCache(
+        `leaderboard:${this.guildId}`,
+        () =>
+          prisma.guildMember.findMany({
+            where: { money: { gt: 0 }, guildId: this.guildId },
+            orderBy: { money: 'desc' },
+            select: { userId: true, money: true },
+          }),
+        true,
+      );
 
-      const rank = leaderboard.findIndex(({ userId }) => userId === user.id);
+      const rank = assignLeaderboardRanks(leaderboard).findIndex(
+        ({ userId }) => userId === user.id,
+      );
 
       const { economy } = await getGuildSettings(this.guildId);
       const { money } = leaderboard[rank] || { money: 0 };
@@ -44,21 +53,15 @@ export const balance: EconomyCommand = {
               icon_url: avatar(user),
               name: `${formatUsername(user)} - Balance`,
             },
-            description: currencyFormat(
-              {
-                money: money,
-              },
-              economy,
-              this.locale,
-            ),
+            description: currencyFormat({ money }, economy, this.locale, { zeroEqualsFree: false }),
             fields: [
               {
                 name: 'Leaderboard Rank',
                 value:
                   (money === 0
                     ? 'Not on the server leaderboard.'
-                    : `**${ordinal(rank + 1, this.locale)}** on the server leaderboard.`) +
-                  ` ${slashCmd('leaderboard')}`,
+                    : `**${ordinal(rank, this.locale)}** on the server leaderboard.`) +
+                  ` (${slashCmd('leaderboard')})`,
               },
             ],
             color: await getColor(this.user),
