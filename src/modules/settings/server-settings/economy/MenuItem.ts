@@ -17,6 +17,7 @@ import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
 import { EditItemInfoButton } from './EditItemInfoButton';
 import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
+import { GoToPageButton } from '../../../economy/inventory/GoToPageButton';
 
 export async function renderItem(this: Interaction, item: Item, mode: 'edit' | 'shop') {
   const settings = await getGuildSettings(this.guildId, true);
@@ -86,7 +87,7 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
       ${item.stock ? `${item.stock} remaining in stock` : 'Unlimited stock'} • ${
         item.availableUntil
           ? `**Available until ${timestampMention(item.availableUntil, 'R')}**`
-          : 'Available for purchase'
+          : 'Always available for purchase'
       }`,
   });
 
@@ -136,26 +137,25 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
                 .setEmoji(emojis.buttons.edit),
             ]
           : [
-              new ShopGoToButton({
-                categoryId: item.categoryId,
-              })
+              new ShopGoToButton({ categoryId: item.categoryId })
                 .setEmoji(emojis.buttons.left_arrow)
                 .setStyle('SECONDARY'),
               userHasItem
-                ? //TODO: work on this
-                  new MessageButton()
-                    .setCustomId('todo')
-                    .setDisabled()
+                ? new GoToPageButton({
+                    page: 0,
+                  })
                     .setLabel('In inventory')
                     .setStyle('SECONDARY')
-                : new BuyItemButton(item.id)
-                    .setLabel(
-                      `Buy - ${currencyFormat(item.price, economy, this.locale, {
-                        withoutSymbol: true,
-                      })}`,
-                    )
-                    .setEmoji(economy.currencySymbol)
-                    .setStyle('PRIMARY'),
+                : item.stock !== null && item.stock <= 0
+                  ? new MessageButton().setLabel('Out of stock').setStyle('SECONDARY').setDisabled()
+                  : new BuyItemButton(item.id)
+                      .setLabel(
+                        `Purchase - ${currencyFormat(item.price, economy, this.locale, {
+                          withoutSymbol: true,
+                        })}`,
+                      )
+                      .setEmoji(economy.currencySymbol)
+                      .setStyle('PRIMARY'),
             ]),
       ),
     ),

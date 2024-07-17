@@ -9,6 +9,7 @@ import { getGuildSettings } from '../../settings/server-settings/_helpers';
 import { ItemSelectMenu } from './ItemSelectMenu';
 import { renderItemEmbedField } from './_helpers';
 import { ShopGoToButton } from './shop';
+import { invisibleChar } from '$lib/util/invisibleChar';
 
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
@@ -28,6 +29,7 @@ export async function renderCategoryShopPage(
   economy: FullGuildSettings['economy'],
 ) {
   return {
+    content: invisibleChar,
     embeds: [
       {
         author: {

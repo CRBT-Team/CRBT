@@ -117,7 +117,7 @@ export function currencyFormat(
 export function formatItemValue(itemType: ItemType, itemValue?: string) {
   switch (itemType) {
     case ItemType.COSMETIC: {
-      return itemValue;
+      return 'Cosmetic item';
     }
     case ItemType.ROLE: {
       return roleMention(itemValue);

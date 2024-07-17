@@ -1,57 +1,64 @@
-import { emojis } from '$lib/env';
+import { colors, emojis } from '$lib/env';
 import { t } from '$lib/language';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
 import { EconomyCommand, getServerMember, upsertGuildMember } from './_helpers';
+import { timestampMention } from '@purplet/utils';
 
 export const daily: EconomyCommand = {
-  getMeta() {
+  getMeta({ plural }) {
     return {
       name: 'daily',
-      description: 'Come back every day to increase your rewards!',
+      description: `Claim free ${plural} every day and increase your streak!`,
     };
   },
   async handle() {
     const ONE_DAY = 86400000;
-    await this.deferReply();
 
     const member = await getServerMember(this.user.id, this.guildId);
 
     if (member?.lastDaily && member.lastDaily.getTime() > Date.now() - ONE_DAY) {
-      return this.editReply({
+      return this.reply({
         embeds: [
           {
-            title: 'You already claimed your daily reward!',
+            title: `${emojis.error} You already claimed your daily reward!`,
             description: dedent`
-              Come back in **${new Date(member.lastDaily.getTime() + ONE_DAY).toLocaleTimeString(
-                this.locale,
+              Come back **${timestampMention(
+                member.lastDaily.getTime() + ONE_DAY,
+                'R',
               )}** to claim your next reward.
             `,
+            color: colors.error,
           },
         ],
+        ephemeral: true,
       });
     }
 
+    await this.deferReply();
+
     const rawIncome = getPurplets(0);
-    const income = (member?.dailyStreak || 0) > 5 ? rawIncome * 1.3 : rawIncome;
+    const streak = member?.dailyStreak || 0;
+    const hasBonus = streak === 6;
+    const income = hasBonus ? rawIncome * 1.3 : rawIncome;
 
     await upsertGuildMember(this, {
-      money: income,
-      dailyStreak: member?.dailyStreak > 5 ? member?.dailyStreak : 0,
+      money: member?.money + income,
+      dailyStreak: !hasBonus ? streak + 1 : 0,
       lastDaily: new Date(),
     });
 
     await this.editReply({
       embeds: [
         {
-          title: 'You claimed your daily reward!',
-          description: dedent`
-            You earned **${income}** Purplets!
-            Come back tomorrow to claim your daily reward (${
-              5 - (member?.dailyStreak || 0)
-            } days left for a streak bonus!).
-          `,
+          title: `${emojis.success} Daily reward claimed!`,
+          description:
+            dedent`
+            You earned **${income}** Purplets! ${hasBonus ? '(+30% 7-day streak bonus!)' : ''}
+            Come back in 24 hours to claim your next daily reward.` +
+            (hasBonus ? ` (Streak reset!)` : ` (${6 - streak} day(s) left for a streak bonus!)`),
+          color: colors.success,
         },
       ],
       components: components(

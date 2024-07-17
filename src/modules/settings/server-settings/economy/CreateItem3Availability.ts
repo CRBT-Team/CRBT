@@ -73,7 +73,7 @@ export async function handleCreateItemPart3(
               ? 'Set Availability'
               : 'Edit Availability',
           )
-          .setStyle('PRIMARY')
+          .setStyle(!buildingItem.stock && !buildingItem.availableUntil ? 'PRIMARY' : 'SECONDARY')
           .setEmoji(emojis.buttons.edit),
       ),
       row(
@@ -89,7 +89,7 @@ export async function handleCreateItemPart3(
               .setEmoji(emojis.buttons.right_arrow)
               .setStyle('PRIMARY')
           : new CreateItemReview()
-              .setEmoji(emojis.buttons.left_arrow)
+              .setEmoji(emojis.buttons.right_arrow)
               .setLabel(t(this, 'PREVIEW'))
               .setStyle('PRIMARY'),
       ),

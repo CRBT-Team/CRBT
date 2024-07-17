@@ -5,7 +5,7 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { GuildMember, Item } from '@prisma/client';
 import { Interaction } from 'discord.js';
-import { components, row } from 'purplet';
+import { ButtonComponent, components, row } from 'purplet';
 import {
   EconomyCommand,
   formatItemType,
@@ -15,6 +15,7 @@ import {
 } from '../_helpers';
 import { GoToPageButton } from './GoToPageButton';
 import { ItemSelectMenu } from './Item';
+import { invisibleChar } from '$lib/util/invisibleChar';
 
 export const inventory: EconomyCommand = {
   getMeta() {
@@ -43,10 +44,11 @@ export async function renderInventory(
   const pages = Math.ceil((member?.items?.length || 0) / 3) - 1;
 
   return {
+    content: this instanceof ButtonComponent ? invisibleChar : undefined,
     embeds: [
       {
         author: {
-          name: `${formatUsername(this.user)} - Your Inventory`,
+          name: `${formatUsername(this.user)} - Inventory`,
           icon_url: avatar(this.user),
         },
         description: !items.length
@@ -57,8 +59,8 @@ export async function renderInventory(
           const isActive = member.activeItems.find((a) => a.id === i.id);
 
           return {
-            name: `${i.emoji} ${i.name} ${hasValue && isActive ? '(Equipped)' : ''}`,
-            value: `${formatItemType(i.type, this.locale)} - ${formatItemValue(i.type, i.value)}`,
+            name: `${i.emoji} ${i.name} ${hasValue && isActive ? '(Equipped)' : '(Not Equipped)'}`,
+            value: `${formatItemType(i.type, this.locale)}: ${formatItemValue(i.type, i.value)}`,
             inline: true,
           };
         }),
@@ -68,11 +70,15 @@ export async function renderInventory(
     components: components(
       row(
         new ItemSelectMenu().setOptions(
-          member.items.map((i) => ({
-            label: i.name,
-            emoji: i.emoji,
-            value: i.id,
-          })),
+          member.items.map((i) => {
+            const isActive = member.activeItems.find((a) => a.id === i.id);
+
+            return {
+              label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
+              emoji: i.emoji,
+              value: i.id,
+            };
+          }),
         ),
       ),
       row(
@@ -81,7 +87,7 @@ export async function renderInventory(
           .setStyle('PRIMARY')
           .setDisabled(page === 0),
         new GoToPageButton({ page: page - 1, s: true })
-          .setEmoji(emojis.buttons.skip_first)
+          .setEmoji(emojis.buttons.left_arrow)
           .setStyle('PRIMARY')
           .setDisabled(page === 0),
         new GoToPageButton({ page: page + 1 })
@@ -93,7 +99,6 @@ export async function renderInventory(
           .setStyle('PRIMARY')
           .setDisabled(page >= pages),
       ),
-      //TODO: add item select menu
     ),
   };
 }

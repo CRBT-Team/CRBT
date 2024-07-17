@@ -4,13 +4,15 @@ import { avatar } from '$lib/functions/avatar';
 import { getColor } from '$lib/functions/getColor';
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 import { getGuildSettings } from '../settings/server-settings/_helpers';
-import { EconomyCommand } from './_helpers';
+import { currencyFormat, EconomyCommand } from './_helpers';
+import { formatUsername } from '$lib/functions/formatUsername';
+import { slashCmd } from '$lib/functions/commandMention';
 
 export const balance: EconomyCommand = {
-  getMeta() {
+  getMeta({ singular }) {
     return {
       name: 'balance',
-      description: "Get a user's balance for this server.",
+      description: `Get a user's ${singular} balance.`,
       options: [
         {
           type: ApplicationCommandOptionType.User,
@@ -31,7 +33,6 @@ export const balance: EconomyCommand = {
       });
 
       const rank = leaderboard.findIndex(({ userId }) => userId === user.id);
-      console.log(rank);
 
       const { economy } = await getGuildSettings(this.guildId);
       const { money } = leaderboard[rank] || { money: 0 };
@@ -41,23 +42,29 @@ export const balance: EconomyCommand = {
           {
             author: {
               icon_url: avatar(user),
-              name: `${user.tag} - Balance`,
+              name: `${formatUsername(user)} - Balance`,
             },
-            description: `${economy.currencySymbol} ${money} ${
-              money === 1 ? economy.currencyNamePlural : economy.currencyNamePlural
-            }`,
+            description: currencyFormat(
+              {
+                money: money,
+              },
+              economy,
+              this.locale,
+            ),
             fields: [
               {
                 name: 'Leaderboard Rank',
                 value:
-                  money === 0
+                  (money === 0
                     ? 'Not on the server leaderboard.'
-                    : `**${ordinal(rank + 1, this.locale)}** on the server leaderboard.`,
+                    : `**${ordinal(rank + 1, this.locale)}** on the server leaderboard.`) +
+                  ` ${slashCmd('leaderboard')}`,
               },
             ],
             color: await getColor(this.user),
           },
         ],
+        ephemeral: true,
       });
     } catch (error) {
       this.reply(UnknownError(this, String(error)));

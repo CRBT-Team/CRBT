@@ -71,7 +71,7 @@ export const CreateItemReview = ButtonComponent({
             {
               name: 'Stock',
               value:
-                buildingItem.stock !== 0
+                buildingItem.stock === 0
                   ? 'Unlimited'
                   : buildingItem.stock?.toLocaleString(this.locale),
               inline: true,

@@ -25,7 +25,7 @@ export async function renderItem(
     embeds: [
       {
         author: {
-          name: `${formatUsername(this.user)} - Your Inventory`,
+          name: `${formatUsername(this.user)} - Inventory`,
           iconURL: avatar(this.user, 64),
         },
         title: `${item.emoji} ${item.name} ${hasValue && isActive ? '(Equipped)' : ''}`,
@@ -33,7 +33,7 @@ export async function renderItem(
         fields: [
           {
             name: 'Value',
-            value: `${formatItemType(item.type, this.locale)} - ${formatItemValue(
+            value: `${formatItemType(item.type, this.locale)}: ${formatItemValue(
               item.type,
               item.value,
             )}`,
@@ -46,12 +46,16 @@ export async function renderItem(
     components: components(
       row(
         new ItemSelectMenu().setOptions(
-          member.items.map((i) => ({
-            label: i.name,
-            emoji: i.emoji,
-            value: i.id,
-            default: i.id === item.id,
-          })),
+          member.items.map((i) => {
+            const isActive = member.activeItems.find((a) => a.id === i.id);
+
+            return {
+              label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
+              emoji: i.emoji,
+              value: i.id,
+              default: i.id === item.id,
+            };
+          }),
         ),
       ),
       row(
@@ -63,14 +67,15 @@ export async function renderItem(
           .setStyle('SECONDARY'),
       ).addComponents(
         hasValue
-          ? new ToggleActiveItemButton({
-              itemId: item.id,
-              newState: !isActive,
-            })
-              .setLabel(isActive ? 'Unequip' : 'Equip')
-              .setStyle(isActive ? 'DANGER' : 'SUCCESS')
-              .setDisabled(item.type === ItemType.INCOME_MULTIPLIER)
-          : null,
+          ? [
+              new ToggleActiveItemButton({
+                itemId: item.id,
+                newState: !isActive,
+              })
+                .setLabel(isActive ? 'Unequip' : 'Equip')
+                .setStyle(isActive ? 'DANGER' : 'SUCCESS'),
+            ]
+          : [],
       ),
     ),
   };
@@ -93,8 +98,6 @@ export const ToggleActiveItemButton = ButtonComponent({
       economy: { items },
     } = await getGuildSettings(this.guildId);
     const item = items.find((i) => i.id === itemId);
-
-    console.log(newState);
 
     switch (item.type) {
       case ItemType.ROLE: {

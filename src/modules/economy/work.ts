@@ -93,7 +93,7 @@ export const work: EconomyCommand = {
           `,
           fields: [
             {
-              name: 'EXP',
+              name: 'Experience Points earned',
               value: `+${expGain} (${newData.workExp} total, level ${newLevel})`,
             },
           ],
