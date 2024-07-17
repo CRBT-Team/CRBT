@@ -19,10 +19,10 @@ export function economyNavBar(i: Interaction, activeTab: Tabs) {
       .setStyle('SECONDARY')
       .setLabel('Shop')
       .setDisabled(activeTab === 'shop'),
-    new MessageButton()
-      .setStyle('SECONDARY')
-      .setLabel('Income commands')
-      .setCustomId('commands')
-      .setDisabled(activeTab === 'commands'),
+    // new MessageButton()
+    //   .setStyle('SECONDARY')
+    //   .setLabel('Income commands')
+    //   .setCustomId('commands')
+    //   .setDisabled(activeTab === 'commands'),
   );
 }
