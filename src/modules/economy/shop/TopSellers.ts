@@ -16,7 +16,14 @@ export async function renderShopTopSellers(this: Interaction) {
         _count: 'desc',
       },
     },
-    take: 10,
+    include: {
+      owners: {
+        select: {
+          userId: true,
+        },
+      },
+    },
+    take: 5,
   });
 
   return {
@@ -30,7 +37,15 @@ export async function renderShopTopSellers(this: Interaction) {
         title: 'Top Sellers',
         description: 'The most popular items in the shop. Buy them while they last!',
         fields: items.map((i) => ({
-          name: `${i.emoji} ${i.name}`,
+          name:
+            `${i.emoji} ${i.name}` +
+            (i.owners.find((o) => o.userId === this.user.id)
+              ? ' (Owned)'
+              : i.stock === 0
+                ? ' (Out of stock)'
+                : i.stock !== null && i.stock <= 5
+                  ? ` (Only ${i.stock} in stock)`
+                  : ''),
           value: currencyFormat(i.price, economy, this.locale),
         })),
         color: await getColor(this.guild),
@@ -60,7 +75,7 @@ export async function renderShopTopSellers(this: Interaction) {
         new ItemSelectMenu('shop' as never)
           .setOptions(
             items.map((i) => ({
-              label: i.name,
+              label: `${i.name} ${i.stock === 0 ? '(Out of stock)' : ''}`,
               emoji: i.emoji,
               description: currencyFormat(i.price, economy, this.locale, {
                 withoutSymbol: true,
