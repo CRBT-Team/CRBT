@@ -10,7 +10,7 @@ import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { EmbedFieldData, Interaction, MessageButton } from 'discord.js';
 import { components, row } from 'purplet';
-import { ItemType, currencyFormat } from '../../../economy/_helpers';
+import { ItemType, currencyFormat, getServerMember } from '../../../economy/_helpers';
 import { BuyItemButton } from '../../../economy/shop/BuyItemButton';
 import { ShopGoToButton } from '../../../economy/shop/shop';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
@@ -30,12 +30,19 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
     }),
   );
   const userHasItem = !!fullItem.owners.find((m) => m.userId === this.user.id);
-  console.log(fullItem);
+  const member = await getServerMember(this.user.id, this.guildId);
   const category = economy.categories.find((c) => c.id === item.categoryId);
+
   const fields: EmbedFieldData[] = [
     {
       name: 'Price',
-      value: currencyFormat(item.price, economy, this.locale),
+      value:
+        currencyFormat(item.price, economy, this.locale) +
+        (mode === 'shop'
+          ? ` • You have: ${currencyFormat(member.money, economy, this.locale, {
+              zeroEqualsFree: false,
+            })}`
+          : ''),
       inline: true,
     },
   ];
@@ -83,12 +90,16 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
     value:
       mode === 'shop' && userHasItem
         ? '**Bought**'
-        : dedent`
-      ${item.stock ? `${item.stock} remaining in stock` : 'Unlimited stock'} • ${
-        item.availableUntil
-          ? `**Available until ${timestampMention(item.availableUntil, 'R')}**`
-          : 'Always available for purchase'
-      }`,
+        : item.availableUntil && item.availableUntil < new Date()
+          ? '**Expired**'
+          : item.stock === 0
+            ? '**Out of stock**'
+            : dedent`
+        ${item.stock === null ? 'Unlimited stock' : `${item.stock} remaining in stock`} • ${
+          item.availableUntil
+            ? `**Available until ${timestampMention(item.availableUntil, 'R')}**`
+            : 'Always available for purchase'
+        }`,
   });
 
   const header =
@@ -147,7 +158,11 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
                     .setLabel('In inventory')
                     .setStyle('SECONDARY')
                 : item.stock !== null && item.stock <= 0
-                  ? new MessageButton().setLabel('Out of stock').setStyle('SECONDARY').setDisabled()
+                  ? new MessageButton()
+                      .setLabel('Out of stock')
+                      .setCustomId('outofstocklolsosad')
+                      .setStyle('SECONDARY')
+                      .setDisabled()
                   : new BuyItemButton(item.id)
                       .setLabel(
                         `Purchase - ${currencyFormat(item.price, economy, this.locale, {
@@ -155,7 +170,8 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
                         })}`,
                       )
                       .setEmoji(economy.currencySymbol)
-                      .setStyle('PRIMARY'),
+                      .setStyle('PRIMARY')
+                      .setDisabled(item.price > member.money),
             ]),
       ),
     ),
