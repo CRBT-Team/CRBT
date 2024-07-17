@@ -16,12 +16,13 @@ import {
 import { GoToPageButton } from './GoToPageButton';
 import { ItemSelectMenu } from './Item';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { ShopGoToButton } from '../shop/shop';
 
 export const inventory: EconomyCommand = {
   getMeta() {
     return {
       name: 'inventory',
-      description: 'List and use your items.',
+      description: 'View and equip your items.',
     };
   },
   async handle() {
@@ -69,17 +70,26 @@ export async function renderInventory(
     ],
     components: components(
       row(
-        new ItemSelectMenu().setOptions(
-          member.items.map((i) => {
-            const isActive = member.activeItems.find((a) => a.id === i.id);
+        new ItemSelectMenu()
+          .setOptions(
+            member.items.length
+              ? member.items.map((i) => {
+                  const isActive = member.activeItems.find((a) => a.id === i.id);
 
-            return {
-              label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
-              emoji: i.emoji,
-              value: i.id,
-            };
-          }),
-        ),
+                  return {
+                    label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
+                    emoji: i.emoji,
+                    value: i.id,
+                  };
+                })
+              : [
+                  {
+                    label: 'No items',
+                    value: 'null',
+                  },
+                ],
+          )
+          .setDisabled(!items.length),
       ),
       row(
         new GoToPageButton({ page: 0 })
@@ -94,11 +104,12 @@ export async function renderInventory(
           .setEmoji(emojis.buttons.right_arrow)
           .setStyle('PRIMARY')
           .setDisabled(page >= pages),
-        new GoToPageButton({ page: pages, s: true })
+        new GoToPageButton({ page: pages, s: false })
           .setEmoji(emojis.buttons.skip_last)
           .setStyle('PRIMARY')
           .setDisabled(page >= pages),
       ),
+      row(new ShopGoToButton({ menu: 'topSellers' }).setLabel('Open Shop').setStyle('SECONDARY')),
     ),
   };
 }
