@@ -1,11 +1,13 @@
 import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
+import { slashCmd } from '$lib/functions/commandMention';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { dbTimeout } from '$lib/timeouts/dbTimeout';
 import { TimeoutTypes } from '$lib/types/timeouts';
 import { ReminderTypes } from '@prisma/client';
 import { MessageButton } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
+import { getUserReminders } from '../tools/reminders/_helpers';
 
 export const RemindButton = ButtonComponent({
   async handle({ relativetime, userId }) {
@@ -15,7 +17,7 @@ export const RemindButton = ButtonComponent({
     if (relativetime < new Date().getTime()) {
       return CRBTError(
         this,
-        "You can't set this reminder as the cooldown for this command has passed."
+        "You can't set this reminder as the cooldown for this command has passed.",
       );
     }
 
@@ -28,17 +30,23 @@ export const RemindButton = ButtonComponent({
       orderBy: { endDate: 'desc' },
     });
 
+    const command =
+      this.message.interaction.type === 'APPLICATION_COMMAND' &&
+      this.message.interaction.commandName;
+
     if (!reminder || Math.abs(reminder.endDate.getTime() - relativetime) > 60000) {
       await dbTimeout(TimeoutTypes.Reminder, {
-        userId: this.user.id,
-        destination: 'dm',
-        endDate: new Date(relativetime),
-        locale: this.locale,
         id: `${this.guildId ?? '@me'}/${this.channelId}/${this.message.id}`,
-        subject: 'Command reminder from CRBT.',
-        details: null,
+        endDate: new Date(relativetime),
+        destination: 'dm',
+        userId: this.user.id,
+        subject: `Command reminder from CRBT: ${slashCmd(command)}`,
+        locale: this.locale,
         type: ReminderTypes.COMMAND,
+        details: null,
       });
+      // Refresh cache
+      await getUserReminders(this.user.id, true);
     }
 
     await this.update({
@@ -49,8 +57,8 @@ export const RemindButton = ButtonComponent({
             .setStyle('SECONDARY')
             .setLabel('Reminder set!')
             .setEmoji(emojis.success)
-            .setDisabled(true)
-        )
+            .setDisabled(true),
+        ),
       ),
     });
   },
