@@ -4,7 +4,7 @@ import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
 import { ItemEditProps } from './MenuOverview';
 import { getGuildSettings } from '../_helpers';
-import { newItemCache } from './CreateItemPart1';
+import { newItemCache } from './CreateItem1Info';
 import { EditItemInfoModal } from './EditItemInfoModal';
 
 export const EditItemInfoButton = ButtonComponent({

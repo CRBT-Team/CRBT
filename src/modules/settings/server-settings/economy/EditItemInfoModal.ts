@@ -3,10 +3,9 @@ import { prisma } from '$lib/db';
 import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
-import { ItemEditProps } from '.';
-import { getGuildSettings } from '../_helpers';
-import { handleCreateItemPart1, newItemCache } from './CreateItemPart1';
-import { renderItem } from './renderItem';
+import { ItemEditProps } from './MenuOverview';
+import { handleCreateItemPart1, newItemCache } from './CreateItem1Info';
+import { renderItem } from './MenuItem';
 
 export const EditItemInfoModal = ModalComponent({
   async handle({ id, mode, cId }: ItemEditProps) {
@@ -56,9 +55,7 @@ export const EditItemInfoModal = ModalComponent({
         true,
       );
 
-      const { economy } = await getGuildSettings(this.guildId, true);
-
-      return this.update(await renderItem.call(this, newData, economy, 'edit'));
+      return this.update(await renderItem.call(this, newData, 'edit'));
     }
   },
 });

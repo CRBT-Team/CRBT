@@ -1,9 +1,8 @@
 import { prisma } from '$lib/db';
 import { dateToSnowflake } from '@purplet/utils';
 import { ButtonComponent } from 'purplet';
-import { getGuildSettings } from '../_helpers';
-import { newItemCache } from './CreateItemPart1';
-import { renderItem } from './renderItem';
+import { newItemCache } from './CreateItem1Info';
+import { renderItem } from './MenuItem';
 
 export const CreateItemSaveButton = ButtonComponent({
   async handle() {
@@ -32,8 +31,6 @@ export const CreateItemSaveButton = ButtonComponent({
     });
     newItemCache.delete(this.message.id);
 
-    const { economy } = await getGuildSettings(this.guildId, true);
-
-    await this.editReply(await renderItem.call(this, newItem, economy, 'edit'));
+    await this.editReply(await renderItem.call(this, newItem, 'edit'));
   },
 });

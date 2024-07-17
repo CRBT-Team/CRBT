@@ -1,6 +1,6 @@
 import { SelectMenuComponent } from 'purplet';
 import { getGuildSettings } from '../../settings/server-settings/_helpers';
-import { renderItem } from '../../settings/server-settings/economy/renderItem';
+import { renderItem } from '../../settings/server-settings/economy/MenuItem';
 
 export const ItemSelectMenu = SelectMenuComponent({
   async handle(mode: 'shop' | 'edit') {
@@ -8,6 +8,6 @@ export const ItemSelectMenu = SelectMenuComponent({
     const { economy } = await getGuildSettings(this.guildId);
     const item = economy.items.find((i) => i.id === id);
 
-    await this.update(await renderItem.call(this, item, economy, mode));
+    await this.update(await renderItem.call(this, item, mode));
   },
 });

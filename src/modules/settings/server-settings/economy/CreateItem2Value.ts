@@ -1,5 +1,4 @@
-import { emojis, icons } from '$lib/env';
-import { getColor } from '$lib/functions/getColor';
+import { emojis } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import dedent from 'dedent';
@@ -7,10 +6,12 @@ import { MessageComponentInteraction, MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { ItemType, formatItemType, formatItemValue, itemTypes } from '../../../economy/_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
-import { CreateItemPart1, newItemCache } from './CreateItemPart1';
-import { CreateItemPart3 } from './CreateItemPart3';
+import { CreateItemPart1, newItemCache } from './CreateItem1Info';
+import { CreateItemPart3 } from './CreateItem3Availability';
 import { EditItemTypeSelectMenu } from './EditItemTypeSelectMenu';
 import { roleSelectMenuCustomId } from './EditItemValueRoleSelect';
+import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 
 export const CreateItemPart2 = ButtonComponent({
   async handle() {
@@ -21,20 +22,30 @@ export const CreateItemPart2 = ButtonComponent({
 //TODO: localize
 export async function handleCreateItemPart2(this: MessageComponentInteraction) {
   await this.deferUpdate();
+  const settings = await getGuildSettings(this.guildId);
 
   const buildingItem = newItemCache.get(this.message.id);
 
   const lastRow = [
     new CancelItemCreateButton(buildingItem.categoryId)
       .setLabel(t(this, 'CANCEL'))
-      .setStyle('SECONDARY'),
+      .setStyle('DANGER'),
     new CreateItemPart1(buildingItem.categoryId)
       .setEmoji(emojis.buttons.left_arrow)
-      .setStyle('SECONDARY'),
+      .setStyle(
+        buildingItem.type === undefined ||
+          (itemTypes[buildingItem.type].hasValue && !buildingItem.value)
+          ? 'SECONDARY'
+          : 'PRIMARY',
+      ),
     new CreateItemPart3()
-      // .setLabel(t(this, 'NEXT'))
       .setEmoji(emojis.buttons.right_arrow)
-      .setStyle('PRIMARY')
+      .setStyle(
+        buildingItem.type === undefined ||
+          (itemTypes[buildingItem.type].hasValue && !buildingItem.value)
+          ? 'SECONDARY'
+          : 'PRIMARY',
+      )
       .setDisabled(
         buildingItem.type === undefined ||
           (itemTypes[buildingItem.type].hasValue && !buildingItem.value),
@@ -44,12 +55,15 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
   await this.editReply({
     embeds: [
       {
-        author: {
-          name: `${this.guild.name} - ${t(this, 'SETTINGS_TITLE')}`,
-          iconURL: icons.settings,
-        },
-        color: await getColor(this.guild),
-        title: `Create Item > ${buildingItem?.name || 'New Item'} > Value`,
+        ...getGuildSettingsHeader(
+          this.guild,
+          settings,
+          this.locale,
+          t(this, EditableGuildFeatures.economy),
+          'Shop',
+          'Create Item',
+        ),
+        title: `${buildingItem.name} - Value`,
         description: dedent`
         Choose the type of item to create, and its value.
         Once the item is created, you will not be able change its type.
@@ -75,7 +89,7 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
               ]
             : []),
         ],
-        thumbnail: buildingItem.emoji ? { url: getEmojiURL(buildingItem.emoji) } : null,
+        thumbnail: { url: getEmojiURL(buildingItem.emoji) },
       },
     ],
     components: components(
@@ -83,14 +97,14 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
         new EditItemTypeSelectMenu().setOptions([
           {
             label: 'Role',
-            description: 'Buying this item grants the selected role.',
+            description: 'Equipping this item gives the selected role.',
             value: ItemType.ROLE.toString(),
             emoji: emojis.role,
             default: buildingItem.type === ItemType.ROLE,
           },
           {
             label: 'Cosmetic',
-            description: 'This item is purely cosmetic, and has no value.',
+            description: 'This item is purely cosmetic and has no value.',
             value: ItemType.COSMETIC.toString(),
             emoji: '✨',
             default: buildingItem.type === ItemType.COSMETIC,
@@ -106,7 +120,9 @@ export async function handleCreateItemPart2(this: MessageComponentInteraction) {
             ]
           : lastRow),
       ),
-      ...(buildingItem.type === ItemType.ROLE ? [row().addComponents(lastRow)] : []),
+      ...(buildingItem.type !== undefined && itemTypes[buildingItem.type].hasValue
+        ? [row().addComponents(lastRow)]
+        : []),
     ),
   });
 }

@@ -6,23 +6,25 @@ import { t } from '$lib/language';
 import { Item } from '@prisma/client';
 import { Dayjs } from 'dayjs';
 import { ModalComponent } from 'purplet';
-import { ItemEditProps } from '.';
-import { getGuildSettings } from '../_helpers';
-import { newItemCache } from './CreateItemPart1';
-import { handleCreateItemPart3 } from './CreateItemPart3';
-import { renderItem } from './renderItem';
+import { ItemEditProps } from './MenuOverview';
+import { newItemCache } from './CreateItem1Info';
+import { handleCreateItemPart3 } from './CreateItem3Availability';
+import { renderItem } from './MenuItem';
 
 export const EditItemAvailabilityModal = ModalComponent({
   async handle({ mode, id }: ItemEditProps) {
     const stock = this.fields.getTextInputValue('stock')
       ? parseInt(this.fields.getTextInputValue('stock'))
       : null;
-    let date: Dayjs;
+    const rawDate = this.fields.getTextInputValue('date');
+    let date: Dayjs | null = null;
 
-    try {
-      date = await resolveToDate(this.fields.getTextInputValue('date'));
-    } catch (e) {
-      return CRBTError(this, t(this, 'remind me.errors.INVALID_FORMAT'));
+    if (rawDate) {
+      try {
+        date = await resolveToDate(rawDate);
+      } catch (e) {
+        return CRBTError(this, t(this, 'remind me.errors.INVALID_FORMAT'));
+      }
     }
 
     if (stock !== null && isNaN(stock)) {
@@ -40,7 +42,7 @@ export const EditItemAvailabilityModal = ModalComponent({
       const newData: Partial<Item> = {
         ...newItemCache.get(this.message.id),
         stock: stock,
-        availableUntil: date.toDate(),
+        availableUntil: date?.toDate(),
       };
 
       newItemCache.set(this.message.id, newData);
@@ -54,7 +56,7 @@ export const EditItemAvailabilityModal = ModalComponent({
             where: { id: id },
             data: {
               stock: stock,
-              availableUntil: date.toDate(),
+              availableUntil: date?.toDate(),
             },
             include: {
               owners: true,
@@ -64,9 +66,7 @@ export const EditItemAvailabilityModal = ModalComponent({
         true,
       );
 
-      const { economy } = await getGuildSettings(this.guildId, true);
-
-      return this.update(await renderItem.call(this, newData, economy, 'edit'));
+      return this.update(await renderItem.call(this, newData, 'edit'));
     }
   },
 });

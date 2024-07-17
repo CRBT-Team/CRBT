@@ -1,7 +1,7 @@
 import { SelectMenuComponent } from 'purplet';
 import { ItemType } from '../../../economy/_helpers';
-import { newItemCache } from './CreateItemPart1';
-import { handleCreateItemPart2 } from './CreateItemPart2';
+import { newItemCache } from './CreateItem1Info';
+import { handleCreateItemPart2 } from './CreateItem2Value';
 
 export const EditItemTypeSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
@@ -9,6 +9,7 @@ export const EditItemTypeSelectMenu = SelectMenuComponent({
     const newData = {
       ...newItemCache.get(this.message.id),
       type,
+      value: undefined, // Reset value when changing type
     };
 
     newItemCache.set(this.message.id, newData);

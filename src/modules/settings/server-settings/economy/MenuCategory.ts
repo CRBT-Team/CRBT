@@ -9,7 +9,7 @@ import { SelectMenuComponent, components, row } from 'purplet';
 import { currencyFormat, formatItemType, formatItemValue } from '../../../economy/_helpers';
 import { ItemSelectMenu } from '../../../economy/shop/ItemSelectMenu';
 import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
-import { CreateItemPart1 } from './CreateItemPart1';
+import { CreateItemPart1 } from './CreateItem1Info';
 import { ShopButton } from './MenuShop';
 import { EditCategoryButton } from './EditCategoryButton';
 

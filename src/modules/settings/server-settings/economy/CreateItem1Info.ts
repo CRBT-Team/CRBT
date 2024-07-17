@@ -2,13 +2,14 @@ import { emojis, icons } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
 import { Item } from '@prisma/client';
-import { MessageButton, MessageComponentInteraction } from 'discord.js';
+import { MessageButton, MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import { currencyFormat } from '../../../economy/_helpers';
-import { getGuildSettings } from '../_helpers';
+import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
-import { CreateItemPart2 } from './CreateItemPart2';
+import { CreateItemPart2 } from './CreateItem2Value';
 import { EditItemInfoButton } from './EditItemInfoButton';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 
 export const newItemCache = new Map<string, Partial<Item>>();
 
@@ -18,20 +19,27 @@ export const CreateItemPart1 = ButtonComponent({
   },
 });
 
-export async function handleCreateItemPart1(this: MessageComponentInteraction, categoryId: string) {
+export async function handleCreateItemPart1(
+  this: MessageComponentInteraction | ModalSubmitInteraction,
+  categoryId: string,
+) {
   await this.deferUpdate();
-  const { economy, accentColor } = await getGuildSettings(this.guildId);
+  const settings = await getGuildSettings(this.guildId);
+  const { economy } = settings;
   const buildingItem = newItemCache.get(this.message.id);
 
   await this.editReply({
     embeds: [
       {
-        author: {
-          name: `${this.guild.name} - ${t(this, 'SETTINGS_TITLE')}`,
-          iconURL: icons.settings,
-        },
-        color: accentColor,
-        title: `Create Item > ${buildingItem?.name || 'New Item'} > Information`,
+        ...getGuildSettingsHeader(
+          this.guild,
+          settings,
+          this.locale,
+          t(this, EditableGuildFeatures.economy),
+          'Shop',
+          'Create Item',
+        ),
+        title: `${buildingItem?.name || 'New Item'} - Information`,
         description: 'Choose a name, icon, description & price for your item.',
         fields: [
           {
@@ -59,21 +67,20 @@ export async function handleCreateItemPart1(this: MessageComponentInteraction, c
           mode: 'setup',
           cId: categoryId,
         })
-          .setLabel(t(this, 'EDIT'))
+          .setLabel(buildingItem?.name ? 'Edit Information' : 'Set Information')
           .setEmoji(emojis.buttons.edit)
-          .setStyle('PRIMARY'),
+          .setStyle(buildingItem?.name ? 'SECONDARY' : 'PRIMARY'),
       ),
       row(
-        new CancelItemCreateButton(categoryId).setLabel(t(this, 'CANCEL')).setStyle('SECONDARY'),
+        new CancelItemCreateButton(categoryId).setLabel(t(this, 'CANCEL')).setStyle('DANGER'),
         new MessageButton()
           .setCustomId('whocares')
           .setDisabled()
           .setEmoji(emojis.buttons.left_arrow)
-          .setStyle('SECONDARY'),
+          .setStyle(buildingItem?.name ? 'PRIMARY' : 'SECONDARY'),
         new CreateItemPart2()
-          // .setLabel(t(this, 'NEXT'))
           .setEmoji(emojis.buttons.right_arrow)
-          .setStyle('PRIMARY')
+          .setStyle(buildingItem?.name ? 'PRIMARY' : 'SECONDARY')
           .setDisabled(!buildingItem?.name || !buildingItem?.emoji || !buildingItem?.description),
       ),
     ),

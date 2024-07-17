@@ -4,31 +4,41 @@ import { t } from '$lib/language';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { ButtonComponent, components, row } from 'purplet';
-import { currencyFormat, formatItemType, formatItemValue } from '../../../economy/_helpers';
-import { getGuildSettings } from '../_helpers';
+import {
+  currencyFormat,
+  formatItemType,
+  formatItemValue,
+  itemTypes,
+} from '../../../economy/_helpers';
+import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
-import { CreateItemPart1, newItemCache } from './CreateItemPart1';
-import { CreateItemPart2 } from './CreateItemPart2';
-import { CreateItemPart3 } from './CreateItemPart3';
-import { CreateItemSaveButton } from './CreateItemSaveButton';
+import { CreateItemPart1, newItemCache } from './CreateItem1Info';
+import { CreateItemPart2 } from './CreateItem2Value';
+import { CreateItemPart3 } from './CreateItem3Availability';
+import { CreateItemSaveButton } from './CreateItem5SaveButton';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 
 export const CreateItemReview = ButtonComponent({
   async handle() {
-    const { economy, accentColor } = await getGuildSettings(this.guildId);
+    const settings = await getGuildSettings(this.guildId);
     const buildingItem = newItemCache.get(this.message.id);
+    const { economy } = settings;
+
+    console.log(buildingItem);
 
     await this.update({
       embeds: [
         {
-          author: {
-            name: `${this.guild.name} - ${t(this, 'SETTINGS_TITLE')}`,
-            iconURL: icons.settings,
-          },
-          color: accentColor,
-          title: `Create Item > ${buildingItem?.name || 'New Item'} > Review`,
-          description: dedent`
-          The final step! Make sure you double check these properties before saving.
-          `,
+          ...getGuildSettingsHeader(
+            this.guild,
+            settings,
+            this.locale,
+            t(this, EditableGuildFeatures.economy),
+            'Shop',
+            'Create Item',
+          ),
+          title: `${buildingItem.name} - Review`,
+          description: `The final step! Make sure you double check everything before saving.`,
           fields: [
             {
               name: 'Name',
@@ -53,7 +63,9 @@ export const CreateItemReview = ButtonComponent({
             },
             {
               name: 'Value',
-              value: formatItemValue(buildingItem.type, buildingItem.value),
+              value: buildingItem.value
+                ? formatItemValue(buildingItem.type, buildingItem.value)
+                : `*${t(this, 'NONE')}*`,
               inline: true,
             },
             {
@@ -78,20 +90,23 @@ export const CreateItemReview = ButtonComponent({
       components: components(
         row(
           new CreateItemPart1(buildingItem.categoryId)
-            .setLabel('Information')
+            .setLabel('Edit Information')
             .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY'),
-          new CreateItemPart2().setLabel('Value').setEmoji(emojis.buttons.edit).setStyle('PRIMARY'),
+          new CreateItemPart2()
+            .setLabel('Edit Value')
+            .setEmoji(emojis.buttons.edit)
+            .setStyle('PRIMARY'),
           new CreateItemPart3()
-            .setLabel('Availability')
+            .setLabel('Edit Availability')
             .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY'),
         ),
         row(
           new CancelItemCreateButton(buildingItem.categoryId)
             .setLabel(t(this, 'CANCEL'))
-            .setStyle('SECONDARY'),
-          new CreateItemSaveButton().setStyle('SUCCESS').setLabel(t(this, 'SAVE')),
+            .setStyle('DANGER'),
+          new CreateItemSaveButton().setStyle('SUCCESS').setLabel('Save & Create Item'),
         ),
       ),
     });

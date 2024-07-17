@@ -1,6 +1,6 @@
 import { OnEvent } from 'purplet';
-import { newItemCache } from './CreateItemPart1';
-import { handleCreateItemPart2 } from './CreateItemPart2';
+import { newItemCache } from './CreateItem1Info';
+import { handleCreateItemPart2 } from './CreateItem2Value';
 
 export const roleSelectMenuCustomId = 'hroleSelectMenu';
 

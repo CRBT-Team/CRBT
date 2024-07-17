@@ -4,7 +4,7 @@ import { emojis } from '$lib/env';
 import { getColor } from '$lib/functions/getColor';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableGuildFeatures, FullGuildSettings } from '$lib/types/guild-settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { Item } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
@@ -16,13 +16,12 @@ import { ShopGoToButton } from '../../../economy/shop/shop';
 import { CancelItemCreateButton } from './CancelItemCreateButton';
 import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
 import { EditItemInfoButton } from './EditItemInfoButton';
+import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 
-export async function renderItem(
-  this: Interaction,
-  item: Item,
-  economy: FullGuildSettings['economy'],
-  mode: 'edit' | 'shop',
-) {
+export async function renderItem(this: Interaction, item: Item, mode: 'edit' | 'shop') {
+  const settings = await getGuildSettings(this.guildId, true);
+
+  const { economy } = settings;
   const fullItem = await fetchWithCache(`economyItem:${item.id}`, () =>
     prisma.item.findFirst({
       where: { id: item.id },
@@ -74,7 +73,7 @@ export async function renderItem(
   if (mode === 'edit') {
     fields.push({
       name: 'Stats',
-      value: `Purchased by ${fullItem.owners.length} members • Used by ${fullItem.activeMembers.length} members`,
+      value: `Purchased by ${fullItem.owners.length} member(s) • Used by ${fullItem.activeMembers.length} member(s)`,
     });
   }
 
@@ -93,18 +92,15 @@ export async function renderItem(
 
   const header =
     mode === 'edit'
-      ? {
-          title: `${t(this, EditableGuildFeatures.economy)} - ${category.label} - ${item.name}
-          `,
-          color: await getColor(this.guild),
-        }
-      : // getGuildSettingsHeader(this.locale, await getColor(this.guild), [
-        //     this.guild.name,
-        //     t(this, EditableGuildFeatures.economy),
-        //     category.label,
-        //     item.name,
-        //   ])
-        {
+      ? getGuildSettingsHeader(
+          this.guild,
+          settings,
+          this.locale,
+          t(this, EditableGuildFeatures.economy),
+          category.label,
+          item.name,
+        )
+      : {
           author: {
             name: `${this.guild.name} - Shop`,
             icon_url: this.guild.iconURL(),
@@ -127,13 +123,16 @@ export async function renderItem(
       row().addComponents(
         ...(mode === 'edit'
           ? [
+              new CancelItemCreateButton(category.id)
+                .setEmoji(emojis.buttons.left_arrow)
+                .setStyle('SECONDARY'),
               new EditItemInfoButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
-                .setLabel(`Information`)
+                .setLabel(`Edit Information`)
                 .setEmoji(emojis.buttons.edit),
               new EditItemAvailabilityButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
-                .setLabel(`Information`)
+                .setLabel(`Edit Availability`)
                 .setEmoji(emojis.buttons.edit),
             ]
           : [
@@ -159,13 +158,6 @@ export async function renderItem(
                     .setStyle('PRIMARY'),
             ]),
       ),
-      mode === 'edit'
-        ? row(
-            new CancelItemCreateButton(category.id)
-              .setEmoji(emojis.buttons.left_arrow)
-              .setStyle('SECONDARY'),
-          )
-        : row(),
     ),
   };
 }
