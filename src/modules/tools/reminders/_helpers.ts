@@ -64,6 +64,10 @@ export async function extractReminder(reminder: Reminder, client: Client) {
     id = reminder.id;
     [guildId, channelId, messageId] = id.split('/');
   }
+  if (reminder.type === ReminderTypes.COMMAND) {
+    id = reminder.id;
+    [guildId, channelId, messageId] = id.split('/');
+  }
 
   const channel = (await client.channels
     .fetch(channelId)
