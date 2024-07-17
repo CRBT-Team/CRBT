@@ -1,16 +1,16 @@
 import { emojis } from '$lib/env';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { t } from '$lib/language';
-import { EditableGuildFeatures, FullGuildSettings } from '$lib/types/guild-settings';
+import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { Category, Item } from '@prisma/client';
 import dedent from 'dedent';
 import { Interaction } from 'discord.js';
 import { SelectMenuComponent, components, row } from 'purplet';
-import { currencyFormat, formatItemValue } from '../../../economy/_helpers';
+import { currencyFormat, formatItemType, formatItemValue } from '../../../economy/_helpers';
 import { ItemSelectMenu } from '../../../economy/shop/ItemSelectMenu';
-import { getGuildSettings } from '../_helpers';
+import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 import { CreateItemPart1 } from './CreateItemPart1';
-import { EditCategoriesButton } from './EditCategoriesButton';
+import { ShopButton } from './MenuShop';
 import { EditCategoryButton } from './EditCategoryButton';
 
 export const CategorySelectMenu = SelectMenuComponent({
@@ -19,7 +19,7 @@ export const CategorySelectMenu = SelectMenuComponent({
     const { economy } = await getGuildSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === id);
 
-    await this.update(await renderItemCategoryEditMenu.call(this, category, economy));
+    await this.update(await renderItemCategoryEditMenu.call(this, category));
   },
 });
 
@@ -28,21 +28,28 @@ export async function renderItemCategoryEditMenu(
   category: Category & {
     items: Item[];
   },
-  economy: FullGuildSettings['economy'],
 ) {
+  const settings = await getGuildSettings(this.guildId);
+  const { economy } = settings;
+
   return {
     embeds: [
       {
-        title: `${t(this, EditableGuildFeatures.economy)} - ${category.label}`,
-
-        // ...getGuildSettingsHeader(this.locale, await getColor(this.guild), [
-        //   this.guild.name,
-        //   category.label,
-        // ]),
+        ...getGuildSettingsHeader(
+          this.guild,
+          settings,
+          this.locale,
+          t(this, EditableGuildFeatures.economy),
+          'Shop',
+          category.label,
+        ),
+        description: category.items.length
+          ? ''
+          : "This category doesn't have any items yet. Create one using the button below.",
         fields: category.items.map((i) => ({
           name: `${i.emoji} ${i.name}`,
           value: dedent`
-          ${i.type}: ${formatItemValue(i.type, i.value)}
+          ${formatItemType(i.type, this.locale)}: ${formatItemValue(i.type, i.value)}
           **${currencyFormat(i.price, economy, this.locale)}**`,
         })),
         thumbnail: category.emoji
@@ -54,16 +61,19 @@ export async function renderItemCategoryEditMenu(
     ],
     components: components(
       row(
-        new EditCategoriesButton().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
+        new ShopButton().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
         new EditCategoryButton(category.id)
-          .setLabel(t(this, 'EDIT'))
+          .setLabel('Edit Details')
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.edit),
-        new CreateItemPart1(category.id).setLabel('Create Item').setStyle('PRIMARY'),
+        new CreateItemPart1(category.id)
+          .setLabel('Create Item')
+          .setStyle('PRIMARY')
+          .setEmoji(emojis.buttons.add),
       ),
       row(
         new ItemSelectMenu('edit' as never)
-          .setPlaceholder('Items')
+          .setPlaceholder('View, edit or delete an item')
           .setDisabled(!category.items.length)
           .setOptions(
             !category.items.length
@@ -77,7 +87,9 @@ export async function renderItemCategoryEditMenu(
                   label: i.name,
                   emoji: i.emoji,
                   value: i.id.toString(),
-                  description: `${i.type} • ${currencyFormat(i.price, economy, this.locale)}`,
+                  description: `${i.type} • ${currencyFormat(i.price, economy, this.locale, {
+                    withoutSymbol: true,
+                  })}`,
                 })),
           ),
       ),

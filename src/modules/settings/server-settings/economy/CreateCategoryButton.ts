@@ -2,7 +2,7 @@ import { prisma } from '$lib/db';
 import { dateToSnowflake } from '@purplet/utils';
 import { ButtonComponent } from 'purplet';
 import { getGuildSettings } from '../_helpers';
-import { renderItemCategoryEditMenu } from './CategorySelectMenu';
+import { renderItemCategoryEditMenu } from './MenuCategory';
 
 export const CreateCategoryButton = ButtonComponent({
   async handle() {

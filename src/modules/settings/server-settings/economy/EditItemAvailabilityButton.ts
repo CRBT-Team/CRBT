@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { ButtonComponent, row } from 'purplet';
-import { ItemEditProps } from '.';
+import { ItemEditProps } from './MenuOverview';
 import { getGuildSettings } from '../_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { EditItemAvailabilityModal } from './EditItemAvailabilityModal';

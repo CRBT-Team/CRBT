@@ -1,6 +1,6 @@
 import { ButtonComponent } from 'purplet';
 import { getGuildSettings } from '../_helpers';
-import { renderItemCategoryEditMenu } from './CategorySelectMenu';
+import { renderItemCategoryEditMenu } from './MenuCategory';
 import { newItemCache } from './CreateItemPart1';
 
 export const CancelItemCreateButton = ButtonComponent({

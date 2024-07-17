@@ -3,7 +3,7 @@ import { CRBTError } from '$lib/functions/CRBTError';
 import { parseEmojiString } from '$lib/functions/parseEmojiString';
 import { ModalComponent } from 'purplet';
 import { getGuildSettings } from '../_helpers';
-import { renderItemCategoryEditMenu } from './CategorySelectMenu';
+import { renderItemCategoryEditMenu } from './MenuCategory';
 
 export const EditCategoryModal = ModalComponent({
   async handle(categoryId: string) {

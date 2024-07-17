@@ -1,6 +1,6 @@
 import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
-import { colors } from '$lib/env';
+import { colors, icons } from '$lib/env';
 import { deepMerge } from '$lib/functions/deepMerge';
 import {
   EditableGuildFeatures,
@@ -8,13 +8,15 @@ import {
   SettingFunctionProps,
   SettingsMenuProps,
 } from '$lib/types/guild-settings';
-import { economySettings } from './economy';
+import { Guild, MessageEmbedOptions } from 'discord.js';
+import { economySettings } from './economy/MenuOverview';
 import { joinLeaveSettings } from './join-leave';
 import { moderationSettings } from './moderation';
 import { modlogsSettings } from './modlogs';
 import { modReportsSettings } from './modreports';
 import { privacySettings } from './privacy';
 import { themeSettings } from './theming';
+import { t } from '$lib/language';
 
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
@@ -123,18 +125,18 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
           [key]: isTopLevel(key)
             ? value
             : type === 'create'
-            ? {
-                connectOrCreate: {
-                  where: { id: guildId },
-                  create: value,
+              ? {
+                  connectOrCreate: {
+                    where: { id: guildId },
+                    create: value,
+                  },
+                }
+              : {
+                  upsert: {
+                    create: value,
+                    update: value,
+                  },
                 },
-              }
-            : {
-                upsert: {
-                  create: value,
-                  update: value,
-                },
-              },
         };
       }
 
@@ -164,4 +166,23 @@ export async function saveServerSettings(guildId: string, newSettings: Partial<F
       }),
     true,
   ) as FullGuildSettings;
+}
+
+export function getGuildSettingsHeader(
+  guild: Guild,
+  settings: FullGuildSettings,
+  locale: string,
+  ...options: string[]
+): MessageEmbedOptions {
+  return {
+    author: {
+      name:
+        options.length > 1
+          ? `${t(locale, 'SETTINGS_TITLE')} - ${options.slice(0, -1).join(' - ')}`
+          : `${guild.name} - ${t(locale, 'SETTINGS_TITLE')}`,
+      iconURL: icons.settings,
+    },
+    title: options[options.length - 1],
+    color: settings.accentColor,
+  };
 }

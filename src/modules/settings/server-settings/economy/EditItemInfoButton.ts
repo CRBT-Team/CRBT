@@ -2,7 +2,7 @@ import { getEmojiObject } from '$lib/functions/getEmojiObject';
 import { t } from '$lib/language';
 import { CustomEmojiRegex } from '@purplet/utils';
 import { ButtonComponent, row } from 'purplet';
-import { ItemEditProps } from '.';
+import { ItemEditProps } from './MenuOverview';
 import { getGuildSettings } from '../_helpers';
 import { newItemCache } from './CreateItemPart1';
 import { EditItemInfoModal } from './EditItemInfoModal';
