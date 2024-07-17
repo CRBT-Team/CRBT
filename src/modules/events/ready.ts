@@ -16,6 +16,12 @@ export default OnEvent('ready', async (client) => {
     type: 'WATCHING',
   });
 
+  if (client.user.id !== clients.crbt.id) {
+    console.log(`Skipping timeouts`);
+  } else {
+    loadTimeouts(client);
+  }
+
   await loadEconomyCommands(client);
 
   allCommands = await client.application.commands.fetch({
@@ -23,12 +29,6 @@ export default OnEvent('ready', async (client) => {
   });
 
   console.log(`Loaded ${allCommands.size} commands`);
-
-  if (client.user.id !== clients.crbt.id) {
-    console.log(`Skipping timeouts`);
-  } else {
-    loadTimeouts(client);
-  }
 });
 
 function loadTimeouts(client: Client) {
