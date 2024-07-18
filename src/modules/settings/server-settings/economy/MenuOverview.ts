@@ -25,7 +25,7 @@ export const economySettings: SettingsMenuProps = {
     return {
       embeds: [
         {
-          title: `${t(i, 'ECONOMY')} \`✨ ${t(i, 'NEW')}\` - ${t(i, 'OVERVIEW')}`,
+          title: `${t(i, 'ECONOMY')} - ${t(i, 'OVERVIEW')}`,
           description: modules.economy
             ? `${emojis.toggle.on} ${t(i, 'ENABLED')}`
             : `${emojis.toggle.off} ${t(i, 'ENABLED')}`,
