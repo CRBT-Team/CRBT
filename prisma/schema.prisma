@@ -189,15 +189,19 @@ model Item {
   owners         GuildMember[] @relation("items")
   // which economy does the item belong to
   economy        Economy       @relation(fields: [guildId], references: [id])
+  // if the item has been archived
+  archived       Boolean?      @default(false)
 }
 
 model Category {
-  id       String  @id
+  id       String   @id
   guild_id String
   items    Item[]
   label    String
   emoji    String
-  economy  Economy @relation(fields: [guild_id], references: [id])
+  economy  Economy  @relation(fields: [guild_id], references: [id])
+  // if the category has been archived
+  archived Boolean? @default(false)
 }
 
 enum ModerationStrikeTypes {
