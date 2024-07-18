@@ -5,18 +5,23 @@ import getPixels from 'get-pixels';
 import { fetch } from 'undici';
 
 export async function imgDominantColor(imageUrl: string) {
-  const buffer = await (await fetch(imageUrl)).arrayBuffer();
+  const buffer = Buffer.from(await (await fetch(imageUrl)).arrayBuffer());
   let averageColor: FinalColor;
 
-    getPixels(Buffer.from(buffer), 'image/png', async (err, pixels) => {
+  await new Promise<void>((resolve) =>
+    getPixels(buffer, 'image/png', async (err, pixels) => {
       if (!err) {
         const data = [...pixels.data];
         const width = Math.round(Math.sqrt(data.length / 4));
         const height = width;
 
-        averageColor = (await extractColors({ data, width, height }))?.[0];
+        const extractedColors = await extractColors({ data, width, height });
+        averageColor = extractedColors?.[0];
+
+        resolve();
       }
-    })
+    }),
+  );
 
   return chroma(averageColor.hex);
 }

@@ -34,7 +34,6 @@
     "dotenv": "^16.4.5",
     "duck-duck-scrape": "^2.2.5",
     "expr-eval": "^2.0.2",
-    "extract-colors": "^4.0.6",
     "get-pixels": "^3.3.3",
     "googlethis": "^1.8.0",
     "html-entities": "^2.5.2",
@@ -54,6 +53,7 @@
     "@types/get-pixels": "^3.3.4",
     "@types/node": "^20.14.10",
     "discord-api-types": "^0.37.92",
+    "extract-colors": "^4.0.6",
     "prettier": "^3.3.2",
     "prisma": "^5.16.2"
   }

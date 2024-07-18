@@ -56,9 +56,6 @@ importers:
       expr-eval:
         specifier: ^2.0.2
         version: 2.0.2
-      extract-colors:
-        specifier: ^4.0.6
-        version: 4.0.6
       get-pixels:
         specifier: ^3.3.3
         version: 3.3.3
@@ -111,6 +108,9 @@ importers:
       discord-api-types:
         specifier: ^0.37.92
         version: 0.37.92
+      extract-colors:
+        specifier: ^4.0.6
+        version: 4.0.6
       prettier:
         specifier: ^3.3.2
         version: 3.3.2
