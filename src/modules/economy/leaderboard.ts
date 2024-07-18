@@ -56,6 +56,8 @@ async function renderLeaderboard(this: Interaction, page: number) {
     return `**${rank}.** <@${user.userId}> - **${currencyFormat(user, economy, self.locale)}**`;
   }
 
+  const properLeaderboard = assignLeaderboardRanks(leaderboard);
+
   return {
     embeds: [
       {
@@ -63,20 +65,18 @@ async function renderLeaderboard(this: Interaction, page: number) {
           name: `${this.guild.name} - Leaderboard`,
           icon_url: this.guild.iconURL(),
         },
-        description: assignLeaderboardRanks(leaderboard)
+        description: properLeaderboard
           .map((u) => renderUser(u, u.rank))
           .slice((page - 1) * 10, page * 10)
           .join('\n'),
         fields: [
           {
-            name: 'Your position',
+            name: 'Your ranking',
             value: !userData
               ? 'Not on the leaderboard'
               : renderUser(
                   userData,
-                  assignLeaderboardRanks(leaderboard).findIndex(
-                    (u) => u.userId === userData.userId,
-                  ),
+                  properLeaderboard.find(({ userId }) => userId === userData.userId).rank,
                 ),
           },
         ],

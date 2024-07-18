@@ -39,12 +39,10 @@ export const balance: EconomyCommand = {
         true,
       );
 
-      const rank = assignLeaderboardRanks(leaderboard).findIndex(
-        ({ userId }) => userId === user.id,
-      );
+      const ranking = assignLeaderboardRanks(leaderboard).find(({ userId }) => userId === user.id);
 
       const { economy } = await getGuildSettings(this.guildId);
-      const { money } = leaderboard[rank] || { money: 0 };
+      const { money } = ranking || { money: 0 };
 
       this.reply({
         embeds: [
@@ -60,7 +58,7 @@ export const balance: EconomyCommand = {
                 value:
                   (money === 0
                     ? 'Not on the server leaderboard.'
-                    : `**${ordinal(rank, this.locale)}** on the server leaderboard.`) +
+                    : `**${ordinal(ranking.rank, this.locale)}** on the server leaderboard.`) +
                   ` (${slashCmd('leaderboard')})`,
               },
             ],
