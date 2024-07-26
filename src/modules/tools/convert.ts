@@ -38,7 +38,7 @@ export default ChatCommand({
             measure.includes(from) ||
             abbr.toLowerCase() === from ||
             singular.toLowerCase().includes(from) ||
-            plural.toLowerCase().includes(from)
+            plural.toLowerCase().includes(from),
         );
         return filtered.map(({ measure, singular: name, abbr }) => ({
           name: `${capitalCase(measure)} - ${name}`,
@@ -57,7 +57,7 @@ export default ChatCommand({
           .filter(({ abbr, measure }) => (from ? measure === fromType && abbr !== from : true))
           .filter(
             ({ singular, plural }) =>
-              singular.toLowerCase().includes(to) || plural.toLowerCase().includes(to)
+              singular.toLowerCase().includes(to) || plural.toLowerCase().includes(to),
           );
 
         return filtered.map(({ measure, singular: name, abbr }) => ({
@@ -71,13 +71,13 @@ export default ChatCommand({
     if (allUnits.find(({ abbr }) => abbr === from) === undefined) {
       return CRBTError(
         this,
-        `"${from}" is not a valid unit. Choose valid units from the autocomplete.`
+        `"${from}" is not a valid unit. Choose valid units from the autocomplete.`,
       );
     }
     if (allUnits.find(({ abbr }) => abbr === to) === undefined) {
       return CRBTError(
         this,
-        `"${to}" is not a valid unit. Choose valid units from the autocomplete.`
+        `"${to}" is not a valid unit. Choose valid units from the autocomplete.`,
       );
     }
 
@@ -86,22 +86,27 @@ export default ChatCommand({
       currencies.find(({ abbr }) => abbr === to) !== undefined
     ) {
       try {
-        const { result, date } = (await fetch(
-          `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`
-        ).then((res) => res.json())) as any;
+        const res: any = await fetch(
+          `https://v6.exchangerate-api.com/v6/${process.env.EXCHANGERATE_API_KEY}/pair/${from}/${to}/${amount}`,
+        ).then((res) => res.json());
 
-        from = currencies.find(({ abbr }) => abbr === from).singular;
-        to = currencies.find(({ abbr }) => abbr === to).singular;
+        const result = Number(res.conversion_result).toFixed(2);
+        const lastUpdate = new Date(res.time_last_update_unix * 1000);
+
+        const baseCurrency = currencies.find(({ abbr }) => abbr === from).singular;
+        const targetCurrency = currencies.find(({ abbr }) => abbr === to).singular;
 
         await this.reply({
           embeds: [
             {
-              author: { name: `${amount} ${from} currently exchanges for` },
-              title: `${result} ${to}`,
+              author: {
+                name: `${amount.toLocaleString(this.locale)} ${baseCurrency} currently exchanges for`,
+              },
+              title: `${result.toLocaleLowerCase(this.locale)} ${targetCurrency}`,
               footer: {
                 text: `${t(this, 'POWERED_BY', {
-                  provider: 'exchangerate.host',
-                })} • Last updated ${date}`,
+                  provider: 'exchangerate-api.com',
+                })} • Last updated ${lastUpdate.toLocaleString(this.locale)}`,
               },
               color: await getColor(this.user),
             },
@@ -116,7 +121,7 @@ export default ChatCommand({
     ) {
       return CRBTError(
         this,
-        `Both of the units must be of the same type (e.g. length, mass, etc.)`
+        `Both of the units must be of the same type (e.g. length, mass, etc.)`,
       );
     } else {
       try {
