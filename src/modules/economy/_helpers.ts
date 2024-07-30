@@ -161,9 +161,8 @@ export async function upsertGuildMember(
             },
           },
           guild: {
-            connectOrCreate: {
-              create: { id: i.guildId },
-              where: { id: i.guildId },
+            connect: {
+              id: i.guildId,
             },
           },
           ...(createArgs as any),
