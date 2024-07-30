@@ -13,7 +13,7 @@ import { createSearchResponse, fetchResults } from './_response';
 
 export async function handleDuckDuckGo(
   this: CommandInteraction | MessageComponentInteraction,
-  opts: SearchCmdOpts
+  opts: SearchCmdOpts,
 ) {
   const { query, page } = opts;
 
@@ -25,7 +25,7 @@ export async function handleDuckDuckGo(
           this.channel.type === 'GUILD_TEXT' && this.channel.nsfw
             ? SafeSearchType.OFF
             : SafeSearchType.STRICT,
-      })
+      }),
     );
 
     let instantResultData: any;
@@ -40,8 +40,8 @@ export async function handleDuckDuckGo(
             `https://api.duckduckgo.com/?${new URLSearchParams({
               q: query,
               format: 'json',
-            })}`
-          ).then((r) => r.json())
+            })}`,
+          ).then((r) => r.json()),
         );
 
         if (instantResultData && instantResultData.Abstract && instantResultData.meta?.status) {
@@ -75,8 +75,10 @@ export async function handleDuckDuckGo(
             fields: res.slice(realPage * 3, realPage * 3 + 3).map((result) => {
               const name = escapeMarkdown(decode(result.title));
               const url = `${result.url.startsWith('https') ? emojis.lock : ''} **[${trimURL(
-                escapeMarkdown(result.url)
-              ).replace(/\//g, ' › ')}](${result.url})**`;
+                escapeMarkdown(result.url),
+              )
+                .replace(/\//g, ' › ')
+                .replace(/\\/g, '')}](${result.url})**`;
               const desc = result.description.replace(/<\/?b>/gi, '**').slice(0, 150);
 
               return {
@@ -99,7 +101,7 @@ export async function handleDuckDuckGo(
           },
         ],
       },
-      { pages }
+      { pages },
     );
   } catch (e) {
     return UnknownError(this, e);
@@ -110,7 +112,7 @@ export async function handleDDGInstant(
   this: CommandInteraction | MessageComponentInteraction,
   opts: SearchCmdOpts,
   data: any,
-  pages: number
+  pages: number,
 ) {
   const { query } = opts;
 
@@ -148,6 +150,6 @@ export async function handleDDGInstant(
         },
       ],
     },
-    { pages }
+    { pages },
   );
 }
