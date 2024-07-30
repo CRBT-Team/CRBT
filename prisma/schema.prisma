@@ -203,11 +203,11 @@ model MemberItem {
 
 model Category {
   id       String   @id
-  guild_id String
+  guildId  String   @map("guild_id")
   items    Item[]
   label    String
   emoji    String
-  economy  Economy  @relation(fields: [guild_id], references: [id])
+  economy  Economy  @relation(fields: [guildId], references: [id])
   // if the category has been archived
   archived Boolean? @default(false)
 }
