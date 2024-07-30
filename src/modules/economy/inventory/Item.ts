@@ -135,12 +135,10 @@ export const ToggleActiveItemButton = ButtonComponent({
       true,
     );
 
-    console.log(newMember.items);
-
     await this.editReply(
       await renderInventoryItem.call(
         this,
-        newMember.items.find((i) => i.id === itemId),
+        newMember.items.find(({ item }) => item.id === itemId),
         newMember,
       ),
     );
