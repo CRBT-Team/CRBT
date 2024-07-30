@@ -15,7 +15,18 @@ export const ExportJSONButton = ButtonComponent({
       return CRBTError(this, t(this, 'ERROR_NO_MESSAGE'));
     }
 
-    const buffer = Buffer.from(JSON.stringify(data, null, 2));
+    const buffer = Buffer.from(
+      JSON.stringify(
+        {
+          type: data.type,
+          content: data.content || null,
+          embed: data.embed || null,
+          script: data.script || null,
+        },
+        null,
+        2,
+      ),
+    );
 
     return this.update({
       content: `JSON file generated! You can now reuse this message elsewhere by clicking the Import button when setting it up.`,
@@ -26,8 +37,8 @@ export const ExportJSONButton = ButtonComponent({
           new BackButton(type as never)
             .setLabel(t(this, 'BACK'))
             .setStyle('SECONDARY')
-            .setEmoji(emojis.buttons.left_arrow)
-        )
+            .setEmoji(emojis.buttons.left_arrow),
+        ),
       ),
     });
   },
