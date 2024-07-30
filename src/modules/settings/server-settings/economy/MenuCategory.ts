@@ -14,6 +14,7 @@ import { ShopButton } from './MenuShop';
 import { EditCategoryButton } from './EditCategoryButton';
 import { renderArchivedCategory } from './MenuArchivedCategory';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { ArchiveCategoryButton, UnarchiveButton } from './ArchiveCategoryButton';
 
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
@@ -76,21 +77,9 @@ export async function renderItemCategoryEditMenu(
     ],
     components: components(
       row(
-        new ShopButton().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
-        new EditCategoryButton(category.id)
-          .setLabel('Edit Details')
-          .setStyle('PRIMARY')
-          .setEmoji(emojis.buttons.edit),
-        new CreateItemPart1(category.id)
-          .setLabel('Create Item')
-          .setStyle('PRIMARY')
-          .setEmoji(emojis.buttons.add)
-          .setDisabled(category.items.length >= 25),
-      ),
-      row(
         new ItemSelectMenu('edit' as never)
           .setPlaceholder('View, edit or delete an item')
-          .setDisabled(!items.length)
+          .setDisabled(!items.length || category.archived)
           .setOptions(
             !items.length
               ? [
@@ -113,6 +102,22 @@ export async function renderItemCategoryEditMenu(
                   )}`,
                 })),
           ),
+      ),
+      row(
+        new ShopButton().setEmoji(emojis.buttons.left_arrow).setStyle('SECONDARY'),
+        new EditCategoryButton(category.id)
+          .setLabel('Edit Details')
+          .setStyle('PRIMARY')
+          .setEmoji(emojis.buttons.edit)
+          .setDisabled(category.archived),
+        new CreateItemPart1(category.id)
+          .setLabel('Create Item')
+          .setStyle('PRIMARY')
+          .setEmoji(emojis.buttons.add)
+          .setDisabled(category.archived || category.items.length >= 25),
+        category.archived
+          ? new UnarchiveButton(category.id).setLabel('Unarchive Category').setStyle('SUCCESS')
+          : new ArchiveCategoryButton(category.id).setLabel('Archive Category').setStyle('DANGER'),
       ),
     ),
   };

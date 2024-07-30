@@ -1,4 +1,4 @@
-import { cache, fetchWithCache } from '$lib/cache';
+import { fetchWithCache } from '$lib/cache';
 import { prisma } from '$lib/db';
 import { colors, emojis } from '$lib/env';
 import { ButtonComponent, components, row } from 'purplet';
@@ -6,7 +6,6 @@ import { getGuildSettings } from '../_helpers';
 import { getEmojiURL } from '$lib/functions/getEmojiURL';
 import { ItemButton, renderItem } from './MenuItem';
 import { t } from '$lib/language';
-import { renderItemCategoryEditMenu } from './MenuCategory';
 import dedent from 'dedent';
 
 export const ArchiveItemButton = ButtonComponent({

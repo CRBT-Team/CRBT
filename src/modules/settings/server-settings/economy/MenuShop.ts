@@ -26,26 +26,28 @@ export const ShopButton = ButtonComponent({
           ),
           description: `Select a category using the dropdown below to edit it or view its items.`,
           fields: [
-            ...economy.categories.map((c) => {
-              const items = c.items.filter(({ archived }) => !archived);
+            ...economy.categories
+              .sort((a, b) => (a.archived && !b.archived ? 1 : !a.archived && b.archived ? -1 : 0))
+              .map((c) => {
+                const items = c.items.filter(({ archived }) => !archived);
 
-              return {
-                name: `${c.emoji} ${c.label}`,
-                value:
-                  items.length > 0
-                    ? items
-                        .slice(0, 5)
-                        .map((i) => `${i.emoji} ${i.name}`)
-                        .join('\n') +
-                      (items.length > 5
-                        ? `\n${t(this, 'MORE_ELEMENTS', {
-                            number: items.length - 5,
-                          })}`
-                        : '')
-                    : `No items`,
-                inline: true,
-              };
-            }),
+                return {
+                  name: `${c.emoji} ${c.label} ${c.archived ? '[ARCHIVED]' : ''}`,
+                  value:
+                    items.length > 0
+                      ? items
+                          .slice(0, 5)
+                          .map((i) => `${i.emoji} ${i.name}`)
+                          .join('\n') +
+                        (items.length > 5
+                          ? `\n${t(this, 'MORE_ELEMENTS', {
+                              number: items.length - 5,
+                            })}`
+                          : '')
+                      : `No items`,
+                  inline: true,
+                };
+              }),
             ...(archivedItems.length
               ? [
                   {
@@ -86,7 +88,7 @@ export const ShopButton = ButtonComponent({
                       a.archived && !b.archived ? 1 : !a.archived && b.archived ? -1 : 0,
                     )
                     .map((c) => ({
-                      label: c.label,
+                      label: `${c.label} ${c.archived ? '[ARCHIVED]' : ''}`,
                       emoji: c.emoji,
                       value: c.id.toString(),
                       description: `${c.items.filter(({ archived }) => !archived).length.toLocaleString(this.locale)} items`,
