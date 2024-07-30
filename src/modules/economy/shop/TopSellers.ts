@@ -6,12 +6,16 @@ import { prisma } from '$lib/db';
 import { currencyFormat } from '../_helpers';
 import { ItemSelectMenu } from './ItemSelectMenu';
 import { invisibleChar } from '$lib/util/invisibleChar';
+import { hasPerms } from '$lib/functions/hasPerms';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
+import { ShopButton } from '../../settings/server-settings/economy/MenuShop';
 
 export async function renderShopTopSellers(this: Interaction) {
   const { economy } = await getGuildSettings(this.guildId);
 
   const items = await prisma.item.findMany({
     where: {
+      guildId: this.guildId,
       archived: false,
       category: {
         archived: false,
@@ -90,15 +94,10 @@ export async function renderShopTopSellers(this: Interaction) {
             })),
           )
           .setPlaceholder('View or buy an item'),
-        // new CategorySelectMenu().setPlaceholder('Categories').setOptions(
-        //   economy.categories.map((c) => ({
-        //     label: c.label,
-        //     emoji: c.emoji,
-        //     description: `${c.items.length.toLocaleString(this.locale)} items`,
-        //     value: c.id.toString(),
-        //   })),
-        // ),
       ),
+      ...(hasPerms(this.memberPermissions, PermissionFlagsBits.ManageGuild)
+        ? [row(new ShopButton().setLabel('Shop Settings').setStyle('SECONDARY'))]
+        : []),
     ),
   };
 }
