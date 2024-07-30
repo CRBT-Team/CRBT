@@ -87,12 +87,12 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
   const arr = chunks(
     [
       Object.entries(searchEngines).find(
-        ([v, { hide }]) => v === currentSite && v !== featured && hide,
+        ([v, { hideButton }]) => v === currentSite && v !== featured && hideButton,
       ),
-      searchEngines[featured].hide
+      searchEngines[featured].hideButton
         ? Object.entries(searchEngines).find(([v]) => v === featured)
         : null,
-      ...Object.entries(searchEngines).filter(([v, { hide }]) => !hide),
+      ...Object.entries(searchEngines).filter(([v, { hideButton }]) => !hideButton),
     ].filter(Boolean),
     5,
   );

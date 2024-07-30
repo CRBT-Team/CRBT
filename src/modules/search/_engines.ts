@@ -18,11 +18,11 @@ import { handleDuckDuckGo } from './web';
 export interface SearchEngine {
   handle: (
     this: CommandInteraction | MessageComponentInteraction,
-    opts: SearchCmdOpts
+    opts: SearchCmdOpts,
   ) => Promise<InteractionReplyOptions | InteractionUpdateOptions>;
   emoji: string;
   provider: string;
-  hide?: boolean;
+  hideButton?: boolean;
   noPagination?: boolean;
 }
 
@@ -53,21 +53,21 @@ export const searchEngines: Record<string, SearchEngine> = {
     handle: handleWeather,
     emoji: '⛅',
     provider: 'Weather',
-    hide: true,
+    hideButton: true,
     noPagination: true,
   },
   dictionary: {
     handle: handleDictionary,
     emoji: '📖',
     provider: 'Google Dictionary',
-    hide: true,
+    hideButton: true,
     noPagination: true,
   },
   urban: {
     handle: handleUrbanDictionary,
     emoji: '🧱',
     provider: 'Urban Dictionary',
-    hide: true,
+    hideButton: true,
   },
   // rawg: {
   //   handle: handleRAWG,
@@ -77,7 +77,7 @@ export const searchEngines: Record<string, SearchEngine> = {
     handle: handleAnimeMangas,
     emoji: '🌸',
     provider: 'AniList',
-    hide: true,
+    hideButton: true,
   },
   // npm: {
   //   handle: handleNpm,
