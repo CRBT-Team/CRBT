@@ -13,6 +13,9 @@ export async function renderShopTopSellers(this: Interaction) {
   const items = await prisma.item.findMany({
     where: {
       archived: false,
+      category: {
+        archived: false,
+      },
     },
     orderBy: {
       members: {
