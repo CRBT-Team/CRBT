@@ -13,7 +13,7 @@ export default ChatCommand({
     .integer('amount', 'How many messages to delete.', {
       required: true,
       minValue: 1,
-      maxValue: 100,
+      maxValue: 99,
     })
     .string('reason', t('en-US', 'REASON_DESCRIPTION'), {
       nameLocalizations: getAllLanguages('REASON', localeLower),
