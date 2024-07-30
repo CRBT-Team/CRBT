@@ -509,6 +509,8 @@
   "SETTINGS_ECONOMY_DESCRIPTION": "CRBT's economy is a fun way to reward members for being active. You can customize the server's shop. WIP!!",
   "SETTINGS_ERROR_CHANNEL_NOT_FOUND": "Channel not found. Edit it for CRBT to continue sending messages.",
   "SETTINGS_ERROR_CONFIG_NOT_DONE": "Feature not fully configured. Use the buttons below to finish setup.",
+  "SETTINGS_ERROR_JOINLEAVE_MISSING_CHANNEL": "No channel set. Edit it to enable this feature.",
+  "SETTINGS_ERROR_JOINLEAVE_MISSING_MESSAGE": "No message set. Edit it to enable this feature.",
   "search": {
     "name": "search",
     "description": "Search anything on the web.",

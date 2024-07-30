@@ -23,6 +23,13 @@ export const joinLeaveSettings: SettingsMenuProps = {
     const { joinMessage: isJoinEnabled, leaveMessage: isLeaveEnabled } = settings.modules;
     const { joinChannelId, leaveChannelId } = settings;
 
+    const joinErrors = errors
+      .filter((e) => e.startsWith('join_'))
+      .map((e) => e.replace('join_', ''));
+    const leaveErrors = errors
+      .filter((e) => e.startsWith('leave_'))
+      .map((e) => e.replace('leave_', ''));
+
     return {
       embeds: [
         {
@@ -31,23 +38,33 @@ export const joinLeaveSettings: SettingsMenuProps = {
           fields: [
             {
               name: `${
-                errors.length > 0 ? '⚠️' : isJoinEnabled ? emojis.toggle.on : emojis.toggle.off
+                joinErrors.length > 0 ? '⚠️' : isJoinEnabled ? emojis.toggle.on : emojis.toggle.off
               } ${t(i, 'JOIN_MESSAGE')}`,
-              value: isJoinEnabled
-                ? t(i, 'SETTINGS_SENDING_IN', {
-                    channel: channelMention(joinChannelId),
-                  })
-                : t(i, 'DISABLED'),
+              value:
+                joinErrors.length > 0
+                  ? joinErrors.join('\n')
+                  : isJoinEnabled
+                    ? t(i, 'SETTINGS_SENDING_IN', {
+                        channel: channelMention(joinChannelId),
+                      })
+                    : t(i, 'DISABLED'),
             },
             {
               name: `${
-                errors.length > 0 ? '⚠️' : isLeaveEnabled ? emojis.toggle.on : emojis.toggle.off
+                leaveErrors.length > 0
+                  ? '⚠️'
+                  : isLeaveEnabled
+                    ? emojis.toggle.on
+                    : emojis.toggle.off
               } ${t(i, 'LEAVE_MESSAGE')}`,
-              value: isLeaveEnabled
-                ? t(i, 'SETTINGS_SENDING_IN', {
-                    channel: channelMention(leaveChannelId),
-                  })
-                : t(i, 'DISABLED'),
+              value:
+                leaveErrors.length > 0
+                  ? leaveErrors.join('\n')
+                  : isLeaveEnabled
+                    ? t(i, 'SETTINGS_SENDING_IN', {
+                        channel: channelMention(leaveChannelId),
+                      })
+                    : t(i, 'DISABLED'),
             },
           ],
         },
@@ -104,23 +121,24 @@ export const joinLeaveSettings: SettingsMenuProps = {
 
     const errors: string[] = [];
 
-    if (isJoinEnabled && joinChannelId && !joinChannel) {
-      errors.push(t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND'));
-    }
     if (isJoinEnabled && !joinChannelId) {
-      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
+      errors.push(`join_${t(i, 'SETTINGS_ERROR_JOINLEAVE_MISSING_CHANNEL')}`);
+    }
+    if (isJoinEnabled && joinChannelId && !joinChannel) {
+      errors.push(`join_${t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND')}`);
     }
     if (isJoinEnabled && !settings.joinMessage) {
-      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
+      errors.push(`join_${t(i, 'SETTINGS_ERROR_JOINLEAVE_MISSING_MESSAGE')}`);
+    }
+
+    if (isLeaveEnabled && !leaveChannelId) {
+      errors.push(`leave_${t(i, 'SETTINGS_ERROR_JOINLEAVE_MISSING_CHANNEL')}`);
     }
     if (isLeaveEnabled && leaveChannelId && !leaveChannel) {
-      errors.push(t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND'));
-    }
-    if (isLeaveEnabled && !leaveChannelId) {
-      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
+      errors.push(`leave_${t(i, 'SETTINGS_ERROR_CHANNEL_NOT_FOUND')}`);
     }
     if (isLeaveEnabled && !settings.leaveMessage) {
-      errors.push(t(i, 'SETTINGS_ERROR_CONFIG_NOT_DONE'));
+      errors.push(`leave_${t(i, 'SETTINGS_ERROR_JOINLEAVE_MISSING_MESSAGE')}`);
     }
 
     return errors;
@@ -167,11 +185,12 @@ export const EditJoinLeaveChannelSelectMenu = OnEvent('interactionCreate', async
     const type = i.customId.replace(customId, '') as EditableGuildFeatures;
     const channel = i.channels.first();
 
-    const propName = type === EditableGuildFeatures.joinMessage ? 'joinChannel' : 'leaveChannel';
-
-    await saveServerSettings(i.guildId, {
-      [propName]: channel.id,
-    });
+    await saveServerSettings(
+      i.guildId,
+      type === EditableGuildFeatures.joinMessage
+        ? { joinChannelId: channel.id }
+        : { leaveChannelId: channel.id },
+    );
 
     i.update(await guildFeatureSettings.call(i, type));
   }
@@ -186,7 +205,7 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
     const builder = MessageBuilder({
       data: {
         type,
-        ...deepMerge(defaultMessage.call(this, type), data),
+        ...(data ?? defaultMessage.call(this, type)),
       },
       interaction: this,
     });
