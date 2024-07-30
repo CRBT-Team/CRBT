@@ -22,7 +22,9 @@ export default OnEvent('ready', async (client) => {
     loadTimeouts(client);
   }
 
-  await loadEconomyCommands(client);
+  if (!process.argv.includes('--skip-economy')) {
+    await loadEconomyCommands(client);
+  }
 
   allCommands = await client.application.commands.fetch({
     guildId: client.user.id !== clients.crbt.id ? servers.community : undefined,
@@ -83,7 +85,9 @@ async function loadEconomyCommands(client: Client) {
           });
         });
 
-        await fetch(
+        console.log(commands);
+
+        const res = await fetch(
           `https://discord.com/api/v10/applications/${client.user.id}/guilds/${guild.id}/commands`,
           {
             method: 'PUT',
@@ -94,6 +98,8 @@ async function loadEconomyCommands(client: Client) {
             body: JSON.stringify(commands),
           },
         );
+
+        console.log(await res.json());
 
         console.log(`Posted ${commands.length} on ${discordGuild.name ?? guild.id}`);
       }),
