@@ -6,6 +6,7 @@ import { getGuildSettings } from '../../settings/server-settings/_helpers';
 import { ShopGoToButton } from './shop';
 import { slashCmd } from '$lib/functions/commandMention';
 import { GoToPageButton } from '../inventory/GoToPageButton';
+import { FullGuildMember } from '$lib/types/member';
 
 export const BuyItemButton = ButtonComponent({
   async handle(itemId: string) {
@@ -14,8 +15,8 @@ export const BuyItemButton = ButtonComponent({
     const memberId = `${this.user.id}_${this.guildId}`;
     const memberItemId = `${itemId}_${memberId}`;
 
-    const inventory = await fetchWithCache(
-      `inventory:${memberId}`,
+    const inventory: FullGuildMember = await fetchWithCache(
+      `member:${memberId}`,
       () =>
         prisma.guildMember.upsert({
           where: { id: memberId },
