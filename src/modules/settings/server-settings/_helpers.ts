@@ -17,6 +17,7 @@ import { modReportsSettings } from './modreports';
 import { privacySettings } from './privacy';
 import { themeSettings } from './theming';
 import { t } from '$lib/language';
+import { PrismaClient } from '@prisma/client';
 
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
@@ -81,7 +82,7 @@ export function resolveSettingsProps(
   };
 }
 
-export const include = {
+export const include: Parameters<PrismaClient['guild']['findFirst']>['0']['include'] = {
   modules: true,
   moderationHistory: true,
   giveaways: true,
@@ -104,7 +105,7 @@ export async function getGuildSettings(guildId: string, force = false) {
       prisma.guild.findFirst({
         where: { id: guildId },
         include: include,
-      }),
+      }) as any,
     force,
   );
 

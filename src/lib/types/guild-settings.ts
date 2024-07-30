@@ -41,6 +41,15 @@ export interface SettingFunctionProps {
   errors?: string[];
 }
 
+export type FullEconomy = Partial<
+  Economy & {
+    items: Item[];
+    categories: (Category & {
+      items: Item[];
+    })[];
+  }
+>;
+
 export type FullGuildSettings = Partial<
   Guild & {
     modules?: Partial<GuildModules>;
@@ -49,14 +58,7 @@ export type FullGuildSettings = Partial<
     joinMessage: JoinLeaveData;
     leaveMessage: JoinLeaveData;
     isDefault: boolean;
-    economy?: Partial<
-      Economy & {
-        items: Item[];
-        categories: (Category & {
-          items: Item[];
-        })[];
-      }
-    >;
+    economy?: FullEconomy;
   }
 >;
 
