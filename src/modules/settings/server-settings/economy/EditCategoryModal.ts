@@ -34,8 +34,6 @@ export const EditCategoryModal = ModalComponent({
       include: { items: true },
     });
 
-    const newSettings = await getGuildSettings(this.guildId, true);
-
-    await this.editReply(await renderItemCategoryEditMenu.call(this, newCategory, newSettings));
+    await this.editReply(await renderItemCategoryEditMenu.call(this, newCategory));
   },
 });

@@ -9,6 +9,6 @@ export const CancelItemCreateButton = ButtonComponent({
     const { economy } = await getGuildSettings(this.guildId);
     const category = economy.categories.find((c) => c.id === categoryId);
 
-    await this.update(await renderItemCategoryEditMenu.call(this, category, economy));
+    await this.update(await renderItemCategoryEditMenu.call(this, category));
   },
 });

@@ -1,7 +1,6 @@
 import { prisma } from '$lib/db';
 import { dateToSnowflake } from '@purplet/utils';
 import { ButtonComponent } from 'purplet';
-import { getGuildSettings } from '../_helpers';
 import { renderItemCategoryEditMenu } from './MenuCategory';
 
 export const CreateCategoryButton = ButtonComponent({
@@ -18,8 +17,6 @@ export const CreateCategoryButton = ButtonComponent({
       include: { items: true },
     });
 
-    const { economy } = await getGuildSettings(this.guildId, true);
-
-    await this.editReply(await renderItemCategoryEditMenu.call(this, category, economy));
+    await this.editReply(await renderItemCategoryEditMenu.call(this, category));
   },
 });
