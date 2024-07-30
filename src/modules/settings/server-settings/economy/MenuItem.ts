@@ -148,11 +148,13 @@ export async function renderItem(
               new EditItemInfoButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
                 .setLabel(`Edit Information`)
-                .setEmoji(emojis.buttons.edit),
+                .setEmoji(emojis.buttons.edit)
+                .setDisabled(item.archived),
               new EditItemAvailabilityButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
                 .setLabel(`Edit Availability`)
-                .setEmoji(emojis.buttons.edit),
+                .setEmoji(emojis.buttons.edit)
+                .setDisabled(item.archived),
               fullItem.archived
                 ? new UnarchiveButton(item.id).setStyle('SUCCESS').setLabel('Unarchive Item')
                 : fullItem.members.length
@@ -163,7 +165,7 @@ export async function renderItem(
                       .setEmoji(emojis.buttons.trash),
             ]
           : [
-              new ShopGoToButton({ categoryId: item.categoryId })
+              new ShopGoToButton({ menu: 'topSellers' })
                 .setEmoji(emojis.buttons.left_arrow)
                 .setStyle('SECONDARY'),
               userHasItem
