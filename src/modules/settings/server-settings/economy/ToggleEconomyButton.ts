@@ -1,13 +1,31 @@
 import { EditableGuildFeatures } from '$lib/types/guild-settings';
 import { Routes } from 'discord-api-types/v10';
-import { ButtonComponent, getRestClient } from 'purplet';
+import { ButtonComponent, components, getRestClient, row } from 'purplet';
 import { economyCommands } from '../../../economy/_helpers';
 import { getGuildSettings, saveServerSettings } from '../_helpers';
 import { guildFeatureSettings } from '../settings';
+import { colors, emojis } from '$lib/env';
 
 export const ToggleEconomyButton = ButtonComponent({
   async handle(isEnabled: boolean) {
     await this.deferUpdate();
+
+    await this.editReply({
+      embeds: [
+        {
+          title: `${emojis.pending} Loading (this may take up to a minute)...`,
+          description:
+            (isEnabled ? `Removing economy commands...` : `Adding economy commands...`) +
+            `\nDo not dismiss this message until the process is done.`,
+          color: colors.yellow,
+        },
+      ],
+      components: components(
+        ...this.message.components.map((r) =>
+          row().addComponents(r.components.map((b) => ({ ...b, disabled: true }))),
+        ),
+      ),
+    });
 
     await saveServerSettings(this.guildId, {
       modules: {
