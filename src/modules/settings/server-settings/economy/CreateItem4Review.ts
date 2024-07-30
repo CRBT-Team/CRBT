@@ -24,8 +24,6 @@ export const CreateItemReview = ButtonComponent({
     const buildingItem = newItemCache.get(this.message.id);
     const { economy } = settings;
 
-    console.log(buildingItem);
-
     await this.update({
       embeds: [
         {
@@ -50,10 +48,7 @@ export const CreateItemReview = ButtonComponent({
             },
             {
               name: 'Price',
-              value:
-                buildingItem.price === 0
-                  ? 'Free'
-                  : currencyFormat(buildingItem.price, economy, this.locale),
+              value: currencyFormat(buildingItem.price, economy, this.locale),
               inline: true,
             },
             {
@@ -70,10 +65,9 @@ export const CreateItemReview = ButtonComponent({
             },
             {
               name: 'Stock',
-              value:
-                buildingItem.stock === 0
-                  ? 'Unlimited'
-                  : buildingItem.stock?.toLocaleString(this.locale),
+              value: !buildingItem.stock
+                ? 'Unlimited'
+                : buildingItem.stock.toLocaleString(this.locale),
               inline: true,
             },
             {
