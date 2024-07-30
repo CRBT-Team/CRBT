@@ -55,11 +55,19 @@ export const daily: EconomyCommand = {
     const hasBonus = streak === 6;
     const income = hasBonus ? rawIncome * 1.3 : rawIncome;
 
-    await upsertGuildMember(this, {
-      money: member?.money + income,
-      dailyStreak: !hasBonus ? streak + 1 : 0,
-      lastDaily: new Date(),
-    });
+    await upsertGuildMember(
+      this,
+      {
+        money: income,
+        dailyStreak: !hasBonus ? streak + 1 : 0,
+        lastDaily: new Date(),
+      },
+      {
+        money: { increment: income },
+        dailyStreak: !hasBonus ? 1 : 0,
+        lastDaily: new Date(),
+      },
+    );
 
     await this.editReply({
       embeds: [

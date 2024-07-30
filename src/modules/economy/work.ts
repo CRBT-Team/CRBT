@@ -73,8 +73,8 @@ export const work: EconomyCommand = {
         lastWork: new Date(),
       },
       {
-        workExp: { increment: expGain },
         money: { increment: income },
+        workExp: { increment: expGain },
         lastWork: new Date(),
       },
     );
