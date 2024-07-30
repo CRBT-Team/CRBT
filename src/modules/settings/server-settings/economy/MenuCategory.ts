@@ -12,11 +12,18 @@ import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 import { CreateItemPart1 } from './CreateItem1Info';
 import { ShopButton } from './MenuShop';
 import { EditCategoryButton } from './EditCategoryButton';
+import { renderArchivedCategory } from './MenuArchivedCategory';
+import { invisibleChar } from '$lib/util/invisibleChar';
 
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const id = this.values[0];
     const { economy } = await getGuildSettings(this.guildId);
+
+    if (id === 'archived') {
+      return this.update(await renderArchivedCategory.call(this));
+    }
+
     const category = economy.categories.find((c) => c.id === id);
 
     await this.update(await renderItemCategoryEditMenu.call(this, category));
@@ -32,7 +39,11 @@ export async function renderItemCategoryEditMenu(
   const settings = await getGuildSettings(this.guildId, true);
   const { economy } = settings;
 
+  const items = category.items.filter(({ archived }) => !archived);
+  const archivedItems = category.items.filter(({ archived }) => archived);
+
   return {
+    content: invisibleChar,
     embeds: [
       {
         ...getGuildSettingsHeader(
@@ -43,10 +54,14 @@ export async function renderItemCategoryEditMenu(
           'Shop',
           category.label,
         ),
-        description: category.items.length
-          ? ''
-          : "This category doesn't have any items yet. Create one using the button below.",
-        fields: category.items.map((i) => ({
+        description:
+          (items.length
+            ? ''
+            : "This category doesn't have any items yet. Create one using the button below.") +
+          (archivedItems.length
+            ? `\n\n${category.items.length - items.length} archived items. View them in the "Archived" category.`
+            : ''),
+        fields: items.map((i) => ({
           name: `${i.emoji} ${i.name}`,
           value: dedent`
           ${formatItemType(i.type, this.locale)}: ${formatItemValue(i.type, i.value)}
@@ -66,7 +81,6 @@ export async function renderItemCategoryEditMenu(
           .setLabel('Edit Details')
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.edit),
-
         new CreateItemPart1(category.id)
           .setLabel('Create Item')
           .setStyle('PRIMARY')
@@ -76,22 +90,27 @@ export async function renderItemCategoryEditMenu(
       row(
         new ItemSelectMenu('edit' as never)
           .setPlaceholder('View, edit or delete an item')
-          .setDisabled(!category.items.length)
+          .setDisabled(!items.length)
           .setOptions(
-            !category.items.length
+            !items.length
               ? [
                   {
                     label: 'nothing to see here 👀',
                     value: 'null',
                   },
                 ]
-              : category.items.map((i) => ({
+              : items.map((i) => ({
                   label: i.name,
                   emoji: i.emoji,
                   value: i.id.toString(),
-                  description: `${i.type} • ${currencyFormat(i.price, economy, this.locale, {
-                    withoutSymbol: true,
-                  })}`,
+                  description: `${formatItemType(i.type, this.locale)}: ${currencyFormat(
+                    i.price,
+                    economy,
+                    this.locale,
+                    {
+                      withoutSymbol: true,
+                    },
+                  )}`,
                 })),
           ),
       ),

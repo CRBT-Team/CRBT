@@ -9,7 +9,7 @@ import { Item } from '@prisma/client';
 import { timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import { EmbedFieldData, Interaction, MessageButton } from 'discord.js';
-import { components, row } from 'purplet';
+import { ButtonComponent, components, row } from 'purplet';
 import { ItemType, currencyFormat, getServerMember } from '../../../economy/_helpers';
 import { BuyItemButton } from '../../../economy/shop/BuyItemButton';
 import { ShopGoToButton } from '../../../economy/shop/shop';
@@ -18,8 +18,17 @@ import { EditItemAvailabilityButton } from './EditItemAvailabilityButton';
 import { EditItemInfoButton } from './EditItemInfoButton';
 import { getGuildSettings, getGuildSettingsHeader } from '../_helpers';
 import { GoToPageButton } from '../../../economy/inventory/GoToPageButton';
+import { DeleteItemButton } from './DeleteItemButton';
+import { invisibleChar } from '$lib/util/invisibleChar';
+import { ArchiveItemButton, UnarchiveButton } from './ArchiveItemButton';
+import { ArchivedCategoryButton } from './MenuArchivedCategory';
 
-export async function renderItem(this: Interaction, item: Item, mode: 'edit' | 'shop') {
+export async function renderItem(
+  this: Interaction,
+  item: Item,
+  mode: 'edit' | 'shop',
+  archivedBack?: 'category' | 'all-categories',
+) {
   const settings = await getGuildSettings(this.guildId, true);
 
   const { economy } = settings;
@@ -122,6 +131,7 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
         };
 
   return {
+    content: invisibleChar,
     embeds: [
       {
         ...header,
@@ -143,6 +153,14 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
                 .setStyle('PRIMARY')
                 .setLabel(`Edit Availability`)
                 .setEmoji(emojis.buttons.edit),
+              fullItem.archived
+                ? new UnarchiveButton(item.id).setStyle('SUCCESS').setLabel('Unarchive Item')
+                : fullItem.members.length
+                  ? new ArchiveItemButton(item.id).setStyle('DANGER').setLabel('Archive Item')
+                  : new DeleteItemButton(item.id)
+                      .setStyle('DANGER')
+                      .setLabel('Delete Item')
+                      .setEmoji(emojis.buttons.trash),
             ]
           : [
               new ShopGoToButton({ categoryId: item.categoryId })
@@ -174,12 +192,29 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
       ...(mode === 'edit'
         ? [
             row(
-              new CancelItemCreateButton(category.id)
-                .setEmoji(emojis.buttons.left_arrow)
-                .setStyle('SECONDARY'),
+              item.archived
+                ? new ArchivedCategoryButton({
+                    categoryId: archivedBack === 'category' ? item.categoryId : null,
+                  })
+                    .setEmoji(emojis.buttons.left_arrow)
+                    .setStyle('SECONDARY')
+                : new CancelItemCreateButton(category.id)
+                    .setEmoji(emojis.buttons.left_arrow)
+                    .setStyle('SECONDARY'),
             ),
           ]
         : []),
     ),
   };
 }
+
+export const ItemButton = ButtonComponent({
+  async handle({ itemId, mode }: { itemId: string; mode: 'edit' | 'shop' }) {
+    await this.deferUpdate();
+
+    const { economy } = await getGuildSettings(this.guildId);
+    const item = economy.items.find((i) => i.id === itemId);
+
+    await this.editReply(await renderItem.call(this, item, mode));
+  },
+});

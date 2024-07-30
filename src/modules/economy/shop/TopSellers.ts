@@ -11,6 +11,9 @@ export async function renderShopTopSellers(this: Interaction) {
   const { economy } = await getGuildSettings(this.guildId);
 
   const items = await prisma.item.findMany({
+    where: {
+      archived: false,
+    },
     orderBy: {
       members: {
         _count: 'desc',
