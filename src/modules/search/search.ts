@@ -48,7 +48,7 @@ export default ChatCommand({
                 ]),
             ...(manualSiteTyped
               ? []
-              : res.map((r) => ({
+              : res.slice(0, 3).map((r) => ({
                   name: `${searchEngines['web'].emoji} ${r.phrase}`,
                   value: `web:${r.phrase}`,
                 }))),
