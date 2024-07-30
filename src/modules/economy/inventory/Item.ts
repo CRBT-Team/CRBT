@@ -3,23 +3,19 @@ import { prisma } from '$lib/db';
 import { emojis } from '$lib/env';
 import { avatar } from '$lib/functions/avatar';
 import { formatUsername } from '$lib/functions/formatUsername';
-import { GuildMember, Item } from '@prisma/client';
 import { MessageComponentInteraction, MessageEditOptions } from 'discord.js';
 import { ButtonComponent, SelectMenuComponent, components, row } from 'purplet';
 import { getGuildSettings } from '../../settings/server-settings/_helpers';
 import { ItemType, formatItemType, formatItemValue, getServerMember, itemTypes } from '../_helpers';
 import { GoToPageButton } from './GoToPageButton';
+import { FullGuildMember, MemberItem } from '$lib/types/member';
 
-export async function renderItem(
+export async function renderInventoryItem(
   this: MessageComponentInteraction,
-  item: Item,
-  member: GuildMember & {
-    items: Item[];
-    activeItems: Item[];
-  },
+  { item, equipped }: MemberItem,
+  member: FullGuildMember,
 ): Promise<MessageEditOptions> {
   const hasValue = itemTypes[item.type].hasValue;
-  const isActive = !!member.activeItems.find((a) => a.id === item.id);
 
   return {
     embeds: [
@@ -28,7 +24,7 @@ export async function renderItem(
           name: `${formatUsername(this.user)} - Inventory`,
           iconURL: avatar(this.user, 64),
         },
-        title: `${item.emoji} ${item.name} ${hasValue && isActive ? '(Equipped)' : ''}`,
+        title: `${item.emoji} ${item.name} ${hasValue && equipped ? '(Equipped)' : ''}`,
         description: item.description,
         fields: [
           {
@@ -46,11 +42,9 @@ export async function renderItem(
     components: components(
       row(
         new ItemSelectMenu().setOptions(
-          member.items.map((i) => {
-            const isActive = member.activeItems.find((a) => a.id === i.id);
-
+          member.items.map(({ equipped: e, item: i }) => {
             return {
-              label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
+              label: `${i.name} ${e ? '(Equipped)' : ''}`,
               emoji: i.emoji,
               value: i.id,
               default: i.id === item.id,
@@ -70,10 +64,10 @@ export async function renderItem(
           ? [
               new ToggleActiveItemButton({
                 itemId: item.id,
-                newState: !isActive,
+                newState: !equipped,
               })
-                .setLabel(isActive ? 'Unequip' : 'Equip')
-                .setStyle(isActive ? 'DANGER' : 'SUCCESS'),
+                .setLabel(equipped ? 'Unequip' : 'Equip')
+                .setStyle(equipped ? 'DANGER' : 'SUCCESS'),
             ]
           : [],
       ),
@@ -85,9 +79,9 @@ export const ItemSelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
     const itemId = this.values[0];
     const member = await getServerMember(this.user.id, this.guildId);
-    const item = member.items.find((i) => i.id === itemId);
+    const item = member.items.find(({ item }) => item.id === itemId);
 
-    await this.update(await renderItem.call(this, item, member));
+    await this.update(await renderInventoryItem.call(this, item, member));
   },
 });
 
@@ -118,37 +112,33 @@ export const ToggleActiveItemButton = ButtonComponent({
       () =>
         prisma.guildMember.update({
           data: {
-            activeItems: {
-              ...(newState
-                ? {
-                    connect: {
-                      id: itemId,
-                      guildId: this.guildId,
-                    },
-                  }
-                : {
-                    disconnect: {
-                      id: itemId,
-                      guildId: this.guildId,
-                    },
-                  }),
+            items: {
+              update: {
+                data: {
+                  equipped: newState,
+                },
+                where: {
+                  id: `${itemId}_${this.user.id}_${this.guildId}`,
+                },
+              },
             },
           },
           where: {
             id: `${this.user.id}_${this.guildId}`,
           },
           include: {
-            activeItems: true,
-            items: true,
+            items: {
+              include: { item: true },
+            },
           },
         }),
       true,
     );
 
-    console.log(newMember.activeItems);
+    console.log(newMember.items);
 
     await this.editReply(
-      await renderItem.call(
+      await renderInventoryItem.call(
         this,
         newMember.items.find((i) => i.id === itemId),
         newMember,

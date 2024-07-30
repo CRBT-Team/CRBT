@@ -26,10 +26,10 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
   const fullItem = await fetchWithCache(`economyItem:${item.id}`, () =>
     prisma.item.findFirst({
       where: { id: item.id },
-      include: { owners: true, activeMembers: true },
+      include: { members: true },
     }),
   );
-  const userHasItem = !!fullItem.owners.find((m) => m.userId === this.user.id);
+  const userHasItem = !!fullItem.members.find((m) => m.memberId.startsWith(this.user.id));
   const member = await getServerMember(this.user.id, this.guildId);
   const category = economy.categories.find((c) => c.id === item.categoryId);
 
@@ -39,9 +39,9 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
       value:
         currencyFormat(item.price, economy, this.locale) +
         (mode === 'shop'
-          ? ` • You have: ${currencyFormat(member.money, economy, this.locale, {
+          ? ` (Your balance: ${currencyFormat(member.money, economy, this.locale, {
               zeroEqualsFree: false,
-            })}`
+            })})`
           : ''),
       inline: true,
     },
@@ -81,7 +81,7 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
   if (mode === 'edit') {
     fields.push({
       name: 'Stats',
-      value: `Purchased by ${fullItem.owners.length} member(s) • Used by ${fullItem.activeMembers.length} member(s)`,
+      value: `Purchased by ${fullItem.members.length} member(s) • Equipped by ${fullItem.members.filter(({ equipped }) => !!equipped).length} member(s)`,
     });
   }
 
@@ -135,9 +135,6 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
       row().addComponents(
         ...(mode === 'edit'
           ? [
-              new CancelItemCreateButton(category.id)
-                .setEmoji(emojis.buttons.left_arrow)
-                .setStyle('SECONDARY'),
               new EditItemInfoButton({ id: item.id, mode: 'edit' })
                 .setStyle('PRIMARY')
                 .setLabel(`Edit Information`)
@@ -174,6 +171,15 @@ export async function renderItem(this: Interaction, item: Item, mode: 'edit' | '
                       .setDisabled(item.price > member.money),
             ]),
       ),
+      ...(mode === 'edit'
+        ? [
+            row(
+              new CancelItemCreateButton(category.id)
+                .setEmoji(emojis.buttons.left_arrow)
+                .setStyle('SECONDARY'),
+            ),
+          ]
+        : []),
     ),
   };
 }

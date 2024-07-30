@@ -3,7 +3,6 @@ import { avatar } from '$lib/functions/avatar';
 import { slashCmd } from '$lib/functions/commandMention';
 import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
-import { GuildMember, Item } from '@prisma/client';
 import { Interaction } from 'discord.js';
 import { ButtonComponent, components, row } from 'purplet';
 import {
@@ -17,6 +16,7 @@ import { GoToPageButton } from './GoToPageButton';
 import { ItemSelectMenu } from './Item';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ShopGoToButton } from '../shop/shop';
+import { FullGuildMember } from '$lib/types/member';
 
 export const inventory: EconomyCommand = {
   getMeta() {
@@ -36,11 +36,7 @@ export const inventory: EconomyCommand = {
   },
 };
 
-export async function renderInventory(
-  this: Interaction,
-  member: GuildMember & { items: Item[]; activeItems: Item[] },
-  page = 0,
-) {
+export async function renderInventory(this: Interaction, member: FullGuildMember, page = 0) {
   const items = member?.items?.slice(page * 10, (page + 1) * 10) || [];
   const pages = Math.ceil((member?.items?.length || 0) / 3) - 1;
 
@@ -55,13 +51,12 @@ export async function renderInventory(
         description: !items.length
           ? `Nothing in your inventory. Buy objects from ${this.guild.name}'s ${slashCmd('shop')}`
           : 'Select an item using the dropdown menu to see info or use it.',
-        fields: items.map((i) => {
-          const hasValue = itemTypes[i.type].hasValue;
-          const isActive = member.activeItems.find((a) => a.id === i.id);
+        fields: items.map(({ equipped, item }) => {
+          const hasValue = itemTypes[item.type].hasValue;
 
           return {
-            name: `${i.emoji} ${i.name} ${hasValue && isActive ? '(Equipped)' : '(Not Equipped)'}`,
-            value: `${formatItemType(i.type, this.locale)}: ${formatItemValue(i.type, i.value)}`,
+            name: `${item.emoji} ${item.name} ${hasValue && equipped ? '(Equipped)' : '(Not Equipped)'}`,
+            value: `${formatItemType(item.type, this.locale)}: ${formatItemValue(item.type, item.value)}`,
             inline: true,
           };
         }),
@@ -73,13 +68,11 @@ export async function renderInventory(
         new ItemSelectMenu()
           .setOptions(
             member.items.length
-              ? member.items.map((i) => {
-                  const isActive = member.activeItems.find((a) => a.id === i.id);
-
+              ? member.items.map(({ item, equipped }) => {
                   return {
-                    label: `${i.name} ${isActive ? '(Equipped)' : ''}`,
-                    emoji: i.emoji,
-                    value: i.id,
+                    label: `${item.name} ${equipped ? '(Equipped)' : ''}`,
+                    emoji: item.emoji,
+                    value: item.id,
                   };
                 })
               : [

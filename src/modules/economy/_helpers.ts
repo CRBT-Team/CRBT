@@ -147,26 +147,32 @@ export async function upsertGuildMember(
 ) {
   const id = `${i.user.id}_${i.guildId}`;
 
-  return await prisma.guildMember.upsert({
-    where: { id },
-    create: {
-      id,
-      user: {
-        connectOrCreate: {
-          create: { id: i.user.id },
-          where: { id: i.user.id },
+  return await fetchWithCache(
+    `member:${id}`,
+    async () =>
+      await prisma.guildMember.upsert({
+        where: { id },
+        create: {
+          id,
+          user: {
+            connectOrCreate: {
+              create: { id: i.user.id },
+              where: { id: i.user.id },
+            },
+          },
+          guild: {
+            connectOrCreate: {
+              create: { id: i.guildId },
+              where: { id: i.guildId },
+            },
+          },
+          ...(createArgs as any),
         },
-      },
-      guild: {
-        connectOrCreate: {
-          create: { id: i.guildId },
-          where: { id: i.guildId },
-        },
-      },
-      ...(createArgs as any),
-    },
-    update: updateArgs ?? createArgs,
-  });
+        update: updateArgs ?? createArgs,
+        include: { items: { include: { item: true } } },
+      }),
+    true,
+  );
 }
 
 export async function getServerMember(userId: string, guildId: string, force = false) {
@@ -177,7 +183,7 @@ export async function getServerMember(userId: string, guildId: string, force = f
     () =>
       prisma.guildMember.findFirst({
         where: { id: memberId },
-        include: { items: true, activeItems: true },
+        include: { items: { include: { item: true } } },
       }),
     force,
   );

@@ -48,8 +48,7 @@ export const EditItemInfoModal = ModalComponent({
               price,
             },
             include: {
-              owners: true,
-              activeMembers: true,
+              members: true,
             },
           }),
         true,

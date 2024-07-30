@@ -11,17 +11,25 @@ export const BuyItemButton = ButtonComponent({
   async handle(itemId: string) {
     await this.deferUpdate();
 
-    const userId = `${this.user.id}_${this.guildId}`;
+    const memberId = `${this.user.id}_${this.guildId}`;
+    const memberItemId = `${itemId}_${memberId}`;
 
     const inventory = await fetchWithCache(
-      `inventory:${userId}`,
+      `inventory:${memberId}`,
       () =>
         prisma.guildMember.upsert({
-          where: { id: userId },
+          where: { id: memberId },
           create: {
-            id: userId,
+            id: memberId,
             items: {
-              connect: { id: itemId },
+              create: {
+                id: memberItemId,
+                item: {
+                  connect: {
+                    id: itemId,
+                  },
+                },
+              },
             },
             user: {
               connectOrCreate: {
@@ -36,16 +44,23 @@ export const BuyItemButton = ButtonComponent({
           },
           update: {
             items: {
-              connect: { id: itemId },
+              create: {
+                id: memberItemId,
+                item: {
+                  connect: {
+                    id: itemId,
+                  },
+                },
+              },
             },
           },
-          include: { items: true },
+          include: { items: { include: { item: true } } },
         }),
       true,
     );
-    const item = inventory.items.find((i) => i.id === itemId);
+    const memberItem = inventory.items.find(({ item }) => item.id === itemId);
 
-    if (item.stock !== null) {
+    if (memberItem.item.stock !== null) {
       await prisma.item.update({
         where: { id: itemId },
         data: {
@@ -62,7 +77,7 @@ export const BuyItemButton = ButtonComponent({
       content: `${emojis.success} Transaction complete! To use your item, open your ${slashCmd('inventory')}.`,
       components: components(
         row(
-          new ShopGoToButton({ categoryId: item.categoryId })
+          new ShopGoToButton({ categoryId: memberItem.item.categoryId })
             .setEmoji(emojis.buttons.left_arrow)
             .setStyle('SECONDARY'),
           new GoToPageButton({

@@ -121,8 +121,7 @@ model GuildMember {
   lastDaily               DateTime?           @map("last_daily") @db.Timestamptz(6)
   workExp                 Int?                @default(0) @map("work_exp") @db.Integer
   money                   Int                 @default(0) @db.Integer
-  activeItems             Item[]              @relation("active_items")
-  items                   Item[]              @relation("items")
+  items                   MemberItem[]
   dailyStreak             Int?                @map("daily_streak")
 }
 
@@ -169,28 +168,37 @@ model Economy {
 }
 
 model Item {
-  id             String        @id
-  guildId        String        @map("guild_id")
+  id             String    @id
+  guildId        String    @map("guild_id")
   name           String
   emoji          String
   description    String?
   price          Int
-  categoryId     String        @map("category_id")
-  category       Category      @relation(fields: [categoryId], references: [id])
+  categoryId     String    @map("category_id")
+  category       Category  @relation(fields: [categoryId], references: [id])
   type           Int
   stock          Int?
   // for items limited in time
-  availableUntil DateTime?     @map("available_until") @db.Timestamptz(6)
+  availableUntil DateTime? @map("available_until") @db.Timestamptz(6)
   // the value an item can hold (role ID, Multiplier, etc)
   value          String?
-  // who's currently using the item
-  activeMembers  GuildMember[] @relation("active_items")
-  // who has the item
-  owners         GuildMember[] @relation("items")
   // which economy does the item belong to
-  economy        Economy       @relation(fields: [guildId], references: [id])
+  economy        Economy   @relation(fields: [guildId], references: [id])
   // if the item has been archived
-  archived       Boolean?      @default(false)
+  archived       Boolean?  @default(false)
+
+  // All items belonging to a member
+  members MemberItem[]
+}
+
+model MemberItem {
+  id       String      @id
+  memberId String
+  itemId   String
+  quantity Int         @default(1)
+  item     Item        @relation(fields: [itemId], references: [id])
+  member   GuildMember @relation(fields: [memberId], references: [id])
+  equipped Boolean     @default(false)
 }
 
 model Category {

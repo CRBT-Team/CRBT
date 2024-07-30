@@ -12,14 +12,14 @@ export async function renderShopTopSellers(this: Interaction) {
 
   const items = await prisma.item.findMany({
     orderBy: {
-      owners: {
+      members: {
         _count: 'desc',
       },
     },
     include: {
-      owners: {
+      members: {
         select: {
-          userId: true,
+          memberId: true,
         },
       },
     },
@@ -39,7 +39,7 @@ export async function renderShopTopSellers(this: Interaction) {
         fields: items.map((i) => ({
           name:
             `${i.emoji} ${i.name}` +
-            (i.owners.find((o) => o.userId === this.user.id)
+            (i.members.find((o) => o.memberId.includes(this.user.id))
               ? ' (Owned)'
               : i.stock === 0
                 ? ' (Out of stock)'

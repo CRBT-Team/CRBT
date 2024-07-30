@@ -59,8 +59,7 @@ export const EditItemAvailabilityModal = ModalComponent({
               availableUntil: date?.toDate(),
             },
             include: {
-              owners: true,
-              activeMembers: true,
+              members: true,
             },
           }),
         true,
