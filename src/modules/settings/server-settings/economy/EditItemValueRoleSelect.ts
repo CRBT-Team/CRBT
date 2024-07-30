@@ -15,8 +15,6 @@ export const RoleSelectMenuEvent = OnEvent('interactionCreate', async (i) => {
       value: i.roles.first().id,
     };
 
-    console.log(newData.value);
-
     newItemCache.set(i.message.id, newData);
 
     await handleCreateItemPart2.call(i);

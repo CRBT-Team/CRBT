@@ -14,8 +14,6 @@ export const themeSettings: SettingsMenuProps = {
   renderMenuMessage: ({ settings, i, guild, backBtn }) => {
     settings.isAutoThemingEnabled = guild.icon ? settings.isAutoThemingEnabled : false;
 
-    console.log(guild.icon);
-
     return {
       embeds: [
         {

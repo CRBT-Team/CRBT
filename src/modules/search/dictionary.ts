@@ -29,7 +29,6 @@ export async function handleDictionary(
       }
     }
     const def = res[0];
-    console.log(def);
 
     //TODO: localize this
     return createSearchResponse(this, opts, {

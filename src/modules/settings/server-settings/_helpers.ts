@@ -206,7 +206,6 @@ export function isDefaultGuildSettings(settings: FullGuildSettings) {
   // Check every key
   for (const key in rest) {
     if (JSON.stringify(rest[key]) !== JSON.stringify(defaultGuildSettings[key])) {
-      console.log(key, rest[key], defaultGuildSettings[key]);
       isDefault = false;
       break;
     }
@@ -214,7 +213,6 @@ export function isDefaultGuildSettings(settings: FullGuildSettings) {
   // Check every key in modules
   for (const key in restModules) {
     if (JSON.stringify(restModules[key]) !== JSON.stringify(defaultGuildSettings.modules[key])) {
-      console.log(key, restModules[key], defaultGuildSettings.modules[key]);
       isDefault = false;
       break;
     }
