@@ -117,7 +117,7 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
               ? []
               : [
                   // First page
-                  new ChangeSearchButton({ newPage: 0, shit: true })
+                  new ChangeSearchButton({ newPage: 1, shit: true })
                     .setEmoji(emojis.buttons.skip_first)
                     .setStyle('PRIMARY')
                     .setDisabled(page - 1 <= 0),
@@ -132,7 +132,7 @@ export function navbar(opts: SearchCmdOpts, { locale, pages, userId }: NavBarPro
                     .setStyle('PRIMARY')
                     .setDisabled(page >= pages),
                   // Last page
-                  new ChangeSearchButton({ newPage: pages - 1, shit: true })
+                  new ChangeSearchButton({ newPage: pages, shit: true })
                     .setEmoji(emojis.buttons.skip_last)
                     .setStyle('PRIMARY')
                     .setDisabled(page >= pages),
