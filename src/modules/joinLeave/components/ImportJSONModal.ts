@@ -10,7 +10,12 @@ export const ImportJSONModal = ModalComponent({
     try {
       const parsed = JSON.parse(input);
 
-      if (!parsed || !('content' in parsed && 'embed' in parsed)) {
+      if (
+        !parsed ||
+        !('type' in parsed) ||
+        !('content' in parsed || 'embed' in parsed) ||
+        type !== parsed.type
+      ) {
         return CRBTError(this, 'Invalid JSON');
       }
 
