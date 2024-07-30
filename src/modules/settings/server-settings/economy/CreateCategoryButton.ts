@@ -10,7 +10,7 @@ export const CreateCategoryButton = ButtonComponent({
     const category = await prisma.category.create({
       data: {
         id: dateToSnowflake(new Date()),
-        guild_id: this.guildId,
+        guildId: this.guildId,
         label: 'New Category',
         emoji: '📁',
       },
