@@ -57,7 +57,6 @@ export type FullGuildSettings = Partial<
     moderationHistory: ModerationEntry[];
     joinMessage: JoinLeaveData;
     leaveMessage: JoinLeaveData;
-    isDefault: boolean;
     economy?: FullEconomy;
   }
 >;

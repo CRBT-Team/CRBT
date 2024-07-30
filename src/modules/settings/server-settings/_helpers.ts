@@ -35,8 +35,15 @@ export const defaultGuildSettings: FullGuildSettings = {
   accentColor: colors.default,
   flags: 0,
   isAutoThemingEnabled: true,
+  joinChannelId: null,
+  joinMessage: null,
+  leaveChannelId: null,
+  leaveMessage: null,
+  modLogsChannelId: null,
+  modReportsChannelId: null,
+  giveaways: [],
+  moderationHistory: [],
   modules: {
-    id: null,
     economy: false,
     joinMessage: false,
     leaveMessage: false,
@@ -104,7 +111,7 @@ export async function getGuildSettings(guildId: string, force = false) {
   );
 
   const merged = deepMerge(defaultGuildSettings, data);
-  return { ...merged, isDefault: data === null } as FullGuildSettings;
+  return merged as FullGuildSettings;
 }
 
 export async function saveServerSettings(guildId: string, newSettings: Partial<FullGuildSettings>) {
@@ -180,4 +187,38 @@ export function getGuildSettingsHeader(
     title: options[options.length - 1],
     color: settings.accentColor,
   };
+}
+
+export function isDefaultGuildSettings(settings: FullGuildSettings) {
+  // Do a parse/stringify to remove any "undefined"s, etc.
+  const parsedSettings = JSON.parse(JSON.stringify(settings));
+
+  const {
+    id,
+    iconHash,
+    flags,
+    modules: { id: mId, ...restModules },
+    ...rest
+  } = parsedSettings;
+
+  let isDefault = true;
+
+  // Check every key
+  for (const key in rest) {
+    if (JSON.stringify(rest[key]) !== JSON.stringify(defaultGuildSettings[key])) {
+      console.log(key, rest[key], defaultGuildSettings[key]);
+      isDefault = false;
+      break;
+    }
+  }
+  // Check every key in modules
+  for (const key in restModules) {
+    if (JSON.stringify(restModules[key]) !== JSON.stringify(defaultGuildSettings.modules[key])) {
+      console.log(key, restModules[key], defaultGuildSettings.modules[key]);
+      isDefault = false;
+      break;
+    }
+  }
+
+  return isDefault;
 }
