@@ -29,7 +29,7 @@ export async function renderItemCategoryEditMenu(
     items: Item[];
   },
 ) {
-  const settings = await getGuildSettings(this.guildId);
+  const settings = await getGuildSettings(this.guildId, true);
   const { economy } = settings;
 
   return {
@@ -66,10 +66,12 @@ export async function renderItemCategoryEditMenu(
           .setLabel('Edit Details')
           .setStyle('PRIMARY')
           .setEmoji(emojis.buttons.edit),
+
         new CreateItemPart1(category.id)
           .setLabel('Create Item')
           .setStyle('PRIMARY')
-          .setEmoji(emojis.buttons.add),
+          .setEmoji(emojis.buttons.add)
+          .setDisabled(category.items.length >= 25),
       ),
       row(
         new ItemSelectMenu('edit' as never)
