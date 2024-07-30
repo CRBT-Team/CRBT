@@ -10,7 +10,6 @@ import {
   EmbedFieldData,
   Interaction,
   MessageEditOptions,
-  MessageOptions,
   MessageSelectOptionData,
 } from 'discord.js';
 import { ButtonComponent, ChatCommand, SelectMenuComponent, components, row } from 'purplet';
@@ -45,7 +44,7 @@ export default ChatCommand({
   },
 });
 
-export async function guildSettingsOverview(this: Interaction): Promise<MessageOptions> {
+export async function guildSettingsOverview(this: Interaction) {
   const settings = await getGuildSettings(this.guildId);
   const embedFields: EmbedFieldData[] = [];
   const selectMenuOptions: MessageSelectOptionData[] = [];
@@ -110,9 +109,9 @@ export async function guildFeatureSettings(
   const menu = GuildSettingMenus.get(featureId);
   const settings = await getGuildSettings(this.guildId);
   const props = resolveSettingsProps(this, menu, settings);
-  const backBtn = new BackSettingsButton(menu.mainMenu)
+  const backBtn = new BackSettingsButton(menu.mainMenu === 'overview' ? null : menu.mainMenu)
     .setEmoji(emojis.buttons.left_arrow)
-    .setLabel(menu.mainMenu ? t(this, menu.mainMenu) : '')
+    .setLabel(menu.mainMenu && menu.mainMenu !== 'overview' ? t(this, menu.mainMenu) : '')
     .setStyle('SECONDARY');
   const message = await menu.renderMenuMessage({ ...props, backBtn });
 

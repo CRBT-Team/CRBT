@@ -22,14 +22,8 @@ import { PrismaClient } from '@prisma/client';
 export const GuildSettingMenus = new Map<EditableGuildFeatures, SettingsMenuProps>([
   [EditableGuildFeatures.automaticTheming, themeSettings],
   [EditableGuildFeatures.joinLeave, joinLeaveSettings],
-  [
-    EditableGuildFeatures.joinMessage,
-    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  ],
-  [
-    EditableGuildFeatures.leaveMessage,
-    { ...joinLeaveSettings, mainMenu: EditableGuildFeatures.joinLeave },
-  ],
+  [EditableGuildFeatures.joinMessage, { ...joinLeaveSettings, mainMenu: 'overview' }],
+  [EditableGuildFeatures.leaveMessage, { ...joinLeaveSettings, mainMenu: 'overview' }],
   [EditableGuildFeatures.economy, economySettings],
   [EditableGuildFeatures.moderation, moderationSettings],
   [EditableGuildFeatures.moderationNotifications, modlogsSettings],

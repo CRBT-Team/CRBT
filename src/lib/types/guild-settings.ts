@@ -64,7 +64,7 @@ export type FullGuildSettings = Partial<
 
 export interface SettingsMenuProps {
   newLabel?: boolean;
-  mainMenu?: EditableGuildFeatures | undefined;
+  mainMenu?: EditableGuildFeatures | 'overview' | undefined;
   description: (locale: string) => string;
   getErrors?(props: Omit<SettingFunctionProps, 'errors'>): string[];
   renderMenuMessage(
