@@ -3,8 +3,10 @@ import { t } from '$lib/language';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
 import { RemindButton } from '../components/RemindButton';
-import { EconomyCommand, getServerMember, upsertGuildMember } from './_helpers';
+import { currencyFormat, EconomyCommand, getServerMember, upsertGuildMember } from './_helpers';
 import { timestampMention } from '@purplet/utils';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
+import { createCRBTError } from '$lib/functions/CRBTError';
 
 export const daily: EconomyCommand = {
   getMeta({ plural }) {
@@ -17,26 +19,36 @@ export const daily: EconomyCommand = {
     const ONE_DAY = 86400000;
 
     const member = await getServerMember(this.user.id, this.guildId);
+    const { economy } = await getGuildSettings(this.guildId);
 
     if (member?.lastDaily && member.lastDaily.getTime() > Date.now() - ONE_DAY) {
-      return this.reply({
-        embeds: [
-          {
-            title: `${emojis.error} You already claimed your daily reward!`,
-            description: dedent`
+      return this.reply(
+        createCRBTError(this, {
+          title: `${emojis.error} You already claimed your daily reward!`,
+          description: dedent`
               Come back **${timestampMention(
                 member.lastDaily.getTime() + ONE_DAY,
                 'R',
               )}** to claim your next reward.
             `,
-            color: colors.error,
-          },
-        ],
-        ephemeral: true,
-      });
+          color: colors.error,
+        }),
+      );
     }
 
     await this.deferReply();
+
+    function getPurplets(n: number) {
+      if (n > 20000) {
+        return Math.floor(Math.random() * (0 - 20 + 1) + 0);
+        // return { range: [0, 20], out: Math.floor(Math.random() * (0 - 20 + 1) + 0) };
+      }
+      const max = Math.floor(-0.004 * n + 100);
+      const min = max - 20;
+      const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+      return rand;
+      // return { range: [min, max], out: rand };
+    }
 
     const rawIncome = getPurplets(0);
     const streak = member?.dailyStreak || 0;
@@ -55,7 +67,7 @@ export const daily: EconomyCommand = {
           title: `${emojis.success} Daily reward claimed!`,
           description:
             dedent`
-            You earned **${income}** Purplets! ${hasBonus ? '(+30% 7-day streak bonus!)' : ''}
+            You earned **${currencyFormat(income, economy, this.locale)}**! ${hasBonus ? '(+30% 7-day streak bonus!)' : ''}
             Come back in 24 hours to claim your next daily reward.` +
             (hasBonus ? ` (Streak reset!)` : ` (${6 - streak} day(s) left for a streak bonus!)`),
           color: colors.success,
@@ -75,15 +87,3 @@ export const daily: EconomyCommand = {
     });
   },
 };
-
-function getPurplets(n: number) {
-  if (n > 20000) {
-    return Math.floor(Math.random() * (0 - 20 + 1) + 0);
-    // return { range: [0, 20], out: Math.floor(Math.random() * (0 - 20 + 1) + 0) };
-  }
-  const max = Math.floor(-0.004 * n + 100);
-  const min = max - 20;
-  const rand = Math.floor(Math.random() * (max - min + 1)) + min;
-  return rand;
-  // return { range: [min, max], out: rand };
-}
