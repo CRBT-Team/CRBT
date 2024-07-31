@@ -7,6 +7,9 @@ import { ApplicationCommand, Client, Collection } from 'discord.js';
 import { OnEvent, getRestClient } from 'purplet';
 import { economyCommands } from '../economy/_helpers';
 import { fetch } from 'undici';
+import { deepMerge } from '$lib/functions/deepMerge';
+import { defaultGuildSettings } from '../settings/server-settings/_helpers';
+import { FullGuildSettings } from '$lib/types/guild-settings';
 
 export let allCommands: Collection<string, ApplicationCommand>;
 
@@ -46,63 +49,71 @@ function loadTimeouts(client: Client) {
 }
 
 async function loadEconomyCommands(client: Client) {
-  if (client.user.id !== clients.crbt.id) {
-    const guilds = await prisma.guild.findMany({
-      where: {
-        modules: {
-          economy: true,
-        },
+  // Fetch all guilds with the economy module enabled
+  const guilds = (await prisma.guild.findMany({
+    where: {
+      modules: {
+        economy: true,
       },
-      include: { economy: { include: { items: true } } },
-    });
+    },
+    include: { economy: { include: { items: true } } },
+  })) as FullGuildSettings[];
 
-    return await Promise.all(
-      guilds.map(async (guild) => {
-        const discordGuild = await client.guilds.fetch(guild.id);
-        const urlParams = new URLSearchParams();
-        urlParams.set('with_localizations', 'true');
+  return await Promise.all(
+    guilds.map(async ({ id, economy }) => {
+      economy = deepMerge(defaultGuildSettings.economy, {
+        id,
+        ...economy,
+      });
 
-        const commands = (await getRestClient().get(
-          Routes.applicationGuildCommands(client.user.id, guild.id),
+      console.log(economy);
+
+      const discordGuild = await client.guilds.fetch(economy.id);
+      const urlParams = new URLSearchParams();
+      urlParams.set('with_localizations', 'true');
+
+      let commands: Partial<APIApplicationCommand>[] = [];
+
+      if (client.user.id !== clients.crbt.id) {
+        commands = (await getRestClient().get(
+          Routes.applicationGuildCommands(client.user.id, economy.id),
           {
             query: urlParams,
           },
         )) as Partial<APIApplicationCommand>[];
+      }
 
-        Object.entries(economyCommands).forEach(([name, command]) => {
-          if (!guild.economy.items.length && name === 'shop') return;
+      Object.entries(economyCommands).forEach(([name, command]) => {
+        if (name === 'shop' && !economy.items.length) return;
 
-          commands.push({
-            ...command.getMeta({
-              plural: guild.economy.currencyNamePlural,
-              singular: guild.economy.currencyNameSingular,
-            }),
-            guild_id: guild.id,
-            default_member_permissions: null,
-            type: 1,
-            application_id: client.user.id,
-            nsfw: false,
-          });
+        commands.push({
+          ...command.getMeta({
+            plural: economy.currencyNamePlural,
+            singular: economy.currencyNameSingular,
+          }),
+          guild_id: economy.id,
+          default_member_permissions: null,
+          type: 1,
+          application_id: client.user.id,
+          nsfw: false,
         });
+      });
 
-        console.log(commands);
-
-        const res = await fetch(
-          `https://discord.com/api/v10/applications/${client.user.id}/guilds/${guild.id}/commands`,
-          {
-            method: 'PUT',
-            headers: {
-              Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(commands),
+      const res = await fetch(
+        `https://discord.com/api/v10/applications/${client.user.id}/guilds/${economy.id}/commands`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify(commands),
+        },
+      );
 
-        console.log(await res.json());
+      console.log(JSON.stringify(await res.json()));
 
-        console.log(`Posted ${commands.length} on ${discordGuild.name ?? guild.id}`);
-      }),
-    );
-  }
+      console.log(`Posted ${commands.length} commands on ${discordGuild.name ?? economy.id}`);
+    }),
+  );
 }
