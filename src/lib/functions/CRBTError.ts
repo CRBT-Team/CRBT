@@ -23,9 +23,10 @@ function handleError(
       error: any;
       context: string;
     };
-  }
+    sendLog?: boolean;
+  },
 ): MessageEmbedOptions {
-  const { embed, error } = opts;
+  const { embed, error, sendLog } = opts;
 
   const devEmbed = new MessageEmbed().setColor(colors.error);
 
@@ -49,27 +50,29 @@ function handleError(
     }
 
     devEmbed.setDescription(
-      `${emojis.error} Error \`${embed.title}\` was triggered on command \`${interactionName}\``
+      `${emojis.error} Error \`${embed.title}\` was triggered on command \`${interactionName}\``,
     );
   }
 
-  (getDiscordClient().channels.cache.get(channels.errors) as TextChannel).send({
-    embeds: [devEmbed],
-    files: [
-      new MessageAttachment(
-        Buffer.from(
-          typeof i === 'object'
-            ? JSON.stringify(
-                i,
-                (key, value) => (typeof value === 'bigint' ? value.toString() : value),
-                2
-              )
-            : i
+  if (sendLog) {
+    (getDiscordClient().channels.cache.get(channels.errors) as TextChannel).send({
+      embeds: [devEmbed],
+      files: [
+        new MessageAttachment(
+          Buffer.from(
+            typeof i === 'object'
+              ? JSON.stringify(
+                  i,
+                  (key, value) => (typeof value === 'bigint' ? value.toString() : value),
+                  2,
+                )
+              : i,
+          ),
+          'interaction.json',
         ),
-        'interaction.json'
-      ),
-    ],
-  });
+      ],
+    });
+  }
 
   return {
     ...embed,
@@ -78,7 +81,11 @@ function handleError(
   };
 }
 
-export function CRBTError(i: Interaction, embed: MessageEmbedOptions | string, ephemeral = true) {
+export async function CRBTError(
+  i: Interaction,
+  embed: MessageEmbedOptions | string,
+  ephemeral = true,
+) {
   if (!i.isRepliable()) return;
 
   const errorMessage = createCRBTError(i, embed, ephemeral);
@@ -86,19 +93,24 @@ export function CRBTError(i: Interaction, embed: MessageEmbedOptions | string, e
   if (i.replied) {
     return i.editReply(errorMessage);
   } else {
-    return i.reply(errorMessage).catch((e) => i.editReply(errorMessage));
+    try {
+      return await i.reply(errorMessage);
+    } catch (e) {
+      return await i.editReply(errorMessage);
+    }
   }
 }
 
 export function createCRBTError(
   i: Interaction,
   embed: Partial<MessageEmbedOptions> | string,
-  ephemeral = true
+  ephemeral = true,
 ): InteractionReplyOptions {
   return {
     embeds: [
       handleError(i, {
         embed: typeof embed === 'string' ? { title: embed } : embed,
+        sendLog: true,
       }),
     ],
     ephemeral,
@@ -116,11 +128,12 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
       error,
       context: context ?? String(i),
     },
+    sendLog: true,
     embed: {
       title: strings.TITLE,
       description: strings.DESCRIPTION.replace('{reportCommand}', slashCmd('report')).replace(
         '{MESSAGE}',
-        `\`\`\`\n${error}\`\`\``
+        `\`\`\`\n${error}\`\`\``,
       ),
     },
   });
@@ -137,7 +150,7 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
 export async function CooldownError(
   context: Interaction,
   relativetime: number,
-  showButton = true
+  showButton = true,
 ): Promise<InteractionReplyOptions> {
   const reminder = await prisma.reminder.findFirst({
     where: {
@@ -160,6 +173,7 @@ export async function CooldownError(
             time: timestampMention(relativetime, 'R'),
           }),
         },
+        sendLog: false,
       }),
     ],
     components:
@@ -169,8 +183,8 @@ export async function CooldownError(
               new RemindButton({ relativetime, userId: context.user.id })
                 .setStyle('SECONDARY')
                 .setLabel(t(context, 'SET_REMINDER'))
-                .setEmoji(emojis.reminder)
-            )
+                .setEmoji(emojis.reminder),
+            ),
           )
         : null,
     ephemeral: true,
