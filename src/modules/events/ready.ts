@@ -66,8 +66,6 @@ async function loadEconomyCommands(client: Client) {
         ...economy,
       });
 
-      console.log(economy);
-
       const discordGuild = await client.guilds.fetch(economy.id);
       const urlParams = new URLSearchParams();
       urlParams.set('with_localizations', 'true');
@@ -99,6 +97,13 @@ async function loadEconomyCommands(client: Client) {
         });
       });
 
+      // remove commands duplicates
+      commands = commands.filter(
+        (command, index, self) =>
+          index ===
+          self.findIndex((t) => t.name === command.name && t.description === command.description),
+      );
+
       const res = await fetch(
         `https://discord.com/api/v10/applications/${client.user.id}/guilds/${economy.id}/commands`,
         {
@@ -111,7 +116,10 @@ async function loadEconomyCommands(client: Client) {
         },
       );
 
-      console.log(JSON.stringify(await res.json()));
+      if (!res.ok) {
+        console.error(await res.json());
+        return;
+      }
 
       console.log(`Posted ${commands.length} commands on ${discordGuild.name ?? economy.id}`);
     }),
