@@ -100,7 +100,7 @@ async function renderLeaderboard(this: Interaction, page: number) {
         new GotoPageBtn(page + 1)
           .setEmoji(emojis.buttons.right_arrow)
           .setStyle('PRIMARY')
-          .setDisabled(page === Math.ceil(leaderboard.length / 10)),
+          .setDisabled(page === Math.ceil(leaderboard.length > 10 ? leaderboard.length / 10 : 1)),
       ),
     ),
   };
