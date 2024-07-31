@@ -33,6 +33,7 @@
   "IMPORT": "इम्पोर्ट",
   "YES": "हाँ",
   "NO": "नहीं",
+  "VIEW_DETAILS": "View Details",
   "LONG_ACTION_FOOTNOTE": "This may take a while.",
   "ERROR_INVALID_CHANNEL": "आपको सही {} चैनल प्रदान करने की आवश्यकता है |",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
@@ -122,7 +123,8 @@
       "PAST": "पिछले समह के लिए रिमाइंडर सेट नहीं हो सकता |",
       "INVALID_FORMAT": "आपने जो टाइम इंटर किया वो सही फॉर्मेट में नहीं है |",
       "TOO_LONG": "रिमाइंडर्स 2 साल से ज्यादा फ्यूचर में सेट नहीं हो सकता |",
-      "REMINDERS_MAX_LIMIT": "10 रिमाइंडर्स की मैक्सिमम लिमिट पूरी हो गयी |"
+      "REMINDERS_MAX_LIMIT": "10 रिमाइंडर्स की मैक्सिमम लिमिट पूरी हो गयी |",
+      "EVENT_NOT_FOUND": "The Discord event provided was not found."
     },
     "strings": {
       "SUCCESS_TITLE": "रिमाइंडर सेट हो गया! रिमाइंडर्स को मैनेज करने के लिए इस {command} को इस्तेमाल करे |",
