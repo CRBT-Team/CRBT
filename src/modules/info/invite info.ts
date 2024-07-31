@@ -34,15 +34,16 @@ export default ChatCommand({
       invite.match(/discord\.com\/invite\/(.*)/)?.[1] ??
       invite;
 
-    const res = (await getRestClient()
-      .get(Routes.invite(inviteCode))
-      .catch(
-        async (r) =>
-          await CRBTError(this, {
-            title: t(this, 'INVITE_INFO_ERROR_INVALID_TITLE'),
-            description: t(this, 'INVITE_INFO_ERROR_INVALID_DESCRIPTION'),
-          }),
-      )) as APIInvite;
+    let res: APIInvite;
+
+    try {
+      res = (await getRestClient().get(Routes.invite(inviteCode))) as APIInvite;
+    } catch (e) {
+      return await CRBTError(this, {
+        title: t(this, 'INVITE_INFO_ERROR_INVALID_TITLE'),
+        description: t(this, 'INVITE_INFO_ERROR_INVALID_DESCRIPTION'),
+      });
+    }
 
     const { expires_at, guild, channel, inviter } = res;
 
@@ -110,8 +111,8 @@ export default ChatCommand({
             url: guild.banner
               ? formatGuildBannerURL(guild.id, guild.banner)
               : guild.splash
-              ? formatGuildSplashURL(guild.id, guild.splash)
-              : null,
+                ? formatGuildSplashURL(guild.id, guild.splash)
+                : null,
           },
           thumbnail: {
             url: guild.icon ? formatGuildIconURL(guild.id, guild.icon) : null,
