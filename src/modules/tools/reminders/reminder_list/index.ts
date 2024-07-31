@@ -5,13 +5,18 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { getAllLanguages, t } from '$lib/language';
 import { renderLowBudgetMessage } from '$lib/timeouts/handleReminder';
-import { Reminder } from '@prisma/client';
-import { snowflakeToDate, timestampMention } from '@purplet/utils';
+import { Reminder, ReminderTypes } from '@prisma/client';
+import { formatGuildEventCoverURL, snowflakeToDate, timestampMention } from '@purplet/utils';
 import dayjs from 'dayjs';
 import dedent from 'dedent';
 import { Interaction, MessageButton } from 'discord.js';
 import { ButtonComponent, ChatCommand, components, row } from 'purplet';
-import { extractReminder, getReminderSubject, getUserReminders } from '../_helpers';
+import {
+  EditableReminderTypes,
+  extractReminder,
+  getReminderSubject,
+  getUserReminders,
+} from '../_helpers';
 import { DeleteReminderButton } from './DeleteReminderButton';
 import { EditReminderButton } from './EditReminderButton';
 import { ReminderSelectMenu } from './ReminderSelectMenu';
@@ -40,7 +45,8 @@ export const BackButton = ButtonComponent({
 export async function renderReminder(this: Interaction, reminder: Reminder) {
   const reminders = await getUserReminders(this.user.id);
   const data = await extractReminder(reminder, this.client);
-  const created = data.messageId ? snowflakeToDate(data.messageId) : null;
+  const created =
+    data.messageId || data.event?.id ? snowflakeToDate(data.messageId || data.event?.id) : null;
 
   return {
     embeds: [
@@ -52,15 +58,24 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
           )} (${reminders.length.toLocaleString(this.locale)})`,
           icon_url: avatar(this.user, 64),
         },
-        title: getReminderSubject(reminder, this.client, 0),
+        title: data.event?.name ?? getReminderSubject(reminder, this.client, 0),
         description: dedent`
-        ${timestampMention(data.endDate, 'R')}
+        ${data.event?.description ?? ''}
+        ${
+          data.event && data.event.scheduledEndAt
+            ? `${timestampMention(data.event.scheduledStartAt)} - ${timestampMention(data.event.scheduledEndAt)}`
+            : timestampMention(data.endDate, 'R')
+        }
         ${t(this, 'REMINDER_DESTINATION')} ${
           data.raw.destination === 'dm' ? t(this, 'DMS') : `${data.channel}`
         }
         ${t(this, 'CREATED_ON')} ${created ? timestampMention(created, 'D') : '??'} • ${
           created ? timestampMention(created, 'R') : '??'
         }`,
+        image:
+          data.event && data.event.image
+            ? { url: formatGuildEventCoverURL(data.event.id, data.event.image, { size: '512' }) }
+            : null,
         color: await getColor(this.user),
       },
       ...renderLowBudgetMessage(data, this.locale),
@@ -71,20 +86,25 @@ export async function renderReminder(this: Interaction, reminder: Reminder) {
         new EditReminderButton(reminder.id)
           .setLabel(t(this, 'EDIT'))
           .setEmoji(emojis.buttons.edit)
-          .setStyle('PRIMARY'),
+          .setStyle('PRIMARY')
+          .setDisabled(!EditableReminderTypes.includes(data.type)),
         new DeleteReminderButton(reminder.id)
           .setLabel(t(this, 'DELETE'))
           .setEmoji(emojis.buttons.trash)
           .setStyle('DANGER'),
       ),
       row(
-        ...(data.id.endsWith('BIRTHDAY')
+        ...(data.type === ReminderTypes.BIRTHDAY
           ? []
           : [
               new MessageButton()
                 .setStyle('LINK')
                 .setURL(data.url)
-                .setLabel(t(this, 'JUMP_TO_MSG')),
+                .setLabel(
+                  data.type === ReminderTypes.EVENT
+                    ? t(this, 'VIEW_DETAILS')
+                    : t(this, 'JUMP_TO_MSG'),
+                ),
             ]),
         new MessageButton()
           .setStyle('LINK')

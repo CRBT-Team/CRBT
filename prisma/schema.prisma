@@ -231,6 +231,8 @@ enum ReminderTypes {
   MESSAGE
   // reminder set for someone's birthday (deprecated feature)
   BIRTHDAY
+  // reminder synced with a discord event
+  EVENT
 }
 
 enum RewardTypes {

@@ -4,7 +4,7 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { getColor } from '$lib/functions/getColor';
 import { t } from '$lib/language';
 import { Reminder } from '@prisma/client';
-import { snowflakeToDate, timestampMention } from '@purplet/utils';
+import { formatGuildEventCoverURL, snowflakeToDate, timestampMention } from '@purplet/utils';
 import { APIEmbedAuthor } from 'discord-api-types/v10';
 import { Client, MessageButton, MessageOptions } from 'discord.js';
 import { components, row } from 'purplet';
@@ -27,7 +27,9 @@ export interface LowBudgetMessage {
 
 export async function handleReminder(reminder: Reminder, client: Client) {
   const data = await extractReminder(reminder, client);
-  const createdAt = snowflakeToDate(data.messageId);
+  const createdAt = snowflakeToDate(data.messageId || data.event?.id);
+
+  if (data.event && data.event.status === 'CANCELED') return;
 
   const message = {
     embeds: [
@@ -36,13 +38,26 @@ export async function handleReminder(reminder: Reminder, client: Client) {
           name: t(reminder.locale, 'REMINDER'),
           icon_url: icons.reminder,
         },
-        title: getReminderSubject(reminder, client, 0),
+        title: data.event?.name ?? getReminderSubject(reminder, client, 0),
+        description: data.event?.description,
         fields: [
+          ...(data.event?.scheduledEndAt
+            ? [
+                {
+                  name: t(reminder.locale, 'END_DATE'),
+                  value: timestampMention(data.event.scheduledEndAt),
+                },
+              ]
+            : []),
           {
             name: t(reminder.locale, 'CREATED_ON'),
             value: `${timestampMention(createdAt)} • ${timestampMention(createdAt, 'R')}`,
           },
         ],
+        image:
+          data.event && data.event.image
+            ? { url: formatGuildEventCoverURL(data.event.id, data.event.image, { size: '512' }) }
+            : null,
         color: await getColor(data.user),
       },
       ...renderLowBudgetMessage(data, reminder.locale),
@@ -51,7 +66,9 @@ export async function handleReminder(reminder: Reminder, client: Client) {
       row(
         new MessageButton()
           .setStyle('LINK')
-          .setLabel(t(reminder?.locale, 'JUMP_TO_MSG'))
+          .setLabel(
+            data.event ? t(reminder.locale, 'VIEW_DETAILS') : t(reminder.locale, 'JUMP_TO_MSG'),
+          )
           .setURL(data.url),
         // new SnoozeButton()
         //   .setStyle('SECONDARY')

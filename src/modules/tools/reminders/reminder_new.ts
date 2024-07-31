@@ -23,20 +23,44 @@ export default ChatCommand({
   description: t('en-US', 'remind me.meta.description'),
   descriptionLocalizations: getAllLanguages('remind me.meta.description'),
   options: new OptionBuilder()
-    .string('when', t('en-US', 'remind me.meta.options.0.description' as any), {
-      nameLocalizations: getAllLanguages('remind me.meta.options.0.name' as any, localeLower),
-      descriptionLocalizations: getAllLanguages('remind me.meta.options.0.description' as any),
-      autocomplete({ when }) {
-        return timeAutocomplete.call(this, when, '2y');
-      },
-      required: true,
-    })
     .string('subject', t('en-US', 'remind me.meta.options.1.description' as any), {
       nameLocalizations: getAllLanguages('SUBJECT', localeLower),
       descriptionLocalizations: getAllLanguages('remind me.meta.options.1.description' as any),
+      async autocomplete({ subject }) {
+        const cachedEvents = this.guild.scheduledEvents.cache;
+
+        const events = (
+          cachedEvents.size ? cachedEvents : await this.guild.scheduledEvents.fetch()
+        ).filter(
+          (event) =>
+            event.status !== 'COMPLETED' &&
+            event.status !== 'CANCELED' &&
+            event.name.toLowerCase().includes(subject.toLowerCase()),
+        );
+
+        return events.map((event) => ({
+          name: `Discord Event: ${event.name} (${event.scheduledStartAt.toLocaleString(this.locale)})`,
+          value: `event=${event.url}`,
+        }));
+      },
       required: true,
       minLength: 1,
       maxLength: 512,
+    })
+    .string('when', t('en-US', 'remind me.meta.options.0.description' as any), {
+      nameLocalizations: getAllLanguages('remind me.meta.options.0.name' as any, localeLower),
+      descriptionLocalizations: getAllLanguages('remind me.meta.options.0.description' as any),
+      async autocomplete({ when, subject }) {
+        if (subject && subject.startsWith('event=')) {
+          const eventUrl = subject.split('=')[1];
+          const event = this.guild.scheduledEvents.cache.find((event) => event.url === eventUrl);
+
+          when = event?.scheduledStartAt.toISOString() ?? when;
+        }
+
+        return timeAutocomplete.call(this, when, '2y');
+      },
+      required: true,
     })
     .channel('destination', t('en-US', 'remind me.meta.options.2.description' as any), {
       nameLocalizations: getAllLanguages('REMINDER_DESTINATION', localeLower),
@@ -62,7 +86,7 @@ export default ChatCommand({
         this,
         t(this, 'ERROR_INVALID_DURATION', {
           relativeTime: '2 years',
-        })
+        }),
       );
     }
 
@@ -73,7 +97,7 @@ export default ChatCommand({
           this,
           t(this, 'ERROR_MISSING_PERMISSIONS', {
             PERMISSIONS: 'Send Messages',
-          })
+          }),
         );
       } else if (
         !hasPerms(channel.permissionsFor(this.guild.me), PermissionFlagsBits.SendMessages)
@@ -82,7 +106,7 @@ export default ChatCommand({
           this,
           t(this, 'ERROR_MISSING_PERMISSIONS', {
             PERMISSIONS: 'Send Messages',
-          })
+          }),
         );
       }
     }
@@ -96,11 +120,30 @@ export default ChatCommand({
 
     await this.deferReply();
 
+    const isEvent = subject.startsWith('event=https://discord.com/events/');
+
     const msg = await this.fetchReply();
-    const url =
+    let url =
       msg instanceof Message
         ? `${msg.guildId ?? '@me'}/${msg.channelId}/${msg.id}`
         : `${msg.guild_id ?? '@me'}/${msg.channel_id}/${msg.id}`;
+
+    if (isEvent) {
+      const [guildId, eventId] = subject
+        .replace('event=https://discord.com/events/', '')
+        .split('/');
+
+      const guild = await this.client.guilds.fetch(guildId);
+      const event = await guild.scheduledEvents.fetch(eventId);
+
+      if (!event || event.status === 'COMPLETED' || event.status === 'CANCELED') {
+        return CRBTError(this, errors.EVENT_NOT_FOUND);
+      }
+
+      subject = event.name;
+      url = `${guildId}/${eventId}`;
+      endDate = dayjs(event.scheduledStartAt);
+    }
 
     try {
       const reminder = await dbTimeout(TimeoutTypes.Reminder, {
@@ -110,7 +153,7 @@ export default ChatCommand({
         userId: this.user.id,
         subject,
         locale: this.locale,
-        type: ReminderTypes.NORMAL,
+        type: isEvent ? ReminderTypes.EVENT : ReminderTypes.NORMAL,
         details: null,
       });
       await getUserReminders(this.user.id, true);

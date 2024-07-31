@@ -4,7 +4,7 @@ import { formatUsername } from '$lib/functions/formatUsername';
 import { t } from '$lib/language';
 import { LowBudgetMessage } from '$lib/timeouts/handleReminder';
 import { Reminder, ReminderTypes } from '@prisma/client';
-import { Client, GuildTextBasedChannel } from 'discord.js';
+import { Client, Guild, GuildTextBasedChannel } from 'discord.js';
 
 export async function getUserReminders(userId: string, force = false) {
   return await fetchWithCache(
@@ -54,6 +54,7 @@ export async function extractReminder(reminder: Reminder, client: Client) {
   let id: string;
   let messageId: string;
   let channelId: string;
+  let eventId: string;
   let guildId: string;
 
   if (reminder.type === ReminderTypes.MESSAGE) {
@@ -68,16 +69,28 @@ export async function extractReminder(reminder: Reminder, client: Client) {
     id = reminder.id;
     [guildId, channelId, messageId] = id.split('/');
   }
+  if (reminder.type === ReminderTypes.EVENT) {
+    id = reminder.id;
+    [guildId, eventId] = id.split('/');
+  }
 
-  const channel = (await client.channels
-    .fetch(channelId)
-    .catch((e) => null)) as GuildTextBasedChannel;
+  const channel = channelId
+    ? ((await client.channels.fetch(channelId).catch((e) => null)) as GuildTextBasedChannel)
+    : null;
 
-  const guild = channel?.guild || { id: '@me' };
+  const guild = channel?.guild || (await client.guilds.fetch(guildId)) || { id: '@me' };
+
+  const event =
+    reminder.type === ReminderTypes.EVENT && eventId && guild instanceof Guild
+      ? await guild.scheduledEvents.fetch(eventId)
+      : null;
 
   const user = await client.users.fetch(reminder.userId).catch((e) => null);
 
-  const url = `https://discord.com/channels/${guild.id}/${channel?.id ?? channelId}/${messageId}`;
+  const url =
+    channelId && !event
+      ? `https://discord.com/channels/${guild.id}/${channel?.id ?? channelId}/${messageId}`
+      : event.url;
   const details: LowBudgetMessage = reminder.details ? JSON.parse(reminder.details) : null;
 
   const author = details
@@ -88,7 +101,9 @@ export async function extractReminder(reminder: Reminder, client: Client) {
   return {
     ...reminder,
     raw: reminder,
-    subject: getReminderSubject(reminder, client),
+    event,
+    endDate: event?.scheduledEndAt ?? reminder.endDate,
+    subject: event?.name ?? getReminderSubject(reminder, client),
     guildId: guild.id,
     channelId,
     messageId,
@@ -101,3 +116,5 @@ export async function extractReminder(reminder: Reminder, client: Client) {
     url,
   };
 }
+
+export const EditableReminderTypes: ReminderTypes[] = [ReminderTypes.NORMAL, ReminderTypes.MESSAGE];
