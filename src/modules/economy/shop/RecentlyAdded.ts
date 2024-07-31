@@ -9,9 +9,9 @@ import { invisibleChar } from '$lib/util/invisibleChar';
 import { hasPerms } from '$lib/functions/hasPerms';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { ShopButton } from '../../settings/server-settings/economy/MenuShop';
-import { RecentlyAddedButton } from './RecentlyAdded';
+import { TopSellersButton } from './TopSellers';
 
-export async function renderShopTopSellers(this: Interaction) {
+export async function renderShopRecentlyAdded(this: Interaction) {
   const { economy } = await getGuildSettings(this.guildId);
 
   const items = await prisma.item.findMany({
@@ -23,9 +23,7 @@ export async function renderShopTopSellers(this: Interaction) {
       },
     },
     orderBy: {
-      members: {
-        _count: 'desc',
-      },
+      id: 'desc',
     },
     include: {
       members: {
@@ -45,8 +43,8 @@ export async function renderShopTopSellers(this: Interaction) {
           name: this.guild.name,
           icon_url: this.guild.iconURL(),
         },
-        title: 'Shop - Top Sellers',
-        description: 'The most popular items in the Shop.',
+        title: 'Shop - Recently Added',
+        description: 'The latest items in the Shop.',
         fields: items.map((i) => ({
           name:
             `${i.emoji} ${i.name}` +
@@ -66,12 +64,12 @@ export async function renderShopTopSellers(this: Interaction) {
     ],
     components: components(
       row(
-        new TopSellersButton()
-          .setEmoji('🔥')
-          .setLabel('Top Sellers')
+        new TopSellersButton().setEmoji('🔥').setLabel('Top Sellers').setStyle('PRIMARY'),
+        new RecentlyAddedButton()
+          .setEmoji('🕒')
+          .setLabel('Recently Added')
           .setStyle('PRIMARY')
           .setDisabled(),
-        new RecentlyAddedButton().setEmoji('🕒').setLabel('Recently Added').setStyle('PRIMARY'),
         new MessageButton()
           .setEmoji('📚')
           .setCustomId('categories')
@@ -100,8 +98,8 @@ export async function renderShopTopSellers(this: Interaction) {
   };
 }
 
-export const TopSellersButton = ButtonComponent({
+export const RecentlyAddedButton = ButtonComponent({
   async handle() {
-    await this.update(await renderShopTopSellers.call(this));
+    await this.update(await renderShopRecentlyAdded.call(this));
   },
 });
