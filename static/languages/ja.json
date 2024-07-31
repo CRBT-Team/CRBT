@@ -33,6 +33,7 @@
   "IMPORT": "Import",
   "YES": "はい",
   "NO": "いいえ",
+  "VIEW_DETAILS": "View Details",
   "LONG_ACTION_FOOTNOTE": "This may take a while.",
   "ERROR_INVALID_CHANNEL": "You need to provide a valid {types} channel.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
@@ -122,7 +123,8 @@
       "PAST": "Reminders cannot be set in the past.",
       "INVALID_FORMAT": "The time you entered is in an invalid format.",
       "TOO_LONG": "Reminders cannot be set for more than 2 years in the future.",
-      "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached."
+      "REMINDERS_MAX_LIMIT": "Maximum limit of 10 reminders reached.",
+      "EVENT_NOT_FOUND": "The Discord event provided was not found."
     },
     "strings": {
       "SUCCESS_TITLE": "Reminder set! Use {command} to manage your reminders.",
