@@ -714,5 +714,6 @@
   "ITEM_TYPE_WEBHOOK_ACTION": "Webhook Action",
   "ITEM_TYPE_CRBTSCRIPT": "CRBTscript Action",
   "ITEM_TYPE_COSMETIC": "Cosmetic",
-  "ITEM_TYPE_OTHER": "Other"
+  "ITEM_TYPE_OTHER": "Other",
+  "LOADING_TITLE": "Loading (this may take up to a minute)..."
 }
