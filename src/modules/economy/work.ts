@@ -25,12 +25,12 @@ export const work: EconomyCommand = {
 
     const level = calculateLevel(memberData?.workExp);
 
-    const cooldown = 60 * 1000 * 5 + level * 0.1;
+    const cooldown = 60 * 1000 * (5 + level);
     const lastWork = memberData?.lastWork?.getTime() || Date.now();
     const timeDiff = Date.now() - lastWork;
 
     if (timeDiff && cooldown > timeDiff) {
-      return this.reply(await CooldownError(this, Date.now() + cooldown, true));
+      return this.reply(await CooldownError(this, lastWork + cooldown, true));
     }
 
     function economyGain() {

@@ -149,14 +149,15 @@ export function UnknownError(i: any, error: any, context?: string, ephemeral = t
 
 export async function CooldownError(
   context: Interaction,
-  relativetime: number,
+  timestamp: number,
   showButton = true,
 ): Promise<InteractionReplyOptions> {
   const reminder = await prisma.reminder.findFirst({
     where: {
       AND: {
-        userId: `${context.user.id}`,
+        userId: context.user.id,
         type: ReminderTypes.COMMAND,
+        endDate: new Date(timestamp),
       },
     },
     orderBy: {
@@ -170,17 +171,17 @@ export async function CooldownError(
         embed: {
           title: t(context.locale, 'CooldownError.TITLE'),
           description: t(context.locale, 'CooldownError.DESCRIPTION', {
-            time: timestampMention(relativetime, 'R'),
+            time: timestampMention(timestamp, 'R'),
           }),
         },
         sendLog: false,
       }),
     ],
     components:
-      showButton && reminder && Math.abs(reminder.endDate.getTime() - relativetime) < 60000
+      showButton && !reminder
         ? components(
             row(
-              new RemindButton({ relativetime, userId: context.user.id })
+              new RemindButton({ relativetime: timestamp, userId: context.user.id })
                 .setStyle('SECONDARY')
                 .setLabel(t(context, 'SET_REMINDER'))
                 .setEmoji(emojis.reminder),

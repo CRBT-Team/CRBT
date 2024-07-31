@@ -24,7 +24,7 @@ export const daily: EconomyCommand = {
     if (member?.lastDaily && member.lastDaily.getTime() > Date.now() - ONE_DAY) {
       return this.reply(
         createCRBTError(this, {
-          title: `${emojis.error} You already claimed your daily reward!`,
+          title: `You already claimed your daily reward!`,
           description: dedent`
               Come back **${timestampMention(
                 member.lastDaily.getTime() + ONE_DAY,

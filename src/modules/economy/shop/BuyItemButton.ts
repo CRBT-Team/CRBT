@@ -6,7 +6,6 @@ import { getGuildSettings } from '../../settings/server-settings/_helpers';
 import { ShopGoToButton } from './shop';
 import { slashCmd } from '$lib/functions/commandMention';
 import { GoToPageButton } from '../inventory/GoToPageButton';
-import { FullGuildMember } from '$lib/types/member';
 
 export const BuyItemButton = ButtonComponent({
   async handle(itemId: string) {
