@@ -14,6 +14,7 @@ import {
 import { BackSettingsButton } from './settings';
 import { getColor } from '$lib/functions/getColor';
 import { Guild, GuildModules } from '@prisma/client';
+import { removeEconomyGuildCommands } from './economy/CommandsButtons';
 
 export const privacySettings: SettingsMenuProps = {
   description: (l) => t(l, 'SETTINGS_PRIVACY_SHORT_DESCRIPTION'),
@@ -207,6 +208,20 @@ export const ConfirmDeleteButton = ButtonComponent({
 
     await this.deferUpdate();
 
+    await this.editReply({
+      embeds: [
+        {
+          title: `${emojis.pending} ${t(this, 'LOADING_TITLE')}`,
+          color: colors.yellow,
+        },
+      ],
+      components: components(
+        ...this.message.components.map((r) =>
+          row().addComponents(r.components.map((b) => ({ ...b, disabled: true }))),
+        ),
+      ),
+    });
+
     const updatedData: Partial<
       Guild & {
         modules: Partial<GuildModules>;
@@ -246,6 +261,8 @@ export const ConfirmDeleteButton = ButtonComponent({
       await prisma.category.deleteMany({
         where: { guildId: this.guildId },
       });
+
+      await removeEconomyGuildCommands(this.guildId, this.client.application.id);
 
       updatedData.modules.economy = false;
     }

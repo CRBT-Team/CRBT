@@ -5,6 +5,7 @@ import { economyCommands } from '../../../economy/_helpers';
 import { getGuildSettings, saveServerSettings } from '../_helpers';
 import { guildFeatureSettings } from '../settings';
 import { colors, emojis } from '$lib/env';
+import { t } from '$lib/language';
 
 export const ToggleEconomyButton = ButtonComponent({
   async handle(isEnabled: boolean) {
@@ -55,7 +56,7 @@ export const RefreshCommandsButton = ButtonComponent({
     await this.editReply({
       embeds: [
         {
-          title: `${emojis.pending} Loading (this may take up to a minute)...`,
+          title: `${emojis.pending} ${t(this, 'LOADING_TITLE')}`,
           description: `Refreshing commands...`,
           color: colors.yellow,
         },
@@ -103,7 +104,7 @@ async function addEconomyGuildCommands(guildId: string, applicationId: string) {
   return promises;
 }
 
-async function removeEconomyGuildCommands(guildId: string, applicationId: string) {
+export async function removeEconomyGuildCommands(guildId: string, applicationId: string) {
   const promises: Promise<any>[] = [];
 
   const guildCommands = (

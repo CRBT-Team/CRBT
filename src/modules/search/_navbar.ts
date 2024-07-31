@@ -49,7 +49,7 @@ async function handleSearchTabBtn(this: ButtonInteraction, newOpts: SearchTabBtn
     await this.editReply({
       embeds: [
         {
-          title: `${emojis.pending} Loading (this may take a while)...`,
+          title: `${emojis.pending} ${t(this, 'LOADING_TITLE')}`,
           color: colors.yellow,
         },
       ],
