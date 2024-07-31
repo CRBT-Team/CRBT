@@ -33,6 +33,7 @@
   "IMPORT": "Importer",
   "YES": "Oui",
   "NO": "Non",
+  "VIEW_DETAILS": "View Details",
   "LONG_ACTION_FOOTNOTE": "Cela peut prendre un moment.",
   "ERROR_INVALID_CHANNEL": "Vous devez fournir un salon {types} valide.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Seul l'utilisateur de cette commande peut utiliser ce composant.",
@@ -122,7 +123,8 @@
       "PAST": "Les rappels ne peuvent pas être définis dans le passé.",
       "INVALID_FORMAT": "L'heure que vous avez saisie est dans un format invalide.",
       "TOO_LONG": "Les rappels ne peuvent pas être définis pour plus de 2 ans dans le futur.",
-      "REMINDERS_MAX_LIMIT": "Limite maximale de 10 rappels atteinte."
+      "REMINDERS_MAX_LIMIT": "Limite maximale de 10 rappels atteinte.",
+      "EVENT_NOT_FOUND": "The Discord event provided was not found."
     },
     "strings": {
       "SUCCESS_TITLE": "Rappel créé ! Utilisez {command} pour gérer vos rappels.",
