@@ -15,13 +15,17 @@ export const BuyItemButton = ButtonComponent({
     const memberId = `${this.user.id}_${this.guildId}`;
     const memberItemId = `${itemId}_${memberId}`;
 
-    const inventory: FullGuildMember = await fetchWithCache(
+    const { economy } = await getGuildSettings(this.guildId);
+    const item = economy.items.find((i) => i.id === itemId);
+
+    await fetchWithCache(
       `member:${memberId}`,
       () =>
         prisma.guildMember.upsert({
           where: { id: memberId },
           create: {
             id: memberId,
+            money: 0,
             items: {
               create: {
                 id: memberItemId,
@@ -44,6 +48,9 @@ export const BuyItemButton = ButtonComponent({
             dailyStreak: 0,
           },
           update: {
+            money: {
+              decrement: item.price,
+            },
             items: {
               create: {
                 id: memberItemId,
@@ -59,9 +66,8 @@ export const BuyItemButton = ButtonComponent({
         }),
       true,
     );
-    const memberItem = inventory.items.find(({ item }) => item.id === itemId);
 
-    if (memberItem.item.stock !== null) {
+    if (item.stock !== null) {
       await prisma.item.update({
         where: { id: itemId },
         data: {
@@ -78,7 +84,7 @@ export const BuyItemButton = ButtonComponent({
       content: `${emojis.success} Transaction complete! To use your item, open your ${slashCmd('inventory')}.`,
       components: components(
         row(
-          new ShopGoToButton({ categoryId: memberItem.item.categoryId })
+          new ShopGoToButton({ categoryId: item.categoryId })
             .setEmoji(emojis.buttons.left_arrow)
             .setStyle('SECONDARY'),
           new GoToPageButton({
