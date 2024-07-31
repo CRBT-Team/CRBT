@@ -33,6 +33,7 @@
   "IMPORT": "Импортировать",
   "YES": "Да",
   "NO": "Нет",
+  "VIEW_DETAILS": "View Details",
   "LONG_ACTION_FOOTNOTE": "Это может занять некоторое время.",
   "ERROR_INVALID_CHANNEL": "Вы должны предоставить корректный {types} канал.",
   "ERROR_ONLY_OG_USER_MAY_USE_BTN": "Only this command's user can use this component.",
@@ -122,7 +123,8 @@
       "PAST": "Напоминания нельзя задавать на прошедшее время.",
       "INVALID_FORMAT": "Введённое вами время имеет недопустимый формат.",
       "TOO_LONG": "Напоминания не могут быть заданы более чем на 2 года вперед.",
-      "REMINDERS_MAX_LIMIT": "Достигнут предел 10 напоминаний."
+      "REMINDERS_MAX_LIMIT": "Достигнут предел 10 напоминаний.",
+      "EVENT_NOT_FOUND": "The Discord event provided was not found."
     },
     "strings": {
       "SUCCESS_TITLE": "Напоминание задано! Используйте {command} для управления вашими напоминаниями.",
