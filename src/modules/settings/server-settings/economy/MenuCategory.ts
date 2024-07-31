@@ -15,6 +15,8 @@ import { EditCategoryButton } from './EditCategoryButton';
 import { renderArchivedCategory } from './MenuArchivedCategory';
 import { invisibleChar } from '$lib/util/invisibleChar';
 import { ArchiveCategoryButton, UnarchiveButton } from './ArchiveCategoryButton';
+import { prisma } from '$lib/db';
+import { DeleteCategoryButton } from './DeleteCategoryButton';
 
 export const CategorySelectMenu = SelectMenuComponent({
   async handle(ctx: null) {
@@ -40,8 +42,24 @@ export async function renderItemCategoryEditMenu(
   const settings = await getGuildSettings(this.guildId, true);
   const { economy } = settings;
 
+  const fullItems = await prisma.item.findMany({
+    where: {
+      categoryId: category.id,
+    },
+    include: {
+      members: true,
+    },
+  });
+
   const items = category.items.filter(({ archived }) => !archived);
   const archivedItems = category.items.filter(({ archived }) => archived);
+
+  // Check if all items have never been bought
+  const canBeDeleted = !fullItems.length || fullItems.some((i) => i.members.length === 0);
+  console.log(
+    fullItems.map((i) => i.name + ' ' + i.members.length),
+    canBeDeleted,
+  );
 
   return {
     content: invisibleChar,
@@ -117,7 +135,14 @@ export async function renderItemCategoryEditMenu(
           .setDisabled(category.archived || category.items.length >= 25),
         category.archived
           ? new UnarchiveButton(category.id).setLabel('Unarchive Category').setStyle('SUCCESS')
-          : new ArchiveCategoryButton(category.id).setLabel('Archive Category').setStyle('DANGER'),
+          : canBeDeleted
+            ? new DeleteCategoryButton(category.id)
+                .setLabel('Delete Category')
+                .setStyle('DANGER')
+                .setEmoji(emojis.buttons.trash)
+            : new ArchiveCategoryButton(category.id)
+                .setLabel('Archive Category')
+                .setStyle('DANGER'),
       ),
     ),
   };
