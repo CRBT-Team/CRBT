@@ -19,7 +19,7 @@ export const ImportJSONModal = ModalComponent({
         return CRBTError(this, 'Invalid JSON');
       }
 
-      const builder = MessageBuilder({
+      const builder = await MessageBuilder({
         data: {
           type,
           ...parsed,

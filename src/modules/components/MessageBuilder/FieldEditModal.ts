@@ -123,7 +123,7 @@ export const FieldEditModal = ModalComponent({
       return CRBTError(this, { title: t(this, 'JOINLEAVE_MESSAGE_ERROR_MSG_EMPTY') });
     }
 
-    const builder = MessageBuilder({
+    const builder = await MessageBuilder({
       data: {
         ...data,
         content,

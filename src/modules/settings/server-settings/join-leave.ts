@@ -202,7 +202,7 @@ export const EditJoinLeaveMessageBtn = ButtonComponent({
       CamelCaseGuildFeatures[type]
     ] as any as JoinLeaveData;
 
-    const builder = MessageBuilder({
+    const builder = await MessageBuilder({
       data: {
         type,
         ...(data ?? defaultMessage.call(this, type)),

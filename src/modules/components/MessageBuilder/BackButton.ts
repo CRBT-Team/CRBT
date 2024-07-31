@@ -7,7 +7,7 @@ export const BackButton = ButtonComponent({
   async handle(type: MessageBuilderTypes) {
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const builder = MessageBuilder({
+    const builder = await MessageBuilder({
       data,
       interaction: this,
     });

@@ -1,9 +1,10 @@
 import { prisma } from '$lib/db';
 import { UnknownError } from '$lib/functions/CRBTError';
-import { GuildMember, GuildTextBasedChannel, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
+import { GuildMember, GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
-import { RawServerJoin } from './types';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
+import { getServerMember } from '../economy/_helpers';
 
 export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
@@ -16,10 +17,6 @@ export default OnEvent('guildMemberUpdate', (oldMember, newMember) => {
 });
 
 export const join = OnEvent('guildMemberAdd', (member) => {
-  // const channel = member.client.channels.fetch('1003652205896806430').then((c) => {
-  //   (c as TextChannel).send(member.id);
-  // });
-
   if (member.pending) return;
   if (member.client.user.id === member.id) return;
 
@@ -39,29 +36,22 @@ async function welcome(member?: GuildMember) {
 
   if (preferences && preferences.silentJoins) return;
 
-  const modules = await prisma.guildModules.findFirst({
-    where: { id: guild.id },
-    select: { joinMessage: true },
-  });
+  const guildSettings = await getGuildSettings(guild.id);
 
-  if (!modules?.joinMessage) return;
+  if (!guildSettings.modules.joinMessage) return;
 
-  const serverData = (await prisma.guild.findFirst({
-    where: { id: guild.id },
-    select: { joinChannelId: true, joinMessage: true },
-  })) as unknown as RawServerJoin;
-
-  if (!serverData) return;
-
-  const { joinChannelId: channelId, joinMessage: message } = serverData;
+  const { joinChannelId: channelId, joinMessage: message } = guildSettings;
 
   if (!channelId || !message) return;
 
   const channel = (await guild.channels.fetch(channelId)) as GuildTextBasedChannel;
+  const crbtGuildMember = await getServerMember(member.id, guild.id);
 
   const parsedMessage = parseCRBTscriptInMessage(message, {
     channel,
     member,
+    crbtGuildMember,
+    guildSettings,
   });
 
   channel.send({

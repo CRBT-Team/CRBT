@@ -12,15 +12,22 @@ import { FieldSelectMenu } from './FieldSelectMenu';
 import { getFieldValue } from './getFieldValue';
 import { parseCRBTscriptInMessage } from './parseCRBTscriptInMessage';
 import { SaveButton } from './SaveButton';
+import { getGuildSettings } from '../../settings/server-settings/_helpers';
+import { getServerMember } from '../../economy/_helpers';
 
-export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
+export async function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
   const { type } = data;
 
   cache.set<MessageBuilderData>(`${type}_BUILDER:${i.guildId}`, data);
 
+  const guildSettings = await getGuildSettings(i.guildId);
+  const crbtGuildMember = await getServerMember(i.user.id, i.guildId);
+
   const parsed = parseCRBTscriptInMessage(data, {
     channel: i.channel as GuildTextBasedChannel,
     member: i.member as GuildMember,
+    crbtGuildMember,
+    guildSettings,
   });
 
   const fieldSelect = new FieldSelectMenu(type as never)
@@ -45,7 +52,7 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
             description: description?.length > 100 ? `${description.slice(0, 97)}...` : description,
           };
         })
-        .filter(Boolean)
+        .filter(Boolean),
     );
 
   const buttons = {
@@ -72,7 +79,7 @@ export function MessageBuilder({ data, interaction: i }: MessageBuilderProps) {
     components: components(
       row(fieldSelect),
       row(buttons.back, buttons.save, buttons.import, buttons.export),
-      row(buttons.CRBTscript)
+      row(buttons.CRBTscript),
     ),
     files: [],
   };

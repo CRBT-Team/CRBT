@@ -39,7 +39,7 @@ export const AuthorEditModal = ModalComponent({
       },
     };
 
-    const builder = MessageBuilder({
+    const builder = await MessageBuilder({
       data,
       interaction: this,
     });

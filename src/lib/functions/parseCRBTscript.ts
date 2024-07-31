@@ -2,10 +2,15 @@ import { GuildMember, GuildTextBasedChannel, PartialGuildMember } from 'discord.
 import { avatar } from './avatar';
 import { banner } from './banner';
 import { formatUsername } from './formatUsername';
+import { FullGuildMember } from '$lib/types/member';
+import { FullGuildSettings } from '$lib/types/guild-settings';
+import { colors } from '$lib/env';
 
 export interface CRBTscriptParserArgs {
   channel: GuildTextBasedChannel;
   member: GuildMember | PartialGuildMember;
+  crbtGuildMember?: FullGuildMember;
+  guildSettings?: FullGuildSettings;
 }
 
 function CRBTscriptfunction(regex: RegExp, callback: (values?: string) => any) {
@@ -23,7 +28,7 @@ function CRBTscriptfunction(regex: RegExp, callback: (values?: string) => any) {
 }
 
 export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): string {
-  const { channel, member } = args;
+  const { channel, member, crbtGuildMember, guildSettings } = args;
   const { guild, client } = member;
 
   const values: [string | RegExp, string | ((values?: string) => string)][] = [
@@ -39,6 +44,9 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
     ['<user.mention>', `<@${member.id}>`],
     ['<user.isBot>', member.user.bot.toString()],
     ['<user.roles>', member.roles.cache.map((r) => r.name).join(', ')],
+    ['<user.money>', crbtGuildMember?.money.toString() ?? '0'],
+    ['<user.work.exp>', crbtGuildMember?.workExp.toString() ?? '0'],
+    ['<user.items.count>', crbtGuildMember?.items.length.toString() ?? '0'],
 
     CRBTscriptfunction(new RegExp(/<user\.roles\.add\(([0-9]{18})\)>/g), (roleId) =>
       member.roles.add(roleId),
@@ -56,6 +64,19 @@ export function parseCRBTscript(text: string, args: CRBTscriptParserArgs): strin
     ['<server.roles>', () => guild.roles.cache.map((r) => r.toString()).join(', ')],
     ['<server.description>', guild.description],
     ['<server.members>', () => guild.memberCount.toString()],
+
+    ...[['<server.boosts>', '']],
+
+    ...(guildSettings
+      ? [
+          ['<server.color>', guildSettings.accentColor ?? colors.default],
+          ['<server.currency.singular>', guildSettings.economy.currencyNameSingular ?? 'N/A'],
+          ['<server.currency.plural>', guildSettings.economy.currencyNamePlural ?? 'N/A'],
+          ['<server.currency.symbol>', guildSettings.economy.currencySymbol ?? 'N/A'],
+          ['<server.items.count>', guildSettings.economy.items.length.toString() ?? '0'],
+          ['<server.categories.count>', guildSettings.economy.categories.length.toString() ?? '0'],
+        ]
+      : ([] as any)),
 
     ['<channel.name>', channel.name],
     ['<channel.id>', channel.id],

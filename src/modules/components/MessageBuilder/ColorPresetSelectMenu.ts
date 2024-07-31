@@ -9,7 +9,7 @@ export const ColorPresetSelectMenu = SelectMenuComponent({
 
     const data = cache.get<MessageBuilderData>(`${type}_BUILDER:${this.guildId}`);
 
-    const builder = MessageBuilder({
+    const builder = await MessageBuilder({
       data: {
         ...data,
         embed: {

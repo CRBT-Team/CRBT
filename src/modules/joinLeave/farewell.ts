@@ -3,7 +3,8 @@ import { UnknownError } from '$lib/functions/CRBTError';
 import { GuildTextBasedChannel, MessageEmbed } from 'discord.js';
 import { OnEvent } from 'purplet';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
-import { RawServerLeave } from './types';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
+import { getServerMember } from '../economy/_helpers';
 
 export default OnEvent('guildMemberRemove', async (member) => {
   const { guild } = member;
@@ -16,27 +17,22 @@ export default OnEvent('guildMemberRemove', async (member) => {
 
     if (preferences && preferences.silentLeaves) return;
 
-    const modules = await prisma.guildModules.findFirst({
-      where: { id: guild.id },
-      select: { leaveMessage: true },
-    });
+    const guildSettings = await getGuildSettings(guild.id);
 
-    if (!modules?.leaveMessage) return;
+    if (!guildSettings.modules.leaveMessage) return;
 
-    const serverData = (await prisma.guild.findFirst({
-      where: { id: guild.id },
-      select: { leaveChannelId: true, leaveMessage: true },
-    })) as unknown as RawServerLeave;
+    const { leaveChannelId: channelId, leaveMessage: message } = guildSettings;
 
-    if (!serverData) return;
-
-    const { leaveChannelId: channelId, leaveMessage: message } = serverData;
+    if (!channelId || !message) return;
 
     const channel = (await guild.channels.fetch(channelId)) as GuildTextBasedChannel;
+    const crbtGuildMember = await getServerMember(member.id, guild.id);
 
     const parsedMessage = parseCRBTscriptInMessage(message, {
       channel,
       member,
+      crbtGuildMember,
+      guildSettings,
     });
 
     channel.send({

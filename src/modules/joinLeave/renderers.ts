@@ -15,6 +15,8 @@ import {
 import { components, row } from 'purplet';
 import { parseCRBTscriptInMessage } from '../components/MessageBuilder/parseCRBTscriptInMessage';
 import { RawServerJoin, RawServerLeave } from './types';
+import { getGuildSettings } from '../settings/server-settings/_helpers';
+import { getServerMember } from '../economy/_helpers';
 
 export function defaultMessage(this: Interaction, type: JoinLeaveData['type']): JoinLeaveData {
   return {
@@ -32,7 +34,7 @@ export function defaultMessage(this: Interaction, type: JoinLeaveData['type']): 
 export async function renderJoinLeavePreview(
   this: CommandInteraction | MessageComponentInteraction,
   type: JoinLeaveData['type'],
-  data: RawServerJoin | RawServerLeave
+  data: RawServerJoin | RawServerLeave,
 ) {
   const message: JoinLeaveData = data[CamelCaseGuildFeatures[type]];
 
@@ -41,10 +43,15 @@ export async function renderJoinLeavePreview(
 
   try {
     const channel = this.guild.channels.resolve(channelId) as TextChannel;
+    const member = this.member as GuildMember;
+    const guildSettings = await getGuildSettings(this.guild.id);
+    const crbtGuildMember = await getServerMember(member.id, this.guild.id);
 
     const parsedMessage = parseCRBTscriptInMessage(message, {
       channel,
-      member: this.member as GuildMember,
+      member,
+      crbtGuildMember,
+      guildSettings,
     });
 
     const { url } = await channel.send({
@@ -73,7 +80,7 @@ export async function renderJoinLeavePreview(
         },
       ],
       components: components(
-        row(new MessageButton().setLabel(t(this, 'JUMP_TO_MSG')).setURL(url).setStyle('LINK'))
+        row(new MessageButton().setLabel(t(this, 'JUMP_TO_MSG')).setURL(url).setStyle('LINK')),
       ),
       ephemeral: true,
     });
