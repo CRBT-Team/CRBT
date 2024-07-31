@@ -48,6 +48,35 @@ export const ToggleEconomyButton = ButtonComponent({
   },
 });
 
+export const RefreshCommandsButton = ButtonComponent({
+  async handle() {
+    await this.deferUpdate();
+
+    await this.editReply({
+      embeds: [
+        {
+          title: `${emojis.pending} Loading (this may take up to a minute)...`,
+          description: `Refreshing commands...`,
+          color: colors.yellow,
+        },
+      ],
+      components: components(
+        ...this.message.components.map((r) =>
+          row().addComponents(r.components.map((b) => ({ ...b, disabled: true }))),
+        ),
+      ),
+    });
+
+    // await Promise.all([
+    //   removeEconomyGuildCommands(this.guildId, this.applicationId),
+    //   addEconomyGuildCommands(this.guildId, this.applicationId),
+    // ]).then(
+    //   async () =>
+    //     await this.editReply(await guildFeatureSettings.call(this, EditableGuildFeatures.economy)),
+    // );
+  },
+});
+
 async function addEconomyGuildCommands(guildId: string, applicationId: string) {
   const {
     economy: { categories, currencyNamePlural, currencyNameSingular },

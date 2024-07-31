@@ -6,7 +6,7 @@ import { SettingsMenuProps } from '$lib/types/guild-settings';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
 import { EditCurrencyButton } from './EditCurrencyButton';
-import { ToggleEconomyButton } from './ToggleEconomyButton';
+import { ToggleEconomyButton } from './CommandsButtons';
 import { economyNavBar } from './_navbar';
 
 export interface ItemEditProps {
@@ -70,6 +70,10 @@ export const economySettings: SettingsMenuProps = {
             .setEmoji(emojis.buttons.edit)
             .setStyle('PRIMARY')
             .setLabel('Edit Currency'),
+          // new RefreshCommandsButton()
+          //   // .setEmoji(emojis.buttons.left_arrowrefresh)
+          //   .setStyle('PRIMARY')
+          //   .setLabel('Refresh Commands'),
         ),
       ),
     };
