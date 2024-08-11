@@ -48,7 +48,7 @@ export async function renderItem(
       value:
         currencyFormat(item.price, economy, this.locale) +
         (mode === 'shop'
-          ? ` (Your balance: ${currencyFormat(member.money, economy, this.locale, {
+          ? ` (Your balance: ${currencyFormat(member?.money || 0, economy, this.locale, {
               zeroEqualsFree: false,
             })})`
           : ''),
@@ -60,7 +60,7 @@ export async function renderItem(
     case ItemType.COSMETIC: {
       fields.push({
         name: 'Value',
-        value: `Cosmetic (see image below)`,
+        value: `Cosmetic`,
       });
       break;
     }
@@ -188,7 +188,7 @@ export async function renderItem(
                       )
                       .setEmoji(economy.currencySymbol)
                       .setStyle('PRIMARY')
-                      .setDisabled(item.price > member.money),
+                      .setDisabled(item.price > (member?.money || 0)),
             ]),
       ),
       ...(mode === 'edit'
