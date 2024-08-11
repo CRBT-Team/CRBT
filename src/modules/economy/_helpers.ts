@@ -12,6 +12,7 @@ import { inventory } from './inventory/inventory';
 import { leaderboard } from './leaderboard';
 import { shop } from './shop/shop';
 import { work } from './work';
+import { FullGuildMember } from '$lib/types/member';
 
 export enum ItemType {
   ROLE,
@@ -104,14 +105,21 @@ export function currencyFormat(
   options.withoutSymbol ??= false;
   amount = typeof amount === 'object' ? amount.money : amount;
 
-  const formattedString =
-    options.zeroEqualsFree && amount === 0
-      ? 'Free'
-      : `${amount.toLocaleString(locale)} ${
-          amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
-        }`;
+  let formattedString = '';
 
-  return options.withoutSymbol ? formattedString : `${economy.currencySymbol} ${formattedString}`;
+  if (!options.withoutSymbol) {
+    formattedString = `${economy.currencySymbol} `;
+  }
+  if (options.zeroEqualsFree && amount === 0) {
+    formattedString += 'Free';
+  } else {
+    formattedString += `${amount.toLocaleString(locale)} ${
+      amount === 1 ? economy.currencyNameSingular : economy.currencyNamePlural
+    }`;
+  }
+  console.log(formattedString);
+
+  return formattedString;
 }
 
 export function formatItemValue(itemType: ItemType, itemValue?: string) {
@@ -174,7 +182,11 @@ export async function upsertGuildMember(
   );
 }
 
-export async function getServerMember(userId: string, guildId: string, force = false) {
+export async function getServerMember(
+  userId: string,
+  guildId: string,
+  force = false,
+): Promise<FullGuildMember | null> {
   const memberId = `${userId}_${guildId}`;
 
   return await fetchWithCache(
