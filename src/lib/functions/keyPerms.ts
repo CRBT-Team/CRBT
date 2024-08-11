@@ -1,67 +1,107 @@
-import { Permissions } from 'discord.js';
+import { GuildMember, Permissions, Role } from 'discord.js';
+import { PermissionFlagsBits } from 'discord-api-types/v10';
 
-export function keyPerms(perms: Permissions) {
-  return perms
-    .toArray()
-    .map((perm) => {
-      switch (perm) {
-        // General Server Permissions
-        case 'MANAGE_CHANNELS':
-          return 'Manage Channels';
-        case 'MANAGE_ROLES':
-          return 'Manage Roles';
-        case 'MANAGE_EMOJIS_AND_STICKERS':
-          return 'Manage Expressions (emoji, stickers & sounds)';
-        case 'VIEW_AUDIT_LOG':
-          return 'View Audit Log';
-        case 'VIEW_GUILD_INSIGHTS':
-          return 'View Server Insights';
-        case 'MANAGE_WEBHOOKS':
-          return 'Manage Webhooks';
-        case 'MANAGE_GUILD':
-          return 'Manage Server';
+export function keyPerms(resolvable: GuildMember | Permissions | Role) {
+  const permsBitfield = resolvable instanceof Permissions ? resolvable : resolvable.permissions;
 
-        // Membership Permissions
-        case 'CREATE_INSTANT_INVITE':
-          return 'Create Invite';
-        case 'CHANGE_NICKNAME':
-          return 'Change Nickname';
-        case 'MANAGE_NICKNAMES':
-          return 'Manage Nicknames';
-        case 'KICK_MEMBERS':
-          return 'Kick Members';
-        case 'BAN_MEMBERS':
-          return 'Ban Members';
-        case 'MODERATE_MEMBERS':
-          return 'Timeout Members';
+  const keyPermsObject = [
+    {
+      name: 'Manage Channels',
+      bits: PermissionFlagsBits.ManageChannels,
+    },
+    {
+      name: 'Manage Roles',
+      bits: PermissionFlagsBits.ManageRoles,
+    },
+    {
+      name: 'Manage Expressions (Emoji, Stickers & Sounds)',
+      bits: PermissionFlagsBits.ManageGuildExpressions,
+    },
+    {
+      name: 'View Audit Log',
+      bits: PermissionFlagsBits.ViewAuditLog,
+    },
+    {
+      name: 'View Server Insights',
+      bits: PermissionFlagsBits.ViewGuildInsights,
+    },
+    {
+      name: 'View Server Monetization Insights',
+      bits: PermissionFlagsBits.ViewCreatorMonetizationAnalytics,
+    },
+    {
+      name: 'Manage Webhooks',
+      bits: PermissionFlagsBits.ManageWebhooks,
+    },
+    {
+      name: 'Manage Server',
+      bits: PermissionFlagsBits.ManageGuild,
+    },
+    {
+      name: 'Create Invite',
+      bits: PermissionFlagsBits.CreateInstantInvite,
+    },
+    {
+      name: 'Change Nickname',
+      bits: PermissionFlagsBits.ChangeNickname,
+    },
+    {
+      name: 'Manage Nicknames',
+      bits: PermissionFlagsBits.ManageNicknames,
+    },
+    {
+      name: 'Manage Threads',
+      bits: PermissionFlagsBits.ManageThreads,
+    },
+    {
+      name: '**Mention @‎everyone, @‎here, and All Roles**',
+      bits: PermissionFlagsBits.MentionEveryone,
+    },
+    {
+      name: 'Manage Messages',
+      bits: PermissionFlagsBits.ManageMessages,
+    },
+    {
+      name: 'Manage Threads',
+      bits: PermissionFlagsBits.ManageThreads,
+    },
+    {
+      name: 'Use Activities',
+      bits: PermissionFlagsBits.UseEmbeddedActivities,
+    },
+    {
+      name: 'Priority Speaker',
+      bits: PermissionFlagsBits.PrioritySpeaker,
+    },
+    {
+      name: 'Mute Members',
+      bits: PermissionFlagsBits.MuteMembers,
+    },
+    {
+      name: 'Deafen Members',
+      bits: PermissionFlagsBits.DeafenMembers,
+    },
+    {
+      name: 'Move Members',
+      bits: PermissionFlagsBits.MoveMembers,
+    },
+    {
+      name: 'Manage Events',
+      bits: PermissionFlagsBits.ManageEvents,
+    },
+    {
+      name: 'Kick Members',
+      bits: PermissionFlagsBits.KickMembers,
+    },
+    {
+      name: 'Ban Members',
+      bits: PermissionFlagsBits.BanMembers,
+    },
+    {
+      name: 'Timeout Members',
+      bits: PermissionFlagsBits.ModerateMembers,
+    },
+  ];
 
-        // Text Channel Permissions
-        case 'MENTION_EVERYONE':
-          return '**Mention @‎everyone, @‎here, and All Roles**';
-        case 'MANAGE_MESSAGES':
-          return 'Manage Messages';
-        case 'MANAGE_THREADS':
-          return 'Manage Threads';
-
-        // Voice Channel Permissions
-        case 'START_EMBEDDED_ACTIVITIES':
-          return 'Use Activities';
-        case 'PRIORITY_SPEAKER':
-          return 'Priority Speaker';
-        case 'MUTE_MEMBERS':
-          return 'Mute Members';
-        case 'DEAFEN_MEMBERS':
-          return 'Deafen Members';
-        case 'MOVE_MEMBERS':
-          return 'Move Members';
-
-        // Events Permissions
-        case 'MANAGE_EVENTS':
-          return 'Manage Events';
-
-        default:
-          return null;
-      }
-    })
-    .filter((perm) => perm);
+  return keyPermsObject.filter((perm) => permsBitfield.has(perm.bits)).map((perm) => perm.name);
 }

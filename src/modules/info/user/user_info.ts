@@ -12,6 +12,7 @@ import { snowflakeToDate, timestampMention } from '@purplet/utils';
 import dedent from 'dedent';
 import {
   APIUser,
+  ApplicationFlags,
   MessageFlags,
   PermissionFlagsBits,
   Routes,
@@ -28,6 +29,7 @@ import { ChatCommand, OptionBuilder, UserContextCommand, components, getRestClie
 import { ShareResponseBtn } from '../../components/ShareResult';
 import { getUser } from '../../settings/user-settings/_helpers';
 import { AvatarFormats, AvatarSizes, NavBarContext, getTabs, navBar } from './_navbar';
+import { fetchWithCache } from '$lib/cache';
 
 export default ChatCommand({
   name: 'user info',
@@ -76,11 +78,11 @@ export const ctxCommand = UserContextCommand({
   },
 });
 
-export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
+export function getBadgeEmojis(rawUserFlags: UserFlags, crbtBadges: string[]) {
   const { badges: discordBadges } = emojis;
 
   const userFlags: {
-    [k: string]: UserFlags;
+    [k: string]: UserFlags | ApplicationFlags;
   } = {
     [discordBadges.verifiedBot]: UserFlags.VerifiedBot,
     [discordBadges.discordStaff]: UserFlags.Staff,
@@ -95,12 +97,14 @@ export function getBadgeEmojis(flags: UserFlags, additionalBadges?: string[]) {
     [discordBadges.activeDeveloper]: UserFlags.ActiveDeveloper,
     [discordBadges.earlySupporter]: UserFlags.PremiumEarlySupporter,
     [discordBadges.developer]: UserFlags.VerifiedDeveloper,
+    [discordBadges.supportsCommands]: ApplicationFlags.ApplicationCommandBadge,
+    [discordBadges.usesAutomod]: ApplicationFlags.ApplicationAutoModerationRuleCreateBadge,
   };
 
   return [
-    ...(additionalBadges ? additionalBadges.map((b) => badges[b].contents) : []),
+    ...(crbtBadges ? crbtBadges.map((b) => badges[b].contents) : []),
     ...Object.entries(userFlags).reduce((acc, [key, value]) => {
-      if ((flags & value) === value) {
+      if ((rawUserFlags & value) === value) {
         acc.push(key);
       }
       return acc;
@@ -115,12 +119,20 @@ export async function renderUser(
   member?: GuildMember,
 ) {
   const crbtUser = await getUser(user.id);
-  const userBadges = getBadgeEmojis(user.flags, crbtUser.crbtBadges);
   const size = AvatarSizes[navCtx.size];
   const format = AvatarFormats[navCtx.format];
   const createdAt = snowflakeToDate(user.id);
   const color =
     ctx instanceof MessageComponentInteraction ? ctx.message.embeds[0].color : await getColor(user);
+  // const apps = await fetchWithCache(`${ctx.guild.id}:integrations`, async () =>
+  //   (await ctx.guild.fetchIntegrations()).filter(({ type }) => type === 'discord').toJSON(),
+  // );
+  // const app = apps.find(({ application }) => application.bot.id === user.id);
+  const userBadges = getBadgeEmojis(user.flags, crbtUser.crbtBadges);
+
+  if (createdAt <= new Date('2023-06-23') && !user.bot) {
+    userBadges.push(emojis.badges.legacyUsername);
+  }
 
   const fields: EmbedFieldData[] = [
     {
@@ -156,8 +168,8 @@ export async function renderUser(
         value: hasPerms(member.permissions, PermissionFlagsBits.Administrator, true)
           ? t(ctx, 'PERMISSION_ADMINISTRATOR')
           : perms.length
-          ? perms.join(', ')
-          : t(ctx, 'NO_PERMS'),
+            ? perms.join(', ')
+            : t(ctx, 'NO_PERMS'),
       },
       {
         name: t(ctx, 'JOINED_DISCORD'),

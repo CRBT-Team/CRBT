@@ -9,7 +9,7 @@ export default {
   },
   gold_purplet: {
     name: 'Gold Purplet',
-    contents: '<:gold_purplet:1000783727875596368>',
+    contents: '<:gold_purplet:1272238901385236511>',
   },
   achievements_legacy: {
     name: 'Achievements legacy',
