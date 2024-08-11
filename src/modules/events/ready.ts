@@ -49,79 +49,86 @@ function loadTimeouts(client: Client) {
 }
 
 async function loadEconomyCommands(client: Client) {
-  // Fetch all guilds with the economy module enabled
-  const guilds = (await prisma.guild.findMany({
-    where: {
-      modules: {
-        economy: true,
-      },
-    },
-    include: { economy: { include: { items: true } } },
-  })) as FullGuildSettings[];
-
-  return await Promise.all(
-    guilds.map(async ({ id, economy }) => {
-      economy = deepMerge(defaultGuildSettings.economy, {
-        id,
-        ...economy,
-      });
-
-      const discordGuild = await client.guilds.fetch(economy.id);
-      const urlParams = new URLSearchParams();
-      urlParams.set('with_localizations', 'true');
-
-      let commands: Partial<APIApplicationCommand>[] = [];
-
-      if (client.user.id !== clients.crbt.id) {
-        commands = (await getRestClient().get(
-          Routes.applicationGuildCommands(client.user.id, economy.id),
-          {
-            query: urlParams,
-          },
-        )) as Partial<APIApplicationCommand>[];
-      }
-
-      Object.entries(economyCommands).forEach(([name, command]) => {
-        if (name === 'shop' && !economy.items.length) return;
-
-        commands.push({
-          ...command.getMeta({
-            plural: economy.currencyNamePlural,
-            singular: economy.currencyNameSingular,
-          }),
-          guild_id: economy.id,
-          default_member_permissions: null,
-          type: 1,
-          application_id: client.user.id,
-          nsfw: false,
-        });
-      });
-
-      // remove commands duplicates
-      commands = commands.filter(
-        (command, index, self) =>
-          index ===
-          self.findIndex((t) => t.name === command.name && t.description === command.description),
-      );
-
-      const res = await fetch(
-        `https://discord.com/api/v10/applications/${client.user.id}/guilds/${economy.id}/commands`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(commands),
+  try {
+    // Fetch all guilds with the economy module enabled
+    const guilds = (await prisma.guild.findMany({
+      where: {
+        modules: {
+          economy: true,
         },
-      );
+      },
+      include: { economy: { include: { items: true } } },
+    })) as FullGuildSettings[];
 
-      if (!res.ok) {
-        console.error(await res.json());
-        return;
-      }
+    return await Promise.all(
+      guilds.map(async ({ id, economy }) => {
+        economy = deepMerge(defaultGuildSettings.economy, {
+          id,
+          ...economy,
+        });
 
-      console.log(`Posted ${commands.length} commands on ${discordGuild.name ?? economy.id}`);
-    }),
-  );
+        const discordGuild = await client.guilds.fetch(economy.id);
+
+        if (!discordGuild) return;
+
+        const urlParams = new URLSearchParams();
+        urlParams.set('with_localizations', 'true');
+
+        let commands: Partial<APIApplicationCommand>[] = [];
+
+        if (client.user.id !== clients.crbt.id) {
+          commands = (await getRestClient().get(
+            Routes.applicationGuildCommands(client.user.id, economy.id),
+            {
+              query: urlParams,
+            },
+          )) as Partial<APIApplicationCommand>[];
+        }
+
+        Object.entries(economyCommands).forEach(([name, command]) => {
+          if (name === 'shop' && !economy.items.length) return;
+
+          commands.push({
+            ...command.getMeta({
+              plural: economy.currencyNamePlural,
+              singular: economy.currencyNameSingular,
+            }),
+            guild_id: economy.id,
+            default_member_permissions: null,
+            type: 1,
+            application_id: client.user.id,
+            nsfw: false,
+          });
+        });
+
+        // remove commands duplicates
+        commands = commands.filter(
+          (command, index, self) =>
+            index ===
+            self.findIndex((t) => t.name === command.name && t.description === command.description),
+        );
+
+        const res = await fetch(
+          `https://discord.com/api/v10/applications/${client.user.id}/guilds/${economy.id}/commands`,
+          {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(commands),
+          },
+        );
+
+        if (!res.ok) {
+          console.error(await res.json());
+          return;
+        }
+
+        console.log(`Posted ${commands.length} commands on ${discordGuild.name ?? economy.id}`);
+      }),
+    );
+  } catch (e) {
+    console.error(e);
+  }
 }
