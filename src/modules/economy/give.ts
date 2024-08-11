@@ -32,16 +32,16 @@ export const give: EconomyCommand = {
   async handle() {
     const target = this.options.getUser('user');
     const amount = this.options.getInteger('amount');
+    const { economy } = await getGuildSettings(this.guildId);
 
     if (target.bot) {
-      return CRBTError(this, 'You cannot give Purplets to a bot.');
+      return CRBTError(this, `You cannot give ${economy.currencyNamePlural} to a bot.`);
     }
     if (target.id === this.user.id) {
-      return CRBTError(this, 'You cannot give Purplets to yourself.');
+      return CRBTError(this, `You cannot give ${economy.currencyNamePlural} to yourself.`);
     }
 
     try {
-      const { economy } = await getGuildSettings(this.guildId);
       const userData = await prisma.guildMember.findFirst({
         where: {
           AND: { guildId: this.guildId, userId: this.user.id },
@@ -51,7 +51,7 @@ export const give: EconomyCommand = {
 
       if (!userData || !userData.money || userData.money < amount) {
         return CRBTError(this, {
-          title: "You don't have enough Purplets!",
+          title: `You don't have enough ${economy.currencyNamePlural}.`,
           fields: [
             {
               name: 'Your current balance',
