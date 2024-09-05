@@ -6,8 +6,8 @@ import { titleCase } from 'change-case-all';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
 import { formatEntry, getAllEntries } from '../../moderation/moderation_history';
-import { GuildSettingMenus, resolveSettingsProps } from './_helpers';
-import { FeatureSelectMenu } from './settings';
+import { GuildSettingMenus, resolveSettingsProps } from '../server-settings/_helpers';
+import { FeatureSelectMenu } from '../server-settings/settings';
 
 export const moderationSettings: SettingsMenuProps = {
   description: (l) => t(l, 'SETTINGS_MODERATION_SHORT_DESCRIPTION'),
