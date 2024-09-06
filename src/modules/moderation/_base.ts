@@ -130,7 +130,7 @@ export async function handleModerationAction(
   const { error } = checkModerationPermission.call(this, target, type);
 
   if (error) {
-    this.editReply(error);
+    await this.editReply(error);
     return;
   }
 
@@ -208,13 +208,6 @@ export async function handleModerationAction(
     );
 
     const { modules, modLogsChannelId } = await getGuildSettings(guild.id);
-    const awareOwnerMember = await prisma.guildMember.findFirst({
-      where: {
-        guildId: guild.id,
-        userId: guild.ownerId,
-        moderationNotifications: true,
-      },
-    });
 
     if (modules.moderationNotifications) {
       const message = createModNotification(
@@ -230,10 +223,20 @@ export async function handleModerationAction(
         this.guildLocale,
       );
 
-      // If the owner enabled DM notifications, send them a copy of the modlogs
-      const user = await guild.client.users.fetch(awareOwnerMember.userId);
+      const awareOwnerMember = await prisma.guildMember.findFirst({
+        where: {
+          guildId: guild.id,
+          userId: guild.ownerId,
+          moderationNotifications: true,
+        },
+      });
 
-      await user.send(message);
+      // If the owner enabled DM notifications, send them a copy of the modlogs
+      if (awareOwnerMember) {
+        const user = await guild.client.users.fetch(guild.ownerId);
+
+        await user.send(message);
+      }
 
       if (modLogsChannelId) {
         const channel = (await guild.client.channels.fetch(modLogsChannelId)) as TextChannel;
