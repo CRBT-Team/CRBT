@@ -11,9 +11,9 @@ import {
 import { Guild, MessageEmbedOptions } from 'discord.js';
 import { economySettings } from './economy/MenuOverview';
 import { joinLeaveSettings } from './join-leave';
-import { moderationSettings } from '../moderation/moderation';
-import { modlogsSettings } from '../moderation/logs';
-import { modReportsSettings } from '../moderation/reports';
+import { moderationSettings } from './moderation/moderation';
+import { modlogsSettings } from './moderation/logs';
+import { modReportsSettings } from './moderation/reports';
 import { privacySettings } from './privacy';
 import { themeSettings } from './theming';
 import { t } from '$lib/language';
