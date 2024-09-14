@@ -5,8 +5,8 @@ import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-setti
 import { ChannelType } from 'discord-api-types/v10';
 import { MessageSelectMenu } from 'discord.js';
 import { ButtonComponent, OnEvent, components, row } from 'purplet';
-import { saveServerSettings } from '../server-settings/_helpers';
-import { ToggleFeatureBtn, guildFeatureSettings } from '../server-settings/settings';
+import { saveServerSettings } from '../_helpers';
+import { ToggleFeatureBtn, guildFeatureSettings } from '../settings';
 
 export const modlogsSettings: SettingsMenuProps = {
   mainMenu: EditableGuildFeatures.moderation,
