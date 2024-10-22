@@ -5,9 +5,9 @@ import { EditableGuildFeatures, SettingsMenuProps } from '$lib/types/guild-setti
 import { titleCase } from 'change-case-all';
 import dedent from 'dedent';
 import { components, row } from 'purplet';
-import { formatEntry, getAllEntries } from '../../moderation/moderation_history';
-import { GuildSettingMenus, resolveSettingsProps } from './_helpers';
-import { FeatureSelectMenu } from './settings';
+import { formatEntry, getAllEntries } from '../../../moderation/moderation_history';
+import { GuildSettingMenus, resolveSettingsProps } from '../_helpers';
+import { FeatureSelectMenu } from '../settings';
 
 export const moderationSettings: SettingsMenuProps = {
   description: (l) => t(l, 'SETTINGS_MODERATION_SHORT_DESCRIPTION'),
@@ -98,7 +98,7 @@ export const moderationSettings: SettingsMenuProps = {
                 const menu = GuildSettingMenus.get(featureId);
                 const props = resolveSettingsProps(i, menu, settings);
 
-                let icon = props.errors.length ? '⚠️' : emojis.features?.[featureId] ?? '';
+                let icon = props.errors.length ? '⚠️' : (emojis.features?.[featureId] ?? '');
                 let description = props.errors.length
                   ? t(i, 'ATTENTION_REQUIRED')
                   : menu.description(i.locale);

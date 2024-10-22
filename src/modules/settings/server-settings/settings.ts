@@ -19,7 +19,6 @@ import {
   resolveSettingsProps,
   saveServerSettings,
 } from '../server-settings/_helpers';
-import { ServerFlags } from '$lib/util/serverFlags';
 
 export default ChatCommand({
   name: 'server settings',
@@ -54,28 +53,22 @@ export async function guildSettingsOverview(this: Interaction) {
 
     const props = resolveSettingsProps(this, menu, settings);
 
-    let icon = props.errors.length ? '⚠️' : emojis.features?.[featureId] ?? '';
+    let icon = props.errors.length ? '⚠️' : (emojis.features?.[featureId] ?? '');
     let description = props.errors.length
       ? t(this, 'ATTENTION_REQUIRED')
       : menu.description(this.locale);
 
-    if (
-      // Only show economy if the server has the economy flag
-      (featureId === EditableGuildFeatures.economy && settings.flags & ServerFlags.HasEconomy) ||
-      featureId !== EditableGuildFeatures.economy
-    ) {
-      embedFields.push({
-        name: `${icon} ${t(this, featureId)} ${menu.newLabel ? `\`✨ ${t(this, 'NEW')}\`` : ''}`,
-        value: description,
-      });
+    embedFields.push({
+      name: `${icon} ${t(this, featureId)} ${menu.newLabel ? `\`✨ ${t(this, 'NEW')}\`` : ''}`,
+      value: description,
+    });
 
-      selectMenuOptions.push({
-        label: `${t(this, featureId)} ${menu.newLabel ? `[✨ ${t(this, 'NEW')}]` : ''}`,
-        value: featureId,
-        emoji: icon,
-        description: props.errors.length ? t(this, 'ATTENTION_REQUIRED') : '',
-      });
-    }
+    selectMenuOptions.push({
+      label: `${t(this, featureId)} ${menu.newLabel ? `[✨ ${t(this, 'NEW')}]` : ''}`,
+      value: featureId,
+      emoji: icon,
+      description: props.errors.length ? t(this, 'ATTENTION_REQUIRED') : '',
+    });
   });
 
   return {
